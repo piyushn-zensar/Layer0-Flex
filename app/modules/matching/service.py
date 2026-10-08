@@ -6,7 +6,9 @@ Public contract:
         Match.units lists every unit [{bu, product_id, offering_type}], main unit first; Match.bu, .product_id
         and .offering_type repeat the main unit (None / "NONE" when the bid manager answers it).
     decide(db, match_id, action, actor)               action: accept | reject; LookupError if no such match
-    set_manual(db, opp_id, req_id, bu, product_id, offering_type, actor) -> Match   a person's own choice
+    set_manual(db, opp_id, req_id, units, actor) -> Match   a person's own choice: units = [{product_id,
+        offering_type}] (empty = bid manager); unit taken from the product. LookupError: no such requirement in
+        the opportunity; ValueError: unknown or inactive product, or bad offering type
     suggested_units(db, opp_id) -> dict[str, list[str]]   bu -> req_ids, every listed unit (input to participation)
 """
 from collections import defaultdict
@@ -18,7 +20,7 @@ from app.core import audit
 from app.modules.catalog import service as catalog
 from app.modules.ingestion import service as ingestion
 from app.modules.matching import agent
-from app.modules.matching.models import Match
+from app.modules.matching.models import OFFERING_TYPES, Match
 from app.modules.requirements import service as requirements
 
 PRODUCT_CATEGORIES = {"technical", "compliance"}
@@ -99,13 +101,24 @@ def decide(db: Session, match_id: int, action: str, actor: str) -> None:
     db.commit()
 
 
-def set_manual(db: Session, opp_id: str, req_id: str, bu: str | None, product_id: str | None,
-               offering_type: str, actor: str) -> Match:
-    units = [{"bu": bu, "product_id": product_id, "offering_type": offering_type}] if bu else []
-    m = _row(opp_id, req_id, units, confidence=1.0, rationale=f"Set by {actor}.", method="manual",
+def set_manual(db: Session, opp_id: str, req_id: str, units: list[dict], actor: str) -> Match:
+    req = requirements.get(db, req_id)
+    if not req or req.opportunity_id != opp_id:
+        raise LookupError(f"{req_id} is not a requirement of {opp_id}.")
+    active = {u["code"] for u in catalog.units()}
+    chosen = []
+    for u in units:
+        p = catalog.product(u["product_id"])
+        if not p or p["bu"] not in active:
+            raise ValueError(f"{u['product_id']} is not a product of an active business unit.")
+        if u["offering_type"] not in OFFERING_TYPES or u["offering_type"] == "NONE":
+            raise ValueError(f"{u['offering_type']} is not an offering type.")
+        if all(c["product_id"] != p["id"] for c in chosen):
+            chosen.append({"bu": p["bu"], "product_id": p["id"], "offering_type": u["offering_type"]})
+    m = _row(opp_id, req_id, chosen, confidence=1.0, rationale=f"Set by {actor}.", method="manual",
              status="accepted", decided_by=actor)
     db.add(m)
-    audit.record(db, actor, "manual", "match", req_id, opp_id, bu=bu, product=product_id)
+    audit.record(db, actor, "manual", "match", req_id, opp_id, units=chosen)
     db.commit()
     return m
 
@@ -121,7 +134,9 @@ def suggested_units(db: Session, opp_id: str) -> dict[str, list[str]]:
 if __name__ == "__main__":  # freeze the matcher's answers for an RFP (task A-03); commit data/llm_cache/match_requirement/
     # LLM_PROVIDER=azure .venv/Scripts/python -m app.modules.matching.service data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf
     # Runs the real services on a throwaway database: cached reader answers -> approve all -> freeze -> match.
-    # The opportunity is OPP-0001, so requirement IDs (part of the matcher prompt) match the demo's.
+    # The opportunity is OPP-0001, so requirement IDs (part of the matcher prompt) match an OPP-0001 read from the
+    # same RFP by the real reader (P-08), not the 13 hand-picked seed items. Layout and page files still go to
+    # data/store (gitignored), as for any upload.
     import sys
     import tempfile
     from collections import Counter
