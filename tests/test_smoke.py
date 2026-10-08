@@ -39,6 +39,13 @@ def test_demo_flow_and_api():
     csv = client.get("/api/opportunities/OPP-0001/compliance-matrix.csv").text
     assert "p. 55, lines" in csv
 
+    # rule R6: the same file in a second opportunity is that opportunity's own document
+    opp2 = client.post("/api/opportunities", json={"title": "second"}).json()["id"]
+    pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
+    doc2 = client.post(f"/api/opportunities/{opp2}/documents", files={"file": ("rfp.pdf", pdf)}).json()
+    assert doc2["opportunity_id"] == opp2 and doc2["id"] != trace["doc"]["id"]
+    assert client.get(f"/api/opportunities/{opp2}").json()["documents"][0]["status"] == "ingested"
+
     # actor header is URL-encoded by the web app (EP² is not ASCII)
     a = next(i for i in client.get("/api/inbox/EP2").json()["items"] if not i["responded_by"])
     r = client.post(f"/api/assignments/{a['id']}/respond", json={"compliance": "met", "response": "ok"},

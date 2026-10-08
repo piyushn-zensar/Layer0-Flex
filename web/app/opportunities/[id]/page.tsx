@@ -32,7 +32,7 @@ export default function DocumentsPage() {
         <tbody>
           {data?.documents.map((d) => (
             <tr key={d.id}><td>{d.filename}</td><td>{d.role}</td><td>{d.page_count}</td>
-              <td><span className="badge">{d.status}</span></td><td className="mono">{d.id.slice(0, 12)}</td></tr>
+              <td><span className="badge">{d.status}</span></td><td className="mono">{d.sha256.slice(0, 12)}</td></tr>
           ))}
           {data?.documents.length === 0 && <tr><td colSpan={5} className="muted">No documents yet.</td></tr>}
         </tbody>

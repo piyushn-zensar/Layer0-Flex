@@ -44,9 +44,9 @@ def ingest(db: Session, doc_id: str, refresh: bool = False) -> dict:
     """refresh=True ignores the committed layout cache (use it on the parsing machine when the parser changes)."""
     doc = opportunities.get_document(db, doc_id)
     opportunities.set_document_status(db, doc_id, "ingesting")
-    frozen = LAYOUT_CACHE / f"{doc_id}.json"
+    frozen = LAYOUT_CACHE / f"{doc.sha256}.json"
     try:
-        model = json.loads(frozen.read_text("utf-8")) if frozen.exists() and not refresh else parse(doc.path, doc_id)
+        model = json.loads(frozen.read_text("utf-8")) if frozen.exists() and not refresh else parse(doc.path, doc.sha256)
     except Exception as exc:  # damaged or encrypted PDF: report, don't skip (rule R5)
         opportunities.set_document_status(db, doc_id, "failed")
         return {"document": doc_id, "error": str(exc)}
@@ -78,9 +78,10 @@ def page(doc_id: str, page_no: int) -> dict:
 
 
 def page_png(db: Session, doc_id: str, page_no: int) -> bytes:
-    path = PAGES / doc_id / f"{page_no}.png"
+    doc = opportunities.get_document(db, doc_id)
+    path = PAGES / doc.sha256 / f"{page_no}.png"  # same file, same images
     if not path.exists():
         path.parent.mkdir(parents=True, exist_ok=True)
-        with pymupdf.open(opportunities.get_document(db, doc_id).path) as pdf:
+        with pymupdf.open(doc.path) as pdf:
             pdf[page_no - 1].get_pixmap(dpi=110).save(path)
     return path.read_bytes()

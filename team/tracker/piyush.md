@@ -6,8 +6,8 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 
 | ID | Task | Stage | Due | Status | Notes / commit |
 |---|---|---|---|---|---|
-| P-01 | Push skeleton, docs, plan, trackers, `.claude/`; confirm both teammates can run it | S0 | Thu 8 Oct | doing | push pending |
-| P-12 | Finish the Next.js switch: `npm run build` clean, all pages checked against the API | S0 | Fri 9 Oct AM | doing | pages written, not yet built |
+| P-01 | Push skeleton, docs, plan, trackers, `.claude/`; confirm both teammates can run it | S0 | Thu 8 Oct | done | pushed ea5b26e |
+| P-12 | Finish the Next.js switch: `npm run build` clean, all pages checked against the API | S0 | Fri 9 Oct AM | review | build clean; all 12 pages + API via proxy 200; fixed per-opportunity document IDs; check trace screen in a browser |
 | P-02 | OCR for pages with no text layer (Tesseract TSV via `subprocess`, `config.TESSERACT_CMD`, optional when missing); page 83 test; re-freeze layout | S1 | Fri 9 Oct | todo | |
 | P-03 | Contents-page and header/footer detection; exclude from the reader's input | S1 | Fri 9 Oct | todo | |
 | P-04 | Run reader agent on the full Syracuse PDF (`LLM_PROVIDER=azure`, GPT-4o), tune prompt/chunking, commit `data/llm_cache/read_requirements/` | S1 | Fri 9 Oct | todo | |

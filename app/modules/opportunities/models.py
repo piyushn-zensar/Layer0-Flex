@@ -22,9 +22,11 @@ class Opportunity(Base):
 
 
 class Document(Base):
-    """A received file, stored once under its SHA-256 and never modified."""
+    """A received file in one opportunity. The bytes are stored once under their SHA-256 and never modified;
+    the same file sent to two opportunities is two documents (rule R6)."""
     __tablename__ = "document"
-    id: Mapped[str] = mapped_column(String(64), primary_key=True)         # sha256 of the file
+    id: Mapped[str] = mapped_column(String(40), primary_key=True)         # <opportunity>-<sha256[:12]>
+    sha256: Mapped[str] = mapped_column(String(64), index=True)
     opportunity_id: Mapped[str] = mapped_column(String(20), index=True)
     filename: Mapped[str] = mapped_column(String(255))
     role: Mapped[str] = mapped_column(String(20), default="main")         # main | addendum | qa | change | other

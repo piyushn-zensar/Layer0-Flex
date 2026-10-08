@@ -146,7 +146,7 @@ This turns a PDF into a **page layout model**: a structured record of every page
 
 ### 5.1 Intake
 
-- The file is stored under its SHA-256 hash and never modified. The hash is the document ID used in every anchor.
+- The file is stored under its SHA-256 hash and never modified. Each opportunity gets its own document record (`<opportunity>-<first 12 hash characters>`), so the same file sent for two opportunities stays two separate documents (rule R6); the hash is kept on the record, and every anchor points to the record.
 - A document record links the file to its opportunity, with its role (main RFP, addendum, Q&A, change, other).
 - Files other than PDF are stored and reported as **unsupported**. Coverage is never claimed for a file that was not read (rule R5).
 - Damaged or encrypted PDFs are reported as failed, not skipped.
@@ -223,7 +223,7 @@ requirement
   version       1, 2, ... (only the latest is current; all are kept)
   text          short restatement shown on the line item
   quote         verbatim source text
-  document_id   SHA-256 of the source file
+  document_id   the document record (opportunity + file hash); the hash itself is on the document
   page, line_start, line_end, bboxes   the exact source
   category, section
   provenance    EXTRACTED | UNANCHORED

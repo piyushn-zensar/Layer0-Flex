@@ -5,7 +5,7 @@ Public contract (other modules call only these):
     get(db, opp_id) -> Opportunity | None
     list_all(db) -> list[Opportunity]
     set_status(db, opp_id, status, actor)
-    add_document(db, opp_id, filename, data, role, actor) -> Document
+    add_document(db, opp_id, filename, data, role, actor) -> Document   id = <opp>-<sha256[:12]>
     get_document(db, doc_id) -> Document | None
     documents(db, opp_id) -> list[Document]
     main_document(db, opp_id) -> Document | None
@@ -51,16 +51,16 @@ def set_status(db: Session, opp_id: str, status: str, actor: str) -> None:
 
 def add_document(db: Session, opp_id: str, filename: str, data: bytes, role: str, actor: str) -> Document:
     sha = hashlib.sha256(data).hexdigest()
-    existing = db.get(Document, sha)
+    existing = db.scalar(select(Document).where(Document.opportunity_id == opp_id, Document.sha256 == sha))
     if existing:
         return existing
     FILES.mkdir(parents=True, exist_ok=True)
     path = FILES / f"{sha}{'.pdf' if filename.lower().endswith('.pdf') else ''}"
     path.write_bytes(data)
-    doc = Document(id=sha, opportunity_id=opp_id, filename=filename, role=role, path=str(path),
+    doc = Document(id=f"{opp_id}-{sha[:12]}", sha256=sha, opportunity_id=opp_id, filename=filename, role=role, path=str(path),
                    status="uploaded" if path.suffix == ".pdf" else "unsupported")
     db.add(doc)
-    audit.record(db, actor, "uploaded", "document", sha, opp_id, filename=filename, role=role)
+    audit.record(db, actor, "uploaded", "document", doc.id, opp_id, sha256=sha, filename=filename, role=role)
     db.commit()
     return doc
 

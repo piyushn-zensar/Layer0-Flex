@@ -4,7 +4,7 @@
 export type OfferingType = "CTO" | "SEMI_CUSTOM" | "ETO" | "NONE";
 
 export interface Opportunity { id: string; title: string; customer: string; customer_type: string; status: string; created_by: string }
-export interface Doc { id: string; filename: string; role: string; status: string; page_count: number }
+export interface Doc { id: string; sha256: string; filename: string; role: string; status: string; page_count: number }
 export interface Requirement {
   req_id: string; version: number; text: string; quote: string; category: string; section: string;
   page: number | null; line_start: number | null; line_end: number | null; bboxes: number[][];
