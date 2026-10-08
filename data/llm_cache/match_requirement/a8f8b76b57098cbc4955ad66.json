@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 0.9,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to submission and communication procedures for the RFP process, not a product or technical specification. Therefore, no product mapping is applicable."
+  },
+  "task": "match_requirement"
+}

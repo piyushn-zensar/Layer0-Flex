@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.95,
+    "offering_type": "ETO",
+    "product_id": "CROWN-ARMV",
+    "rationale": "The requirement specifies medium voltage switchgear equipment rated for 15,000V and a basic insulation level of 95,000V. The candidate 'CROWN-ARMV' describes arc-resistant metal-clad medium-voltage switchgear suitable for 15kV applications, meeting the technical specifications provided."
+  },
+  "task": "match_requirement"
+}

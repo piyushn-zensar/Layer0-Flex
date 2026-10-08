@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 1.0,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to compliance and certification regarding M/WBE participation, which is a legal or commercial aspect of the contract and not related to a specific product offering."
+  },
+  "task": "match_requirement"
+}

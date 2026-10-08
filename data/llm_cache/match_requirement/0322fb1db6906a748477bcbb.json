@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 0.95,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to a commercial aspect of the RFP, specifically requesting a lump sum price for manufacturing, furnishing, delivering, and testing the switchgear. This does not directly specify a product requirement, so no product mapping is applicable."
+  },
+  "task": "match_requirement"
+}

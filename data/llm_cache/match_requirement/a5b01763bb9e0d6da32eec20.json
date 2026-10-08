@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 0.9,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to submission instructions and does not specify a product or technical requirement. Therefore, no mapping to a SpinCo business unit or product is applicable."
+  },
+  "task": "match_requirement"
+}

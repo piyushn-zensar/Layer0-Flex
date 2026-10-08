@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 0.95,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to documentation of efforts for subcontractor participation, which is a commercial or contractual aspect rather than a product requirement. No product mapping is applicable."
+  },
+  "task": "match_requirement"
+}

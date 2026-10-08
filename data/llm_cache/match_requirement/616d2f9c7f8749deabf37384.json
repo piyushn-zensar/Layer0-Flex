@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 0.9,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to compliance and legal provisions related to subcontracting and human rights law, which does not specify a product or service offering. Therefore, no product mapping is applicable."
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 0.95,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement is classified as 'commercial,' which does not pertain to a specific product offering. Therefore, no product mapping is applicable."
+  },
+  "task": "match_requirement"
+}

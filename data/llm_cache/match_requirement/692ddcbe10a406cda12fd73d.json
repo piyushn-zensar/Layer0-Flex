@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.9,
+    "offering_type": "ETO",
+    "product_id": "CROWN-ARMV",
+    "rationale": "The requirement specifies a sequence of operation involving tie breakers and feeder breakers, which aligns with the capabilities of the 'Arc-resistant metal-clad MV switchgear' product (CROWN-ARMV). This product supports medium-voltage switchgear with tie breakers and vacuum circuit breakers, suitable for the described operation."
+  },
+  "task": "match_requirement"
+}

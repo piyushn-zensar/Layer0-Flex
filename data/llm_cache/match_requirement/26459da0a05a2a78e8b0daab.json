@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.95,
+    "offering_type": "ETO",
+    "product_id": "CROWN-ARMV",
+    "rationale": "The requirement specifies hardware for installing and testing Metal Clad Switchgear. The product 'CROWN-ARMV' matches this requirement as it is an engineered-to-order (ETO) offering of arc-resistant metal-clad medium-voltage switchgear, which aligns with the specification for Metal Clad Switchgear in the Syracuse Airport document."
+  },
+  "task": "match_requirement"
+}

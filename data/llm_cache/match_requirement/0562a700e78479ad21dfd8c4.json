@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 1.0,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to submission and compliance with SDVOB goals, which is a commercial or legal aspect and not a product requirement. Therefore, no business unit or product is applicable."
+  },
+  "task": "match_requirement"
+}

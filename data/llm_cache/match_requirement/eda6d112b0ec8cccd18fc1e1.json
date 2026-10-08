@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 0.95,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to compliance with legal regulations and does not specify a product or technical solution. Therefore, no product mapping is applicable."
+  },
+  "task": "match_requirement"
+}

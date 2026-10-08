@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.9,
+    "offering_type": "CTO",
+    "product_id": "CROWN-ACC",
+    "rationale": "The requirement specifies a separate utility incoming cable termination compartment that allows the utility to lock. The candidate 'CROWN-ACC' from the CROWN business unit offers MV switchgear accessories, including cable termination compartments with features such as utility lock compatibility, which directly aligns with the requirement."
+  },
+  "task": "match_requirement"
+}

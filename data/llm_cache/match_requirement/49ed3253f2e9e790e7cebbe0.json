@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.95,
+    "offering_type": "ETO",
+    "product_id": "CROWN-ARMV",
+    "rationale": "The requirement specifies a protective epoxy powder finish for steel surfaces of equipment, which aligns with the 'Arc-resistant metal-clad MV switchgear' product (CROWN-ARMV) as it involves metal-clad switchgear construction. This product is suitable for the specification context of metal-clad switchgear."
+  },
+  "task": "match_requirement"
+}

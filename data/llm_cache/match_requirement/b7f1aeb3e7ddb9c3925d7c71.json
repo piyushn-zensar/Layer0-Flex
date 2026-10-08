@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.95,
+    "offering_type": "ETO",
+    "product_id": "CROWN-ARMV",
+    "rationale": "The requirement specifies connections to voltage transformers in metal-clad switchgear, which aligns with the description of the CROWN-ARMV product as arc-resistant metal-clad medium-voltage switchgear suitable for 15kV applications. This product meets the technical specification provided in the requirement."
+  },
+  "task": "match_requirement"
+}

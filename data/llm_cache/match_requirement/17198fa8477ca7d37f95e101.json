@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 1.0,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to commercial practices related to payments to certified minority- and women-owned business enterprises, which is not a product requirement. Therefore, no business unit or product is applicable."
+  },
+  "task": "match_requirement"
+}

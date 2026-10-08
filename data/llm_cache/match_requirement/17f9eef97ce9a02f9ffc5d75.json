@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.9,
+    "offering_type": "ETO",
+    "product_id": "CROWN-ARMV",
+    "rationale": "The requirement pertains to the operation of a smoke alarm within the context of the Syracuse Airport Specification for Metal Clad Switchgear. The candidate product 'CROWN-ARMV' is an arc-resistant metal-clad MV switchgear, which aligns with the specification header and the technical nature of the requirement."
+  },
+  "task": "match_requirement"
+}

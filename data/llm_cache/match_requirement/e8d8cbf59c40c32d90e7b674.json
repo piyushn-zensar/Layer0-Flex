@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 0.9,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to submission and review of accessories, which is a commercial or procedural aspect rather than a product-specific requirement. Therefore, no product mapping is applicable."
+  },
+  "task": "match_requirement"
+}

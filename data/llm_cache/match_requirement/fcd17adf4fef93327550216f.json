@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.9,
+    "offering_type": "ETO",
+    "product_id": "CROWN-ARMV",
+    "rationale": "The requirement specifies an interlock switch with a breaker for medium-voltage applications, which aligns with the features of the CROWN-ARMV product offering, as it includes medium-voltage switchgear with vacuum circuit breakers and interlocking capabilities."
+  },
+  "task": "match_requirement"
+}

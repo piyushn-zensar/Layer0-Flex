@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 1.0,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to submission instructions for contractors and does not specify a product or service from SpinCo. Therefore, it is classified as NONE."
+  },
+  "task": "match_requirement"
+}

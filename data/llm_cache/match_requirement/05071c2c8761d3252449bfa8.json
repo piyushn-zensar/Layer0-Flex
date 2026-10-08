@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 0.95,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to compliance and legal obligations during the contract term, which does not directly relate to any product offering. Therefore, no product mapping is applicable."
+  },
+  "task": "match_requirement"
+}

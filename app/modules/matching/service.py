@@ -14,6 +14,7 @@ from sqlalchemy.orm import Session
 
 from app.core import audit
 from app.modules.catalog import service as catalog
+from app.modules.ingestion import service as ingestion
 from app.modules.matching import agent
 from app.modules.matching.models import Match
 from app.modules.requirements import service as requirements
@@ -37,20 +38,39 @@ def match(db: Session, opp_id: str, actor: str) -> dict:
     decided = {req_id for req_id, m in _latest(db, opp_id).items() if m.status != "proposed"}
     reqs = [r for r in requirements.current(db, opp_id) if r.status == "approved" and r.req_id not in decided]
     method_count = defaultdict(int)
+    layouts = {}
     for req in reqs:
         hits = catalog.search(req.quote, k=5)
+        header = _header(req, layouts)
+        # lines like "Apply an epoxy finish" name no equipment: add the products the page header points to
+        seen = {h["id"] for h in hits}
+        candidates = hits + [h for h in catalog.search(header, k=10) if h["kind"] == "product" and h["id"] not in seen][:2]
         try:
-            out, method = agent.propose({"req_id": req.req_id, "category": req.category, "quote": req.quote}, hits), "agent"
+            proposal = agent.propose({"req_id": req.req_id, "category": req.category, "quote": req.quote,
+                                      "header": header}, candidates)
+            out, method = agent.checked(proposal, candidates), "agent"
+            if out is None:  # the model named something that is not a candidate product
+                out, method = _retrieval_only(req, hits), "retrieval_only"
+                out["rationale"] = f"Model answer {proposal['product_id']!r} is not a candidate product. {out['rationale']}"
         except agent.LLMUnavailable:
             out, method = _retrieval_only(req, hits), "retrieval_only"
         m = Match(opportunity_id=opp_id, req_id=req.req_id, bu=out["bu"] or None, product_id=out["product_id"] or None,
                   offering_type=out["offering_type"], confidence=out["confidence"], rationale=out["rationale"],
-                  evidence=hits, method=method)
+                  evidence=candidates, method=method)
         db.add(m)
         method_count[method] += 1
         audit.record(db, actor, "proposed", "match", req.req_id, opp_id, bu=m.bu, product=m.product_id, method=method)
     db.commit()
     return {"matched": len(reqs), "kept": len(decided), **method_count}
+
+
+def _header(req, layouts: dict) -> str:
+    """Header block of the requirement's source page, from the frozen layout ("" when unanchored)."""
+    if req.page is None:
+        return ""
+    if req.document_id not in layouts:
+        layouts[req.document_id] = ingestion.layout(req.document_id)["pages"]
+    return agent.page_header(layouts[req.document_id][req.page - 1])
 
 
 def _latest(db: Session, opp_id: str) -> dict[str, Match]:
@@ -87,3 +107,41 @@ def suggested_units(db: Session, opp_id: str) -> dict[str, list[str]]:
         if m.bu:
             units[m.bu].append(req_id)
     return dict(units)
+
+
+if __name__ == "__main__":  # freeze the matcher's answers for an RFP (task A-03); commit data/llm_cache/match_requirement/
+    # LLM_PROVIDER=azure .venv/Scripts/python -m app.modules.matching.service data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf
+    # Runs the real services on a throwaway database: cached reader answers -> approve all -> freeze -> match.
+    # The opportunity is OPP-0001, so requirement IDs (part of the matcher prompt) match the demo's.
+    import sys
+    import tempfile
+    from collections import Counter
+    from pathlib import Path
+
+    from sqlalchemy import create_engine
+
+    from app.core import config
+    from app.core.db import Base
+    from app.main import app  # noqa: F401  (registers every module's tables)
+    from app.modules.opportunities import service as opportunities
+
+    who = "matcher freeze"
+    engine = create_engine(f"sqlite:///{Path(tempfile.mkdtemp(), 'freeze.db').as_posix()}")
+    Base.metadata.create_all(engine)
+    for arg in sys.argv[1:]:
+        pdf = Path(arg)
+        with Session(engine) as db:
+            opp = opportunities.create(db, pdf.stem, "", "", who)
+            doc = opportunities.add_document(db, opp.id, pdf.name, pdf.read_bytes(), "main", who)
+            ingestion.ingest(db, doc.id)
+            print(f"{arg}: provider={config.LLM_PROVIDER} model={config.LLM_MODEL}", flush=True)
+            print("reader:", requirements.extract(db, opp.id, who), flush=True)
+            for r in requirements.current(db, opp.id):
+                requirements.review(db, r.req_id, "approve", who)
+            requirements.freeze(db, opp.id, who)
+            print("matcher:", match(db, opp.id, "matching agent"))
+            ms = for_opportunity(db, opp.id).values()
+            print("by unit:", Counter(m.bu or "BID" for m in ms))
+            print("by offering type:", Counter(m.offering_type for m in ms))
+            print("by product:", Counter(m.product_id for m in ms if m.product_id).most_common())
+            print("by method:", Counter(m.method for m in ms))

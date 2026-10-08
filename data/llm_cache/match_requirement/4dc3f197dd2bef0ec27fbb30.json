@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.95,
+    "offering_type": "CTO",
+    "product_id": "CROWN-ACC",
+    "rationale": "The requirement specifies the need for NEMA four-hole pads and insulating boots for cable connections, which aligns with the description of the 'CROWN-ACC' product offering accessories for MV switchgear, including NEMA terminal pads and insulating boots."
+  },
+  "task": "match_requirement"
+}

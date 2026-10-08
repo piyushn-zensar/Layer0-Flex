@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 0.9,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to compliance with legal and auditing standards, which is not directly related to the technical specifications or offerings of the listed products. Therefore, no product mapping is applicable."
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.95,
+    "offering_type": "ETO",
+    "product_id": "CROWN-ARMV",
+    "rationale": "The requirement specifies a Metal Clad Switchgear for 13.2 kV feeders, which aligns with the product 'CROWN-ARMV' described as arc-resistant metal-clad MV switchgear suitable for medium-voltage applications (5 to 38 kV class). This product meets the technical specifications and is offered as engineered-to-order (ETO), fitting the requirement's context."
+  },
+  "task": "match_requirement"
+}

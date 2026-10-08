@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 0.9,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement specifies construction-related tasks (blocking, furring, and shimming) which are not directly related to any product offering. Therefore, this requirement is classified as NONE."
+  },
+  "task": "match_requirement"
+}

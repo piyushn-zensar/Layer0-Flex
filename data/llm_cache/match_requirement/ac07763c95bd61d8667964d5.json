@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 0.9,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to coordination of door hardware, trim, and finishes, which does not align with the technical specifications of the provided product candidates. Therefore, no product is applicable."
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 0.9,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to compliance and certification regarding the Prohibited Entities List, which is a legal and commercial aspect of the bid submission process. It does not specify a product or technical requirement, so no mapping to a business unit or product is applicable."
+  },
+  "task": "match_requirement"
+}

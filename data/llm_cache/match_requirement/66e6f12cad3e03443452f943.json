@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "",
+    "confidence": 1.0,
+    "offering_type": "NONE",
+    "product_id": "",
+    "rationale": "The requirement pertains to commercial aspects (spare parts recommendation) and does not specify a product requirement. Therefore, no mapping to a business unit or product is applicable."
+  },
+  "task": "match_requirement"
+}

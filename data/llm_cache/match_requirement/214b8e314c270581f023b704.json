@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.95,
+    "offering_type": "ETO",
+    "product_id": "CROWN-ARMV",
+    "rationale": "The requirement specifies nameplates for internal and front panel mounted devices in metal-clad switchgear. The candidate 'CROWN-ARMV' describes arc-resistant metal-clad medium-voltage switchgear, which aligns with the specification header and requirement context. This product is suitable for the described application."
+  },
+  "task": "match_requirement"
+}

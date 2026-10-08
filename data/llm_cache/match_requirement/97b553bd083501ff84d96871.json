@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.9,
+    "offering_type": "CTO",
+    "product_id": "CROWN-ACC",
+    "rationale": "The requirement specifies special tools necessary for installation, testing, and maintenance of metal-clad switchgear. The candidate 'CROWN-ACC' offers accessories for MV switchgear, including installation and test hardware, which aligns with the requirement."
+  },
+  "task": "match_requirement"
+}

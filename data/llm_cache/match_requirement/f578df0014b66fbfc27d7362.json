@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.95,
+    "offering_type": "ETO",
+    "product_id": "CROWN-ARMV",
+    "rationale": "The requirement pertains to the installation of metal-clad switchgear, as indicated by the page header. The candidate 'CROWN-ARMV' describes arc-resistant metal-clad MV switchgear, which aligns with the specification. Therefore, this product is selected as it matches the requirement contextually and technically."
+  },
+  "task": "match_requirement"
+}

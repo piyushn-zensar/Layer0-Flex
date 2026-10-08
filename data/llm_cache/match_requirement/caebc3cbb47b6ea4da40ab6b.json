@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.95,
+    "offering_type": "ETO",
+    "product_id": "CROWN-ARMV",
+    "rationale": "The requirement specifies furnishing bus sections with tie breakers for metal-clad switchgear. The candidate product 'CROWN-ARMV' from the CROWN business unit is an arc-resistant metal-clad medium-voltage switchgear lineup that includes bus sections and tie breakers, meeting the technical specification provided."
+  },
+  "task": "match_requirement"
+}
