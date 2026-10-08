@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 19,
+        "quote": "The Contractor agrees to complete and submit these forms without change in response to goals specified in the Request for Proposal (RFP) or contract.",
+        "section": "C",
+        "text": "Submit required forms as specified in the RFP or contract."
+      },
+      {
+        "category": "compliance",
+        "page": 19,
+        "quote": "Failure to comply with all of the requirements herein may result in a finding of non-responsiveness, non-responsibility and/or breach of contract, leading to the withholding of funds or such other actions, liquidated damages pursuant to Section VII of the Appendix or enforcement proceedings allowed by the Contract.",
+        "section": "D",
+        "text": "Non-compliance may result in penalties, including withholding of funds or contract breach."
+      },
+      {
+        "category": "compliance",
+        "page": 19,
+        "quote": "For purposes of this procurement, the SRAA hereby establishes an overall goal of thirty percent (30%) for Minority and Women-Owned Business Enterprises (MWBE) participation. Additionally, an overall goal of ten to twenty percent (10-20%) is established for Equal Employment Opportunity (EEO) participation.",
+        "section": "II.A",
+        "text": "Meet 30% MWBE and 10-20% EEO participation goals."
+      },
+      {
+        "category": "compliance",
+        "page": 19,
+        "quote": "Where MWBE goals have been established herein, pursuant to 5 NYCRR § 142.8, Contractor must document “good faith efforts” to provide meaningful participation by MWBEs as subcontractors and suppliers in the performance of the Contract.",
+        "section": "II.C",
+        "text": "Document good faith efforts to meet MWBE participation goals."
+      },
+      {
+        "category": "submission",
+        "page": 20,
+        "quote": "The Contractor shall submit an EEO policy statement to the SRAA within seventy two (72) hours after the date of the notice by SRAA to award the contract to the Contractor.",
+        "section": "III.B.2",
+        "text": "Submit EEO policy statement within 72 hours of contract award notice."
+      },
+      {
+        "category": "compliance",
+        "page": 20,
+        "quote": "The Contractor’s EEO policy statement shall include the following language: The Contractor will not discriminate against any employee or applicant for employment because of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status, predisposing genetic characteristics, victim of domestic violence status or marital status.",
+        "section": "III.B.4.a",
+        "text": "Include non-discrimination language in EEO policy statement."
+      },
+      {
+        "category": "compliance",
+        "page": 20,
+        "quote": "The Contractor shall state in all solicitations or advertisements for employees that, in the performance of the contract, all qualified applicants will be afforded equal employment opportunities without discrimination.",
+        "section": "III.B.4.b",
+        "text": "State non-discrimination in all employment solicitations or advertisements."
+      },
+      {
+        "category": "compliance",
+        "page": 20,
+        "quote": "The Contractor shall request each employment agency, labor union, or authorized representative of workers with which it has a collective bargaining or other agreement or understanding, to furnish a written statement that such employment agency, labor union, or representative will not discriminate.",
+        "section": "III.B.4.c",
+        "text": "Request non-discrimination statements from employment agencies or unions."
+      },
+      {
+        "category": "compliance",
+        "page": 20,
+        "quote": "The Contractor will include the provisions of Subdivisions (a) through (c) of this Subsection 4 which provides for relevant provisions of the Human Rights Law, in every subcontract.",
+        "section": "III.B.4.d",
+        "text": "Include non-discrimination provisions in all subcontracts."
+      },
+      {
+        "category": "submission",
+        "page": 20,
+        "quote": "To ensure compliance with this section, the Contractor shall submit a staffing plan to document the composition of the proposed workforce to be utilized in the performance of the Contract.",
+        "section": "III.C",
+        "text": "Submit a staffing plan documenting workforce composition."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

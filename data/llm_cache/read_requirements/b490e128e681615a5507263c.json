@@ -1,0 +1,36 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 37,
+        "quote": "This form is to be submitted with bid attached to the Subcontractor's Information Form in a sealed envelope for each certified Minority or Women-Owned Business enterprise the Bidder/Awardee/Contractor proposes to utilize as subcontractors, service providers or suppliers.",
+        "section": "INSTRUCTIONS FOR M/WBE SUBCONTRACTORS AND SUPPLIERS' LETTER",
+        "text": "Submit the form with the bid in a sealed envelope for each certified M/WBE subcontractor."
+      },
+      {
+        "category": "compliance",
+        "page": 40,
+        "quote": "By submitting this form and the required information, the offeror/contractor certifies that every Good Faith Effort has been taken to promote M/WBE participation pursuant to the M/WBE requirements set forth under the contract.",
+        "section": "MWBE SUBCONTRACTOR REQUEST FOR WAIVER FORM",
+        "text": "Certify that good faith efforts were made to promote M/WBE participation."
+      },
+      {
+        "category": "submission",
+        "page": 41,
+        "quote": "Copies of the following information and all relevant supporting documentation must be submitted along with the request:",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "Submit all required documentation with the waiver request."
+      },
+      {
+        "category": "schedule",
+        "page": 42,
+        "quote": "Quarterly reports should be submitted to your contract manager.",
+        "section": "Contractor Quarterly Compliance Report",
+        "text": "Submit quarterly compliance reports to the contract manager."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

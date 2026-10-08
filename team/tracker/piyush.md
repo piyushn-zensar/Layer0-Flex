@@ -10,7 +10,7 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | P-12 | Finish the Next.js switch: `npm run build` clean, all pages checked against the API | S0 | Fri 9 Oct AM | done | build clean; all 12 pages + API via proxy 200; fixed per-opportunity document IDs; check trace screen in a browser |
 | P-02 | OCR for pages with no text layer (Tesseract TSV via `subprocess`, `config.TESSERACT_CMD`, optional when missing); page 83 test; re-freeze layout | S1 | Fri 9 Oct | done | whole-page OCR (Tesseract TSV, optional when missing); p.83 now 106 lines; layout re-frozen, byte-identical on re-run |
 | P-03 | Contents-page and header/footer detection; exclude from the reader's input | S1 | Fri 9 Oct | done | furniture (repeated band lines) + contents pages marked; reader skips them; Syracuse: p.54 contents, 346 furniture lines, no known requirement hidden |
-| P-04 | Run reader agent on the full Syracuse PDF (`LLM_PROVIDER=azure`, GPT-4o), tune prompt/chunking, commit `data/llm_cache/read_requirements/` | S1 | Fri 9 Oct | todo | Azure connection verified 8 Oct |
+| P-04 | Run reader agent on the full Syracuse PDF (`LLM_PROVIDER=azure`, GPT-4o), tune prompt/chunking, commit `data/llm_cache/read_requirements/` | S1 | Fri 9 Oct | done | 174 requirements from GPT-4o, 168 anchored (96.6%); 6 unanchored are real rewordings; 17 answers cached; `scripts/freeze_reader.py` |
 | P-05 | Golden requirement list for Syracuse (`rfp-golden` agent) + recall/precision check script | S1 | Sat 10 Oct | todo | |
 | P-06 | Review actions: inline edit, split, merge, add a missed requirement (by quote) | S2 | Sat 10 Oct | todo | |
 | P-07 | Ruled tables via pdfplumber in the layout model; re-freeze layout | S2 | Sun 11 Oct | todo | |
@@ -30,3 +30,4 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 |---|---|---|
 | 8 Oct 2026 | P-01 pushed; P-12 build verified + per-opportunity document IDs; P-02 OCR; P-03 contents/furniture; layout re-frozen; config accepts the team .env names | P-04 reader agent on Azure GPT-4o (needs the saved .env) |
 | 8 Oct 2026 | Azure GPT-4o live call OK (structured output, 4.8 s); reader strips copied L-labels from quotes; reviewed A-01 + J-02/J-03, all checks green; legend wording aligned to agreed offering definitions | P-04 reader agent on the full Syracuse RFP |
+| 8 Oct 2026 | P-04 done (reader agent on Azure, answers frozen; anchoring tolerates an added final full stop); navigation simplified (3 top-level destinations, 5-step workflow stepper, Traceability naming); UI layout pass (one container, spacing scale, calmer tables) | P-05 golden list; P-06 review actions |

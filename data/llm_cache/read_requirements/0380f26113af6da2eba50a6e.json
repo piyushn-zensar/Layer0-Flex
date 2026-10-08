@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 7,
+        "quote": "Any Proposer responding to this RFP must complete the Non-Collusive Proposal Certification attached hereto at Exhibit B and submit it to the Authority with its proposal.",
+        "section": "2.3",
+        "text": "Submit the Non-Collusive Proposal Certification with the proposal."
+      },
+      {
+        "category": "submission",
+        "page": 7,
+        "quote": "Any and all exceptions to this RFP must be clearly and completely indicated in proposals submitted.",
+        "section": "2.4",
+        "text": "Clearly indicate all exceptions to the RFP in the proposal."
+      },
+      {
+        "category": "commercial",
+        "page": 7,
+        "quote": "The proposers’ costs for the proposers entire submittal effort shall be borne by the proposer.",
+        "section": "2.5",
+        "text": "Proposers bear all costs for their proposal submission."
+      },
+      {
+        "category": "compliance",
+        "page": 7,
+        "quote": "The selected Proposer will be required to comply with and perform its services under the contract in accordance with any and all Whistleblower Policy and Procedures adopted by the Authority.",
+        "section": "2.6",
+        "text": "Comply with the Authority's Whistleblower Policy and Procedures."
+      },
+      {
+        "category": "compliance",
+        "page": 7,
+        "quote": "Proposers’ utilization of M/WBE’s and SDVOB’s is a factor in awarding projects and imposes obligations on a selected proposer to utilize M/WBE’s and SDVOB’s in performance of contracts with the Authority.",
+        "section": "2.7",
+        "text": "Utilize M/WBE and SDVOB businesses in contract performance."
+      },
+      {
+        "category": "compliance",
+        "page": 8,
+        "quote": "Each proposer shall, in accordance with the regulations, make good faith efforts and, in a manner that can be established in documentary form, solicit active participation by certified M/WBE’s and SDVOB’s in connection with any contract resulting from this RFP.",
+        "section": "2.7",
+        "text": "Make good faith efforts to involve certified M/WBE and SDVOB businesses."
+      },
+      {
+        "category": "submission",
+        "page": 8,
+        "quote": "Annexed hereto at Exhibits C and D respectively are various M/WBE-SDVOB forms and information which the Authority requires all proposers to complete and submit with each proposal.",
+        "section": "2.7",
+        "text": "Complete and submit M/WBE-SDVOB forms with the proposal."
+      },
+      {
+        "category": "compliance",
+        "page": 8,
+        "quote": "The services to be performed shall conform to and be subject to the provisions of the New York Public Authorities Law, Generally Accepted Auditing Standards, Generally Accepted Accounting Principles, and Standards promulgated by the NYS Comptroller and Authorities Budget Office and all other applicable laws and regulations of all Federal and State agencies having jurisdiction.",
+        "section": "2.8",
+        "text": "Perform services in compliance with applicable laws and standards."
+      },
+      {
+        "category": "compliance",
+        "page": 8,
+        "quote": "Valid licenses and registrations as required by the Authority and any State, and Federal agencies shall be obtained by the successful proposer prior to commencing work.",
+        "section": "2.8",
+        "text": "Obtain all required licenses and registrations before starting work."
+      },
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "The Authority reserves the right to reject any response to this RFP by any such proposer.",
+        "section": "2.8",
+        "text": "The Authority may reject proposals from proposers in default or arrears."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,113 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 74,
+        "quote": "CONSTRUCTION SHALL CONFORM TO THE “2020 BUILDING CODE OF NEW YORK STATE”, LATEST REVISION, AND ANY OTHER CODES GOVERNED BY THE JURISDICTION IN WHICH THE PROJECT IS BEING CONSTRUCTED.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Construction must comply with the 2020 Building Code of New York State and other applicable codes."
+      },
+      {
+        "category": "compliance",
+        "page": 74,
+        "quote": "CONSTRUCTION SHALL COMPLY WITH ALL LOCAL, STATE AND FEDERAL CODES AND REGULATIONS.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Construction must adhere to all local, state, and federal codes and regulations."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "ALL DRAWINGS ARE GRAPHIC REPRESENTATIONS OF APPROXIMATE LOCATIONS OF NEW MATERIALS. IT IS THE CONTRACTOR'S RESPONSIBILITY TO FIELD VERIFY ALL CONDITIONS PRIOR TO COMMENCEMENT OF WORK.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors must verify all conditions before starting work."
+      },
+      {
+        "category": "staffing",
+        "page": 74,
+        "quote": "CONTRACTORS ARE RESPONSIBLE FOR ALL MATERIALS, CONSTRUCTION METHODS AND CRAFTSMANSHIP.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors are responsible for materials, methods, and craftsmanship."
+      },
+      {
+        "category": "submission",
+        "page": 74,
+        "quote": "CONTRACTORS ARE TO VERIFY ALL EXISTING CONDITIONS, REQUIREMENTS, NOTES, CODES AND DIMENSIONS, PRIOR TO THE START OF CONSTRUCTION AND SHALL NOTIFY THE ARCHITECT IF CONDITIONS VARY FROM THOSE SHOWN ON THE DOCUMENTS.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors must verify conditions and notify the architect of discrepancies."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "CONTRACTORS ARE TO PROVIDE ADEQUATE SUPPORT OF FOUNDATION WALLS, LOAD BEARING WALLS AND PARTITIONS DURING CONSTRUCTION.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors must support foundation walls, load-bearing walls, and partitions during construction."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "THOROUGHLY COORDINATE WORK WITH OTHER TRADES AND DETERMINE THE EXACT ROUTE AND LOCATION OF UTILITIES, MATERIALS AND EQUIPMENT BEFORE FABRICATION AND INSTALLATION.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Coordinate work with other trades and determine routes and locations before fabrication."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "CONTRACTORS PROVIDE ALL BLOCKING, FURRING AND SHIMMING FOR INSTALLATION AND COMPLETION OF WORK.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors must provide blocking, furring, and shimming for installation."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "ALL NEW WORK SHALL BE PLUMB, LEVEL AND SQUARE.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "New work must be plumb, level, and square."
+      },
+      {
+        "category": "submission",
+        "page": 74,
+        "quote": "CONTRACTORS VERIFY ALL DIMENSIONS BEFORE ORDERING MATERIAL OR DOING WORK. NO EXTRA COMPENSATION OR CHARGES WILL BE ACCEPTED DUE TO DIFFERENCES BETWEEN THE ACTUAL MEASUREMENTS AND MEASUREMENTS INDICATED ON THE DRAWINGS.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Verify dimensions before ordering materials; no extra charges for discrepancies."
+      },
+      {
+        "category": "submission",
+        "page": 74,
+        "quote": "ALL DETAILS ARE SUBJECT TO CHANGE DUE TO EXISTING FIELD CONDITIONS. CONTRACTOR MUST NOTIFY ARCHITECT OF SAME.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Notify architect of changes due to field conditions."
+      },
+      {
+        "category": "legal",
+        "page": 74,
+        "quote": "THE CONTRACTOR SHALL ASSUME RESPONSIBILITY FOR CHANGES TO THESE DRAWINGS AND COMPLETION OF COMPLIANT WORK.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractor is responsible for changes and compliant work."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "ARCHITECT, OWNER, AND CONTRACTOR, TO COORDINATE ALL DOOR HARDWARE, TRIM AND FINISHES TO MEET INTENT AND COMPLIANCE.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Coordinate door hardware, trim, and finishes to meet compliance."
+      },
+      {
+        "category": "legal",
+        "page": 74,
+        "quote": "CONTRACTORS ARE RESPONSIBLE FOR OBTAINING AND PAYING FOR ALL PERMITS ASSOCIATED WITH THE WORK OF THEIR CONTRACT.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors must obtain and pay for all permits."
+      },
+      {
+        "category": "compliance",
+        "page": 74,
+        "quote": "INTERIOR FINISHES SHALL COMPLY WITH APPLICABLE LOCAL CODES AND REGULATIONS.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Interior finishes must comply with local codes."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}
