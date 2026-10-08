@@ -7,10 +7,53 @@ import type { Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 
 type Decision = { outcome: string; units: string[]; rationale: string; decided_by: string };
+type Layer = { n: number; name: string; in_scope: boolean; basis: string; terms: { term: string; count: number; req_ids: string[] }[] };
+type Checks = {
+  requirements_checked: number; scope: { in_scope: number[]; layers: Layer[] }; units_outside_scope: Record<string, string[]>;
+  tier_flags: { req_id: string; bu: string; product_id: string; kind: string; note: string }[];
+  rules: { id: string; rule: string; status: "pass" | "warn" | "fail" | "n/a"; note: string }[];
+  solver: { status: string; reasons: string[]; warnings: string[]; working: { step: string; expression: string; result: number; unit: string; reference: string }[] };
+};
 type Evidence = {
   requirements: number; frozen: boolean; by_category: Record<string, number>; unanchored: string[];
   suggested_units: Record<string, number>; offering_mix: Record<string, number>; unmatched: string[]; not_reviewed: number;
+  checks: Checks;
 };
+
+const STATUS_CLASS: Record<string, string> = { pass: "status-approved", warn: "status-proposed", fail: "status-rejected", "n/a": "" };
+
+// Engineering checks ported from v0.3.0 (task A-06): evidence for the bid manager, never a decision.
+function EngineeringChecks({ c, oppId }: { c: Checks; oppId: string }) {
+  const req = (id: string) => <a key={id} className="mono" href={`/opportunities/${oppId}/trace#${id}`}>{id}</a>;
+  const outside = Object.entries(c.units_outside_scope);
+  return (
+    <section className="card">
+      <h2>Engineering checks</h2>
+      <p className="muted">Over {c.requirements_checked} frozen requirements. Illustrative rules ported from the earlier code line; to be confirmed with SpinCo engineering.</p>
+      <h3>Scope: layers this RFP covers</h3>
+      <ul>{c.scope.layers.map((l) => (
+        <li key={l.n}><span className={`badge ${l.in_scope ? "status-approved" : ""}`}>{l.in_scope ? "in scope" : "not in scope"}</span>
+          {" "}{l.n}. {l.name} <span className="muted">({l.basis})</span>
+          {l.terms.length > 0 && <div className="muted">{l.terms.map((t) => <span key={t.term}>“{t.term}” ×{t.count} in {t.req_ids.map(req)}; </span>)}</div>}
+        </li>))}</ul>
+      {outside.length > 0 && <p className="warn">Suggested although nothing in the RFP points to their layers: {outside.map(([bu, ids]) => `${bu} (${ids.length})`).join(", ")}. Check these matches.</p>}
+      <h3>Rules</h3>
+      <table><tbody>{c.rules.map((r) => (
+        <tr key={r.id}><td className="mono">{r.id}</td><td><span className={`badge ${STATUS_CLASS[r.status]}`}>{r.status}</span></td>
+          <td>{r.note}<div className="muted">{r.rule}</div></td></tr>))}</tbody></table>
+      <h3>Offering type against each unit&apos;s default tier</h3>
+      {c.tier_flags.length === 0 ? <p className="muted">No flags.</p> : (
+        <details><summary>{c.tier_flags.length} item(s) need an engineer&apos;s confirmation</summary>
+          <ul>{c.tier_flags.map((f, i) => <li key={i}>{req(f.req_id)} {f.bu} · {f.product_id}: {f.note}</li>)}</ul></details>)}
+      <h3>Low-voltage solver</h3>
+      <p><span className={`badge ${c.solver.status === "NOT_SOLVABLE" ? "" : "status-approved"}`}>{c.solver.status}</span></p>
+      {c.solver.reasons.length > 0 && <ul>{c.solver.reasons.map((r) => <li key={r} className="muted">{r}</li>)}</ul>}
+      {c.solver.working.length > 0 && <table><tbody>{c.solver.working.map((w) => (
+        <tr key={w.step}><td>{w.step}</td><td className="mono">{w.expression} = {w.result} {w.unit}</td><td className="muted">{w.reference}</td></tr>))}</tbody></table>}
+      {c.solver.warnings.map((w) => <p key={w} className="warn">{w}</p>)}
+    </section>
+  );
+}
 type Data = { evidence: Evidence; units: Unit[]; participation: Decision | null; go_no_go: Decision | null };
 
 export default function DecisionsPage() {
@@ -47,6 +90,8 @@ export default function DecisionsPage() {
         {ev.not_reviewed > 0 && <p className="muted">Product matches nobody has accepted or changed yet: {ev.not_reviewed} (Traceability, pane 3)</p>}
         {!ev.frozen && <p className="warn">Requirements are not frozen yet: freeze them on the Requirements page before deciding go or no-go.</p>}
       </section>
+
+      {ev.frozen && <EngineeringChecks c={ev.checks} oppId={id} />}
 
       <section className="card">
         <h2>1. Which business units take part?</h2>

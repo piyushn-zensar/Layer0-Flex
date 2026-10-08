@@ -1,0 +1,222 @@
+{
+ "_note": "ILLUSTRATIVE, ported from reference/v0.3.0 (knowledge_base/spinco_layers.json and the scope keywords in agents/understand_agent.py), brands mapped to business-unit codes. Used as matching evidence only (task A-06): scope detection (M3), automation tiers (M4). Needs confirmation with SpinCo engineering.",
+ "tier_order": [
+  "CTO_AUTOMATE",
+  "ETO_GUIDED",
+  "ETO_EXCEPTION"
+ ],
+ "tier_offering_floor": {
+  "CTO_AUTOMATE": "CTO",
+  "ETO_GUIDED": "SEMI_CUSTOM",
+  "ETO_EXCEPTION": "ETO"
+ },
+ "scope": {
+  "min_hits": 3,
+  "min_distinct_terms": 2,
+  "decisive_terms": [
+   "metal clad switchgear",
+   "arc-resistant",
+   "arc resistant",
+   "vacuum circuit breaker",
+   "direct-to-chip",
+   "coolant distribution unit",
+   "grid-forming",
+   "uninterruptible power supply",
+   "modular power pod"
+  ]
+ },
+ "layers": [
+  {
+   "n": 1,
+   "name": "Grid Interface",
+   "units": [
+    "EPC"
+   ],
+   "keywords": [
+    "onsite energy generation",
+    "onsite generation",
+    "microgrid",
+    "battery energy storage",
+    "grid-forming",
+    "grid outage",
+    "utility interconnection",
+    "small modular reactor",
+    "grid interface",
+    "utility feeder",
+    "interconnect"
+   ]
+  },
+  {
+   "n": 2,
+   "name": "Utility / Facility Electrical",
+   "units": [
+    "CROWN",
+    "EP2",
+    "ANORD"
+   ],
+   "keywords": [
+    "switchgear",
+    "substation",
+    "protective relay",
+    "protection panel",
+    "circuit breaker position",
+    "vacuum circuit breaker",
+    "e-house",
+    "medium voltage",
+    "arc-resistant",
+    "arc resistant",
+    "metal clad switchgear"
+   ]
+  },
+  {
+   "n": 3,
+   "name": "Power Distribution (Room to Row to Rack)",
+   "units": [
+    "ANORD"
+   ],
+   "keywords": [
+    "busway",
+    "power distribution cabinet",
+    "power distribution unit",
+    "distribution infrastructure",
+    "power whip",
+    "rpp",
+    "modular power pod",
+    "prefabricated",
+    "modular systems"
+   ]
+  },
+  {
+   "n": 4,
+   "name": "Rack & Board Power",
+   "units": [
+    "FPM",
+    "EPC"
+   ],
+   "keywords": [
+    "uninterruptible power supply",
+    "rack-mounted pdu",
+    "rack mounted pdu",
+    "power shelf",
+    "dc-dc",
+    "rack power",
+    "equipment rack",
+    "rack-level",
+    "rack level",
+    "vpd",
+    "800vdc",
+    "48vdc"
+   ]
+  },
+  {
+   "n": 5,
+   "name": "Thermal Management",
+   "units": [
+    "JETCOOL"
+   ],
+   "keywords": [
+    "liquid cooling",
+    "liquid cooled",
+    "liquid-cooled",
+    "cdu",
+    "cold plate",
+    "direct-to-chip",
+    "coolant distribution unit",
+    "chiller",
+    "cooling capacity",
+    "rack cooling"
+   ]
+  },
+  {
+   "n": 6,
+   "name": "Compute + Integration",
+   "units": [
+    "CLOUD"
+   ],
+   "keywords": [
+    "compute tray",
+    "rack-scale integration",
+    "rack scale integration",
+    "gpu",
+    "ai inference",
+    "ai training"
+   ]
+  }
+ ],
+ "unit_tiers": {
+  "EPC": {
+   "tier": "ETO_EXCEPTION",
+   "rationale": "Novel grid-forming / 800VDC power conversion topology — high-complexity ETO, per EPC Power's own product profile."
+  },
+  "CROWN": {
+   "tier": "ETO_GUIDED",
+   "rationale": "Bespoke arc-resistant switchgear and E-Houses engineered per utility/site spec."
+  },
+  "EP2": {
+   "tier": "ETO_GUIDED",
+   "rationale": "Explicitly labeled 'Engineered-to-order' on Flex's own site; bespoke substation control and protection panels."
+  },
+  "ANORD": {
+   "tier": "CTO_AUTOMATE",
+   "rationale": "Standardized, modular switchgear and building blocks configured from parametric rules."
+  },
+  "FPM": {
+   "tier": "CTO_AUTOMATE",
+   "rationale": "Catalog board-level DC-DC converters and power shelves, standardized part numbers."
+  },
+  "JETCOOL": {
+   "tier": "CTO_AUTOMATE",
+   "rationale": "Productized cold plates and CDUs (SmartPlate, SmartSense) with configurable, catalog-driven options."
+  },
+  "CLOUD": {
+   "tier": "CTO_AUTOMATE",
+   "rationale": "Rack-scale integration of already-selected components — assembly, not bespoke design."
+  }
+ },
+ "component_overrides": [
+  {
+   "keyword": "standard enclosure",
+   "applies_to_layers": [
+    2
+   ],
+   "override_tier": "CTO_AUTOMATE",
+   "reason": "Standard enclosures are catalog items even within an otherwise bespoke EP2/Crown panel."
+  },
+  {
+   "keyword": "standard busbar",
+   "applies_to_layers": [
+    2,
+    3
+   ],
+   "override_tier": "CTO_AUTOMATE",
+   "reason": "Standard busbar fittings are catalog components regardless of the surrounding panel's engineering complexity."
+  },
+  {
+   "keyword": "standard breaker",
+   "applies_to_layers": [
+    2
+   ],
+   "override_tier": "CTO_AUTOMATE",
+   "reason": "Standard breaker families are catalog-selectable even inside a bespoke protection panel."
+  },
+  {
+   "keyword": "novel topology",
+   "applies_to_layers": [
+    1,
+    4
+   ],
+   "override_tier": "ETO_EXCEPTION",
+   "reason": "Explicit signal of a first-of-kind design reinforces exception routing even if a brand default were otherwise automated."
+  },
+  {
+   "keyword": "first-of-kind",
+   "applies_to_layers": [
+    1,
+    4,
+    5
+   ],
+   "override_tier": "ETO_EXCEPTION",
+   "reason": "Explicit novelty signal overrides any brand default toward mandatory specialist routing."
+  }
+ ]
+}

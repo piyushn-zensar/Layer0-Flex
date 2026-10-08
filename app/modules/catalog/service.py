@@ -9,6 +9,8 @@ Public contract:
     product(product_id) -> dict | None
     search(query, k=5, bu=None) -> list[dict]   ranked products and past responses, each with "score"
     bom(product_id) -> list[dict]               BOM lines from the BOM source system (stub: catalog JSON)
+    layers() -> dict                            grid-to-chip layers, scope keywords, unit tiers (spinco_layers.json)
+    engineering_rules() -> dict                 rules R-001..R-004 and generic NEC/IEC values (engineering_rules.json)
     people() -> list[str]                       actors for the PoC user picker
     unit_of(actor) -> str | None                business-unit code of a product manager / design engineer
 """
@@ -66,6 +68,14 @@ def bom(product_id: str) -> list[dict]:
     """ponytail: reads the catalog JSON; replace with the real BOM system connector (Needs confirmation which one)."""
     p = product(product_id)
     return p["bom"] if p else []
+
+
+def layers() -> dict:
+    return _load("spinco_layers")
+
+
+def engineering_rules() -> dict:
+    return _load("engineering_rules")
 
 
 def people() -> list[str]:

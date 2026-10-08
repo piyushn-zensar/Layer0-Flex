@@ -35,6 +35,7 @@ def evidence(db: Session, opp_id: str) -> dict:
         "offering_mix": dict(Counter(m.offering_type for m in matches.values())),
         "unmatched": [r.req_id for r in reqs if r.req_id not in matches],
         "not_reviewed": sum(m.status == "proposed" and bool(m.units) for m in matches.values()),  # product matches nobody accepted
+        "checks": matching.evidence_checks(db, opp_id),  # scope, tiers, engineering rules, LV solver (A-06)
     }
 
 

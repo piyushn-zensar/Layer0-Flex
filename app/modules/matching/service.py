@@ -10,6 +10,8 @@ Public contract:
         offering_type}] (empty = bid manager); unit taken from the product. LookupError: no such requirement in
         the opportunity; ValueError: unknown or inactive product, or bad offering type
     suggested_units(db, opp_id) -> dict[str, list[str]]   bu -> req_ids, every listed unit (input to participation)
+    evidence_checks(db, opp_id) -> dict   scope (M3), tier flags (M4), rules R-001..R-004 (M5), LV solver (M13) and
+        units suggested outside the scope, over the frozen approved requirements (see checks.py)
 """
 from collections import defaultdict
 
@@ -19,7 +21,7 @@ from sqlalchemy.orm import Session
 from app.core import audit
 from app.modules.catalog import service as catalog
 from app.modules.ingestion import service as ingestion
-from app.modules.matching import agent
+from app.modules.matching import agent, checks
 from app.modules.matching.models import OFFERING_TYPES, Match
 from app.modules.requirements import service as requirements
 
@@ -129,6 +131,25 @@ def suggested_units(db: Session, opp_id: str) -> dict[str, list[str]]:
         for bu in dict.fromkeys(u["bu"] for u in m.units):  # each unit once per requirement
             units[bu].append(req_id)
     return dict(units)
+
+
+def evidence_checks(db: Session, opp_id: str) -> dict:
+    reqs = [{"req_id": r.req_id, "quote": r.quote} for r in requirements.current(db, opp_id)
+            if r.status == "approved" and r.baseline is not None]
+    ids = {r["req_id"] for r in reqs}
+    matched = {req_id: m.units for req_id, m in for_opportunity(db, opp_id).items() if req_id in ids and m.units}
+    kb, eng = catalog.layers(), catalog.engineering_rules()
+    scope, facts = checks.scope(reqs, kb), checks.facts(reqs)
+    unit_layers = {u: {l["n"] for l in kb["layers"] if u in l["units"]} for u in kb["unit_tiers"]}
+    outside = defaultdict(list)  # a unit suggested although nothing in the RFP points to its layers
+    for req_id, units in matched.items():
+        for bu in {u["bu"] for u in units}:
+            if not unit_layers.get(bu, set()) & set(scope["in_scope"]):
+                outside[bu].append(req_id)
+    return {"requirements_checked": len(reqs), "scope": scope, "facts": facts,
+            "units_outside_scope": dict(outside), "tier_flags": checks.tier_flags(reqs, matched, kb),
+            "rules": checks.rules(facts, scope["in_scope"], matched, kb, eng),
+            "solver": checks.solve(facts, scope["in_scope"], eng)}
 
 
 if __name__ == "__main__":  # freeze the matcher's answers for an RFP (task A-03); commit data/llm_cache/match_requirement/
