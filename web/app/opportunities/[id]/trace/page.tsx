@@ -44,7 +44,7 @@ export default function TracePage() {
       <div className="toolbar">
         <span>Units: {Object.entries(data.progress).map(([bu, p]) => <span key={bu} className="tag">{bu} {p.validated}/{p.total} validated</span>)}
           {Object.keys(data.progress).length === 0 && <span className="muted">not dispatched</span>}</span>
-        <button className="secondary" onClick={() => post(`/api/opportunities/${id}/match`).then(reload, alert)}>Run matching agent</button>
+        <button className="secondary" onClick={() => post(`/api/opportunities/${id}/match`).then(reload, alert)}>Match products</button>
       </div>
       <div className="trace-legend" aria-label="Offering type legend">
         <span className="tag CTO"><strong>CTO</strong> Configure to Order</span>
@@ -106,7 +106,7 @@ export default function TracePage() {
                       <div className="trace-unit">{unit?.name ?? m.bu}</div>
                       <div className="trace-product">{product?.name ?? m.product_id} <span className={`tag ${m.offering_type}`}>{m.offering_type}</span></div>
                       <div className="muted trace-rationale">{m.rationale}</div>
-                      {bom.length > 0 && <details className="trace-bom"><summary>BOM ({bom.length} lines, from BOM system)</summary>
+                      {bom.length > 0 && <details className="trace-bom"><summary>Bill of materials ({bom.length} lines)</summary>
                         <ul>{bom.map((b) => <li key={b.item}>{b.item} — {b.qty}</li>)}</ul></details>}
                     </>) : <span className="muted">{m ? "Bid manager (not a product item)" : "not matched yet"}</span>}
                   </td>

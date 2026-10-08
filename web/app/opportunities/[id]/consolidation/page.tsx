@@ -16,7 +16,7 @@ export default function ConsolidationPage() {
     <>
       <h1>Consolidation</h1>
       <p><strong>{cov.answered} / {cov.total}</strong> requirements answered.{" "}
-        {cov.blocking.length ? <span className="warn">{cov.blocking.length} block completion.</span> : <span className="ok">Every requirement is answered.</span>}{" "}
+        {cov.blocking.length ? <span className="warn">{cov.blocking.length} still need an answer.</span> : <span className="ok">Every requirement is answered.</span>}{" "}
         <a className="button" href={`/api/opportunities/${id}/compliance-matrix.csv`}>Download compliance matrix (CSV)</a></p>
       <table>
         <thead><tr><th>ID</th><th>Requirement</th><th>Units and responses</th><th>State</th></tr></thead>
