@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { post, useApi } from "@/lib/api";
 import type { Doc, Opportunity } from "@/lib/types";
+import PageHead from "@/components/shell/PageHead";
 
 export default function DocumentsPage() {
   const { id } = useParams<{ id: string }>();
@@ -25,8 +26,8 @@ export default function DocumentsPage() {
 
   return (
     <>
-      <h1>Documents</h1>
-      <p className="muted">{data?.opportunity.customer || "—"} · {data?.opportunity.customer_type || "customer type not set"}</p>
+      <PageHead level={2} title="RFP documents"
+        help={`${data?.opportunity.customer || "Customer not set"} · ${data?.opportunity.customer_type || "customer type not set"}. Upload the RFP, then let the reader agent break it into requirements.`} />
       <table>
         <thead><tr><th>File</th><th>Role</th><th>Pages</th><th>Status</th><th>SHA-256</th></tr></thead>
         <tbody>

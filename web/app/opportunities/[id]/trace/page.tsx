@@ -1,10 +1,11 @@
 "use client";
-// Three linked screens: (1) RFP page with highlights, (2) requirement line items, (3) product mapping + responses.
+// Traceability: three linked panes: (1) RFP page with highlights, (2) requirement line items, (3) product mapping + responses.
 // Selecting a requirement in any pane selects it in all three and opens its source page.  Owner: Janvia.
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { post, useApi } from "@/lib/api";
 import type { Trace } from "@/lib/types";
+import PageHead from "@/components/shell/PageHead";
 
 // Assignment status -> safe CSS class suffix (displayed text stays as-is).
 const statusClass = (s: string | null | undefined) =>
@@ -42,10 +43,13 @@ export default function TracePage() {
 
   return (
     <>
-      <div className="toolbar">
-        <span>Units: {Object.entries(data.progress).map(([bu, p]) => <span key={bu} className="tag">{bu} {p.validated}/{p.total} validated</span>)}
-          {Object.keys(data.progress).length === 0 && <span className="muted">not dispatched</span>}</span>
+      <PageHead level={2} title="Traceability"
+        help="Original RFP, requirement breakdown and product mapping side by side. Select a requirement in any pane to follow it across all three.">
         <button className="secondary" onClick={() => post(`/api/opportunities/${id}/match`).then(reload, alert)}>Match products</button>
+      </PageHead>
+      <div className="toolbar">
+        <span className="muted">Unit responses: {Object.entries(data.progress).map(([bu, p]) => <span key={bu} className="tag">{bu} {p.validated}/{p.total} validated</span>)}
+          {Object.keys(data.progress).length === 0 && "not sent to units yet"}</span>
       </div>
       <div className="trace-legend" aria-label="Offering type legend">
         <span className="tag CTO"><strong>CTO</strong> Configure-to-order: catalog product with options (CPQ)</span>

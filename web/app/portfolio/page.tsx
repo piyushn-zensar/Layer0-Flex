@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useApi } from "@/lib/api";
 import type { Opportunity, Progress } from "@/lib/types";
+import PageHead from "@/components/shell/PageHead";
 
 type Item = { opp: Opportunity; requirements: number; progress: Progress };
 
@@ -10,7 +11,7 @@ export default function PortfolioPage() {
   const { data, error } = useApi<Item[]>("/api/portfolio");
   return (
     <div className="content">
-      <h1>Opportunities</h1>
+      <PageHead title="Opportunities" help="Every RFP in progress, with how far each business unit has answered." />
       {error && <p className="warn">{error}</p>}
       <table>
         <thead><tr><th>ID</th><th>Title</th><th>Customer</th><th>Status</th><th>Requirements</th><th>Unit responses (validated / total)</th><th /></tr></thead>

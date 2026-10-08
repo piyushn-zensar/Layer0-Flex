@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useApi } from "@/lib/api";
 import type { Assignment, Requirement } from "@/lib/types";
+import PageHead from "@/components/shell/PageHead";
 
 type Row = { requirement: Requirement; assignments: Assignment[]; state: string };
 type Coverage = { rows: Row[]; total: number; answered: number; blocking: string[] };
@@ -14,7 +15,7 @@ export default function ConsolidationPage() {
   if (!cov) return <p>Loading…</p>;
   return (
     <>
-      <h1>Consolidation</h1>
+      <PageHead level={2} title="Final response" help="Every requirement must be answered by its business unit and validated before the response is complete." />
       <p><strong>{cov.answered} / {cov.total}</strong> requirements answered.{" "}
         {cov.blocking.length ? <span className="warn">{cov.blocking.length} still need an answer.</span> : <span className="ok">Every requirement is answered.</span>}{" "}
         <a className="button" href={`/api/opportunities/${id}/compliance-matrix.csv`}>Download compliance matrix (CSV)</a></p>

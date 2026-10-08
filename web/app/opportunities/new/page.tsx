@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { post } from "@/lib/api";
 import type { Opportunity } from "@/lib/types";
+import PageHead from "@/components/shell/PageHead";
 
 const CUSTOMER_TYPES = ["utility", "hyperscaler", "neocloud", "colocation", "silicon provider", "public sector"];
 
@@ -14,7 +15,7 @@ export default function NewOpportunityPage() {
   }
   return (
     <div className="content">
-      <h1>New opportunity</h1>
+      <PageHead title="New opportunity" help="One opportunity per RFP. Upload the RFP on the next page." />
       <form className="card form" action={create}>
         <label>Title <input name="title" required placeholder="e.g. Syracuse switchgear procurement" /></label>
         <label>Customer <input name="customer" /></label>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useApi } from "@/lib/api";
 import type { Product, Unit } from "@/lib/types";
+import PageHead from "@/components/shell/PageHead";
 
 type Hit = { kind: string; id: string; bu: string; score: number; text: string };
 type Data = { units: Unit[]; products: Product[]; results: Hit[] };
@@ -12,8 +13,7 @@ export default function CatalogPage() {
   const { data } = useApi<Data>(`/api/catalog?q=${encodeURIComponent(q)}`);
   return (
     <div className="content">
-      <h1>Business units and products</h1>
-      <p className="muted">Illustrative seed data from <span className="mono">data/knowledge_base/</span>. Needs confirmation with each unit.</p>
+      <PageHead title="Product catalog" help="Business units, their products and past responses used for matching. Illustrative seed data, to be confirmed with each unit." />
       <form className="inline" action={(f) => setQ(String(f.get("q") ?? ""))}>
         <input name="q" defaultValue={q} placeholder="Search the knowledge base" /><button>Search</button>
       </form>

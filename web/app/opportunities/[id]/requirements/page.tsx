@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import { post, useApi } from "@/lib/api";
 import type { Baseline, Requirement } from "@/lib/types";
+import PageHead from "@/components/shell/PageHead";
 
 export default function RequirementsPage() {
   const { id } = useParams<{ id: string }>();
@@ -13,8 +14,8 @@ export default function RequirementsPage() {
 
   return (
     <>
-      <h1>Requirement review</h1>
-      <p className="muted">{b ? `Baseline ${b.number} frozen by ${b.frozen_by} (${b.count} items). Later changes run as a delta.`
+      <PageHead level={2} title="Requirements" />
+      <p className="page-help">{b ? `Baseline ${b.number} frozen by ${b.frozen_by} (${b.count} items). Later changes run as a delta.`
         : "Draft. Approve or reject each line item against its source, then freeze."}</p>
       <table>
         <thead><tr><th>ID</th><th>Source</th><th>Category</th><th>Requirement</th><th>Status</th><th /></tr></thead>

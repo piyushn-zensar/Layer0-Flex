@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import { post, useApi } from "@/lib/api";
 import type { Unit } from "@/lib/types";
+import PageHead from "@/components/shell/PageHead";
 
 type Decision = { outcome: string; units: string[]; rationale: string; decided_by: string };
 type Evidence = {
@@ -25,7 +26,7 @@ export default function DecisionsPage() {
 
   return (
     <>
-      <h1>Participation and go/no-go</h1>
+      <PageHead level={2} title="Bid decision" help="Review the evidence, choose the participating business units, decide go or no-go, then send each unit its work." />
       <section className="card">
         <h2>Evidence</h2>
         <p>{ev.requirements} requirements · {Object.entries(ev.by_category).map(([k, v]) => `${k} ${v}`).join(", ")}</p>

@@ -16,7 +16,7 @@ From the repo root (Git Bash paths; in PowerShell use `.venv\Scripts\python`):
    needed after any model/table change).
 5. API: `.venv/Scripts/python -m uvicorn app.main:app --reload` → http://127.0.0.1:8000/docs
    Web (second terminal): `cd web && npm install && npm run dev` → http://localhost:3000
-   - Three screens: http://localhost:3000/opportunities/OPP-0001/trace
+   - Traceability (the three screens): http://localhost:3000/opportunities/OPP-0001/trace
    - Switch the acting user (bid manager, unit product manager or design engineer) in the header.
 6. Tests: `.venv/Scripts/python -m pytest -q`.
 

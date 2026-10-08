@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { post, useApi } from "@/lib/api";
 import type { Assignment, Requirement, Unit } from "@/lib/types";
+import PageHead from "@/components/shell/PageHead";
 
 type Item = Assignment & { requirement: Requirement };
 type Data = { bu: string; unit: Unit | null; compliance: string[]; items: Item[] };
@@ -19,8 +20,8 @@ export default function InboxPage() {
 
   return (
     <div className="content">
-      <h1>Work package: {data.unit?.name ?? "Bid desk (bid manager)"}</h1>
-      <p className="muted">Each line is a requirement assigned to this unit. Mark it met, partly met, not met or an exception,
+      <PageHead title={`My work: ${data.unit?.name ?? "Bid desk (bid manager)"}`} />
+      <p className="page-help">Each line is a requirement assigned to this unit. Mark it met, partly met, not met or an exception,
         say what meets it, then submit. The bid manager validates.</p>
       <table>
         <thead><tr><th>Opportunity</th><th>Requirement</th><th>Response</th><th>Status</th></tr></thead>

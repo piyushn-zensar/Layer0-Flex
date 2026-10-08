@@ -297,11 +297,13 @@ Addenda, Q&A answers, change requests and execution-stage changes all use one pa
 | View | Level | Shows |
 |---|---|---|
 | **Portfolio** | All opportunities | Every opportunity, its status, requirement count and each unit's validated/total responses |
-| **Three screens** | One opportunity | (1) the RFP page with every requirement's source lines highlighted; (2) the requirement line items with ID, source and quote; (3) unit, product, offering type, rationale, BOM lines and unit responses. Selecting a requirement in any pane selects it in all three and opens its page |
+| **Traceability** (the three screens) | One opportunity | (1) the RFP page with every requirement's source lines highlighted; (2) the requirement line items with ID, source and quote; (3) unit, product, offering type, rationale, BOM lines and unit responses. Selecting a requirement in any pane selects it in all three and opens its page |
 | **Requirement review** | One opportunity | Line items with quote and source; approve, edit, reject; freeze |
 | **Decisions** | One opportunity | Evidence pack, participation, go/no-go, dispatch |
 | **Unit inbox** | One business unit | Its assignments across all opportunities, with the checklist response form and validation |
 | **Consolidation** | One opportunity | Coverage, blocking items, compliance matrix download |
+
+Navigation: the top bar has three destinations (Opportunities, My work, Product catalog) and a New opportunity button. Inside an opportunity, a stepper follows the workflow order: RFP, Requirements, Traceability, Bid decision, Final response; a step is ticked once the opportunity has moved past it. Change handling is shown as a separate, planned link.
 
 The acting user is chosen from a list in the header (bid manager, or a unit's product manager or design engineer). Real sign-in is added before a pilot.
 
