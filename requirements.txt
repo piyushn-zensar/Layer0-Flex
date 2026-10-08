@@ -1,0 +1,13 @@
+# Pinned to the versions the skeleton was built and tested with (Python 3.12).
+fastapi==0.142.4
+uvicorn[standard]==0.54.0
+python-multipart==0.0.32
+SQLAlchemy==2.1.4
+pydantic==2.13.5
+python-dotenv==1.2.4
+pymupdf==1.28.2        # AGPL: fine for an internal PoC; licence decision needed before a pilot
+pdfplumber==0.11.10
+scikit-learn==1.9.1    # TF-IDF retrieval (ported from v0.3.0 rag/)
+openai==3.26.0         # Azure OpenAI (GPT-4o) via the model gateway
+pytest==9.1.1
+httpx==0.28.1          # FastAPI TestClient

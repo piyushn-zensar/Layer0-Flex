@@ -1,0 +1,45 @@
+REAL PUBLIC RFI / RFLP — TECHNICAL SUMMARY FOR PoC GROUNDING
+
+SOURCE (verifiable, public):
+  U.S. Department of the Air Force
+  (a) Commercial Data Center RFI, Davis-Monthan AFB — responses due 24 April 2025
+  (b) Request for Lease Proposal (RFLP), AI Data Center Development
+      Most recent: Solicitation AFCEC-26-R-0006, issued 8 May 2026, due 29 June 2026
+      (Joint Base Elmendorf Richardson, Eielson AFB, Clear Space Force Station, Alaska)
+  URLs: https://sam.gov/opp/5215c59dc17b44feb3fc309bfc7fb83f/view
+        https://www.dm.af.mil/Portals/99/Public%20Notice/AI%20Data%20Centers%20FAQ_FINAL.pdf
+
+IMPORTANT CLASSIFICATION NOTE:
+This is a LAND LEASE solicitation, not an equipment procurement. SpinCo would not
+bid on this directly; the winning developer becomes the buyer of power and cooling
+infrastructure. It is included as a fixture because it defines the grid-interface
+requirements of exactly the kind of site SpinCo equips.
+
+--- SCOPE ---
+Lease of underutilized federal land for private commercial AI data center
+development, including associated infrastructure and generation to support
+energy reliability and resilience.
+
+--- QUALIFYING PROJECT THRESHOLDS (per Executive Order 14318) ---
+- New electrical load: greater than 100 MW
+- Capital expenditure: minimum $500 million
+- Purpose: dedicated to AI inference, training, simulation, or synthetic data generation
+- Davis-Monthan parcel: up to 620 acres, sited for large scale data center use (500 MW+)
+
+--- INFRASTRUCTURE TECHNOLOGIES SOUGHT ---
+- Onsite energy generation (e.g. natural gas, small modular reactors)
+- Battery energy storage systems
+- Fuel storage
+- Upgraded electrical distribution infrastructure
+- Complementary microgrid capability
+- Where a developer proposes a dedicated energy source, the Government requires
+  first right of refusal of power during a grid outage
+
+--- BIDDER QUALIFICATION ---
+At least three completed AI data center projects drawing over 100 MW of new
+contracted power, developed within the last 3 years.
+
+--- NOT SPECIFIED ---
+Rack density, cooling architecture, switchgear ratings and rack-level power
+architecture are left to the developer; this document defines site and grid-interface
+requirements only.

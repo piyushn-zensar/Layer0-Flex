@@ -1,0 +1,161 @@
+{
+  "automation_tiers": {
+    "CTO_AUTOMATE": "Full parametric spec and quote-grade BOM generated automatically; fast-path human approval — approver reviews, does not co-design.",
+    "ETO_GUIDED": "Standard sub-components auto-priced; the bespoke remainder is captured as a basis-of-design and routed to a specialist engineer — no spec is claimed for the bespoke portion.",
+    "ETO_EXCEPTION": "No design attempt is made; the requirement is captured with a margin-protected price placeholder; 100% of design work is routed to specialist engineers."
+  },
+  "layers": [
+    {
+      "n": 1,
+      "name": "Grid Interface",
+      "brands": [
+        {
+          "name": "EPC Power (pending close)",
+          "automation_tier": "ETO_EXCEPTION",
+          "tier_rationale": "Novel grid-forming / 800VDC power conversion topology — high-complexity ETO, per EPC Power's own product profile."
+        }
+      ],
+      "description": "Grid-forming power conversion, 800V DC, on-site storage / microgrid support.",
+      "selection_rules": [
+        "If voltage_arch mentions '800VDC' or 'grid-forming', prefer EPC Power.",
+        "If no grid-scale storage/microgrid requirement is present, note EPC Power scope may be reduced to conversion only."
+      ]
+    },
+    {
+      "n": 2,
+      "name": "Utility / Facility Electrical",
+      "brands": [
+        {
+          "name": "Crown Technical Systems",
+          "automation_tier": "ETO_GUIDED",
+          "tier_rationale": "Bespoke arc-resistant switchgear and E-Houses engineered per utility/site spec."
+        },
+        {
+          "name": "EP2",
+          "automation_tier": "ETO_GUIDED",
+          "tier_rationale": "Explicitly labeled 'Engineered-to-order' on Flex's own site; bespoke substation control and protection panels."
+        },
+        {
+          "name": "Anord Mardix",
+          "automation_tier": "CTO_AUTOMATE",
+          "tier_rationale": "Standardized, modular switchgear and building blocks configured from parametric rules."
+        }
+      ],
+      "description": "MV/LV switchgear, substation control, protection, E-Houses.",
+      "selection_rules": [
+        "If requirement mentions utility substation control or protection panels, prefer EP2.",
+        "If requirement mentions arc-resistant MV switchgear or E-Houses, prefer Crown Technical Systems.",
+        "If requirement is general LV/MV switchgear without a specific utility-grade need, prefer Anord Mardix."
+      ]
+    },
+    {
+      "n": 3,
+      "name": "Power Distribution (Room to Row to Rack)",
+      "brands": [
+        {
+          "name": "Anord Mardix",
+          "automation_tier": "CTO_AUTOMATE",
+          "tier_rationale": "Modular power pods and busway are SpinCo's most standardized, highest CTO-volume product line."
+        }
+      ],
+      "description": "Busway, PDUs, RPPs, prefabricated modular power pods.",
+      "selection_rules": [
+        "If deployment_preference mentions 'modular' or 'prefabricated', prefer Anord Mardix modular power pods.",
+        "Default to standard busway + PDU distribution otherwise."
+      ]
+    },
+    {
+      "n": 4,
+      "name": "Rack & Board Power",
+      "brands": [
+        {
+          "name": "Flex Power Modules",
+          "automation_tier": "CTO_AUTOMATE",
+          "tier_rationale": "Catalog board-level DC-DC converters and power shelves, standardized part numbers."
+        },
+        {
+          "name": "EPC Power",
+          "automation_tier": "ETO_EXCEPTION",
+          "tier_rationale": "Same novel 800VDC conversion technology as Layer 1 — high-complexity ETO."
+        }
+      ],
+      "description": "Power shelves, rack power, DC-DC modules, chip-level power.",
+      "selection_rules": [
+        "If voltage_arch specifies 800VDC at rack level, prefer EPC Power for rack-level conversion in combination with Flex Power Modules for board-level DC-DC.",
+        "If voltage_arch is standard 48VDC or 415VAC, prefer Flex Power Modules alone."
+      ]
+    },
+    {
+      "n": 5,
+      "name": "Thermal Management",
+      "brands": [
+        {
+          "name": "JetCool",
+          "automation_tier": "CTO_AUTOMATE",
+          "tier_rationale": "Productized cold plates and CDUs (SmartPlate, SmartSense) with configurable, catalog-driven options."
+        }
+      ],
+      "description": "Cold plates, direct liquid-to-chip, CDUs, turn-key liquid cooling.",
+      "selection_rules": [
+        "If rack_density_kw >= 100, require direct-to-chip liquid cooling (JetCool SmartPlate + CDU).",
+        "If rack_density_kw is between 35 and 100, hybrid air/liquid acceptable.",
+        "If rack_density_kw < 35, air cooling may be sufficient; flag for engineering review."
+      ]
+    },
+    {
+      "n": 6,
+      "name": "Compute + Integration",
+      "brands": [
+        {
+          "name": "Cloud (organic)",
+          "automation_tier": "CTO_AUTOMATE",
+          "tier_rationale": "Rack-scale integration of already-selected components — assembly, not bespoke design."
+        }
+      ],
+      "description": "Compute trays, rack-scale integration.",
+      "selection_rules": [
+        "Always included when the RFP scope extends to rack-scale integration, not just component supply."
+      ]
+    }
+  ],
+  "component_overrides": [
+    {
+      "keyword": "standard enclosure",
+      "applies_to_layers": [2],
+      "override_tier": "CTO_AUTOMATE",
+      "reason": "Standard enclosures are catalog items even within an otherwise bespoke EP2/Crown panel."
+    },
+    {
+      "keyword": "standard busbar",
+      "applies_to_layers": [2, 3],
+      "override_tier": "CTO_AUTOMATE",
+      "reason": "Standard busbar fittings are catalog components regardless of the surrounding panel's engineering complexity."
+    },
+    {
+      "keyword": "standard breaker",
+      "applies_to_layers": [2],
+      "override_tier": "CTO_AUTOMATE",
+      "reason": "Standard breaker families are catalog-selectable even inside a bespoke protection panel."
+    },
+    {
+      "keyword": "novel topology",
+      "applies_to_layers": [1, 4],
+      "override_tier": "ETO_EXCEPTION",
+      "reason": "Explicit signal of a first-of-kind design reinforces exception routing even if a brand default were otherwise automated."
+    },
+    {
+      "keyword": "first-of-kind",
+      "applies_to_layers": [1, 4, 5],
+      "override_tier": "ETO_EXCEPTION",
+      "reason": "Explicit novelty signal overrides any brand default toward mandatory specialist routing."
+    }
+  ],
+  "team_routing": {
+    "1": "Critical Power Team",
+    "2": "Critical Power Team",
+    "3": "Critical Power Team",
+    "4": "Embedded Power Team",
+    "5": "Thermal (JetCool) Team",
+    "6": "Cloud Team"
+  }
+}

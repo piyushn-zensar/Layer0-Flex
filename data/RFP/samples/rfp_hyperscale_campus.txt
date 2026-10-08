@@ -1,0 +1,12 @@
+RFP — Hyperscale AI Training Campus, Phase 1 (fictional, for demo/testing purposes)
+Issuing organization: [Hyperscale Customer]
+Requirement: Design and supply integrated power and cooling infrastructure for a new AI training campus.
+- IT capacity: approximately 48 MW critical load, Phase 1
+- Redundancy: 2N at utility/substation level, N+1 at rack level
+- Power architecture: preference for 800VDC rack-level distribution where mature; open to hybrid AC/DC
+- Rack density: minimum 120kW per rack, liquid cooling required at rack and chip level
+- Site: single greenfield site, Central Texas, grid interconnect pending utility approval
+- Timeline: energization required within 9 months of award
+- Compliance: UL, IEC 61439, NEC Article 645 applicable
+- Deployment preference: prefabricated / modular systems preferred to compress on-site schedule
+- Scope requested: grid interface through rack-level power and cooling; compute integration to be coordinated separately

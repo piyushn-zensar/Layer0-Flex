@@ -1,0 +1,72 @@
+{
+  "_note": "Blessed extraction outputs. A candidate LLM or any extraction change must reproduce every must_extract value and produce none of the must_not_extract values, or agents/model_guard.py returns REJECT and the change must not ship. Guards KNOWN cases only. New accepted answers enter via an engineer-confirmed correction, never by editing a value to force a pass.",
+  "extractor_baseline": "regex (LLM_MODE=mock)",
+  "cases": [
+    {
+      "case_id": "RFP-SYR-2023-20",
+      "fixture": "knowledge_base/sample_rfps/real_pdfs/RFP-2023-20-Switchgear-Procurement-Final.pdf",
+      "description": "The real 101-page Syracuse switchgear procurement. Source of four fixed defects.",
+      "must_extract": {
+        "voltage_class_kv": 15.0,
+        "breaker_positions": 18,
+        "arc_resistant_contains": "2B"
+      },
+      "must_not_extract": {
+        "ups_kva": "A single-line diagram lists a 112.5kVA transformer; it must not be read as a UPS rating.",
+        "layer_5_in_scope": "The word 'cooling' appears once, in a lightning-conductor list; thermal must not be in scope.",
+        "layer_6_in_scope": "No compute scope exists in a switchgear procurement."
+      },
+      "must_scope": [
+        2,
+        3
+      ]
+    },
+    {
+      "case_id": "RFP-SYR-2023-20-TEXT",
+      "fixture": "knowledge_base/sample_rfps/rfp_REAL_syracuse_switchgear.txt",
+      "description": "Text summary of the Syracuse RFP.",
+      "must_extract": {
+        "voltage_class_kv": 15.0,
+        "breaker_positions": 18,
+        "arc_resistant_contains": "2B"
+      },
+      "must_not_extract": {
+        "ups_kva": "No UPS in switchgear scope.",
+        "layer_5_in_scope": "No thermal scope."
+      },
+      "must_scope": [
+        2
+      ]
+    },
+    {
+      "case_id": "RFQ-FTLAUD-UPS",
+      "fixture": "knowledge_base/sample_rfps/rfp_REAL_ftlauderdale_ups.txt",
+      "description": "Ft. Lauderdale 45kVA UPS RFQ. The solvable case.",
+      "must_extract": {
+        "ups_kva": 45.0,
+        "rack_count": 10,
+        "branch_circuits": 24
+      },
+      "must_not_extract": {
+        "voltage_class_kv": "No MV equipment in a UPS scope."
+      },
+      "must_scope": [
+        3,
+        4
+      ]
+    },
+    {
+      "case_id": "RFLP-DAVIS-MONTHAN",
+      "fixture": "knowledge_base/sample_rfps/rfp_REAL_davis_monthan_ai_dc.txt",
+      "description": "USAF AI data-center land lease. Grid-interface scope.",
+      "must_extract": {
+        "capacity_mw": 100.0,
+        "onsite_generation": true
+      },
+      "must_not_extract": {},
+      "must_scope": [
+        1
+      ]
+    }
+  ]
+}

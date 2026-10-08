@@ -13,7 +13,7 @@
 **How statements are labelled.**
 
 - **Company and market facts** come from the written portfolio and market sources and are labelled where they are inferred or unverified.
-- **Review-meeting statements** (the review meetings of 22 Sep and 5 Oct 2026) are the working baseline for Layer 0's purpose and workflow. They are not verified corporate facts, and the workflow has not been formally signed off. Where a meeting statement is used for a business fact, it is marked **Needs confirmation** or "from the review meetings; needs confirmation".
+- **Review-meeting statements** (the review meetings of 22 Sep, 5 Oct and 8 Oct 2026) are the working baseline for Layer 0's purpose and workflow. Statements from the 8 Oct 2026 meeting are marked "(8 Oct 2026)" where the date matters, and written client direction given before it is marked as such. They are not verified corporate facts, and the workflow has not been formally signed off. Where a meeting statement is used for a business fact, it is marked **Needs confirmation** or "from the review meetings; needs confirmation".
 - A statement that is an argument made by a source, not a verified fact, is marked as such.
 - Where sources disagree, the conflict is named and left open.
 - Illustrative examples are labelled **illustrative**. They are not recorded SpinCo bids.
@@ -28,7 +28,7 @@
 - **Zensar** is the company building the PoC for Flex. The Zensar team is taking it forward.
 - **What SpinCo is not.** It is not a holding company of many consumer brands. It is organised around four product pillars, led day to day by two businesses, Embedded Power and Critical Power. The "companies" people mention are acquired brands that fill those pillars.
 - **How sure the facts are.** The portfolio source separates facts taken directly from Flex's investor deck, press releases and filings from facts that are inferred. The business identity, pillars, finances and leadership are confirmed. The assignment of each brand to SpinCo is inferred until Flex files a **Form 10** (the registration statement with the US securities regulator, the SEC, that lists the legal entities moving to SpinCo). As of 10 Sep 2026 it was not filed.
-- **How many companies?** The review meetings described SpinCo as a subset of "six companies" (one passage was transcribed as "76") that previously could bid for products themselves. The written sources describe four pillars and seven named brands, one still pending. The number six and how those companies map to brands, pillars, layers or teams are **Needs confirmation**. This document uses the written brand count, and it does not assume that "six companies" corresponds to anything else (see section 3.6).
+- **How many companies, and what are the business units?** The earlier review meetings described SpinCo as a subset of "six companies" that previously could bid for products themselves. The written sources describe four pillars and seven named brands, one still pending. The review of 8 Oct 2026 settled the working picture: **six business units**, with EP² (Electrical Power Products) named as one. The working list is Anord Mardix, Crown Technical Systems, EP², Flex Power Modules, JetCool and Cloud (in-house); EPC Power stays pending acquisition and is not active. The exact list is **Needs confirmation**. Business units are data in the system, so the list can change without code changes. Each business unit has a **product manager** and a **design engineer**. One **bid manager**, who has a general idea of all the units, receives the RFP and owns the opportunity (8 Oct 2026). The six business units are not the six grid-to-chip layers (see section 3.6).
 
 ## 3. What SpinCo Sells
 
@@ -64,13 +64,13 @@ Terms in the table, explained:
 
 ### 3.3 The brands
 
-Brand-to-SpinCo assignments are inferred until the Form 10 is filed.
+Brand-to-SpinCo assignments are inferred until the Form 10 is filed, with one exception: written client direction (before the 8 Oct 2026 review) is that EP² is already part of SpinCo / Axiom Solutions. The Layer 0 design assumes this and includes solution components coming from EP²; the working code must include EP² products.
 
 | Brand | Pillar | What it does |
 |---|---|---|
 | Anord Mardix | Critical Power | Switchgear, busway, power distribution, modular power, monitoring and services. Mostly configure-to-order |
 | Crown Technical Systems | Critical Power | Control panels, medium-voltage switchgear (arc-resistant and standard), E-Houses |
-| Electrical Power Products (EP²) | Critical Power | Substation control buildings, relay and protection panels, auxiliary power. Labelled "engineered-to-order" on Flex's website |
+| Electrical Power Products (EP²) | Critical Power | Substation control buildings, relay and protection panels, auxiliary power. Labelled "engineered-to-order" on Flex's website. Part of SpinCo by written client direction; the architecture includes EP² components |
 | Flex Power Modules | Embedded Power | Board-level DC-DC converters, power modules, rack power shelves |
 | JetCool | Thermal Management | Chip-level liquid cooling, cold plates, coolant distribution units |
 | EPC Power | Critical or Embedded Power (sources give both) | 800 V DC and grid-forming power conversion, some designs first-of-kind. **Pending acquisition**: $4.4 billion, announced 3 Sep 2026, close expected in Q4 2026 |
@@ -80,7 +80,7 @@ An **E-House** is a pre-built, transportable building that contains electrical e
 
 **Needs confirmation (new conflict).** One source describes the EPC Power acquisition as closed; another, which cites the dated filing, says it is pending. This document uses pending.
 
-Brands that appear likely to stay with Flex are Coreworks (it might feed power products), Farm, Irumold, Sønderborg Værktøjsfabrik and MCi. The brand list is **Needs confirmation** until the Form 10 is filed.
+Brands that appear likely to stay with Flex are Coreworks (it might feed power products), Farm, Irumold, Sønderborg Værktøjsfabrik and MCi. The brand list, other than EP², is **Needs confirmation** until the Form 10 is filed.
 
 ### 3.4 The six-layer grid-to-chip stack
 
@@ -112,12 +112,12 @@ Several different groupings are used when people talk about SpinCo. They overlap
 | Term | What it is | Count in the sources | Status |
 |---|---|---|---|
 | Company or brand | An acquired company name, such as Anord Mardix, Crown, EP², Flex Power Modules, JetCool, EPC Power (pending) or Cloud | Seven named brands, one pending | Written count; Form 10 not filed |
-| Business unit | An organisational unit of SpinCo that sells and delivers | Not established. The review meetings spoke of "six companies" | **Needs confirmation**, including how units map to brands, pillars, layers and teams |
+| Business unit | An organisational unit of SpinCo that sells and delivers; each has a product manager and a design engineer | Six (8 Oct 2026): Anord Mardix, Crown Technical Systems, EP², Flex Power Modules, JetCool, Cloud (in-house). EP² is confirmed as one | The exact list is **Needs confirmation**, including how units map to pillars, layers and teams. EPC Power is pending and not active |
 | Product pillar | A product grouping: Critical Power, Embedded Power, Thermal Management, Cloud | Four | Confirmed |
 | Product layer | One of the six grid-to-chip product families, L1 to L6 | Six | Project knowledge-base list; an alternative list exists |
 | Delivery or engineering team | The group that owns and answers requirements for a bid | The v0.3.0 knowledge base uses four: Critical Power, Embedded Power, Thermal (JetCool), Cloud | Project working assumption |
 
-The meetings' "six companies" must not be equated with the six grid-to-chip layers. The two numbers match only by coincidence of count. One layer can involve several brands (L2 involves three), one brand can sit in more than one layer (EPC Power is listed in L1 and L4), and one team can cover several layers (Critical Power covers L1 to L3). Whether the six companies are brands, business units or something else is not established, and no one-to-one mapping to pillars, layers or teams should be assumed.
+The six business units must not be equated with the six grid-to-chip layers. The two numbers match only by coincidence of count. One layer can involve several brands (L2 involves three), one brand can sit in more than one layer (EPC Power is listed in L1 and L4), and one team can cover several layers (Critical Power covers L1 to L3). The working list of business units follows the brand names, but the exact list is not confirmed, and no one-to-one mapping to pillars, layers or teams should be assumed.
 
 ## 4. Who Buys and How Big the Business Is
 
@@ -167,15 +167,23 @@ The scale runs from low customisation and fast delivery (MTS) to high customisat
 
 Steps 2 to 4 need an engineer even for quotes that may never win. The source gives an illustration, not SpinCo data: a company that issues 20 requests and wins 4 spent real design time on the 16 never built. This is called **quote churn**.
 
-**SpinCo mixes the models.** The review meetings described three kinds of offering: configurable, custom (designed for a specific data-centre rack, completely custom), and semi-custom (standard components, then something made exclusively for the customer) (from the review meetings; needs confirmation). The sources use the MTS/ATO/CTO/ETO vocabulary. Comparing the two (configurable with CTO, custom with ETO) is this document's comparison, not a stated source claim. The written evidence:
+**SpinCo mixes the models.** The review meetings described three kinds of offering: configurable, custom (designed for a specific data-centre rack, completely custom), and semi-custom (standard components, then something made exclusively for the customer) (from the review meetings; needs confirmation). The review of 8 Oct 2026 named the three offering types in the client's vocabulary (below). The sources use the MTS/ATO/CTO/ETO vocabulary. Comparing the two (configurable with CTO, custom with ETO) is this document's comparison, not a stated source claim. The written evidence:
 
-- EP² is labelled engineered-to-order on Flex's site, so part of the portfolio is purely ETO.
+- EP² is labelled engineered-to-order on Flex's site, so part of the portfolio is purely ETO. The review of 8 Oct 2026 also said EP² is in the engineered-to-order business.
 - Anord Mardix sells switchboards and packaged substations "configured to project requirements" and also "bespoke end-to-end solutions".
 - EPC Power has high-complexity designs, some first-of-kind.
 
 The sources argue that a fully CTO company buys CPQ off the shelf, a fully ETO company does not, and SpinCo is neither. This is an argument, not a measurement.
 
-**Four tiers used by the project.** Layer 0 labels each part of a bid with one of these (an older document spells the last tier ETO_ESCALATE):
+**Three offering types (8 Oct 2026, client vocabulary).** Layer 0 shows one offering type per requirement:
+
+- **Configure-to-order (CTO):** a base model with options chosen, handled by CPQ. Think of configuring a laptop's memory and disk.
+- **Semi-custom:** a configured product plus extra workshop work for the customer. Think of a car from the showroom sent to a workshop for tinted windows.
+- **Engineered-to-order (ETO):** no existing product; the whole thing is designed to the customer's requirements. Example: a custom 8-foot rack with its own dimensions, wiring and power. EP² is in this business.
+
+The project's earlier tiers map to these: `CTO_AUTOMATE` is CTO; `ETO_GUIDED` (the system drafts a basis of design and an engineer approves) is semi-custom, or guided ETO; `ETO_EXCEPTION` (engineers design manually) is ETO.
+
+**Four tiers used by the project (earlier vocabulary).** Layer 0 labels each part of a bid with one of these (an older document spells the last tier ETO_ESCALATE):
 
 - `CTO_AUTOMATE`: standard; can be configured and priced automatically and sent to the CPQ tool.
 - `ETO_GUIDED`: mostly bespoke; standard sub-parts can be priced from the catalogue, and the rest is written up as a basis of design for a design engineer. The system does not design.
@@ -244,6 +252,10 @@ A real RFP is "a real, often-messy document (PDF, spec tables, sometimes CAD/BOQ
 
 **The review-meeting version**, stated as an assumption: the salesperson receives the RFP and studies it for a few days, sends the same document to everybody, each group somehow produces its own response, and there is no workflow or system (Needs confirmation). For a data-centre bid, someone must decide whether one company or several of the brands can handle it and then whether to bid at all. This was contrasted with a single power unit sold to a factory, which can be quoted in the CPQ way (Needs confirmation).
 
+**Roles and the bid flow (Expected (review meetings), 8 Oct 2026).** One **bid manager** has a general idea of all the business units, receives the RFP and owns the opportunity. **Each business unit has a product manager and a design engineer.** The tool reads the RFP and maps each requirement against the product offerings each business unit carries, creating one **line item** per requirement. An RFP may involve one or more business units. The bid manager then sends each participating unit its part in one simple step: the main RFP plus the line items assigned to it. The unit's product manager and design engineer complete their part. The response works as a checklist per requirement: the design engineer states that the requirement is met, and with what. Someone then validates the responses. Responses flow back to the bid manager, who assembles the comprehensive response. The analogy is different groups writing different chapters of one proposal. The system tracks which units have responded. The product is built from a bill of materials (BOM) held in a separate system; the response itself may not include the BOM.
+
+**Concurrency, identifiers and retention (8 Oct 2026).** Several RFPs run at once, and people work on several at once. Requirement IDs must be unique across all opportunities; part numbers need not be. Each engagement has its own workspace and workflow. All data for an opportunity (RFP, requirements, responses, communication) must be captured and protected for the life of the project and beyond, because warranty clauses apply. The record is append-only.
+
 **The intended opportunity workflow (Expected, review meetings).** The business direction described in the review meetings is to manage each opportunity from the arrival of the RFP until the final bid response is assembled. In order, it is:
 
 1. **Read and understand** the incoming RFP. Every extracted item keeps an exact source reference: document, page and quoted text.
@@ -298,15 +310,15 @@ The review meetings drew the same contrast: a single power unit sold to a factor
 
 *Single-unit opportunity.* A standalone medium-voltage switchgear RFP, like the public Syracuse airport RFP used in section 10.
 
-- Likely one business unit (critical power) takes part.
+- Likely Crown Technical Systems takes part (arc-resistant medium-voltage switchgear), and possibly EP² (relay and protection panels). The matcher proposes this and a person confirms it.
 - The workflow is light: engineering review of requirements such as arc-resistant Type 2B, plus commercial and compliance items.
 - Go/no-go turns on scope fit and deviations.
 - Every requirement still traces to its owning team and to its answer in the final response.
 
 *Multi-unit opportunity.* An AI data-centre campus RFP, like the synthetic 48 MW hyperscale-campus sample.
 
-- It may need facility power and switchgear, rack and board power, liquid cooling, and possibly compute integration.
-- That means several business units and teams. One requirement, such as rack power plus cooling at a given density, may involve two teams.
+- It may need Anord Mardix (facility power and switchgear), Flex Power Modules (rack and board power), JetCool (liquid cooling), Cloud (compute integration), and possibly EP² for substation control.
+- That means several business units. One requirement, such as rack power plus cooling at a given density, may involve two teams.
 - The workflow is heavier and must coordinate responses across units before they are consolidated.
 - Not every data-centre bid needs every unit. The synthetic modular inference-pod sample may need fewer.
 
@@ -397,7 +409,7 @@ The terms, in plain words:
 
 ### 10.4 What the PoC does with it
 
-This describes the v0.3.0 bid-triage pipeline, the demo built on this RFP. It is **current state** for one code line, not the target workflow. It covers only part of the early steps of the intended workflow (section 7) and does not produce a go/no-go output, set up a workflow, or track team responses.
+The sample PDF used for development now lives in Layer0-Flex/data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf. The description below is of the v0.3.0 bid-triage pipeline, the demo built on this RFP. It is **current state** for one code line, not the target workflow. It covers only part of the early steps of the intended workflow (section 7) and does not produce a go/no-go output, set up a workflow, or track team responses.
 
 1. The reading stage extracts values such as 15 kV, Arc-resistant Type 2B and 18 breaker positions. Counting keywords (for example, "switchgear" about 163 times) shows the RFP asks for layer L2 and not for cooling.
 2. L2 is mapped to Crown and tiered `ETO_GUIDED`.
@@ -422,6 +434,7 @@ The UPS example is the one an engineer can check by hand. **kVA** (kilovolt-ampe
 - **The "structural squeeze".** Demand grows; capacity is limited by design engineers who must do bespoke quoting; and systems are fragmented. Quote capacity then limits how much of the AI-infrastructure market SpinCo can bid for (argument).
 - **The cost is hidden.** Engineering hours spent on RFPs that were lost show up only as declined, slow or conservatively priced bids.
 - **Fragmentation by acquisition.** The portfolio was assembled by buying companies, and each has its own quoting practice. SAP and Infor LN both run. Anord Mardix has its own head of IT and a separately procured stack. Two ERPs plus brand autonomy suggest no single quoting path across the portfolio. This is an inference from market-data sources, not a measurement. Because units that previously sold on their own must now combine offerings, the coordination burden falls on opportunities that span units.
+- **Future (not in scope).** If the design works well, the review of 8 Oct 2026 noted many similar use cases in the semiconductor industry.
 - **The window.** The sources argue that a separation is the one moment a company rebuilds its commercial systems by choice. Before separation the change is part of standing up the company; afterwards it becomes a migration project competing for budget (Proposed argument).
 - **Expectation in the review meetings.** Volume is expected to grow 3x to 4x; with about a one-in-three conversion rate, a business three times larger means answering far more RFPs, and the teams cannot be multiplied to match (from the review meetings; needs confirmation).
 

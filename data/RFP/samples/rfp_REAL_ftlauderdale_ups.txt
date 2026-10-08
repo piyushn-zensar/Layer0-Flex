@@ -1,0 +1,36 @@
+REAL PUBLIC RFQ — TECHNICAL SUMMARY FOR PoC GROUNDING
+
+SOURCE (verifiable, public):
+  United States District Court, Southern District of Florida
+  "RFQ Installation of 45-kVA UPS System in Data Center" — Ft. Lauderdale
+  Solicitation notice posted 27 February 2026 | Site visit 18 March 2026
+  URL: https://www.flsd.uscourts.gov/node/6301
+
+NOTE: Technical-requirements summary extracted from the public source for
+system-testing purposes; not a reproduction. Status should be re-verified
+before being described as an open opportunity.
+
+--- SCOPE ---
+Furnish, install and commission a UPS system providing conditioned and redundant
+backup power to data center equipment racks. Delivered as a fully operational,
+code-compliant power infrastructure solution.
+
+--- TECHNICAL REQUIREMENTS ---
+- UPS: 45-kVA online double-conversion UPS system
+- Load served: ten (10) data center equipment racks
+- Distribution: one dedicated power distribution cabinet
+- Branch circuits: twenty-four (24) 208V power whips
+- Rack power: rack-mounted PDUs
+- Safety: Emergency Power Off (EPO) switch
+- Earthing: grounding and bonding
+- Installation environment: work performed under a non-plenum raised floor
+- Commissioning: all required testing and commissioning included
+
+--- COMPLIANCE ---
+Code-compliant installation (NEC / NFPA 70 applicable to 208V branch distribution
+and EPO requirements).
+
+--- NOT SPECIFIED IN THIS RFQ ---
+No medium-voltage switchgear, no utility interconnection, no liquid cooling, and
+no rack density in kW are specified. Scope is limited to UPS, distribution cabinet,
+branch circuits and rack PDUs.

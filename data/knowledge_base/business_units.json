@@ -1,0 +1,26 @@
+{
+  "_note": "Working list of SpinCo / Axiom Solutions business units (Needs confirmation). EP2 is part of SpinCo per client direction. Each unit has a product manager and a design engineer; names are role placeholders until real people are named.",
+  "units": [
+    {"code": "EP2", "name": "Electrical Power Products (EP²)", "pillar": "Critical Power", "status": "active",
+     "focus": "Substation control buildings, relay and protection panels, auxiliary power. Engineered-to-order.",
+     "product_manager": "EP² Product Manager", "design_engineer": "EP² Design Engineer"},
+    {"code": "CROWN", "name": "Crown Technical Systems", "pillar": "Critical Power", "status": "active",
+     "focus": "Medium-voltage switchgear (arc-resistant and standard), control panels, E-Houses.",
+     "product_manager": "Crown Product Manager", "design_engineer": "Crown Design Engineer"},
+    {"code": "ANORD", "name": "Anord Mardix", "pillar": "Critical Power", "status": "active",
+     "focus": "Switchgear, busway, power distribution, modular power. Mostly configure-to-order.",
+     "product_manager": "Anord Mardix Product Manager", "design_engineer": "Anord Mardix Design Engineer"},
+    {"code": "FPM", "name": "Flex Power Modules", "pillar": "Embedded Power", "status": "active",
+     "focus": "Board-level DC-DC converters, power modules, rack power shelves.",
+     "product_manager": "Flex Power Modules Product Manager", "design_engineer": "Flex Power Modules Design Engineer"},
+    {"code": "JETCOOL", "name": "JetCool", "pillar": "Thermal Management", "status": "active",
+     "focus": "Chip-level liquid cooling, cold plates, coolant distribution units.",
+     "product_manager": "JetCool Product Manager", "design_engineer": "JetCool Design Engineer"},
+    {"code": "CLOUD", "name": "Cloud (in-house)", "pillar": "Cloud", "status": "active",
+     "focus": "Compute-tray build and rack-scale integration.",
+     "product_manager": "Cloud Product Manager", "design_engineer": "Cloud Design Engineer"},
+    {"code": "EPC", "name": "EPC Power", "pillar": "Critical or Embedded Power", "status": "pending",
+     "focus": "800 V DC and grid-forming power conversion. Acquisition pending: not offered until closed.",
+     "product_manager": "EPC Power Product Manager", "design_engineer": "EPC Power Design Engineer"}
+  ]
+}

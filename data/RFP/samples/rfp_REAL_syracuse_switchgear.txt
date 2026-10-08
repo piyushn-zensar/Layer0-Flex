@@ -1,0 +1,51 @@
+REAL PUBLIC RFP — TECHNICAL SUMMARY FOR PoC GROUNDING
+
+SOURCE (verifiable, public):
+  Syracuse Regional Airport Authority, RFP # 2023-20, "Switchgear Procurement"
+  Issued 24 Aug 2023 | Spec No. 22186.00-SPC-E01 Rev 3 (14 Aug 2023)
+  Project: Syracuse Hancock International Airport — Landside Switchgear Relocation
+  URL: https://syrairport.org/wp-content/uploads/2023/08/RFP-2023-20-Switchgear-Procurement-Final.pdf
+
+NOTE: This file is a technical-requirements SUMMARY extracted from the public source
+document for system-testing purposes. It is not a reproduction of the RFP. The
+procurement closed in September 2023; it is used here as a verifiable, real-world
+input, not a live bid opportunity.
+
+--- SCOPE ---
+Manufacture, furnish, deliver and test a Metal Clad Switchgear lineup and accessories.
+
+--- TECHNICAL REQUIREMENTS ---
+- Equipment: One 15kV two-section Metal Clad Switchgear lineup
+- Breaker positions: 18 x 15kV vacuum circuit breaker positions with protective relays and controls
+- Arc resistance: Arc-resistant Type 2B, meeting or exceeding IEEE C37.20.7
+- Metering: 2 revenue meter positions
+- Isolation: Two sets of 2 x 15kV isolation switches
+- Instrument transformers: bus VTs and multi-ratio CTs
+- Bus configuration: Two bus sections with tie breaker
+- Incoming supply: Two 13.2 kV utility feeders from National Grid, underground cable connection
+- Cable terminations: NEMA four-hole pad and insulating boots, up to two 750 MCM 15kV cables per phase
+- Utility compartment: Separate lockable utility incoming cable termination compartment
+- Grounding: 1 inch diameter ground ball per phase; 5/8 inch x 24 inch copper ground bail
+- Future capacity: Future bays provided fully functional without VCBs included
+- Enclosure: Switchgear mounted within a fully enclosed Equipment Building (supplied by others)
+
+--- COMPLIANCE STANDARDS ---
+IEEE C37.20.2 (Metal-Clad Switchgear), IEEE C37.20.7 (Internal Arcing Faults),
+IEEE C37.04 / C37.06 / C37.09 / C37.010 (AC High-Voltage Circuit Breakers),
+IEEE C37.90 / C37.90.1 (Relays and Surge Withstand), IEEE C57.13 (Instrument Transformers),
+IEEE C2 (National Electrical Safety Code), NFPA 70 (National Electrical Code),
+ANSI, NEMA SG-4 / SG-5 / SG-6, ASTM, OSHA 1910
+
+--- COMMERCIAL / DELIVERY ---
+- Pricing basis: Lump sum covering manufacturing, furnishing, delivering, testing
+- Also required in cost proposal: special tools; drawings, instructions and test reports in English;
+  final drawings in AutoCAD format; maintenance equipment and spare parts; start-up and training
+- Bidder must submit a schedule covering drawings, factory shipment, site delivery,
+  overall lead time ARO, and field works
+- Field technical service: optional pricing line
+- Participation goals: 30% MWBE, 6% SDVOB (New York State Executive Law Articles 15-A and 17-B)
+
+--- NOT SPECIFIED IN THIS RFP ---
+Rack density, cooling requirements, IT capacity in MW, and data-hall power architecture
+are not applicable to this scope — this is a facility/utility electrical procurement,
+not a data centre build.

@@ -1,0 +1,8 @@
+# Parsing machine only (Piyush). Everyone else installs requirements.txt and uses the
+# committed layouts in data/layout_cache/.
+#
+# System dependency (not pip): Tesseract OCR 5.x
+#   default path: %LOCALAPPDATA%\Tesseract-OCR\tesseract.exe   (override with TESSERACT_CMD in .env)
+#
+# Add Python packages that only the parser needs below this line (e.g. image pre-processing for OCR).
+-r requirements.txt

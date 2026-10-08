@@ -1,0 +1,25 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local secrets and runtime data (uploads, layouts, page images, SQLite DB)
+.env
+data/store/
+
+# Personal Claude Code settings (team settings live in .claude/settings.json)
+.claude/settings.local.json
+
+# Editors / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# Next.js (web/)
+node_modules/
+web/node_modules/
+web/.next/
+web/next-env.d.ts
+*.tsbuildinfo

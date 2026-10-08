@@ -1,0 +1,12 @@
+RFP — Modular Inference Pod Deployment (fictional, for demo/testing purposes)
+Issuing organization: [Cloud Provider Customer]
+Requirement: Supply of modular power and cooling pods for distributed inference capacity.
+- IT capacity: approximately 6 MW across multiple regional sites
+- Redundancy: N+1 at rack level; utility redundancy per site, not centrally specified
+- Power architecture: standard 415VAC facility power, 48VDC rack distribution acceptable
+- Rack density: 35-50kW per rack, hybrid air/liquid cooling acceptable
+- Site: flexible — multiple candidate sites across 3 regions, final site TBD
+- Timeline: 4 months from award to first site live
+- Compliance: local electrical code per region; no unusual compliance flags
+- Deployment preference: cost efficiency prioritized over speed; modular preferred but not mandatory
+- Scope requested: facility electrical through rack-level power and cooling

@@ -1,0 +1,97 @@
+{
+  "completeness_requirements": [
+    "capacity_mw",
+    "redundancy",
+    "voltage_arch",
+    "site",
+    "timeline",
+    "rack_density_kw"
+  ],
+  "per_layer_constraints": [
+    {
+      "id": "R-001",
+      "applies_to_layers": [
+        1,
+        4
+      ],
+      "rule": "If any selected layer specifies 800VDC, all layers in the power path (1, 3, 4) must be 800VDC-compatible.",
+      "severity": "fail"
+    },
+    {
+      "id": "R-002",
+      "applies_to_layers": [
+        5
+      ],
+      "rule": "If rack_density_kw >= 100, layer 5 must specify direct-to-chip liquid cooling, not air cooling alone.",
+      "severity": "fail"
+    },
+    {
+      "id": "R-003",
+      "applies_to_layers": [
+        2
+      ],
+      "rule": "If redundancy specifies '2N' at the utility level, layer 2 selection must include a utility-grade control/protection brand (EP2 or Crown), not Anord Mardix alone.",
+      "severity": "warn"
+    },
+    {
+      "id": "R-004",
+      "applies_to_layers": [
+        1
+      ],
+      "rule": "EPC Power is currently a pending acquisition (not yet closed). Any design relying on Layer 1 = EPC Power must flag this as a supply-timeline dependency.",
+      "severity": "warn"
+    }
+  ],
+  "cross_layer_compatibility": [
+    {
+      "id": "X-001",
+      "rule": "Voltage architecture must be consistent from Layer 1 through Layer 4 \u2014 a design that mixes 800VDC at Layer 1 with 415VAC at Layer 4 without an explicit conversion stage is inconsistent.",
+      "severity": "fail"
+    },
+    {
+      "id": "X-002",
+      "rule": "Rack density (Layer 5 cooling capacity) must be able to support the power delivered per rack at Layer 4 \u2014 a mismatch here is a common design-time error.",
+      "severity": "fail"
+    }
+  ],
+  "cost_margin_notes": [
+    "Combination designs spanning 4+ SpinCo brands typically carry higher integration cost but higher margin than single-brand designs, per historical SpinCo bundling patterns (AI Infrastructure Platform).",
+    "Designs depending on EPC Power (pending close) carry schedule risk that should be reflected as a cost/timeline contingency, not silently absorbed."
+  ],
+  "physical_rules": {
+    "_note": "[Standard NEC/IEC Reference - Subject to SpinCo Line-Specific Validation] These are published generic-standard values, NOT SpinCo line-specific engineering limits. A SpinCo power engineer must confirm which standards and derating practice each product line designs against before production use.",
+    "continuous_load_derating": {
+      "value": 0.8,
+      "reference": "NEC 210.20(A) - continuous loads sized at 125% of load, i.e. 80% usable capacity",
+      "status": "GENERIC_STANDARD"
+    },
+    "assumed_power_factor": {
+      "value": 0.9,
+      "reference": "Typical UPS output power factor; RFP did not state. Assumption, flagged.",
+      "status": "ASSUMPTION"
+    },
+    "assumed_branch_circuit_amps": {
+      "value": 20,
+      "reference": "NEC 210.24 - common branch circuit rating where RFP does not specify",
+      "status": "GENERIC_STANDARD"
+    },
+    "out_of_scope_for_solver": [
+      {
+        "topic": "medium voltage switchgear",
+        "reason": "Requires protection coordination and arc-flash study per IEEE 1584, not arithmetic"
+      },
+      {
+        "topic": "busbar ampacity sizing",
+        "reason": "Requires thermal rise calculation and enclosure context; needs SpinCo line data"
+      },
+      {
+        "topic": "short-circuit withstand",
+        "reason": "Requires system fault current study"
+      },
+      {
+        "topic": "thermal / cooling design",
+        "reason": "Requires CFD or manufacturer thermal models"
+      }
+    ]
+  }
+}

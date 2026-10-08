@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Layer 0 — Bid Intake, Triage &amp; Routing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12151A; --panel:#1A1F26; --raised:#212832; --line:#2E3944;
+    --text:#E8ECEF; --muted:#8B95A1; --dim:#5A6470;
+    --cyan:#5EC8E0; --amber:#D9A441; --green:#4CAF7D; --coral:#E0625E; --violet:#9B8FD4;
+    --mono:'IBM Plex Mono',ui-monospace,monospace; --sans:'IBM Plex Sans',-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--sans)}
+  body{padding:26px 20px 60px}
+  .app{max-width:1120px;margin:0 auto}
+  .hdr{display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+  .hdr h1{font-family:var(--mono);font-size:19px;font-weight:600;margin:0 0 4px;letter-spacing:.02em}
+  .hdr .sub{color:var(--muted);font-size:13px;max-width:620px;line-height:1.5}
+  .badge{font-family:var(--mono);font-size:11px;border:1px solid var(--line);color:var(--muted);padding:3px 8px}
+  .badge.ok{border-color:var(--green);color:var(--green)} .badge.down{border-color:var(--coral);color:var(--coral)}
+  .panel{background:var(--panel);border:1px solid var(--line);padding:16px 18px;margin-bottom:14px}
+  label{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:8px}
+  textarea{width:100%;background:var(--raised);border:1px solid var(--line);color:var(--text);font-family:var(--mono);font-size:12px;line-height:1.5;padding:10px;min-height:90px;resize:vertical}
+  textarea:focus{outline:none;border-color:var(--cyan)}
+  input[type=text]{background:var(--raised);border:1px solid var(--line);color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 10px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  select,button{font-family:var(--mono);font-size:12px;border:1px solid var(--line);background:var(--raised);color:var(--text);padding:8px 12px;cursor:pointer}
+  button.primary{background:var(--cyan);color:#0A2530;border-color:var(--cyan);font-weight:600}
+  button.primary:hover{background:#7ad3e8}
+  button.approve{background:var(--green);color:#0A2A18;border-color:var(--green);font-weight:600}
+  button.reject{background:var(--coral);color:#2A0A0A;border-color:var(--coral);font-weight:600}
+  button:disabled{opacity:.35;cursor:not-allowed}
+  .drop{border:1px dashed var(--line);background:var(--raised);padding:22px;text-align:center;cursor:pointer;transition:border-color .2s}
+  .drop:hover,.drop.over{border-color:var(--cyan)}
+  .drop .big{font-family:var(--mono);font-size:13px;color:var(--text)}
+  .drop .small{font-size:11.5px;color:var(--dim);margin-top:6px}
+  #fileInput{display:none}
+  .ingest{margin-top:12px;border:1px solid var(--line);background:var(--raised);padding:12px 14px;display:none}
+  .ingest.show{display:block}
+  .ingest .line{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-bottom:6px}
+  .unsupported{border-left:2px solid var(--amber);padding:6px 10px;margin-top:6px;font-size:11.5px}
+  .unsupported .fn{font-family:var(--mono);color:var(--amber)}
+  .unsupported .rs{color:var(--muted);margin-top:2px}
+  .connector{width:1px;height:18px;background:var(--line);margin:0 auto}
+  .stage{background:var(--panel);border:1px solid var(--line)}
+  .stage.current{border-color:var(--cyan)}
+  .stage.rejected{border-color:var(--coral)}
+  .shead{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line)}
+  .shead .l{display:flex;align-items:center;gap:11px}
+  .snum{font-family:var(--mono);font-size:11px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);flex-shrink:0}
+  .stitle{font-family:var(--mono);font-size:13px;font-weight:600}
+  .sstat{font-family:var(--mono);font-size:10.5px;padding:3px 9px;border:1px solid var(--line);color:var(--muted)}
+  .sstat.await{color:var(--cyan);border-color:var(--cyan)}
+  .sstat.ok{color:var(--green);border-color:var(--green)}
+  .sstat.rej{color:var(--coral);border-color:var(--coral)}
+  .sbody{padding:14px 16px}
+  .expl{font-size:12.5px;line-height:1.55;background:var(--raised);border-left:3px solid var(--cyan);padding:9px 11px;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th{text-align:left;font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:6px 8px;border-bottom:1px solid var(--line)}
+  td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .tier{font-family:var(--mono);font-size:10px;padding:2px 7px;border:1px solid;white-space:nowrap}
+  .tier.CTO_AUTOMATE{color:var(--green);border-color:var(--green)}
+  .tier.ETO_GUIDED{color:var(--amber);border-color:var(--amber)}
+  .tier.ETO_EXCEPTION{color:var(--coral);border-color:var(--coral)}
+  .tier.OUT_OF_SCOPE{color:var(--dim);border-color:var(--dim)}
+  .pill{font-family:var(--mono);font-size:10px;padding:2px 7px;border:1px solid var(--line);color:var(--muted)}
+  .pill.pass{color:var(--green);border-color:var(--green)}
+  .pill.warn{color:var(--amber);border-color:var(--amber)}
+  .pill.fail{color:var(--coral);border-color:var(--coral)}
+  .pill.SOLVED,.pill.SOLVED_WITH_WARNINGS{color:var(--green);border-color:var(--green)}
+  .pill.NOT_SOLVABLE{color:var(--violet);border-color:var(--violet)}
+  .anchor{font-family:var(--mono);font-size:10.5px;color:var(--cyan);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+  .anchor.none{color:var(--dim);cursor:default;text-decoration:none}
+  .work{font-family:var(--mono);font-size:11px;background:#0D1013;border:1px solid var(--line);padding:10px 12px;margin-top:8px}
+  .work .w{display:grid;grid-template-columns:1fr auto;gap:10px;padding:3px 0}
+  .work .ref{color:var(--dim);font-size:10px;padding-bottom:5px;border-bottom:1px solid #1c2228;margin-bottom:4px}
+  .refuse{font-size:11.5px;color:var(--violet);padding:5px 0}
+  .gridhalf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:860px){.gridhalf{grid-template-columns:1fr}}
+  .approve-bar{display:flex;gap:10px;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);flex-wrap:wrap}
+  .rec{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:9px}
+  .err{background:rgba(224,98,94,.12);border:1px solid var(--coral);color:var(--coral);padding:10px 13px;font-size:12.5px;margin-bottom:12px;display:none}
+  .err.show{display:block}
+  .toggle{font-family:var(--mono);font-size:10.5px;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;margin-top:10px;display:inline-block}
+  .drawer{display:none;margin-top:8px;border:1px solid var(--line);background:var(--raised);padding:10px 12px}
+  .drawer.show{display:block}
+  .drawer pre{white-space:pre-wrap;word-break:break-word;margin:0;font-family:var(--mono);font-size:10.5px;color:var(--text)}
+  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;padding:40px 20px;overflow:auto}
+  .modal.show{display:block}
+  .modal-in{max-width:760px;margin:0 auto;background:var(--panel);border:1px solid var(--cyan);padding:20px 22px}
+  .modal h3{font-family:var(--mono);font-size:14px;margin:0 0 12px;color:var(--cyan)}
+  .src{font-family:var(--mono);font-size:12px;line-height:1.7;background:#0D1013;padding:14px;border:1px solid var(--line);max-height:400px;overflow:auto;white-space:pre-wrap}
+  .hl{background:rgba(94,200,224,.28);color:#fff}
+  .note{font-size:11.5px;color:var(--muted);margin-top:10px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="hdr">
+    <div>
+      <h1>LAYER 0 &middot; BID INTAKE, TRIAGE &amp; ROUTING</h1>
+      <div class="sub">Reads an RFP, decides line by line what is automatable and what needs an engineer, solves what is solvable, and shows which clause drove every decision.</div>
+    </div>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--muted)">
+      backend <span id="api" class="badge">checking&hellip;</span>
+    </div>
+  </div>
+
+  <div class="err" id="err"></div>
+
+  <div class="panel">
+    <label>1 &middot; Bid document</label>
+    <div class="drop" id="drop">
+      <div class="big">Drop a PDF here, or click to choose</div>
+      <div class="small">PDF or text. CAD drawings and macro spreadsheets are named and routed to engineering, not guessed at.</div>
+    </div>
+    <input type="file" id="fileInput" accept=".pdf,.txt,.md">
+    <div class="ingest" id="ingest"></div>
+    <div style="margin-top:14px">
+      <label>or paste text</label>
+      <textarea id="rfpText" placeholder="Paste RFP text&hellip;"></textarea>
+    </div>
+    <div class="row">
+      <select id="sample"><option value="">&mdash; sample &mdash;</option></select>
+      <button id="loadBtn">Load</button>
+      <input type="text" id="approver" placeholder="Your name (approver)">
+      <button class="primary" id="runBtn">Run pipeline &#9654;</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+  </div>
+
+  <div id="timeline"></div>
+</div>
+
+<div class="modal" id="modal"><div class="modal-in">
+  <h3 id="modalTitle">Source</h3>
+  <div class="src" id="modalSrc"></div>
+  <div class="note" id="modalNote"></div>
+  <div class="row"><button onclick="document.getElementById('modal').classList.remove('show')">Close</button></div>
+</div></div>
+
+<script>
+var API = window.location.protocol === 'file:' ? 'http://127.0.0.1:8000' : '';
+var run = null, sourceText = '', sourcePages = [], STAGE_NAMES = {};
+
+var SAMPLES = {
+ 'Syracuse switchgear (15kV, arc-resistant)':
+"RFP - Syracuse Regional Airport Authority #2023-20 Switchgear Procurement\n" +
+"SCOPE: Manufacture, furnish, deliver and test a Metal Clad Switchgear lineup.\n" +
+"- Equipment: One 15kV two-section Metal Clad Switchgear lineup\n" +
+"- Metal Clad Switchgear shall have eighteen (18) 15kV vacuum circuit breaker positions\n" +
+"- Arc resistance: Arc-resistant Type 2B, meeting or exceeding IEEE C37.20.7\n" +
+"- Incoming supply: Two 13.2 kV utility feeders from National Grid, underground cable\n" +
+"- Bus configuration: Two bus sections with tie breaker\n" +
+"- Instrument transformers: bus VTs and multi-ratio CTs\n" +
+"- Compliance: IEEE C37.20.2, IEEE C37.20.7, NFPA 70, ANSI, NEMA SG-4\n" +
+"- Participation goals: 30% MWBE, 6% SDVOB",
+ 'Ft. Lauderdale UPS (45 kVA)':
+"RFQ - US District Court, Southern District of Florida\n" +
+"Installation of 45-kVA UPS System in Data Center\n" +
+"SCOPE: Furnish, install and commission a UPS system providing conditioned and redundant backup power.\n" +
+"- UPS: 45-kVA online double-conversion UPS system\n" +
+"- Load served: ten (10) data center equipment racks\n" +
+"- Distribution: one dedicated power distribution cabinet\n" +
+"- Branch circuits: twenty-four (24) 208V power whips\n" +
+"- Rack power: rack-mounted PDUs\n" +
+"- Safety: Emergency Power Off (EPO) switch\n" +
+"- Earthing: grounding and bonding\n" +
+"- Compliance: NEC / NFPA 70 applicable to 208V branch distribution"
+};
+
+function esc(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function showErr(m){var e=document.getElementById('err');e.textContent=m||'';e.className='err'+(m?' show':'');}
+function api(path,opts){return fetch(API+path,opts).then(function(r){
+  if(!r.ok){return r.json().catch(function(){return{};}).then(function(d){throw new Error(d.detail||('HTTP '+r.status));});}
+  return r.json();});}
+function jpost(path,body){return api(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});}
+
+function health(){var el=document.getElementById('api');
+  api('/health').then(function(h){el.textContent='connected \u00b7 '+h.llm_mode;el.className='badge ok';})
+  .catch(function(){el.textContent='unreachable';el.className='badge down';});}
+
+function upload(file){
+  showErr('');
+  var fd=new FormData(); fd.append('file',file);
+  var box=document.getElementById('ingest');
+  box.className='ingest show'; box.innerHTML='<div class="line">Reading '+esc(file.name)+'\u2026</div>';
+  api('/ingest',{method:'POST',body:fd}).then(function(d){
+    sourceText=d.text||''; sourcePages=d.pages||[];
+    document.getElementById('rfpText').value=sourceText;
+    var pd=d.primary_document, h='<div class="line">'+esc(d.explanation)+'</div>';
+    if(pd){h+='<div class="line">'+esc(pd.filename)+' \u00b7 '+pd.page_count+' pages \u00b7 extractor '+esc(pd.extractor)+'</div>';}
+    (d.ingestion.unsupported_artifacts||[]).forEach(function(u){
+      h+='<div class="unsupported"><div class="fn">\u26a0 '+esc(u.filename)+' \u2192 routed to engineering</div><div class="rs">'+esc(u.reason)+'</div></div>';});
+    ((pd&&pd.warnings)||[]).forEach(function(w){h+='<div class="unsupported"><div class="rs">'+esc(w)+'</div></div>';});
+    box.innerHTML=h;
+  }).catch(function(e){box.innerHTML='<div class="line" style="color:var(--coral)">'+esc(e.message)+'</div>';});
+}
+
+var drop=document.getElementById('drop'), fi=document.getElementById('fileInput');
+drop.onclick=function(){fi.click();};
+drop.ondragover=function(e){e.preventDefault();drop.classList.add('over');};
+drop.ondragleave=function(){drop.classList.remove('over');};
+drop.ondrop=function(e){e.preventDefault();drop.classList.remove('over');if(e.dataTransfer.files[0])upload(e.dataTransfer.files[0]);};
+fi.onchange=function(){if(fi.files[0])upload(fi.files[0]);};
+
+var ANCHORS={}, ANCHOR_SEQ=0;
+function showSource(key,label){
+  var a=ANCHORS[key]; if(!a)return;
+  var pageTxt=(sourcePages[a.page-1]!==undefined)?sourcePages[a.page-1]:sourceText;
+  var s=a.span[0], e=a.span[1];
+  var from=Math.max(0,s-500), to=Math.min(pageTxt.length,e+500);
+  document.getElementById('modalTitle').textContent=label+' \u2014 page '+a.page;
+  document.getElementById('modalSrc').innerHTML=esc(pageTxt.slice(from,s))+'<span class="hl">'+esc(pageTxt.slice(s,e))+'</span>'+esc(pageTxt.slice(e,to));
+  document.getElementById('modalNote').textContent='doc '+a.doc_id+' \u00b7 version '+a.version+' \u00b7 chars ['+s+':'+e+'] \u00b7 extractor '+a.extractor;
+  document.getElementById('modal').classList.add('show');
+}
+function anchorCell(a,label){
+  if(!a)return '<span class="anchor none">\u2014</span>';
+  var k='a'+(++ANCHOR_SEQ); ANCHORS[k]=a;
+  return '<span class="anchor" onclick="showSource(\''+k+'\',\''+esc(label).replace(/'/g,'')+'\')">p'+a.page+' ['+a.span[0]+':'+a.span[1]+']</span>';
+}
+
+function r1(o){
+  var f=[['Voltage class','voltage_class_kv','kV'],['Arc resistance','arc_resistant',''],['Breaker positions','breaker_positions',''],
+         ['UPS rating','ups_kva','kVA'],['Racks','rack_count',''],['Branch circuits','branch_circuits',''],
+         ['Capacity','capacity_mw','MW'],['Redundancy','redundancy',''],['Voltage architecture','voltage_arch','']];
+  var h='<table><tr><th>Requirement</th><th>Value</th></tr>';
+  f.forEach(function(x){if(o[x[1]]!==null&&o[x[1]]!==undefined)
+    h+='<tr><td>'+x[0]+'</td><td style="font-family:var(--mono)">'+esc(o[x[1]])+' '+x[2]+'</td></tr>';});
+  h+='</table><div style="margin-top:10px;font-size:12px"><b>Completeness '+o.completeness_score+'%</b>'+
+     (o.missing_fields&&o.missing_fields.length?' \u00b7 missing: '+esc(o.missing_fields.join(', ')):'')+'</div>';
+  if(o.scope_evidence){
+    h+='<div style="margin-top:14px"><label>Scope evidence \u2014 why each layer is in or out</label>'+
+       '<table><tr><th>Layer</th><th>In scope</th><th>Basis</th><th>Top terms</th></tr>';
+    Object.keys(o.scope_evidence).forEach(function(n){var e=o.scope_evidence[n];
+      h+='<tr><td>L'+n+'</td><td>'+(e.in_scope?'<span class="pill pass">yes</span>':'<span class="pill">no</span>')+'</td>'+
+         '<td style="color:var(--muted);font-size:11.5px">'+esc(e.basis)+'</td>'+
+         '<td style="font-family:var(--mono);font-size:10.5px;color:var(--muted)">'+
+         esc((e.matched_terms||[]).map(function(t){return t[0]+'\u00d7'+t[1];}).join(', '))+'</td></tr>';});
+    h+='</table></div>';
+  }
+  return h;
+}
+function r2(o){
+  var h='<table><tr><th>Layer</th><th>Tier</th><th>Brand</th><th>Basis</th></tr>';
+  o.tiers.forEach(function(t){
+    h+='<tr><td>L'+t.n+' '+esc(t.name)+'</td><td><span class="tier '+t.tier+'">'+t.tier+'</span></td>'+
+       '<td style="font-family:var(--mono);font-size:11px">'+esc(t.hinted_brands.join(', ')||'\u2014')+'</td>'+
+       '<td style="color:var(--muted);font-size:11.5px">'+esc(t.reason)+'</td></tr>';});
+  h+='</table>';
+  if(o.pending_confirmations&&o.pending_confirmations.length){
+    h+='<div style="margin-top:10px;border-left:2px solid var(--amber);padding:7px 10px;font-size:12px">'+
+       '<b style="color:var(--amber)">Held for human confirmation</b> \u2014 a downward override was withheld; the safer tier applies until an engineer confirms.</div>';}
+  return h;
+}
+function r3(o){
+  var h='<table><tr><th>Layer</th><th>Brand</th><th>Spec</th></tr>';
+  o.layers.forEach(function(l){h+='<tr><td>L'+l.n+' '+esc(l.name)+'</td>'+
+    '<td style="font-family:var(--mono);font-size:11px;color:var(--cyan)">'+esc(l.brand)+'</td>'+
+    '<td style="font-size:11.5px">'+esc(l.spec)+'</td></tr>';});
+  return h+'</table>';
+}
+function r4(o){
+  var h='<table><tr><th>Check</th><th>Status</th><th>Note</th></tr>';
+  o.checks.forEach(function(c){h+='<tr><td style="font-family:var(--mono);font-size:11px">'+esc(c.id)+'</td>'+
+    '<td><span class="pill '+c.status+'">'+c.status+'</span></td><td style="font-size:11.5px">'+esc(c.note)+'</td></tr>';});
+  return h+'</table>';
+}
+function r5(o){
+  var h='';
+  o.results.forEach(function(r){
+    h+='<div style="margin-bottom:12px"><div style="display:flex;gap:10px;align-items:center;margin-bottom:5px">'+
+       '<b style="font-size:12.5px">L'+r.layer+' '+esc(r.layer_name)+'</b>'+
+       '<span class="pill '+r.status+'">'+r.status+'</span></div>';
+    if(r.status==='NOT_SOLVABLE'){
+      (r.reasons||[]).forEach(function(x){h+='<div class="refuse">\u2192 '+esc(x)+'</div>';});
+    }else{
+      h+='<div class="work">';
+      (r.working||[]).forEach(function(w){
+        h+='<div class="w"><span>'+esc(w.step)+': '+esc(w.expression)+'</span>'+
+           '<span style="color:var(--green)">= '+esc(w.result)+' '+esc(w.unit)+'</span></div>'+
+           '<div class="ref">'+esc(w.reference)+'</div>';});
+      h+='</div>';
+      (r.warnings||[]).forEach(function(w){h+='<div style="color:var(--amber);font-size:11.5px;margin-top:5px">\u26a0 '+esc(w)+'</div>';});
+      if(r.standards_note)h+='<div style="color:var(--dim);font-size:10.5px;margin-top:6px">'+esc(r.standards_note)+'</div>';
+    }
+    h+='</div>';});
+  return h;
+}
+function r6(o){
+  var h='<table><tr><th>Clause</th><th>Requirement</th><th>Disposition</th><th>Extracted</th><th>Source</th></tr>';
+  o.rows.forEach(function(r){
+    var cls=r.disposition==='NOT_HANDLED'?'fail':(r.disposition==='OUT_OF_SCOPE_BY_DESIGN'?'':'pass');
+    h+='<tr><td style="font-family:var(--mono);font-size:11px">'+esc(r.clause_id)+'</td>'+
+       '<td style="font-size:11.5px">'+esc((r.requirement||'').slice(0,80))+'</td>'+
+       '<td><span class="pill '+cls+'">'+esc(r.disposition.replace(/_/g,' '))+'</span></td>'+
+       '<td style="font-family:var(--mono);font-size:10.5px">'+esc(r.extracted||'\u2014')+'</td>'+
+       '<td>'+anchorCell(r.source_anchor,r.clause_id)+'</td></tr>';});
+  h+='</table>';
+  if(o.work_packages){
+    h+='<div style="margin-top:14px"><label>Routed work packages</label><div class="gridhalf">';
+    Object.keys(o.work_packages).forEach(function(t){
+      h+='<div style="border:1px solid var(--line);padding:10px">'+
+         '<div style="font-family:var(--mono);font-size:11.5px;color:var(--cyan);margin-bottom:6px">'+esc(t)+'</div>';
+      o.work_packages[t].forEach(function(l){h+='<div style="font-size:11.5px;margin-bottom:3px">'+
+        '<span style="font-family:var(--mono);color:var(--muted)">L'+l.n+'</span> '+esc(l.name)+'</div>';});
+      h+='</div>';});
+    h+='</div></div>';}
+  return h;
+}
+var R={1:r1,2:r2,3:r3,4:r4,5:r5,6:r6};
+
+function render(){
+  var el=document.getElementById('timeline'); el.innerHTML='';
+  var stages=Object.keys(run.stage_outputs).map(Number).sort(function(a,b){return a-b;});
+  stages.forEach(function(n,i){
+    if(i>0){var c=document.createElement('div');c.className='connector';el.appendChild(c);}
+    var o=run.stage_outputs[n], ap=run.approvals[n];
+    var cur=(n===run.current_stage&&run.status==='awaiting_approval');
+    var rej=(n===run.current_stage&&run.status==='rejected');
+    var card=document.createElement('div');
+    card.className='stage'+(cur?' current':'')+(rej?' rejected':'');
+    var body='<div class="expl">'+esc(o.explanation)+'</div>'+(R[n]?R[n](o):'');
+    body+='<div class="toggle" onclick="this.nextElementSibling.classList.toggle(\'show\')">\u25b8 evidence</div>'+
+          '<div class="drawer"><pre>'+esc(JSON.stringify(o.evidence,null,2))+'</pre></div>';
+    if(cur){
+      body+='<div class="approve-bar"><input type="text" id="rj'+n+'" placeholder="Reason (to reject)">'+
+            '<button class="approve" onclick="doApprove()">\u2713 Approve &amp; continue</button>'+
+            '<button class="reject" onclick="doReject('+n+')">\u2717 Reject</button></div>';
+    }else if(ap){
+      body+='<div class="rec">'+(ap.approved?'\u2713 approved':'\u2717 rejected')+' by '+esc(ap.approver)+
+            (ap.note?' \u2014 "'+esc(ap.note)+'"':'')+'</div>';
+    }
+    card.innerHTML='<div class="shead"><div class="l"><div class="snum">'+n+'</div>'+
+      '<div class="stitle">'+esc(STAGE_NAMES[n]||('Stage '+n))+'</div></div>'+
+      '<div class="sstat '+(cur?'await':(rej?'rej':'ok'))+'">'+(cur?'awaiting approval':(rej?'rejected':'approved'))+'</div></div>'+
+      '<div class="sbody">'+body+'</div>';
+    el.appendChild(card);
+  });
+  if(run.status==='completed'){
+    var d=document.createElement('div');
+    d.style.cssText='text-align:center;color:var(--green);font-family:var(--mono);font-size:12px;margin-top:14px;padding:13px;border:1px solid var(--green)';
+    d.textContent='\u2713 COMPLETE \u2014 all 6 stages approved';
+    el.appendChild(d);
+  }
+}
+
+function doApprove(){
+  showErr('');
+  jpost('/pipelines/'+run.run_id+'/approve',{approver:document.getElementById('approver').value||'unknown',note:''})
+   .then(function(r){run=r;render();}).catch(function(e){showErr('Approve failed: '+e.message);});
+}
+function doReject(n){
+  var f=document.getElementById('rj'+n), reason=f?f.value:'';
+  if(!reason){showErr('A reason is required to reject.');return;}
+  jpost('/pipelines/'+run.run_id+'/reject',{approver:document.getElementById('approver').value||'unknown',reason:reason})
+   .then(function(r){run=r;render();}).catch(function(e){showErr('Reject failed: '+e.message);});
+}
+
+document.getElementById('runBtn').onclick=function(){
+  showErr('');
+  var t=document.getElementById('rfpText').value.trim();
+  if(!t){showErr('Upload a document or paste text first.');return;}
+  sourceText=t; if(!sourcePages.length)sourcePages=[t];
+  var b=document.getElementById('runBtn'); b.disabled=true;
+  jpost('/pipelines',{rfp_text:t}).then(function(r){run=r;render();})
+   .catch(function(e){showErr('Run failed: '+e.message+' \u2014 is the backend running?');})
+   .then(function(){b.disabled=false;});
+};
+document.getElementById('resetBtn').onclick=function(){
+  run=null;sourceText='';sourcePages=[];ANCHORS={};
+  document.getElementById('rfpText').value='';
+  document.getElementById('timeline').innerHTML='';
+  document.getElementById('ingest').className='ingest';
+  showErr('');
+};
+var sel=document.getElementById('sample');
+Object.keys(SAMPLES).forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=k;sel.appendChild(o);});
+document.getElementById('loadBtn').onclick=function(){
+  if(sel.value){document.getElementById('rfpText').value=SAMPLES[sel.value];sourceText=SAMPLES[sel.value];sourcePages=[sourceText];}};
+
+api('/stage-names').then(function(s){STAGE_NAMES=s;}).catch(function(){});
+health(); setInterval(health,15000);
+</script>
+</body>
+</html>

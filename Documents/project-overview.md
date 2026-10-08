@@ -12,8 +12,8 @@
 - how the software is built: [architecture-overview.md](architecture-overview.md).
 
 **How to read the labels.**
-- **Intended** is the business direction described in the review meetings (22 Sep and 5 Oct 2026). It is the working baseline for purpose and workflow. It has not been formally signed off, and the meetings are not evidence that anything is built.
-- **Expected (review meetings)** marks an explicit expectation stated in those meetings.
+- **Intended** is the business direction described in the review meetings (22 Sep, 5 Oct and 8 Oct 2026). It is the working baseline for purpose and workflow. It has not been formally signed off, and the meetings are not evidence that anything is built.
+- **Expected (review meetings)** marks an explicit expectation stated in those meetings. Content from the 8 Oct 2026 meeting carries the date "(8 Oct 2026)" where the date matters. Where the client point of contact gave written direction before that meeting, the text says "written client direction".
 - **Proposed (inferred design)** marks a design recommendation inferred from the direction. It is not an approved technical design.
 - **Implemented (by code line)** describes only what a code line actually does, with its caveats.
 - **Needs confirmation** marks a point that remains open.
@@ -21,6 +21,8 @@
 ## 2. What Layer 0 is
 
 Layer 0 is a proof of concept (PoC: a small build that tests whether an idea works; it is not a product) for SpinCo, the existing Flex business being spun off as Axiom Solutions. Its intended purpose is to help the business manage an incoming bid opportunity, from the moment a request for proposal (RFP: a long customer document that says what the customer wants to buy) arrives until the final bid response is assembled.
+
+Three roles matter (details in section 6). One **bid manager** has a general idea of all the business units, receives the RFP and owns the opportunity. Each business unit has a **product manager** and a **design engineer**. The bid manager sends each participating unit its part of the RFP in one simple step, the units answer, and the bid manager assembles the comprehensive response (8 Oct 2026). The architecture assumes that EP² (Electrical Power Products) is already part of SpinCo / Axiom Solutions (written client direction).
 
 It should:
 - help understand the RFP;
@@ -40,8 +42,13 @@ This workflow is the business direction described in the review meetings and is 
 | Term | Meaning |
 |---|---|
 | Opportunity | An incoming bid (from an RFP, request for quotation RFQ, or request for information RFI) that the business considers pursuing |
-| Business unit | An organisational unit of SpinCo / Axiom Solutions that sells and delivers. The review meetings spoke of "six companies"; how these map to brands, pillars and teams is Needs confirmation |
-| Brand | An acquired company name, for example Anord Mardix, Crown, EP2, Flex Power Modules, JetCool, EPC Power (pending), Cloud |
+| Business unit | An organisational unit of SpinCo / Axiom Solutions that sells and delivers products. The review of 8 Oct 2026 spoke of six business units and named EP² as one of them. The working list is Anord Mardix, Crown Technical Systems, EP², Flex Power Modules, JetCool and Cloud (in-house); the exact list is Needs confirmation. Business units are data in the system, so the list can change without code changes. The six units are not the six grid-to-chip layers |
+| Bid manager | The one person who has a general idea of all the business units, receives the RFP, owns the opportunity, sends work to the units and assembles the final response (8 Oct 2026) |
+| Product manager | The person in a business unit who knows the unit's product offerings. Each unit has one (8 Oct 2026) |
+| Design engineer | The person in a business unit who states, per requirement, whether it is met and with what. Each unit has one (8 Oct 2026) |
+| Line item | One requirement taken from the RFP, shown as one row with a unique requirement ID that traces back to its source, for example "page 5, lines 6 to 8" |
+| Offering type | How a business unit would meet a requirement: configure-to-order (CTO), semi-custom or engineered-to-order (ETO). See section 5 |
+| Brand | An acquired company name, for example Anord Mardix, Crown, EP², Flex Power Modules, JetCool, EPC Power (pending), Cloud. EP² is taken as part of SpinCo (written client direction); the brand assignment of the others stays inferred until the Form 10 (SpinCo's registration filing) |
 | Product pillar | Critical Power, Embedded Power, Thermal Management, Cloud |
 | Product layer | One of the six grid-to-chip layers, L1 to L6. "Six layers" is not the same as "six companies"; there is no one-to-one mapping |
 | Team | The delivery or engineering team that owns and answers requirements. The v0.3.0 knowledge base uses four: Critical Power, Embedded Power, Thermal (JetCool), Cloud |
@@ -93,7 +100,10 @@ Detail is in [problem-mapping.md](problem-mapping.md). The core problem is how a
 - **Tracking team work is part of Layer 0.** It does not require Layer 0 to be a general-purpose collaboration platform.
 - **Linking and consolidating team responses is not autonomous proposal writing.** People write the responses.
 - **Supporting go/no-go does not give the model decision authority.** A person decides and is recorded. The working baseline is that bid/no-bid output is decision support, not a Layer 0 decision.
-- **Language-model rule.** The model reads; it does not decide anything that carries liability. Classification, validation and calculation are repeatable rules. In every code line the default run uses no language model; the intended design uses one only for reading.
+- **BOM handling (8 Oct 2026).** Layer 0 does not construct the bill of materials (BOM: the parts list of a product). The finished BOM lives in a separate system. Layer 0 reads it from there and shows it on screen 3 (section 7.1). The response itself may not include the BOM, but the product is built from it. The exact BOM source system is Needs confirmation.
+- **Offering types.** Each requirement is matched to one of three offering types, in client vocabulary. **Configure-to-order (CTO)** is a base model with options chosen, handled by CPQ; think of configuring a laptop's memory and disk. **Semi-custom** is a configured product plus extra workshop work for the customer; think of a car from the showroom sent to a workshop for tinted windows. **Engineered-to-order (ETO)** has no existing product: the whole thing is designed to the customer's requirements, for example a custom 8-foot rack with its own dimensions, wiring and power. EP² is in this business. The earlier tiers map as follows: `CTO_AUTOMATE` is CTO; `ETO_GUIDED` (the system drafts a basis of design and an engineer approves) is semi-custom, or guided ETO; `ETO_EXCEPTION` (engineers design manually) is ETO. The offering type is shown per requirement on screen 3.
+- **Retrieval (RAG, 8 Oct 2026).** RAG (retrieval-augmented generation) means giving the model retrieved reference text to work from. All product details of the business units go into a retrieval knowledge base, and so do their past RFP responses, since each unit has answered dozens of RFPs. The data is also saved in a database, with a connector that feeds it into the knowledge base. Fine-tuning a model is still not used.
+- **Language-model rule.** The model reads; it does not decide anything that carries liability. Classification, validation and calculation are repeatable rules. In every earlier code line the default run uses no language model; the intended design uses one for reading and for requirement identification and matching, with a person approving the result. Regular-expression (regex) pattern matching is rejected for requirement identification (section 13.1a).
 - **Downstream systems.** CPQ (Logik.io with Salesforce), costing (aPriori), quoting (QuoteWin), enterprise resource planning (ERP: SAP, Infor LN), product-data systems and engineering teams may support downstream work. The integration boundaries are uncertain and open: what is handed off, what is read back, and whether opportunities are created in a customer-relationship management (CRM) system.
 - **Open scope question.** Whether per-team estimation sheets, or any price or margin figures, belong inside Layer 0. Earlier documents say Layer 0 never produces a price; the review meetings mention estimation tables; v1.1 produced margin estimates on synthetic data. This is not resolved.
 - **Not in scope:** configuration engine; pricing engine; generator of quotes or bills of materials (BOMs); replacement for Logik.io, Salesforce, QuoteWin, SAP or aPriori; CAD or design tool; autonomous engineering design.
@@ -104,49 +114,57 @@ Detail is in [problem-mapping.md](problem-mapping.md). The core problem is how a
 - **Flex**: parent company and ultimate customer of the work.
 - **SpinCo (to become Axiom Solutions)**: the business whose bids Layer 0 would support. It sells to utilities, hyperscalers (very large cloud providers), neoclouds (new AI-infrastructure entrants), silicon providers and colocation operators; details are in the business background document. The exact separation date is Needs confirmation.
 - **Zensar**: builds the PoC.
-- **Client point of contact**: the business-side point of contact for the PoC; the review meetings of 22 Sep and 5 Oct 2026 were held with this role.
+- **Client point of contact**: the business-side point of contact for the PoC; the review meetings of 22 Sep, 5 Oct and 8 Oct 2026 were held with this role.
 - **The Zensar team**: takes the PoC forward. The PoC code was produced with AI coding tools and has no version history.
-- **Intended end users (Proposed, inferred design):** bid managers and application engineers who read RFPs; the people who make go/no-go decisions; and the owners of teams who receive and answer work packages. Titles and named individuals at SpinCo are Needs confirmation.
+- **Roles (Expected (review meetings), 8 Oct 2026).** One **bid manager** has a general idea of all the business units, receives the RFP and owns the opportunity. **Each business unit has a product manager and a design engineer.** The review spoke of six business units, with EP² named as one. The working list is in the terms table (section 2) and is Needs confirmation.
+- **Intended end users (Proposed, inferred design):** the bid manager; the product managers and design engineers of the participating units; and the people who make go/no-go decisions. Titles and named individuals at SpinCo are Needs confirmation.
 
 ## 7. Target workflow (Intended)
 
-This is the business direction described in the review meetings. No code line implements it end to end.
+This is the business direction described in the review meetings, updated by the review of 8 Oct 2026. No code line implements it end to end. The new baseline (Layer0-Flex, section 10.4) is at stage 0: a running skeleton with a seeded demonstration.
 
-1. **Read and understand** the incoming RFP. Every extracted item keeps an exact source reference: document, page and quoted text.
-2. **Determine participation.** Decide whether one, several or all relevant business units need to take part. Not every data-centre bid needs every unit.
-3. **Support a human go/no-go decision.** Layer 0 assembles the evidence (scope fit, deviations, capacity or portfolio conflicts, open questions). A named person decides, and the decision is recorded.
-4. **If go, establish the workflow** for that opportunity. Different customers and product combinations need different workflows: some steps are mandatory, some configurable.
-5. **Break the RFP into requirements and work packages** assigned to the appropriate teams. One requirement may involve several teams.
-6. **Track each team's response** against its assigned requirements.
-7. **Bring the responses together** into the final bid response with complete traceability, and check that every requirement is answered or explicitly excluded.
+The workflow is deliberately simple, and the review asked for it to be kept to one dispatch step. Think of different groups writing different chapters of one proposal.
+
+1. **Read and understand** the incoming RFP. The tool reads the RFP and splits it into requirements. Each requirement becomes one **line item** with a unique requirement ID and an exact source reference, for example "page 5, lines 6 to 8".
+2. **Match each requirement to product offerings.** The tool maps each requirement against the product offerings that each business unit carries, using retrieval (RAG) over product details and past responses. It proposes a business unit, a product or configuration, and an offering type (CTO, semi-custom or ETO) per requirement. An RFP may involve one or more business units. The matcher proposes; people confirm.
+3. **Determine participation and support a human go/no-go decision.** Layer 0 assembles the evidence (scope fit, deviations, capacity or portfolio conflicts, open questions). A named person decides, and the decision is recorded.
+4. **Dispatch in one step.** The bid manager sends each participating business unit its part: the main RFP plus the requirement line items assigned to it.
+5. **Business units respond.** The unit's product manager and design engineer complete their part. The response works as a checklist per requirement: the design engineer states that the requirement is met, and with what. Someone then validates those responses. The system tracks which units have responded.
+6. **Consolidate.** Responses flow back to the bid manager, who assembles the comprehensive response. Layer 0 checks that every requirement is answered or explicitly excluded, and keeps the link back to the source.
+7. **Handle changes.** Clarifications, addenda and change requests are processed as a delta against the frozen baseline (below).
+
+**The process must be agentic (8 Oct 2026).** The review identified "no agentic process" as a gap. The steps above (reading, matching, routing, tracking and consolidating) can be run by agents. Agentic runs give different answers each time, so the control is: the first run is reviewed by a person, then **frozen** as the specification baseline; later runs process **only the delta** (change requests). This is consistent with the earlier "freeze first-pass facts" principle. Agents propose; named people approve and decide (go/no-go, freeze, accepting a response). Details of the build are in [technical-architecture.md](technical-architecture.md).
 
 **Cross-cutting, at every step:**
 - human approval and accountability;
 - an audit history of decisions and changes;
-- handling of clarifications (Q&A), addenda and change requests against the affected requirements. The review meetings described incremental handling of change requests, with a drastically changed RFP treated as a new opportunity (how changes are applied incrementally is Needs confirmation).
+- handling of clarifications (Q&A), addenda and change requests against the affected requirements. The review meetings described incremental handling of change requests, with a drastically changed RFP treated as a new opportunity (how changes are applied incrementally is Needs confirmation; the freeze-then-delta control above is the Expected direction);
+- **concurrency and retention (8 Oct 2026).** Several RFPs run at once, and people work on several at once. Requirement IDs must be unique across all opportunities; part numbers need not be. Each engagement has its own workspace and workflow. All data for an opportunity (RFP, requirements, responses, communication) must be captured and protected for the life of the project and beyond, because warranty clauses apply. The record is append-only.
 
-### 7.1 Traceability chain and three views
+### 7.1 Traceability chain and three screens
 
-The chain is: **Original RFP requirement → breakdown and team assignment → team response → final bid response.**
+The chain is: **Original RFP requirement → line item with requirement ID → product mapping → business-unit response → final bid response.**
 
-The review meetings described three connected views that must all connect in the final response (Expected (review meetings)):
-1. the original RFP;
-2. how its requirements were broken up and assigned;
-3. how the teams responded.
+The review meetings described three connected views, and the review of 8 Oct 2026 made them concrete as three screens that are central to the demo (Expected (review meetings)):
+1. **The original RFP.**
+2. **The requirement breakdown.** Spreadsheet-like line items. Each has a unique requirement ID that traces back to its source, for example "page 5, lines 6 to 8".
+3. **The requirement-to-product mapping.** Against each requirement ID, the product or configuration that will meet it, with BOM-level detail and the offering type. Layer 0 does not construct the BOM. The finished BOM lives in a separate system; Layer 0 reads it from there and shows it here.
 
-The **requirement** is the main tracked item. It keeps its source reference, its sub-requirements, the participating team or teams, each team's response, and the parts of the final response that answer it. The missing three-way view is PM-105 (The expected three-way traceability view is missing).
+The **requirement** is the main tracked item. It keeps its source reference, its sub-requirements, the participating business unit or units, each unit's response, and the parts of the final response that answer it. The missing three-way view is PM-105 (The expected three-way traceability view is missing).
 
 ### 7.2 Illustrative examples (illustrative, not a recorded SpinCo bid)
 
-**Single-unit opportunity.** A standalone medium-voltage switchgear RFP, like the public Syracuse airport switchgear RFP used in the PoC.
-- Likely one business unit (critical power) participates.
+Which unit takes part is proposed by the matcher and confirmed by a person; the unit names below show the idea only.
+
+**Single-unit opportunity.** A standalone medium-voltage switchgear RFP, like the public Syracuse airport switchgear RFP used in the PoC (the sample file is Layer0-Flex/data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf).
+- Likely Crown Technical Systems participates (arc-resistant medium-voltage switchgear), and possibly EP² (relay and protection panels).
 - A light workflow: engineering review of requirements such as arc-resistant Type 2B, plus commercial and compliance items.
 - Go/no-go turns on scope fit and deviations.
-- Every requirement still traces to its owning team and its answer in the final response.
+- Every requirement still traces to its line item, its owning unit and its answer in the final response.
 
 **Multi-unit opportunity.** An AI data-centre campus RFP, like the synthetic 48 MW hyperscale-campus sample.
-- It may need facility power and switchgear, rack and board power, liquid cooling, and possibly compute integration.
-- That means several business units and teams. One requirement, such as rack power plus cooling at a given density, may involve two teams.
+- It may need Anord Mardix (facility power and switchgear), Flex Power Modules (rack and board power), JetCool (liquid cooling), Cloud (compute integration), and possibly EP² for substation control.
+- That means several business units. One requirement, such as rack power plus cooling at a given density, may involve two units.
 - The workflow is heavier and must coordinate responses across units before consolidation.
 - Not every data-centre bid needs every unit; the synthetic modular inference-pod sample may need fewer.
 
@@ -158,30 +176,31 @@ Status labels: **Intended** is the workflow step or capability from the business
 
 | Workflow step or capability | Intended | Proposed design | Implemented, by code line |
 |---|---|---|---|
-| 1. Read and understand the RFP | Any format and length; every item keeps document, page and quoted text; unsupported files (CAD, macro spreadsheets) named and sent to engineering | Read-only ingestion with the language model used only for reading; scanned pages need OCR (optical character recognition) | v0.3.0: reads a real PDF or text; regex (pattern matching) by default; language-model path untested; clause splitting unreliable on the full 101-page PDF; no OCR. v1.0: anchored extraction shown on one synthetic case; plain text only. v1.1: reads no RFP |
-| 2. Determine participation of business units | One, several or all units; not every bid needs every unit | A mapping of layers, brands and units to teams, producing a suggested participation list for a person to confirm | None. v0.3.0 scope detection (which product layers a bid touches, mapped to brands and teams) is a partial precursor only |
+| 1. Read and understand the RFP | Any format and length; every item keeps document, page and quoted text; unsupported files (CAD, macro spreadsheets) named and sent to engineering | Layout reading plus model-based requirement identification, with anchors verified against the page text (no regex); scanned pages need OCR (optical character recognition). Layer0-Flex (new baseline): skeleton, 8 Oct | v0.3.0: reads a real PDF or text; regex (pattern matching) by default; language-model path untested; clause splitting unreliable on the full 101-page PDF; no OCR. v1.0: anchored extraction shown on one synthetic case; plain text only. v1.1: reads no RFP |
+| 2. Determine participation of business units | One, several or all units; not every bid needs every unit | Matching of each requirement to business-unit offerings through retrieval (RAG), producing a suggested participation list for a person to confirm | Layer0-Flex (new baseline): skeleton, 8 Oct. Earlier lines: none. v0.3.0 scope detection (which product layers a bid touches, mapped to brands and teams) is a partial precursor only |
 | 3. Support a human go/no-go decision | Evidence assembled; a named person decides; decision recorded | An evidence pack (scope fit, deviations, conflicts, open questions) and a decision record | None as defined. v1.1 gives BID/HOLD/NO_BID with a margin estimate over synthetic data (partial, different intent) |
-| 4. Establish the opportunity workflow | Per customer and product mix; some steps mandatory, some configurable | Workflow templates selected per opportunity | None |
-| 5. Break into requirements and work packages by team | Requirement-level assignment; one requirement may involve several teams | Requirement as the unit of work; work packages per team | v0.3.0: routes per layer (not per requirement) to four teams; payload adapters not wired; requirement registry (M17) not connected. v1.0, v1.1: none |
-| 6. Track each team's response | Responses tracked against assigned requirements | A response record per requirement and team (form is open: narrative, estimation sheet, price?) | None. No estimation sheets in any line |
-| 7. Consolidate into the final bid response | Complete traceability; every requirement answered or excluded | Links from each requirement to the parts of the final response | v0.3.0: coverage map built and connected (weak on full PDFs); proposal checker built but not connected. No consolidation in any line |
-| Cross-cutting: Q&A, addenda, change requests | Captured against affected requirements; incremental change handling | Clarification entries linked to requirement IDs | Not built in any line |
-| Cross-cutting: human review and audit | Approve, change, split or merge; immutable history | Side-by-side review; append-only audit log; frozen first-pass facts | v0.3.0: approve or reject only; reject ends the run; no edit; approvals editable, no immutable log. v1.0: edit, split, merge and a case-scoped event log in the data layer (unverified); three-panel UI never compiled. v1.1: none |
+| 4. Establish the opportunity workflow | Per customer and product mix; some steps mandatory, some configurable | Workflow templates selected per opportunity; agents run the steps, people approve | Layer0-Flex (new baseline): skeleton, 8 Oct. Earlier lines: none |
+| 5. Break into requirements and work packages by team | Requirement-level assignment; one requirement may involve several teams | Requirement as the unit of work (line item with unique ID); one-step dispatch of work packages per business unit. Screens 2 and 3 show the breakdown and the mapping | Layer0-Flex (new baseline): skeleton, 8 Oct. v0.3.0: routes per layer (not per requirement) to four teams; payload adapters not wired; requirement registry (M17) not connected. v1.0, v1.1: none |
+| 6. Track each team's response | Responses tracked against assigned requirements | A checklist response per requirement and unit (the design engineer states that it is met, and with what), then validation; tracking of which units have responded. Whether an estimation sheet or price is also needed is open | Layer0-Flex (new baseline): skeleton, 8 Oct. Earlier lines: none; no estimation sheets |
+| 7. Consolidate into the final bid response | Complete traceability; every requirement answered or excluded | Links from each requirement to the parts of the final response; coverage and a compliance matrix | Layer0-Flex (new baseline): skeleton, 8 Oct. v0.3.0: coverage map built and connected (weak on full PDFs); proposal checker built but not connected. No consolidation in any line |
+| Cross-cutting: Q&A, addenda, change requests | Captured against affected requirements; incremental change handling | Clarification entries linked to requirement IDs; the first run is frozen and later runs process only the delta | Layer0-Flex (new baseline): skeleton, 8 Oct. Not built in any earlier line |
+| Cross-cutting: human review and audit | Approve, change, split or merge; immutable history | Review of the three screens; append-only audit log; frozen first-pass facts and delta-only reruns | v0.3.0: approve or reject only; reject ends the run; no edit; approvals editable, no immutable log. v1.0: edit, split, merge and a case-scoped event log in the data layer (unverified); three-panel UI never compiled. v1.1: none |
 
 ### 8.2 Supporting capabilities
 
 | Workflow step or capability | Intended | Proposed design | Implemented, by code line |
 |---|---|---|---|
 | Source anchoring (provenance states) | Every value shows where it came from: `EXTRACTED` (verbatim), `DERIVED` (calculated), `UNANCHORED` (not found, never given an invented location). Serves steps 1, 5, 7 | Carried through assignment and response records | v0.3.0 and v1.0: built |
-| Scope detection across six grid-to-chip layers | Input to steps 2 and 5 | Layer-to-brand-to-team map, to be reconciled with the business-unit list | v0.3.0: built; out-of-scope layers are wrongly drafted as `ETO_EXCEPTION` (defect). v1.0: not built (Phase 2) |
-| Automation tiers | `CTO_AUTOMATE` (standard, can go to configuration and pricing tools), `ETO_GUIDED` (mostly bespoke: standard sub-parts handled, rest written up for a design engineer), `ETO_EXCEPTION` (fully bespoke: captured with a placeholder and sent to a specialist). CTO is configure-to-order; ETO is engineered-to-order. Input to steps 3 and 5 | Tier shown per requirement as evidence | v0.3.0: built, deterministic rules. v1.0: not built. v1.1: not applicable |
-| Specification and engineering checks; solve or refuse | Simple standard items solved with cited references; bespoke items refused with a reason. Input to steps 3 and 5 | Same | v0.3.0: low-voltage arithmetic only |
-| Deviation detection against past bids | What a new RFP requires that an earlier bid did not quote. Input to step 3 | Same | v1.0: built, tested on one synthetic case |
+| Scope detection across six grid-to-chip layers | Input to steps 2 and 5 | Layer-to-brand-to-team map, to be reconciled with the business-unit list; superseded in the new baseline by matching against business-unit offerings | v0.3.0: built; out-of-scope layers are wrongly drafted as `ETO_EXCEPTION` (defect). v1.0: not built (Phase 2) |
+| Automation tiers | `CTO_AUTOMATE` (standard, can go to configuration and pricing tools), `ETO_GUIDED` (mostly bespoke: standard sub-parts handled, rest written up for a design engineer), `ETO_EXCEPTION` (fully bespoke: captured with a placeholder and sent to a specialist). CTO is configure-to-order; ETO is engineered-to-order. Input to steps 3 and 5 | Offering type (CTO, semi-custom, ETO) shown per requirement on screen 3; the tiers map as in section 5 | v0.3.0: built, deterministic rules. v1.0: not built. v1.1: not applicable |
+| Specification and engineering checks; solve or refuse | Simple standard items solved with cited references; bespoke items refused with a reason. Input to steps 3 and 5 | Same; reused as evidence checks in the new baseline | v0.3.0: low-voltage arithmetic only |
+| Deviation detection against past bids | What a new RFP requires that an earlier bid did not quote. Input to step 3 | Same; v1.0 and v1.1 rule pieces reused as evidence checks | v1.0: built, tested on one synthetic case |
 | Bid, execution and portfolio checks | Capacity, specification and timeline conflicts across customers; phase-to-phase changes needing an ECN (engineering change notice: formal approval of a design change). Input to step 3; later phases | Same | v1.1: three-stage demo, deterministic rules over synthetic, pre-structured data |
 | Coverage map and proposal checker | Step 7 | Same | v0.3.0: see step 7 above |
-| Isolation of concurrent bids | Two teams on unrelated RFPs cannot cross-contaminate | Case ID on every record | v1.0: case ID on every specification and event, not stress-tested. v1.1: case IDs per scenario |
-| Pointer links to artefacts in other systems | Drawings, vendor specs, test reports linked from requirements; steps 5 to 7 | A read-only pointer index to the systems that own the files | None |
+| Isolation of concurrent bids | Two teams on unrelated RFPs cannot cross-contaminate | Own workspace per engagement; requirement IDs unique across all opportunities; append-only record | v1.0: case ID on every specification and event, not stress-tested. v1.1: case IDs per scenario |
+| Pointer links to artefacts in other systems | Drawings, vendor specs, test reports linked from requirements; steps 5 to 7 | A read-only pointer index to the systems that own the files; includes the BOM source system (Needs confirmation) | None |
 | Connectors to QuoteWin, SAP / Infor LN, aPriori | Boundaries open (section 5) | Read-only lookups and payload hand-off | Stubs only (PM-111: Integrations with downstream systems exist only as stubs) |
+| Product and past-response knowledge (RAG) | All business-unit product details and past RFP responses in a retrieval knowledge base, fed from a database through a connector (8 Oct 2026). Serves step 2 | Same; no fine-tuning | Layer0-Flex (new baseline): skeleton, 8 Oct. Earlier lines: none (PM-018: Product knowledge and past bid responses are not reusable across bids) |
 
 ## 9. Expected value (hypotheses to measure)
 
@@ -237,7 +256,12 @@ These are separate code lines. They do not form one working system, none is a fi
 
 ### 10.4 Documents and code baseline
 
-Documents and code are fragmented and contradict each other, with no version control (PM-110). A consolidation was decided on 5 October (section 13). Which code line is the base for further work is not yet decided.
+Documents and code were fragmented and contradicted each other, with no version control (PM-110). A consolidation was decided on 5 October (section 13). **Resolved on 8 Oct 2026:** the Git repository **Layer0-Flex** is now the single code base, and the documents in Layer0-Flex/Documents are the source of truth. PM-110 is partly resolved: version control now exists, and the remaining work is to keep documents and code in step.
+
+- **Shape.** A modular monolith: one Python service whose modules each have a model, a view and a controller. The existing v0.3.0 modules are ported into it rather than rewritten. The v1.0 and v1.1 rule pieces are reused as evidence checks.
+- **Modules (new baseline):** opportunities, ingestion, requirements, catalog (business units, products, past responses, retrieval index), matching, decisions (participation, go/no-go), workpackages (dispatch, responses, validation), consolidation (coverage, compliance matrix, final response), changes (delta) and trace (three screens, portfolio). The port table is in [architecture-overview.md](architecture-overview.md); build details are in [technical-architecture.md](technical-architecture.md).
+- **Sample RFP for development:** Layer0-Flex/data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf (the public Syracuse switchgear RFP).
+- **Status on 8 Oct 2026: stage 0 is built: a running skeleton with a demonstration seeded from the Syracuse RFP; the reader and matcher agents have not yet been run on the full RFP.**
 
 ## 11. How the idea evolved: history
 
@@ -252,7 +276,7 @@ Documents and code are fragmented and contradict each other, with no version con
 | 22 to 23 Sep 2026 | **Intake and specification anchoring in front of the customer's CPQ** (v1.0) | Anchored extraction plus a check against the customer's past bid; flag deviations before submission | Documented; one synthetic case demonstrated |
 | 23 Sep 2026 onward | **Portfolio-risk intake** (v1.1) | Bid-stage, execution-stage and portfolio-stage decision support, so that simultaneous commitments across customers do not conflict | Demo over synthetic data |
 
-The opportunity-management workflow described in the review meetings (22 Sep and 5 Oct 2026) is the working baseline and succeeds these framings for purpose and workflow. Formal sign-off has not been given. How much of the v1.1 portfolio and execution-stage checks stays in Layer 0 is open (they are input to step 3 and later phases).
+The opportunity-management workflow described in the review meetings (22 Sep, 5 Oct and 8 Oct 2026) is the working baseline and succeeds these framings for purpose and workflow. Formal sign-off has not been given. How much of the v1.1 portfolio and execution-stage checks stays in Layer 0 is open (they are input to step 3 and later phases).
 
 **Common core** shared by all framings, and still valid: read the bid; identify requirements with their source; decide what can be automated or committed; route the work to the right people; keep humans accountable.
 
@@ -262,6 +286,7 @@ The opportunity-management workflow described in the review meetings (22 Sep and
 - 23 September: research found that hyperscalers sign direct framework contracts with a single vendor instead of competitive RFPs, so a tool that only handled bid intake missed execution-stage and portfolio-stage risk. The figures offered ("$100M" at risk; contracts of "$115M to $720M" with named companies) are unverified claims.
 - Value claims were withdrawn the same day (section 9).
 - 5 October: the review meeting described the opportunity-management workflow and found the three-way traceability view missing from the demo.
+- 8 October: the review meeting fixed the working baseline: roles (bid manager; product manager and design engineer per unit), a simple one-step dispatch, three screens, no regex, an agentic process with freeze-then-delta, RAG for product knowledge and past responses, and Layer0-Flex as the single code base. It also set the timeline in section 12.0.
 
 ### 11.3 Code lines and precursors
 
@@ -285,10 +310,31 @@ Whether `layer0-delivery/` is the newest "enhanced" 17-module version is also un
 | 23 Sep | Pivot to portfolio-risk intake; v1.1 rewrite planned (about 22 hours estimated) |
 | 24 and 28 Sep | v1.1 release folder and parent folder dates |
 | 5 Oct | Review meeting 2: v1.1 reviewed; three-way traceability screen missing; decision to consolidate documents before more code |
+| 8 Oct | Review meeting 3 (preceded by a written note from the client point of contact): roles, three screens, offering types, agentic process, RAG, Layer0-Flex adopted by the project team as the single code base (stage 0 skeleton); first screen walkthrough planned for 9 Oct |
 
-## 12. Roadmap and next steps (Proposed, per code line)
+## 12. Roadmap and next steps
 
-Every item below is **Proposed**, and it is organised **per code line**. The roadmaps were written under earlier framings and the sources define "Phase 2" and the version after each package differently, so no single roadmap is declared current. No roadmap yet targets the workflow in section 7 as a whole; which code line is the base, and which roadmap the team follows, needs confirmation. A Proposed (inferred design) direction for workflow work is stated at the end.
+### 12.0 Current plan (from 8 Oct 2026)
+
+**Timeline (Expected (review meetings), 8 Oct 2026).**
+- 9 Oct 2026: a first walkthrough of the three screens. It may be static or hard-coded.
+- 12 Oct 2026: a functioning version is targeted, with a walkthrough document.
+
+**Build stages (Proposed (inferred design)).** Each stage builds on the Layer0-Flex baseline and leaves it running end to end. The modules are ported and wired, not redesigned.
+0. Skeleton: every module in place, a demonstration seeded from the Syracuse RFP, the three screens (built 8 Oct 2026).
+1. Reading: OCR, contents and header detection, the reader agent on the full RFP with its answers frozen (target 9 Oct 2026, with the screen walkthrough).
+2. Matching: product matching against business-unit offerings, EP² and unit catalogs refined, review actions (10 to 11 Oct 2026).
+3. Workflow: decisions, one-step dispatch, checklist responses and validation on the real extraction (target 12 Oct 2026, functioning version).
+4. Consolidation: coverage, compliance matrix, response outline, validated answers fed back into the knowledge base (after 12 Oct 2026).
+5. Change handling: delta processing against the frozen baseline (after 12 Oct 2026).
+
+Build details are in [technical-architecture.md](technical-architecture.md). **The older per-line roadmaps in sections 12.1 to 12.3 are now history.**
+
+**Future (not in scope).** If the design works well, the review noted many similar use cases in the semiconductor industry.
+
+### Earlier per-line roadmaps (history)
+
+Every item below is **Proposed**, and it is organised **per code line**. The roadmaps were written under earlier framings and the sources define "Phase 2" and the version after each package differently, so none is current. Section 12.0 now targets the workflow in section 7; the roadmaps below do not. A Proposed (inferred design) direction for workflow work is stated at the end.
 
 ### 12.1 v1.0 line: Phase 2 (4 weeks, "assuming access to real SpinCo historical RFP data")
 
@@ -314,9 +360,9 @@ Every item below is **Proposed**, and it is organised **per code line**. The roa
 6. Fix the out-of-scope drafting defect; add an append-only audit log separate from editable state; freeze the first-pass extraction.
 7. Later: a second language-model check, addenda handling, routing payloads, connect the proposal checker.
 
-### 12.4 Workflow steps not covered by any roadmap (Proposed (inferred design))
+### 12.4 Workflow steps not covered by any earlier roadmap (history)
 
-Steps 2, 3 (as a recorded human decision), 4, 6 and the final-response consolidation in step 7 appear in no existing roadmap. Once the baseline and the remaining decisions are settled, the next demo could be scoped around one opportunity carried through steps 1 to 7 on a single code line. Its acceptance criteria are an open decision (section 14, item 1).
+Participation, go/no-go (as a recorded human decision), dispatch, response tracking and final-response consolidation appeared in no earlier roadmap. Section 12.0 now covers them on the single code line. The acceptance criteria for the demo remain open.
 
 ### 12.5 Exit criteria for a pilot and for production (from earlier plans)
 
@@ -335,6 +381,21 @@ Steps 2, 3 (as a recorded human decision), 4, 6 and the final-response consolida
 
 Smaller meeting agreements (22 Sep): use the sample RFP already in the app instead of pasting the PDF; share the "enhanced version" of the build through Teams; meet again the next day.
 
+### 13.1a Direction from the 8 Oct 2026 review
+
+Each point is marked as stated in the meeting, as written client direction given before it, or as a project-team decision. Formal sign-off is still pending.
+
+1. **EP² is part of SpinCo / Axiom Solutions** (written client direction). The design includes solution components coming from EP², and the working code must include EP² products. This replaces the earlier "brand assignment inferred until the Form 10" caveat for EP² only; the caveat stays for the other brands.
+2. **Connect and test the unwired modules** (written client direction). All existing modules are important; wire them in, test them and use them in the PoC.
+3. **Three screens** (stated in the meeting): the original RFP, the requirement breakdown, and the requirement-to-product mapping with BOM detail. Layer 0 reads the BOM from a separate system and does not construct it.
+4. **Simple workflow** (stated in the meeting): one-step dispatch from the bid manager; checklist responses; validation; the system tracks which units have responded.
+5. **No regex** (stated in the meeting): pattern matching turned table-of-contents entries into requirements and used about 100,000 model tokens. Requirement identification must be model-based on top of deterministic layout reading. The choice of PDF tooling is not the client's concern; the quality of the result is.
+6. **The process must be agentic** (stated in the meeting): agents propose, people decide; the first run is reviewed and frozen, later runs process only the delta.
+7. **Do not redesign the architecture** (stated in the meeting). About 12 to 13 modules exist. Modularity is deliberate, so one module can change without touching the others. The three-screen view is equally important.
+8. **RAG** (stated in the meeting): product details and past responses of the business units go into a retrieval knowledge base. Fine-tuning is still not used.
+9. **Concurrency and retention** (stated in the meeting): unique requirement IDs across opportunities, a workspace per engagement, and append-only retention for the life of the project and beyond.
+10. **Layer0-Flex is the single code base** (project-team decision, 8 Oct 2026), as in section 10.4.
+
 ### 13.2 Decisions recorded in the written sources (earlier iterations)
 
 - 22 Sep: rewrite the documents to match the code instead of building the missing stages.
@@ -349,13 +410,14 @@ Smaller meeting agreements (22 Sep): use the sample RFP already in the app inste
 - Layer 0 is not a collaboration tool.
 - Each requirement gets an ID, is classified and routed, and each team responds, possibly on an estimation sheet (form open).
 - A final check confirms every customer requirement was answered; clarifications update requirements.
-- Humans review changes side by side: the language model has no authority to change a result, but a person does. Approval is step by step. Fine-tuning a model is rejected as too expensive; the system is to be trained through rules, not the model, and not through retrieval-augmented generation (RAG). Temperature 0 and an immutable first-pass fact set.
-- Decide which of "six companies" respond, go or no-go, create the workflow, keep three-way traceability, handle changes incrementally with a fixed plan and a new opportunity for a drastically changed RFP.
+- Humans review changes side by side: the language model has no authority to change a result, but a person does. Approval is step by step. Fine-tuning a model is rejected as too expensive. The review of 5 Oct said the system is trained through rules, not through retrieval-augmented generation (RAG); the review of 8 Oct updates this: RAG is now expected for product knowledge and past responses (section 13.1a). Temperature 0 and an immutable first-pass fact set.
+- Decide which of the six business units respond, go or no-go, create the workflow, keep three-way traceability, handle changes incrementally with a fixed plan and a new opportunity for a drastically changed RFP.
 - The PoC does not yet meet these expectations: v0.3.0 triages per layer with no editing or estimation sheets; v1.1 runs over synthetic data.
 
 ### 13.4 Ambiguities in the review-meeting content
 
-- "Six companies" (one passage transcribed as "76"), and how these map to brands, pillars and teams (four pillars and seven brands appear in written sources).
+- The business-unit list. The review of 8 Oct 2026 settled on six business units with EP² as one, and the working list is Anord Mardix, Crown Technical Systems, EP², Flex Power Modules, JetCool and Cloud (in-house). EPC Power stays pending acquisition and is not active. The exact list and how units map to brands, pillars and teams remain Needs confirmation (four pillars and seven brands appear in written sources). The six units are not the six grid-to-chip layers.
+- The exact BOM source system, from which Layer 0 reads the finished BOM.
 - "$7 billion", against $6.6B FY26 revenue in written sources.
 - A "January 4" start, with no year given.
 - The phrase "pre-RFI bid response system", against the RFPs actually processed.
@@ -367,7 +429,8 @@ Smaller meeting agreements (22 Sep): use the sample RFP already in the app inste
 
 - This document gives the project view.
 - [business-and-domain-background.md](business-and-domain-background.md) explains Flex, SpinCo, how engineered products are sold, what CPQ does and a worked RFP example. Read it first if terms such as ETO, CPQ or switchgear are new.
-- [problem-mapping.md](problem-mapping.md) lists each business problem (PM-001 to PM-017, grouped as core workflow, supporting capabilities, and commitments, capacity and volume) and each PoC or project problem (PM-101 to PM-111) with impact, solution options and success criteria. The identifiers were created for documentation traceability only.
+- [problem-mapping.md](problem-mapping.md) lists each business problem (PM-001 to PM-018, grouped as core workflow, supporting capabilities, and commitments, capacity and volume) and each PoC or project problem (PM-101 to PM-112) with impact, solution options and success criteria. The identifiers were created for documentation traceability only.
 - [architecture-overview.md](architecture-overview.md) explains the modules, stages and data flow of each code line and where Layer 0 sits next to existing systems.
 - [technical-architecture.md](technical-architecture.md) is the build design for the next version: how an RFP is read into anchored requirements (PyMuPDF, pdfplumber, Tesseract OCR), the data model, the workflow modules, change handling, the views and the build order.
+- A team plan exists outside this Documents folder; it tracks work and is not part of the source of truth.
 - Original files are kept unchanged. Where a source is superseded (earlier "agentic CPQ" documents, all catch-rate and ROI figures, the original problem and solution documents), this document describes it only as history (section 11).
