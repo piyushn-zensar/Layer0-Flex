@@ -1,0 +1,176 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Manufacture complete as specified or required for operation and continuous service at the location indicated in the Contract Documents.",
+        "section": "3.1.A",
+        "text": "Manufacture equipment as specified for operation at the indicated location."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Provide all openings in floors, walls, and other structures necessary for complete equipment installation, unless such openings are specifically indicated as being provided by others.",
+        "section": "3.1.B",
+        "text": "Provide necessary structural openings for equipment installation unless specified otherwise."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Make all internal connections as required.",
+        "section": "3.1.C",
+        "text": "Perform all required internal connections."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Check all internal connections, especially current transformer secondary short circuiting jumpers, and torque to MANUFACTURERs recommendation.",
+        "section": "3.1.D",
+        "text": "Verify and torque all internal connections per manufacturer's recommendations."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Erect equipment enclosure and all components plumb, true, and conforming to MANUFACTURER’s printed instructions.",
+        "section": "3.2.A",
+        "text": "Install equipment enclosure per manufacturer's instructions."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Provide all openings in floors, walls, and other structures necessary for complete equipment installation, unless such openings are specifically indicated as being provided by others.",
+        "section": "3.2.B",
+        "text": "Provide necessary structural openings for equipment installation unless specified otherwise."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Roof penetrations shall not be permitted.",
+        "section": "3.2.C",
+        "text": "Do not allow roof penetrations."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Level, shim, and anchor the prefabricated equipment enclosure to the foundation in accordance with the MANUFACTURERS instructions.",
+        "section": "3.2.D",
+        "text": "Level, shim, and anchor the enclosure per manufacturer's instructions."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Replace any panels or components bent or otherwise damaged as result of PURCHASERS operations, or repair if damage is minor.",
+        "section": "3.2.E",
+        "text": "Replace or repair damaged panels or components caused by purchaser's operations."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Megger each pole of breaker for freedom from grounds.",
+        "section": "3.3.A.1",
+        "text": "Test each breaker pole for grounding issues."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Operate the breaker manually and visually inspect the breaker.",
+        "section": "3.3.A.2",
+        "text": "Manually operate and inspect the breaker."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Adjust the gap of the primary contacts as per MANUFACTURER's instructions.",
+        "section": "3.3.A.3",
+        "text": "Adjust primary contact gap per manufacturer's instructions."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Check for proper clearances of all items.",
+        "section": "3.3.A.4",
+        "text": "Verify proper clearances of all items."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Check for proper lubrication.",
+        "section": "3.3.A.5",
+        "text": "Ensure proper lubrication."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Inspect all bushings.",
+        "section": "3.3.A.6",
+        "text": "Inspect all bushings."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Check all secondary contacts for proper operation.",
+        "section": "3.3.A.7",
+        "text": "Verify proper operation of all secondary contacts."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "With breaker in switchgear, operate the breaker electrically and check for proper operation.",
+        "section": "3.3.A.8",
+        "text": "Electrically operate the breaker in switchgear and verify operation."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Check continuity of breaker frame ground.",
+        "section": "3.3.A.9",
+        "text": "Verify continuity of breaker frame ground."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Check all safety interlock mechanisms for proper lubrication, adjustment and operation.",
+        "section": "3.3.B.1",
+        "text": "Inspect and adjust safety interlock mechanisms for proper operation."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Megger all power buses with a 1,000-volt megger. Grounded AC circuits, instruments and fuses should not be meggered.",
+        "section": "3.3.B.2",
+        "text": "Test power buses with a 1,000-volt megger, excluding grounded AC circuits."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Inspect all buses and insulators.",
+        "section": "3.3.B.3",
+        "text": "Inspect all buses and insulators."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Inspect control and instrument switches and adjust contacts if required.",
+        "section": "3.3.B.4",
+        "text": "Inspect and adjust control and instrument switches."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Check all fuses.",
+        "section": "3.3.B.5",
+        "text": "Verify all fuses."
+      },
+      {
+        "category": "technical",
+        "page": 70,
+        "quote": "Check connections to instruments and adjust instrument indicating pointers.",
+        "section": "3.3.B.6",
+        "text": "Verify instrument connections and adjust pointers."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

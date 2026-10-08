@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "At terminal blocks, the incoming and outgoing wires must both be labeled. The labels must be permanent and in accordance with wire identification shown on approved wiring and interconnection drawings.",
+        "section": "d",
+        "text": "Label all terminal block wires permanently as per approved drawings."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "All wires originating from the same electrical node or point shall carry the same wire number.",
+        "section": "e",
+        "text": "Assign the same wire number to wires from the same node."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "Wire numbers shall be typewritten, or machine stamped on the plastic sleeve markers. Handwritten wire numbers are not acceptable.",
+        "section": "f",
+        "text": "Use typewritten or machine-stamped wire numbers; handwritten is not allowed."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "Mount all terminal blocks in the same units requiring the connections.",
+        "section": "14",
+        "text": "Install terminal blocks in the same units as their connections."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "Arrange terminal block wiring to receive field cable with one wire per terminal.",
+        "section": "15",
+        "text": "Ensure terminal block wiring has one wire per terminal."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "All devices within each switchgear enclosure including test switches and terminal blocks shall be shown in their approximate physical location and shall be represented on a single connection diagram.",
+        "section": "16",
+        "text": "Depict all switchgear devices on a single connection diagram."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "Control and Lockout switches shall be Electroswitch or approved equal. Shallco shall not be used.",
+        "section": "17",
+        "text": "Use Electroswitch or equivalent for control and lockout switches; Shallco is not allowed."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "Furnish protective relays to provide the general plan of relaying as indicated and specified in Contract Documents and fully coordinate to provide the highest degree of system protection and security in conformance with this plan.",
+        "section": "M",
+        "text": "Provide protective relays as per the relaying plan in the contract documents."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "Include relays as specified and indicated in Contract Documents and the one line diagram.",
+        "section": "M.1",
+        "text": "Provide relays as specified in the documents and one-line diagram."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "Furnish relays of the MANUFACTURER as required by the Contract Documents.",
+        "section": "M.2",
+        "text": "Supply relays from the specified manufacturer."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "Protective relays and lockout relay shall be provided with test switches that isolate all used inputs and outputs.",
+        "section": "M.3",
+        "text": "Equip relays with test switches to isolate inputs and outputs."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "Instruments, relays and control devices mounted on the switchgear front doors shall be semi-flush panel mounted.",
+        "section": "M.4",
+        "text": "Mount devices on switchgear doors semi-flush."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "The main contacts of all switching devices shall be silver plated. The contact surfaces of secondary disconnecting devices and relays shall be silver plated.",
+        "section": "M.5",
+        "text": "Ensure switching device contacts are silver plated."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "Furnish auxiliary relays in the number and types as required to perform the tripping and interlocking features required of the relaying scheme.",
+        "section": "M.6",
+        "text": "Provide auxiliary relays for tripping and interlocking."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "Furnish relays in semi flush rack mount type cases, rear-connected.",
+        "section": "M.7",
+        "text": "Provide relays in semi-flush, rear-connected cases."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "Provide relay programming to achieve operational switchgear. Trip settings to be adjusted during installation and commissioning. Settings files to be loaded into the relays for shipment and provided in advance for review and approval. Manufacturer to coordinate with Purchaser on protection schemes to be used.",
+        "section": "M.8",
+        "text": "Program relays for operational switchgear and coordinate settings with the purchaser."
+      },
+      {
+        "category": "submission",
+        "page": 67,
+        "quote": "The manufacturer shall submit a complete equipment parts list that shall cross-reference all the Manufacturer or Sub-Manufacturer assigned part numbers back to the original manufacturer’s part number.",
+        "section": "N",
+        "text": "Submit a cross-referenced equipment parts list."
+      },
+      {
+        "category": "submission",
+        "page": 67,
+        "quote": "The Manufacturer shall make a notation of quantities of these items recommended or required for continuous operation during one normal overhaul cycle.",
+        "section": "N",
+        "text": "Indicate quantities of parts for one overhaul cycle."
+      },
+      {
+        "category": "submission",
+        "page": 67,
+        "quote": "This Recommended Spare Parts List (RSPL) shall include items requiring replacement under the following conditions (which condition to be noted)",
+        "section": "N",
+        "text": "Include items needing replacement under specified conditions in the RSPL."
+      },
+      {
+        "category": "technical",
+        "page": 67,
+        "quote": "The following switchgear accessories and spare parts shall be supplied and stored inside the Equipment Enclosure:",
+        "section": "O",
+        "text": "Provide and store specified switchgear accessories and spare parts."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

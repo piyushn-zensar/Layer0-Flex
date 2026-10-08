@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 28,
+        "quote": "General Instructions for Form SRAA - 5001: All Offerors and each subcontractor identified in the bid or proposal must complete an EEO Staffing Plan (04-10) and submit it as part of the bid or proposal package.",
+        "section": "General Instructions",
+        "text": "Offerors and subcontractors must complete and submit an EEO Staffing Plan."
+      },
+      {
+        "category": "submission",
+        "page": 28,
+        "quote": "Where the work force to be utilized in the performance of the State contract can be separated out from the contractor’s or subcontractor’s total work force, the Offeror shall complete this form only for the anticipated work force to be utilized on the State contract.",
+        "section": "General Instructions",
+        "text": "Complete the form for the anticipated work force if separable."
+      },
+      {
+        "category": "submission",
+        "page": 28,
+        "quote": "Where the work force to be utilized in the performance of the State contract cannot be separated out from the contractor’s or subcontractor’s total work force, the Offeror shall complete this form for the contractor’s or subcontractor’s total work force.",
+        "section": "General Instructions",
+        "text": "Complete the form for the total work force if not separable."
+      },
+      {
+        "category": "submission",
+        "page": 28,
+        "quote": "Enter the Solicitation number or RFP number that this report applies to along with the name and address of the Offeror.",
+        "section": "Instructions for completing",
+        "text": "Provide solicitation/RFP number and Offeror details."
+      },
+      {
+        "category": "submission",
+        "page": 28,
+        "quote": "Check off the appropriate box to indicate if the Offeror completing the report is the contractor or a subcontractor.",
+        "section": "Instructions for completing",
+        "text": "Indicate if the Offeror is a contractor or subcontractor."
+      },
+      {
+        "category": "submission",
+        "page": 28,
+        "quote": "Check off the appropriate box to indicate if the work force being reported is just for the contract or the Offerors’ total work force.",
+        "section": "Instructions for completing",
+        "text": "Specify if the work force is for the contract or total work force."
+      },
+      {
+        "category": "submission",
+        "page": 28,
+        "quote": "Enter the total work force by EEO job category.",
+        "section": "Instructions for completing",
+        "text": "Provide total work force by EEO job category."
+      },
+      {
+        "category": "submission",
+        "page": 28,
+        "quote": "Break down the total work force by gender and enter under the heading ‘Work force by Gender’.",
+        "section": "Instructions for completing",
+        "text": "Provide work force breakdown by gender."
+      },
+      {
+        "category": "submission",
+        "page": 28,
+        "quote": "Break down the total work force by race/ethnic background and enter under the heading ‘Work force by Race/Ethnic Identification’.",
+        "section": "Instructions for completing",
+        "text": "Provide work force breakdown by race/ethnic background."
+      },
+      {
+        "category": "submission",
+        "page": 28,
+        "quote": "Contact the Designated Contacts(s) for the solicitation if you have any questions.",
+        "section": "Instructions for completing",
+        "text": "Contact designated contacts for questions."
+      },
+      {
+        "category": "submission",
+        "page": 28,
+        "quote": "Enter information on disabled or veterans included in the work force under the appropriate headings.",
+        "section": "Instructions for completing",
+        "text": "Provide information on disabled or veteran employees."
+      },
+      {
+        "category": "submission",
+        "page": 28,
+        "quote": "Enter the name, title, phone number and email address for the person completing the form. Sign and date the form in the designated boxes.",
+        "section": "Instructions for completing",
+        "text": "Provide details of the form completer and sign/date the form."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

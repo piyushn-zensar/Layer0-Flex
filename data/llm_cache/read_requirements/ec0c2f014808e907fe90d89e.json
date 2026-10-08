@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 4,
+        "quote": "By submitting a proposal to the Authority in response to this RFP, each proposer agrees and represents and warrants that the proposer: a) has all information necessary for the proposer to complete and submit a fully responsive proposal to the Authority; b) that if awarded the contract, that the proposer has all the necessary skills and resources to complete the contract for the amount stated in the proposal; and c) that the proposer is waiving any and all claims against the Authority and its members, officers, staff and employees relating to the submission of the proposer’s proposal to the Authority.",
+        "section": "1.6",
+        "text": "Proposer must have all necessary information, skills, and resources, and waive claims against the Authority."
+      },
+      {
+        "category": "commercial",
+        "page": 4,
+        "quote": "Proposer will bear any, and all travel and other costs and expenses related to its attendance at the pre-submittal meeting and facility tour (if any). Verbal responses provided by Authority representatives at such meeting/tour are informal and are not binding on the Authority.",
+        "section": "1.6",
+        "text": "Proposer covers all costs for pre-submittal meeting and tour; verbal responses are informal."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "In the event that it becomes necessary to revise this RFP, such revision will be by an addendum to this RFP. Any addendum to this RFP will become part of this RFP and part of any contract awarded as a result of this RFP.",
+        "section": "1.7",
+        "text": "RFP revisions will be issued as addenda and become part of the contract."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "Further, if a proposer discovers any conflict, discrepancy, omission or other error in this RFP, the proposer shall immediately notify the Authority at bids@syrairport.org, of such error and request modification to the document to address such alleged error.",
+        "section": "1.7",
+        "text": "Proposer must notify the Authority of any RFP errors and request modifications."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "The Authority shall make any RFP modifications necessary by addenda, provided that any such modifications would not materially benefit or disadvantage any one proposer over another.",
+        "section": "1.7",
+        "text": "Authority will issue addenda for modifications without favoring any proposer."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "If a proposer fails, prior to the submission deadline, to notify the Authority of a known error or an error that reasonably should have been known or discovered by proposer, the proposer shall assume the risk of such failure to notify.",
+        "section": "1.7",
+        "text": "Proposer assumes risk for not notifying the Authority of known RFP errors before the deadline."
+      },
+      {
+        "category": "commercial",
+        "page": 4,
+        "quote": "If awarded the contract, the proposer shall not be entitled to additional compensation, change order or time allowance by reason of the error or its late correction.",
+        "section": "1.7",
+        "text": "Proposer cannot claim additional compensation for late error corrections after contract award."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "All RFP addenda will be communicated via email to the recipients of the original RFP.",
+        "section": "1.7",
+        "text": "Addenda will be emailed to original RFP recipients."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "The Authority is not responsible for a proposer’s failure to receive amendments or addenda pertaining to this RFP.",
+        "section": "1.7",
+        "text": "Proposer is responsible for receiving RFP amendments or addenda."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "It is incumbent on proposers to routinely check for amendments and addenda at (http://www.syrsraa.com/bids-rfp-rfq/ and no allowance will be made for a proposer’s failure to receive addenda.",
+        "section": "1.7",
+        "text": "Proposer must check the website for amendments and addenda; no exceptions for failure to receive them."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,71 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 8,
+        "quote": "Each proposer shall, in accordance with the regulations, make good faith efforts and, in a manner that can be established in documentary form, solicit active participation by certified M/WBE’s and SDVOB’s in connection with any contract resulting from this RFP.",
+        "section": "M/WBE and SDVOB Participation",
+        "text": "Proposers must solicit participation by certified M/WBE and SDVOB entities."
+      },
+      {
+        "category": "compliance",
+        "page": 8,
+        "quote": "These regulations, and any contract to be entered into between the Authority and the successful proposer, will impose reporting obligations on the awarded contractor to periodically report various M/WBE and SDVOB information to the Authority.",
+        "section": "M/WBE and SDVOB Reporting",
+        "text": "Contractors must periodically report M/WBE and SDVOB information."
+      },
+      {
+        "category": "submission",
+        "page": 8,
+        "quote": "Annexed hereto at Exhibits C and D respectively are various M/WBE-SDVOB forms and information which the Authority requires all proposers to complete and submit with each proposal.",
+        "section": "M/WBE and SDVOB Forms",
+        "text": "Proposers must complete and submit M/WBE-SDVOB forms with their proposal."
+      },
+      {
+        "category": "submission",
+        "page": 8,
+        "quote": "Failure to do so will result in a finding of non-responsiveness and rejection of that proposal.",
+        "section": "Proposal Responsiveness",
+        "text": "Non-submission of required forms results in proposal rejection."
+      },
+      {
+        "category": "compliance",
+        "page": 8,
+        "quote": "For purposes of this solicitation, the Authority has established a goal of (19.64%) for Minority Owned Business Enterprises (M/WBE) participation, (11.45%) for Minority Owned Business Enterprises (M/WBE) participation and (6%) for Service-Disabled Veteran Owned Business (SDVOB) participation.",
+        "section": "Participation Goals",
+        "text": "Participation goals: 19.64% M/WBE, 11.45% M/WBE, 6% SDVOB."
+      },
+      {
+        "category": "legal",
+        "page": 8,
+        "quote": "The services to be performed shall conform to and be subject to the provisions of the New York Public Authorities Law, Generally Accepted Auditing Standards, Generally Accepted Accounting Principles, and Standards promulgated by the NYS Comptroller and Authorities Budget Office and all other applicable laws and regulations of all Federal and State agencies having jurisdiction.",
+        "section": "Compliance Standards",
+        "text": "Services must comply with NY Public Authorities Law, GAAS, GAAP, and other applicable standards."
+      },
+      {
+        "category": "compliance",
+        "page": 8,
+        "quote": "Valid licenses and registrations as required by the Authority and any State, and Federal agencies shall be obtained by the successful proposer prior to commencing work.",
+        "section": "Licensing Requirements",
+        "text": "Proposers must obtain required licenses and registrations before starting work."
+      },
+      {
+        "category": "submission",
+        "page": 8,
+        "quote": "Final designation of a proposer will depend on satisfaction of all additional RFP documentation and review requirements of the Authority and will be subject to subsequent approval by the Authority.",
+        "section": "Proposer Designation",
+        "text": "Proposer designation depends on meeting RFP documentation and review requirements."
+      },
+      {
+        "category": "compliance",
+        "page": 8,
+        "quote": "No transaction will be consummated if any selected proposer or principal of a selected proposer or any member of the proposer’s development team is in arrears or in default upon any debt, lease, contract or obligation regarding the",
+        "section": "Financial Standing",
+        "text": "Proposers must not be in arrears or default on obligations."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

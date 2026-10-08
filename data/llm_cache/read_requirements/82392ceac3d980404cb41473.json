@@ -1,0 +1,43 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 98,
+        "quote": "By submitting a bid in response to this solicitation or by assuming the responsibility of a Contract awarded hereunder, each Bidder/Contractor, any person signing on behalf of any Bidder/Contractor and any assignee or subcontractor and, in the case of a joint bid, each party thereto, certifies, under penalty of perjury, that once the Prohibited Entities List is posted on the OGS website, that to the best of its knowledge and belief, that each Bidder/Contractor and any subcontractor or assignee is not identified on the Prohibited Entities List created pursuant to SFL § 165-a(3)(b).",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Bidder must certify they are not on the Prohibited Entities List."
+      },
+      {
+        "category": "compliance",
+        "page": 98,
+        "quote": "Additionally, Bidder/Contractor is advised that once the Prohibited Entities List is posted on the OGS Website, any Bidder/Contractor seeking to renew or extend a Contract or assume the responsibility of a Contract awarded in response to this solicitation must certify at the time the Contract is renewed, extended, or assigned that it is not included on the Prohibited Entities List.",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Bidder must certify compliance with the Prohibited Entities List for contract renewals or extensions."
+      },
+      {
+        "category": "legal",
+        "page": 98,
+        "quote": "During the term of the Contract, should the Owner receive information that a Bidder/Contractor is in violation of the above-referenced certification, the Owner will offer the person or entity an opportunity to respond. If the person or entity fails to demonstrate that he/she/it has ceased engagement in the investment which is in violation of the Act within 90 days after the determination of such violation, then the Owner shall take such action as may be appropriate including, but not limited to, imposing sanctions, seeking compliance, recovering damages or declaring the Bidder/Contractor in default.",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Owner may impose sanctions if Bidder violates the certification."
+      },
+      {
+        "category": "legal",
+        "page": 98,
+        "quote": "The Owner reserves the right to reject any bid or request for assignment for a Bidder/Contractor that appears on the Prohibited Entities List prior to the award of a contract and to pursue a responsibility review with respect to any Bidder/Contractor that is awarded a contract and subsequently appears on the Prohibited Entities List.",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Owner can reject bids from entities on the Prohibited Entities List."
+      },
+      {
+        "category": "submission",
+        "page": 98,
+        "quote": "(This form must be completed and submitted with the Proposal.)",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Form must be completed and submitted with the proposal."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 97,
+        "quote": "Contractor/Proposer hereby represents that said Contractor/Proposer is in compliance with New York State General Municipal Law Section 103-g entitled “Iranian Energy Sector Divestment”, in that said Contractor/Proposer has not:",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Bidder must comply with NYS General Municipal Law Section 103-g regarding Iranian Energy Sector Divestment."
+      },
+      {
+        "category": "compliance",
+        "page": 97,
+        "quote": "(a) Provided goods or services of $20 Million or more in the energy sector of Iran including but not limited to the provision of oil or liquefied natural gas tankers or products used to construct or maintain pipelines used to transport oil or liquefied natural gas for the energy sector of Iran; or",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Bidder must not have provided goods/services worth $20M+ in Iran's energy sector."
+      },
+      {
+        "category": "compliance",
+        "page": 97,
+        "quote": "(b) Acted as a financial institution and extended $20 Million or more in credit to another person for forty-five days or more if that person’s intent was to use the credit to provide goods or services in the energy sector in Iran.",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Bidder must not have extended $20M+ credit for Iran's energy sector."
+      },
+      {
+        "category": "compliance",
+        "page": 97,
+        "quote": "Any Contractor/Proposer who has undertaken any of the above and is identified on a list created pursuant to Section 165-a (3)(b) of the New York State Finance Law as a person engaging in investment activities in Iran, shall not be deemed a responsible bidder pursuant to Section 103 of the New York State General Municipal Law.",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Bidder listed under NYS Finance Law Section 165-a (3)(b) is not deemed responsible."
+      },
+      {
+        "category": "submission",
+        "page": 97,
+        "quote": "Except as otherwise specifically provided herein, every Contractor/Proposer submitting a bid/proposal in response to this Request for Bids/Request for Proposals must certify and affirm the following under penalties of perjury:",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Bidder must certify compliance under penalties of perjury."
+      },
+      {
+        "category": "submission",
+        "page": 97,
+        "quote": "“By submission of this bid, each bidder and each person signing on behalf of any bidder certifies, and in the case of a joint bid, each party thereto certifies as to its own organization, under penalty of perjury, that to the best of its knowledge and belief, that each bidder is not on the list created pursuant to NYS Finance Law Section 165-a (3)(b).”",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Bidder must certify they are not on the NYS Finance Law Section 165-a (3)(b) list."
+      },
+      {
+        "category": "submission",
+        "page": 97,
+        "quote": "Except as otherwise specifically provided herein, any Bid/Proposal that is submitted without having complied with subdivision (a) above, shall not be considered for award.",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Non-compliance with certification requirement disqualifies the bid."
+      },
+      {
+        "category": "submission",
+        "page": 97,
+        "quote": "In any case where the Bidder/Proposer cannot make the certification as set forth in subdivision (a) above, the Bidder/Proposer shall so state and shall furnish with the bid a signed statement setting forth in detail the reasons, therefore.",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Bidder unable to certify must provide a signed statement explaining reasons."
+      },
+      {
+        "category": "compliance",
+        "page": 97,
+        "quote": "The Owner reserves its rights, in accordance with General Municipal Law Section 103-g to award the Bid/Proposal to any Bidder/Proposer who cannot make the certification, on a case-by-case basis under the following circumstances:",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Owner may award to non-certifying bidder under specific conditions."
+      },
+      {
+        "category": "compliance",
+        "page": 97,
+        "quote": "(1) The investment activities in Iran were made before April 12, 2012, the investment activities in Iran have not been expanded or renewed after April 12, 2012, and the Bidder/Proposer has adopted, publicized, and is implementing a formal plan to cease the investment activities in Iran and to refrain from engaging in any new investments in Iran; or",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Bidder's pre-2012 Iran investments must not be renewed and must have a cessation plan."
+      },
+      {
+        "category": "compliance",
+        "page": 97,
+        "quote": "(2) The Owner has made a determination that the goods or services are necessary for the Owner to perform its functions and that, absent such an exemption, the Owner would be unable to obtain the goods or services for which the Bid/Proposal is offered. Such determination shall be made by the Owner in writing and shall be a public document.",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Owner may exempt bidder if goods/services are essential and unavailable otherwise."
+      },
+      {
+        "category": "submission",
+        "page": 97,
+        "quote": "Bidder or Proposer shall sign and notarize the attached “Certification of Compliance with the Iran Divestment Act” form with your proposal.",
+        "section": "SECTION 03 - PROPOSAL",
+        "text": "Bidder must sign and notarize the Iran Divestment Act compliance form."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

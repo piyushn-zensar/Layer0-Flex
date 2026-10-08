@@ -1,0 +1,71 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "The Authority reserves the right to reject any response to this RFP by any such proposer.",
+        "section": "5",
+        "text": "The Authority can reject any proposal."
+      },
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "The Authority reserves the right to: a. Negotiate with one or more proposers, and/or negotiate on terms other than those set forth herein.",
+        "section": "5.a",
+        "text": "The Authority may negotiate with proposers on different terms."
+      },
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "b. At any time, waive compliance with, or change any of the terms and conditions of this RFP, to entertain modifications or additions to selected proposals.",
+        "section": "5.b",
+        "text": "The Authority can waive or change RFP terms and consider proposal modifications."
+      },
+      {
+        "category": "legal",
+        "page": 9,
+        "quote": "This RFP does not represent any obligation or agreement whatsoever on the part of the Authority.",
+        "section": "6",
+        "text": "The RFP does not create any obligation for the Authority."
+      },
+      {
+        "category": "legal",
+        "page": 9,
+        "quote": "Any such obligation or agreement may only be incurred or entered into by written agreement authorized by the Board of the Authority, approved as to form by the Authority’s counsel and executed by the Executive Director of the Authority.",
+        "section": "6",
+        "text": "Agreements require Board authorization, legal approval, and execution by the Executive Director."
+      },
+      {
+        "category": "legal",
+        "page": 9,
+        "quote": "Mere selection of a proposer will not create any rights on the proposer's part, including, without limitation, rights of enforcement, equity or reimbursement, until after all required government approvals are received and the insurance, agreement and all related documents are fully approved and executed.",
+        "section": "7",
+        "text": "Selection does not grant rights until all approvals and documents are finalized."
+      },
+      {
+        "category": "legal",
+        "page": 9,
+        "quote": "This RFP and any agreement or other documents resulting therefrom is subject to Federal, State, or local law or regulation having jurisdiction over the subject matter thereof, as the same may be amended from time to time.",
+        "section": "8",
+        "text": "The RFP and agreements are subject to applicable laws and regulations."
+      },
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "Title VI Solicitation Notice: The Authority, in accordance with the provisions of Title VI of the Civil Rights Act of 1964 (78 Stat. 252, 42 U.S.C. §§ 2000d-2000d-4) and its related Regulations, hereby notifies all proposers that it will affirmatively ensure that any contract entered into pursuant to this RFP, will provide disadvantaged business enterprises a full and fair opportunity to submit proposals in response to this RFP and will not be discriminated against on the grounds of race, color, or national origin in consideration for an award.",
+        "section": "9",
+        "text": "The Authority ensures fair opportunity for disadvantaged business enterprises and prohibits discrimination."
+      },
+      {
+        "category": "submission",
+        "page": 9,
+        "quote": "Upon receipt of proposals, the Authority and/or any Ad Hoc Committee it shall appoint for reviewing proposals (“Committee”) will review each Proposal and may recommend a Proposer(s) to the Board of the Authority to be awarded a contract to provide the required services at the Airport.",
+        "section": "2.9.1",
+        "text": "Proposals will be reviewed by the Authority or a Committee, which may recommend a proposer for contract award."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

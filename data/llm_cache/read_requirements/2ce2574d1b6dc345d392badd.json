@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 55,
+        "quote": "This Specification covers the manufacturer, furnishing, delivering, and testing of a Metal Clad Switchgear lineup and its accessories for installation at the Syracuse Airport.",
+        "section": "1.1.A",
+        "text": "Provide Metal Clad Switchgear and accessories for Syracuse Airport."
+      },
+      {
+        "category": "compliance",
+        "page": 55,
+        "quote": "The Metal Clad Switchgear and accessories shall be in accordance with the following standards and supplements: American Society for Testing Materials (ASTM), Metal Building Manufacturers Association (MBMA), Institute of Electrical and Electronics Engineers (IEEE), and National Fire Protection Association (NFPA) Standards insofar as consistent with these Specifications.",
+        "section": "1.1.A",
+        "text": "Switchgear must comply with ASTM, MBMA, IEEE, and NFPA standards."
+      },
+      {
+        "category": "technical",
+        "page": 55,
+        "quote": "Work in this Specification includes, the following items: One (1) 15kV two (2) section Metal Clad Switchgear lineup.",
+        "section": "1.1.B",
+        "text": "Provide one 15kV two-section Metal Clad Switchgear lineup."
+      },
+      {
+        "category": "technical",
+        "page": 55,
+        "quote": "Work in this Specification includes, the following items: Protective Relays and Controls.",
+        "section": "1.1.B",
+        "text": "Include protective relays and controls."
+      },
+      {
+        "category": "submission",
+        "page": 55,
+        "quote": "BIDDER shall provide a schedule for the project with the bid. This shall indicate, at a minimum, the schedule for drawings, shipment from factory, delivery at site, overall lead time to site ARO, and schedule for field works.",
+        "section": "1.1.C",
+        "text": "Submit project schedule with bid, including drawings, shipment, delivery, lead time, and field works."
+      },
+      {
+        "category": "submission",
+        "page": 55,
+        "quote": "BIDDER shall clearly indicate in a separate document any clarifications and/or deviations the BIDDER is issuing in response to the RFP and specifications.",
+        "section": "1.1.C",
+        "text": "Provide clarifications and deviations in a separate document."
+      },
+      {
+        "category": "technical",
+        "page": 55,
+        "quote": "Special Tools necessary for installation, testing and maintenance.",
+        "section": "1.1.D",
+        "text": "Provide special tools for installation, testing, and maintenance."
+      },
+      {
+        "category": "submission",
+        "page": 55,
+        "quote": "Necessary drawings, instructions and test reports in the English language.",
+        "section": "1.1.D",
+        "text": "Provide drawings, instructions, and test reports in English."
+      },
+      {
+        "category": "submission",
+        "page": 55,
+        "quote": "In addition to other Submittal requirements, final drawings shall be submitted as AutoCAD format files.",
+        "section": "1.1.D",
+        "text": "Submit final drawings in AutoCAD format."
+      },
+      {
+        "category": "technical",
+        "page": 55,
+        "quote": "Maintenance equipment and spare parts.",
+        "section": "1.1.D",
+        "text": "Provide maintenance equipment and spare parts."
+      },
+      {
+        "category": "technical",
+        "page": 55,
+        "quote": "Metal Clad Switchgear shall have eighteen (18) 15kV vacuum circuit breaker positions with protective relay and controls, two (2) revenue meter positions, two sets of (2) 15kV isolation switches, bus VT’s, and multi-ratio CT’s as shown in Contract Documents.",
+        "section": "1.1.E",
+        "text": "Switchgear must include specified circuit breakers, meters, switches, VT’s, and CT’s."
+      },
+      {
+        "category": "compliance",
+        "page": 55,
+        "quote": "Switchgear shall be Arc-resistant Type 2B. The switchgear shall meet or exceed the most conservative interpretation of standard IEEE C37.20.7.",
+        "section": "1.1.E",
+        "text": "Switchgear must be Arc-resistant Type 2B and comply with IEEE C37.20.7."
+      },
+      {
+        "category": "technical",
+        "page": 55,
+        "quote": "All necessary hardware for installing and testing shall be provided with Metal Clad Switchgear.",
+        "section": "1.1.E",
+        "text": "Provide installation and testing hardware with switchgear."
+      },
+      {
+        "category": "technical",
+        "page": 55,
+        "quote": "Metal Clad Switchgear shall be mounted within a fully enclosed Equipment Building (by others).",
+        "section": "1.1.E",
+        "text": "Switchgear must be mounted in an enclosed equipment building."
+      },
+      {
+        "category": "technical",
+        "page": 55,
+        "quote": "The Metal Clad Switchgear will be connected to two (2) 13.2 kV feeders supplied by National Grid. Connection between the feeders and the switchgear will be underground cables.",
+        "section": "1.1.E",
+        "text": "Connect switchgear to two 13.2 kV feeders via underground cables."
+      },
+      {
+        "category": "technical",
+        "page": 55,
+        "quote": "Separate utility incoming Cable termination compartment is required, that allows the utility to lock.",
+        "section": "1.1.E",
+        "text": "Provide lockable utility cable termination compartment."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

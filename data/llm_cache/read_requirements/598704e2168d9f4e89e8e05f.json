@@ -1,0 +1,57 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 86,
+        "quote": "1. ALL MEDIUM VOLTAGE SWITCHGEAR EQUIPMENT AND ACCESSORIES TO BE RATED FOR 15,000V AND BASIC INSULATION LEVEL TO BE 95,000V.",
+        "section": "GENERAL NOTES",
+        "text": "Switchgear equipment must be rated for 15,000V and have a basic insulation level of 95,000V."
+      },
+      {
+        "category": "technical",
+        "page": 86,
+        "quote": "2. ENCLOSURE WILL BE METAL CLAD WITH BOTTOM FEED ON SECTIONS",
+        "section": "GENERAL NOTES",
+        "text": "Enclosure must be metal clad with bottom feed."
+      },
+      {
+        "category": "technical",
+        "page": 86,
+        "quote": "1. SWITCHGEAR POWER 125VDC.",
+        "section": "KEYED NOTES",
+        "text": "Switchgear power must be 125VDC."
+      },
+      {
+        "category": "technical",
+        "page": 86,
+        "quote": "2. UTILITY METERING SECTION: TRANSFORMERS AND METERS PROVIDED BY UTILITY.",
+        "section": "KEYED NOTES",
+        "text": "Utility will provide transformers and meters for the metering section."
+      },
+      {
+        "category": "technical",
+        "page": 86,
+        "quote": "3. TIE BREAKER SEQUENCE OF OPERATION: • FEEDER BREAKERS HANCOCK FEED AND SAND ROAD FEED ARE NORMALLY CLOSED. • TIE BREAKER IS NORMALLY OPEN. • LOSS OF VOLTAGE IN FEEDER (OPEN TRANSITION). • THAT BREAKER OPENS AND TIE BREAKER CLOSES. • MANUAL DISCONNECTING OF FEEDER (CLOSE TRANSITION - MAKE BEFORE BREAK) • UPON SATISFYING VOLTAGE REQUIREMENT, CLOSE TIE BREAKER WHEN BOTH FEEDERS ARE IN PHASE WITH SAME FREQUENCY. • AFTER 10 SECONDS, OPEN FEEDER BREAKER. • RETURN OF VOLTAGE IN FEEDER OR MANUAL SELECTION (CLOSE TRANSITION - MAKE BEFORE BREAK). • SATISFIED WHEN VOLTAGE IS PRESENT IN FEEDER FOR MINIMUM OF 15 MINUTES. • UPON SATISFYING VOLTAGE REQUIREMENT, CLOSE FEEDER WHEN BOTH FEEDER ARE IN PHASE WITH SAME FREQUENCY. • AFTER 10 SECONDS, OPEN BREAKER.",
+        "section": "KEYED NOTES",
+        "text": "Tie breaker operation sequence must follow specified steps for voltage loss and restoration."
+      },
+      {
+        "category": "technical",
+        "page": 86,
+        "quote": "4. INTERLOCK SWITCH WITH BREAKER TO ALLOW CHANGE OF SWITCH POSITION ONLY WHEN FEEDER BREAKER IS OPEN (DISCONNECTED)",
+        "section": "KEYED NOTES",
+        "text": "Interlock switch must allow position change only when feeder breaker is open."
+      },
+      {
+        "category": "technical",
+        "page": 86,
+        "quote": "5. CABLE PROVIDED BY UTILITY. TERMINATIONS BY CONTRACTOR.",
+        "section": "KEYED NOTES",
+        "text": "Utility provides cable; contractor handles terminations."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

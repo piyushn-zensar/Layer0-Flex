@@ -1,0 +1,36 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 47,
+        "quote": "State agencies shall seek to achieve a 6% goal on all State contracts for service-disabled veteran-owned business enterprises.",
+        "section": "III. Contract Goals",
+        "text": "State agencies must aim for a 6% SDVOB participation goal in contracts."
+      },
+      {
+        "category": "compliance",
+        "page": 47,
+        "quote": "Contractor must document “good faith efforts” to provide meaningful participation by SDVEs as subcontractors or suppliers in the performance of the Contract.",
+        "section": "III. Contract Goals",
+        "text": "Contractors must show good faith efforts to include SDVEs in contracts."
+      },
+      {
+        "category": "legal",
+        "page": 47,
+        "quote": "Contractor acknowledges that if Contractor is found to have willfully and intentionally failed to comply with the SDVE participation goals set forth in the Contract, such a finding constitutes a breach of contract and the Contractor shall be liable to the SRAA for liquidated or other appropriate damages.",
+        "section": "III. Contract Goals",
+        "text": "Failure to meet SDVE goals may result in breach of contract and damages."
+      },
+      {
+        "category": "submission",
+        "page": 47,
+        "quote": "Contractors shall submit utilization plans for achieving contract goals established for the participation of certified service-disabled veteran owned business enterprises performing commercially useful functions in relation to State contracts.",
+        "section": "V. SDVE Utilization Plans",
+        "text": "Contractors must submit utilization plans for SDVOB participation."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

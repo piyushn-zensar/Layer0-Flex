@@ -1,0 +1,113 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 10,
+        "quote": "Proposers should be willing and able to provide additional information that may be required by the Authority or its Committee.",
+        "section": "2.9.2 Submission Review",
+        "text": "Proposers must provide additional information if requested by the Authority or its Committee."
+      },
+      {
+        "category": "submission",
+        "page": 10,
+        "quote": "Also, interviews and office visits may be requested at the discretion of the Authority/Committee.",
+        "section": "2.9.2 Submission Review",
+        "text": "Proposers must accommodate interviews and office visits if requested."
+      },
+      {
+        "category": "submission",
+        "page": 10,
+        "quote": "Upon review of proposals submitted by Proposers, the Authority/Committee may, at its discretion, submit to Proposers written questions and requests for clarification relating to their Proposals.",
+        "section": "2.9.2 Submission Review",
+        "text": "Proposers must respond to written questions and requests for clarification from the Authority/Committee."
+      },
+      {
+        "category": "submission",
+        "page": 10,
+        "quote": "Proposers will be provided the period of time in which the written responses to the Authority’s requests for clarification must be completed.",
+        "section": "2.9.2 Submission Review",
+        "text": "Proposers must submit written responses to clarification requests within the provided timeframe."
+      },
+      {
+        "category": "submission",
+        "page": 10,
+        "quote": "Other than to provide clarifying information as may be requested by the Authority, including the Committee, no Proposer will be allowed to alter its proposal or add information.",
+        "section": "2.9.2 Submission Review",
+        "text": "Proposers cannot alter or add to their proposal except to provide requested clarifications."
+      },
+      {
+        "category": "submission",
+        "page": 10,
+        "quote": "The Authority/Committee will examine all proposals that are received in a proper and timely manner to determine if they meet the proposal submission requirements, as described in this RFP.",
+        "section": "2.9.2 Submission Review",
+        "text": "Proposals must be submitted properly and on time to be considered."
+      },
+      {
+        "category": "submission",
+        "page": 10,
+        "quote": "Proposals that are materially deficient in meeting the submission requirements or have omitted material documents, in the sole opinion of the Committee, may be rejected.",
+        "section": "2.9.2 Submission Review",
+        "text": "Proposals missing required elements or documents may be rejected."
+      },
+      {
+        "category": "submission",
+        "page": 10,
+        "quote": "Proposals failing to pass the Submission Review will be considered non-responsive and will not be evaluated any further.",
+        "section": "2.9.2 Submission Review",
+        "text": "Non-compliant proposals will not proceed to further evaluation."
+      },
+      {
+        "category": "submission",
+        "page": 10,
+        "quote": "Proposals will be reviewed based on a variety of criteria, including but not limited to:",
+        "section": "2.9.3 Proposal Review Criteria",
+        "text": "Proposals will be evaluated based on specified criteria."
+      },
+      {
+        "category": "staffing",
+        "page": 10,
+        "quote": "The education, experience and/or expertise of the Proposer and it’s principals and key employees.",
+        "section": "2.9.3 Proposal Review Criteria",
+        "text": "Proposer's education, experience, and expertise will be evaluated."
+      },
+      {
+        "category": "compliance",
+        "page": 10,
+        "quote": "The Proposer’s specific experience, stability and history of performance providing the requested services similar to those under consideration.",
+        "section": "2.9.3 Proposal Review Criteria",
+        "text": "Proposer's experience, stability, and performance history will be evaluated."
+      },
+      {
+        "category": "staffing",
+        "page": 10,
+        "quote": "The availability of adequate personnel to provide the requested services safely and efficiently.",
+        "section": "2.9.3 Proposal Review Criteria",
+        "text": "Proposer must have sufficient personnel to perform services safely and efficiently."
+      },
+      {
+        "category": "technical",
+        "page": 10,
+        "quote": "The Proposer’s approach to the planning, organization, supervision, and management of the requested services at the Airport, including communications procedures, problem-solving approaches, costing and other level-of-service factors.",
+        "section": "2.9.3 Proposal Review Criteria",
+        "text": "Proposer's approach to service management and planning will be evaluated."
+      },
+      {
+        "category": "commercial",
+        "page": 10,
+        "quote": "The Proposer’s proposed fee for the services requested herein with a breakdown of those fee’s as they relate to discrete tasks or phases of the work to be performed.",
+        "section": "2.9.3 Proposal Review Criteria",
+        "text": "Proposer must provide a detailed fee breakdown for the services."
+      },
+      {
+        "category": "compliance",
+        "page": 10,
+        "quote": "Commitment to consistently maintain the highest standards of performance and the expeditious resolution of problems and complaints.",
+        "section": "2.9.3 Proposal Review Criteria",
+        "text": "Proposer must commit to high performance standards and quick problem resolution."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

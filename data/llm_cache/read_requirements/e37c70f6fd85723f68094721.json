@@ -1,0 +1,29 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 33,
+        "quote": "(k) The Contractor negotiated in good faith with certified minority- and women-owned business enterprises submitting bids, proposals, or quotations and did not, without justifiable reason, reject as unsatisfactory any bids, proposals or quotations prepared by any certified minority- or women-owned business enterprise.",
+        "section": "k",
+        "text": "Contractor must negotiate in good faith with certified minority- and women-owned business enterprises."
+      },
+      {
+        "category": "compliance",
+        "page": 33,
+        "quote": "“Good faith” negotiating means engaging in good faith discussions with certified minority- or women-owned business enterprises about the nature of the work, scheduling, requirements for special equipment, opportunities for dividing of work among the bidders, proposers, and various subcontractors and the bids of the minority- or women-owned businesses, including sharing with them any cost estimates from the request for proposal or invitation to bid documents, if available;",
+        "section": "k",
+        "text": "Contractor must engage in detailed discussions with minority- and women-owned businesses about work, scheduling, equipment, and cost estimates."
+      },
+      {
+        "category": "commercial",
+        "page": 33,
+        "quote": "(l) The Contractor undertook efforts to make payments for any work performed by certified minority- and women-owned business enterprises in a timely fashion so as to facilitate continued performance by certified minority- and women-owned business enterprises.",
+        "section": "l",
+        "text": "Contractor must ensure timely payments to certified minority- and women-owned business enterprises."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

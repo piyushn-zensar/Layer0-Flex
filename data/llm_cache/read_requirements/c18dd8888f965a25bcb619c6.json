@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 40,
+        "quote": "By submitting this form and the required information, the offeror/contractor certifies that every Good Faith Effort has been taken to promote M/WBE participation pursuant to the M/WBE requirements set forth under the contract.",
+        "section": "MWBE Requirements",
+        "text": "The bidder must certify that they have made every effort to promote M/WBE participation."
+      },
+      {
+        "category": "compliance",
+        "page": 40,
+        "quote": "Contractor is requesting a: 1. MBE Waiver – A waiver of the MBE Goal for this procurement is requested. Total Partial",
+        "section": "MWBE Waiver",
+        "text": "The bidder can request a total or partial waiver of the MBE goal."
+      },
+      {
+        "category": "compliance",
+        "page": 40,
+        "quote": "Contractor is requesting a: 2. WBE Waiver – A waiver of the WBE Goal for this procurement is requested. Total Partial",
+        "section": "MWBE Waiver",
+        "text": "The bidder can request a total or partial waiver of the WBE goal."
+      },
+      {
+        "category": "compliance",
+        "page": 40,
+        "quote": "Contractor is requesting a: 3. Waiver Pending ESD Certification – (Check here if subcontractors or suppliers of Contractor are not certified M/WBE, but an application for certification has been filed with Empire State Development.) Date of such filing with Empire State Development:",
+        "section": "MWBE Waiver",
+        "text": "The bidder can request a waiver pending ESD certification for subcontractors or suppliers."
+      },
+      {
+        "category": "compliance",
+        "page": 40,
+        "quote": "SUBMISSION OF THIS FORM CONSTITUTES THE OFFEROR/CONTRACTOR’S ACKNOWLEDGEMENT AND AGREEMENT TO COMPLY WITH THE M/WBE REQUIREMENTS SET FORTH UNDER NYS EXECUTIVE LAW, ARTICLE 15-A AND 5 NYCRR PART 143.",
+        "section": "MWBE Requirements",
+        "text": "Submitting the form acknowledges agreement to comply with NYS Executive Law Article 15-A and 5 NYCRR Part 143."
+      },
+      {
+        "category": "compliance",
+        "page": 40,
+        "quote": "FAILURE TO SUBMIT COMPLETE AND ACCURATE INFORMATION MAY RESULT IN A FINDING OF NONCOMPLIANCE AND/OR TERMINATION OF THE CONTRACT.",
+        "section": "Submission Requirements",
+        "text": "Incomplete or inaccurate submission may lead to noncompliance or contract termination."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

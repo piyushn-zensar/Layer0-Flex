@@ -1,0 +1,36 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 100,
+        "quote": "All information provided herein is true and correct to the best of their knowledge.",
+        "section": "BID/PROPOSAL SIGN-OFF SHEET",
+        "text": "Certify that all provided information is accurate."
+      },
+      {
+        "category": "compliance",
+        "page": 100,
+        "quote": "The respondent has read and understands the specifications in their entirety and that the response is made in accordance therewith, and;",
+        "section": "BID/PROPOSAL SIGN-OFF SHEET",
+        "text": "Confirm understanding and compliance with all specifications."
+      },
+      {
+        "category": "staffing",
+        "page": 100,
+        "quote": "The respondent possesses the capabilities, resources, and personnel necessary to provide efficient and successful service to the Authority, and;",
+        "section": "BID/PROPOSAL SIGN-OFF SHEET",
+        "text": "Ensure possession of necessary capabilities, resources, and personnel."
+      },
+      {
+        "category": "legal",
+        "page": 100,
+        "quote": "The respondent agrees to all terms and conditions as provided within the specifications.",
+        "section": "BID/PROPOSAL SIGN-OFF SHEET",
+        "text": "Agree to all terms and conditions in the specifications."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

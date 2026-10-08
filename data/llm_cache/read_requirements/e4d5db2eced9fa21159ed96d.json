@@ -1,0 +1,57 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "schedule",
+        "page": 2,
+        "quote": "Monday, 08/23/2023 - Issuance of Request for Proposals",
+        "section": "1.3 Key Dates in the RFP Schedule",
+        "text": "RFP issued on August 23, 2023."
+      },
+      {
+        "category": "schedule",
+        "page": 2,
+        "quote": "Monday 09/06/2023 – Question/Clarification Submission Deadline",
+        "section": "1.3 Key Dates in the RFP Schedule",
+        "text": "Deadline for submitting questions or clarifications is September 6, 2023."
+      },
+      {
+        "category": "submission",
+        "page": 2,
+        "quote": "Monday, 09/15/2023 by 4:00 PM - Proposal Submission Deadline",
+        "section": "1.3 Key Dates in the RFP Schedule",
+        "text": "Proposals must be submitted by September 15, 2023, 4:00 PM."
+      },
+      {
+        "category": "schedule",
+        "page": 2,
+        "quote": "09/18/2023 to 09/22/2023 - Proposal Evaluation Period",
+        "section": "1.3 Key Dates in the RFP Schedule",
+        "text": "Proposals will be evaluated between September 18 and September 22, 2023."
+      },
+      {
+        "category": "schedule",
+        "page": 2,
+        "quote": "Execution of Contract1 with successful proposer anticipated in late September",
+        "section": "1.3 Key Dates in the RFP Schedule",
+        "text": "Contract execution with the selected proposer is expected in late September."
+      },
+      {
+        "category": "technical",
+        "page": 2,
+        "quote": "The Metal Clad Switchgear and accessories shall be in accordance with the provided technical specification (the “Project”).",
+        "section": "1.2 Intent and Purpose of this RFP",
+        "text": "Switchgear and accessories must meet the provided technical specifications."
+      },
+      {
+        "category": "compliance",
+        "page": 2,
+        "quote": "If such change occurs, the Authority will notify all entities who received the RFP directly from the Authority and post the change(s) on the Syracuse Regional Airport Authority’s website.",
+        "section": "1.3 Key Dates in the RFP Schedule",
+        "text": "Changes to the schedule will be communicated to recipients and posted on the Authority's website."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 60,
+        "quote": "comply with requirements of this Specification.",
+        "section": "General",
+        "text": "Adhere to all requirements outlined in the specification."
+      },
+      {
+        "category": "technical",
+        "page": 60,
+        "quote": "Factory Tests conducted.",
+        "section": "General",
+        "text": "Conduct factory tests."
+      },
+      {
+        "category": "technical",
+        "page": 60,
+        "quote": "Bolts, nuts, and washers including mechanical properties and chemical analysis.",
+        "section": "General",
+        "text": "Provide bolts, nuts, and washers with specified properties and analysis."
+      },
+      {
+        "category": "technical",
+        "page": 60,
+        "quote": "Tension-control, high-strength, bolt-nut-washer assemblies.",
+        "section": "General",
+        "text": "Use tension-control, high-strength bolt-nut-washer assemblies."
+      },
+      {
+        "category": "technical",
+        "page": 60,
+        "quote": "Shop primers.",
+        "section": "General",
+        "text": "Apply shop primers."
+      },
+      {
+        "category": "compliance",
+        "page": 60,
+        "quote": "Quality Control assurance will be conducted in accordance with the requirements stated in the PURCHASER documents.",
+        "section": "1.4 QUALITY ASSURANCE",
+        "text": "Follow purchaser's quality control requirements."
+      },
+      {
+        "category": "compliance",
+        "page": 60,
+        "quote": "Comply with the applicable codes and standards referenced in this Specification.",
+        "section": "1.4 QUALITY ASSURANCE",
+        "text": "Adhere to all referenced codes and standards."
+      },
+      {
+        "category": "compliance",
+        "page": 60,
+        "quote": "The PURCHASER reserves the right to inspect materials and workmanship at all stages of manufacture and to witness any or all tests including complete assembly as described in the respective sections.",
+        "section": "1.4 QUALITY ASSURANCE",
+        "text": "Allow purchaser to inspect and witness tests at all stages."
+      },
+      {
+        "category": "schedule",
+        "page": 60,
+        "quote": "Metal Clad Switchgear section shall be shipped as part of the Prefabricated Equipment Enclosure.",
+        "section": "1.5 DELIVERY, STORAGE AND HANDLING",
+        "text": "Ship switchgear as part of the enclosure."
+      },
+      {
+        "category": "schedule",
+        "page": 60,
+        "quote": "Withdrawable circuit breaker shall be shipped separately from housing.",
+        "section": "1.5 DELIVERY, STORAGE AND HANDLING",
+        "text": "Ship circuit breaker separately from housing."
+      },
+      {
+        "category": "schedule",
+        "page": 60,
+        "quote": "Preparation for shipment shall protect the Metal Clad Switchgear auxiliary devices accessories, etc. against corrosion, dampness, breakage or vibration injury during transportation and handling.",
+        "section": "1.5 DELIVERY, STORAGE AND HANDLING",
+        "text": "Protect switchgear and accessories during shipment."
+      },
+      {
+        "category": "submission",
+        "page": 60,
+        "quote": "A copy of the operating instructions, along with packing slip, shall be forwarded with the equipment.",
+        "section": "1.5 DELIVERY, STORAGE AND HANDLING",
+        "text": "Include operating instructions and packing slip with equipment."
+      },
+      {
+        "category": "schedule",
+        "page": 60,
+        "quote": "Boxing, crating, or otherwise protection of all shipped unassembled equipment shall be suitable for outdoor storage. Each item shall be tagged with the project number, MANUFACTURER number, bill of material number, and item number.",
+        "section": "1.5 DELIVERY, STORAGE AND HANDLING",
+        "text": "Protect unassembled equipment for outdoor storage and tag items appropriately."
+      },
+      {
+        "category": "staffing",
+        "page": 60,
+        "quote": "Labor and support for off-loading and assembly at the site location will be provided by others.",
+        "section": "1.5 DELIVERY, STORAGE AND HANDLING",
+        "text": "Off-loading and assembly labor will be provided by others."
+      },
+      {
+        "category": "schedule",
+        "page": 60,
+        "quote": "The PURCHASER shall be notified the day shipment is made, indicating carriers, routing, actual shipping height and weight of Prefabricated Equipment Enclosure listed on the freight bill. Refer to the Purchase Order for delivery date and exact destination.",
+        "section": "1.5 DELIVERY, STORAGE AND HANDLING",
+        "text": "Notify purchaser on shipment day with details."
+      },
+      {
+        "category": "compliance",
+        "page": 60,
+        "quote": "The PURCHASER reserves the right to inspect the Metal Clad Switchgear at the MANUFACTURERs facility prior to shipping to prove compliance with this Specification.",
+        "section": "1.5 DELIVERY, STORAGE AND HANDLING",
+        "text": "Allow purchaser to inspect switchgear at the manufacturer's facility."
+      },
+      {
+        "category": "technical",
+        "page": 60,
+        "quote": "No welding shall be required for field assembly.",
+        "section": "1.5 DELIVERY, STORAGE AND HANDLING",
+        "text": "Ensure no welding is needed for field assembly."
+      },
+      {
+        "category": "submission",
+        "page": 60,
+        "quote": "The VENDOR shall provide the necessary storage and protection literature for the Metal Clad Switchgear.",
+        "section": "1.5 DELIVERY, STORAGE AND HANDLING",
+        "text": "Provide storage and protection literature for switchgear."
+      },
+      {
+        "category": "schedule",
+        "page": 60,
+        "quote": "Prior to packing, the equipment shall be cleaned to remove all dirt and waste material left from fabrication.",
+        "section": "1.5 DELIVERY, STORAGE AND HANDLING",
+        "text": "Clean equipment before packing."
+      },
+      {
+        "category": "schedule",
+        "page": 60,
+        "quote": "The shipping container shall be provided with supports, lifting eyes etc. to maintain alignment of parts during shipping, handling, hoisting, and installation.",
+        "section": "1.5 DELIVERY, STORAGE AND HANDLING",
+        "text": "Provide shipping containers with supports and lifting eyes."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

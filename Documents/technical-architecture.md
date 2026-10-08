@@ -196,7 +196,7 @@ The pipeline version names the tool versions and settings. The same file and pip
 
 ### 6.1 From layout to line items
 
-1. The reader agent sends pages to the model in groups (starting value: six pages per call), each line prefixed with its line number.
+1. The reader agent sends one page per call to the model (several calls in parallel), each line prefixed with its line number. Measured on the Syracuse RFP, six pages per call missed whole specification pages because the model returns only a limited number of items per answer: recall against the golden list was 26% with six pages per call and 92% with one.
 2. The model returns, per requirement: page, **verbatim quote**, a short restatement, a category (technical, compliance, commercial, schedule, submission, legal, staffing) and a section. It is told to skip contents pages, headers, footers, blank forms and signature blocks.
 3. **Anchoring.** Each quote is searched for on its page, ignoring differences in spacing, quote marks and hyphen forms. If found, the requirement gets its page, line range and highlight boxes and is `EXTRACTED`. If not found, it is `UNANCHORED`, flagged, and never accepted without a person. The model's own page and line claims are never trusted on their own.
 4. Line items are stored as drafts. A re-run before the freeze replaces the drafts. After the freeze, extraction is closed and changes go through section 8.
@@ -215,7 +215,16 @@ No regular-expression or keyword fallback exists for identifying requirements (r
 
 ### 6.3 Human review and freezing
 
-The bid manager reviews each line item against its highlighted source: approve, edit or reject. Each action is an audit event. When review is complete, a named person **freezes** the approved set as **baseline 1**. From then on, requirements change only through new versions created by change handling. Split, merge and adding a missed requirement by drawing a box on the page are stage 2 additions.
+The bid manager reviews each line item against its highlighted source (built 8 Oct 2026). The actions are:
+- **approve** or **reject**, one at a time or for a selection;
+- **edit** the short text or the category;
+- **split** one line item that holds several obligations into parts. Each part is a piece of the original quote and is anchored again;
+- **merge** several line items that are one obligation. The merged item keeps every source box and the joined quote;
+- **add** a requirement the agent missed, by pasting its quote, which is anchored like any other.
+
+Split and merged originals are kept, marked as replaced, and drop out of matching, dispatch and the final response. The new items record which ones they came from. Each action is an audit event.
+
+Freezing needs every active line item to be approved or rejected. A named person then **freezes** the approved set as **baseline 1**. From then on, requirements change only through new versions created by change handling. Adding a requirement by drawing a box on the page is a later addition.
 
 ### 6.4 The requirement record
 
@@ -229,7 +238,8 @@ requirement
   page, line_start, line_end, bboxes   the exact source
   category, section
   provenance    EXTRACTED | UNANCHORED
-  status        proposed | approved | rejected
+  status        proposed | approved | rejected | split | merged
+  derived_from  the line items it was split from or merged from
   baseline      frozen baseline number, empty while draft
 ```
 
@@ -347,7 +357,7 @@ Every write uses the acting user's name.
 
 - **Smoke test** (`tests/test_smoke.py`, built): seeds the Syracuse demo through the real services, opens every screen, downloads the compliance matrix, and checks that the audit table rejects updates. A second test fails if any module imports another module's internals.
 - **Self-checks** next to non-trivial logic (built for anchoring and retrieval): `python -m app.modules.<module>.<file>`.
-- **Golden requirement list** for the Syracuse RFP (stage 1): a hand-checked list of its requirements, used to measure the reader agent's recall and precision. Contents pages must produce no requirements.
+- **Golden requirement list** for the Syracuse RFP (`data/golden/`, built 8 Oct 2026): 361 requirements drafted from the frozen layout independently of the reader agent, 78 marked uncertain. It is a draft until a person reviews it. `scripts/score_reader.py` measures the reader against it. First result: recall 92% of the certain items, and 54% of the reader's 840 proposals overlap a golden item. Most of the rest are finer-grained items (each listed drawing or standard as its own line item) or come from pages the golden list leaves out (blank forms, drawing sheets, the standards list). Contents pages produce no requirements.
 - **Repeatability:** ingest the same PDF twice and compare the layout model byte for byte; re-run extraction and matching and compare (cached answers make this exact).
 - **Change test** (stage 5): apply a sample addendum and check that only the affected requirements changed version.
 

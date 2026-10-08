@@ -1,0 +1,162 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 75,
+        "quote": "CONSTRUCTION SHALL CONFORM TO THE “2020 BUILDING CODE OF NEW YORK STATE”, LATEST REVISION, AND ANY OTHER CODES GOVERNED BY THE JURISDICTION IN WHICH THE PROJECT IS BEING CONSTRUCTED.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Construction must comply with the 2020 New York State Building Code and other applicable codes."
+      },
+      {
+        "category": "compliance",
+        "page": 75,
+        "quote": "CONSTRUCTION SHALL COMPLY WITH ALL LOCAL, STATE AND FEDERAL CODES AND REGULATIONS.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Construction must adhere to all local, state, and federal codes and regulations."
+      },
+      {
+        "category": "technical",
+        "page": 75,
+        "quote": "ALL DRAWINGS ARE GRAPHIC REPRESENTATIONS OF APPROXIMATE LOCATIONS OF NEW MATERIALS. IT IS THE CONTRACTOR'S RESPONSIBILITY TO FIELD VERIFY ALL CONDITIONS PRIOR TO COMMENCEMENT OF WORK.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors must verify all field conditions before starting work."
+      },
+      {
+        "category": "staffing",
+        "page": 75,
+        "quote": "CONTRACTORS ARE RESPONSIBLE FOR ALL MATERIALS, CONSTRUCTION METHODS AND CRAFTSMANSHIP.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors are accountable for materials, methods, and craftsmanship."
+      },
+      {
+        "category": "submission",
+        "page": 75,
+        "quote": "CONTRACTORS ARE TO VERIFY ALL EXISTING CONDITIONS, REQUIREMENTS, NOTES, CODES AND DIMENSIONS, PRIOR TO THE START OF CONSTRUCTION AND SHALL NOTIFY THE ARCHITECT IF CONDITIONS VARY FROM THOSE SHOWN ON THE DOCUMENTS.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors must verify all conditions and notify the architect of discrepancies."
+      },
+      {
+        "category": "technical",
+        "page": 75,
+        "quote": "CONTRACTORS ARE TO PROVIDE ADEQUATE SUPPORT OF FOUNDATION WALLS, LOAD BEARING WALLS AND PARTITIONS DURING CONSTRUCTION.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors must ensure proper support for walls and partitions during construction."
+      },
+      {
+        "category": "technical",
+        "page": 75,
+        "quote": "THOROUGHLY COORDINATE WORK WITH OTHER TRADES AND DETERMINE THE EXACT ROUTE AND LOCATION OF UTILITIES, MATERIALS AND EQUIPMENT BEFORE FABRICATION AND INSTALLATION.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Coordinate with other trades and determine utility routes before installation."
+      },
+      {
+        "category": "technical",
+        "page": 75,
+        "quote": "CONTRACTORS PROVIDE ALL BLOCKING, FURRING AND SHIMMING FOR INSTALLATION AND COMPLETION OF WORK.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors must provide blocking, furring, and shimming for installations."
+      },
+      {
+        "category": "technical",
+        "page": 75,
+        "quote": "ALL NEW WORK SHALL BE PLUMB, LEVEL AND SQUARE.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "New work must be plumb, level, and square."
+      },
+      {
+        "category": "submission",
+        "page": 75,
+        "quote": "CONTRACTORS VERIFY ALL DIMENSIONS BEFORE ORDERING MATERIAL OR DOING WORK. NO EXTRA COMPENSATION OR CHARGES WILL BE ACCEPTED DUE TO DIFFERENCES BETWEEN THE ACTUAL MEASUREMENTS AND MEASUREMENTS INDICATED ON THE DRAWINGS.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors must verify dimensions before work; no extra charges for discrepancies."
+      },
+      {
+        "category": "submission",
+        "page": 75,
+        "quote": "ALL DETAILS ARE SUBJECT TO CHANGE DUE TO EXISTING FIELD CONDITIONS. CONTRACTOR MUST NOTIFY ARCHITECT OF SAME.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors must notify the architect of field condition changes."
+      },
+      {
+        "category": "legal",
+        "page": 75,
+        "quote": "THE CONTRACTOR SHALL ASSUME RESPONSIBILITY FOR CHANGES TO THESE DRAWINGS AND COMPLETION OF COMPLIANT WORK.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors are responsible for drawing changes and compliant work."
+      },
+      {
+        "category": "technical",
+        "page": 75,
+        "quote": "ARCHITECT, OWNER, AND CONTRACTOR, TO COORDINATE ALL DOOR HARDWARE, TRIM AND FINISHES TO MEET INTENT AND COMPLIANCE.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Coordinate door hardware, trim, and finishes for compliance."
+      },
+      {
+        "category": "legal",
+        "page": 75,
+        "quote": "CONTRACTORS ARE RESPONSIBLE FOR OBTAINING AND PAYING FOR ALL PERMITS ASSOCIATED WITH THE WORK OF THEIR CONTRACT.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Contractors must obtain and pay for all required permits."
+      },
+      {
+        "category": "compliance",
+        "page": 75,
+        "quote": "INTERIOR FINISHES SHALL COMPLY WITH APPLICABLE LOCAL CODES AND REGULATIONS.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Interior finishes must comply with local codes."
+      },
+      {
+        "category": "technical",
+        "page": 75,
+        "quote": "INTERIOR GYPSUM BOARD TO RECIEVE PAINT FINISH SHALL BE TAPED, SEALED AND SANDED TO RECEIVE FINISH. INTERIOR GYPSUM BOARD TO BE TRUE AND LEVEL.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Gypsum board must be prepared and leveled for paint finish."
+      },
+      {
+        "category": "technical",
+        "page": 75,
+        "quote": "ALL SURFACES TO RECIEVE PAINT FINISH SHALL BE PREPARED TO SHOW NO DEFECTS.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Painted surfaces must be defect-free."
+      },
+      {
+        "category": "technical",
+        "page": 75,
+        "quote": "FLOORS SHALL BE SMOOTH AND LEVEL WITHOUT DEPRESSED OR RAISED AREAS, EXCEPT A PROVISION SHALL BE MADE TO HAVE SMOOTH, EVEN SLOPE TO FLOOR DRAINS. THE SURFACE SHALL BE ACCEPTABLE TO RECIEVE FINISH.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Floors must be smooth, level, and sloped to drains as needed."
+      },
+      {
+        "category": "technical",
+        "page": 75,
+        "quote": "PROVIDE METAL CORNER BEAD, TRIM AND CASING FOR ALL EDGES AND CORNERS OF GYPSUM BOARD SURFACES ON PAINTED WALLS, CLEAN GYPSUM BOARD CORNERS WITHOUT METAL CORNER BEADS SHALL BE UNDER FRP, TILE, OR STAINLESS STEEL.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Provide metal corner beads for gypsum board edges unless covered by other materials."
+      },
+      {
+        "category": "technical",
+        "page": 75,
+        "quote": "PROVIDE STIFFENERS, BRACING, BACK-UP PLATES, ETC. AS REQUIRED AT STUD WALLS FOR SUPPORT OF FIXTURES AND OTHER EQUIPMENT.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Provide necessary supports for fixtures and equipment on stud walls."
+      },
+      {
+        "category": "technical",
+        "page": 75,
+        "quote": "TILE SHALL BE INSTALLED IN ACCORDANCE WITH THE RECOMMENDATIONS CONTAINED IN THE HANDBOOK FOR CERAMIC TILE INSTALLATION OF THE COUNCIL OF AMERICA (CURRENT EDITION).",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Install tile per the Ceramic Tile Installation Handbook."
+      },
+      {
+        "category": "technical",
+        "page": 75,
+        "quote": "TILE DIMENSIONS ON FLOOR FINISH PLANS ARE DESIGNED TO LAYOUT IN AN EQUAL MANNER. IF TILE MUST BE CUT, THE GROUT LINES SHALL ALIGN WITH ADJACENT TILES OR BE CENTERED AND CUT IN OBVIOUS LOCATIONS. THE GENERAL CONTRACTOR SHALL COORDINATE THE INSTALLATION OF GYPSUM BOARD WITH TILE DIMENSIONS TO PERMIT EVEN INSTALLATION.",
+        "section": "GENERAL CONSTRUCTION NOTES",
+        "text": "Coordinate tile and gypsum board installation for even layout."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

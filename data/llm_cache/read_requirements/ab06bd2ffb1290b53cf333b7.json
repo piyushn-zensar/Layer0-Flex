@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 20,
+        "quote": "Contractor and Subcontractors shall undertake or continue existing EEO programs to ensure that minority group members and women are afforded equal employment opportunities without discrimination because of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status, predisposing genetic characteristics, victim of domestic violence status or marital status.",
+        "section": "1",
+        "text": "Ensure EEO programs provide equal opportunities without discrimination."
+      },
+      {
+        "category": "submission",
+        "page": 20,
+        "quote": "The Contractor shall submit an EEO policy statement to the SRAA within seventy two (72) hours after the date of the notice by SRAA to award the contract to the Contractor.",
+        "section": "2",
+        "text": "Submit EEO policy statement within 72 hours of contract award notice."
+      },
+      {
+        "category": "compliance",
+        "page": 20,
+        "quote": "If Contractor or Subcontractor does not have an existing EEO policy statement, the SRAA may provide the Contractor or Subcontractor a model statement (see SRAA 5000 – Minority/Women-Owned Business Enterprises – Equal Employment Opportunity Policy Statement).",
+        "section": "3",
+        "text": "Use SRAA-provided model EEO statement if no existing one."
+      },
+      {
+        "category": "compliance",
+        "page": 20,
+        "quote": "The Contractor’s EEO policy statement shall include the following language: The Contractor will not discriminate against any employee or applicant for employment because of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status, predisposing genetic characteristics, victim of domestic violence status or marital status.",
+        "section": "4a",
+        "text": "Include non-discrimination language in EEO policy."
+      },
+      {
+        "category": "compliance",
+        "page": 20,
+        "quote": "The Contractor shall state in all solicitations or advertisements for employees that, in the performance of the contract, all qualified applicants will be afforded equal employment opportunities without discrimination because of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status, predisposing genetic characteristics, victim of domestic violence status or marital status.",
+        "section": "4b",
+        "text": "Include EEO statement in job advertisements."
+      },
+      {
+        "category": "compliance",
+        "page": 20,
+        "quote": "The Contractor shall request each employment agency, labor union, or authorized representative of workers with which it has a collective bargaining or other agreement or understanding, to furnish a written statement that such employment agency, labor union, or representative will not discriminate on the basis of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status, predisposing genetic characteristics, victim of domestic violence status or marital status and that such union or representative will affirmatively cooperate in the implementation of the Contractor’s obligations herein.",
+        "section": "4c",
+        "text": "Obtain non-discrimination statements from employment agencies or unions."
+      },
+      {
+        "category": "compliance",
+        "page": 20,
+        "quote": "The Contractor will include the provisions of Subdivisions (a) through (c) of this Subsection 4 which provides for relevant provisions of the Human Rights Law, in every subcontract in such a manner that the requirements of the subdivisions will be binding upon each subcontractor as to work in connection with the Contract.",
+        "section": "4d",
+        "text": "Include EEO provisions in all subcontracts."
+      },
+      {
+        "category": "submission",
+        "page": 20,
+        "quote": "To ensure compliance with this section, the Contractor shall submit a staffing plan to document the composition of the proposed workforce to be utilized in the performance of the Contract by the specified categories listed, including ethnic background, gender and federal occupational categories.",
+        "section": "C",
+        "text": "Submit staffing plan detailing workforce composition."
+      },
+      {
+        "category": "submission",
+        "page": 20,
+        "quote": "Contractors shall complete the Staff Plan Form and submit it as part of their bid or proposal or within a reasonable time, but no later than the time of award of the contract.",
+        "section": "C",
+        "text": "Submit completed Staff Plan Form with bid or before contract award."
+      },
+      {
+        "category": "submission",
+        "page": 20,
+        "quote": "Once a contract has been awarded and during the term of the Contract, Contractor is responsible for updating and providing notice to the SRAA of any changes to the previously submitted Staffing Plan.",
+        "section": "D",
+        "text": "Update and notify SRAA of changes to Staffing Plan during contract term."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

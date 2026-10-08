@@ -1,0 +1,29 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 84,
+        "quote": "PROVIDE 3 TYPE S LUMINAIRES ON THE EAST WALL AND 3 TYPE S LUMINAIRES ON THE WEST WALL OF THE BASEMENT FLOOR OF THE BUILDING. SEE SHEET E61-00 FOR LUMINAIRE SCHEDULE.",
+        "section": "KEYED NOTES",
+        "text": "Install specified luminaires on basement walls as per schedule."
+      },
+      {
+        "category": "technical",
+        "page": 84,
+        "quote": "PROVIDE 3 TYPE S LUMINAIRES ON THE EAST WALL AND 3 TYPE S LUMINAIRES ON THE WEST WALL OF THE FIRST FLOOR OF THE BUILDING. SEE SHEET E61-00 FOR LUMINAIRE SCHEDULE.",
+        "section": "KEYED NOTES",
+        "text": "Install specified luminaires on first floor walls as per schedule."
+      },
+      {
+        "category": "technical",
+        "page": 84,
+        "quote": "PROVIDE BATTERY CHARGER FOR BATTERY BANK. PROVIDE NEW CONDUIT FROM PANEL LP-1 TO BATTERY CHARGER FOR POWER CONNECTION.",
+        "section": "KEYED NOTES",
+        "text": "Install battery charger and connect it to panel LP-1."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,43 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 34,
+        "quote": "In an effort to promote and assist in the participation of certified M/WBEs as subcontractors and suppliers on this project for the provision of services and materials, the bidder is required to comply with SRAA’s participation goals through one of the three methods below.",
+        "section": "M/WBE Requirements",
+        "text": "Bidder must comply with M/WBE participation goals using one of three methods."
+      },
+      {
+        "category": "compliance",
+        "page": 34,
+        "quote": " Full Participation – No Request for Waiver (PREFERRED)",
+        "section": "M/WBE Requirements",
+        "text": "Bidder can choose full participation without requesting a waiver."
+      },
+      {
+        "category": "compliance",
+        "page": 34,
+        "quote": " Partial Participation – Partial Request for Waiver",
+        "section": "M/WBE Requirements",
+        "text": "Bidder can choose partial participation with a partial waiver request."
+      },
+      {
+        "category": "compliance",
+        "page": 34,
+        "quote": " No Participation – Request for Complete Waiver",
+        "section": "M/WBE Requirements",
+        "text": "Bidder can choose no participation with a complete waiver request."
+      },
+      {
+        "category": "submission",
+        "page": 34,
+        "quote": "By my signature on this Cover Letter, I certify that I am authorized to bid the Bidder’s firm contractually",
+        "section": "M/WBE Cover Letter",
+        "text": "Authorized representative must certify their authority to bid contractually."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

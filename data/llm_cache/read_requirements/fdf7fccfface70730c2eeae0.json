@@ -1,0 +1,197 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "capable of disconnecting the transformer fuses from their voltage source and removing them from the structure.",
+        "section": "Transformer Fuses",
+        "text": "Transformer fuses must be disconnectable and removable."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "This removing mechanism shall be so arranged that full access to the transformers cannot be accomplished until fuses are disconnected from the structure and grounded.",
+        "section": "Transformer Fuses",
+        "text": "Access to transformers requires fuses to be disconnected and grounded."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "When moved to a full out position, the transformer fuses and VT windings shall be automatically connected to a ground stud.",
+        "section": "Transformer Fuses",
+        "text": "Transformer fuses and VT windings must ground automatically when fully extended."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Primary contacts shall be insulated from the structure by porcelain or cycloaliphatic epoxy supports, shall be self-aligning, and shall have silver to silver contact surfaces.",
+        "section": "Primary Contacts",
+        "text": "Primary contacts must be insulated, self-aligning, and have silver contact surfaces."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "VT’s shall be of the ratio indicated on the Contract Drawings and shall comply with ANSI C57.13.",
+        "section": "Voltage Transformers",
+        "text": "VTs must match specified ratios and comply with ANSI C57.13."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Current transformers shall be of the multi-ratio window type with ratios as indicated on the Contract Drawings.",
+        "section": "Current Transformers",
+        "text": "CTs must be multi-ratio window type and match specified ratios."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "They shall have sufficient thermal and mechanical capacity to withstand the maximum momentary current rating of the breakers.",
+        "section": "Current Transformers",
+        "text": "CTs must handle maximum momentary current rating."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "The secondary terminals shall be of the solder-less clamp type.",
+        "section": "Current Transformers",
+        "text": "CT secondary terminals must be solder-less clamp type."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "All current transformers shall be properly identified for polarity with standard marking symbols.",
+        "section": "Current Transformers",
+        "text": "CTs must have standard polarity markings."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "CT’s having a insulation rating of 15kV with fully insulated bus centered in the transformer window opening, are acceptable when corona, hypot, and impulse tests prove a satisfactory arrangement.",
+        "section": "Current Transformers",
+        "text": "15kV CTs are acceptable if tests confirm satisfactory arrangement."
+      },
+      {
+        "category": "submission",
+        "page": 65,
+        "quote": "Tests shall be performed on a similar CT installation in the switchgear MANUFACTURER’s equipment and certified test reports shall be submitted with the approval drawings when requested.",
+        "section": "Current Transformers",
+        "text": "Submit certified test reports for similar CT installations upon request."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "The minimum acceptable accuracy class for metering and relaying shall be in accordance with the latest edition of ANSI Standard C37.20.2 and C57.13.",
+        "section": "Current Transformers",
+        "text": "CT accuracy class must meet ANSI C37.20.2 and C57.13."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Phase CT’s shall be mounted over stationary primary disconnects.",
+        "section": "Current Transformers",
+        "text": "Phase CTs must be mounted over stationary primary disconnects."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Provide two KWH meter socket for Form 9S meter. KWH meter provided by others.",
+        "section": "Revenue Meter Socket",
+        "text": "Provide two Form 9S KWH meter sockets."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Provide (1) Test Switch assembly, with (3) current test jack and short-circuiting current assemblies and (4) single-pole potential assemblies, similar to States Type FMS-10E2.",
+        "section": "Revenue Meter Socket",
+        "text": "Provide specified test switch assembly similar to States Type FMS-10E2."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Miscellaneous interlock contacts and auxiliary relays as required for the breaker control scheme.",
+        "section": "Control Features",
+        "text": "Include interlock contacts and auxiliary relays for breaker control."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Two sets of control power circuit fuses for each breaker. Electrical control scheme shall be similar to ANSI C37.11, Figure 1, Diagram B, 2 with the trip and close circuits individually protected.",
+        "section": "Control Features",
+        "text": "Provide two control power circuit fuses per breaker with ANSI C37.11 compliant scheme."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Provide spare fuses for other control circuits (no less than two each).",
+        "section": "Control Features",
+        "text": "Provide at least two spare fuses for control circuits."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Cell switches in each compartment to bypass all breaker-mounted auxiliary switch \"b\" contacts when circuit breaker is removed.",
+        "section": "Control Features",
+        "text": "Include cell switches to bypass auxiliary switch \"b\" contacts when breaker is removed."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Include at least two spare \"a\" and two spare \"b\" contacts on each breaker cell position switch.",
+        "section": "Control Features",
+        "text": "Provide two spare \"a\" and \"b\" contacts per breaker cell position switch."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "All breaker auxiliary and cell switch spare contacts wired out to compartment external connection terminal block.",
+        "section": "Control Features",
+        "text": "Wire all spare contacts to external terminal block."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Control designed such that breakers will not trip on interruption to DC control power.",
+        "section": "Control Features",
+        "text": "Design control to prevent breaker trips on DC power interruption."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Completely factory-install all internal control wiring.",
+        "section": "Control Wiring",
+        "text": "Factory-install all internal control wiring."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Switchgear secondary wiring shall be multi-stranded, tinned, copper conductor, type SIS, 600 volt, VW-1 rating. Minimum wire size shall be #14 AWG, 41 strand.",
+        "section": "Control Wiring",
+        "text": "Secondary wiring must meet specified standards and sizes."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "BCT wiring shall be #10 AWG. Signal wiring (transducer outputs, etc.) shall be #22 twisted shielded pair. RTU connections shall be #18 AWG, 18 strand, type SIS.",
+        "section": "Control Wiring",
+        "text": "BCT, signal, and RTU wiring must meet specified sizes and types."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Splicing or tapping is not permitted.",
+        "section": "Control Wiring",
+        "text": "No splicing or tapping allowed in wiring."
+      },
+      {
+        "category": "technical",
+        "page": 65,
+        "quote": "Wiring between hinged and stationary panels shall be supported to prevent undue stress and shall be protected from contact with metal edges by suitable protective wrap.",
+        "section": "Control Wiring",
+        "text": "Support and protect wiring between hinged and stationary panels."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

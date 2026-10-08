@@ -1,0 +1,204 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 72,
+        "quote": "Indoor (Switchgear house by others)",
+        "section": "Application",
+        "text": "Switchgear must be suitable for indoor use."
+      },
+      {
+        "category": "technical",
+        "page": 72,
+        "quote": "Controlled Environment Yes",
+        "section": "Application",
+        "text": "Switchgear must operate in a controlled environment."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "Drawing Size 24 X 36 Inch",
+        "section": "Drawings",
+        "text": "Drawings must be 24x36 inches."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "Usable Drawing Area 23‐1/2 X 35‐1/2 Inch",
+        "section": "Drawings",
+        "text": "Usable drawing area must be 23.5x35.5 inches."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "CAD Drawing Required Yes",
+        "section": "Drawings",
+        "text": "CAD drawings are required."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "CAD System required from SubPurchaser VENDOR",
+        "section": "Drawings",
+        "text": "Vendor must provide CAD system."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "CAD System Used by Purchaser AutoCAD",
+        "section": "Drawings",
+        "text": "Purchaser uses AutoCAD."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "Border Title Block File Provided by VENDOR",
+        "section": "Drawings",
+        "text": "Vendor must provide border title block file."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "One Line Diagram Provided by PURCHASER",
+        "section": "Drawings",
+        "text": "Purchaser provides one-line diagram."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "Tripping Block Diagram Provided by VENDOR",
+        "section": "Drawings",
+        "text": "Vendor must provide tripping block diagram."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "Three Line Diagram Provided by VENDOR",
+        "section": "Drawings",
+        "text": "Vendor must provide three-line diagram."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "Schematic Diagram Provided by VENDOR",
+        "section": "Drawings",
+        "text": "Vendor must provide schematic diagram."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "Bill of Materials VENDOR",
+        "section": "Documentation",
+        "text": "Vendor must provide bill of materials."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "Metal Clad Switchgear Arrangement Drawing Provided by VENDOR",
+        "section": "Drawings",
+        "text": "Vendor must provide arrangement drawing for metal clad switchgear."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "Metal Clad Switchgear Fabrication Details Provided by VENDOR",
+        "section": "Drawings",
+        "text": "Vendor must provide fabrication details for metal clad switchgear."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "Metal Clad Switchgear Engraved Nameplate List Provided by VENDOR",
+        "section": "Documentation",
+        "text": "Vendor must provide engraved nameplate list for metal clad switchgear."
+      },
+      {
+        "category": "submission",
+        "page": 72,
+        "quote": "Metal Clad Switchgear Connection Diagram Provided by VENDOR",
+        "section": "Drawings",
+        "text": "Vendor must provide connection diagram for metal clad switchgear."
+      },
+      {
+        "category": "technical",
+        "page": 72,
+        "quote": "Number of Sections 2 Unit",
+        "section": "Specifications",
+        "text": "Switchgear must have 2 sections."
+      },
+      {
+        "category": "schedule",
+        "page": 72,
+        "quote": "Number of Shipped Assemblies VENDOR Unit 2 EA.",
+        "section": "Delivery",
+        "text": "Vendor must ship 2 assemblies."
+      },
+      {
+        "category": "technical",
+        "page": 72,
+        "quote": "Total Number of Compartments VENDOR Unit",
+        "section": "Specifications",
+        "text": "Vendor must specify total number of compartments."
+      },
+      {
+        "category": "technical",
+        "page": 72,
+        "quote": "Finish Color Gray Exterior and White Interior Color",
+        "section": "Specifications",
+        "text": "Switchgear must have gray exterior and white interior."
+      },
+      {
+        "category": "technical",
+        "page": 72,
+        "quote": "Breaker Type Drawout type VCB",
+        "section": "Specifications",
+        "text": "Switchgear must use drawout type VCB breakers."
+      },
+      {
+        "category": "technical",
+        "page": 72,
+        "quote": "Number of Independent Trip Coils",
+        "section": "Specifications",
+        "text": "Vendor must specify number of independent trip coils."
+      },
+      {
+        "category": "technical",
+        "page": 72,
+        "quote": "Current Transformers Quantity per pole 2",
+        "section": "Specifications",
+        "text": "Each pole must have 2 current transformers."
+      },
+      {
+        "category": "technical",
+        "page": 72,
+        "quote": "Relaying Ratio 2000/5MR; 1200/5MR Multi ratio Yes",
+        "section": "Specifications",
+        "text": "Relaying ratio must be 2000/5MR or 1200/5MR, multi-ratio."
+      },
+      {
+        "category": "technical",
+        "page": 72,
+        "quote": "Relaying Accuracy C400",
+        "section": "Specifications",
+        "text": "Relaying accuracy must be C400."
+      },
+      {
+        "category": "technical",
+        "page": 72,
+        "quote": "Thermal Rating 1.5 or higher",
+        "section": "Specifications",
+        "text": "Thermal rating must be 1.5 or higher."
+      },
+      {
+        "category": "technical",
+        "page": 72,
+        "quote": "Metering Current Transformer Quantity 2",
+        "section": "Specifications",
+        "text": "Switchgear must have 2 metering current transformers."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,113 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 21,
+        "quote": "information is to be submitted on a quarterly basis during the term of the contract to report the actual workforce utilized in the performance of the contract by the specified categories listed including ethnic background, gender and federal occupational categories. The Workforce Report must be submitted to report this information.",
+        "section": "Workforce Reporting",
+        "text": "Submit quarterly Workforce Reports detailing workforce demographics."
+      },
+      {
+        "category": "submission",
+        "page": 21,
+        "quote": "Separate forms shall be completed by contractor and any subcontractor performing work on the Contract.",
+        "section": "Workforce Reporting",
+        "text": "Contractor and subcontractors must complete separate forms."
+      },
+      {
+        "category": "submission",
+        "page": 21,
+        "quote": "Contractor shall submit the Workforce Report and indicate that the information provided related to the actual workforce utilized on the Contract.",
+        "section": "Workforce Reporting",
+        "text": "Indicate if the Workforce Report data is specific to the contract."
+      },
+      {
+        "category": "submission",
+        "page": 21,
+        "quote": "Contractor shall submit the Workforce Report and indicate that the information provided is Contractor’s total workforce during the subject time frame, not limited to work specifically under the contract.",
+        "section": "Workforce Reporting",
+        "text": "Indicate if the Workforce Report data is for the total workforce."
+      },
+      {
+        "category": "submission",
+        "page": 21,
+        "quote": "In the case where the Contractor’s and/or subcontractor’s workforce does not change within the quarterly period, the Contractor shall notify SRAA in writing.",
+        "section": "Workforce Reporting",
+        "text": "Notify SRAA in writing if workforce remains unchanged quarterly."
+      },
+      {
+        "category": "submission",
+        "page": 21,
+        "quote": "All forms and reports will be submitted to the SRAA program manager for this contract and forwarded to Tori Hunt at huntt@syrairport.org.",
+        "section": "Workforce Reporting",
+        "text": "Submit forms and reports to the SRAA program manager and Tori Hunt."
+      },
+      {
+        "category": "compliance",
+        "page": 21,
+        "quote": "Contractor shall comply with the provisions of the Human Rights Law, and all other state and federal statutory and constitutional non-discrimination provisions.",
+        "section": "Non-Discrimination",
+        "text": "Comply with Human Rights Law and non-discrimination provisions."
+      },
+      {
+        "category": "compliance",
+        "page": 21,
+        "quote": "Contractor and subcontractors shall not discriminate against any employee or applicant for employment because of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status, predisposing genetic characteristics, victim of domestic violence status or marital status, and shall also follow the requirements of the Human Rights Law with regard to non-discrimination on the basis of prior criminal conviction and prior arrest.",
+        "section": "Non-Discrimination",
+        "text": "Ensure no discrimination in employment based on specified characteristics."
+      },
+      {
+        "category": "compliance",
+        "page": 21,
+        "quote": "The contractor acknowledges that it is the policy of the State of New York and of SRAA that MWBEs shall be given the opportunity for meaningful participation in the performance of State contracts.",
+        "section": "MWBE Requirements",
+        "text": "Acknowledge policy for MWBE participation in state contracts."
+      },
+      {
+        "category": "compliance",
+        "page": 21,
+        "quote": "Contractors agree to make good faith efforts to solicit active participation to meet established goals under this procurement by MWBEs identified in the ESD directory of certified businesses.",
+        "section": "MWBE Requirements",
+        "text": "Make good faith efforts to involve MWBEs in the contract."
+      },
+      {
+        "category": "compliance",
+        "page": 21,
+        "quote": "The question of whether a Contractor has engaged in and documented “Good Faith Efforts” to solicit active participation to meet established goals under this procurement by MWBEs in the performance of State Contracts shall be determined by the SRAA Executive Director or his/her designee, after a thorough consideration of the factors listed in 5 NYCRR § 142.8.",
+        "section": "MWBE Requirements",
+        "text": "Good faith efforts for MWBE participation will be evaluated by SRAA."
+      },
+      {
+        "category": "compliance",
+        "page": 21,
+        "quote": "The separate MBE and WBE participation goals established by SRAA for this procurement are based on the overall availability of MWBEs that have been certified to perform the specific scope of work identified under this procurement.",
+        "section": "MWBE Requirements",
+        "text": "Follow SRAA's MBE and WBE participation goals."
+      },
+      {
+        "category": "compliance",
+        "page": 21,
+        "quote": "All MWBE firms are required to be certified by Empire State Development (ESD) or must be in the process of obtaining certification from ESD.",
+        "section": "MWBE Requirements",
+        "text": "Ensure MWBE firms are certified or in the process of certification by ESD."
+      },
+      {
+        "category": "compliance",
+        "page": 21,
+        "quote": "Should the Contractor identify a minority-owned or woman-owned firm that is not currently certified as an MWBE, the Contractor should request that the firm submit a certification application to ESD for an eligibility determination, with a copy to the SRAA MWBE Coordinator.",
+        "section": "MWBE Requirements",
+        "text": "Request non-certified MWBE firms to apply for ESD certification."
+      },
+      {
+        "category": "compliance",
+        "page": 21,
+        "quote": "SRAA’s MWBE Coordinator will work with ESD to expedite the application; however, it is the responsibility of the Contractor to ensure that a sufficient number of certified MWBE firms have been identified in response to this procurement, in order to facilitate full MWBE participation.",
+        "section": "MWBE Requirements",
+        "text": "Ensure sufficient certified MWBE firms are identified for participation."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

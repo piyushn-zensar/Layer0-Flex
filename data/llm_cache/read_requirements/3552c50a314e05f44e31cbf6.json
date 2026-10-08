@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 18,
+        "quote": "SRAA is required to implement the provisions of New York State Executive Law Article 15-A and 5 NYCRR Parts 142-144 (MWBE Regulations) for all State contracts as defined therein, with a value: (1) in excess of $25,000 for labor, services, equipment, materials, or any combination of the foregoing or; (2) in excess of $100,000 for real property renovations and construction.",
+        "section": "I.B",
+        "text": "SRAA must apply MWBE regulations for contracts exceeding $25,000 for services or $100,000 for construction."
+      },
+      {
+        "category": "compliance",
+        "page": 18,
+        "quote": "Contractor’s demonstration of “good faith efforts” pursuant to 5 NYCRR § 142.8 shall be a part of these requirements.",
+        "section": "I.B",
+        "text": "Contractors must demonstrate good faith efforts as per 5 NYCRR § 142.8."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

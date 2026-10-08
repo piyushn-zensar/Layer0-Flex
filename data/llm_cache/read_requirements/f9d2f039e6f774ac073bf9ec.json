@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 24,
+        "quote": "SRAA reserves the right to impose sanctions following a determination of non-compliance by a Contractor.",
+        "section": "VIII. Sanctions",
+        "text": "SRAA may impose sanctions for contractor non-compliance."
+      },
+      {
+        "category": "compliance",
+        "page": 24,
+        "quote": "Sanctions may be imposed upon the Contractor whenever EEO and/or MWBE program requirements have not been met in a timely and effective manner.",
+        "section": "VIII. Sanctions",
+        "text": "Sanctions apply if EEO or MWBE requirements are not met effectively."
+      },
+      {
+        "category": "commercial",
+        "page": 24,
+        "quote": "Disallowance of costs associated with such noncompliance;",
+        "section": "VIII. Sanctions",
+        "text": "Costs related to non-compliance may be disallowed."
+      },
+      {
+        "category": "legal",
+        "page": 24,
+        "quote": "Initiation of procedures to suspend or terminate the grant or contract;",
+        "section": "VIII. Sanctions",
+        "text": "Procedures to suspend or terminate the contract may be initiated."
+      },
+      {
+        "category": "commercial",
+        "page": 24,
+        "quote": "Withholding of progress payments until such time as corrective actions have been undertaken by the Contractor to the satisfaction of SRAA;",
+        "section": "VIII. Sanctions",
+        "text": "Progress payments may be withheld until corrective actions are satisfactory."
+      },
+      {
+        "category": "compliance",
+        "page": 24,
+        "quote": "Deleting Contractor’s name from bid lists for a specified period of time to be determined in the sole discretion of SRAA;",
+        "section": "VIII. Sanctions",
+        "text": "Contractor may be removed from bid lists for a period."
+      },
+      {
+        "category": "compliance",
+        "page": 24,
+        "quote": "Report Contractor as non-responsible to NYS OSC Vendor Responsibility System;",
+        "section": "VIII. Sanctions",
+        "text": "Contractor may be reported as non-responsible to NYS OSC."
+      },
+      {
+        "category": "legal",
+        "page": 24,
+        "quote": "Other sanctions of which a Contractor has notice in writing prior to or during the performance of a contract.",
+        "section": "VIII. Sanctions",
+        "text": "Other sanctions may be applied with prior written notice."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

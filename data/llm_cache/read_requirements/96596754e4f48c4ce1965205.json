@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Thermal Rating 1.5 or higher",
+        "section": "Thermal Rating",
+        "text": "The thermal rating must be 1.5 or higher."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Doors (Per Section) One For Rear Door and Two For Front panels.",
+        "section": "Doors",
+        "text": "Each section must have one rear door and two front panels."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Panel Material Steel, 1/8 or 11 Gauge",
+        "section": "Panel Material",
+        "text": "Panels must be made of steel, either 1/8 inch or 11 gauge."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Minimum Distance from Floor to Lowest Device Yes",
+        "section": "Device Placement",
+        "text": "There must be a minimum distance from the floor to the lowest device."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Floor Sill Framing and Anchoring Channel Required",
+        "section": "Floor Sill",
+        "text": "Channel framing and anchoring for the floor sill is required."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "External Control Cable Entrance Top",
+        "section": "Cable Entrance",
+        "text": "The external control cable entrance must be at the top."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Laminated Phenolic Screw‐on Nameplate",
+        "section": "Nameplate",
+        "text": "Nameplates must be laminated phenolic and screw-on."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Interior Lighting Controlled by Door Switch (Per Section) Yes",
+        "section": "Lighting",
+        "text": "Interior lighting must be controlled by a door switch for each section."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Each Section and Compartment Physically Separable",
+        "section": "Section Separation",
+        "text": "Each section and compartment must be physically separable."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Available Power Supply Volts 125 VDC Volts 120/240 VAC Phases Single Wire 3 Frequency 60 Hz",
+        "section": "Power Supply",
+        "text": "The power supply must be 125 VDC or 120/240 VAC, single phase, 3-wire, 60 Hz."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Wire Size Voltage rating 600 Volts",
+        "section": "Wire Size",
+        "text": "The wire size must support a voltage rating of 600 volts."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Power Circuits 8 AWG",
+        "section": "Power Circuits",
+        "text": "Power circuits must use 8 AWG wire."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Control Circuits 12 and 14 AWG",
+        "section": "Control Circuits",
+        "text": "Control circuits must use 12 and 14 AWG wire."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Trip and Close 12 AWG",
+        "section": "Trip and Close Circuits",
+        "text": "Trip and close circuits must use 12 AWG wire."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "CT Circuit 10 AWG",
+        "section": "CT Circuit",
+        "text": "CT circuits must use 10 AWG wire."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Instrument Circuit 16 Shielded twisted pair",
+        "section": "Instrument Circuit",
+        "text": "Instrument circuits must use 16 AWG shielded twisted pair wire."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Outdoor Ambient Temp Range ‐30 to +120 Degrees Fahrenheit",
+        "section": "Outdoor Temperature",
+        "text": "The outdoor ambient temperature range must be -30 to +120°F."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Indoor Ambient Temp Range 60‐80 Degrees Fahrenheit",
+        "section": "Indoor Temperature",
+        "text": "The indoor ambient temperature range must be 60-80°F."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Altitude 420 FT",
+        "section": "Altitude",
+        "text": "The altitude must be 420 feet."
+      },
+      {
+        "category": "technical",
+        "page": 73,
+        "quote": "Seismic and wind loading per Ground Motion Site Classification Wind Exposure Category",
+        "section": "Seismic and Wind Loading",
+        "text": "Seismic and wind loading must comply with ground motion, site classification, and wind exposure category."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

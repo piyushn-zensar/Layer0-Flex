@@ -1,0 +1,134 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 11,
+        "quote": "The recommendations and opinions of each Proposer’s previous customers or clients.",
+        "section": "8",
+        "text": "Provide recommendations and opinions from previous customers or clients."
+      },
+      {
+        "category": "submission",
+        "page": 11,
+        "quote": "Information provided in response to specific questions and requirements contained in the RFP and all attachments/exhibits.",
+        "section": "9",
+        "text": "Respond to all specific questions and requirements in the RFP and its attachments."
+      },
+      {
+        "category": "submission",
+        "page": 11,
+        "quote": "The proposer’s past experience at the Syracuse Hancock International Airport.",
+        "section": "10",
+        "text": "Detail past experience at the Syracuse Hancock International Airport."
+      },
+      {
+        "category": "submission",
+        "page": 11,
+        "quote": "Information provided at interview (if required).",
+        "section": "11",
+        "text": "Provide information during the interview if required."
+      },
+      {
+        "category": "commercial",
+        "page": 11,
+        "quote": "The Proposer must certify in the proposal that its fee covers all services proposed and meets the requirements of this RFP.",
+        "section": "N/A",
+        "text": "Certify that the proposed fee covers all services and meets RFP requirements."
+      },
+      {
+        "category": "commercial",
+        "page": 11,
+        "quote": "The total estimated contract value for the services provided will be derived from the successful proposer’s proposed fee.",
+        "section": "N/A",
+        "text": "The contract value will be based on the proposed fee."
+      },
+      {
+        "category": "compliance",
+        "page": 11,
+        "quote": "The Committee will evaluate each proposal based on a “Best Value” concept.",
+        "section": "N/A",
+        "text": "Proposals will be evaluated on a 'Best Value' concept."
+      },
+      {
+        "category": "compliance",
+        "page": 11,
+        "quote": "The Authority and its review committee will determine which proposal(s) best satisfies its requirements.",
+        "section": "N/A",
+        "text": "The Authority will select proposals that best satisfy its requirements."
+      },
+      {
+        "category": "compliance",
+        "page": 11,
+        "quote": "All proposals deemed to be responsive to the requirements of this procurement will be evaluated.",
+        "section": "N/A",
+        "text": "Only responsive proposals will be evaluated."
+      },
+      {
+        "category": "compliance",
+        "page": 11,
+        "quote": "Proposals failing to meet the requirements of this RFP may be eliminated from consideration.",
+        "section": "N/A",
+        "text": "Non-compliant proposals may be disqualified."
+      },
+      {
+        "category": "staffing",
+        "page": 11,
+        "quote": "Qualified staff/individuals will evaluate all submitted proposals.",
+        "section": "N/A",
+        "text": "Qualified personnel will evaluate proposals."
+      },
+      {
+        "category": "submission",
+        "page": 11,
+        "quote": "The Authority may request clarification of a proposal.",
+        "section": "N/A",
+        "text": "The Authority may ask for proposal clarifications."
+      },
+      {
+        "category": "legal",
+        "page": 11,
+        "quote": "The Authority reserves the right to: (i) withdraw or cancel the RFP at any time and at its sole discretion;",
+        "section": "2.9.4",
+        "text": "The Authority can cancel the RFP at any time."
+      },
+      {
+        "category": "legal",
+        "page": 11,
+        "quote": "(ii) reject any or all proposals received in response to this RFP;",
+        "section": "2.9.4",
+        "text": "The Authority can reject any or all proposals."
+      },
+      {
+        "category": "legal",
+        "page": 11,
+        "quote": "(iii) accept a proposal and any subsequent proposal for the contract from someone other than the lowest cost Proposer consistent with the criteria for the evaluation of proposals;",
+        "section": "2.9.4",
+        "text": "The Authority can accept a proposal not based on lowest cost."
+      },
+      {
+        "category": "legal",
+        "page": 11,
+        "quote": "(iv) make an award under the RFP in whole or in part;",
+        "section": "2.9.4",
+        "text": "The Authority can make partial or full awards."
+      },
+      {
+        "category": "legal",
+        "page": 11,
+        "quote": "(v) disqualify any proposer whose conduct and/or proposal fails to conform to the requirements of the RFP;",
+        "section": "2.9.4",
+        "text": "The Authority can disqualify non-conforming proposers."
+      },
+      {
+        "category": "legal",
+        "page": 11,
+        "quote": "(vi) seek clarifications and revisions of proposals;",
+        "section": "2.9.4",
+        "text": "The Authority can request proposal clarifications or revisions."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

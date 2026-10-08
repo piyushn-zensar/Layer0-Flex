@@ -1,0 +1,99 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "External Power Cable Entrance: Bottom Rear Section B2",
+        "section": "External Power Cable Entrance",
+        "text": "The external power cable must enter at the bottom rear section B2."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "External Power Cable Exit: Bottom Rear Section A2",
+        "section": "External Power Cable Exit",
+        "text": "The external power cable must exit at the bottom rear section A2."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "System nominal voltage: 13.2 kV",
+        "section": "Ratings",
+        "text": "The system nominal voltage must be 13.2 kV."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "Rated Maximum Voltage: 15 kV rms",
+        "section": "Ratings",
+        "text": "The rated maximum voltage must be 15 kV rms."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "Rated Continuous Current: 2000/1200 A, rms",
+        "section": "Ratings",
+        "text": "The rated continuous current must be 2000/1200 A, rms."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "Basic Impulse Level (BIL): 95 kV peak",
+        "section": "Ratings",
+        "text": "The basic impulse level must be 95 kV peak."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "Normal Frequency Withstand: 36 kV, rms",
+        "section": "Ratings",
+        "text": "The normal frequency withstand must be 36 kV, rms."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "Frequency: 60 Hz",
+        "section": "Ratings",
+        "text": "The frequency must be 60 Hz."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "Momentary Rating: 25 kA, rms",
+        "section": "Ratings",
+        "text": "The momentary rating must be 25 kA, rms."
+      },
+      {
+        "category": "submission",
+        "page": 74,
+        "quote": "Project Title: Syracuse Airport Terminal Switchgear Relocation",
+        "section": "Shipping Label",
+        "text": "The project title is Syracuse Airport Terminal Switchgear Relocation."
+      },
+      {
+        "category": "submission",
+        "page": 74,
+        "quote": "Specification No.: 22186.00‐SPC‐E01",
+        "section": "Shipping Label",
+        "text": "The specification number is 22186.00‐SPC‐E01."
+      },
+      {
+        "category": "technical",
+        "page": 74,
+        "quote": "Equipment Type: Metal Clad Switchgear",
+        "section": "Shipping Label",
+        "text": "The equipment type is Metal Clad Switchgear."
+      },
+      {
+        "category": "submission",
+        "page": 74,
+        "quote": "Device Location: Syracuse, NY",
+        "section": "Shipping Label",
+        "text": "The device location is Syracuse, NY."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

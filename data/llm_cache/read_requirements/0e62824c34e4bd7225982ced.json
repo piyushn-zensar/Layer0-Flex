@@ -1,0 +1,134 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 5,
+        "quote": "Proposer’s proposal, including all required forms attached at Exhibits to this RFP, shall be submitted via email to bids@syrairport.org in response to this RFP.",
+        "section": "1.8 Submission Requirements",
+        "text": "Submit proposals via email to the specified address."
+      },
+      {
+        "category": "submission",
+        "page": 5,
+        "quote": "The email with attached proposal and all required forms in PDF format shall be submitted.",
+        "section": "1.8 Submission Requirements",
+        "text": "Submit proposals and forms in PDF format via email."
+      },
+      {
+        "category": "submission",
+        "page": 5,
+        "quote": "Each copy shall be clearly labeled with the name of the proposer and the date.",
+        "section": "1.8 Submission Requirements",
+        "text": "Label each proposal copy with proposer name and date."
+      },
+      {
+        "category": "submission",
+        "page": 5,
+        "quote": "Each copy must contain the required information for the proposer.",
+        "section": "1.8 Submission Requirements",
+        "text": "Ensure each proposal copy includes all required information."
+      },
+      {
+        "category": "compliance",
+        "page": 5,
+        "quote": "Proposers are to ensure that their proposals are in compliance with all of the requirements of this RFP.",
+        "section": "1.8 Submission Requirements",
+        "text": "Ensure proposals comply with all RFP requirements."
+      },
+      {
+        "category": "compliance",
+        "page": 5,
+        "quote": "Failure to do so may result in disqualification.",
+        "section": "1.8 Submission Requirements",
+        "text": "Non-compliance may lead to disqualification."
+      },
+      {
+        "category": "submission",
+        "page": 5,
+        "quote": "Proposers should also be willing and able to provide additional information that may be required.",
+        "section": "1.8 Submission Requirements",
+        "text": "Be prepared to provide additional requested information."
+      },
+      {
+        "category": "staffing",
+        "page": 5,
+        "quote": "In addition, interviews may be requested at the discretion of any RFP review or ad hoc Committee appointed by the Authority.",
+        "section": "1.8 Submission Requirements",
+        "text": "Interviews may be requested by the Authority."
+      },
+      {
+        "category": "legal",
+        "page": 5,
+        "quote": "All information and materials submitted to the Authority in response to this RFP will become the property of the Authority.",
+        "section": "1.8 Submission Requirements",
+        "text": "Submitted materials become Authority property."
+      },
+      {
+        "category": "submission",
+        "page": 5,
+        "quote": "Proposers shall not submit proprietary or confidential business information unless they believe such information is critical to their submittals or presentations.",
+        "section": "1.8 Submission Requirements",
+        "text": "Avoid submitting proprietary information unless critical."
+      },
+      {
+        "category": "submission",
+        "page": 5,
+        "quote": "If any such information is included, it shall be clearly identified as such.",
+        "section": "1.8 Submission Requirements",
+        "text": "Clearly identify any proprietary information submitted."
+      },
+      {
+        "category": "legal",
+        "page": 5,
+        "quote": "The Authority shall endeavor to protect the identified information only to the extent allowed under applicable law.",
+        "section": "1.8 Submission Requirements",
+        "text": "Authority will protect proprietary information as allowed by law."
+      },
+      {
+        "category": "schedule",
+        "page": 5,
+        "quote": "Proposals must be received via email no later than 09/15/2023 by 4:00PM at: bids@syrairport.org",
+        "section": "1.9 Submission Due Date",
+        "text": "Submit proposals by 09/15/2023 at 4:00 PM via email."
+      },
+      {
+        "category": "schedule",
+        "page": 5,
+        "quote": "Proposals received after the specified date and time will not be considered.",
+        "section": "1.9 Submission Due Date",
+        "text": "Late proposals will not be considered."
+      },
+      {
+        "category": "submission",
+        "page": 5,
+        "quote": "Upon receipt of proposals, the Authority shall internally review each proposal and make a recommendation to the Board of the Authority.",
+        "section": "2.0 Proposals and Qualifications Review",
+        "text": "Authority will review proposals and recommend to the Board."
+      },
+      {
+        "category": "submission",
+        "page": 5,
+        "quote": "Proposals will be reviewed on the basis of competency, experience, date of final delivery and ability to perform the services required.",
+        "section": "2.0 Proposals and Qualifications Review",
+        "text": "Proposals evaluated on competency, experience, delivery date, and service ability."
+      },
+      {
+        "category": "submission",
+        "page": 5,
+        "quote": "Proposers should be willing and able to provide additional information that may be required by the Authority.",
+        "section": "2.0 Proposals and Qualifications Review",
+        "text": "Provide additional information if requested."
+      },
+      {
+        "category": "legal",
+        "page": 5,
+        "quote": "The Syracuse Regional Airport Authority reserves the right to waive any formalities and to reject or negotiate any and all proposals for any reason.",
+        "section": "2.0 Proposals and Qualifications Review",
+        "text": "Authority may waive formalities, reject, or negotiate proposals."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

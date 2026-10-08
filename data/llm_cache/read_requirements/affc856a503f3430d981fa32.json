@@ -1,0 +1,57 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "commercial",
+        "page": 15,
+        "quote": "Please provide a lump sum (LS) price that covers the manufacturing, furnishing, delivering, and testing of the new switchgear.",
+        "section": "Exhibit A",
+        "text": "Provide a lump sum price for manufacturing, furnishing, delivering, and testing the switchgear."
+      },
+      {
+        "category": "submission",
+        "page": 15,
+        "quote": "Please also include in your cost proposal:",
+        "section": "Exhibit A",
+        "text": "Include the following items in the cost proposal."
+      },
+      {
+        "category": "technical",
+        "page": 15,
+        "quote": "1. Special Tools necessary for installation, testing and maintenance.",
+        "section": "Exhibit A",
+        "text": "Provide special tools for installation, testing, and maintenance."
+      },
+      {
+        "category": "technical",
+        "page": 15,
+        "quote": "2. Necessary drawings, instructions and test reports in the English language.",
+        "section": "Exhibit A",
+        "text": "Provide drawings, instructions, and test reports in English."
+      },
+      {
+        "category": "submission",
+        "page": 15,
+        "quote": "3. In addition to other Submittal requirements, final drawings shall be submitted as AutoCAD format files.",
+        "section": "Exhibit A",
+        "text": "Submit final drawings in AutoCAD format."
+      },
+      {
+        "category": "technical",
+        "page": 15,
+        "quote": "4. Maintenance equipment and spare parts.",
+        "section": "Exhibit A",
+        "text": "Provide maintenance equipment and spare parts."
+      },
+      {
+        "category": "staffing",
+        "page": 15,
+        "quote": "5. Start-up and training",
+        "section": "Exhibit A",
+        "text": "Provide start-up and training services."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,141 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 88,
+        "quote": "1. DO NOT SHUT DOWN ANY MECHANICAL, PLUMBING, FIRE PROTECTION, NATURAL GAS, ELECTRICAL, OR RELATED SYSTEMS WITHOUT BUILDING OWNER'S PRIOR WRITTEN APPROVAL. FOLLOW ALL OWNER REQUIREMENTS AND SHUT DOWN PROCEDURES AS WELL AS ALL REQUIREMENTS OF THIS PROJECT.",
+        "section": "GENERAL NOTES",
+        "text": "Obtain written approval from the building owner before shutting down any systems."
+      },
+      {
+        "category": "schedule",
+        "page": 88,
+        "quote": "2. IF REQUIRED, PROVIDE SHUT DOWNS AND TIE-INS DURING OFF HOURS TO AVOID DISRUPTION OF BUILDING SYSTEMS. COORDINATE ALL SHUT DOWN REQUIREMENTS PRIOR TO SUBMITTING BID (INCLUDE ALL REQUIRED DURING OFF HOURS IN BID).",
+        "section": "GENERAL NOTES",
+        "text": "Plan shutdowns during off hours and include them in the bid."
+      },
+      {
+        "category": "compliance",
+        "page": 88,
+        "quote": "3. PROVIDE ALL WORK IN COMPLIANCE WITH ALL LOCAL, STATE AND FEDERAL CODES. OBTAIN ALL REQUIRED PERMITS.",
+        "section": "GENERAL NOTES",
+        "text": "Ensure compliance with all codes and obtain necessary permits."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "4. PROVIDE ALL REQUIRED EXCAVATION, BACKFILL AND COMPACTION FOR ALL UNDERGROUND WORK.",
+        "section": "GENERAL NOTES",
+        "text": "Perform excavation, backfill, and compaction for underground work."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "5. FIELD VERIFY EXACT LOCATION, DEPTH, COMPOSITION AND CONDITION OF ALL PIPING, VALVES AND SYSTEMS AS REQUIRED FOR WORK OF THE CONTRACT.",
+        "section": "GENERAL NOTES",
+        "text": "Verify location, depth, and condition of all systems on-site."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "6. PROVIDE CUTTING, CORING AND PATCHING OF ALL WALLS, SLABS AND DECKS AS REQUIRED FOR WORK SHOWN. COORDINATE ALL WORK WITH OWNER AND GENERAL CONTRACTOR AND ALL TRADES.",
+        "section": "GENERAL NOTES",
+        "text": "Perform cutting, coring, and patching as needed and coordinate with all parties."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "7. PROVIDE SCHEDULE 40 BLACK STEEL PIPE SLEEVES FOR ALL UNDERGROUND PIPING PASSING THROUGH OR UNDER FOOTINGS, WALLS, FOUNDATION WALLS, SLABS FLOORS AND/OR UNDERGROUND STRUCTURES. REFER TO THE PROJECT SPECIFICATIONS FOR ADDITIONAL REQUIREMENTS.",
+        "section": "GENERAL NOTES",
+        "text": "Use Schedule 40 black steel pipe sleeves for underground piping."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "8. WHERE PIPING IS LOCATED OVER FOOTINGS AND/OR OTHER UNDERGROUND STRUCTURES, ROLL DOWN AS REQUIRED TO CONNECT TO SYSTEMS NOTED. PROVIDE ALL REQUIRED OFFSETS, FITTINGS AND CONNECTIONS.",
+        "section": "GENERAL NOTES",
+        "text": "Adjust piping over footings and provide necessary fittings."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "9. CONNECT TO SITE PIPING OUTSIDE BUILDING AS SHOWN. PROVIDE ALL REQUIRED OFFSETS, FITTINGS AND CONNECTIONS. FIELD VERIFY EXACT LOCATION, DEPTH AND COMPOSITION OF SITE SERVICES AND COORDINATE ALL WORK WITH SITE CONTRACTOR.",
+        "section": "GENERAL NOTES",
+        "text": "Connect to site piping and coordinate with the site contractor."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "10. COORDINATE ALL OUTSIDE AIR INTAKE LOCATIONS WITH PLUMBING CONTRACTOR. ALL VENT TERMINATIONS ABOVE ROOF SHALL BE A MINIMUM 25'-0\" AWAY FROM ANY HVAC OUTSIDE AIR INTAKE (ROOFTOP UNIT, LOUVER, ETC.).",
+        "section": "GENERAL NOTES",
+        "text": "Coordinate air intake locations and ensure vent terminations are 25 feet from HVAC intakes."
+      },
+      {
+        "category": "schedule",
+        "page": 88,
+        "quote": "11. REFER TO ARCHITECTURAL DRAWINGS AND THE PROJECT SPECIFICATIONS FOR ANY PROJECT PHASING REQUIREMENTS.",
+        "section": "GENERAL NOTES",
+        "text": "Follow project phasing requirements as per architectural drawings."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "12. THE PIPING INDICATED ON THESE PLANS ARE DIAGRAMATIC. ALL WORK SHALL BE COORDINATED WITH ALL OTHER TRADES PRIOR TO INSTALLATION. CONTRACTOR SHALL COORDINATE ROUTING OF ALL PIPING WITH EXISTING CONDITIONS AND SHALL PROVIDE ANY NECESSARY OFFSETS, REROUTING, TEES, ELBOWS, ETC. REQUIRED FOR A COMPLETE AND COORDINATED INSTALLATION.",
+        "section": "GENERAL NOTES",
+        "text": "Coordinate piping installation with other trades and existing conditions."
+      },
+      {
+        "category": "commercial",
+        "page": 88,
+        "quote": "13. THE CONTRACTOR SHALL OBTAIN AND PAY ALL FEES RELATED TO PERMITTING, INSPECTIONS, TAP-ON FEES, ETC.",
+        "section": "GENERAL NOTES",
+        "text": "Pay all fees for permits, inspections, and related costs."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "14. CONTRACTOR SHALL COORDINATE AND PROVIDE ALL NECESSARY PIPING FITTINGS, PIPING, MISCELLANEOUS ITEMS REQUIRED FOR A COMPLETE INSTALLATION OF ALL MECHANICAL RELATED ITEMS.",
+        "section": "GENERAL NOTES",
+        "text": "Provide all necessary items for complete mechanical installation."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "15. ALL WORK SHALL BE COORDINATED WITH THE EQUIPMENT.",
+        "section": "GENERAL NOTES",
+        "text": "Coordinate all work with the equipment."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "16. ALL MECHANICAL & PIPING SYSTEMS SHALL BE SUPPORTED AS REQUIRED BY THE STATE AND LOCAL CODE REQUIREMENTS AND PER MANUFACTURER'S RECOMMENDATIONS.",
+        "section": "GENERAL NOTES",
+        "text": "Support systems as per codes and manufacturer recommendations."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "17. ALL PIPING PENETRATIONS THROUGH NEW, EXISTING WALL, OR FLOOR SHALL BE SEALED TO EQUAL THE RATING OF THE NEW, EXISTING WALL OR FLOOR.",
+        "section": "GENERAL NOTES",
+        "text": "Seal piping penetrations to match wall or floor ratings."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "18. THE MECHANICAL SYSTEM(S) SHALL BE TESTED AS REQUIRED BY STATE AND LOCAL CODE OR BY THE REQUIREMENTS OF THE LOCAL INSPECTOR.",
+        "section": "GENERAL NOTES",
+        "text": "Test mechanical systems as per codes or inspector requirements."
+      },
+      {
+        "category": "technical",
+        "page": 88,
+        "quote": "19. THE BACKFLOW PREVENTION DEVICE SHALL BE INSTALLED PER STATE AND LOCAL CODE & PER AUTHORITY HAVING JURISDICTION REQUIREMENTS.",
+        "section": "GENERAL NOTES",
+        "text": "Install backflow prevention devices as per codes and authority requirements."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

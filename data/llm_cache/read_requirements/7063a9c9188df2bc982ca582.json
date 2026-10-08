@@ -1,0 +1,113 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "Short-circuit current at rated max kV: (18,000).",
+        "section": "c",
+        "text": "The short-circuit current at rated maximum kV must be 18,000."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "Three-phase rated MVA or nominal MVA class: (500).",
+        "section": "3.a",
+        "text": "The three-phase rated MVA or nominal MVA class must be 500."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "Maximum symmetrical interrupting, amperes: (18,000).",
+        "section": "3.b",
+        "text": "The maximum symmetrical interrupting current must be 18,000 amperes."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "Close and latch, peak amperes: (62,000).",
+        "section": "3.c",
+        "text": "The close and latch peak current must be 62,000 amperes."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "Frequency, hertz: 60.",
+        "section": "4",
+        "text": "The frequency must be 60 Hz."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "Rated interrupting time, cycles: 5.",
+        "section": "5",
+        "text": "The rated interrupting time must be 5 cycles."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "The breaker shall be provided with two (2) independent trip coils.",
+        "section": "6",
+        "text": "The breaker must have two independent trip coils."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "Low-frequency test voltage (60-hertz, dry 1-minute), kV: 36.",
+        "section": "7.a",
+        "text": "The low-frequency test voltage must be 36 kV."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "Basic impulse level (1-1/2x40 microseconds), kV crest: 95.",
+        "section": "7.b",
+        "text": "The basic impulse level must be 95 kV crest."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "Nominal voltage supplies: 125 volts DC for close and trip; 240 volts AC for spring charging motor.",
+        "section": "8.a",
+        "text": "Nominal voltage supplies must be 125V DC for close/trip and 240V AC for spring charging motor."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "Voltage range, closing, volts: 100-140 volts DC.",
+        "section": "8.b",
+        "text": "The closing voltage range must be 100-140 volts DC."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "Voltage range, tripping, volts: 70-140 volts DC.",
+        "section": "8.c",
+        "text": "The tripping voltage range must be 70-140 volts DC."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "Charging motor voltage range, volts: 208-254 volts AC.",
+        "section": "8.d",
+        "text": "The charging motor voltage range must be 208-254 volts AC."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "125 volts DC electric stored-energy-operated, mechanically and electrically trip free.",
+        "section": "F.1",
+        "text": "The breaker must be 125V DC electric stored-energy-operated and trip free."
+      },
+      {
+        "category": "technical",
+        "page": 64,
+        "quote": "Completely interchangeable with all other breakers furnished of the same rating.",
+        "section": "F.2",
+        "text": "The breaker must be interchangeable with others of the same rating."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

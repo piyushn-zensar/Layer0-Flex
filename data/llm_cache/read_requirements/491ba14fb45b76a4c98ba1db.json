@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 43,
+        "quote": "List all M/WBEs used during the quarter, providing all requested information in appropriate columns.",
+        "section": "SRAA - 5011",
+        "text": "Provide a list of all M/WBEs used during the quarter."
+      },
+      {
+        "category": "submission",
+        "page": 43,
+        "quote": "In the event that an M/WBE is used more than one time during a quarter, list the M/WBE only once for each expenditure category.",
+        "section": "SRAA - 5011",
+        "text": "List each M/WBE only once per expenditure category, even if used multiple times."
+      },
+      {
+        "category": "submission",
+        "page": 43,
+        "quote": "Use the Expenditure Code defined at the top of the form to indicate the category of expenditures for which the M/WBE was used.",
+        "section": "SRAA - 5011",
+        "text": "Use the provided Expenditure Code to categorize M/WBE expenditures."
+      },
+      {
+        "category": "submission",
+        "page": 43,
+        "quote": "Column A Total Amount of Actual Expenditures in Report Period: Enter the amount ($) for each Expenditure Code made during report period under this contract.",
+        "section": "SRAA - 5011",
+        "text": "Enter the total expenditures for each Expenditure Code in Column A."
+      },
+      {
+        "category": "submission",
+        "page": 43,
+        "quote": "Column B MBE Subcontracting Expenditures: Enter the amount for each Expenditure Code with registered Minority Owned Business Enterprises made during the report period under this contract.",
+        "section": "SRAA - 5011",
+        "text": "Enter MBE subcontracting expenditures for each Expenditure Code in Column B."
+      },
+      {
+        "category": "submission",
+        "page": 43,
+        "quote": "Column C WBE Subcontracting Expenditures: Enter the amount of expenditures for each Expenditure Code with registered Women Owned Business Enterprises made during the report period under this contract.",
+        "section": "SRAA - 5011",
+        "text": "Enter WBE subcontracting expenditures for each Expenditure Code in Column C."
+      },
+      {
+        "category": "submission",
+        "page": 43,
+        "quote": "Column D MWBE Dual Subcontracting Expenditures: Enter the amount of expenditures for each Expenditure Code with registered Minority and Women Owned Business Enterprises made during the report period under this contract.",
+        "section": "SRAA - 5011",
+        "text": "Enter MWBE dual subcontracting expenditures for each Expenditure Code in Column D."
+      },
+      {
+        "category": "submission",
+        "page": 43,
+        "quote": "Use the following codes in the Product Code column to indicate the category of work for which the M/WBE was utilized:",
+        "section": "SRAA - 5011",
+        "text": "Use the specified Product Codes to indicate the work category for M/WBE usage."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,85 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 19,
+        "quote": "The Contractor agrees to complete and submit these forms without change in response to goals specified in the Request for Proposal (RFP) or contract.",
+        "section": "C",
+        "text": "Submit required SRAA forms without modification."
+      },
+      {
+        "category": "compliance",
+        "page": 19,
+        "quote": "Failure to comply with all of the requirements herein may result in a finding of non-responsiveness, non-responsibility and/or breach of contract, leading to the withholding of funds or such other actions, liquidated damages pursuant to Section VII of the Appendix or enforcement proceedings allowed by the Contract.",
+        "section": "D",
+        "text": "Non-compliance may lead to penalties or contract enforcement actions."
+      },
+      {
+        "category": "compliance",
+        "page": 19,
+        "quote": "For purposes of this procurement, the SRAA hereby establishes an overall goal of thirty percent (30%) for Minority and Women-Owned Business Enterprises (MWBE) participation.",
+        "section": "II.A",
+        "text": "Achieve 30% MWBE participation in the contract."
+      },
+      {
+        "category": "compliance",
+        "page": 19,
+        "quote": "Additionally, an overall goal of ten to twenty percent (10-20%) is established for Equal Employment Opportunity (EEO) participation.",
+        "section": "II.A",
+        "text": "Achieve 10-20% EEO participation in the contract."
+      },
+      {
+        "category": "technical",
+        "page": 19,
+        "quote": "Contractor should reference the directory of New York State Certified MBWEs found at the following internet address: https://ny.newnycontracts.com/FrontEnd/VendorSearchPublic.asp",
+        "section": "II.B",
+        "text": "Use the NY State Certified MWBE directory for participation."
+      },
+      {
+        "category": "staffing",
+        "page": 19,
+        "quote": "Contractor is encouraged to contact the Division of Minority and Women’s Business Development at (518) 292-5250, (212) 803-2414 or (716) 846-8200 to discuss additional methods of maximizing participation by MWBEs on the Contract.",
+        "section": "II.B",
+        "text": "Contact DMWBD for MWBE participation guidance."
+      },
+      {
+        "category": "compliance",
+        "page": 19,
+        "quote": "Where MWBE goals have been established herein, pursuant to 5 NYCRR § 142.8, Contractor must document “good faith efforts” to provide meaningful participation by MWBEs as subcontractors and suppliers in the performance of the Contract.",
+        "section": "II.C",
+        "text": "Document good faith efforts for MWBE participation."
+      },
+      {
+        "category": "legal",
+        "page": 19,
+        "quote": "Contractor acknowledges that if Contractor is found to have willfully and intentionally failed to comply with the MWBE participation goals set forth in the Contract, such a finding constitutes a breach of contract and the Contractor shall be liable to the SRAA for liquidated or other appropriate damages, as set forth herein.",
+        "section": "II.C",
+        "text": "Non-compliance with MWBE goals may result in breach and damages."
+      },
+      {
+        "category": "legal",
+        "page": 19,
+        "quote": "As a condition of the Contract, the Contractor and SRAA agree to be bound by the provisions of § 316 of Article 15-A of the New York State Executive Law regarding enforcement.",
+        "section": "II.D",
+        "text": "Contractor must adhere to Article 15-A enforcement provisions."
+      },
+      {
+        "category": "compliance",
+        "page": 19,
+        "quote": "SRAA reserves the right to establish separate and different goals on any State Contract, as identified in the specified procurement.",
+        "section": "II.E",
+        "text": "SRAA may set different goals for specific contracts."
+      },
+      {
+        "category": "legal",
+        "page": 19,
+        "quote": "Contractor agrees to be bound by the provisions of Article 15-A and the MWBE Regulations promulgated by the DMWBD.",
+        "section": "III.A",
+        "text": "Adhere to Article 15-A and MWBE regulations."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

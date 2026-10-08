@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 69,
+        "quote": "Quality Conformance Inspections shall comply with the following:",
+        "section": "Quality Conformance Inspections",
+        "text": "Quality conformance inspections must meet specified requirements."
+      },
+      {
+        "category": "compliance",
+        "page": 69,
+        "quote": "The witnessing of the pre-shipment operational test by the PURCHASER does not relieve the VENDOR of any responsibility regarding the quality of the component provided.",
+        "section": "Quality Conformance Inspections",
+        "text": "Vendor retains responsibility for component quality despite purchaser witnessing tests."
+      },
+      {
+        "category": "compliance",
+        "page": 69,
+        "quote": "The PURCHASER or authorized representative shall have access to the VENDOR’s shop procedures, schedules, testing, and inspection procedures and documents.",
+        "section": "General Testing and Inspection",
+        "text": "Purchaser must have access to vendor's shop procedures and documents."
+      },
+      {
+        "category": "technical",
+        "page": 69,
+        "quote": "The VENDOR shall verify by test that the complete electrical system with its components complies with all its performance requirements.",
+        "section": "General Testing and Inspection",
+        "text": "Vendor must test the electrical system to ensure compliance with performance requirements."
+      },
+      {
+        "category": "technical",
+        "page": 69,
+        "quote": "Except where more stringent industry standards are to be performed, all VENDOR’s normal quality control tests shall be performed.",
+        "section": "General Testing and Inspection",
+        "text": "Vendor must perform all normal quality control tests unless stricter standards apply."
+      },
+      {
+        "category": "technical",
+        "page": 69,
+        "quote": "Use VENDOR’s standard design whenever consistent with the intent of these Specifications.",
+        "section": "Source Quality Control",
+        "text": "Vendor should use standard design if it aligns with specifications."
+      },
+      {
+        "category": "technical",
+        "page": 69,
+        "quote": "Use only new, unused equipment and materials.",
+        "section": "Source Quality Control",
+        "text": "Vendor must use new and unused equipment and materials."
+      },
+      {
+        "category": "technical",
+        "page": 69,
+        "quote": "The VENDOR shall assume full responsibility for wiring accuracy, electrical operation, sequence and wiring tests shall be conducted in strict accordance with approved design documents.",
+        "section": "TESTING",
+        "text": "Vendor is responsible for wiring accuracy and must test according to approved designs."
+      },
+      {
+        "category": "technical",
+        "page": 69,
+        "quote": "The VENDOR shall perform all necessary operational tests to assure proper operation of the component and performance in accordance with the requirements of this Specification.",
+        "section": "TESTING",
+        "text": "Vendor must perform operational tests to ensure component compliance."
+      },
+      {
+        "category": "technical",
+        "page": 69,
+        "quote": "Factory tests shall be made with the breaker assembled, as it will be used in the field.",
+        "section": "TESTING",
+        "text": "Factory tests must be conducted with the breaker fully assembled."
+      },
+      {
+        "category": "submission",
+        "page": 69,
+        "quote": "The VENDOR shall provide certified test reports for all tests performed.",
+        "section": "TESTING",
+        "text": "Vendor must provide certified reports for all tests."
+      },
+      {
+        "category": "submission",
+        "page": 69,
+        "quote": "The VENDOR shall provide test certificates that the design and rating of Metal Clad Switchgear for Type and Routine tests carried out.",
+        "section": "TESTING",
+        "text": "Vendor must provide test certificates for switchgear design and rating."
+      },
+      {
+        "category": "compliance",
+        "page": 69,
+        "quote": "The PURCHASER reserves the right to inspect Metal Clad Switchgear and witness all tests at the VENDORs works prior to the shipment to prove compliance with the Specification.",
+        "section": "TESTING",
+        "text": "Purchaser may inspect and witness tests at vendor's facility before shipment."
+      },
+      {
+        "category": "schedule",
+        "page": 69,
+        "quote": "The VENDOR shall notify the PURCHASER 10 working days in advance of the commencement of the tests.",
+        "section": "TESTING",
+        "text": "Vendor must notify purchaser 10 days before tests begin."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

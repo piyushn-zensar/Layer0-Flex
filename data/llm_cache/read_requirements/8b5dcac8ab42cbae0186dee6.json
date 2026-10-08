@@ -1,0 +1,43 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 27,
+        "quote": "Submit with Bid or Proposal - Instructions on page 2",
+        "section": "SRAA - 5001",
+        "text": "The staffing plan must be submitted with the bid or proposal."
+      },
+      {
+        "category": "staffing",
+        "page": 27,
+        "quote": "Enter the total number of employees for each classification in each of the EEO-Job Categories identified",
+        "section": "SRAA - 5001",
+        "text": "Provide employee counts for each EEO-Job Category."
+      },
+      {
+        "category": "staffing",
+        "page": 27,
+        "quote": "Work force by Gender",
+        "section": "SRAA - 5001",
+        "text": "Report workforce distribution by gender."
+      },
+      {
+        "category": "staffing",
+        "page": 27,
+        "quote": "Work force by Race/Ethnic Identification",
+        "section": "SRAA - 5001",
+        "text": "Report workforce distribution by race/ethnic identification."
+      },
+      {
+        "category": "submission",
+        "page": 27,
+        "quote": "Submit Completed with Bid or Proposal",
+        "section": "SRAA - 5001",
+        "text": "The completed form must be submitted with the bid or proposal."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

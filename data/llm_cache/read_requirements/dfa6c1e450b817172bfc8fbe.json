@@ -1,0 +1,43 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 83,
+        "quote": "CONDUIT BELOW GRADE TO BE NON-METALLIC AND CONCRETE ENCASED.",
+        "section": "2",
+        "text": "Underground conduits must be non-metallic and encased in concrete."
+      },
+      {
+        "category": "technical",
+        "page": 83,
+        "quote": "PROVIDE NEW CONDUIT DUCT BANK CONSISTING OF (4) 4\" CONDUITS. CONNECT TO EXISTING CONDUIT",
+        "section": "7",
+        "text": "Install a new duct bank with four 4-inch conduits and connect to existing conduit."
+      },
+      {
+        "category": "technical",
+        "page": 83,
+        "quote": "PROVIDE (2) 4\" CONDUITS FOR POWER CONNECTION FROM SWITCHGEAR IN SWITCHGEAR BUILDING TO LOCATION INDICATED AND STUB & CAP CONDUITS FOR CONNECTION IN FUTURE PHASE.",
+        "section": "11",
+        "text": "Install two 4-inch conduits for power from switchgear to specified location, stub and cap for future use."
+      },
+      {
+        "category": "technical",
+        "page": 83,
+        "quote": "PROVIDE (2) 2\" CONDUITS FOR DATA CONNECTION FROM MDF IN SWITCHGEAR BUILDING TO LOCATION INDICATED AND STUB & CAP CONDUITS FOR CONNECTION IN FUTURE PHASE.",
+        "section": "13",
+        "text": "Install two 2-inch conduits for data from MDF to specified location, stub and cap for future use."
+      },
+      {
+        "category": "technical",
+        "page": 83,
+        "quote": "PROVIDE (2) 2\" CONDUITS FOR FIRE ALARM CONNECTION FROM FACU IN SWITCHGEAR BUILDING TO LOCATION INDICATED AND STUB & CAP CONDUITS FOR CONNECTION IN FUTURE PHASE.",
+        "section": "15",
+        "text": "Install two 2-inch conduits for fire alarm from FACU to specified location, stub and cap for future use."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

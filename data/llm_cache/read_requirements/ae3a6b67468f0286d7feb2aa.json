@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 14,
+        "quote": "commercial general liability. The schedule of underlying insurance, additional insured follow form or its equivalent and endorsements must be provided to the Authority.",
+        "section": "2.9.7 CONTRACT PREPARATION/NEGOTIATION",
+        "text": "Provide commercial general liability insurance details and endorsements."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

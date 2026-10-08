@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 12,
+        "quote": "(vii) use proposal information obtained through site visits, management interviews and the Authority’s investigation of a proposer’s qualifications, experience, ability or financial standing, and any material or information submitted by the proposer in response to the agency’s request for clarifying information in the course of evaluation and/or selection under the RFP;",
+        "section": "vii",
+        "text": "Use proposal information from site visits, interviews, and investigations."
+      },
+      {
+        "category": "submission",
+        "page": 12,
+        "quote": "(viii) prior to the bid opening, amend the RFP specifications to correct errors or oversights, or to supply additional information, as it becomes available;",
+        "section": "viii",
+        "text": "Amend RFP specifications before bid opening to correct errors or add information."
+      },
+      {
+        "category": "submission",
+        "page": 12,
+        "quote": "(ix) prior to the bid opening, direct proposers to submit proposal modifications addressing subsequent RFP amendments;",
+        "section": "ix",
+        "text": "Direct proposers to submit modifications addressing RFP amendments before bid opening."
+      },
+      {
+        "category": "schedule",
+        "page": 12,
+        "quote": "(x) change any of the scheduled dates;",
+        "section": "x",
+        "text": "Change scheduled dates as needed."
+      },
+      {
+        "category": "compliance",
+        "page": 12,
+        "quote": "(xi) eliminate any mandatory, non-material specifications that cannot be complied with by all of the prospective proposers;",
+        "section": "xi",
+        "text": "Eliminate non-material specifications that cannot be met by all proposers."
+      },
+      {
+        "category": "compliance",
+        "page": 12,
+        "quote": "(xii) waive any requirements that are not material;",
+        "section": "xii",
+        "text": "Waive non-material requirements."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "(xiii) negotiate with the successful proposer within the scope of the RFP in the best interests of the Authority;",
+        "section": "xiii",
+        "text": "Negotiate with the successful proposer within RFP scope."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "(xiv) conduct contract negotiations with the next responsible proposer, should the Authority be unsuccessful in negotiating with the selected proposer;",
+        "section": "xiv",
+        "text": "Negotiate with the next proposer if negotiations fail with the selected one."
+      },
+      {
+        "category": "submission",
+        "page": 12,
+        "quote": "(xv) utilize any and all ideas submitted in the proposals received;",
+        "section": "xv",
+        "text": "Utilize ideas from received proposals."
+      },
+      {
+        "category": "submission",
+        "page": 12,
+        "quote": "(xvi) unless otherwise specified in the solicitation, every submission is a firm offer and not revocable for a period of 60 days from the bid opening;",
+        "section": "xvi",
+        "text": "Submissions are firm offers not revocable for 60 days post bid opening."
+      },
+      {
+        "category": "submission",
+        "page": 12,
+        "quote": "(xvii) require clarification at any time during the procurement process and/or require correction of arithmetic or other apparent errors for the purpose of assuring a full and complete understanding of an offerer’s proposal and/or to determine an offerer’s compliance with the requirements of the solicitation.",
+        "section": "xvii",
+        "text": "Require clarification or correction of errors during procurement."
+      },
+      {
+        "category": "submission",
+        "page": 12,
+        "quote": "(xviii) waive or modify minor deviations in the proposals received after prior notification to the Proposers;",
+        "section": "xviii",
+        "text": "Waive or modify minor deviations in proposals after notifying proposers."
+      },
+      {
+        "category": "submission",
+        "page": 12,
+        "quote": "(xix) request best and final offers;",
+        "section": "xix",
+        "text": "Request best and final offers."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "(xx) Should the Authority be unsuccessful in negotiating a contract with a selected Proposer, the Authority may begin contract negotiations with the next highest-rated qualified Proposer.",
+        "section": "xx",
+        "text": "Begin negotiations with the next highest-rated proposer if negotiations fail."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

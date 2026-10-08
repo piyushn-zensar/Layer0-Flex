@@ -1,0 +1,43 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 35,
+        "quote": "We are currently soliciting bid quotations or proposals from NY State certified M/WBE firms for any tasks of the work contained in this contract.",
+        "section": "SRAA - 5006",
+        "text": "Submit bid quotations or proposals if you are a NY State certified M/WBE firm."
+      },
+      {
+        "category": "technical",
+        "page": 35,
+        "quote": "The Workplan and specifications are currently available at our office for your review.",
+        "section": "SRAA - 5006",
+        "text": "Review the Workplan and specifications available at the office."
+      },
+      {
+        "category": "submission",
+        "page": 35,
+        "quote": "If you are interested in participation on this project, please complete and submit a copy of the MBE/WBE Contractor Participation Bid/Proposal (SRAA - 5008) no later than thirty (30) days from the (due date).",
+        "section": "SRAA - 5006",
+        "text": "Submit the MBE/WBE Contractor Participation Bid/Proposal (SRAA - 5008) within 30 days of the due date."
+      },
+      {
+        "category": "technical",
+        "page": 35,
+        "quote": "If you need additional information and assistance, or need to review the Work Plan and specifications, please contact (authorized representative) of our office at (telephone).",
+        "section": "SRAA - 5006",
+        "text": "Contact the authorized representative for additional information or to review the Work Plan and specifications."
+      },
+      {
+        "category": "submission",
+        "page": 35,
+        "quote": "In the event that you cannot bid on this contract please complete the attached Minority/Women's Contractor Unavailability Certification Form (SRAA - 5009).",
+        "section": "SRAA - 5006",
+        "text": "Complete the Minority/Women's Contractor Unavailability Certification Form (SRAA - 5009) if unable to bid."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

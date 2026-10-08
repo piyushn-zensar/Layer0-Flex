@@ -1,0 +1,71 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 36,
+        "quote": "Are you a New York State Certified M/WBE?",
+        "section": "M/WBE SUBCONTRACTOR/SUPPLIER INFORMATION",
+        "text": "Confirm if the subcontractor/supplier is a New York State Certified M/WBE."
+      },
+      {
+        "category": "schedule",
+        "page": 36,
+        "quote": "Proposal Contract Start Date:",
+        "section": "WORK/SERVICES to be PROVIDED BY M/WBE SUBCONTRACTOR/SUPPLIER",
+        "text": "Provide the start date of the proposal contract."
+      },
+      {
+        "category": "schedule",
+        "page": 36,
+        "quote": "Proposal Contract End Date:",
+        "section": "WORK/SERVICES to be PROVIDED BY M/WBE SUBCONTRACTOR/SUPPLIER",
+        "text": "Provide the end date of the proposal contract."
+      },
+      {
+        "category": "technical",
+        "page": 36,
+        "quote": "Work/Services to be Performed:",
+        "section": "WORK/SERVICES to be PROVIDED BY M/WBE SUBCONTRACTOR/SUPPLIER",
+        "text": "Specify the work or services to be performed by the M/WBE subcontractor/supplier."
+      },
+      {
+        "category": "commercial",
+        "page": 36,
+        "quote": "Cost:",
+        "section": "WORK/SERVICES to be PROVIDED BY M/WBE SUBCONTRACTOR/SUPPLIER",
+        "text": "Provide the cost associated with the work/services to be performed."
+      },
+      {
+        "category": "technical",
+        "page": 36,
+        "quote": "Materials/Supplies to be Purchased:",
+        "section": "WORK/SERVICES to be PROVIDED BY M/WBE SUBCONTRACTOR/SUPPLIER",
+        "text": "List the materials or supplies to be purchased."
+      },
+      {
+        "category": "commercial",
+        "page": 36,
+        "quote": "Cost:",
+        "section": "WORK/SERVICES to be PROVIDED BY M/WBE SUBCONTRACTOR/SUPPLIER",
+        "text": "Provide the cost of the materials or supplies to be purchased."
+      },
+      {
+        "category": "schedule",
+        "page": 36,
+        "quote": "Dates Supplies Ordered:",
+        "section": "WORK/SERVICES to be PROVIDED BY M/WBE SUBCONTRACTOR/SUPPLIER",
+        "text": "Specify the dates when the supplies will be ordered."
+      },
+      {
+        "category": "schedule",
+        "page": 36,
+        "quote": "Date Supplies Delivered:",
+        "section": "WORK/SERVICES to be PROVIDED BY M/WBE SUBCONTRACTOR/SUPPLIER",
+        "text": "Specify the date when the supplies will be delivered."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,141 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Rated Continuous Current\n2000/1200 A,rms",
+        "section": "4",
+        "text": "The switchgear must support a rated continuous current of 2000/1200 A, rms."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Momentary rating\n25 kA, rms",
+        "section": "5",
+        "text": "The switchgear must support a momentary rating of 25 kA, rms."
+      },
+      {
+        "category": "compliance",
+        "page": 62,
+        "quote": "The general arrangement of switchgear breaker and auxiliary units shall as indicated in Contract Documents.",
+        "section": "C.1",
+        "text": "The arrangement of switchgear and auxiliary units must follow the contract documents."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "The switchgear enclosure shall be of welded construction and utilize 11-gauge steel minimum throughout.",
+        "section": "C.2",
+        "text": "Switchgear enclosures must be welded and use at least 11-gauge steel."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Provide equipment of dead-front construction and design for heavy duty utility service.",
+        "section": "C.3",
+        "text": "Equipment must be dead-front and suitable for heavy-duty utility service."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Provide front-hinged doors on which are mounted meters, relays, control switches, etc., and which open to permit removal of circuit breaker.",
+        "section": "C.4",
+        "text": "Front-hinged doors must allow mounting of devices and circuit breaker removal."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Connections to the voltage transformers shall utilize 15kV rated cable that is sized and supported to withstand the maximum fault and momentary current ratings of the switchgear.",
+        "section": "C.5",
+        "text": "Voltage transformer connections must use 15kV rated cables suitable for fault and current ratings."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "The circuit breaker compartment shall be designed to house a 15kV removable element vacuum circuit breakers.",
+        "section": "C.6",
+        "text": "Circuit breaker compartments must accommodate 15kV removable vacuum circuit breakers."
+      },
+      {
+        "category": "compliance",
+        "page": 62,
+        "quote": "Furnish nameplates for each device as indicated in Contract Documents.",
+        "section": "C.7",
+        "text": "Nameplates must be provided for each device as specified in the contract documents."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Energized bare parts mounted on doors shall be guarded where the door must be opened for maintenance of equipment or removal of draw out equipment.",
+        "section": "C.8",
+        "text": "Guard energized bare parts on doors requiring opening for maintenance or equipment removal."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Factory install all components of equipment except items specified as being furnished by the PURCHASER.",
+        "section": "C.9",
+        "text": "All components must be factory-installed unless specified otherwise."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "All metering, relaying, and control equipment shall be accessible from the front of the switchgear.",
+        "section": "C.10",
+        "text": "Metering, relaying, and control equipment must be front-accessible."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Switchgear power cable compartment doors shall be 11-gauge steel.",
+        "section": "C.11",
+        "text": "Power cable compartment doors must be made of 11-gauge steel."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Provide red-painted, nonmetallic safety shutters covering the breaker bus connections.",
+        "section": "C.12",
+        "text": "Safety shutters for breaker bus connections must be red-painted and nonmetallic."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Provide internal LED light fixture and grounded convenience receptacle and switch on the draw out side of each unit.",
+        "section": "C.13",
+        "text": "Each unit must have an internal LED light, grounded receptacle, and switch."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Provide a 2-inch x 6-inch engraved (3/8-inch lettering) laminated, black with white core, phenolic nameplate for each cubicle door, front and rear.",
+        "section": "C.14",
+        "text": "Engraved phenolic nameplates must be provided for each cubicle door."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Provide bolted removable access panels to permit access to power connections and bus.",
+        "section": "C.15",
+        "text": "Removable access panels must allow access to power connections and bus."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Provide drawout carriages with grounding device for mounting transformers.",
+        "section": "C.16",
+        "text": "Drawout carriages with grounding devices must be provided for transformer mounting."
+      },
+      {
+        "category": "technical",
+        "page": 62,
+        "quote": "Provide entry for power cable conduit in the bottom of each switchgear unit.",
+        "section": "C.17",
+        "text": "Power cable conduit entry must be provided at the bottom of each unit."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,3442 @@
+{
+ "excluded_notes": [
+  "Authority rights and remedies (reject proposals, waive formalities, negotiate, change dates, cancel RFP, best and final offers; pp 3, 5, 9, 11-13) excluded as Authority obligations/rights, not proposer obligations",
+  "Evaluation criteria and Best Value process (pp 5, 10-11) excluded as how the Authority will evaluate; fee breakdown and fee certification are recorded as items",
+  "Authority Code of Ethics / conflicts of interest (p13 2.9.5) applies only to Authority members and staff",
+  "Contract preparation by Authority counsel (p14) and Authority anticipated award dates (p2) are Authority actions",
+  "Definitions of Statute terms offeror, contact, restricted period (pp 6-7); background text (pp 2, 15, 18, 46); race/ethnic category definitions (pp 28, 30); product code key and definitions (pp 43-44)",
+  "Signature blocks, name/date/title fields and Agency use only boxes on all forms excluded; each blank form is one submission item",
+  "Work by others excluded: equipment building/enclosure (p55 L58), AC/DC power supply (p56 L16-17), off-loading labor and support (p60 L42), kWh meter (p65 L33), utility CT/VT and meters, utility feeders and cable, Purchaser's separate field testing (p70 L53-60, p71 L12-31), foundation, HVAC, building construction",
+  "Specification states Metal Clad Switchgear is shipped as part of a Prefabricated Equipment Enclosure (p60 L26) while also saying the enclosure is by others (p55 L58); recorded both, p60 item marked uncertain",
+  "Section 3.1 Installation and 3.2 Erection (p70) recorded but marked uncertain: scope split between supplier and others is unclear; 3.3 and 1.6 field services are optional-priced items",
+  "Dates conflict in the RFP: issue date Aug 24 (p1) vs 08/23 (p2); question deadline Monday 09/06 vs Wednesday 09/06 (pp 2, 3); exhibit headers say RFP# 2023-14; M/WBE goals 19.64%/11.45%/6% (p8) vs 30% MWBE and 10-20% EEO (p19); factory test notice two weeks (p58) vs 10 working days (p69); quarterly reports due 10th day (p22) vs 15 days (p30); all recorded as stated",
+  "Restated obligations (cover page, 1.9, 2.2, scope lists repeated in Exhibit A and 1.1D, 2.1B ratings repeated in data sheet) are recorded at each location and marked uncertain where they only restate",
+  "Generic standards bullet lists on pp 56-58 treated as one compliance item (p56 L35-37); factory test standards (p58 L76-77) carry their own test obligation and are recorded separately",
+  "Data sheet pages 72-74 contain blank environmental values (ice, wind, seismic, soil type) with no stated requirement; not recorded",
+  "Pre-submittal meeting/facility tour mentioned (p4) but none is scheduled; only the cost-bearing sentence is recorded as uncertain"
+ ],
+ "excluded_pages": [
+  {
+   "page": 9,
+   "reason": "Authority reservations of rights, no-obligation and Title VI notices; no proposer obligation"
+  },
+  {
+   "page": 17,
+   "reason": "Exhibit C cover page"
+  },
+  {
+   "page": 24,
+   "reason": "Sanctions the Authority may impose; consequences, not proposer obligations"
+  },
+  {
+   "page": 27,
+   "reason": "Blank form SRAA 5001 EEO Staffing Plan; submission item recorded at p20 L34-39 and p28"
+  },
+  {
+   "page": 31,
+   "reason": "Blank form SRAA 5003 Utilization Plan; submission item recorded at p22 L3-5"
+  },
+  {
+   "page": 32,
+   "reason": "Blank form SRAA 5004 Good Faith Efforts certification; submission item recorded at p22 L12-13"
+  },
+  {
+   "page": 33,
+   "reason": "Blank form SRAA 5004 Good Faith Efforts certification; submission item recorded at p22 L12-13"
+  },
+  {
+   "page": 36,
+   "reason": "Blank form SRAA 5007 Letter of Intent; submission item recorded at p22 L14-16"
+  },
+  {
+   "page": 37,
+   "reason": "Blank form SRAA 5007 Letter of Intent; submission item recorded at p22 L14-16"
+  },
+  {
+   "page": 40,
+   "reason": "Blank form SRAA 5010 waiver request; conditional item recorded at p22 L18-19 and p41"
+  },
+  {
+   "page": 42,
+   "reason": "Blank form SRAA 5011 quarterly compliance report and instructions; item recorded at p22 L30-32"
+  },
+  {
+   "page": 43,
+   "reason": "Blank form SRAA 5011 quarterly compliance report and instructions; item recorded at p22 L30-32"
+  },
+  {
+   "page": 44,
+   "reason": "Blank form SRAA 5011 quarterly compliance report and instructions; item recorded at p22 L30-32"
+  },
+  {
+   "page": 45,
+   "reason": "Exhibit D cover page"
+  },
+  {
+   "page": 49,
+   "reason": "SDVOB utilization plan additional sheet (blank form); item recorded at p47 L41-45"
+  },
+  {
+   "page": 51,
+   "reason": "Agency-use-only reverse side of SDVOB waiver form"
+  },
+  {
+   "page": 52,
+   "reason": "Exhibit E cover page"
+  },
+  {
+   "page": 53,
+   "reason": "Specification cover sheet and revision table"
+  },
+  {
+   "page": 54,
+   "reason": "Contents page of Exhibit E specification"
+  },
+  {
+   "page": 57,
+   "reason": "Continuation of referenced codes and standards list; covered by item at p56 L35-37"
+  },
+  {
+   "page": 75,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 76,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 77,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 78,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 79,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 80,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 81,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 82,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 83,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 84,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 85,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 86,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 87,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 88,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 89,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 90,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 91,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 92,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 93,
+   "reason": "Architectural, structural, mechanical, plumbing and electrical drawing sheets; construction notes address the building/electrical contractor. Exception: notes on p86 stating switchgear requirements are recorded as items"
+  },
+  {
+   "page": 94,
+   "reason": "Exhibit F cover page"
+  },
+  {
+   "page": 96,
+   "reason": "Exhibit G cover page"
+  },
+  {
+   "page": 99,
+   "reason": "Exhibit H cover page"
+  }
+ ],
+ "pdf": "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf",
+ "requirements": [
+  {
+   "category": "legal",
+   "line_end": 11,
+   "line_start": 6,
+   "page": 1,
+   "quote": "IMPORTANT NOTICE: A restricted period under the Procurement Lobbying Law is currently in effect for this Procurement and it will remain in effect until the Authority executes the contract. Proposers are prohibited from contact related to this procurement with any Syracuse Regional Airport Authority member, officer, staff or employee other than the designated contact person (if any) and/or the designated email address for contact.  Please refer to Sections 2.2 and 2.3 below.",
+   "uncertain": true,
+   "why": "restricted period contact prohibition (restates 2.2)"
+  },
+  {
+   "category": "submission",
+   "line_end": 13,
+   "line_start": 12,
+   "page": 1,
+   "quote": "All contacts/inquiries shall be made by email only to the following address: bids@syrairport.org",
+   "uncertain": true,
+   "why": "contact/inquiries by email only to designated address"
+  },
+  {
+   "category": "submission",
+   "line_end": 18,
+   "line_start": 14,
+   "page": 1,
+   "quote": "ALL PROPOSALS MUST BE RECEIVED VIA EMAIL PRIOR TO 4PM ON FRIDAY, SEPTEMBER 15. PROPOSALS ARE ONLY ACCEPTED ELECTRONICALLY AND MUST BE ADDRESSED TO: bids@syrairport.org",
+   "uncertain": false,
+   "why": "proposals must be received by email before 4pm Sept 15 and addressed to bids address"
+  },
+  {
+   "category": "submission",
+   "line_end": 20,
+   "line_start": 19,
+   "page": 1,
+   "quote": "PLEASE PRINT THE WORDS “RFP REFERENCE # 2023-20” ON THE FRONT OF THE PROPOSAL.",
+   "uncertain": false,
+   "why": "print RFP reference on front of proposal"
+  },
+  {
+   "category": "technical",
+   "line_end": 18,
+   "line_start": 13,
+   "page": 2,
+   "quote": "The intent and purpose of this Request for Proposals (the “RFP”) is to solicit responses for the selection of a firm to provide a Metal Clad Switchgear lineup and its accessories for installation at the Syracuse Hancock International Airport. The Metal Clad Switchgear and accessories shall be in accordance with the provided technical specification (the “Project”). A comprehensive description of the Project can be found at Exhibit A to this RFP.",
+   "uncertain": false,
+   "why": "supply Metal Clad Switchgear lineup and accessories per technical specification"
+  },
+  {
+   "category": "schedule",
+   "line_end": 24,
+   "line_start": 23,
+   "page": 2,
+   "quote": "Monday 09/06/2023 – Question/Clarification Submission Deadline Monday, 09/15/2023 by 4:00 PM - Proposal Submission Deadline",
+   "uncertain": true,
+   "why": "key dates: question deadline and proposal deadline (restated in 1.6 and 1.9)"
+  },
+  {
+   "category": "submission",
+   "line_end": 19,
+   "line_start": 17,
+   "page": 3,
+   "quote": "Any questions, requests for information or clarification regarding this RFP should be submitted via email, citing the relevant RFP page(s) and section(s), no later than Wednesday 09/06/23 by 4:00 pm to bids@syrairport.org.",
+   "uncertain": false,
+   "why": "submit questions by email citing RFP pages/sections by 09/06/23 4pm"
+  },
+  {
+   "category": "submission",
+   "line_end": 27,
+   "line_start": 25,
+   "page": 3,
+   "quote": "Proposers that receive this RFP or access it from a source other than the Authority should contact the Authority at bids@syrairport.org to confirm that and/or add their correct contact information, including email address, is on file with the Authority for",
+   "uncertain": true,
+   "why": "proposers receiving RFP from other source should confirm contact info with Authority"
+  },
+  {
+   "category": "legal",
+   "line_end": 12,
+   "line_start": 6,
+   "page": 4,
+   "quote": "By submitting a proposal to the Authority in response to this RFP, each proposer agrees and represents and warrants that the proposer: a) has all information necessary for the proposer to complete and submit a fully responsive proposal to the Authority; b) that if awarded the contract, that the proposer has all the necessary skills and resources to complete the contract for the amount stated in the proposal; and c) that the proposer is waiving any and all claims against the Authority and its members, officers, staff and employees relating to the submission of the proposer’s proposal to the Authority.",
+   "uncertain": false,
+   "why": "by submitting proposer agrees/warrants it has information, resources, and waives claims"
+  },
+  {
+   "category": "commercial",
+   "line_end": 14,
+   "line_start": 13,
+   "page": 4,
+   "quote": "Proposer will bear any, and all travel and other costs and expenses related to its attendance at the pre-submittal meeting and facility tour (if any). Verbal responses",
+   "uncertain": true,
+   "why": "proposer bears own travel costs for pre-submittal meeting/tour"
+  },
+  {
+   "category": "submission",
+   "line_end": 23,
+   "line_start": 20,
+   "page": 4,
+   "quote": "of any contract awarded as a result of this RFP. Further, if a proposer discovers any conflict, discrepancy, omission or other error in this RFP, the proposer shall immediately notify the Authority at bids@syrairport.org, of such error and request modification to the document to address such alleged error. The Authority shall make any RFP",
+   "uncertain": false,
+   "why": "notify Authority immediately of any conflict, discrepancy, omission or error in RFP"
+  },
+  {
+   "category": "submission",
+   "line_end": 34,
+   "line_start": 33,
+   "page": 4,
+   "quote": "addenda pertaining to this RFP.  It is incumbent on proposers to routinely check for amendments and addenda at (http://www.syrsraa.com/bids-rfp-rfq/ and no allowance",
+   "uncertain": true,
+   "why": "proposers must routinely check website for addenda"
+  },
+  {
+   "category": "submission",
+   "line_end": 9,
+   "line_start": 7,
+   "page": 5,
+   "quote": "Proposer’s proposal, including all required forms attached at Exhibits to this RFP, shall be submitted via email to bids@syrairport.org in response to this RFP. The email with attached proposal and all required forms in PDF format shall be submitted. Each copy",
+   "uncertain": false,
+   "why": "submit proposal and all required forms by email as PDF"
+  },
+  {
+   "category": "submission",
+   "line_end": 10,
+   "line_start": 9,
+   "page": 5,
+   "quote": "attached proposal and all required forms in PDF format shall be submitted. Each copy shall be clearly labeled with the name of the proposer and the date. Each copy must",
+   "uncertain": false,
+   "why": "label each copy with proposer name and date"
+  },
+  {
+   "category": "submission",
+   "line_end": 13,
+   "line_start": 11,
+   "page": 5,
+   "quote": "contain the required information for the proposer. Proposers are to ensure that their proposals are in compliance with all of the requirements of this RFP. Failure to do so may result in disqualification. Proposers should also be willing and able to provide",
+   "uncertain": true,
+   "why": "proposal must comply with all RFP requirements or risk disqualification"
+  },
+  {
+   "category": "submission",
+   "line_end": 15,
+   "line_start": 13,
+   "page": 5,
+   "quote": "may result in disqualification. Proposers should also be willing and able to provide additional information that may be required. In addition, interviews may be requested at the discretion of any RFP review or ad hoc Committee appointed by the Authority. All",
+   "uncertain": true,
+   "why": "be willing and able to provide additional information and interviews"
+  },
+  {
+   "category": "submission",
+   "line_end": 20,
+   "line_start": 17,
+   "page": 5,
+   "quote": "become the property of the Authority. Proposers shall not submit proprietary or confidential business information unless they believe such information is critical to their submittals or presentations. If any such information is included, it shall be clearly identified as such. The Authority shall endeavor to protect the identified information",
+   "uncertain": false,
+   "why": "identify any proprietary/confidential information clearly"
+  },
+  {
+   "category": "submission",
+   "line_end": 25,
+   "line_start": 23,
+   "page": 5,
+   "quote": "Proposals must be received via email no later than 09/15/2023 by 4:00PM at: bids@syrairport.org Proposals received after the specified date and time will not be considered.",
+   "uncertain": true,
+   "why": "proposals must be received by 09/15/2023 4:00PM; late not considered (restates cover)"
+  },
+  {
+   "category": "legal",
+   "line_end": 10,
+   "line_start": 7,
+   "page": 6,
+   "quote": "Proposers are prohibited from contact related to this RFP with any Authority Board member, officer, staff, employee or representative other than designated personnel from the date this RFP is issued until the contract(s) have been executed by the Authority. Violation of this provision is grounds for immediate disqualification. All",
+   "uncertain": false,
+   "why": "no contact with Authority personnel other than designated contact; violation disqualifies"
+  },
+  {
+   "category": "submission",
+   "line_end": 12,
+   "line_start": 11,
+   "page": 6,
+   "quote": "inquiries concerning this RFP must be done via email at: bids@syrairport.org Please indicate RFP Reference # 2023-20 in the subject line of the email.",
+   "uncertain": false,
+   "why": "inquiries by email with RFP Reference # 2023-20 in subject line"
+  },
+  {
+   "category": "submission",
+   "line_end": 9,
+   "line_start": 7,
+   "page": 7,
+   "quote": "four years from the date of the second final determination. Any Proposer responding to this RFP must complete the Non-Collusive Proposal Certification attached hereto at Exhibit B and submit it to the Authority with its proposal. Questions regarding this form",
+   "uncertain": false,
+   "why": "complete and submit Non-Collusive Proposal Certification (Exhibit B) with proposal"
+  },
+  {
+   "category": "submission",
+   "line_end": 17,
+   "line_start": 15,
+   "page": 7,
+   "quote": "Any and all exceptions to this RFP must be clearly and completely indicated in proposals submitted. Please be advised that any exceptions to the requirements in this RFP may be cause for a proposer’s proposal to be disqualified.",
+   "uncertain": false,
+   "why": "all exceptions must be clearly and completely indicated in the proposal"
+  },
+  {
+   "category": "commercial",
+   "line_end": 21,
+   "line_start": 19,
+   "page": 7,
+   "quote": "The proposers’ costs for the proposers entire submittal effort shall be borne by the proposer. The Authority will not reimburse any proposer or other firm for any costs associated with its submittal effort.",
+   "uncertain": true,
+   "why": "proposer bears all proposal preparation costs"
+  },
+  {
+   "category": "legal",
+   "line_end": 25,
+   "line_start": 23,
+   "page": 7,
+   "quote": "The selected Proposer will be required to comply with and perform its services under the contract in accordance with any and all Whistleblower Policy and Procedures adopted by the Authority and available on its website at: https://syrsraa.com/",
+   "uncertain": false,
+   "why": "selected proposer must comply with Authority Whistleblower Policy and Procedures"
+  },
+  {
+   "category": "staffing",
+   "line_end": 4,
+   "line_start": 2,
+   "page": 8,
+   "quote": "has reviewed and familiarized itself with the New York State M/WBE and SDVOB regulations which are incorporated herein by this reference. Any conflicts between this solicitation and those regulations shall be resolved in favor of the regulations. Each",
+   "uncertain": false,
+   "why": "proposer represents it has reviewed NYS M/WBE and SDVOB regulations"
+  },
+  {
+   "category": "staffing",
+   "line_end": 7,
+   "line_start": 4,
+   "page": 8,
+   "quote": "solicitation and those regulations shall be resolved in favor of the regulations. Each proposer shall, in accordance with the regulations, make good faith efforts and, in a manner that can be established in documentary form, solicit active participation by certified M/WBE’s and SDVOB’s in connection with any contract resulting from this RFP.",
+   "uncertain": false,
+   "why": "make documented good faith efforts to solicit certified M/WBE and SDVOB participation"
+  },
+  {
+   "category": "submission",
+   "line_end": 14,
+   "line_start": 10,
+   "page": 8,
+   "quote": "periodically report various M/WBE and SDVOB information to the Authority.  Annexed hereto at Exhibits C and D respectively are various M/WBE-SDVOB forms and information which the Authority requires all proposers to complete and submit with each proposal.  Failure to do so will result in a finding of non-responsiveness and rejection of that proposal.",
+   "uncertain": false,
+   "why": "complete and submit Exhibits C and D M/WBE-SDVOB forms with each proposal; failure is non-responsive"
+  },
+  {
+   "category": "staffing",
+   "line_end": 18,
+   "line_start": 15,
+   "page": 8,
+   "quote": "For purposes of this solicitation, the Authority has established a goal of (19.64%) for Minority Owned Business Enterprises (M/WBE) participation, (11.45%) for Minority Owned Business Enterprises (M/WBE) participation and (6%) for Service-Disabled Veteran Owned Business (SDVOB) participation.",
+   "uncertain": false,
+   "why": "participation goals 19.64% / 11.45% M/WBE and 6% SDVOB"
+  },
+  {
+   "category": "legal",
+   "line_end": 25,
+   "line_start": 21,
+   "page": 8,
+   "quote": "1. The services to be performed shall conform to and be subject to the provisions of the New York Public Authorities Law, Generally Accepted Auditing Standards, Generally Accepted Accounting Principles, and Standards promulgated by the NYS Comptroller and Authorities Budget Office and all other applicable laws and regulations of all Federal and State agencies having jurisdiction.",
+   "uncertain": true,
+   "why": "services must conform to NY Public Authorities Law, GAAS, GAAP, other applicable laws"
+  },
+  {
+   "category": "legal",
+   "line_end": 28,
+   "line_start": 26,
+   "page": 8,
+   "quote": "2. Valid licenses and registrations as required by the Authority and any State, and Federal agencies shall be obtained by the successful proposer prior to commencing work.",
+   "uncertain": false,
+   "why": "valid licenses and registrations obtained by successful proposer before commencing work"
+  },
+  {
+   "category": "legal",
+   "line_end": 31,
+   "line_start": 29,
+   "page": 8,
+   "quote": "3. Final designation of a proposer will depend on satisfaction of all additional RFP documentation and review requirements of the Authority and will be subject to subsequent approval by the Authority.",
+   "uncertain": true,
+   "why": "final designation depends on satisfaction of additional RFP documentation and approval"
+  },
+  {
+   "category": "legal",
+   "line_end": 34,
+   "line_start": 32,
+   "page": 8,
+   "quote": "4. No transaction will be consummated if any selected proposer or principal of a selected proposer or any member of the proposer’s development team is in arrears or in default upon any debt, lease, contract or obligation regarding the",
+   "uncertain": true,
+   "why": "no transaction if proposer or team in arrears or default to the Authority"
+  },
+  {
+   "category": "submission",
+   "line_end": 4,
+   "line_start": 2,
+   "page": 10,
+   "quote": "Proposers should be willing and able to provide additional information that may be required by the Authority or its Committee. Also, interviews and office visits may be requested at the discretion of the Authority/Committee.",
+   "uncertain": true,
+   "why": "be willing to provide additional information, interviews and office visits"
+  },
+  {
+   "category": "submission",
+   "line_end": 8,
+   "line_start": 5,
+   "page": 10,
+   "quote": "Upon review of proposals submitted by Proposers, the Authority/Committee may, at its discretion, submit to Proposers written questions and requests for clarification relating to their Proposals. Proposers will be provided the period of time in which the written responses to the Authority’s requests for clarification must be completed.",
+   "uncertain": true,
+   "why": "respond in time allowed to Authority written clarification requests"
+  },
+  {
+   "category": "submission",
+   "line_end": 11,
+   "line_start": 9,
+   "page": 10,
+   "quote": "Other than to provide clarifying information as may be requested by the Authority, including the Committee, no Proposer will be allowed to alter its proposal or add information.",
+   "uncertain": true,
+   "why": "no alteration of proposal after submission except clarifications requested"
+  },
+  {
+   "category": "submission",
+   "line_end": 18,
+   "line_start": 13,
+   "page": 10,
+   "quote": "The Authority/Committee will examine all proposals that are received in a proper and timely manner to determine if they meet the proposal submission requirements, as described in this RFP. Proposals that are materially deficient in meeting the submission requirements or have omitted material documents, in the sole opinion of the Committee, may be rejected. Proposals failing to pass the Submission Review will be considered non-responsive and will not be evaluated any further.",
+   "uncertain": true,
+   "why": "proposals materially deficient or missing documents may be rejected as non-responsive"
+  },
+  {
+   "category": "commercial",
+   "line_end": 33,
+   "line_start": 31,
+   "page": 10,
+   "quote": "5. The Proposer’s proposed fee for the services requested herein with a breakdown of those fee’s as they relate to discrete tasks or phases of the work to be performed.",
+   "uncertain": false,
+   "why": "proposed fee with breakdown by discrete tasks or phases of work"
+  },
+  {
+   "category": "commercial",
+   "line_end": 12,
+   "line_start": 9,
+   "page": 11,
+   "quote": "Authority for the services described in this RFP. The Proposer must certify in the proposal that its fee covers all services proposed and meets the requirements of this RFP. The total estimated contract value for the services provided will be derived from the successful proposer’s proposed fee.",
+   "uncertain": false,
+   "why": "proposer must certify its fee covers all services proposed and meets RFP requirements"
+  },
+  {
+   "category": "legal",
+   "line_end": 21,
+   "line_start": 20,
+   "page": 12,
+   "quote": "(xvi) unless otherwise specified in the solicitation, every submission is a firm offer and not revocable for a period of 60 days from the bid opening; and,",
+   "uncertain": false,
+   "why": "submission is a firm offer not revocable for 60 days from bid opening"
+  },
+  {
+   "category": "commercial",
+   "line_end": 13,
+   "line_start": 11,
+   "page": 13,
+   "quote": "The selected Contractor shall be required to purchase at its own cost and expense and maintain at all times for the duration of the contract with the Authority, insurance coverage as specified below. Additional coverage may apply as necessary.",
+   "uncertain": false,
+   "why": "selected contractor must purchase and maintain insurance at own cost for contract duration"
+  },
+  {
+   "category": "commercial",
+   "line_end": 21,
+   "line_start": 14,
+   "page": 13,
+   "quote": "The Contractor shall obtain and for the duration of the contract, maintain a Commercial General Liability insurance policy including contractual liability coverage, with minimum limits of: • Bodily Injury and Property Damage Limit $1,000,000 each occurrence • Products/Completed Operations Limit $2,000,000 aggregate • Personal Injury & Advertising Injury Limit $4,000,000 each person/organization • General Aggregate $4,000,000 applicable on a per project basis",
+   "uncertain": false,
+   "why": "Commercial General Liability policy with specified minimum limits"
+  },
+  {
+   "category": "commercial",
+   "line_end": 24,
+   "line_start": 22,
+   "page": 13,
+   "quote": "The General Liability policy shall name the Authority and the City of Syracuse and their respective members, officers, staff, and employees as additional insureds for both ongoing and completed operations.",
+   "uncertain": false,
+   "why": "GL policy must name Authority and City of Syracuse as additional insureds"
+  },
+  {
+   "category": "commercial",
+   "line_end": 30,
+   "line_start": 25,
+   "page": 13,
+   "quote": "The Contractor shall obtain and maintain workers' compensation and employer's liability insurance policy or policies covering its obligations in accordance with the provisions of New York Workers' Compensation Law, including Article 9 of New York Workers' Compensation Law, known as the Disability Benefits Law, and any and all rules, regulations and procedures promulgated pursuant to the New York Workers' Compensation Law.",
+   "uncertain": false,
+   "why": "workers compensation and employer's liability insurance per NY law"
+  },
+  {
+   "category": "commercial",
+   "line_end": 32,
+   "line_start": 31,
+   "page": 13,
+   "quote": "The Contractor shall obtain and maintain a commercial umbrella/excess insurance policy with annual aggregate coverage of at least one million Dollars ($1,000,000) for the",
+   "uncertain": false,
+   "why": "commercial umbrella/excess insurance at least $1,000,000 annual aggregate"
+  },
+  {
+   "category": "submission",
+   "line_end": 3,
+   "line_start": 2,
+   "page": 14,
+   "quote": "commercial general liability. The schedule of underlying insurance, additional insured follow form or its equivalent and endorsements must be provided to the Authority.",
+   "uncertain": false,
+   "why": "schedule of underlying insurance, additional insured follow form and endorsements provided to Authority"
+  },
+  {
+   "category": "commercial",
+   "line_end": 14,
+   "line_start": 12,
+   "page": 15,
+   "quote": "specification (Exhibit E). Please provide a lump sum (LS) price that covers the manufacturing, furnishing, delivering, and testing of the new switchgear. Please also include in your cost proposal:",
+   "uncertain": false,
+   "why": "lump sum price covering manufacturing, furnishing, delivering and testing of switchgear"
+  },
+  {
+   "category": "commercial",
+   "line_end": 15,
+   "line_start": 15,
+   "page": 15,
+   "quote": "1. Special Tools necessary for installation, testing and maintenance.",
+   "uncertain": false,
+   "why": "include special tools for installation, testing and maintenance in cost proposal"
+  },
+  {
+   "category": "commercial",
+   "line_end": 16,
+   "line_start": 16,
+   "page": 15,
+   "quote": "2. Necessary drawings, instructions and test reports in the English language.",
+   "uncertain": false,
+   "why": "include drawings, instructions and test reports in English in cost proposal"
+  },
+  {
+   "category": "submission",
+   "line_end": 18,
+   "line_start": 17,
+   "page": 15,
+   "quote": "3. In addition to other Submittal requirements, final drawings shall be submitted as AutoCAD format files.",
+   "uncertain": false,
+   "why": "final drawings submitted as AutoCAD format files"
+  },
+  {
+   "category": "commercial",
+   "line_end": 19,
+   "line_start": 19,
+   "page": 15,
+   "quote": "4. Maintenance equipment and spare parts.",
+   "uncertain": false,
+   "why": "include maintenance equipment and spare parts in cost proposal"
+  },
+  {
+   "category": "commercial",
+   "line_end": 20,
+   "line_start": 20,
+   "page": 15,
+   "quote": "5. Start-up and training",
+   "uncertain": false,
+   "why": "include start-up and training in cost proposal"
+  },
+  {
+   "category": "legal",
+   "line_end": 21,
+   "line_start": 5,
+   "page": 16,
+   "quote": "By submission of this proposal, each Respondent and each person signing on behalf of any Respondent certifies, and in the case of a joint proposal each party thereto certifies as to its own organization, under penalty of perjury, that to the best of knowledge and belief: 1. The prices in this proposal have been arrived at independently without collusion, consultation, communication, or agreement, for the purpose of restricting competition, as to any matter relating to such prices with any other Respondent, or with any competitor; 2. Unless otherwise required by law, the prices which have been quoted in this proposal have not been knowingly disclosed by the Respondent and will not knowingly be disclosed by the Respondent prior to opening, directly or indirectly, to any other respondent or to any competitor; and 3. No attempt has been made or will be made by the Respondent to induce any other person, partnership or corporation to submit or not to submit a proposal for purpose of restricting competition.",
+   "uncertain": true,
+   "why": "Non-Collusive Certification content (Exhibit B form, same item as p7 submission)"
+  },
+  {
+   "category": "staffing",
+   "line_end": 39,
+   "line_start": 38,
+   "page": 18,
+   "quote": "Law”) or other applicable federal, state or local laws. Contractors participating in and/or selected for procurement opportunities with SRAA shall fulfill their obligations to comply with applicable Federal, State",
+   "uncertain": true,
+   "why": "contractors selected must comply with Federal, State and local EEO and MWBE requirements"
+  },
+  {
+   "category": "submission",
+   "line_end": 7,
+   "line_start": 5,
+   "page": 19,
+   "quote": "C. Copies of the required SRAA Forms are identified in this Appendix and available on SRAA’s Internet Site at http://www.syrsraa.com. The Contractor agrees to complete and submit these forms without change in response to goals specified in the Request for Proposal (RFP) or contract.",
+   "uncertain": false,
+   "why": "complete and submit SRAA M/WBE forms without change"
+  },
+  {
+   "category": "staffing",
+   "line_end": 17,
+   "line_start": 15,
+   "page": 19,
+   "quote": "A. For purposes of this procurement, the SRAA hereby establishes an overall goal of thirty percent (30%) for Minority and Women-Owned Business Enterprises (MWBE) participation. Additionally, an overall goal of ten to twenty percent (10-20%) is established for Equal Employment Opportunity (EEO) participation.",
+   "uncertain": false,
+   "why": "overall goal 30% MWBE and 10-20% EEO participation"
+  },
+  {
+   "category": "staffing",
+   "line_end": 27,
+   "line_start": 25,
+   "page": 19,
+   "quote": "C. Where MWBE goals have been established herein, pursuant to 5 NYCRR § 142.8, Contractor must document “good faith efforts” to provide meaningful participation by MWBEs as subcontractors and suppliers in the performance of the Contract. In accordance with Section 316-a of Article 15-A and 5 NYCRR § 142.13, the",
+   "uncertain": false,
+   "why": "document good faith efforts for meaningful MWBE participation as subcontractors and suppliers"
+  },
+  {
+   "category": "legal",
+   "line_end": 39,
+   "line_start": 37,
+   "page": 19,
+   "quote": "A. Contractor agrees to be bound by the provisions of Article 15-A and the MWBE Regulations promulgated by the DMWBD. If any of these terms or provisions conflict with applicable laws or regulations, such laws and regulations shall supersede these requirements.",
+   "uncertain": true,
+   "why": "contractor bound by Article 15-A and MWBE regulations"
+  },
+  {
+   "category": "staffing",
+   "line_end": 6,
+   "line_start": 1,
+   "page": 20,
+   "quote": "1. Contractor and Subcontractors shall undertake or continue existing EEO programs to ensure that minority group members and women are afforded equal employment opportunities without discrimination because of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status, predisposing genetic characteristics, victim of domestic violence status or marital status. For these purposes, EEO shall apply in the areas of recruitment, employment, job assignment, promotion, upgrading, demotion, transfer, layoff or termination and rates of pay or other forms of compensation.",
+   "uncertain": false,
+   "why": "contractor and subcontractors undertake or continue EEO programs"
+  },
+  {
+   "category": "submission",
+   "line_end": 8,
+   "line_start": 7,
+   "page": 20,
+   "quote": "2. The Contractor shall submit an EEO policy statement to the SRAA within seventy two (72) hours after the date of the notice by SRAA to award the contract to the Contractor.",
+   "uncertain": false,
+   "why": "submit EEO policy statement within 72 hours after notice of award"
+  },
+  {
+   "category": "staffing",
+   "line_end": 18,
+   "line_start": 12,
+   "page": 20,
+   "quote": "4. The Contractor’s EEO policy statement shall include the following language: a. The Contractor will not discriminate against any employee or applicant for employment because of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status, predisposing genetic characteristics, victim of domestic violence status or marital status. The Contractor will undertake or continue existing EEO programs to ensure that minority group members and women are afforded equal employment opportunities without discrimination, and shall make and document its conscientious and active efforts to employ and utilize minority group members and women in its workforce.",
+   "uncertain": false,
+   "why": "EEO policy statement must include non-discrimination and EEO program language"
+  },
+  {
+   "category": "staffing",
+   "line_end": 23,
+   "line_start": 19,
+   "page": 20,
+   "quote": "b. The Contractor shall state in all solicitations or advertisements for employees that, in the performance of the contract, all qualified applicants will be afforded equal employment opportunities without discrimination because of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status, predisposing genetic characteristics, victim of domestic violence status or marital status.",
+   "uncertain": false,
+   "why": "state in all employment solicitations that applicants get equal opportunity"
+  },
+  {
+   "category": "staffing",
+   "line_end": 29,
+   "line_start": 24,
+   "page": 20,
+   "quote": "c. The Contractor shall request each employment agency, labor union, or authorized representative of workers with which it has a collective bargaining or other agreement or understanding, to furnish a written statement that such employment agency, labor union, or representative will not discriminate on the basis of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status, predisposing genetic characteristics, victim of domestic violence status or marital status and that such union or representative will affirmatively cooperate in the implementation of the Contractor’s obligations herein.",
+   "uncertain": false,
+   "why": "request each employment agency/union to furnish written non-discrimination statement"
+  },
+  {
+   "category": "staffing",
+   "line_end": 33,
+   "line_start": 30,
+   "page": 20,
+   "quote": "d. The Contractor will include the provisions of Subdivisions (a) through (c) of this Subsection 4 which provides for relevant provisions of the Human Rights Law, in every subcontract in such a manner that the requirements of the subdivisions will be binding upon each subcontractor as to work in connection with the Contract.",
+   "uncertain": false,
+   "why": "include EEO provisions in every subcontract"
+  },
+  {
+   "category": "submission",
+   "line_end": 39,
+   "line_start": 34,
+   "page": 20,
+   "quote": "C. Staffing Plan - SRAA Form 5001- Equal Employment Opportunity Staffing Plan To ensure compliance with this section, the Contractor shall submit a staffing plan to document the composition of the proposed workforce to be utilized in the performance of the Contract by the specified categories listed, including ethnic background, gender and federal occupational categories. Contractors shall complete the Staff Plan Form and submit it as part of their bid or proposal or within a reasonable time, but no later than the time of award of the contract.",
+   "uncertain": false,
+   "why": "submit EEO Staffing Plan (SRAA Form 5001) with bid or proposal"
+  },
+  {
+   "category": "submission",
+   "line_end": 43,
+   "line_start": 42,
+   "page": 20,
+   "quote": "1. Once a contract has been awarded and during the term of the Contract, Contractor is responsible for updating and providing notice to the SRAA of any changes to the previously submitted Staffing Plan. This",
+   "uncertain": true,
+   "why": "notify SRAA of any changes to submitted Staffing Plan"
+  },
+  {
+   "category": "submission",
+   "line_end": 4,
+   "line_start": 1,
+   "page": 21,
+   "quote": "information is to be submitted on a quarterly basis during the term of the contract to report the actual workforce utilized in the performance of the contract by the specified categories listed including ethnic background, gender and federal occupational categories. The Workforce Report must be submitted to report this information.",
+   "uncertain": false,
+   "why": "submit Workforce Report (SRAA Form 5002) quarterly during contract term"
+  },
+  {
+   "category": "submission",
+   "line_end": 5,
+   "line_start": 5,
+   "page": 21,
+   "quote": "2. Separate forms shall be completed by contractor and any subcontractor performing work on the Contract.",
+   "uncertain": true,
+   "why": "separate workforce forms for contractor and each subcontractor"
+  },
+  {
+   "category": "submission",
+   "line_end": 14,
+   "line_start": 13,
+   "page": 21,
+   "quote": "4. In the case where the Contractor’s and/or subcontractor’s workforce does not change within the quarterly period, the Contractor shall notify SRAA in writing.",
+   "uncertain": true,
+   "why": "notify SRAA in writing if workforce does not change in quarter"
+  },
+  {
+   "category": "submission",
+   "line_end": 16,
+   "line_start": 15,
+   "page": 21,
+   "quote": "5. All forms and reports will be submitted to the SRAA program manager for this contract and forwarded to Tori Hunt at huntt@syrairport.org.",
+   "uncertain": true,
+   "why": "submit forms and reports to SRAA program manager and forward to designated contact email"
+  },
+  {
+   "category": "legal",
+   "line_end": 22,
+   "line_start": 17,
+   "page": 21,
+   "quote": "E. Contractor shall comply with the provisions of the Human Rights Law, and all other state and federal statutory and constitutional non-discrimination provisions. Contractor and subcontractors shall not discriminate against any employee or applicant for employment because of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status, predisposing genetic characteristics, victim of domestic violence status or marital status, and shall also follow the requirements of the Human Rights Law with regard to non- discrimination on the basis of prior criminal conviction and prior arrest.",
+   "uncertain": false,
+   "why": "comply with Human Rights Law and non-discrimination provisions"
+  },
+  {
+   "category": "staffing",
+   "line_end": 27,
+   "line_start": 25,
+   "page": 21,
+   "quote": "given the opportunity for meaningful participation in the performance of State contracts. Therefore, Contractors agree to make good faith efforts to solicit active participation to meet established goals under this procurement by MWBEs identified in the ESD directory of certified businesses1.",
+   "uncertain": false,
+   "why": "make good faith efforts to solicit active participation by certified MWBEs"
+  },
+  {
+   "category": "staffing",
+   "line_end": 41,
+   "line_start": 37,
+   "page": 21,
+   "quote": "1 All MWBE firms are required to be certified by Empire State Development (ESD) or must be in the process of obtaining certification from ESD. Should the Contractor identify a minority-owned or woman-owned firm that is not currently certified as an MWBE, the Contractor should request that the firm submit a certification application to ESD for an eligibility determination, with a copy to the SRAA MWBE Coordinator. SRAA’s MWBE Coordinator will work with ESD to expedite the application; however, it is the responsibility of the Contractor to ensure that a sufficient number of certified MWBE firms have been identified in response to this procurement, in order to facilitate full MWBE participation.",
+   "uncertain": true,
+   "why": "contractor responsible to identify sufficient certified MWBE firms"
+  },
+  {
+   "category": "submission",
+   "line_end": 5,
+   "line_start": 3,
+   "page": 22,
+   "quote": "1. M/WBE Subcontractor Utilization Plan (SRAA Form 5003) a. Contractor agrees to use such MWBE Utilization Plan for the performance of MWBEs on the Contract pursuant to the prescribed MWBE goals set forth in Section II-A of this Appendix.",
+   "uncertain": false,
+   "why": "submit M/WBE Subcontractor Utilization Plan (SRAA Form 5003)"
+  },
+  {
+   "category": "submission",
+   "line_end": 7,
+   "line_start": 6,
+   "page": 22,
+   "quote": "b. If a Contractor seeks modification to its previously approved MWBE Subcontractor Utilization Plan, the Contractor shall first notify SRAA in writing of such change and obtain approval from SRAA.",
+   "uncertain": true,
+   "why": "obtain SRAA approval before modifying approved Utilization Plan"
+  },
+  {
+   "category": "submission",
+   "line_end": 13,
+   "line_start": 12,
+   "page": 22,
+   "quote": "2. M/WBE Goal Requirements – Certification of Good Faith Efforts (SRAA Form 5004) to achieve the overall prescribed MWBE participation percentage (30%) goals set forth in the procurement.",
+   "uncertain": false,
+   "why": "submit M/WBE Certification of Good Faith Efforts (SRAA Form 5004)"
+  },
+  {
+   "category": "submission",
+   "line_end": 16,
+   "line_start": 14,
+   "page": 22,
+   "quote": "3. MWBE Subcontractors’ and/ or Suppliers’ Letter of Intent to Participate (SRAA Form 5007), which should document the names and signatures of certified MBEs and/or WBEs which have agreed to participate as subcontractors on the Contract.",
+   "uncertain": false,
+   "why": "submit MWBE Subcontractors/Suppliers Letter of Intent (SRAA Form 5007)"
+  },
+  {
+   "category": "submission",
+   "line_end": 19,
+   "line_start": 18,
+   "page": 22,
+   "quote": "A. For Waiver Requests, Contractor should use SRAA Form 5010 MWBE Subcontractor Request for Waiver Form.",
+   "uncertain": true,
+   "why": "use SRAA Form 5010 for MWBE waiver requests"
+  },
+  {
+   "category": "submission",
+   "line_end": 28,
+   "line_start": 26,
+   "page": 22,
+   "quote": "waiver has been issued in regards to such non-compliance, the SRAA may issue a Notice of Deficiency to the Contractor. The Contractor must respond to the Notice of Deficiency within seven (7) business days of receipt. Such response may include a request for partial or total waiver of MWBE Contract Goals.",
+   "uncertain": true,
+   "why": "respond to Notice of Deficiency within seven business days"
+  },
+  {
+   "category": "submission",
+   "line_end": 32,
+   "line_start": 30,
+   "page": 22,
+   "quote": "A. Contractor is required to submit the Subcontractor Quarterly Compliance Report (SRAA Form 5011) to the SRAA by the 10th day following each end of quarter over the term of the Contract documenting the progress made towards achievement of the MWBE goals of the Contract.",
+   "uncertain": false,
+   "why": "submit Subcontractor Quarterly Compliance Report (SRAA Form 5011) by 10th day after each quarter"
+  },
+  {
+   "category": "submission",
+   "line_end": 34,
+   "line_start": 33,
+   "page": 22,
+   "quote": "B. All reports will be submitted to the SRAA program manager for this contract and forwarded to Tori Hunt at huntt@syrairport.org.",
+   "uncertain": true,
+   "why": "submit reports to program manager and forward to designated contact email"
+  },
+  {
+   "category": "legal",
+   "line_end": 10,
+   "line_start": 7,
+   "page": 23,
+   "quote": "A. Where SRAA determines that Contractor is not in compliance with the requirements of the Contract and Contractor refuses to comply with such requirements, or if Contractor is found to have willfully and intentionally failed to comply with the MWBE participation goals, Contractor shall be obligated to pay to the SRAA liquidated damages.",
+   "uncertain": true,
+   "why": "contractor pays liquidated damages for MWBE non-compliance"
+  },
+  {
+   "category": "legal",
+   "line_end": 28,
+   "line_start": 26,
+   "page": 23,
+   "quote": "E. In the event a determination has been made which requires the payment of liquidated damages and such identified sums have not been withheld by the SRAA, Contractor shall pay such liquidated damages to the SRAA within sixty (60) days after they are assessed by the SRAA unless prior to the expiration of such",
+   "uncertain": true,
+   "why": "pay assessed liquidated damages within 60 days"
+  },
+  {
+   "category": "submission",
+   "line_end": 33,
+   "line_start": 32,
+   "page": 23,
+   "quote": "2 Contractors may be requested to provide additional Compliance Reports and information (i) to verify payments made to MWBEs, (ii) to verify MWBE utilization and/or, (iii) as needed to evaluate any other aspect of Contractor compliance with the requirements set forth herein.",
+   "uncertain": true,
+   "why": "contractor may be asked for additional compliance reports and information"
+  },
+  {
+   "category": "staffing",
+   "line_end": 10,
+   "line_start": 9,
+   "page": 25,
+   "quote": "This organization will require its contractors and subcontractors to take good faith actions to achieve the M/WBE contract participation goals and provide Equal Employment Opportunities set by NYS SRAA for the State-funded project by taking the following steps:",
+   "uncertain": true,
+   "why": "M/WBE and EEO policy statement: contractors and subcontractors take good faith actions"
+  },
+  {
+   "category": "staffing",
+   "line_end": 6,
+   "line_start": 3,
+   "page": 26,
+   "quote": "is designated as the Minority/Women Business Enterprise Liaison (Name of Designated Liaison) responsible for administering the Minority and Women-Owned Business Enterprises-Equal Employment Opportunity (M/WBE-EEO) program.",
+   "uncertain": true,
+   "why": "designate M/WBE-EEO liaison responsible for program"
+  },
+  {
+   "category": "submission",
+   "line_end": 3,
+   "line_start": 2,
+   "page": 28,
+   "quote": "General Instructions for Form SRAA - 5001: All Offerors and each subcontractor identified in the bid or proposal must complete an EEO Staffing Plan (04-10) and submit it as part of the bid or proposal package. Where the work force to be utilized in the performance of the State contract can be separated out from",
+   "uncertain": true,
+   "why": "each subcontractor must also complete EEO Staffing Plan submitted with proposal"
+  },
+  {
+   "category": "submission",
+   "line_end": 70,
+   "line_start": 68,
+   "page": 29,
+   "quote": "Email completed form to M/WBE Program Unit: Tori Hunt - huntt@syrairport.org Ed Wilson - ewilson@omni-ops.com",
+   "uncertain": true,
+   "why": "email completed Form 5002 to M/WBE Program Unit"
+  },
+  {
+   "category": "schedule",
+   "line_end": 7,
+   "line_start": 6,
+   "page": 30,
+   "quote": "or subcontractor’s total work force, information on the contractor’s total work force shall be included in the Utilization Report. Utilization reports are to be completed each quarter and submitted to SRAA within 15 days of the end of each quarter. If there are no changes to the work force utilized on the contract",
+   "uncertain": true,
+   "why": "workforce utilization reports submitted within 15 days of end of each quarter"
+  },
+  {
+   "category": "submission",
+   "line_end": 19,
+   "line_start": 13,
+   "page": 34,
+   "quote": "In an effort to promote and assist in the participation of certified M/WBEs as subcontractors and suppliers on this project for the provision of services and materials, the bidder is required to comply with SRAA’s participation goals through one of the three methods below. Please indicate which one of the following is included with the M/WBE Documents Submission.  Full Participation – No Request for Waiver (PREFERRED)  Partial Participation – Partial Request for Waiver  No Participation – Request for Complete Waiver",
+   "uncertain": false,
+   "why": "submit M/WBE Cover Letter (SRAA 5005) selecting participation method"
+  },
+  {
+   "category": "submission",
+   "line_end": 22,
+   "line_start": 12,
+   "page": 35,
+   "quote": "We are currently soliciting bid quotations or proposals from NY State certified M/WBE firms for any tasks of the work contained in this contract. The specialty items contained include the following: Item(s) Description Quantity Projected Start Date The Workplan and specifications are currently available at our office for your review. If you are interested in participation on this project, please complete and submit a copy of the MBE/WBE Contractor Participation Bid/Proposal (SRAA - 5008) no later than thirty (30) days from the (due date) .",
+   "uncertain": true,
+   "why": "contractor bid solicitation letter (SRAA 5006) to certified M/WBE firms"
+  },
+  {
+   "category": "submission",
+   "line_end": 19,
+   "line_start": 2,
+   "page": 38,
+   "quote": "M/WBE CONTRACTOR PARTICIPATION BID/PROPOSAL MBE/WBE Business Name: Address: Prime Contractor: Contract #: County: Project Title: To: (Prime Contractor) Form SRAA - 5007 Completed Yes No (Specify in detail the particular work items to be performed thereof and associated dollar amounts) Type of Work Unit Price Dollar Amount Signature of MWBE Contractor Date",
+   "uncertain": true,
+   "why": "M/WBE Contractor Participation Bid/Proposal (SRAA 5008) from M/WBE"
+  },
+  {
+   "category": "submission",
+   "line_end": 14,
+   "line_start": 11,
+   "page": 39,
+   "quote": "I certify that on (Date) I contacted the following New York State Certified Minority/Women Business Enterprises by registered mail to obtain bids for work to be performed on the above-mentioned contract.",
+   "uncertain": true,
+   "why": "M/WBE Unavailability Certification (SRAA 5009) when MWBE unavailable"
+  },
+  {
+   "category": "submission",
+   "line_end": 4,
+   "line_start": 2,
+   "page": 41,
+   "quote": "When completing the Request for Waiver Form (SRAA – 5010) please check all boxes that apply. To be considered, the Request for Waiver Form must be accompanied by documentation for items 1 – 11, as listed below. If box # 3 has been checked above, please see item 11. Copies of the following information and all relevant supporting documentation must be submitted along with the request:",
+   "uncertain": true,
+   "why": "waiver request must be accompanied by documentation items 1-11"
+  },
+  {
+   "category": "staffing",
+   "line_end": 34,
+   "line_start": 31,
+   "page": 46,
+   "quote": "nation and in recognition of their economic activity in doing business in New York State, bidders/proposers for this contract for commodities, services or technology are strongly encouraged and expected to consider SDVOBs in the fulfillment of the requirements of the contract. Such partnering may be a subcontractors, suppliers, protégés or other supporting roles. SDVOBs can be readily identified on the directory of certified businesses at:",
+   "uncertain": true,
+   "why": "bidders encouraged and expected to consider SDVOBs"
+  },
+  {
+   "category": "staffing",
+   "line_end": 12,
+   "line_start": 8,
+   "page": 47,
+   "quote": "Where SDVE goals have been established herein, Contractor must document “good faith efforts” to provide meaningful participation by SDVEs as subcontractors or suppliers in the performance of the Contract. The Contractor acknowledges that if Contractor is found to have willfully and intentionally failed to comply with the SDVE participation goals set forth in the Contract, such a finding constitutes a breach of contract and the Contractor shall be liable to the SRAA for liquidated or other appropriate damages.",
+   "uncertain": false,
+   "why": "document good faith efforts for SDVOB participation"
+  },
+  {
+   "category": "submission",
+   "line_end": 45,
+   "line_start": 41,
+   "page": 47,
+   "quote": "Contractors shall submit utilization plans for achieving contract goals established for the participation of certified service-disabled veteran owned business enterprises performing commercially useful functions in relation to State contracts. A form for the utilization plan shall be provided by the State agency to the contractor for any request for bids, proposals or qualifications, or negotiated contracts, for which contract goals are established with:",
+   "uncertain": false,
+   "why": "submit SDVOB utilization plan"
+  },
+  {
+   "category": "submission",
+   "line_end": 28,
+   "line_start": 27,
+   "page": 48,
+   "quote": "If unable to meet the SDVOB goals set forth in the solicitation/contract, bidder/contractor must submit a request for waiver on the SDVOB Waiver Form.",
+   "uncertain": true,
+   "why": "submit SDVOB Waiver Form if unable to meet goals"
+  },
+  {
+   "category": "submission",
+   "line_end": 2,
+   "line_start": 1,
+   "page": 50,
+   "quote": "APPLICATION FOR WAIVER OF SDVOB PARTICIPATION GOAL (must be submitted before requesting final payment on the Contract)",
+   "uncertain": true,
+   "why": "SDVOB waiver application must be submitted before requesting final payment"
+  },
+  {
+   "category": "compliance",
+   "line_end": 12,
+   "line_start": 7,
+   "page": 55,
+   "quote": "This Specification covers the manufacturer, furnishing, delivering, and testing of a Metal Clad Switchgear lineup and its accessories for installation at the Syracuse Airport. The Metal Clad Switchgear and accessories shall be in accordance with the following standards and supplements: American Society for Testing Materials (ASTM), Metal Building Manufacturers Association (MBMA), Institute of Electrical and Electronics Engineers (IEEE), and National Fire Protection Association (NFPA) Standards insofar as consistent with these Specifications.",
+   "uncertain": false,
+   "why": "manufacture/furnish/deliver/test switchgear per ASTM, MBMA, IEEE, NFPA standards"
+  },
+  {
+   "category": "technical",
+   "line_end": 18,
+   "line_start": 14,
+   "page": 55,
+   "quote": "Work in this Specification includes, the following items: 1. One (1) 15kV two (2) section Metal Clad Switchgear lineup. 2. Protective Relays and Controls.",
+   "uncertain": false,
+   "why": "work includes 15kV two section lineup, protective relays and controls"
+  },
+  {
+   "category": "schedule",
+   "line_end": 25,
+   "line_start": 22,
+   "page": 55,
+   "quote": "BIDDER shall provide a schedule for the project with the bid.  This shall indicate, at a minimum, the schedule for drawings, shipment from factory, delivery at site, overall lead time to site ARO, and schedule for field works.  A more detailed schedule will be required to be issued from the successful BIDDER following award.",
+   "uncertain": false,
+   "why": "bidder schedule with bid: drawings, shipment, delivery, lead time, field works"
+  },
+  {
+   "category": "submission",
+   "line_end": 30,
+   "line_start": 27,
+   "page": 55,
+   "quote": "BIDDER shall clearly indicate in a separate document any clarifications and/or deviations the BIDDER is issuing in response to the RFP and specifications.  Only clarifications and deviations provided in this separate document and accepted by the PURCHASER will be consider to be part of the contract.",
+   "uncertain": false,
+   "why": "separate document of clarifications and deviations"
+  },
+  {
+   "category": "commercial",
+   "line_end": 35,
+   "line_start": 34,
+   "page": 55,
+   "quote": "1. Special Tools necessary for installation, testing and maintenance.",
+   "uncertain": true,
+   "why": "special tools (restated from Exhibit A)"
+  },
+  {
+   "category": "submission",
+   "line_end": 37,
+   "line_start": 36,
+   "page": 55,
+   "quote": "2. Necessary drawings, instructions and test reports in the English language.",
+   "uncertain": true,
+   "why": "drawings, instructions, test reports in English (restated)"
+  },
+  {
+   "category": "submission",
+   "line_end": 40,
+   "line_start": 38,
+   "page": 55,
+   "quote": "3. In addition to other Submittal requirements, final drawings shall be submitted as AutoCAD format files.",
+   "uncertain": true,
+   "why": "final drawings AutoCAD (restated)"
+  },
+  {
+   "category": "commercial",
+   "line_end": 42,
+   "line_start": 41,
+   "page": 55,
+   "quote": "4. Maintenance equipment and spare parts.",
+   "uncertain": true,
+   "why": "maintenance equipment and spare parts (restated)"
+  },
+  {
+   "category": "technical",
+   "line_end": 50,
+   "line_start": 45,
+   "page": 55,
+   "quote": "1. Metal Clad Switchgear shall have eighteen (18) 15kV vacuum circuit breaker positions with protective relay and controls, two (2) revenue meter positions, two sets of (2) 15kV isolation switches, bus VT’s, and multi-ratio CT’s as shown in Contract Documents.  Future bays shall be provided fully functional without the VCB’s included.",
+   "uncertain": false,
+   "why": "switchgear configuration 18 breakers, meters, isolation switches, VTs, CTs, future bays"
+  },
+  {
+   "category": "compliance",
+   "line_end": 53,
+   "line_start": 52,
+   "page": 55,
+   "quote": "Switchgear shall be Arc-resistant Type 2B.  The switchgear shall meet or exceed the most conservative interpretation of standard IEEE C37.20.7.",
+   "uncertain": false,
+   "why": "arc-resistant Type 2B meeting IEEE C37.20.7"
+  },
+  {
+   "category": "technical",
+   "line_end": 56,
+   "line_start": 55,
+   "page": 55,
+   "quote": "All necessary hardware for installing and testing shall be provided with Metal Clad Switchgear.",
+   "uncertain": false,
+   "why": "all hardware for installing and testing provided"
+  },
+  {
+   "category": "technical",
+   "line_end": 65,
+   "line_start": 64,
+   "page": 55,
+   "quote": "Separate utility incoming Cable termination compartment is required, that allows the utility to lock.",
+   "uncertain": false,
+   "why": "separate lockable utility incoming cable termination compartment"
+  },
+  {
+   "category": "technical",
+   "line_end": 67,
+   "line_start": 66,
+   "page": 55,
+   "quote": "a. Each phase shall have 1 inch diameter ground ball.",
+   "uncertain": false,
+   "why": "1 inch ground ball each phase"
+  },
+  {
+   "category": "technical",
+   "line_end": 70,
+   "line_start": 69,
+   "page": 55,
+   "quote": "A 5/8 inch diameter by 24 inch long copper ground bail shall be connected to the ground bus at both ends and located 7 inches behind the door and 5 inches above",
+   "uncertain": false,
+   "why": "copper ground bail 5/8 x 24 inch location"
+  },
+  {
+   "category": "technical",
+   "line_end": 7,
+   "line_start": 5,
+   "page": 56,
+   "quote": "The MANUFACTURER shall provide a NEMA four-hole pad and insulating boots for incoming and outgoing cable connection of up to two (2) 750 MCM 15kV cables, per phase.",
+   "uncertain": false,
+   "why": "NEMA four-hole pad and insulating boots for cable connection"
+  },
+  {
+   "category": "technical",
+   "line_end": 10,
+   "line_start": 9,
+   "page": 56,
+   "quote": "Furnish two (2) bus Sections with tie breaker to contain the equipment specified in Contract Documents.",
+   "uncertain": false,
+   "why": "two bus sections with tie breaker"
+  },
+  {
+   "category": "compliance",
+   "line_end": 14,
+   "line_start": 12,
+   "page": 56,
+   "quote": "The Circuit Breaker shall be designed, rated, tested, and manufactured in accordance with codes and standards stated herein, except that in event of contradictory requirements between IEEE, ANSI, or NEMA and this Specification.",
+   "uncertain": false,
+   "why": "circuit breaker per codes and standards"
+  },
+  {
+   "category": "technical",
+   "line_end": 17,
+   "line_start": 15,
+   "page": 56,
+   "quote": "10. Furnish relays, controls and associated accessories and hardware as required for a complete functional and operational system.  AC/DC power supply will be provided by others.",
+   "uncertain": false,
+   "why": "relays, controls, accessories for functional system"
+  },
+  {
+   "category": "compliance",
+   "line_end": 37,
+   "line_start": 35,
+   "page": 56,
+   "quote": "Design, construct, assemble and test all equipment furnished to conform with, but not limited to, the latest revisions of the following applicable Codes and Standards, (the latest revision of the following standards shall apply):",
+   "uncertain": false,
+   "why": "design, construct, assemble and test to latest codes and standards listed"
+  },
+  {
+   "category": "compliance",
+   "line_end": 66,
+   "line_start": 65,
+   "page": 58,
+   "quote": "All equipment shall be constructed such that when installed it will conform to the applicable rules of the National Electrical Safety Code & NEC.",
+   "uncertain": false,
+   "why": "conform to National Electrical Safety Code and NEC"
+  },
+  {
+   "category": "compliance",
+   "line_end": 68,
+   "line_start": 68,
+   "page": 58,
+   "quote": "Local and State Ordinances shall also be adhered to for the equipment.",
+   "uncertain": false,
+   "why": "adhere to local and state ordinances"
+  },
+  {
+   "category": "schedule",
+   "line_end": 74,
+   "line_start": 72,
+   "page": 58,
+   "quote": "The PURCHASER reserves the rights to witness factory testing. The MANUFACTURER shall notify the PURCHASER not less than two weeks prior to the starting date of the factory tests.",
+   "uncertain": false,
+   "why": "notify purchaser at least two weeks before factory tests"
+  },
+  {
+   "category": "compliance",
+   "line_end": 77,
+   "line_start": 76,
+   "page": 58,
+   "quote": "Conduct factory tests of all equipment as required by applicable IEEE, ANSI, and NEMA standards including, but not limited to:",
+   "uncertain": false,
+   "why": "conduct factory tests per IEEE ANSI NEMA standards"
+  },
+  {
+   "category": "technical",
+   "line_end": 9,
+   "line_start": 8,
+   "page": 59,
+   "quote": "Conduct on all system components and subassemblies to assure that all devices and systems are in proper working order before delivery to jobsite.",
+   "uncertain": false,
+   "why": "test all system components and subassemblies before delivery"
+  },
+  {
+   "category": "technical",
+   "line_end": 11,
+   "line_start": 11,
+   "page": 59,
+   "quote": "Simulate actual system operation.",
+   "uncertain": false,
+   "why": "simulate actual system operation"
+  },
+  {
+   "category": "submission",
+   "line_end": 13,
+   "line_start": 13,
+   "page": 59,
+   "quote": "Submit test reports as specified.",
+   "uncertain": false,
+   "why": "submit test reports as specified"
+  },
+  {
+   "category": "submission",
+   "line_end": 17,
+   "line_start": 17,
+   "page": 59,
+   "quote": "Technical submittals shall be as specified in the Attachments to these Specifications.",
+   "uncertain": false,
+   "why": "technical submittals per Attachments"
+  },
+  {
+   "category": "submission",
+   "line_end": 22,
+   "line_start": 21,
+   "page": 59,
+   "quote": "Furnish drawings necessary for design, erection, installation, and operation of all equipment and materials furnished including, but not limited to, the following:",
+   "uncertain": false,
+   "why": "furnish drawings and documents for design, erection, installation, operation"
+  },
+  {
+   "category": "submission",
+   "line_end": 60,
+   "line_start": 59,
+   "page": 59,
+   "quote": "Furnish catalog information and Material Safety Data Sheets (MSDS) for all materials where applicable.",
+   "uncertain": false,
+   "why": "furnish catalog information and MSDS"
+  },
+  {
+   "category": "submission",
+   "line_end": 63,
+   "line_start": 62,
+   "page": 59,
+   "quote": "Separate schematic and wiring diagrams shall be submitted for each breaker furnished. “Typical” drawings covering several breakers will not be acceptable.",
+   "uncertain": false,
+   "why": "separate schematic and wiring diagram for each breaker"
+  },
+  {
+   "category": "submission",
+   "line_end": 67,
+   "line_start": 65,
+   "page": 59,
+   "quote": "Standard drawings of equipment which do not indicated clearly the exact size, model number, and optional items to be furnished will be returned to the VENDOR for this information before review by the PURCHASER.",
+   "uncertain": true,
+   "why": "standard drawings must show exact size, model and options or be returned"
+  },
+  {
+   "category": "submission",
+   "line_end": 70,
+   "line_start": 69,
+   "page": 59,
+   "quote": "Table showing on each anchor bolt, forces due to Dead load, Live load, Operation loads, Seismic loads (direction x-x), Seismic loads (direction y-y).",
+   "uncertain": false,
+   "why": "table of anchor bolt forces"
+  },
+  {
+   "category": "submission",
+   "line_end": 73,
+   "line_start": 72,
+   "page": 59,
+   "quote": "The center of gravity, location of the anchor bolts, base plates dimensions and information about the holes-diameter, edge distance from each side.",
+   "uncertain": false,
+   "why": "center of gravity, anchor bolt locations, base plate dimensions"
+  },
+  {
+   "category": "submission",
+   "line_end": 76,
+   "line_start": 75,
+   "page": 59,
+   "quote": "Shipping drawings showing weight, lifting positions, bracing requirements and shipping instructions.",
+   "uncertain": false,
+   "why": "shipping drawings"
+  },
+  {
+   "category": "submission",
+   "line_end": 79,
+   "line_start": 78,
+   "page": 59,
+   "quote": "In addition to other Submittal requirements, final drawings shall be submitted as in AutoCAD and PDF format.",
+   "uncertain": false,
+   "why": "final drawings in AutoCAD and PDF"
+  },
+  {
+   "category": "submission",
+   "line_end": 81,
+   "line_start": 80,
+   "page": 59,
+   "quote": "C. Material Test Reports: Signed by MANUFACTURERs certifying that the following products",
+   "uncertain": false,
+   "why": "material test reports signed by manufacturers"
+  },
+  {
+   "category": "compliance",
+   "line_end": 16,
+   "line_start": 15,
+   "page": 60,
+   "quote": "Quality Control assurance will be conducted in accordance with the requirements stated in the PURCHASER documents.",
+   "uncertain": false,
+   "why": "quality control per purchaser documents"
+  },
+  {
+   "category": "compliance",
+   "line_end": 18,
+   "line_start": 18,
+   "page": 60,
+   "quote": "Comply with the applicable codes and standards referenced in this Specification.",
+   "uncertain": false,
+   "why": "comply with codes and standards referenced"
+  },
+  {
+   "category": "technical",
+   "line_end": 22,
+   "line_start": 20,
+   "page": 60,
+   "quote": "The PURCHASER reserves the right to inspect materials and workmanship at all stages of manufacture and to witness any or all tests including complete assembly as described in the respective sections.",
+   "uncertain": true,
+   "why": "purchaser may inspect materials/workmanship and witness tests"
+  },
+  {
+   "category": "technical",
+   "line_end": 27,
+   "line_start": 26,
+   "page": 60,
+   "quote": "Metal Clad Switchgear section shall be shipped as part of the Prefabricated Equipment Enclosure.",
+   "uncertain": true,
+   "why": "switchgear shipped as part of Prefabricated Equipment Enclosure"
+  },
+  {
+   "category": "technical",
+   "line_end": 29,
+   "line_start": 29,
+   "page": 60,
+   "quote": "Withdrawable circuit breaker shall be shipped separately from housing.",
+   "uncertain": false,
+   "why": "withdrawable breaker shipped separately"
+  },
+  {
+   "category": "technical",
+   "line_end": 33,
+   "line_start": 31,
+   "page": 60,
+   "quote": "Preparation for shipment shall protect the Metal Clad Switchgear auxiliary devices accessories, etc. against corrosion, dampness, breakage or vibration injury during transportation and handling.",
+   "uncertain": false,
+   "why": "protect equipment in shipment against corrosion, dampness, breakage, vibration"
+  },
+  {
+   "category": "submission",
+   "line_end": 36,
+   "line_start": 35,
+   "page": 60,
+   "quote": "A copy of the operating instructions, along with packing slip, shall be forwarded with the equipment.",
+   "uncertain": false,
+   "why": "operating instructions and packing slip with equipment"
+  },
+  {
+   "category": "technical",
+   "line_end": 40,
+   "line_start": 38,
+   "page": 60,
+   "quote": "Boxing, crating, or otherwise protection of all shipped unassembled equipment shall be suitable for outdoor storage. Each item shall be tagged with the project number, MANUFACTURER number, bill of material number, and item number.",
+   "uncertain": false,
+   "why": "boxing/crating suitable for outdoor storage, items tagged"
+  },
+  {
+   "category": "submission",
+   "line_end": 46,
+   "line_start": 44,
+   "page": 60,
+   "quote": "The PURCHASER shall be notified the day shipment is made, indicating carriers, routing, actual shipping height and weight of Prefabricated Equipment Enclosure listed on the freight bill. Refer to the Purchase Order for delivery date and exact destination.",
+   "uncertain": false,
+   "why": "notify purchaser on shipment day with carrier, routing, height and weight"
+  },
+  {
+   "category": "technical",
+   "line_end": 49,
+   "line_start": 48,
+   "page": 60,
+   "quote": "The PURCHASER reserves the right to inspect the Metal Clad Switchgear at the MANUFACTURERs facility prior to shipping to prove compliance with this Specification.",
+   "uncertain": true,
+   "why": "purchaser may inspect switchgear at manufacturer facility before shipping"
+  },
+  {
+   "category": "technical",
+   "line_end": 51,
+   "line_start": 51,
+   "page": 60,
+   "quote": "No welding shall be required for field assembly.",
+   "uncertain": false,
+   "why": "no welding required for field assembly"
+  },
+  {
+   "category": "submission",
+   "line_end": 54,
+   "line_start": 53,
+   "page": 60,
+   "quote": "The VENDOR shall provide the necessary storage and protection literature for the Metal Clad Switchgear.",
+   "uncertain": false,
+   "why": "provide storage and protection literature"
+  },
+  {
+   "category": "technical",
+   "line_end": 57,
+   "line_start": 56,
+   "page": 60,
+   "quote": "Prior to packing, the equipment shall be cleaned to remove all dirt and waste material left from fabrication.",
+   "uncertain": false,
+   "why": "clean equipment before packing"
+  },
+  {
+   "category": "technical",
+   "line_end": 60,
+   "line_start": 59,
+   "page": 60,
+   "quote": "The shipping container shall be provided with supports, lifting eyes etc. to maintain alignment of parts during shipping, handling, hoisting, and installation. Location of lifting points shall be",
+   "uncertain": false,
+   "why": "shipping container supports and lifting eyes"
+  },
+  {
+   "category": "technical",
+   "line_end": 4,
+   "line_start": 3,
+   "page": 61,
+   "quote": "clearly marked on shipping container and on Contract Drawings. The shipping container shall have its weight and center of gravity clearly marked on the container.",
+   "uncertain": false,
+   "why": "weight and center of gravity marked on container"
+  },
+  {
+   "category": "technical",
+   "line_end": 6,
+   "line_start": 5,
+   "page": 61,
+   "quote": "M. Equipment and material shall be loaded and transported in such a manner that delivery will be made without damage.",
+   "uncertain": false,
+   "why": "load and transport so delivery without damage"
+  },
+  {
+   "category": "commercial",
+   "line_end": 12,
+   "line_start": 10,
+   "page": 61,
+   "quote": "Field service representative shall provide technical support during installation and initial startup of the equipment and appropriate training for operating and maintenance personnel, if required. These services shall be quoted as an option in the proposal.",
+   "uncertain": false,
+   "why": "field service representative support and training quoted as an option"
+  },
+  {
+   "category": "technical",
+   "line_end": 20,
+   "line_start": 19,
+   "page": 61,
+   "quote": "Switchgear shall consist of breaker and auxiliary units, as indicated in Contract Documents, bolted together to form a rigid, self-supporting, metal-enclosed structure.",
+   "uncertain": false,
+   "why": "breaker and auxiliary units bolted into rigid self-supporting structure"
+  },
+  {
+   "category": "technical",
+   "line_end": 22,
+   "line_start": 22,
+   "page": 61,
+   "quote": "Switchgear units shall be arranged as shown in Contract Documents.",
+   "uncertain": false,
+   "why": "units arranged as shown in Contract Documents"
+  },
+  {
+   "category": "technical",
+   "line_end": 25,
+   "line_start": 24,
+   "page": 61,
+   "quote": "For rigidity during fault conditions all connections to roll-out potential transformer trays shall be by rigid bus bars insulated to full voltage rating of switchgear assembly.",
+   "uncertain": false,
+   "why": "rigid insulated bus bars to roll-out PT trays"
+  },
+  {
+   "category": "technical",
+   "line_end": 30,
+   "line_start": 27,
+   "page": 61,
+   "quote": "Circuit breaker compartment shall be designed to house 15kV removable-element circuit breaker. Stationary primary disconnect contacts shall be silver-plated copper. Grounded metal safety shutters shall isolate all primary connections in compartment when breaker is withdrawn from connected position.",
+   "uncertain": false,
+   "why": "breaker compartment for 15kV removable breaker, silver-plated contacts, shutters"
+  },
+  {
+   "category": "technical",
+   "line_end": 33,
+   "line_start": 32,
+   "page": 61,
+   "quote": "Breaker unit shall contain three-pole, single-throw, horizontal draw out, trip-free, vacuum circuit breaker.",
+   "uncertain": false,
+   "why": "three-pole vacuum circuit breaker draw out"
+  },
+  {
+   "category": "technical",
+   "line_end": 35,
+   "line_start": 35,
+   "page": 61,
+   "quote": "Breaker shall be complete with all necessary operating mechanisms.",
+   "uncertain": false,
+   "why": "breaker complete with operating mechanisms"
+  },
+  {
+   "category": "technical",
+   "line_end": 37,
+   "line_start": 37,
+   "page": 61,
+   "quote": "Breakers shall be equipped with 2 CT’s per pole.",
+   "uncertain": false,
+   "why": "2 CTs per pole"
+  },
+  {
+   "category": "technical",
+   "line_end": 39,
+   "line_start": 39,
+   "page": 61,
+   "quote": "Breaker shall be suitable for remote closing and tripping with local testing.",
+   "uncertain": false,
+   "why": "suitable for remote closing and tripping with local testing"
+  },
+  {
+   "category": "technical",
+   "line_end": 41,
+   "line_start": 41,
+   "page": 61,
+   "quote": "Equipment shall be metal clad, draw out switchgear.",
+   "uncertain": false,
+   "why": "metal clad draw out switchgear"
+  },
+  {
+   "category": "technical",
+   "line_end": 43,
+   "line_start": 42,
+   "page": 61,
+   "quote": "10. Equipment shall be suitable for operation on a solidly grounded system rated 13200 volts line-to-line, 3-phase, 4-wire, 60 hertz.",
+   "uncertain": false,
+   "why": "suitable for 13200 V solidly grounded 3-phase 4-wire 60 Hz system"
+  },
+  {
+   "category": "technical",
+   "line_end": 45,
+   "line_start": 44,
+   "page": 61,
+   "quote": "11. The 13.2kV breakers shall be equipped with a SEL-751 (with touchscreen) overcurrent relay trip device.",
+   "uncertain": false,
+   "why": "13.2kV breakers with SEL-751 relay with touchscreen"
+  },
+  {
+   "category": "technical",
+   "line_end": 46,
+   "line_start": 46,
+   "page": 61,
+   "quote": "12. The incoming feeders shall be provided with a gang operated Isolation Switch.",
+   "uncertain": false,
+   "why": "gang operated isolation switch on incoming feeders"
+  },
+  {
+   "category": "technical",
+   "line_end": 48,
+   "line_start": 47,
+   "page": 61,
+   "quote": "13. The Billing metering position requires a 1 inch diameter ground ball ahead of and also after the CT/VT connections per phase.",
+   "uncertain": false,
+   "why": "billing metering 1 inch ground ball before and after CT/VT"
+  },
+  {
+   "category": "technical",
+   "line_end": 52,
+   "line_start": 50,
+   "page": 61,
+   "quote": "A 5/8 inch diameter by 24 inch long copper ground bail shall be connected to the ground bus at both ends and located 7 inches behind the door and 5 inches above the door sill.",
+   "uncertain": false,
+   "why": "copper ground bail at metering position"
+  },
+  {
+   "category": "technical",
+   "line_end": 55,
+   "line_start": 53,
+   "page": 61,
+   "quote": "14. Switchgear vendor to provide a minimum of one bus piece as shipping brace where utility CT’s will connect.  Should utility CT ever fail, bus piece can be used until replacement CT is available.",
+   "uncertain": false,
+   "why": "one bus piece as shipping brace for utility CT"
+  },
+  {
+   "category": "technical",
+   "line_end": 56,
+   "line_start": 56,
+   "page": 61,
+   "quote": "15. Metering/Billing CT’s shall be ABB KIR-11 or GE JKM-5 CT’s.",
+   "uncertain": false,
+   "why": "metering CTs ABB KIR-11 or GE JKM-5"
+  },
+  {
+   "category": "technical",
+   "line_end": 57,
+   "line_start": 57,
+   "page": 61,
+   "quote": "16. Metering/Billing VT’s shall be GE JVM-5 or ABB VIZ-11 VT’s.",
+   "uncertain": false,
+   "why": "metering VTs GE JVM-5 or ABB VIZ-11"
+  },
+  {
+   "category": "compliance",
+   "line_end": 60,
+   "line_start": 59,
+   "page": 61,
+   "quote": "Switchgear Ratings: The switchgear shall be designed per the latest revision of IEEE standard for Metal Clad Switchgear with the following electrical characteristics:",
+   "uncertain": false,
+   "why": "designed per latest IEEE metal clad switchgear standard"
+  },
+  {
+   "category": "technical",
+   "line_end": 63,
+   "line_start": 62,
+   "page": 61,
+   "quote": "Rated Maximum Voltage, 15 kV rms",
+   "uncertain": false,
+   "why": "rated maximum voltage 15 kV rms"
+  },
+  {
+   "category": "technical",
+   "line_end": 66,
+   "line_start": 65,
+   "page": 61,
+   "quote": "Normal Frequency Withstand 36 kV rms",
+   "uncertain": false,
+   "why": "normal frequency withstand 36 kV rms"
+  },
+  {
+   "category": "technical",
+   "line_end": 69,
+   "line_start": 68,
+   "page": 61,
+   "quote": "Impulse Withstand Rating (BIL) 95 kV peak",
+   "uncertain": false,
+   "why": "impulse withstand BIL 95 kV peak"
+  },
+  {
+   "category": "technical",
+   "line_end": 5,
+   "line_start": 4,
+   "page": 62,
+   "quote": "Rated Continuous Current 2000/1200 A,rms",
+   "uncertain": false,
+   "why": "rated continuous current 2000/1200 A"
+  },
+  {
+   "category": "technical",
+   "line_end": 8,
+   "line_start": 7,
+   "page": 62,
+   "quote": "Momentary rating 25 kA, rms",
+   "uncertain": false,
+   "why": "momentary rating 25 kA"
+  },
+  {
+   "category": "technical",
+   "line_end": 13,
+   "line_start": 12,
+   "page": 62,
+   "quote": "The general arrangement of switchgear breaker and auxiliary units shall as indicated in Contract Documents.",
+   "uncertain": true,
+   "why": "general arrangement per Contract Documents"
+  },
+  {
+   "category": "technical",
+   "line_end": 18,
+   "line_start": 15,
+   "page": 62,
+   "quote": "The switchgear enclosure shall be of welded construction and utilize 11-gauge steel minimum throughout. The breaker compartment shall be totally welded construction. Each switchgear compartment shall form its own solid box, such that there are two thicknesses of 11-gauge steel between vertical sections.",
+   "uncertain": false,
+   "why": "welded construction 11-gauge steel, two thicknesses between sections"
+  },
+  {
+   "category": "technical",
+   "line_end": 20,
+   "line_start": 20,
+   "page": 62,
+   "quote": "Provide equipment of dead-front construction and design for heavy duty utility service.",
+   "uncertain": false,
+   "why": "dead-front construction heavy duty"
+  },
+  {
+   "category": "technical",
+   "line_end": 25,
+   "line_start": 22,
+   "page": 62,
+   "quote": "Provide front-hinged doors on which are mounted meters, relays, control switches, etc., and which open to permit removal of circuit breaker. Doors shall be capable of being completely closed with the breaker in the racked-out test and racked-in positions. Front panels shall be hinged on the left side.",
+   "uncertain": false,
+   "why": "front-hinged doors left hinged closable with breaker racked out/in"
+  },
+  {
+   "category": "technical",
+   "line_end": 29,
+   "line_start": 27,
+   "page": 62,
+   "quote": "Connections to the voltage transformers shall utilize 15kV rated cable that is sized and supported to withstand the maximum fault and momentary current ratings of the switchgear.",
+   "uncertain": false,
+   "why": "VT connections 15kV cable sized for fault current"
+  },
+  {
+   "category": "technical",
+   "line_end": 34,
+   "line_start": 31,
+   "page": 62,
+   "quote": "The circuit breaker compartment shall be designed to house a 15kV removable element vacuum circuit breakers. Stationary primary disconnect contacts shall be silver plated copper. Grounded metal safety shutters shall isolate all primary connections in compartment when breaker is withdrawn from connected position.",
+   "uncertain": true,
+   "why": "breaker compartment for 15kV vacuum breaker, silver contacts, shutters"
+  },
+  {
+   "category": "technical",
+   "line_end": 41,
+   "line_start": 36,
+   "page": 62,
+   "quote": "Furnish nameplates for each device as indicated in Contract Documents. Nameplates shall be white letters on black background. Nameplates shall be fastened with screws. There shall be a master nameplate that indicates equipment ratings, MANUFACTURER’s name, shop order number and general information. Interior devices labeled with lamacoid nameplates shall be provided with silicon adhesive or ENGINEER approved equal.",
+   "uncertain": false,
+   "why": "nameplates white on black, master nameplate, lamacoid"
+  },
+  {
+   "category": "technical",
+   "line_end": 44,
+   "line_start": 43,
+   "page": 62,
+   "quote": "Energized bare parts mounted on doors shall be guarded where the door must be opened for maintenance of equipment or removal of draw out equipment.",
+   "uncertain": false,
+   "why": "guard energized bare parts on doors"
+  },
+  {
+   "category": "technical",
+   "line_end": 47,
+   "line_start": 46,
+   "page": 62,
+   "quote": "Factory install all components of equipment except items specified as being furnished by the PURCHASER.",
+   "uncertain": false,
+   "why": "factory install all components"
+  },
+  {
+   "category": "technical",
+   "line_end": 49,
+   "line_start": 49,
+   "page": 62,
+   "quote": "the switchgear.",
+   "uncertain": false,
+   "why": "metering relaying controls accessible from front"
+  },
+  {
+   "category": "technical",
+   "line_end": 54,
+   "line_start": 50,
+   "page": 62,
+   "quote": "11. Switchgear power cable compartment doors shall be 11-gauge steel. Each door shall be provided with a stainless-steel lockable vault handle and internal three point latching mechanism and bolts. The internal latches shall utilize nylon rollers. The doors shall be provided with an automotive type weatherproof gasket, drip shield at the top and bolted at top and bottom.",
+   "uncertain": false,
+   "why": "power cable compartment doors 11-gauge, lockable stainless handle, gasket"
+  },
+  {
+   "category": "technical",
+   "line_end": 55,
+   "line_start": 55,
+   "page": 62,
+   "quote": "12. Provide red-painted, nonmetallic safety shutters covering the breaker bus connections.",
+   "uncertain": false,
+   "why": "red nonmetallic safety shutters"
+  },
+  {
+   "category": "technical",
+   "line_end": 57,
+   "line_start": 56,
+   "page": 62,
+   "quote": "13. Provide internal LED light fixture and grounded convenience receptacle and switch on the draw out side of each unit.",
+   "uncertain": false,
+   "why": "internal LED light and convenience receptacle"
+  },
+  {
+   "category": "technical",
+   "line_end": 64,
+   "line_start": 58,
+   "page": 62,
+   "quote": "14. Provide a 2-inch x 6-inch engraved (3/8-inch lettering) laminated, black with white core, phenolic nameplate for each cubicle door, front and rear, 125-volt DC emergency lighting control switch and panelboards. Provide a 3/4-inch x 3-inch engraved (1/8-inch lettering) nameplate of the same construction as above for each individual meter, instrument, relay, or control switch. Nameplates shall be provided for equipment both inside and outside switchgear as well as all field-mounted equipment. Engraving shall be as required by Contract Documents. Nameplates shall be secured with screws.",
+   "uncertain": false,
+   "why": "engraved phenolic nameplates for doors, meters, instruments"
+  },
+  {
+   "category": "technical",
+   "line_end": 65,
+   "line_start": 65,
+   "page": 62,
+   "quote": "15. Provide bolted removable access panels to permit access to power connections and bus.",
+   "uncertain": false,
+   "why": "bolted removable access panels"
+  },
+  {
+   "category": "technical",
+   "line_end": 66,
+   "line_start": 66,
+   "page": 62,
+   "quote": "16. Provide drawout carriages with grounding device for mounting transformers.",
+   "uncertain": false,
+   "why": "drawout carriages with grounding for transformers"
+  },
+  {
+   "category": "technical",
+   "line_end": 67,
+   "line_start": 67,
+   "page": 62,
+   "quote": "17. Provide entry for power cable conduit in the bottom of each switchgear unit.",
+   "uncertain": false,
+   "why": "bottom entry for power cable conduit"
+  },
+  {
+   "category": "technical",
+   "line_end": 3,
+   "line_start": 3,
+   "page": 63,
+   "quote": "18. Provide hinged, latched rear doors with stops and padlock provisions, complete.",
+   "uncertain": false,
+   "why": "hinged latched rear doors with padlock provisions"
+  },
+  {
+   "category": "technical",
+   "line_end": 4,
+   "line_start": 4,
+   "page": 63,
+   "quote": "19. Provide bolted removable access panels to permit access to power connections and bus.",
+   "uncertain": true,
+   "why": "bolted removable access panels"
+  },
+  {
+   "category": "technical",
+   "line_end": 5,
+   "line_start": 5,
+   "page": 63,
+   "quote": "20. Provide drawout carriages with grounding device for mounting transformers and fuses.",
+   "uncertain": true,
+   "why": "drawout carriages for transformers and fuses"
+  },
+  {
+   "category": "technical",
+   "line_end": 6,
+   "line_start": 6,
+   "page": 63,
+   "quote": "21. Provide Kirk Key Interlock for incoming feeder cubicles.",
+   "uncertain": false,
+   "why": "Kirk Key interlock for incoming feeder cubicles"
+  },
+  {
+   "category": "technical",
+   "line_end": 16,
+   "line_start": 10,
+   "page": 63,
+   "quote": "Provide a copper main bus, 2000 ampere rating as indicated in Contract Documents with capacity to supply full rating to the circuit breakers without exceeding temperatures limits imposed by IEEE and ANSI standards, mechanically braced to withstand shocks and stresses imposed by short-circuit currents equal to the short-time rating of the breaker. Silver-plate contact surfaces of all joints in buses and bus connections. All bus supports for medium voltage conductors shall be wet process porcelain or cycloaliphatic epoxy.",
+   "uncertain": false,
+   "why": "copper main bus 2000 A silver-plated joints porcelain supports"
+  },
+  {
+   "category": "technical",
+   "line_end": 21,
+   "line_start": 18,
+   "page": 63,
+   "quote": "Insulate all medium voltage bus with epoxy applied using the fluidized bed process. All bus shall be provided with removable access covers for inspection. Provide PVC boots with nylon hardware to insulate all bus joints and medium voltage connections, including the power cable terminations.",
+   "uncertain": false,
+   "why": "epoxy-insulated bus, access covers, PVC boots"
+  },
+  {
+   "category": "technical",
+   "line_end": 23,
+   "line_start": 23,
+   "page": 63,
+   "quote": "Voltage ratings of the main bus shall equal the breaker ratings.",
+   "uncertain": false,
+   "why": "main bus voltage rating equals breaker rating"
+  },
+  {
+   "category": "technical",
+   "line_end": 25,
+   "line_start": 25,
+   "page": 63,
+   "quote": "Provide four-hole NEMA pads for the high-voltage power cables.",
+   "uncertain": false,
+   "why": "four-hole NEMA pads for HV cables"
+  },
+  {
+   "category": "technical",
+   "line_end": 32,
+   "line_start": 27,
+   "page": 63,
+   "quote": "Provide a ¼” x 2” copper ground bus extending full length of the switchgear. The ground bus shall be connected with bronzed grounding pads located in two opposite locations on the exterior of the switchgear. The ground pads shall be furnished with 1/0-500 kcmil lugs for connection of the ground cable and located near the cable entrance. Ground each compartment housing to this bus as well as each circuit breaker when in \"operate\" and \"test\" positions.",
+   "uncertain": false,
+   "why": "copper ground bus with bronzed pads and lugs"
+  },
+  {
+   "category": "technical",
+   "line_end": 38,
+   "line_start": 34,
+   "page": 63,
+   "quote": "Ground bus joints (splice points) shall not be coincident with the bolts which support the ground bus. Connections to the ground bus should be made such that it is not necessary to open the ground bus or any other connection to the ground bus in order to remove any connection to the ground bus. Bolted connections to the ground bus should be separate from the support and joint bolts.",
+   "uncertain": false,
+   "why": "ground bus joint and connection arrangement"
+  },
+  {
+   "category": "technical",
+   "line_end": 42,
+   "line_start": 40,
+   "page": 63,
+   "quote": "Extend the ground bus to a location near the access door of each power cable compartment for the grounding of the feeder's power cable shielding. Provide one #6- 1/0 ground connector in each power cable compartment to ground the cable shield.",
+   "uncertain": false,
+   "why": "ground bus extension and cable shield ground connector"
+  },
+  {
+   "category": "technical",
+   "line_end": 47,
+   "line_start": 44,
+   "page": 63,
+   "quote": "Provide a ground bus in each control cable compartment, extended from the switchgear ground bus, for the termination of control cable shields. This bus shall be at least 1\"x1/8\"x1' and drilled and tapped with 10-32 thread on one-inch centers with termination bolts provided.",
+   "uncertain": false,
+   "why": "control cable compartment ground bus"
+  },
+  {
+   "category": "compliance",
+   "line_end": 50,
+   "line_start": 49,
+   "page": 63,
+   "quote": "Switchgear bus phase sequence shall be clearly identified in the breaker compartment in conformance with ANSI C37.20, Article 6.1.1.2, Phase Sequence.",
+   "uncertain": false,
+   "why": "phase sequence identified per ANSI C37.20"
+  },
+  {
+   "category": "technical",
+   "line_end": 52,
+   "line_start": 51,
+   "page": 63,
+   "quote": "10. The switchgear assembly shall have been design tested to withstand a BIL rating of 95kV.",
+   "uncertain": false,
+   "why": "assembly design tested to 95kV BIL"
+  },
+  {
+   "category": "technical",
+   "line_end": 55,
+   "line_start": 54,
+   "page": 63,
+   "quote": "Circuit Breaker Ratings and Specifications: Breaker shall be horizontal draw-out vacuum type. The breaker shall have the following characteristics:",
+   "uncertain": false,
+   "why": "horizontal draw-out vacuum breaker with characteristics below"
+  },
+  {
+   "category": "technical",
+   "line_end": 65,
+   "line_start": 57,
+   "page": 63,
+   "quote": "Voltage: a. Rated kV or nominal kV class: 15. b. Maximum kV: 15. c. Operating kV: 13.2 d. Rated voltage range factor (K): 1.30.",
+   "uncertain": false,
+   "why": "breaker voltage ratings 15 kV class, 13.2 operating, K 1.30"
+  },
+  {
+   "category": "technical",
+   "line_end": 71,
+   "line_start": 67,
+   "page": 63,
+   "quote": "Current Ratings: a. Continuous amperes: 1,200 b. Momentary, rms amperes (three-second): (25,000).",
+   "uncertain": false,
+   "why": "breaker continuous 1,200 A, momentary 25,000 A"
+  },
+  {
+   "category": "technical",
+   "line_end": 4,
+   "line_start": 3,
+   "page": 64,
+   "quote": "c. Short-circuit current at rated max kV: (18,000).",
+   "uncertain": false,
+   "why": "short-circuit current 18,000 A"
+  },
+  {
+   "category": "technical",
+   "line_end": 12,
+   "line_start": 6,
+   "page": 64,
+   "quote": "Interrupting Ratings: a. Three-phase rated MVA or nominal MVA class: (500). b. Maximum symmetrical interrupting, amperes: (18,000). c. Close and latch, peak amperes: (62,000).",
+   "uncertain": false,
+   "why": "interrupting ratings 500 MVA, 18,000 A, 62,000 A close and latch"
+  },
+  {
+   "category": "technical",
+   "line_end": 14,
+   "line_start": 14,
+   "page": 64,
+   "quote": "Frequency, hertz: 60.",
+   "uncertain": false,
+   "why": "frequency 60 Hz"
+  },
+  {
+   "category": "technical",
+   "line_end": 16,
+   "line_start": 16,
+   "page": 64,
+   "quote": "Rated interrupting time, cycles: 5.",
+   "uncertain": false,
+   "why": "interrupting time 5 cycles"
+  },
+  {
+   "category": "technical",
+   "line_end": 18,
+   "line_start": 18,
+   "page": 64,
+   "quote": "The breaker shall be provided with two (2) independent trip coils.",
+   "uncertain": false,
+   "why": "two independent trip coils"
+  },
+  {
+   "category": "technical",
+   "line_end": 24,
+   "line_start": 20,
+   "page": 64,
+   "quote": "Insulation Levels: a. Low-frequency test voltage (60-hertz, dry 1-minute), kV: 36. b. Basic impulse level (1-1/2x40 microseconds), kV crest: 95.",
+   "uncertain": false,
+   "why": "insulation levels 36 kV and 95 kV BIL"
+  },
+  {
+   "category": "technical",
+   "line_end": 35,
+   "line_start": 26,
+   "page": 64,
+   "quote": "Control Circuit Voltage: a. Nominal voltage supplies: 125 volts DC for close and trip; 240 volts AC for spring charging motor. b. Voltage range, closing, volts: 100-140 volts DC. c. Voltage range, tripping, volts: 70-140 volts DC. d. Charging motor voltage range, volts: 208-254 volts AC.",
+   "uncertain": false,
+   "why": "control circuit voltages 125 VDC and 240 VAC with ranges"
+  },
+  {
+   "category": "technical",
+   "line_end": 39,
+   "line_start": 39,
+   "page": 64,
+   "quote": "125 volts DC electric stored-energy-operated, mechanically and electrically trip free.",
+   "uncertain": false,
+   "why": "125 VDC stored energy mechanically and electrically trip free"
+  },
+  {
+   "category": "technical",
+   "line_end": 41,
+   "line_start": 41,
+   "page": 64,
+   "quote": "Completely interchangeable with all other breakers furnished of the same rating.",
+   "uncertain": false,
+   "why": "breakers interchangeable"
+  },
+  {
+   "category": "technical",
+   "line_end": 43,
+   "line_start": 43,
+   "page": 64,
+   "quote": "Self-aligning primary and secondary contacts.",
+   "uncertain": false,
+   "why": "self-aligning primary and secondary contacts"
+  },
+  {
+   "category": "technical",
+   "line_end": 46,
+   "line_start": 45,
+   "page": 64,
+   "quote": "Suitable interlocks to positively prevent breaker withdrawal out of or insertion into operating position with breaker closed.",
+   "uncertain": false,
+   "why": "interlocks to prevent breaker movement while closed"
+  },
+  {
+   "category": "technical",
+   "line_end": 52,
+   "line_start": 48,
+   "page": 64,
+   "quote": "Auxiliary contacts mounted in the breaker cell and operated by the breaker in both \"operate\" and \"test\" positions of the breaker. Furnish contacts in sufficient number for all interlocking functions as required for the control scheme designed for each breaker, and to provide a minimum of two spare \"normally open\" and two spare \"normally closed\" contacts for each breaker.",
+   "uncertain": false,
+   "why": "cell-mounted auxiliary contacts with spares"
+  },
+  {
+   "category": "technical",
+   "line_end": 58,
+   "line_start": 54,
+   "page": 64,
+   "quote": "Auxiliary contacts mounted on the removable breaker in sufficient number for all control, indicating, and alarm functions as required provide a minimum of two spare \"normally open\" and two spare \"normally closed\" contacts for each breaker. Secondary contacts shall be made in test position to eliminate need of jumper cable, where such option is permitted by MANUFACTURER's standard design.",
+   "uncertain": false,
+   "why": "breaker-mounted auxiliary contacts with spares"
+  },
+  {
+   "category": "technical",
+   "line_end": 60,
+   "line_start": 60,
+   "page": 64,
+   "quote": "Means to prevent removing a charged breaker from the cubicle.",
+   "uncertain": false,
+   "why": "prevent removing a charged breaker"
+  },
+  {
+   "category": "technical",
+   "line_end": 63,
+   "line_start": 62,
+   "page": 64,
+   "quote": "Provide for manual stored energy closing, tripping, and spring recharge on loss of control power.",
+   "uncertain": false,
+   "why": "manual stored energy closing, tripping and spring recharge"
+  },
+  {
+   "category": "technical",
+   "line_end": 70,
+   "line_start": 69,
+   "page": 64,
+   "quote": "Provide intermediate class arresters consisting of MCOV 8.4kV, initially connect to provide the MCOV rating as shown on Contract Documents.",
+   "uncertain": false,
+   "why": "intermediate class surge arresters MCOV 8.4kV"
+  },
+  {
+   "category": "technical",
+   "line_end": 74,
+   "line_start": 72,
+   "page": 64,
+   "quote": "For vacuum switchgear, furnish one metal oxide surge arrester for each phase terminal of load feeder circuit. Furnish arresters coordinated with insulation levels to provide complete protection of connected loads from surges created by vacuum interrupters.",
+   "uncertain": false,
+   "why": "metal oxide surge arrester each phase terminal of load feeder"
+  },
+  {
+   "category": "technical",
+   "line_end": 81,
+   "line_start": 78,
+   "page": 64,
+   "quote": "Each set of voltage transformers and their primary fuses shall be mounted in separate steel compartments. Primary connections to the transformers shall be insulated and enter the compartment through porcelain or cycloaliphatic epoxy bushings. Each set of voltage transformers and fuses shall be mounted on the tilt out steel carriage which will be",
+   "uncertain": false,
+   "why": "VT and fuses in separate compartments on tilt-out carriage"
+  },
+  {
+   "category": "technical",
+   "line_end": 10,
+   "line_start": 3,
+   "page": 65,
+   "quote": "capable of disconnecting the transformer fuses from their voltage source and removing them from the structure. This removing mechanism shall be so arranged that full access to the transformers cannot be accomplished until fuses are disconnected from the structure and grounded. When moved to a full out position, the transformer fuses and VT windings shall be automatically connected to a ground stud. Primary contacts shall be insulated from the structure by porcelain or cycloaliphatic epoxy supports, shall be self- aligning, and shall have silver to silver contact surfaces. VT’s shall be of the ratio indicated on the Contract Drawings and shall comply with ANSI C57.13.",
+   "uncertain": false,
+   "why": "VT fuse disconnect/ground arrangement, VTs comply with ANSI C57.13"
+  },
+  {
+   "category": "technical",
+   "line_end": 18,
+   "line_start": 14,
+   "page": 65,
+   "quote": "Current transformers shall be of the multi-ratio window type with ratios as indicated on the Contract Drawings. They shall have sufficient thermal and mechanical capacity to withstand the maximum momentary current rating of the breakers. The secondary terminals shall be of the solder-less clamp type. All current transformers shall be properly identified for polarity with standard marking symbols.",
+   "uncertain": false,
+   "why": "multi-ratio window type CTs"
+  },
+  {
+   "category": "submission",
+   "line_end": 24,
+   "line_start": 20,
+   "page": 65,
+   "quote": "CT’s having a insulation rating of 15kV with fully insulated bus centered in the transformer window opening, are acceptable when corona, hypot, and impulse tests prove a satisfactory arrangement. Tests shall be performed on a similar CT installation in the switchgear MANUFACTURER’s equipment and certified test reports shall be submitted with the approval drawings when requested.",
+   "uncertain": false,
+   "why": "CT 15kV alternative requires tests and certified reports when requested"
+  },
+  {
+   "category": "compliance",
+   "line_end": 27,
+   "line_start": 26,
+   "page": 65,
+   "quote": "The minimum acceptable accuracy class for metering and relaying shall be in accordance with the latest edition of ANSI Standard C37.20.2 and C57.13.",
+   "uncertain": false,
+   "why": "CT accuracy class per ANSI C37.20.2 and C57.13"
+  },
+  {
+   "category": "technical",
+   "line_end": 29,
+   "line_start": 29,
+   "page": 65,
+   "quote": "Phase CT’s shall be mounted over stationary primary disconnects.",
+   "uncertain": false,
+   "why": "phase CTs over stationary primary disconnects"
+  },
+  {
+   "category": "technical",
+   "line_end": 33,
+   "line_start": 33,
+   "page": 65,
+   "quote": "Provide two KWH meter socket for Form 9S meter. KWH meter provided by others.",
+   "uncertain": false,
+   "why": "two KWH meter sockets Form 9S"
+  },
+  {
+   "category": "technical",
+   "line_end": 36,
+   "line_start": 35,
+   "page": 65,
+   "quote": "Provide (1) Test Switch assembly, with (3) current test jack and short-circuiting current assemblies and (4) single-pole potential assemblies, similar to States Type FMS-10E2.",
+   "uncertain": false,
+   "why": "test switch assembly similar to FMS-10E2"
+  },
+  {
+   "category": "technical",
+   "line_end": 41,
+   "line_start": 40,
+   "page": 65,
+   "quote": "Miscellaneous interlock contacts and auxiliary relays as required for the breaker control scheme.",
+   "uncertain": false,
+   "why": "interlock contacts and auxiliary relays"
+  },
+  {
+   "category": "technical",
+   "line_end": 46,
+   "line_start": 43,
+   "page": 65,
+   "quote": "Two sets of control power circuit fuses for each breaker. Electrical control scheme shall be similar to ANSI C37.11, Figure 1, Diagram B, 2 with the trip and close circuits individually protected. Provide spare fuses for other control circuits (no less than two each).",
+   "uncertain": false,
+   "why": "two control power fuse sets per breaker, spare fuses"
+  },
+  {
+   "category": "technical",
+   "line_end": 50,
+   "line_start": 48,
+   "page": 65,
+   "quote": "Cell switches in each compartment to bypass all breaker-mounted auxiliary switch \"b\" contacts when circuit breaker is removed. Include at least two spare \"a\" and two spare \"b\" contacts on each breaker cell position switch.",
+   "uncertain": false,
+   "why": "cell switches with spare contacts"
+  },
+  {
+   "category": "technical",
+   "line_end": 53,
+   "line_start": 52,
+   "page": 65,
+   "quote": "All breaker auxiliary and cell switch spare contacts wired out to compartment external connection terminal block.",
+   "uncertain": false,
+   "why": "spare contacts wired to terminal block"
+  },
+  {
+   "category": "technical",
+   "line_end": 55,
+   "line_start": 55,
+   "page": 65,
+   "quote": "Control designed such that breakers will not trip on interruption to DC control power.",
+   "uncertain": false,
+   "why": "breakers do not trip on DC power interruption"
+  },
+  {
+   "category": "technical",
+   "line_end": 59,
+   "line_start": 59,
+   "page": 65,
+   "quote": "Completely factory-install all internal control wiring.",
+   "uncertain": false,
+   "why": "factory-install internal control wiring"
+  },
+  {
+   "category": "technical",
+   "line_end": 65,
+   "line_start": 61,
+   "page": 65,
+   "quote": "Switchgear secondary wiring shall be multi-stranded, tinned, copper conductor, type SIS, 600 volt, VW-1 rating. Minimum wire size shall be #14 AWG, 41 strand. BCT wiring shall be #10 AWG. Signal wiring (transducer outputs, etc.) shall be #22 twisted shielded pair. RTU connections shall be #18 AWG, 18 strand, type SIS. Splicing or tapping is not permitted.",
+   "uncertain": false,
+   "why": "secondary wiring type SIS multi-stranded tinned copper, sizes"
+  },
+  {
+   "category": "technical",
+   "line_end": 68,
+   "line_start": 67,
+   "page": 65,
+   "quote": "Wiring between hinged and stationary panels shall be supported to prevent undue stress and shall be protected from contact with metal edges by suitable protective wrap. All",
+   "uncertain": false,
+   "why": "wiring between hinged and stationary panels supported and protected"
+  },
+  {
+   "category": "technical",
+   "line_end": 5,
+   "line_start": 3,
+   "page": 66,
+   "quote": "wiring between the door and compartment shall cross the hinge at a point above the height of the circuit breaker to eliminate the possibility of interference with the breaker element.",
+   "uncertain": false,
+   "why": "door wiring crosses hinge above breaker height"
+  },
+  {
+   "category": "technical",
+   "line_end": 10,
+   "line_start": 7,
+   "page": 66,
+   "quote": "All wiring shall be firmly bundled and secured to ensure it will remain in its intended location and not interfere with the operation of any device. Wire bundles shall be secured with cable ties attached to welded studs. Adhesive type hold-down clamps are not acceptable.",
+   "uncertain": false,
+   "why": "wiring bundled, cable ties on welded studs, no adhesive clamps"
+  },
+  {
+   "category": "technical",
+   "line_end": 14,
+   "line_start": 12,
+   "page": 66,
+   "quote": "Make all connections at equipment studs or heavy-duty terminal blocks. Terminate all Bushing Current Transformer (BCT) leads on 4-point shorting-type terminal blocks similar to GE EB27 model or ENGINEER approved equal.",
+   "uncertain": false,
+   "why": "connections at studs or heavy-duty terminal blocks, BCT shorting blocks"
+  },
+  {
+   "category": "technical",
+   "line_end": 22,
+   "line_start": 16,
+   "page": 66,
+   "quote": "Terminate all points requiring external wiring connections at points on terminal blocks conveniently grouped to receive external cables with color-code order as approved by the ENGINEER. All terminal blocks, except the short-circuiting type, to be twelve-point straight-strap terminal blocks with white marking strip or ENGINEER approved equal. Points on terminal blocks shall bear alphanumeric designations which indicate unit number, block letter, and terminal number (such as 2B1, 3C2, 4D3, etc.). Letters I, O, and S shall not be used as terminal block designations.",
+   "uncertain": false,
+   "why": "external wiring terminal blocks twelve-point with alphanumeric designations"
+  },
+  {
+   "category": "technical",
+   "line_end": 28,
+   "line_start": 24,
+   "page": 66,
+   "quote": "Furnish terminal blocks for external wiring connections in sufficient numbers to provide at least 15 percent spare terminals (terminals having no connections or designated field future connections), arranged with no less than two spare terminals on each 12-point block. Furnish all spare terminal blocks with proper nuts and/or screws with flat washers in each cabinet.",
+   "uncertain": false,
+   "why": "at least 15 percent spare terminals"
+  },
+  {
+   "category": "technical",
+   "line_end": 33,
+   "line_start": 30,
+   "page": 66,
+   "quote": "Use No. 14-gauge or larger stranded, tinned copper wire insulated for 600 volts, equal to General Electric Type SIS Specification SI-47275, or ENGINEER approved equal. Any wiring subject to movement, e.g., wiring mounted to swing panels, shall be of extra-flexible conductor.",
+   "uncertain": false,
+   "why": "No. 14 or larger tinned stranded copper 600 V SIS wire"
+  },
+  {
+   "category": "technical",
+   "line_end": 37,
+   "line_start": 35,
+   "page": 66,
+   "quote": "Control power buses for AC or DC shall extend through each switchgear assembly. The buses shall be adequately sized for the control power load but shall not be less than No. 6 AWG.",
+   "uncertain": false,
+   "why": "control power buses through each assembly not less than No. 6 AWG"
+  },
+  {
+   "category": "technical",
+   "line_end": 42,
+   "line_start": 38,
+   "page": 66,
+   "quote": "10. Use pre-insulated compression-type connectors with ring tongue for all control connections. No more than two wires shall be terminated at any one connection point. Make all circuits continuous between termination points. No butt splices shall be allowed. All control connectors shall be applied using a ratcheting type lugging tool that cannot be released until the lug is properly crimped.",
+   "uncertain": false,
+   "why": "pre-insulated ring tongue compression connectors, no butt splices"
+  },
+  {
+   "category": "technical",
+   "line_end": 44,
+   "line_start": 43,
+   "page": 66,
+   "quote": "11. Connect to agree with schematic and connection drawings that have been approved by the PURCHASER.",
+   "uncertain": false,
+   "why": "connect per schematics approved by purchaser"
+  },
+  {
+   "category": "technical",
+   "line_end": 46,
+   "line_start": 45,
+   "page": 66,
+   "quote": "12. Factory check and functionally test for proper operation of all relays, meters, instruments, switches, lights, and interlocks.",
+   "uncertain": false,
+   "why": "factory check and functionally test relays, meters, switches, interlocks"
+  },
+  {
+   "category": "technical",
+   "line_end": 48,
+   "line_start": 47,
+   "page": 66,
+   "quote": "13. Label all cables at equipment studs and terminal blocks with wire numbers conforming to wire numbers shown on the MANUFACTURER's drawings.",
+   "uncertain": false,
+   "why": "label all cables with wire numbers"
+  },
+  {
+   "category": "technical",
+   "line_end": 54,
+   "line_start": 50,
+   "page": 66,
+   "quote": "The identification shall be by the application of heat-shrinkable or plastic sleeve markers approved by the PURCHASER in writing. The wire tags shall be heated only to extent required to conform to the wire size. It is recommended that the heat- shrinkable tag be loose enough to turn for proper orientation but tight enough not to turn accidentally.",
+   "uncertain": false,
+   "why": "heat-shrink or plastic sleeve markers approved by purchaser"
+  },
+  {
+   "category": "technical",
+   "line_end": 56,
+   "line_start": 56,
+   "page": 66,
+   "quote": "The number shall be properly oriented so that it is visible.",
+   "uncertain": false,
+   "why": "wire numbers properly oriented and visible"
+  },
+  {
+   "category": "technical",
+   "line_end": 63,
+   "line_start": 58,
+   "page": 66,
+   "quote": "Individual wire identification for each wire shall be included in schematic diagrams to be submitted. All wires shall be labeled at both ends and at any intermediate point where the wires may terminate. The label on each end of each internal wire shall be the destination identification of the other end of the wire. The label on each end of each wire in an external cable shall be the individual wire identification as indicated on the schematic diagram.",
+   "uncertain": false,
+   "why": "wire labels at both ends with destination identification"
+  },
+  {
+   "category": "technical",
+   "line_end": 6,
+   "line_start": 4,
+   "page": 67,
+   "quote": "At terminal blocks, the incoming and outgoing wires must both be labeled. The labels must be permanent and in accordance with wire identification shown on approved wiring and interconnection drawings.",
+   "uncertain": false,
+   "why": "permanent wire labels at terminal blocks"
+  },
+  {
+   "category": "technical",
+   "line_end": 9,
+   "line_start": 8,
+   "page": 67,
+   "quote": "All wires originating from the same electrical node or point shall carry the same wire number.",
+   "uncertain": false,
+   "why": "same wire number for same electrical node"
+  },
+  {
+   "category": "technical",
+   "line_end": 12,
+   "line_start": 11,
+   "page": 67,
+   "quote": "Wire numbers shall be typewritten, or machine stamped on the plastic sleeve markers. Handwritten wire numbers are not acceptable.",
+   "uncertain": false,
+   "why": "wire numbers typewritten or machine stamped"
+  },
+  {
+   "category": "technical",
+   "line_end": 13,
+   "line_start": 13,
+   "page": 67,
+   "quote": "14. Mount all terminal blocks in the same units requiring the connections.",
+   "uncertain": false,
+   "why": "mount terminal blocks in same units requiring connections"
+  },
+  {
+   "category": "technical",
+   "line_end": 14,
+   "line_start": 14,
+   "page": 67,
+   "quote": "15. Arrange terminal block wiring to receive field cable with one wire per terminal.",
+   "uncertain": false,
+   "why": "terminal block wiring one wire per terminal"
+  },
+  {
+   "category": "submission",
+   "line_end": 18,
+   "line_start": 15,
+   "page": 67,
+   "quote": "16. All devices within each switchgear enclosure including test switches and terminal blocks shall be shown in their approximate physical location and shall be represented on a single connection diagram. Wiring devices and methods shall be in accordance with details contained within this Specification and Contract Documents.",
+   "uncertain": false,
+   "why": "single connection diagram showing all devices in approximate physical location"
+  },
+  {
+   "category": "technical",
+   "line_end": 20,
+   "line_start": 19,
+   "page": 67,
+   "quote": "17. Control and Lockout switches shall be Electroswitch or approved equal.  Shallco shall not be used.",
+   "uncertain": false,
+   "why": "Electroswitch or approved equal control and lockout switches, no Shallco"
+  },
+  {
+   "category": "technical",
+   "line_end": 23,
+   "line_start": 21,
+   "page": 67,
+   "quote": "M. Protective Relays: Furnish protective relays to provide the general plan of relaying as indicated and specified in Contract Documents and fully coordinate to provide the highest degree of system protection and security in conformance with this plan:",
+   "uncertain": false,
+   "why": "protective relays per general relaying plan, fully coordinated"
+  },
+  {
+   "category": "technical",
+   "line_end": 26,
+   "line_start": 25,
+   "page": 67,
+   "quote": "Include relays as specified and indicated in Contract Documents and the one line diagram.",
+   "uncertain": false,
+   "why": "relays as in Contract Documents and one line diagram"
+  },
+  {
+   "category": "technical",
+   "line_end": 28,
+   "line_start": 28,
+   "page": 67,
+   "quote": "Furnish relays of the MANUFACTURER as required by the Contract Documents.",
+   "uncertain": false,
+   "why": "relays of manufacturer required by Contract Documents"
+  },
+  {
+   "category": "technical",
+   "line_end": 31,
+   "line_start": 30,
+   "page": 67,
+   "quote": "Protective relays and lockout relay shall be provided with test switches that isolate all used inputs and outputs.",
+   "uncertain": false,
+   "why": "relay and lockout relay test switches"
+  },
+  {
+   "category": "technical",
+   "line_end": 34,
+   "line_start": 33,
+   "page": 67,
+   "quote": "Instruments, relays and control devices mounted on the switchgear front doors shall be semi-flush panel mounted.",
+   "uncertain": false,
+   "why": "devices on front doors semi-flush panel mounted"
+  },
+  {
+   "category": "technical",
+   "line_end": 37,
+   "line_start": 36,
+   "page": 67,
+   "quote": "The main contacts of all switching devices shall be silver plated. The contact surfaces of secondary disconnecting devices and relays shall be silver plated.",
+   "uncertain": false,
+   "why": "silver-plated main contacts and secondary disconnect surfaces"
+  },
+  {
+   "category": "technical",
+   "line_end": 40,
+   "line_start": 39,
+   "page": 67,
+   "quote": "Furnish auxiliary relays in the number and types as required to perform the tripping and interlocking features required of the relaying scheme.",
+   "uncertain": false,
+   "why": "auxiliary relays for tripping and interlocking"
+  },
+  {
+   "category": "technical",
+   "line_end": 42,
+   "line_start": 42,
+   "page": 67,
+   "quote": "Furnish relays in semi flush rack mount type cases, rear-connected.",
+   "uncertain": false,
+   "why": "relays semi flush rack mount rear-connected"
+  },
+  {
+   "category": "submission",
+   "line_end": 47,
+   "line_start": 44,
+   "page": 67,
+   "quote": "Provide relay programming to achieve operational switchgear.  Trip settings to be adjusted during installation and commissioning.  Settings files to be loaded into the relays for shipment and provided in advance for review and approval.  Manufacturer to coordinate with Purchaser on protection schemes to be used.",
+   "uncertain": false,
+   "why": "relay programming; settings files loaded and provided in advance for review"
+  },
+  {
+   "category": "submission",
+   "line_end": 54,
+   "line_start": 49,
+   "page": 67,
+   "quote": "Recommended Spare Parts List: The manufacturer shall submit a complete equipment parts list that shall cross-reference all the Manufacturer or Sub-Manufacturer assigned part numbers back to the original manufacturer’s part number. The Manufacturer shall make a notation of quantities of these items recommended or required for continuous operation during one normal overhaul cycle. This Recommended Spare Parts List (RSPL) shall include items requiring replacement under the following conditions (which condition to be noted)",
+   "uncertain": false,
+   "why": "submit Recommended Spare Parts List cross-referenced to original part numbers"
+  },
+  {
+   "category": "technical",
+   "line_end": 67,
+   "line_start": 66,
+   "page": 67,
+   "quote": "The following switchgear accessories and spare parts shall be supplied and stored inside the Equipment Enclosure:",
+   "uncertain": false,
+   "why": "supply accessories and spare parts stored inside Equipment Enclosure"
+  },
+  {
+   "category": "technical",
+   "line_end": 69,
+   "line_start": 69,
+   "page": 67,
+   "quote": "Tube of contact lubricant",
+   "uncertain": false,
+   "why": "tube of contact lubricant"
+  },
+  {
+   "category": "technical",
+   "line_end": 71,
+   "line_start": 71,
+   "page": 67,
+   "quote": "A remote racking device shall be provided including push-button station, motor operator,",
+   "uncertain": false,
+   "why": "remote racking device with push-button station and motor operator"
+  },
+  {
+   "category": "technical",
+   "line_end": 6,
+   "line_start": 5,
+   "page": 68,
+   "quote": "One test cabinet complete with secondary contacts, test jumper, control relays, and push buttons-mounted on interior wall.",
+   "uncertain": false,
+   "why": "one test cabinet with secondary contacts, jumper, relays, push buttons"
+  },
+  {
+   "category": "technical",
+   "line_end": 9,
+   "line_start": 8,
+   "page": 68,
+   "quote": "One set of special wrenches, removable hand cranks, and manual spring recharge and maintenance slow closing devices.",
+   "uncertain": false,
+   "why": "special wrenches, hand cranks, slow closing devices"
+  },
+  {
+   "category": "submission",
+   "line_end": 12,
+   "line_start": 11,
+   "page": 68,
+   "quote": "Provide list of other accessories normally furnished by MANUFACTURER for PURCHASER review and approval.",
+   "uncertain": false,
+   "why": "list of other accessories for purchaser review and approval"
+  },
+  {
+   "category": "technical",
+   "line_end": 14,
+   "line_start": 14,
+   "page": 68,
+   "quote": "Furnish one set of spare fuses for all fuses installed.",
+   "uncertain": false,
+   "why": "one set of spare fuses"
+  },
+  {
+   "category": "technical",
+   "line_end": 16,
+   "line_start": 16,
+   "page": 68,
+   "quote": "Two quarts of touch-up paint of each finish color.",
+   "uncertain": false,
+   "why": "two quarts touch-up paint of each color"
+  },
+  {
+   "category": "technical",
+   "line_end": 18,
+   "line_start": 18,
+   "page": 68,
+   "quote": "One trip coil.",
+   "uncertain": false,
+   "why": "one trip coil"
+  },
+  {
+   "category": "technical",
+   "line_end": 20,
+   "line_start": 20,
+   "page": 68,
+   "quote": "One close coil.",
+   "uncertain": false,
+   "why": "one close coil"
+  },
+  {
+   "category": "technical",
+   "line_end": 21,
+   "line_start": 21,
+   "page": 68,
+   "quote": "10. One 52X auxiliary relay complete.",
+   "uncertain": false,
+   "why": "one 52X auxiliary relay"
+  },
+  {
+   "category": "technical",
+   "line_end": 22,
+   "line_start": 22,
+   "page": 68,
+   "quote": "11. One 52Y auxiliary relay complete.",
+   "uncertain": false,
+   "why": "one 52Y auxiliary relay"
+  },
+  {
+   "category": "technical",
+   "line_end": 23,
+   "line_start": 23,
+   "page": 68,
+   "quote": "12. One breaker spring charge motor.",
+   "uncertain": false,
+   "why": "one breaker spring charge motor"
+  },
+  {
+   "category": "technical",
+   "line_end": 24,
+   "line_start": 24,
+   "page": 68,
+   "quote": "13. Two spare LED bulbs of each type installed.",
+   "uncertain": false,
+   "why": "two spare LED bulbs of each type"
+  },
+  {
+   "category": "technical",
+   "line_end": 25,
+   "line_start": 25,
+   "page": 68,
+   "quote": "14. Two spare indicating light assemblies.",
+   "uncertain": false,
+   "why": "two spare indicating light assemblies"
+  },
+  {
+   "category": "technical",
+   "line_end": 26,
+   "line_start": 26,
+   "page": 68,
+   "quote": "15. One set of test plugs.",
+   "uncertain": false,
+   "why": "one set of test plugs"
+  },
+  {
+   "category": "technical",
+   "line_end": 33,
+   "line_start": 30,
+   "page": 68,
+   "quote": "Apply a protective epoxy powder finish to all steel surfaces of equipment. Uncoated surfaces are not permitted or acceptable. All coated surfaces shall be completely cured in a oven prior to installation or assembly. The epoxy powder is to be applied electrostatically to ensure all surfaces receive a uniform coating.",
+   "uncertain": false,
+   "why": "epoxy powder finish on all steel surfaces, oven cured"
+  },
+  {
+   "category": "technical",
+   "line_end": 36,
+   "line_start": 35,
+   "page": 68,
+   "quote": "Clean and treat surfaces with phosphatizing process or equal and apply all necessary filler before application of finish.",
+   "uncertain": false,
+   "why": "phosphatize and fill before finish"
+  },
+  {
+   "category": "technical",
+   "line_end": 39,
+   "line_start": 38,
+   "page": 68,
+   "quote": "The exterior of the prefabricated equipment enclosure shall be provided with at least two exterior finish coats of high gloss PURCHASER selected color.",
+   "uncertain": false,
+   "why": "enclosure exterior two coats high gloss purchaser selected color"
+  },
+  {
+   "category": "technical",
+   "line_end": 41,
+   "line_start": 41,
+   "page": 68,
+   "quote": "The interior walls and ceiling shall high be coated high visibility white.",
+   "uncertain": false,
+   "why": "interior walls and ceiling high visibility white"
+  },
+  {
+   "category": "technical",
+   "line_end": 43,
+   "line_start": 43,
+   "page": 68,
+   "quote": "The interior of the switchgear shall be coated high visibility white.",
+   "uncertain": false,
+   "why": "switchgear interior high visibility white"
+  },
+  {
+   "category": "technical",
+   "line_end": 45,
+   "line_start": 45,
+   "page": 68,
+   "quote": "The switchgear front doors shall be ANSY 61 grey.",
+   "uncertain": false,
+   "why": "switchgear front doors ANSI 61 grey"
+  },
+  {
+   "category": "technical",
+   "line_end": 50,
+   "line_start": 49,
+   "page": 68,
+   "quote": "Provide nameplates on all internal and front panel mounted devices. Front panel nameplates shall be attached with stainless self-tapping screws.",
+   "uncertain": false,
+   "why": "nameplates on internal and front panel devices with stainless screws"
+  },
+  {
+   "category": "technical",
+   "line_end": 52,
+   "line_start": 52,
+   "page": 68,
+   "quote": "Nameplate shall be engraved laminated black face with white core.",
+   "uncertain": false,
+   "why": "nameplate engraved laminated black face white core"
+  },
+  {
+   "category": "technical",
+   "line_end": 54,
+   "line_start": 54,
+   "page": 68,
+   "quote": "Provide 2” x 6” with 3/8” lettering panel nameplates for Relay and Control Compartments.",
+   "uncertain": false,
+   "why": "2x6 nameplates for relay and control compartments"
+  },
+  {
+   "category": "technical",
+   "line_end": 56,
+   "line_start": 56,
+   "page": 68,
+   "quote": "All other nameplates shall be ¾” x 3” with 1/8” lettering.",
+   "uncertain": false,
+   "why": "other nameplates 3/4 x 3"
+  },
+  {
+   "category": "submission",
+   "line_end": 58,
+   "line_start": 58,
+   "page": 68,
+   "quote": "All nameplates to be submitted for PURCHASER review and approval.",
+   "uncertain": false,
+   "why": "submit all nameplates for purchaser review and approval"
+  },
+  {
+   "category": "submission",
+   "line_end": 65,
+   "line_start": 64,
+   "page": 68,
+   "quote": "Details of Inspection and Testing requirements will normally be detailed on a supplier standard Form. In addition it should detail requirements with respect to:",
+   "uncertain": false,
+   "why": "inspection and testing requirements detailed on supplier standard form"
+  },
+  {
+   "category": "legal",
+   "line_end": 10,
+   "line_start": 8,
+   "page": 69,
+   "quote": "The witnessing of the pre-shipment operational test by the PURCHASER does not relieve the VENDOR of any responsibility regarding the quality of the component provided.",
+   "uncertain": true,
+   "why": "purchaser witnessing does not relieve vendor of quality responsibility"
+  },
+  {
+   "category": "technical",
+   "line_end": 16,
+   "line_start": 14,
+   "page": 69,
+   "quote": "The PURCHASER or authorized representative shall have access to the VENDOR’s shop procedures, schedules, testing, and inspection procedures and documents.",
+   "uncertain": true,
+   "why": "purchaser access to vendor shop procedures, schedules, test and inspection documents"
+  },
+  {
+   "category": "technical",
+   "line_end": 19,
+   "line_start": 18,
+   "page": 69,
+   "quote": "The VENDOR shall verify by test that the complete electrical system with its components complies with all its performance requirements.",
+   "uncertain": false,
+   "why": "vendor verifies by test that complete electrical system meets performance requirements"
+  },
+  {
+   "category": "technical",
+   "line_end": 22,
+   "line_start": 21,
+   "page": 69,
+   "quote": "Except where more stringent industry standards are to be performed, all VENDOR’s normal quality control tests shall be performed.",
+   "uncertain": false,
+   "why": "all vendor normal quality control tests performed"
+  },
+  {
+   "category": "technical",
+   "line_end": 27,
+   "line_start": 26,
+   "page": 69,
+   "quote": "Use VENDOR’s standard design whenever consistent with the intent of these Specifications.",
+   "uncertain": true,
+   "why": "use vendor standard design when consistent with specification intent"
+  },
+  {
+   "category": "technical",
+   "line_end": 29,
+   "line_start": 29,
+   "page": 69,
+   "quote": "Use only new, unused equipment and materials.",
+   "uncertain": false,
+   "why": "use only new, unused equipment and materials"
+  },
+  {
+   "category": "technical",
+   "line_end": 35,
+   "line_start": 33,
+   "page": 69,
+   "quote": "The VENDOR shall assume full responsibility for wiring accuracy, electrical operation, sequence and wiring tests shall be conducted in strict accordance with approved design documents. ANSI describes two methods of verification, both should be used. The",
+   "uncertain": false,
+   "why": "vendor full responsibility for wiring accuracy, tests per approved design documents"
+  },
+  {
+   "category": "technical",
+   "line_end": 47,
+   "line_start": 43,
+   "page": 69,
+   "quote": "The VENDOR shall perform all necessary operational tests to assure proper operation of the component and performance in accordance with the requirements of this Specification. In addition, the VENDOR shall perform those electrical tests (including continuity) which are consistent with this class of equipment, in accordance with the latest revision of applicable ANSI standards.",
+   "uncertain": false,
+   "why": "operational and electrical tests per latest applicable ANSI standards"
+  },
+  {
+   "category": "technical",
+   "line_end": 49,
+   "line_start": 49,
+   "page": 69,
+   "quote": "Factory tests shall be made with the breaker assembled, as it will be used in the field.",
+   "uncertain": false,
+   "why": "factory tests with breaker assembled as used in field"
+  },
+  {
+   "category": "submission",
+   "line_end": 53,
+   "line_start": 51,
+   "page": 69,
+   "quote": "The VENDOR shall provide certified test reports for all tests performed. Notify PURCHASER of any unusual event or damage occurring during the fabrication of the Metal Clad Switchgear and of any test that do not meet the specified values.",
+   "uncertain": false,
+   "why": "certified test reports; notify purchaser of unusual events, damage, failed tests"
+  },
+  {
+   "category": "submission",
+   "line_end": 60,
+   "line_start": 55,
+   "page": 69,
+   "quote": "The VENDOR shall provide test certificates that the design and rating of Metal Clad Switchgear for Type and Routine tests carried out. Tests shall be those listed in the relevant standards. The tests shall be for the precise compartment configuration proposed, including any adaptor units between switchgear and control equipment. The VENDOR shall certify that the equipment and components are free of defects and perform at the ratings assigned at the specified condition of service.",
+   "uncertain": false,
+   "why": "test certificates for type and routine tests; certify free of defects"
+  },
+  {
+   "category": "schedule",
+   "line_end": 65,
+   "line_start": 62,
+   "page": 69,
+   "quote": "The PURCHASER reserves the right to inspect Metal Clad Switchgear and witness all tests at the VENDORs works prior to the shipment to prove compliance with the Specification. The VENDOR shall notify the PURCHASER 10 working days in advance of the commencement of the tests.",
+   "uncertain": false,
+   "why": "notify purchaser 10 working days before tests; purchaser may witness"
+  },
+  {
+   "category": "technical",
+   "line_end": 5,
+   "line_start": 4,
+   "page": 70,
+   "quote": "Manufacture complete as specified or required for operation and continuous service at the location indicated in the Contract Documents.",
+   "uncertain": true,
+   "why": "manufacture complete for continuous service at indicated location"
+  },
+  {
+   "category": "technical",
+   "line_end": 8,
+   "line_start": 7,
+   "page": 70,
+   "quote": "Provide all openings in floors, walls, and other structures necessary for complete equipment installation, unless such openings are specifically indicated as being provided by others.",
+   "uncertain": true,
+   "why": "provide all openings in floors, walls unless by others"
+  },
+  {
+   "category": "technical",
+   "line_end": 10,
+   "line_start": 10,
+   "page": 70,
+   "quote": "Make all internal connections as required.",
+   "uncertain": true,
+   "why": "make all internal connections"
+  },
+  {
+   "category": "technical",
+   "line_end": 13,
+   "line_start": 12,
+   "page": 70,
+   "quote": "Check all internal connections, especially current transformer secondary short circuiting jumpers, and torque to MANUFACTURERs recommendation.",
+   "uncertain": true,
+   "why": "check internal connections, torque to manufacturer recommendation"
+  },
+  {
+   "category": "technical",
+   "line_end": 18,
+   "line_start": 17,
+   "page": 70,
+   "quote": "Erect equipment enclosure and all components plumb, true, and conforming to MANUFACTURER’s printed instructions.",
+   "uncertain": true,
+   "why": "erect equipment enclosure plumb and true per instructions"
+  },
+  {
+   "category": "technical",
+   "line_end": 23,
+   "line_start": 23,
+   "page": 70,
+   "quote": "Roof penetrations shall not be permitted.",
+   "uncertain": true,
+   "why": "roof penetrations not permitted"
+  },
+  {
+   "category": "technical",
+   "line_end": 26,
+   "line_start": 25,
+   "page": 70,
+   "quote": "Level, shim, and anchor the prefabricated equipment enclosure to the foundation in accordance with the MANUFACTURERS instructions.",
+   "uncertain": true,
+   "why": "level, shim and anchor prefabricated enclosure to foundation"
+  },
+  {
+   "category": "technical",
+   "line_end": 29,
+   "line_start": 28,
+   "page": 70,
+   "quote": "Replace any panels or components bent or otherwise damaged as result of PURCHASERS operations, or repair if damage is minor.",
+   "uncertain": true,
+   "why": "replace or repair components damaged by purchaser operations"
+  },
+  {
+   "category": "commercial",
+   "line_end": 33,
+   "line_start": 32,
+   "page": 70,
+   "quote": "A. Drawout Circuit Breakers: Test and Checks",
+   "uncertain": true,
+   "why": "optional pricing: field services testing and checks of drawout circuit breakers"
+  },
+  {
+   "category": "commercial",
+   "line_end": 64,
+   "line_start": 62,
+   "page": 70,
+   "quote": "Metal Clad Switchgear: Test and Checks 1. Check all safety interlock mechanisms for proper lubrication, adjustment and operation.",
+   "uncertain": true,
+   "why": "optional pricing: field services testing and checks of switchgear"
+  },
+  {
+   "category": "commercial",
+   "line_end": 11,
+   "line_start": 3,
+   "page": 71,
+   "quote": "7. Check operation of switchgear alarm contacts. 8. Initial check of proper breaker tripping by manual or electrical operation of protective relay contacts. 9. Check all circuit breaker cell interlocks for conformance with these Specifications. 10. Check all internal electrical interlocks and automatic transfer sequences for specified operation.",
+   "uncertain": true,
+   "why": "optional pricing: remaining switchgear field checks (alarm contacts, tripping, interlocks)"
+  },
+  {
+   "category": "technical",
+   "line_end": 14,
+   "line_start": 10,
+   "page": 72,
+   "quote": "Application Indoor (Switchgear house by others) Controlled Environment Yes",
+   "uncertain": false,
+   "why": "indoor application in controlled environment"
+  },
+  {
+   "category": "submission",
+   "line_end": 22,
+   "line_start": 15,
+   "page": 72,
+   "quote": "Drawing Size 24 X 36 Inch Usable Drawing Area 23‐1/2 X 35‐1/2 Inch CAD Drawing Required Yes",
+   "uncertain": false,
+   "why": "drawing size 24x36 and CAD drawing required"
+  },
+  {
+   "category": "submission",
+   "line_end": 27,
+   "line_start": 23,
+   "page": 72,
+   "quote": "CAD System required from SubPurchaser VENDOR CAD System Used by Purchaser AutoCAD",
+   "uncertain": true,
+   "why": "CAD system AutoCAD"
+  },
+  {
+   "category": "submission",
+   "line_end": 53,
+   "line_start": 28,
+   "page": 72,
+   "quote": "Border Title Block File Provided by VENDOR One Line Diagram Provided by PURCHASER Tripping Block Diagram Provided by VENDOR Three Line Diagram Provided by VENDOR Schematic Diagram Provided by VENDOR Bill of Materials VENDOR Metal Clad Switchgear Arrangement Drawing Provided by VENDOR Metal Clad Switchgear Fabrication Details Provided by VENDOR Metal Clad Switchgear Engraved Nameplate List Provided by VENDOR Metal Clad Switchgear Connection Diagram Provided by",
+   "uncertain": false,
+   "why": "documents provided by vendor: title block, diagrams, BOM, arrangement, nameplate list"
+  },
+  {
+   "category": "technical",
+   "line_end": 61,
+   "line_start": 54,
+   "page": 72,
+   "quote": "Number of Sections 2 Unit Number of Shipped Assemblies VENDOR Unit 2 EA.",
+   "uncertain": false,
+   "why": "two sections and two shipped assemblies"
+  },
+  {
+   "category": "technical",
+   "line_end": 66,
+   "line_start": 65,
+   "page": 72,
+   "quote": "Finish Color Gray Exterior and White Interior",
+   "uncertain": false,
+   "why": "finish color gray exterior and white interior"
+  },
+  {
+   "category": "technical",
+   "line_end": 71,
+   "line_start": 68,
+   "page": 72,
+   "quote": "Breaker Type Drawout type VCB Number of Independent Trip Coils",
+   "uncertain": false,
+   "why": "drawout type vacuum circuit breaker"
+  },
+  {
+   "category": "technical",
+   "line_end": 77,
+   "line_start": 72,
+   "page": 72,
+   "quote": "Current Transformers Quantity per pole 2 Relaying Ratio 2000/5MR; 1200/5MR Multi ratio Yes",
+   "uncertain": false,
+   "why": "CTs 2 per pole multi-ratio 2000/5 and 1200/5"
+  },
+  {
+   "category": "technical",
+   "line_end": 81,
+   "line_start": 78,
+   "page": 72,
+   "quote": "Relaying Accuracy C400 Thermal Rating 1.5 or higher",
+   "uncertain": false,
+   "why": "relaying accuracy C400, thermal rating 1.5 or higher"
+  },
+  {
+   "category": "technical",
+   "line_end": 83,
+   "line_start": 82,
+   "page": 72,
+   "quote": "Metering Current Transformer Quantity 2",
+   "uncertain": false,
+   "why": "metering CTs quantity 2"
+  },
+  {
+   "category": "technical",
+   "line_end": 14,
+   "line_start": 11,
+   "page": 73,
+   "quote": "Single Ratio Yes Thermal Rating 1.5 or higher",
+   "uncertain": false,
+   "why": "metering CT single ratio thermal rating 1.5"
+  },
+  {
+   "category": "technical",
+   "line_end": 17,
+   "line_start": 15,
+   "page": 73,
+   "quote": "Doors (Per Section) One For Rear Door and Two For Front panels.",
+   "uncertain": false,
+   "why": "doors per section"
+  },
+  {
+   "category": "technical",
+   "line_end": 28,
+   "line_start": 27,
+   "page": 73,
+   "quote": "Panel Material Steel, 1/8 or 11 Gauge",
+   "uncertain": false,
+   "why": "panel material steel 1/8 inch or 11 gauge"
+  },
+  {
+   "category": "technical",
+   "line_end": 32,
+   "line_start": 30,
+   "page": 73,
+   "quote": "Minimum Distance from Floor to Lowest Device Yes",
+   "uncertain": true,
+   "why": "minimum distance from floor to lowest device"
+  },
+  {
+   "category": "technical",
+   "line_end": 34,
+   "line_start": 33,
+   "page": 73,
+   "quote": "Floor Sill Framing and Anchoring Channel Required",
+   "uncertain": false,
+   "why": "floor sill framing and anchoring channel required"
+  },
+  {
+   "category": "technical",
+   "line_end": 40,
+   "line_start": 35,
+   "page": 73,
+   "quote": "Black with white core Material/color External Control Cable Entrance Top Laminated Phenolic Screw‐on Nameplate",
+   "uncertain": false,
+   "why": "nameplate black with white core laminated phenolic screw-on"
+  },
+  {
+   "category": "technical",
+   "line_end": 38,
+   "line_start": 37,
+   "page": 73,
+   "quote": "External Control Cable Entrance Top",
+   "uncertain": false,
+   "why": "external control cable entrance at top"
+  },
+  {
+   "category": "technical",
+   "line_end": 44,
+   "line_start": 41,
+   "page": 73,
+   "quote": "LED (120VAC) Volts Interior Lighting Controlled by Door Switch (Per Section)",
+   "uncertain": false,
+   "why": "interior LED lighting 120VAC controlled by door switch"
+  },
+  {
+   "category": "technical",
+   "line_end": 47,
+   "line_start": 46,
+   "page": 73,
+   "quote": "Each Section and Compartment Physically Separable",
+   "uncertain": false,
+   "why": "each section and compartment physically separable"
+  },
+  {
+   "category": "technical",
+   "line_end": 56,
+   "line_start": 48,
+   "page": 73,
+   "quote": "Available Power Supply Volts 125 VDC Volts 120/240 VAC Phases Single Wire 3 Frequency 60 Hz",
+   "uncertain": true,
+   "why": "available power supply 125 VDC and 120/240 VAC"
+  },
+  {
+   "category": "technical",
+   "line_end": 73,
+   "line_start": 57,
+   "page": 73,
+   "quote": "Wire Size Voltage rating 600 Volts Power Circuits 8 AWG Control Circuits 12 and 14 AWG Trip and Close 12 AWG CT Circuit 10 AWG Instrument Circuit 16 Shielded twisted pair",
+   "uncertain": false,
+   "why": "wire sizes by circuit type"
+  },
+  {
+   "category": "technical",
+   "line_end": 81,
+   "line_start": 74,
+   "page": 73,
+   "quote": "Environmental Outdoor Ambient Temp Range ‐30 to +120 Degrees Fahrenheit Indoor Ambient Temp Range 60‐80 Degrees Fahrenheit Altitude 420",
+   "uncertain": false,
+   "why": "environmental temperature and altitude conditions"
+  },
+  {
+   "category": "technical",
+   "line_end": 17,
+   "line_start": 12,
+   "page": 74,
+   "quote": "External Power Cable Entrance Bottom Rear Section B2 From XFMR External Power Cable Exit Bottom Rear Section A2 Feed to DAF",
+   "uncertain": false,
+   "why": "external power cable entrance bottom rear B2, exit bottom rear A2"
+  },
+  {
+   "category": "technical",
+   "line_end": 41,
+   "line_start": 20,
+   "page": 74,
+   "quote": "Ratings System nominal voltage 13.2 kV Rated Maximum Voltage 15 kV rms Rated Continuous Current 2000/1200 A, rms Basic Impulse Level (BIL) 95 kV peak Normal Frequency Withstand 36 kV, rms Frequency 60 Hz Momentary Rating 25 kA, rms",
+   "uncertain": true,
+   "why": "ratings table (restates 2.1B)"
+  },
+  {
+   "category": "technical",
+   "line_end": 53,
+   "line_start": 42,
+   "page": 74,
+   "quote": "Shipping Label Project Title Syracuse Airport Terminal Switchgear Relocation Specification No. 22186.00‐SPC‐E01 Equipment Type Metal Clad Switchgear P. O. Item No. See Purchase Order Device Location Syracuse, NY",
+   "uncertain": false,
+   "why": "shipping label contents"
+  },
+  {
+   "category": "technical",
+   "line_end": 32,
+   "line_start": 31,
+   "page": 86,
+   "quote": "1. ALL MEDIUM VOLTAGE SWITCHGEAR EQUIPMENT AND ACCESSORIES TO BE RATED FOR 15,000V AND BASIC INSULATION LEVEL TO BE 95,000V.",
+   "uncertain": false,
+   "why": "medium voltage equipment rated 15,000V, BIL 95,000V"
+  },
+  {
+   "category": "technical",
+   "line_end": 34,
+   "line_start": 34,
+   "page": 86,
+   "quote": "2. ENCLOSURE WILL BE METAL CLAD WITH BOTTOM FEED ON SECTIONS",
+   "uncertain": false,
+   "why": "enclosure metal clad with bottom feed"
+  },
+  {
+   "category": "technical",
+   "line_end": 42,
+   "line_start": 40,
+   "page": 86,
+   "quote": "KEYED NOTES: STRUCTURAL, ROADWAY DESIGN 1. SWITCHGEAR POWER 125VDC.",
+   "uncertain": true,
+   "why": "switchgear power 125VDC keyed note"
+  },
+  {
+   "category": "technical",
+   "line_end": 122,
+   "line_start": 94,
+   "page": 86,
+   "quote": "3. TIE BREAKER SEQUENCE OF OPERATION: • FEEDER BREAKERS HANCOCK FEED AND SAND ROAD FEED ARE NORMALLY CLOSED. • TIE BREAKER IS NORMALLY OPEN. • LOSS OF VOLTAGE IN FEEDER (OPEN TRANSITION). • THAT BREAKER OPENS AND TIE BREAKER CLOSES. • MANUAL DISCONNECTING OF FEEDER (CLOSE TRANSITION - MAKE BEFORE BREAK) • UPON SATISFYING VOLTAGE REQUIREMENT, CLOSE TIE BREAKER WHEN BOTH FEEDERS ARE IN PHASE WITH SAME FREQUENCY. • AFTER  10 SECONDS, OPEN FEEDER BREAKER. • RETURN OF VOLTAGE IN FEEDER OR MANUAL SELECTION (CLOSE TRANSITION - MAKE BEFORE BREAK). • SATISFIED WHEN VOLTAGE IS PRESENT IN FEEDER FOR MINIMUM OF 15 MINUTES. • UPON SATISFYING VOLTAGE REQUIREMENT, CLOSE FEEDER WHEN BOTH FEEDER ARE IN PHASE WITH SAME FREQUENCY. • AFTER 10 SECONDS, OPEN BREAKER.",
+   "uncertain": false,
+   "why": "tie breaker sequence of operation"
+  },
+  {
+   "category": "technical",
+   "line_end": 133,
+   "line_start": 132,
+   "page": 86,
+   "quote": "4. INTERLOCK SWITCH WITH BREAKER TO ALLOW CHANGE OF SWITCH POSITION ONLY WHEN FEEDER BREAKER IS OPEN (DISCONNECTED)",
+   "uncertain": false,
+   "why": "switch interlocked with breaker"
+  },
+  {
+   "category": "submission",
+   "line_end": 3,
+   "line_start": 2,
+   "page": 95,
+   "quote": "1. Bidder/Offerer certifies that it understands and agrees to comply with the procedures of the Syracuse Regional Airport Authority relative to permissible contacts as required by State Finance Law Section 139-j (3) and Section 139-j (6) (b).",
+   "uncertain": false,
+   "why": "submit Procurement Lobbying Form certifying compliance and disclosing prior non-responsibility"
+  },
+  {
+   "category": "legal",
+   "line_end": 4,
+   "line_start": 3,
+   "page": 97,
+   "quote": "1. Contractor/Proposer hereby represents that said Contractor/Proposer is in compliance with New York State General Municipal Law Section 103-g entitled “Iranian Energy Sector Divestment”, in that said Contractor/Proposer has not:",
+   "uncertain": true,
+   "why": "represent compliance with NY GML 103-g Iranian Energy Sector Divestment"
+  },
+  {
+   "category": "legal",
+   "line_end": 17,
+   "line_start": 15,
+   "page": 97,
+   "quote": "(a) “By submission of this bid, each bidder and each person signing on behalf of any bidder certifies, and in the case of a joint bid, each party thereto certifies as to its own organization, under penalty of perjury, that to the best of its knowledge and belief, that each bidder is not on the list created pursuant to NYS Finance Law Section 165-a (3)(b).”",
+   "uncertain": false,
+   "why": "certify not on Iran investment list under penalty of perjury"
+  },
+  {
+   "category": "submission",
+   "line_end": 22,
+   "line_start": 18,
+   "page": 97,
+   "quote": "4. Except as otherwise specifically provided herein, any Bid/Proposal that is submitted without having complied with subdivision (a) above, shall not be considered for award. In any case where the Bidder/Proposer cannot make the certification as set forth in subdivision (a) above, the Bidder/Proposer shall so state and shall furnish with the bid a signed statement setting forth in detail the reasons, therefore. The Owner reserves its rights, in accordance with General Municipal Law Section 103-g to award the Bid/Proposal to any Bidder/Proposer who cannot make the certification, on a",
+   "uncertain": true,
+   "why": "cannot-certify bidders must furnish signed statement with bid"
+  },
+  {
+   "category": "submission",
+   "line_end": 31,
+   "line_start": 30,
+   "page": 97,
+   "quote": "5. Bidder or Proposer shall sign and notarize the attached “Certification of Compliance with the Iran Divestment Act” form with your proposal.",
+   "uncertain": false,
+   "why": "sign and notarize Iran Divestment Act certification with proposal"
+  },
+  {
+   "category": "legal",
+   "line_end": 14,
+   "line_start": 9,
+   "page": 98,
+   "quote": "By submitting a bid in response to this solicitation or by assuming the responsibility of a Contract awarded hereunder, each Bidder/Contractor, any person signing on behalf of any Bidder/Contractor and any assignee or subcontractor and, in the case of a joint bid, each party thereto, certifies, under penalty of perjury, that once the Prohibited Entities List is posted on the OGS website, that to the best of its knowledge and belief, that each Bidder/Contractor and any subcontractor or assignee is not identified on the Prohibited Entities List created pursuant to SFL § 165-a(3)(b).",
+   "uncertain": true,
+   "why": "certify not on Prohibited Entities List"
+  },
+  {
+   "category": "submission",
+   "line_end": 11,
+   "line_start": 2,
+   "page": 100,
+   "quote": "By signing below the respondent is certifying that: 1. All information provided herein is true and correct to the best of their knowledge. 2. The respondent has read and understands the specifications in their entirety and that the response is made in accordance therewith, and; 3. The respondent possesses the capabilities, resources, and personnel necessary to provide efficient and successful service to the Authority, and; 4. The respondent agrees to all terms and conditions as provided within the specifications.",
+   "uncertain": false,
+   "why": "submit signed Bid/Proposal Sign-Off Sheet certifying read specs, capabilities, agree to terms"
+  },
+  {
+   "category": "commercial",
+   "line_end": 19,
+   "line_start": 4,
+   "page": 101,
+   "quote": "Pricing Proposal Sheet LS Price for metal clad switchgear: __________________________________ $_____________________ (In words) (In numbers) Optional Field Service: __________________________________ $_____________________ (In words) (In numbers) Recommended Spare Parts: __________________________________ $_____________________ (In words) (In numbers)",
+   "uncertain": false,
+   "why": "submit Pricing Proposal Sheet with LS price, optional field service, recommended spare parts"
+  }
+ ],
+ "sha256": "893403680eda487a7fcf4968231102e10345324aefd0503d2b28b97d3347a76e",
+ "status": "draft: built by an AI assistant from the frozen layout; needs review by a person before it is treated as hand-checked"
+}

@@ -1,0 +1,99 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 22,
+        "quote": "The Contractor represents and warrants that Contractor has submitted the following SRAA forms either prior to, or at the time of, the execution of the contract:",
+        "section": "A",
+        "text": "Contractor must submit specified SRAA forms before or at contract execution."
+      },
+      {
+        "category": "compliance",
+        "page": 22,
+        "quote": "Contractor agrees to use such MWBE Utilization Plan for the performance of MWBEs on the Contract pursuant to the prescribed MWBE goals set forth in Section II-A of this Appendix.",
+        "section": "A.1.a",
+        "text": "Contractor must use the MWBE Utilization Plan to meet prescribed MWBE goals."
+      },
+      {
+        "category": "compliance",
+        "page": 22,
+        "quote": "If a Contractor seeks modification to its previously approved MWBE Subcontractor Utilization Plan, the Contractor shall first notify SRAA in writing of such change and obtain approval from SRAA.",
+        "section": "A.1.b",
+        "text": "Contractor must notify and obtain approval for changes to the MWBE Utilization Plan."
+      },
+      {
+        "category": "legal",
+        "page": 22,
+        "quote": "Contractor further agrees that a failure to submit and/or use such MWBE Utilization Plan shall constitute a material breach of the terms of the Contract.",
+        "section": "A.1.c",
+        "text": "Failure to submit or use the MWBE Utilization Plan is a material breach."
+      },
+      {
+        "category": "submission",
+        "page": 22,
+        "quote": "M/WBE Goal Requirements – Certification of Good Faith Efforts (SRAA Form 5004) to achieve the overall prescribed MWBE participation percentage (30%) goals set forth in the procurement.",
+        "section": "A.2",
+        "text": "Contractor must certify good faith efforts to meet MWBE participation goals."
+      },
+      {
+        "category": "submission",
+        "page": 22,
+        "quote": "MWBE Subcontractors’ and/ or Suppliers’ Letter of Intent to Participate (SRAA Form 5007), which should document the names and signatures of certified MBEs and/or WBEs which have agreed to participate as subcontractors on the Contract.",
+        "section": "A.3",
+        "text": "Contractor must submit letters of intent from MWBE subcontractors or suppliers."
+      },
+      {
+        "category": "submission",
+        "page": 22,
+        "quote": "For Waiver Requests, Contractor should use SRAA Form 5010 MWBE Subcontractor Request for Waiver Form.",
+        "section": "V.A",
+        "text": "Contractor must use SRAA Form 5010 for MWBE waiver requests."
+      },
+      {
+        "category": "compliance",
+        "page": 22,
+        "quote": "If the Contractor, after making good faith efforts, is unable to comply with MWBE goals, the Contractor may submit a request for waiver form documenting good faith efforts by the Contractor to meet such goals.",
+        "section": "V.B",
+        "text": "Contractor may request a waiver if unable to meet MWBE goals despite good faith efforts."
+      },
+      {
+        "category": "schedule",
+        "page": 22,
+        "quote": "If the documentation included with the waiver request is complete, the SRAA shall evaluate the request and issue a written notice of acceptance or denial within twenty (20) days of receipt.",
+        "section": "V.B",
+        "text": "SRAA will respond to waiver requests within 20 days if documentation is complete."
+      },
+      {
+        "category": "compliance",
+        "page": 22,
+        "quote": "If the SRAA, upon review of the MWBE Utilization Plan and updated Quarterly MWBE Contractor Compliance Reports, determines that Contractor is failing or refusing to comply with Contract goals and no waiver has been issued in regards to such non-compliance, the SRAA may issue a Notice of Deficiency to the Contractor.",
+        "section": "V.C",
+        "text": "SRAA may issue a Notice of Deficiency for non-compliance without a waiver."
+      },
+      {
+        "category": "schedule",
+        "page": 22,
+        "quote": "The Contractor must respond to the Notice of Deficiency within seven (7) business days of receipt.",
+        "section": "V.C",
+        "text": "Contractor must respond to Notice of Deficiency within 7 business days."
+      },
+      {
+        "category": "submission",
+        "page": 22,
+        "quote": "Contractor is required to submit the Subcontractor Quarterly Compliance Report (SRAA Form 5011) to the SRAA by the 10th day following each end of quarter over the term of the Contract documenting the progress made towards achievement of the MWBE goals of the Contract.",
+        "section": "VI.A",
+        "text": "Contractor must submit quarterly compliance reports by the 10th day after each quarter."
+      },
+      {
+        "category": "submission",
+        "page": 22,
+        "quote": "All reports will be submitted to the SRAA program manager for this contract and forwarded to Tori Hunt at huntt@syrairport.org.",
+        "section": "VI.B",
+        "text": "Reports must be submitted to the SRAA program manager and forwarded to Tori Hunt."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,36 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 6,
+        "quote": "Proposers are prohibited from contact related to this RFP with any Authority Board member, officer, staff, employee or representative other than designated personnel from the date this RFP is issued until the contract(s) have been executed by the Authority.",
+        "section": "2.2 Restriction of Communications",
+        "text": "Proposers must not contact unauthorized personnel regarding the RFP."
+      },
+      {
+        "category": "compliance",
+        "page": 6,
+        "quote": "Violation of this provision is grounds for immediate disqualification.",
+        "section": "2.2 Restriction of Communications",
+        "text": "Violating the communication restriction results in disqualification."
+      },
+      {
+        "category": "submission",
+        "page": 6,
+        "quote": "All inquiries concerning this RFP must be done via email at: bids@syrairport.org",
+        "section": "2.2 Restriction of Communications",
+        "text": "Inquiries must be sent via email to the specified address."
+      },
+      {
+        "category": "submission",
+        "page": 6,
+        "quote": "Please indicate RFP Reference # 2023-20 in the subject line of the email.",
+        "section": "2.2 Restriction of Communications",
+        "text": "Emails must include the RFP reference number in the subject line."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

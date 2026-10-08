@@ -1,0 +1,36 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 58,
+        "quote": "All equipment shall be constructed such that when installed it will conform to the applicable rules of the National Electrical Safety Code & NEC.",
+        "section": "C",
+        "text": "Equipment must comply with National Electrical Safety Code and NEC."
+      },
+      {
+        "category": "compliance",
+        "page": 58,
+        "quote": "Local and State Ordinances shall also be adhered to for the equipment.",
+        "section": "D",
+        "text": "Equipment must comply with local and state ordinances."
+      },
+      {
+        "category": "schedule",
+        "page": 58,
+        "quote": "The PURCHASER reserves the rights to witness factory testing. The MANUFACTURER shall notify the PURCHASER not less than two weeks prior to the starting date of the factory tests.",
+        "section": "E.1",
+        "text": "Manufacturer must notify purchaser two weeks before factory tests."
+      },
+      {
+        "category": "technical",
+        "page": 58,
+        "quote": "Conduct factory tests of all equipment as required by applicable IEEE, ANSI, and NEMA standards including, but not limited to:",
+        "section": "E.2",
+        "text": "Factory tests must meet IEEE, ANSI, and NEMA standards."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

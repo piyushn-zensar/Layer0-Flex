@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 30,
+        "quote": "The work force utilization/compliance report is to be submitted on a quarterly basis during the life of the contract",
+        "section": "SRAA – 5002 Instructions",
+        "text": "Submit workforce utilization reports quarterly during the contract."
+      },
+      {
+        "category": "submission",
+        "page": 30,
+        "quote": "Utilization reports are to be completed each quarter and submitted to SRAA within 15 days of the end of each quarter.",
+        "section": "SRAA – 5002 Instructions",
+        "text": "Submit utilization reports within 15 days after each quarter ends."
+      },
+      {
+        "category": "submission",
+        "page": 30,
+        "quote": "If there are no changes to the work force utilized on the contract during the reporting period, the contractor can submit a written statement of no change or submit a copy of the previously submitted report with the date and reporting period updated.",
+        "section": "SRAA – 5002 Instructions",
+        "text": "Submit a statement of no change or an updated previous report if no workforce changes occurred."
+      },
+      {
+        "category": "submission",
+        "page": 30,
+        "quote": "Enter the number of the contract that this report applies to along with the name and address of the contractor preparing the report.",
+        "section": "Instructions for completing",
+        "text": "Provide contract number, contractor name, and address in the report."
+      },
+      {
+        "category": "submission",
+        "page": 30,
+        "quote": "Check off the appropriate box to indicate if the entity completing the report is the contractor or a subcontractor.",
+        "section": "Instructions for completing",
+        "text": "Indicate if the report is completed by the contractor or subcontractor."
+      },
+      {
+        "category": "submission",
+        "page": 30,
+        "quote": "Check off the box that corresponds to the reporting period for this report.",
+        "section": "Instructions for completing",
+        "text": "Specify the reporting period in the report."
+      },
+      {
+        "category": "submission",
+        "page": 30,
+        "quote": "Check off the appropriate box to indicate if the work force being reported is just for the contract or the Contractor’s total work force.",
+        "section": "Instructions for completing",
+        "text": "Indicate if the workforce reported is for the contract or total workforce."
+      },
+      {
+        "category": "submission",
+        "page": 30,
+        "quote": "Enter the total work force by EEO job category.",
+        "section": "Instructions for completing",
+        "text": "Provide total workforce data by EEO job category."
+      },
+      {
+        "category": "submission",
+        "page": 30,
+        "quote": "Break down the total work force by gender and enter under the heading “Work force by Gender’.",
+        "section": "Instructions for completing",
+        "text": "Provide workforce breakdown by gender."
+      },
+      {
+        "category": "submission",
+        "page": 30,
+        "quote": "Break down the total work force by race/ethnic background and enter under the heading ‘Work force by Race/Ethnic Identification’.",
+        "section": "Instructions for completing",
+        "text": "Provide workforce breakdown by race/ethnic background."
+      },
+      {
+        "category": "submission",
+        "page": 30,
+        "quote": "Enter information on any disabled or veteran employees included in the work force under the appropriate heading.",
+        "section": "Instructions for completing",
+        "text": "Provide information on disabled or veteran employees in the workforce."
+      },
+      {
+        "category": "submission",
+        "page": 30,
+        "quote": "Enter the name, title, phone number and email address for the person completing the form. Sign and date the form in the designated boxes.",
+        "section": "Instructions for completing",
+        "text": "Provide contact details and signature of the person completing the form."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

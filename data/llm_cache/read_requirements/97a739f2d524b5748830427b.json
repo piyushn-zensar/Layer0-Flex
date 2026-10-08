@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 3,
+        "quote": "bids@syrairport.org to advise the Authority of their interest and to confirm that their correct contact information, including email address, is placed on file with the Authority.",
+        "section": "1.4",
+        "text": "Proposers must notify the Authority of their interest and provide correct contact information."
+      },
+      {
+        "category": "compliance",
+        "page": 3,
+        "quote": "The Syracuse Regional Airport Authority reserves the right to amend, cancel or postpone this RFP at any time without penalty.",
+        "section": "1.4",
+        "text": "The Authority can amend, cancel, or postpone the RFP at any time."
+      },
+      {
+        "category": "legal",
+        "page": 3,
+        "quote": "The Syracuse Regional Airport Authority reserves the right to terminate or cancel any contract awarded pursuant to this RFP, either pre or post execution, or any part of said contract, immediately upon notice mailed or delivered by the Authority to the selected proposer.",
+        "section": "1.4",
+        "text": "The Authority can terminate or cancel any awarded contract at any time with notice."
+      },
+      {
+        "category": "compliance",
+        "page": 3,
+        "quote": "The Syracuse Regional Airport Authority reserves the right to reject any and all proposals at any time not deemed in the best interest of the Authority and to reject as informal such proposals, as in the Authority’s opinion, are incomplete, conditional, obscure, or which contain irregularities of any kind.",
+        "section": "1.5",
+        "text": "The Authority can reject proposals not in its best interest or deemed informal."
+      },
+      {
+        "category": "submission",
+        "page": 3,
+        "quote": "Any questions, requests for information or clarification regarding this RFP should be submitted via email, citing the relevant RFP page(s) and section(s), no later than Wednesday 09/06/23 by 4:00 pm to bids@syrairport.org.",
+        "section": "1.6",
+        "text": "Questions must be submitted via email by the specified deadline."
+      },
+      {
+        "category": "submission",
+        "page": 3,
+        "quote": "Questions will not be accepted other than by email, and any question received after the deadline may not be answered.",
+        "section": "1.6",
+        "text": "Questions are only accepted via email and must be submitted before the deadline."
+      },
+      {
+        "category": "submission",
+        "page": 3,
+        "quote": "The list of questions/requests for information or clarification and the official responses will be emailed to all Proposers who obtained this material directly from the Authority and posted on the Syracuse Regional Airport Authority’s website, http://www.syrsraa.com/bids-rfp-rfq/.",
+        "section": "1.6",
+        "text": "Responses to questions will be emailed to registered proposers and posted online."
+      },
+      {
+        "category": "submission",
+        "page": 3,
+        "quote": "Proposers that receive this RFP or access it from a source other than the Authority should contact the Authority at bids@syrairport.org to confirm that and/or add their correct contact information, including email address, is on file with the Authority for purposes of this RFP.",
+        "section": "1.6",
+        "text": "Proposers obtaining the RFP from other sources must confirm their contact information with the Authority."
+      },
+      {
+        "category": "submission",
+        "page": 3,
+        "quote": "This will ensure that the proposer receives the list of questions/requests for information, amendments or clarifications and the official responses.",
+        "section": "1.6",
+        "text": "Providing contact information ensures receipt of updates and responses."
+      },
+      {
+        "category": "compliance",
+        "page": 3,
+        "quote": "The Authority is not responsible for a proposer’s failure to receive the list of questions/requests for information, amendments or clarifications and the official responses, due to the proposer’s failure to provide the Authority its contact information, including email address, and no allowance will be made for a proposer that submitted a",
+        "section": "1.6",
+        "text": "The Authority is not liable for missed updates if the proposer fails to provide contact information."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

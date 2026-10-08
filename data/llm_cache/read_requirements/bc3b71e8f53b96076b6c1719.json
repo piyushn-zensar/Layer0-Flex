@@ -1,0 +1,134 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "1. THESE CONTRACT DOCUMENTS ARE SCHEMATIC IN NATURE AND REPRESENT A COMPLETED PROJECT. MINOR MODIFICATIONS OF WORK SHALL BE PROVIDED BY THE CONTRACTOR TO COMPLY WITH PROJECT REQUIREMENTS AND TO INSTALL A WORKING SYSTEM.",
+        "section": "General Notes",
+        "text": "Contractor must provide minor modifications to comply with project requirements and install a working system."
+      },
+      {
+        "category": "compliance",
+        "page": 82,
+        "quote": "2. THE CONTRACT SPECIFICATIONS FOR THIS PROJECT ARE AN INTEGRAL PART OF THESE CONTRACT DOCUMENTS AND SHALL BE CONSIDERED PART OF AND COMPLIMENTARY TO THE INFORMATION IN THESE CONTRACT DRAWINGS.",
+        "section": "General Notes",
+        "text": "Contract specifications are integral and complementary to contract drawings."
+      },
+      {
+        "category": "legal",
+        "page": 82,
+        "quote": "3. ALL REFERENCES TO THE CONTRACTOR REFERS TO THE CONTRACTOR OR CONTRACTORS RESPONSIBLE FOR ANY AND ALL WORK SHOWN ON THESE ELECTRICAL CONTRACT DOCUMENTS.",
+        "section": "General Notes",
+        "text": "Contractor is responsible for all work shown on electrical contract documents."
+      },
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "4. ALL MATERIAL AND EQUIPMENT SHALL BE LISTED AS APPROPRIATE FOR THE APPLICATION.",
+        "section": "General Notes",
+        "text": "Materials and equipment must be listed as appropriate for their application."
+      },
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "5. ELECTRICAL CONTRACTOR SHALL FIELD VERIFY ALL EXISTING CONDITIONS AND DIMENSIONS PRIOR TO COMMENCEMENT OF ANY WORK OR SHOP FABRICATION.",
+        "section": "General Notes",
+        "text": "Electrical contractor must verify existing conditions and dimensions before starting work."
+      },
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "6. COORDINATE THE WORK ON THESE DRAWINGS WITH THE WORK OF ALL OTHER DRAWINGS AND CONTRACTS IN THE AFFECTED AND/OR ADJACENT AREAS.",
+        "section": "General Notes",
+        "text": "Coordinate work with other drawings and contracts in affected areas."
+      },
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "7. PROVIDE GROUNDING & BONDING IN ACCORDANCE WITH THE NATIONAL ELECTRICAL CODE AND THE CONTRACT DOCUMENTS.",
+        "section": "General Notes",
+        "text": "Provide grounding and bonding per National Electrical Code and contract documents."
+      },
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "8. PROVIDE ELECTRICAL CONNECTION FOR EVERY FIXTURE, ITEM OR ANY EQUIPMENT REQUIRING ANY ELECTRICAL CONNECTION WHICH IS SHOWN ON ANY CONTRACT DRAWING OR NOTED IN ANY TECHNICAL SPECIFICATION.",
+        "section": "General Notes",
+        "text": "Provide electrical connections for all fixtures and equipment requiring them."
+      },
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "9. EXISTING CIRCUITS, AND DEVICES, WHICH ARE PRESENT OR PASS THROUGH AFFECTED AREAS, SHALL BE MAINTAINED OPERATIONAL, AS REQUIRED, AND AS DIRECTED.",
+        "section": "General Notes",
+        "text": "Maintain operational status of existing circuits and devices in affected areas."
+      },
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "10. THE CONTRACTOR IS RESPONSIBLE FOR ANY EQUIPMENT OR WORK THAT MAY BE REQUIRED TO BE TEMPORARILY DISCONNECTED, REMOVED AND/OR RELOCATED AS PART OF THE CONTRACTORS WORK OR THE WORK OF OTHER TRADES.",
+        "section": "General Notes",
+        "text": "Contractor must handle temporary disconnection, removal, or relocation of equipment."
+      },
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "11. ALL EQUIPMENT SHALL BE INSTALLED IN A NEAT AND WORKMAN LIKE MANNER, RECTILINEAR TO BUILDING STRUCTURE.",
+        "section": "General Notes",
+        "text": "Install equipment neatly and aligned with building structure."
+      },
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "12. ALL RACEWAYS THROUGH BUILDING EXPANSION JOINTS SHALL BE EQUIPPED WITH EXPANSION FITTINGS.",
+        "section": "General Notes",
+        "text": "Equip raceways through expansion joints with expansion fittings."
+      },
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "13. ALL CUTTING AND PATCHING OF BUILDING COMPONENTS REQUIRED TO ACCOMMODATE THE WORK OF THIS CONTRACT SHALL BE THE RESPONSIBILITY OF THE CONTRACTOR.",
+        "section": "General Notes",
+        "text": "Contractor is responsible for cutting and patching building components."
+      },
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "14. ELECTRICAL CONTRACTOR SHALL PROVIDE NECESSARY SUPPORT FRAMING, STIFFENERS, BRACING, AND HANGERS TO ENSURE A COMPLETE AND DURABLE SYSTEM.",
+        "section": "General Notes",
+        "text": "Provide support framing, stiffeners, bracing, and hangers for durability."
+      },
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "15. 120/277V, 20A CIRCUITS SHALL BE FED WITH #12AWG CONDUCTORS AND A #12AWG GROUND MINIMUM, UNLESS STATED OTHERWISE.",
+        "section": "General Notes",
+        "text": "Use #12AWG conductors and ground for 120/277V, 20A circuits unless stated otherwise."
+      },
+      {
+        "category": "submission",
+        "page": 82,
+        "quote": "16. NOT ALL SYMBOLS AND NOT ALL NOTES ARE USED ON THESE CONTRACT DRAWINGS.",
+        "section": "General Notes",
+        "text": "Not all symbols and notes are used in the contract drawings."
+      },
+      {
+        "category": "submission",
+        "page": 82,
+        "quote": "17. THE CONTRACTOR SHALL MAINTAIN RECORD DRAWINGS ON SITE SHOWING CHANGES MADE DUE TO FIELD CONDITIONS OR ENGINEER APPROVED CHANGES.",
+        "section": "General Notes",
+        "text": "Maintain record drawings on site showing field or engineer-approved changes."
+      },
+      {
+        "category": "technical",
+        "page": 82,
+        "quote": "18. REMOVAL NOTES: A. REMOVE ALL EXISTING ELECTRICAL ITEMS SHOWN ON THE REMOVAL DRAWINGS UNLESS NOTED OTHERWISE.",
+        "section": "Removal Notes",
+        "text": "Remove all existing electrical items shown on removal drawings unless noted otherwise."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

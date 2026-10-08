@@ -1,0 +1,183 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "18. Provide hinged, latched rear doors with stops and padlock provisions, complete.",
+        "section": "D",
+        "text": "Include hinged, latched rear doors with stops and padlock provisions."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "19. Provide bolted removable access panels to permit access to power connections and bus.",
+        "section": "D",
+        "text": "Include bolted removable access panels for power connections and bus access."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "20. Provide drawout carriages with grounding device for mounting transformers and fuses.",
+        "section": "D",
+        "text": "Include drawout carriages with grounding devices for transformers and fuses."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "21. Provide Kirk Key Interlock for incoming feeder cubicles.",
+        "section": "D",
+        "text": "Include Kirk Key Interlock for incoming feeder cubicles."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Provide a copper main bus, 2000 ampere rating as indicated in Contract Documents with capacity to supply full rating to the circuit breakers without exceeding temperatures limits imposed by IEEE and ANSI standards, mechanically braced to withstand shocks and stresses imposed by short-circuit currents equal to the short-time rating of the breaker.",
+        "section": "Buses and Connections",
+        "text": "Provide a 2000A copper main bus meeting IEEE and ANSI standards."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Silver-plate contact surfaces of all joints in buses and bus connections.",
+        "section": "Buses and Connections",
+        "text": "Silver-plate contact surfaces of bus joints and connections."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "All bus supports for medium voltage conductors shall be wet process porcelain or cycloaliphatic epoxy.",
+        "section": "Buses and Connections",
+        "text": "Use wet process porcelain or cycloaliphatic epoxy for bus supports."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Insulate all medium voltage bus with epoxy applied using the fluidized bed process.",
+        "section": "Buses and Connections",
+        "text": "Insulate medium voltage bus with epoxy using fluidized bed process."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "All bus shall be provided with removable access covers for inspection.",
+        "section": "Buses and Connections",
+        "text": "Provide removable access covers for bus inspection."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Provide PVC boots with nylon hardware to insulate all bus joints and medium voltage connections, including the power cable terminations.",
+        "section": "Buses and Connections",
+        "text": "Use PVC boots with nylon hardware to insulate bus joints and connections."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Voltage ratings of the main bus shall equal the breaker ratings.",
+        "section": "Buses and Connections",
+        "text": "Ensure main bus voltage ratings match breaker ratings."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Provide four-hole NEMA pads for the high-voltage power cables.",
+        "section": "Buses and Connections",
+        "text": "Include four-hole NEMA pads for high-voltage power cables."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Provide a ¼” x 2” copper ground bus extending full length of the switchgear.",
+        "section": "Buses and Connections",
+        "text": "Include a ¼” x 2” copper ground bus throughout the switchgear."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Ground bus joints (splice points) shall not be coincident with the bolts which support the ground bus.",
+        "section": "Buses and Connections",
+        "text": "Ensure ground bus joints are separate from support bolts."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Extend the ground bus to a location near the access door of each power cable compartment for the grounding of the feeder's power cable shielding.",
+        "section": "Buses and Connections",
+        "text": "Extend ground bus near access doors for feeder cable shielding."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Provide a ground bus in each control cable compartment, extended from the switchgear ground bus, for the termination of control cable shields.",
+        "section": "Buses and Connections",
+        "text": "Include ground bus in control cable compartments for shield termination."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Switchgear bus phase sequence shall be clearly identified in the breaker compartment in conformance with ANSI C37.20, Article 6.1.1.2, Phase Sequence.",
+        "section": "Buses and Connections",
+        "text": "Identify switchgear bus phase sequence per ANSI C37.20."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "The switchgear assembly shall have been design tested to withstand a BIL rating of 95kV.",
+        "section": "Buses and Connections",
+        "text": "Ensure switchgear withstands a BIL rating of 95kV."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Breaker shall be horizontal draw-out vacuum type.",
+        "section": "Circuit Breaker Ratings and Specifications",
+        "text": "Use horizontal draw-out vacuum type breakers."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Rated kV or nominal kV class: 15.",
+        "section": "Circuit Breaker Ratings and Specifications",
+        "text": "Breakers must have a rated kV class of 15."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Maximum kV: 15.",
+        "section": "Circuit Breaker Ratings and Specifications",
+        "text": "Breakers must have a maximum kV of 15."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Operating kV: 13.2",
+        "section": "Circuit Breaker Ratings and Specifications",
+        "text": "Breakers must operate at 13.2 kV."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Rated voltage range factor (K): 1.30.",
+        "section": "Circuit Breaker Ratings and Specifications",
+        "text": "Breakers must have a voltage range factor of 1.30."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Continuous amperes: 1,200",
+        "section": "Circuit Breaker Ratings and Specifications",
+        "text": "Breakers must have a continuous current rating of 1,200A."
+      },
+      {
+        "category": "technical",
+        "page": 63,
+        "quote": "Momentary, rms amperes (three-second): (25,000).",
+        "section": "Circuit Breaker Ratings and Specifications",
+        "text": "Breakers must have a momentary current rating of 25,000A for three seconds."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

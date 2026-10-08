@@ -5,17 +5,22 @@ proves each quote exists on the page (or marks it UNANCHORED). Answers are cache
 frozen by the model gateway, so a re-run gives the same list.
 """
 import re
+from concurrent.futures import ThreadPoolExecutor
 
 from app.core.llm import LLMUnavailable, complete_json
 from app.modules.requirements.models import CATEGORIES
 
-PAGES_PER_CALL = 6
+# One page per call: GPT-4o returns at most ~10-17 items per answer, so 6-page calls dropped dense specification
+# pages entirely (measured against the golden list, P-05). Calls run in parallel; answers are cached either way.
+PAGES_PER_CALL = 1
+PARALLEL_CALLS = 4
 
 SYSTEM = """You read pages of a customer's request for proposal (RFP) for engineered power and
 cooling equipment, and list every requirement the bidder must meet or answer.
 
 Rules:
-- One item per distinct obligation (technical, compliance, commercial, schedule, submission, legal, staffing).
+- List EVERY requirement on the page: one item per distinct obligation (technical, compliance, commercial,
+  schedule, submission, legal, staffing). Dense specification pages often have 15 to 30.
 - "quote" must be copied character for character from ONE page's lines, without the "L12:" line labels.
   Never paraphrase the quote.
 - "text" is a short plain-English restatement (max 25 words).
@@ -51,21 +56,24 @@ def read(layout: dict) -> tuple[list[dict], list[str]]:
     # Contents pages and page furniture never reach the model (they used to become "requirements").
     pages = [p | {"lines": [l for l in p["lines"] if not l.get("furniture")]} for p in layout["pages"] if not p.get("toc")]
     pages = [p for p in pages if p["lines"]]
-    found, problems = [], []
-    for i in range(0, len(pages), PAGES_PER_CALL):
-        chunk = pages[i:i + PAGES_PER_CALL]
-        prompt = "\n\n".join(
-            f"=== Page {p['page']} ===\n" + "\n".join(
-                f"L{l['n']}: {l['text']}" + (" [low OCR confidence]" if l.get("low_confidence") else "")
-                for l in p["lines"])
-            for p in chunk
-        )
-        try:
-            found += [r | {"quote": strip_line_labels(r["quote"])}
-                      for r in complete_json("read_requirements", SYSTEM, prompt, SCHEMA)["requirements"]]
-        except LLMUnavailable as exc:
-            problems.append(f"pages {chunk[0]['page']}-{chunk[-1]['page']}: {exc}")
-    return found, problems
+    chunks = [pages[i:i + PAGES_PER_CALL] for i in range(0, len(pages), PAGES_PER_CALL)]
+    with ThreadPoolExecutor(PARALLEL_CALLS) as pool:
+        answers = list(pool.map(_read_chunk, chunks))  # map keeps page order
+    return [r for items, _ in answers for r in items], [problem for _, problem in answers if problem]
+
+
+def _read_chunk(chunk: list[dict]) -> tuple[list[dict], str | None]:
+    prompt = "\n\n".join(
+        f"=== Page {p['page']} ===\n" + "\n".join(
+            f"L{l['n']}: {l['text']}" + (" [low OCR confidence]" if l.get("low_confidence") else "")
+            for l in p["lines"])
+        for p in chunk
+    )
+    try:
+        items = complete_json("read_requirements", SYSTEM, prompt, SCHEMA)["requirements"]
+        return [r | {"quote": strip_line_labels(r["quote"])} for r in items], None
+    except LLMUnavailable as exc:
+        return [], f"pages {chunk[0]['page']}-{chunk[-1]['page']}: {exc}"
 
 
 def strip_line_labels(quote: str) -> str:
