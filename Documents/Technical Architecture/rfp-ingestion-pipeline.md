@@ -1,6 +1,6 @@
 # RFP Ingestion Pipeline: Technical Detail
 
-Status: stage 0 **built** (native text); stage 1 **Proposed (inferred design)**. This covers workflow step 1, reading the RFP, in the `ingestion` module (`app/modules/ingestion/service.py`). Its output feeds the reader agent in the `requirements` module ([technical-architecture.md](../technical-architecture.md) section 6).
+Status: native text and whole-page OCR **built** (8 Oct 2026); tables and region-level OCR **Proposed (inferred design)**. This covers workflow step 1, reading the RFP, in the `ingestion` module (`app/modules/ingestion/service.py`). Its output feeds the reader agent in the `requirements` module ([technical-architecture.md](../technical-architecture.md) section 6).
 
 ## Stack
 

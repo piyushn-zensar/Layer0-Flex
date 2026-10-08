@@ -136,7 +136,7 @@ This turns a PDF into a **page layout model**: a structured record of every page
    |
  (5.2) page reading (PyMuPDF): lines in reading order, boxes, size      [built]
    |
- (5.3) region routing: native text / table / OCR                        [stage 1]
+ (5.3) routing: native text, or whole-page OCR    [built]; tables       [stage 1]
    +--> tables (pdfplumber)   +--> OCR (Tesseract)
    |
  (5.4) clean-up: headers and footers, table of contents, headings       [stage 1]
@@ -157,7 +157,7 @@ This turns a PDF into a **page layout model**: a structured record of every page
 - Coordinates are PDF points (1/72 inch), origin at the top-left of the page, rounded to 0.01 so that two runs give identical output.
 - A page with no text layer is marked **unreviewed** and shown with a warning on screen 1 (rule R5). On the Syracuse RFP this is page 83.
 
-### 5.3 Region routing (stage 1)
+### 5.3 Region routing (whole-page OCR built 8 Oct 2026; tables and region-level OCR stage 1)
 
 | Situation | Method | Reason |
 |---|---|---|
@@ -168,6 +168,8 @@ This turns a PDF into a **page layout model**: a structured record of every page
 | An image inside a text page, above a minimum size (starting value 2% of the page), with no text over it | **OCR**, marked `figure_text` | Drawings can contain requirements |
 
 Thresholds are starting guesses, stored as data and calibrated on real SpinCo RFPs. Each routing decision is stored with its reason.
+
+**Built so far.** A page with no text layer, or whose text layer has more than 5% unmapped characters, is read by whole-page OCR. Without Tesseract (machines other than the parsing machine) such a page is flagged with the reason and never causes a failure. On the Syracuse RFP this reads page 83, a scanned drawing, into 106 lines (38 marked low-confidence), so every one of the 101 pages has a stated method. Two runs give byte-identical layouts.
 
 **OCR details.** The region is rendered at 300 dpi and passed to Tesseract with fixed settings; the TSV output gives each word's box and a confidence from 0 to 100. Pixel positions are converted to page points (page x = region x + pixel x × 72 / 300). Words below a confidence threshold (starting value 60) mark the line low-confidence, and a requirement drawn from it always goes to a person. The Tesseract path is configuration (`TESSERACT_CMD`). Each call uses one thread so results do not vary between runs.
 
@@ -372,7 +374,7 @@ Each stage leaves the application running end to end. The demonstration RFP is t
 7. Whether customer-type workflow templates are needed beyond the one-step dispatch.
 
 **Known limits of stage 0:**
-- Native text only: scanned pages are flagged but not read; tables are read as plain lines.
+- Scanned pages are read by whole-page OCR on the parsing machine only (others use the committed layout); OCR inside an otherwise native page (figure text) and tables are not yet built: tables are read as plain lines.
 - Matching runs retrieval-only until matcher answers are generated and cached; retrieval is keyword-based.
 - The catalog, BOM lines and seeded unit responses are illustrative.
 - One acting user is picked from a list; no sign-in.
