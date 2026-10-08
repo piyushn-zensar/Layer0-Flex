@@ -77,8 +77,33 @@ def unit_of(actor: str) -> str | None:
 
 
 if __name__ == "__main__":  # self-check: python -m app.modules.catalog.service
-    first_product = lambda q: next(h for h in search(q) if h["kind"] == "product")["id"]
-    assert first_product("Switchgear shall be Arc-resistant Type 2B") == "CROWN-ARMV"
-    assert first_product("Furnish relays, controls and associated accessories and hardware") == "EP2-RPP"
+    def top(q: str) -> dict:
+        return next(h for h in search(q, k=10) if h["kind"] == "product")
+
+    # Syracuse demo items (data/seed) and spec lines: the product retrieval should rank first
+    for q, want in [
+        ("One (1) 15kV two (2) section Metal Clad Switchgear lineup.", "CROWN-ARMV"),
+        ("Protective Relays and Controls.", "EP2-RPP"),
+        ("Metal Clad Switchgear shall have eighteen (18) 15kV vacuum circuit breaker positions", "CROWN-ARMV"),
+        ("Switchgear shall be Arc-resistant Type 2B", "CROWN-ARMV"),
+        # by others: the documents give Syracuse to Crown (+ EP² relays only); scope is the matcher's call
+        ("Metal Clad Switchgear shall be mounted within a fully enclosed Equipment Building (by others).", "CROWN-ARMV"),
+        ("Separate utility incoming Cable termination compartment is required, that allows the utility to lock.", "CROWN-ACC"),
+        ("Each phase shall have 1 inch diameter ground ball.", "CROWN-ACC"),
+        ("The MANUFACTURER shall provide a NEMA four-hole pad and insulating boots", "CROWN-ACC"),
+        ("Furnish two (2) bus Sections with tie breaker", "CROWN-ARMV"),
+        ("Furnish relays, controls and associated accessories and hardware", "EP2-RPP"),
+        ("The 13.2kV breakers shall be equipped with a SEL-751 (with touchscreen) overcurrent relay trip device.", "EP2-RPP"),
+        ("Nominal voltage supplies: 125 volts DC for close and trip", "EP2-AUX"),
+        # data/RFP/samples: data-centre wording
+        ("Deployment preference: prefabricated / modular systems preferred to compress on-site schedule", "ANORD-POD"),
+        ("Rack power: rack-mounted PDUs", "ANORD-PDU"),
+        ("Branch circuits: twenty-four (24) 208V power whips", "ANORD-PDU"),
+    ]:
+        assert top(q)["id"] == want, (q, top(q)["id"], want)
+    # unit only, where two products of the unit are both fair
+    assert top("Rack density: minimum 120kW per rack, liquid cooling required at rack and chip level")["bu"] == "JETCOOL"
+    assert top("Distribution: one dedicated power distribution cabinet")["bu"] == "ANORD"
+    assert top("48 V DC rack power shelf with N+1 power supply units")["bu"] == "FPM"
     assert unit_of("EP² Design Engineer") == "EP2"
     print("catalog ok")

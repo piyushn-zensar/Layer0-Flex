@@ -4,14 +4,26 @@
     {"id": "PAST-EP2-001", "bu": "EP2", "rfp": "Illustrative utility substation RFP",
      "requirement": "Furnish relay and protection panels with SCADA interface for a 69 kV substation.",
      "response": "Met. Relay and protection panels engineered to the one-line diagram; relays type-tested to IEEE C37.90; SCADA points list agreed at design review."},
+    {"id": "PAST-EP2-002", "bu": "EP2", "rfp": "Illustrative municipal switchgear RFP",
+     "requirement": "Provide protective relays, auxiliary relays and relay programming for a complete, operational switchgear lineup.",
+     "response": "Met. Feeder overcurrent relays, lockout and auxiliary relays supplied and programmed to the coordination study; settings issued for approval before factory test."},
     {"id": "PAST-CROWN-001", "bu": "CROWN", "rfp": "Illustrative airport switchgear RFP",
      "requirement": "15 kV metal-clad switchgear, arc-resistant Type 2B per IEEE C37.20.7.",
      "response": "Met. Arc-resistant metal-clad lineup with vacuum breakers; Type 2B accessibility; arc plenum routed per site layout."},
+    {"id": "PAST-CROWN-002", "bu": "CROWN", "rfp": "Illustrative utility interconnect RFP",
+     "requirement": "Separate lockable utility cable termination compartment with NEMA pads, insulating boots and ground studs.",
+     "response": "Met. Standard lockable utility termination compartment; NEMA four-hole pads, insulating boots and ground ball studs from the accessory catalog."},
     {"id": "PAST-ANORD-001", "bu": "ANORD", "rfp": "Illustrative colocation RFP",
      "requirement": "Overhead busway distribution to 40 racks per hall.",
      "response": "Met. Configured busway with tap-off units per rack; standard catalogue ratings."},
+    {"id": "PAST-FPM-001", "bu": "FPM", "rfp": "Illustrative AI cluster RFP",
+     "requirement": "48 V DC rack power with N+1 power supply redundancy.",
+     "response": "Met. Rack power shelves with N+1 power supply units at 48 V DC; catalog part numbers per rack configuration."},
     {"id": "PAST-JETCOOL-001", "bu": "JETCOOL", "rfp": "Illustrative AI cluster RFP",
      "requirement": "Liquid cooling for 120 kW racks.",
-     "response": "Met. Direct-to-chip cold plates with row-level CDUs sized for 120 kW per rack."}
+     "response": "Met. Direct-to-chip cold plates with row-level CDUs sized for 120 kW per rack."},
+    {"id": "PAST-CLOUD-001", "bu": "CLOUD", "rfp": "Illustrative AI cluster RFP",
+     "requirement": "Deliver racks fully integrated and tested with compute, power and cooling.",
+     "response": "Met. Rack-scale integration and test of compute trays, power shelves and cold-plate cooling before shipment."}
   ]
 }

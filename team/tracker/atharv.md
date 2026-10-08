@@ -6,8 +6,8 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 
 | ID | Task | Stage | Due | Status | Notes / commit |
 |---|---|---|---|---|---|
-| A-01 | Clone, `.venv`, seed, run; read `technical-architecture.md` §7 and the port table in `architecture-overview.md` | S0 | Thu 8 Oct | doing | cloned, `.venv`, pytest green; seed/run and reading still to do |
-| A-02 | Refine `business_units.json` / `products.json` / `past_responses.json`: EP² products as first-class components, better retrieval keywords, keep "illustrative" labels | S2 | Fri 9 Oct | todo | |
+| A-01 | Clone, `.venv`, seed, run; read `technical-architecture.md` §7 and the port table in `architecture-overview.md` | S0 | Thu 8 Oct | done | cloned, `.venv`, seeded, API :8000 + web :3000 up, pytest green; §7 + port table read |
+| A-02 | Refine `business_units.json` / `products.json` / `past_responses.json`: EP² products as first-class components, better retrieval keywords, keep "illustrative" labels | S2 | Fri 9 Oct | done | EP² kept to the 3 documented families; keywords from sample-RFP wording + v0.3.0 rules; 8 past responses (all 6 units); catalog self-check: 15 product + 3 unit asserts |
 | A-03 | Matcher agent: generate and commit `data/llm_cache/match_requirement/` for the Syracuse line items; tune prompt | S2 | Sat 10 Oct | todo | |
 | A-04 | One requirement → several units (schema returns a list; dispatch creates one assignment per unit) | S2 | Sat 10 Oct | todo | |
 | A-05 | Screen-3 actions: accept / reject / change unit-product-offering (`web/components/matching/MatchActions.tsx`, used by Janvia's trace page) | S2 | Sat 10 Oct | todo | |
@@ -27,3 +27,4 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | Date | Done | Next |
 |---|---|---|
 | 8 Oct | Fixed in matching / decisions / workpackages: re-run matching no longer overwrites accepted, manual or rejected matches; a rejected match no longer brings back an older proposal; dispatch needs a "go" (409 otherwise); invalid actions, outcomes and compliance values get 422, unknown IDs 404. Regression test appended to `tests/test_smoke.py` | finish A-01 (seed, run, read §7), then A-02 |
+| 8 Oct | A-01 done. A-02 done: retrieval now ranks rack-mounted PDUs → Anord PDU, SEL-751 relay / relay programming → EP² relay panel; Syracuse demo matches unchanged | A-03 (needs Azure settings; depends on P-04) |
