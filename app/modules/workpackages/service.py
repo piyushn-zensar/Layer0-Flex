@@ -1,11 +1,12 @@
 """Work packages: one-step dispatch to business units, checklist responses, validation.  Owner: Atharv.
 
 Public contract:
-    dispatch(db, opp_id, actor) -> int                    create assignments for participating units (idempotent)
+    dispatch(db, opp_id, actor) -> int                    create assignments for participating units (idempotent);
+                                                          ValueError unless the latest go/no-go is "go"
     by_requirement(db, opp_id) -> dict[str, list[Assignment]]
     inbox(db, bu) -> list[Assignment]                     a unit's open work across all opportunities
-    respond(db, assignment_id, compliance, product_ref, response, actor)
-    validate(db, assignment_id, ok, note, actor)
+    respond(db, assignment_id, compliance, product_ref, response, actor)   LookupError if no such assignment
+    validate(db, assignment_id, ok, note, actor)                           LookupError if no such assignment
     progress(db, opp_id) -> dict[str, dict]               bu -> {"total", "submitted", "validated"}
 """
 from collections import defaultdict
@@ -24,6 +25,9 @@ from app.modules.workpackages.models import BID_DESK, COMPLIANCE, Assignment
 
 
 def dispatch(db: Session, opp_id: str, actor: str) -> int:
+    go = decisions.latest(db, opp_id, "go_no_go")
+    if not go or go.outcome != "go":
+        raise ValueError("Dispatch needs a 'go' decision first (decisions page).")
     units = set(decisions.participating_units(db, opp_id))
     matches = matching.for_opportunity(db, opp_id)
     existing = {(a.req_id, a.bu) for a in db.scalars(select(Assignment).where(Assignment.opportunity_id == opp_id))}
@@ -57,15 +61,22 @@ def inbox(db: Session, bu: str) -> list[Assignment]:
 
 def respond(db: Session, assignment_id: int, compliance: str, product_ref: str | None, response: str, actor: str) -> None:
     assert compliance in COMPLIANCE, compliance
-    a = db.get(Assignment, assignment_id)
+    a = _get(db, assignment_id)
     a.compliance, a.product_ref, a.response = compliance, product_ref or a.product_ref, response
     a.status, a.responded_by, a.responded_at = "submitted", actor, utcnow()
     audit.record(db, actor, "responded", "assignment", a.req_id, a.opportunity_id, bu=a.bu, compliance=compliance)
     db.commit()
 
 
-def validate(db: Session, assignment_id: int, ok: bool, note: str, actor: str) -> None:
+def _get(db: Session, assignment_id: int) -> Assignment:
     a = db.get(Assignment, assignment_id)
+    if not a:
+        raise LookupError(f"Assignment {assignment_id} not found.")
+    return a
+
+
+def validate(db: Session, assignment_id: int, ok: bool, note: str, actor: str) -> None:
+    a = _get(db, assignment_id)
     a.status, a.validated_by, a.validation_note = ("validated" if ok else "returned"), actor, note
     audit.record(db, actor, a.status, "assignment", a.req_id, a.opportunity_id, bu=a.bu, note=note)
     db.commit()

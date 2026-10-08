@@ -1,3 +1,5 @@
+from typing import Literal
+
 from fastapi import APIRouter, Depends, Request
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -16,7 +18,7 @@ class ParticipationIn(BaseModel):
 
 
 class GoNoGoIn(BaseModel):
-    outcome: str  # go | no_go
+    outcome: Literal["go", "no_go"]
     rationale: str = ""
 
 
