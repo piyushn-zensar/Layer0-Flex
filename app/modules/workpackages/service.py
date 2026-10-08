@@ -1,7 +1,8 @@
 """Work packages: one-step dispatch to business units, checklist responses, validation.  Owner: Atharv.
 
 Public contract:
-    dispatch(db, opp_id, actor) -> int                    create assignments for participating units (idempotent);
+    dispatch(db, opp_id, actor) -> int                    one assignment per matched participating unit, else the
+                                                          bid desk (idempotent);
                                                           ValueError unless the latest go/no-go is "go"
     by_requirement(db, opp_id) -> dict[str, list[Assignment]]
     inbox(db, bu) -> list[Assignment]                     a unit's open work across all opportunities
@@ -34,14 +35,18 @@ def dispatch(db: Session, opp_id: str, actor: str) -> int:
     created = 0
     for req in requirements.current(db, opp_id):
         m = matches.get(req.req_id)
-        bu = m.bu if m and m.bu in units else BID_DESK
-        if (req.req_id, bu) in existing:
-            continue
-        owner = catalog.unit(bu)["design_engineer"] if bu != BID_DESK else "Bid Manager"
-        db.add(Assignment(opportunity_id=opp_id, req_id=req.req_id, bu=bu, owner=owner,
-                          product_ref=m.product_id if m and bu != BID_DESK else None))
-        audit.record(db, actor, "assigned", "assignment", req.req_id, opp_id, bu=bu, owner=owner)
-        created += 1
+        # one assignment per matched participating unit (its first product); none of them -> the bid desk
+        targets = {}
+        for u in m.units if m else []:
+            if u["bu"] in units:
+                targets.setdefault(u["bu"], u["product_id"])
+        for bu, product_ref in (targets or {BID_DESK: None}).items():
+            if (req.req_id, bu) in existing:
+                continue
+            owner = catalog.unit(bu)["design_engineer"] if bu != BID_DESK else "Bid Manager"
+            db.add(Assignment(opportunity_id=opp_id, req_id=req.req_id, bu=bu, owner=owner, product_ref=product_ref))
+            audit.record(db, actor, "assigned", "assignment", req.req_id, opp_id, bu=bu, owner=owner)
+            created += 1
     db.commit()
     opportunities.set_status(db, opp_id, "dispatched", actor)
     return created

@@ -136,3 +136,37 @@ def test_requirement_review_actions():
     assert statuses[p55[1]["req_id"]] == "split" and statuses[p55[2]["req_id"]] == "merged"
     trace_ids = {r["req"]["req_id"] for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"]}
     assert p55[1]["req_id"] not in trace_ids and merged["req_id"] in trace_ids  # replaced items leave the flow
+
+
+def test_one_requirement_several_units(monkeypatch):
+    """A-04: the matcher may list several units; dispatch creates one assignment per participating unit.
+    The matcher is stubbed (no model call). Appended by Atharv (append-only on this shared file)."""
+    from app.core.db import SessionLocal
+    from app.modules.decisions import service as decisions
+    from app.modules.matching import agent
+    from app.modules.matching import service as matching
+    from app.modules.workpackages import service as workpackages
+
+    def two_units(requirement, candidates):  # first two candidate products from different units
+        units = {}
+        for c in candidates:
+            if c["kind"] == "product":
+                units.setdefault(c["bu"], {"bu": c["bu"], "product_id": c["id"], "offering_type": c["offering_type"]})
+        return {"units": list(units.values())[:2], "confidence": 0.9, "rationale": "stub"}
+
+    monkeypatch.setattr(agent, "propose", two_units)
+    seed_demo.main()  # its own opportunity (matched retrieval-only, then dispatched)
+    with SessionLocal() as db:
+        opp = TestClient(app).get("/api/portfolio").json()[0]["opp"]["id"]
+        matching.match(db, opp, "test")  # proposals are refreshed with the stub's two units
+        multi = {r: m for r, m in matching.for_opportunity(db, opp).items() if len({u["bu"] for u in m.units}) == 2}
+        assert multi, "stub should give some requirement two units"
+        req_id, m = next(iter(multi.items()))
+        assert (m.bu, m.product_id) == (m.units[0]["bu"], m.units[0]["product_id"])  # main unit first
+        both = [u["bu"] for u in m.units]
+        assert all(req_id in matching.suggested_units(db, opp)[bu] for bu in both)
+        decisions.record(db, opp, "participation", "units", list(matching.suggested_units(db, opp)), "", "test")
+        decisions.record(db, opp, "go_no_go", "go", [], "", "test")
+        workpackages.dispatch(db, opp, "test")
+        assert {a.bu for a in workpackages.by_requirement(db, opp)[req_id]} >= set(both)
+        assert workpackages.dispatch(db, opp, "test") == 0  # repeatable: nothing duplicated

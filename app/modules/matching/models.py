@@ -14,9 +14,10 @@ class Match(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     opportunity_id: Mapped[str] = mapped_column(String(20), index=True)
     req_id: Mapped[str] = mapped_column(String(20), index=True)
-    bu: Mapped[str | None] = mapped_column(String(20))          # None = handled by the bid manager
+    bu: Mapped[str | None] = mapped_column(String(20))          # main unit; None = handled by the bid manager
     product_id: Mapped[str | None] = mapped_column(String(40))
     offering_type: Mapped[str] = mapped_column(String(12), default="NONE")
+    units: Mapped[list] = mapped_column(JSON, default=list)     # every unit: [{bu, product_id, offering_type}], main first
     confidence: Mapped[float] = mapped_column(default=0.0)
     rationale: Mapped[str] = mapped_column(Text, default="")
     evidence: Mapped[list] = mapped_column(JSON, default=list)   # retrieved catalog / past-response hits

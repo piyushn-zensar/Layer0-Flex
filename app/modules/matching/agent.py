@@ -1,12 +1,16 @@
-"""Matcher agent: requirement + retrieved catalog evidence -> business unit, product, offering type."""
+"""Matcher agent: requirement + retrieved catalog evidence -> business unit(s), product, offering type."""
 import json
 
 from app.core.llm import LLMUnavailable, complete_json
 from app.modules.matching.models import OFFERING_TYPES
 
-SYSTEM = """You map one requirement from a customer RFP to the SpinCo business unit and product that would
-meet it. You may only choose a product from the candidates given: product_id must be the id of a candidate
+MAX_UNITS = 3  # ponytail: guard against a talkative answer flooding inboxes; raise if real bids need more
+
+SYSTEM = """You map one requirement from a customer RFP to the SpinCo business units and products that would
+meet it. You may only choose products from the candidates given: product_id must be the id of a candidate
 whose kind is "product". Candidates of kind "past_response" are evidence only, never a product_id.
+"units" lists the unit and product for each part of the requirement, the main one first. List more than one
+only when the requirement needs products from several business units.
 The page header names the document part the requirement comes from (for example a specification for one
 piece of equipment). A line about construction, materials, finish, nameplates, wiring, testing, shipping or
 installation inside such a specification belongs to the product that specification is for.
@@ -14,20 +18,30 @@ Offering types:
 CTO = configure-to-order (catalog product with options, quoted through CPQ);
 SEMI_CUSTOM = configured product plus additional workshop work for this customer;
 ETO = engineered-to-order (designed for this requirement).
-NONE = not a product requirement (commercial, submission, legal, or work stated as by others or done by the
-purchaser); leave bu and product_id empty.
-Explain the choice in one or two sentences that cite the candidate you used."""
+Return an empty "units" list when it is not a product requirement (commercial, submission, legal, or work
+stated as by others or done by the purchaser): the bid manager answers it.
+Explain the choice in one or two sentences that cite the candidates you used."""
 
 SCHEMA = {
     "type": "object",
     "properties": {
-        "bu": {"type": "string"},
-        "product_id": {"type": "string"},
-        "offering_type": {"type": "string", "enum": OFFERING_TYPES},
+        "units": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "bu": {"type": "string"},
+                    "product_id": {"type": "string"},
+                    "offering_type": {"type": "string", "enum": [t for t in OFFERING_TYPES if t != "NONE"]},
+                },
+                "required": ["bu", "product_id", "offering_type"],
+                "additionalProperties": False,
+            },
+        },
         "confidence": {"type": "number"},
         "rationale": {"type": "string"},
     },
-    "required": ["bu", "product_id", "offering_type", "confidence", "rationale"],
+    "required": ["units", "confidence", "rationale"],
     "additionalProperties": False,
 }
 
@@ -48,12 +62,18 @@ def page_header(page: dict) -> str:
 
 
 def checked(out: dict, candidates: list[dict]) -> dict | None:
-    """The model's answer, or None when it names something that is not a candidate product (design 7.2).
-    The unit always comes from the chosen product, so unit and product never disagree."""
-    if out["offering_type"] == "NONE":
-        return out | {"bu": "", "product_id": ""}
-    product = next((c for c in candidates if c["kind"] == "product" and c["id"] == out["product_id"]), None)
-    return out | {"bu": product["bu"]} if product else None
+    """The model's answer with only candidate products kept (design 7.2), at most MAX_UNITS, one per product.
+    Each unit comes from its product, so unit and product never disagree. None when the model named
+    products but none of them is a candidate product; an empty list means not a product item."""
+    products = {c["id"]: c for c in candidates if c["kind"] == "product"}
+    units = []
+    for u in out["units"]:
+        p = products.get(u["product_id"])
+        if p and all(x["product_id"] != p["id"] for x in units):
+            units.append({"bu": p["bu"], "product_id": p["id"], "offering_type": u["offering_type"]})
+    if out["units"] and not units:
+        return None
+    return out | {"units": units[:MAX_UNITS]}
 
 
 __all__ = ["propose", "page_header", "checked", "LLMUnavailable"]
@@ -70,10 +90,18 @@ if __name__ == "__main__":  # self-check: python -m app.modules.matching.agent
                                             {"text": "first body line", "bbox": [72, 70, 300, 80]}]}
     assert page_header(two_columns) == "Data Sheet Metal Clad Switchgear"  # starts in the header, ends below it
     assert page_header({"height": 800, "lines": [line("no header here", 10)]}) == ""
-    cands = [{"kind": "product", "id": "CROWN-ARMV", "bu": "CROWN"}, {"kind": "past_response", "id": "PAST-1", "bu": "JETCOOL"}]
-    answer = {"bu": "EP2", "product_id": "CROWN-ARMV", "offering_type": "ETO", "confidence": 0.9, "rationale": ""}
-    assert checked(answer, cands)["bu"] == "CROWN"                                   # unit taken from the product
-    assert checked(answer | {"product_id": "PAST-1"}, cands) is None                 # past response is not a product
-    assert checked(answer | {"product_id": "NOT-A-CANDIDATE"}, cands) is None
-    assert checked(answer | {"offering_type": "NONE"}, cands)["product_id"] == ""    # not a product item
+
+    cands = [{"kind": "product", "id": "CROWN-ARMV", "bu": "CROWN"}, {"kind": "product", "id": "EP2-RPP", "bu": "EP2"},
+             {"kind": "product", "id": "CROWN-ACC", "bu": "CROWN"}, {"kind": "product", "id": "ANORD-PDU", "bu": "ANORD"},
+             {"kind": "past_response", "id": "PAST-1", "bu": "JETCOOL"}]
+    unit = lambda pid, bu="X": {"bu": bu, "product_id": pid, "offering_type": "ETO"}
+    answer = lambda *units: {"units": list(units), "confidence": 0.9, "rationale": ""}
+    two = checked(answer(unit("CROWN-ARMV", "EP2"), unit("EP2-RPP")), cands)["units"]
+    assert [(u["bu"], u["product_id"]) for u in two] == [("CROWN", "CROWN-ARMV"), ("EP2", "EP2-RPP")]  # unit from product
+    assert checked(answer(unit("PAST-1")), cands) is None                    # a past response is not a product
+    assert checked(answer(unit("NOT-A-CANDIDATE")), cands) is None
+    assert checked(answer(), cands)["units"] == []                           # not a product item
+    assert [u["product_id"] for u in checked(answer(unit("PAST-1"), unit("EP2-RPP")), cands)["units"]] == ["EP2-RPP"]
+    assert len(checked(answer(*(unit(p) for p in ("CROWN-ARMV", "EP2-RPP", "CROWN-ACC", "ANORD-PDU", "EP2-RPP"))),
+                       cands)["units"]) == MAX_UNITS                          # capped, duplicates dropped
     print("matching agent ok")

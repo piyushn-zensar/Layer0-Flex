@@ -2,10 +2,12 @@
 
 Public contract:
     match(db, opp_id, actor) -> dict                  propose a match for every approved requirement not yet decided
-    for_opportunity(db, opp_id) -> dict[str, Match]   latest match per req_id, unless a person rejected it
+    for_opportunity(db, opp_id) -> dict[str, Match]   latest match per req_id, unless a person rejected it.
+        Match.units lists every unit [{bu, product_id, offering_type}], main unit first; Match.bu, .product_id
+        and .offering_type repeat the main unit (None / "NONE" when the bid manager answers it).
     decide(db, match_id, action, actor)               action: accept | reject; LookupError if no such match
     set_manual(db, opp_id, req_id, bu, product_id, offering_type, actor) -> Match   a person's own choice
-    suggested_units(db, opp_id) -> dict[str, list[str]]   bu -> req_ids (input to participation)
+    suggested_units(db, opp_id) -> dict[str, list[str]]   bu -> req_ids, every listed unit (input to participation)
 """
 from collections import defaultdict
 
@@ -27,10 +29,16 @@ def _retrieval_only(req, hits) -> dict:
     """Fallback when no model answer exists: top catalog hit for product items, else the bid manager."""
     top = next((h for h in hits if h["kind"] == "product"), None)
     if req.category not in PRODUCT_CATEGORIES or not top or top["score"] < MIN_SCORE:
-        return {"bu": "", "product_id": "", "offering_type": "NONE", "confidence": 0.0,
-                "rationale": "Not matched to a product; the bid manager answers it."}
-    return {"bu": top["bu"], "product_id": top["id"], "offering_type": top["offering_type"],
+        return {"units": [], "confidence": 0.0, "rationale": "Not matched to a product; the bid manager answers it."}
+    return {"units": [{"bu": top["bu"], "product_id": top["id"], "offering_type": top["offering_type"]}],
             "confidence": top["score"], "rationale": f"Closest catalog entry {top['id']} (retrieval score {top['score']})."}
+
+
+def _row(opp_id: str, req_id: str, units: list[dict], **fields) -> Match:
+    """A match row; bu / product_id / offering_type repeat the main (first) unit."""
+    main = units[0] if units else {"bu": None, "product_id": None, "offering_type": "NONE"}
+    return Match(opportunity_id=opp_id, req_id=req_id, units=units, bu=main["bu"], product_id=main["product_id"],
+                 offering_type=main["offering_type"], **fields)
 
 
 def match(db: Session, opp_id: str, actor: str) -> dict:
@@ -49,17 +57,17 @@ def match(db: Session, opp_id: str, actor: str) -> dict:
             proposal = agent.propose({"req_id": req.req_id, "category": req.category, "quote": req.quote,
                                       "header": header}, candidates)
             out, method = agent.checked(proposal, candidates), "agent"
-            if out is None:  # the model named something that is not a candidate product
+            if out is None:  # the model named only things that are not candidate products
+                named = [u["product_id"] for u in proposal["units"]]
                 out, method = _retrieval_only(req, hits), "retrieval_only"
-                out["rationale"] = f"Model answer {proposal['product_id']!r} is not a candidate product. {out['rationale']}"
+                out["rationale"] = f"Model answer {named} has no candidate product. {out['rationale']}"
         except agent.LLMUnavailable:
             out, method = _retrieval_only(req, hits), "retrieval_only"
-        m = Match(opportunity_id=opp_id, req_id=req.req_id, bu=out["bu"] or None, product_id=out["product_id"] or None,
-                  offering_type=out["offering_type"], confidence=out["confidence"], rationale=out["rationale"],
-                  evidence=candidates, method=method)
+        m = _row(opp_id, req.req_id, out["units"], confidence=out["confidence"], rationale=out["rationale"],
+                 evidence=candidates, method=method)
         db.add(m)
         method_count[method] += 1
-        audit.record(db, actor, "proposed", "match", req.req_id, opp_id, bu=m.bu, product=m.product_id, method=method)
+        audit.record(db, actor, "proposed", "match", req.req_id, opp_id, units=m.units, method=method)
     db.commit()
     return {"matched": len(reqs), "kept": len(decided), **method_count}
 
@@ -93,8 +101,9 @@ def decide(db: Session, match_id: int, action: str, actor: str) -> None:
 
 def set_manual(db: Session, opp_id: str, req_id: str, bu: str | None, product_id: str | None,
                offering_type: str, actor: str) -> Match:
-    m = Match(opportunity_id=opp_id, req_id=req_id, bu=bu, product_id=product_id, offering_type=offering_type,
-              confidence=1.0, rationale=f"Set by {actor}.", method="manual", status="accepted", decided_by=actor)
+    units = [{"bu": bu, "product_id": product_id, "offering_type": offering_type}] if bu else []
+    m = _row(opp_id, req_id, units, confidence=1.0, rationale=f"Set by {actor}.", method="manual",
+             status="accepted", decided_by=actor)
     db.add(m)
     audit.record(db, actor, "manual", "match", req_id, opp_id, bu=bu, product=product_id)
     db.commit()
@@ -104,8 +113,8 @@ def set_manual(db: Session, opp_id: str, req_id: str, bu: str | None, product_id
 def suggested_units(db: Session, opp_id: str) -> dict[str, list[str]]:
     units = defaultdict(list)
     for req_id, m in for_opportunity(db, opp_id).items():
-        if m.bu:
-            units[m.bu].append(req_id)
+        for bu in dict.fromkeys(u["bu"] for u in m.units):  # each unit once per requirement
+            units[bu].append(req_id)
     return dict(units)
 
 
@@ -145,3 +154,4 @@ if __name__ == "__main__":  # freeze the matcher's answers for an RFP (task A-03
             print("by offering type:", Counter(m.offering_type for m in ms))
             print("by product:", Counter(m.product_id for m in ms if m.product_id).most_common())
             print("by method:", Counter(m.method for m in ms))
+            print("several units:", sum(len({u["bu"] for u in m.units}) > 1 for m in ms))
