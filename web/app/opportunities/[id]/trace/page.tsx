@@ -12,7 +12,7 @@ const statusClass = (s: string | null | undefined) =>
 
 export default function TracePage() {
   const { id } = useParams<{ id: string }>();
-  const { data, reload } = useApi<Trace>(`/api/opportunities/${id}/trace`);
+  const { data, error, reload } = useApi<Trace>(`/api/opportunities/${id}/trace`);
   const [selected, setSelected] = useState<string>();
   const [pageNo, setPageNo] = useState(1);
 
@@ -31,6 +31,7 @@ export default function TracePage() {
     if (first) select(first.req.req_id);
   }, [data, selected, select]);
 
+  if (error) return <p className="warn">Unable to load this view. Please refresh the page or try again shortly.</p>;
   if (!data) return <p>Loading…</p>;
   const page = data.pages[pageNo - 1];
   const rowProps = (reqId: string) => ({
