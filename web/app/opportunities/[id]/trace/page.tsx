@@ -48,9 +48,9 @@ export default function TracePage() {
         <button className="secondary" onClick={() => post(`/api/opportunities/${id}/match`).then(reload, alert)}>Match products</button>
       </div>
       <div className="trace-legend" aria-label="Offering type legend">
-        <span className="tag CTO"><strong>CTO</strong> Configure to Order</span>
-        <span className="tag SEMI_CUSTOM"><strong>Semi-Custom</strong> Standard product with limited customization</span>
-        <span className="tag ETO"><strong>ETO</strong> Engineer to Order</span>
+        <span className="tag CTO"><strong>CTO</strong> Configure-to-order: catalog product with options (CPQ)</span>
+        <span className="tag SEMI_CUSTOM"><strong>Semi-custom</strong> Configured product plus workshop work for this customer</span>
+        <span className="tag ETO"><strong>ETO</strong> Engineered-to-order: designed for this requirement</span>
       </div>
       <div className="three">
         <section className="pane">
