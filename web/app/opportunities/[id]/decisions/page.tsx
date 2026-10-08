@@ -1,6 +1,7 @@
 "use client";
 // Evidence pack, participation, go/no-go and one-step dispatch.  Owner: Atharv.
 import { useParams } from "next/navigation";
+import { useState } from "react";
 import { post, useApi } from "@/lib/api";
 import type { Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
@@ -15,15 +16,22 @@ type Data = { evidence: Evidence; units: Unit[]; participation: Decision | null;
 export default function DecisionsPage() {
   const { id } = useParams<{ id: string }>();
   const { data, error, reload } = useApi<Data>(`/api/opportunities/${id}/decisions`);
+  const [busy, setBusy] = useState(false);
   if (error) return <p className="warn">Could not load the bid decision: {error}</p>;
   if (!data) return <p>Loading…</p>;
   const { evidence: ev, participation: part, go_no_go: go } = data;
 
+  // one action at a time: a double click must not record two decisions or start two dispatches
+  const run = <T,>(request: Promise<T>, done: (r: T) => void = () => {}) => {
+    setBusy(true);
+    request.then((r) => { done(r); return reload(); }, alert).finally(() => setBusy(false));
+  };
   const recordParticipation = (form: FormData) =>
-    post(`/api/opportunities/${id}/participation`, { units: form.getAll("units"), rationale: form.get("rationale") }).then(reload, alert);
+    run(post(`/api/opportunities/${id}/participation`, { units: form.getAll("units"), rationale: form.get("rationale") }));
   const decide = (outcome: string, form: HTMLFormElement) =>
-    post(`/api/opportunities/${id}/go-no-go`, { outcome, rationale: new FormData(form).get("rationale") }).then(reload, alert);
-  const dispatch = () => post<{ created: number }>(`/api/opportunities/${id}/dispatch`).then((r) => { alert(`${r.created} assignments created`); reload(); }, alert);
+    run(post(`/api/opportunities/${id}/go-no-go`, { outcome, rationale: new FormData(form).get("rationale") }));
+  const dispatch = () => run(post<{ created: number }>(`/api/opportunities/${id}/dispatch`), (r) =>
+    alert(r.created ? `${r.created} new assignments sent to the units.` : "Nothing new to send: every unit already has its work."));
 
   return (
     <>
@@ -51,7 +59,7 @@ export default function DecisionsPage() {
             </label>
           ))}
           <label>Rationale <input name="rationale" /></label>
-          <button>Record participation</button>
+          <button disabled={busy}>Record participation</button>
         </form>
       </section>
 
@@ -60,12 +68,12 @@ export default function DecisionsPage() {
         {go && <p>Decision <span className="badge">{go.outcome}</span> by <strong>{go.decided_by}</strong>. {go.rationale}</p>}
         <form className="form" onSubmit={(e) => e.preventDefault()}>
           <label>Rationale <input name="rationale" /></label>
-          <button type="button" disabled={!ev.frozen} onClick={(e) => decide("go", e.currentTarget.form!)}>Go</button>
-          <button type="button" disabled={!ev.frozen} className="secondary" onClick={(e) => decide("no_go", e.currentTarget.form!)}>No-go</button>
+          <button type="button" disabled={!ev.frozen || busy} onClick={(e) => decide("go", e.currentTarget.form!)}>Go</button>
+          <button type="button" disabled={!ev.frozen || busy} className="secondary" onClick={(e) => decide("no_go", e.currentTarget.form!)}>No-go</button>
         </form>
       </section>
 
-      {go?.outcome === "go" && <p><button onClick={dispatch}>Dispatch work packages to units</button>{" "}
+      {go?.outcome === "go" && <p><button disabled={busy} onClick={dispatch}>Dispatch work packages to units</button>{" "}
         <span className="muted">Repeat after changing matches or participation: new work is sent, work that no longer fits is withdrawn.</span></p>}
     </>
   );

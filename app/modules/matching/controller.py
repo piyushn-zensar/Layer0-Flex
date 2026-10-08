@@ -26,7 +26,7 @@ class ChangeIn(BaseModel):
 
 @router.post("/opportunities/{opp_id}/match")
 def match(opp_id: str, request: Request, db: Session = Depends(get_db)):
-    return service.match(db, opp_id, actor(request))
+    return service.match(db, opp_id, f"matching agent ({actor(request)})")  # the agent proposes; the person asked
 
 
 @router.post("/matches/{match_id}/decide")

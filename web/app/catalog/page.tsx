@@ -15,7 +15,8 @@ export default function CatalogPage() {
     <div className="content">
       <PageHead title="Product catalog" help="Business units, their products and past responses used for matching. Illustrative seed data, to be confirmed with each unit." />
       <form className="inline" action={(f) => setQ(String(f.get("q") ?? ""))}>
-        <input name="q" defaultValue={q} placeholder="Search the knowledge base" /><button>Search</button>
+        <label><span className="sr-only">Search the knowledge base</span>
+          <input name="q" defaultValue={q} placeholder="Search the knowledge base" /></label><button>Search</button>
       </form>
       {data && data.results.length > 0 && (
         <table>
