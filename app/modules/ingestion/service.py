@@ -23,7 +23,9 @@ import csv
 import io
 import json
 import os
+import re
 import subprocess
+from collections import defaultdict
 from functools import lru_cache
 from pathlib import Path
 
@@ -41,6 +43,11 @@ PAGES = config.STORE / "pages"
 OCR_DPI = 300
 UNMAPPED_SHARE = 0.05      # share of U+FFFD characters that makes a native text layer unusable
 LOW_CONFIDENCE = 60        # mean Tesseract word confidence below this marks the line for a person
+BAND = 0.08                # top / bottom share of the page where headers and footers live
+FURNITURE_MIN_PAGES = 3    # a band line repeated on this many pages is page furniture
+TOC_SHORT_LINE_WORDS = 6   # contents entries are short
+TOC_SHORT_SHARE = 0.6      # share of short lines on a page with a "Contents" heading
+TOC_LEADER_SHARE = 0.3     # share of dot-leader lines ("Scope ........ 4") that makes a contents page
 
 
 @lru_cache
@@ -53,13 +60,16 @@ def tesseract_version() -> str | None:
 
 
 def pipeline_version() -> str:
-    return f"pymupdf-{pymupdf.VersionBind}/tesseract-{tesseract_version() or 'none'}/ocr-1"
+    return f"pymupdf-{pymupdf.VersionBind}/tesseract-{tesseract_version() or 'none'}/layout-2"
 
 
 def parse(path: str, doc_id: str) -> dict:
     """PDF -> layout model. Pure function of the file and the pipeline version (no DB)."""
     with pymupdf.open(path) as pdf:
         pages = [_read_page(p) for p in pdf]
+    _mark_furniture(pages)
+    for page in pages:
+        page["toc"] = _is_toc(page)
     return {"document": doc_id, "pipeline_version": pipeline_version(), "page_count": len(pages), "pages": pages}
 
 
@@ -94,6 +104,36 @@ def _read_page(p: pymupdf.Page) -> dict:
     lines = _ocr_lines(p)
     return page | {"method": "ocr", "unreviewed": not lines, "reason": reason if lines else f"{reason}; OCR found no text",
                    "lines": lines}
+
+
+def _furniture_key(text: str) -> str:
+    return re.sub(r"\s+", " ", re.sub(r"\d+", "#", text.lower())).strip()
+
+
+def _mark_furniture(pages: list[dict]) -> None:
+    """Headers and footers: the same text (digits ignored) in the top or bottom band of several pages.
+    Marked, never deleted, so line numbers and highlights stay stable (technical-architecture.md 5.4)."""
+    seen = defaultdict(set)
+    in_band = lambda line, page: line["bbox"][3] < BAND * page["height"] or line["bbox"][1] > (1 - BAND) * page["height"]
+    for page in pages:
+        for line in page["lines"]:
+            if in_band(line, page):
+                seen[_furniture_key(line["text"])].add(page["page"])
+    for page in pages:
+        for line in page["lines"]:
+            line["furniture"] = in_band(line, page) and len(seen[_furniture_key(line["text"])]) >= FURNITURE_MIN_PAGES
+
+
+def _is_toc(page: dict) -> bool:
+    """Contents page: a 'Contents' heading with mostly short entries, or many dot-leader lines.
+    Layout clean-up only; requirement identification itself never uses patterns (rule R5)."""
+    body = [l for l in page["lines"] if not l.get("furniture")]
+    if not body:
+        return False
+    heading = any(l["text"].strip().lower() in ("contents", "table of contents") for l in body[:5])
+    short = sum(len(l["text"].split()) <= TOC_SHORT_LINE_WORDS for l in body) / len(body)
+    leaders = sum(bool(re.search(r"(\.{4,}|…{2,})\s*\d{1,4}$", l["text"])) for l in body) / len(body)
+    return (heading and short >= TOC_SHORT_SHARE) or leaders >= TOC_LEADER_SHARE
 
 
 def _native_lines(p: pymupdf.Page) -> list[dict]:
@@ -160,4 +200,13 @@ if __name__ == "__main__":  # self-check: python -m app.modules.ingestion.servic
         assert abs(x0 - 72) < 4 and abs(y1 - 100) < 6, ocr["lines"][0]["bbox"]  # boxes land in page points
     else:
         assert ocr["method"] == "none" and ocr["unreviewed"] and "OCR not available" in ocr["reason"]
+    toc = {"page": 1, "height": 792, "lines": [{"text": t, "bbox": [72, 100 + 14 * i, 300, 112 + 14 * i]} for i, t in
+           enumerate(["CONTENTS", "1.1", "SCOPE", "1.2", "REFERENCES", "PART 2 - PRODUCTS"])]}
+    body = {"page": 2, "height": 792, "lines": [{"text": "The switchgear shall be arc resistant and tested to IEEE C37.20.7.",
+                                                 "bbox": [72, 100, 500, 112]}]}
+    assert _is_toc(toc) and not _is_toc(body)
+    pages = [{"page": n, "height": 792, "lines": [{"text": f"Page | {n}", "bbox": [280, 740, 330, 752]},
+                                                  {"text": "Body text", "bbox": [72, 400, 200, 412]}]} for n in (1, 2, 3)]
+    _mark_furniture(pages)
+    assert all(p["lines"][0]["furniture"] and not p["lines"][1]["furniture"] for p in pages)
     print("ingestion ok", pipeline_version())

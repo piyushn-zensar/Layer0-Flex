@@ -16,11 +16,12 @@ STORE.mkdir(parents=True, exist_ok=True)
 
 DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{(STORE / 'layer0.db').as_posix()}")
 
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "mock")      # mock | azure
-AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT", "")
+# Azure OpenAI. The second name of each pair is the team's shared .env naming.
+LLM_PROVIDER = os.getenv("LLM_PROVIDER") or os.getenv("MODEL_PROVIDER") or "mock"   # mock | azure
+AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT") or os.getenv("ENDPOINT_URL") or ""
 AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY", "")
-AZURE_OPENAI_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION", "2024-10-21")
-LLM_MODEL = os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-4o")   # deployment name; part of the cache key
+AZURE_OPENAI_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION") or os.getenv("API_VERSION") or "2024-10-21"
+LLM_MODEL = os.getenv("AZURE_OPENAI_DEPLOYMENT") or os.getenv("DEPLOYMENT_NAME") or "gpt-4o"  # part of the cache key
 
 TESSERACT_CMD = os.getenv(
     "TESSERACT_CMD", str(Path(os.getenv("LOCALAPPDATA", "")) / "Tesseract-OCR" / "tesseract.exe")

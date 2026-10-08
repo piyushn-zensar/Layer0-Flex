@@ -56,7 +56,7 @@ def main() -> None:
                 workpackages.respond(db, a.id, r["compliance"], None, r["response"], a.owner)
                 if r["validated"]:
                     workpackages.validate(db, a.id, True, "", BM)
-        print(f"done: open http://127.0.0.1:8000/opportunities/{opp.id}/trace")
+        print(f"done: open http://localhost:3000/opportunities/{opp.id}/trace (web) - API on :8000")
 
 
 if __name__ == "__main__":

@@ -139,7 +139,7 @@ This turns a PDF into a **page layout model**: a structured record of every page
  (5.3) routing: native text, or whole-page OCR    [built]; tables       [stage 1]
    +--> tables (pdfplumber)   +--> OCR (Tesseract)
    |
- (5.4) clean-up: headers and footers, table of contents, headings       [stage 1]
+ (5.4) clean-up: headers/footers, contents pages [built]; headings     [stage 1]
    |
  page layout model (JSON per document and pipeline version, never edited)
 ```
@@ -175,10 +175,10 @@ Thresholds are starting guesses, stored as data and calibrated on real SpinCo RF
 
 **Tables.** pdfplumber's "lines" strategy finds ruled tables. Each table records its box, rows, columns and cells; a table that continues on the next page is linked when the columns line up. Compliance-matrix rows are common requirement sources. Known limit: tables without ruling lines lose their cell structure (the text is kept).
 
-### 5.4 Clean-up (stage 1)
+### 5.4 Clean-up (headers, footers and contents pages built 8 Oct 2026; headings stage 1)
 
 - **Headers and footers.** Lines repeated in the top or bottom band of most pages are marked as page furniture. They are kept but are never offered as requirements.
-- **Table of contents.** Pages with many lines ending in dot leaders and page numbers are marked as contents pages and excluded from extraction. In the earlier regex-based line, contents headings became requirements; this rule, together with model-based reading, prevents that.
+- **Table of contents.** A page is a contents page when it has a "Contents" heading near the top and mostly short entries, or when many lines end in dot leaders and page numbers. It is excluded from extraction. On the Syracuse RFP this marks page 54 only, and 346 header, footer and drawing title-block lines are marked as furniture; none of the known requirements is hidden. In the earlier regex-based line, contents headings became requirements; this rule, together with model-based reading, prevents that.
 - **Headings and sections** from numbering patterns and font size, so each requirement can carry a section path.
 
 ### 5.5 The page layout model

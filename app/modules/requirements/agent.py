@@ -45,12 +45,16 @@ SCHEMA = {
 
 def read(layout: dict) -> tuple[list[dict], list[str]]:
     """Returns (proposed requirements, problems). A chunk without a cached answer is a problem, not a guess."""
-    pages = [p for p in layout["pages"] if p["lines"]]
+    # Contents pages and page furniture never reach the model (they used to become "requirements").
+    pages = [p | {"lines": [l for l in p["lines"] if not l.get("furniture")]} for p in layout["pages"] if not p.get("toc")]
+    pages = [p for p in pages if p["lines"]]
     found, problems = [], []
     for i in range(0, len(pages), PAGES_PER_CALL):
         chunk = pages[i:i + PAGES_PER_CALL]
         prompt = "\n\n".join(
-            f"=== Page {p['page']} ===\n" + "\n".join(f"L{l['n']}: {l['text']}" for l in p["lines"])
+            f"=== Page {p['page']} ===\n" + "\n".join(
+                f"L{l['n']}: {l['text']}" + (" [low OCR confidence]" if l.get("low_confidence") else "")
+                for l in p["lines"])
             for p in chunk
         )
         try:
