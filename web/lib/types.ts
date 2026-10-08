@@ -9,6 +9,7 @@ export interface Requirement {
   req_id: string; version: number; text: string; quote: string; category: string; section: string;
   page: number | null; line_start: number | null; line_end: number | null; bboxes: number[][];
   provenance: "EXTRACTED" | "UNANCHORED"; status: string; baseline: number | null; source: string;
+  derived_from: string[]; created_by: string;
 }
 export interface Baseline { number: number; count: number; frozen_by: string }
 export interface Match {

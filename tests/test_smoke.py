@@ -93,3 +93,46 @@ def test_people_decide_and_dispatch_needs_go():
     client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "no_go"})
     assert client.post(f"/api/opportunities/{opp}/dispatch").status_code == 409
     assert client.get(f"/api/opportunities/{opp}").json()["opportunity"]["status"] == "no_go"
+
+
+def test_requirement_review_actions():
+    """P-06: edit, split, merge, add missed; freeze needs every line item decided; replaced items leave the flow."""
+    client = TestClient(app)
+    opp = client.post("/api/opportunities", json={"title": "review actions"}).json()["id"]
+    pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
+    client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    assert client.post(f"/api/opportunities/{opp}/requirements/extract").json()["proposed"] > 100  # frozen GPT-4o answers
+    reqs = {r["req_id"]: r for r in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
+    p55 = [r for r in reqs.values() if r["page"] == 55 and r["provenance"] == "EXTRACTED"]
+
+    edited = client.post(f"/api/requirements/{p55[0]['req_id']}/review",
+                         json={"action": "edit", "text": "Edited text", "category": "schedule"}).json()
+    assert (edited["text"], edited["category"]) == ("Edited text", "schedule")
+    assert client.post(f"/api/requirements/{p55[0]['req_id']}/review", json={"action": "edit", "category": "nope"}).status_code == 409
+
+    q = p55[1]["quote"]
+    half = q.rfind(" ", 0, len(q) // 2)
+    parts = client.post(f"/api/requirements/{p55[1]['req_id']}/split",
+                        json={"parts": [{"quote": q[:half]}, {"quote": q[half + 1:]}]}).json()
+    assert len(parts) == 2 and all(p["provenance"] == "EXTRACTED" and p["derived_from"] == [p55[1]["req_id"]] for p in parts)
+
+    merged = client.post(f"/api/opportunities/{opp}/requirements/merge",
+                         json={"req_ids": [p55[2]["req_id"], p55[3]["req_id"]], "text": "One obligation"}).json()
+    assert merged["derived_from"] == [p55[2]["req_id"], p55[3]["req_id"]] and merged["provenance"] == "EXTRACTED"
+    assert client.post(f"/api/requirements/{p55[2]['req_id']}/split",
+                       json={"parts": [{"quote": "a"}, {"quote": "b"}]}).status_code == 409  # already merged
+
+    missed = client.post(f"/api/opportunities/{opp}/requirements",
+                         json={"quote": "Each phase shall have 1 inch diameter ground ball.", "category": "technical", "page": 55}).json()
+    assert missed["provenance"] == "EXTRACTED" and missed["page"] == 55
+
+    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 409  # undecided items left
+    rows = client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]
+    for r in rows:
+        if r["status"] == "proposed":
+            client.post(f"/api/requirements/{r['req_id']}/review", json={"action": "approve"})
+    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 200
+    statuses = {r["req_id"]: r["status"] for r in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
+    assert statuses[p55[1]["req_id"]] == "split" and statuses[p55[2]["req_id"]] == "merged"
+    trace_ids = {r["req"]["req_id"] for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"]}
+    assert p55[1]["req_id"] not in trace_ids and merged["req_id"] in trace_ids  # replaced items leave the flow
