@@ -58,3 +58,31 @@ def test_modules_talk_only_through_services():
         own = f.relative_to(ROOT / "app" / "modules").parts[0]
         for mod, part in re.findall(r"app\.modules\.(\w+)\.(\w+)", f.read_text("utf-8")):
             assert mod == own or part == "service", f"{f.name} imports app.modules.{mod}.{part}"
+
+
+def test_people_decide_and_dispatch_needs_go():
+    """Rule R4: re-running matching keeps people's decisions; dispatch needs a go; bad input is refused.
+    Appended by Atharv (append-only on this shared file)."""
+    seed_demo.main()  # its own opportunity, so this test does not depend on test order
+    client = TestClient(app)
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]  # newest first
+    rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
+    rejected, accepted = rows[0]["match"], rows[1]["match"]
+    assert client.post(f"/api/matches/{rejected['id']}/decide", json={"action": "reject"}).status_code == 200
+    assert client.post(f"/api/matches/{accepted['id']}/decide", json={"action": "accept"}).status_code == 200
+    assert client.post(f"/api/opportunities/{opp}/match").json()["kept"] == 2
+    after = {r["req"]["req_id"]: r["match"] for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"]}
+    assert after[rejected["req_id"]] is None  # stays rejected: no older proposal comes back
+    assert after[accepted["req_id"]]["id"] == accepted["id"] and after[accepted["req_id"]]["status"] == "accepted"
+
+    a = client.get("/api/inbox/CROWN").json()["items"][0]
+    assert client.post(f"/api/matches/{accepted['id']}/decide", json={"action": "maybe"}).status_code == 422
+    assert client.post("/api/matches/999999/decide", json={"action": "accept"}).status_code == 404
+    assert client.post(f"/api/assignments/{a['id']}/respond", json={"compliance": "yes"}).status_code == 422
+    assert client.post("/api/assignments/999999/respond", json={"compliance": "met"}).status_code == 404
+    assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "maybe"}).status_code == 422
+    assert client.get(f"/api/opportunities/{opp}/decisions").json()["go_no_go"]["outcome"] == "go"
+
+    client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "no_go"})
+    assert client.post(f"/api/opportunities/{opp}/dispatch").status_code == 409
+    assert client.get(f"/api/opportunities/{opp}").json()["opportunity"]["status"] == "no_go"

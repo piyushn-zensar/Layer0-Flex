@@ -1,9 +1,9 @@
 """Matching: requirement -> business unit(s), product, offering type, with evidence.  Owner: Atharv.
 
 Public contract:
-    match(db, opp_id, actor) -> dict                  propose a match for every baseline requirement
-    for_opportunity(db, opp_id) -> dict[str, Match]   latest match per req_id
-    decide(db, match_id, action, actor)               action: accept | reject
+    match(db, opp_id, actor) -> dict                  propose a match for every approved requirement not yet decided
+    for_opportunity(db, opp_id) -> dict[str, Match]   latest match per req_id, unless a person rejected it
+    decide(db, match_id, action, actor)               action: accept | reject; LookupError if no such match
     set_manual(db, opp_id, req_id, bu, product_id, offering_type, actor) -> Match   a person's own choice
     suggested_units(db, opp_id) -> dict[str, list[str]]   bu -> req_ids (input to participation)
 """
@@ -33,7 +33,9 @@ def _retrieval_only(req, hits) -> dict:
 
 
 def match(db: Session, opp_id: str, actor: str) -> dict:
-    reqs = [r for r in requirements.current(db, opp_id) if r.status == "approved"]
+    """A re-run refreshes only proposals; accepted, manual and rejected matches are a person's decision (rule R4)."""
+    decided = {req_id for req_id, m in _latest(db, opp_id).items() if m.status != "proposed"}
+    reqs = [r for r in requirements.current(db, opp_id) if r.status == "approved" and r.req_id not in decided]
     method_count = defaultdict(int)
     for req in reqs:
         hits = catalog.search(req.quote, k=5)
@@ -48,16 +50,22 @@ def match(db: Session, opp_id: str, actor: str) -> dict:
         method_count[method] += 1
         audit.record(db, actor, "proposed", "match", req.req_id, opp_id, bu=m.bu, product=m.product_id, method=method)
     db.commit()
-    return {"matched": len(reqs), **method_count}
+    return {"matched": len(reqs), "kept": len(decided), **method_count}
+
+
+def _latest(db: Session, opp_id: str) -> dict[str, Match]:
+    rows = db.scalars(select(Match).where(Match.opportunity_id == opp_id).order_by(Match.id))
+    return {m.req_id: m for m in rows}  # later rows win
 
 
 def for_opportunity(db: Session, opp_id: str) -> dict[str, Match]:
-    rows = db.scalars(select(Match).where(Match.opportunity_id == opp_id, Match.status != "rejected").order_by(Match.id))
-    return {m.req_id: m for m in rows}  # later rows win
+    return {req_id: m for req_id, m in _latest(db, opp_id).items() if m.status != "rejected"}
 
 
 def decide(db: Session, match_id: int, action: str, actor: str) -> None:
     m = db.get(Match, match_id)
+    if not m:
+        raise LookupError(f"Match {match_id} not found.")
     m.status, m.decided_by = {"accept": "accepted", "reject": "rejected"}[action], actor
     audit.record(db, actor, action, "match", m.req_id, m.opportunity_id, bu=m.bu, product=m.product_id)
     db.commit()

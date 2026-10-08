@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, Request
+from typing import Literal
+
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
@@ -10,7 +12,7 @@ router = APIRouter(tags=["matching"])
 
 
 class DecideIn(BaseModel):
-    action: str  # accept | reject
+    action: Literal["accept", "reject"]
 
 
 @router.post("/opportunities/{opp_id}/match")
@@ -20,5 +22,8 @@ def match(opp_id: str, request: Request, db: Session = Depends(get_db)):
 
 @router.post("/matches/{match_id}/decide")
 def decide(match_id: int, body: DecideIn, request: Request, db: Session = Depends(get_db)):
-    service.decide(db, match_id, body.action, actor(request))
+    try:
+        service.decide(db, match_id, body.action, actor(request))
+    except LookupError as exc:
+        raise HTTPException(404, str(exc))
     return {"ok": True}
