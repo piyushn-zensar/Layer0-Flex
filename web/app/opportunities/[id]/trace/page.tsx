@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { post, useApi } from "@/lib/api";
 import type { Trace } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
+import MatchActions from "@/components/matching/MatchActions"; // A-05 (Atharv)
 
 // Assignment status -> safe CSS class suffix (displayed text stays as-is).
 const statusClass = (s: string | null | undefined) =>
@@ -114,6 +115,7 @@ export default function TracePage() {
                       {bom.length > 0 && <details className="trace-bom"><summary>Bill of materials ({bom.length} lines)</summary>
                         <ul>{bom.map((b) => <li key={b.item}>{b.item} — {b.qty}</li>)}</ul></details>}
                     </>) : <span className="muted">{m ? "Bid manager (not a product item)" : "not matched yet"}</span>}
+                    <MatchActions oppId={id} reqId={req.req_id} match={m} dispatched={assignments.length > 0} onDone={reload} />
                   </td>
                   <td>
                     {assignments.map((a) => (
