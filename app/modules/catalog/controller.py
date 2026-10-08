@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 from app.modules.catalog import service
 
@@ -12,7 +12,7 @@ def catalog(q: str = ""):
 
 
 @router.get("/catalog/search")
-def search(q: str, k: int = 5):
+def search(q: str, k: int = Query(5, ge=1, le=50)):
     return service.search(q, k)
 
 

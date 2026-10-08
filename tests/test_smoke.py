@@ -170,3 +170,64 @@ def test_one_requirement_several_units(monkeypatch):
         workpackages.dispatch(db, opp, "test")
         assert {a.bu for a in workpackages.by_requirement(db, opp)[req_id]} >= set(both)
         assert workpackages.dispatch(db, opp, "test") == 0  # repeatable: nothing duplicated
+
+
+def test_person_changes_match():
+    """A-05: a person accepts, rejects or changes a match (several units); re-dispatch adds the new unit only.
+    Appended by Atharv (append-only on this shared file)."""
+    seed_demo.main()  # its own opportunity, dispatched
+    client = TestClient(app)
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
+    req_id = next(r["req"]["req_id"] for r in rows if r["match"] and r["match"]["bu"] == "CROWN")
+    url = f"/api/opportunities/{opp}/requirements/{req_id}/match"
+    body = {"units": [{"product_id": "CROWN-ARMV", "offering_type": "ETO"}, {"product_id": "EP2-RPP", "offering_type": "ETO"}]}
+    m = client.post(url, json=body, headers={"X-Actor": "Bid%20Manager"}).json()
+    assert (m["status"], m["method"], m["decided_by"], m["bu"]) == ("accepted", "manual", "Bid Manager", "CROWN")
+    assert [u["bu"] for u in m["units"]] == ["CROWN", "EP2"]  # unit follows the product
+    assert client.post(url, json={"units": [{"product_id": "NOPE", "offering_type": "ETO"}]}).status_code == 422
+    assert client.post(url, json={"units": [{"product_id": "EPC-800V", "offering_type": "ETO"}]}).status_code == 422  # pending unit
+    assert client.post(url, json={"units": [{"product_id": "EP2-RPP", "offering_type": "NONE"}]}).status_code == 422
+    assert client.post(f"/api/opportunities/{opp}/requirements/REQ-9999-0001/match", json=body).status_code == 404
+
+    client.post(f"/api/opportunities/{opp}/participation", json={"units": ["CROWN", "EP2"]})
+    client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go"})
+    assert client.post(f"/api/opportunities/{opp}/dispatch").json()["created"] >= 1  # the added EP2 work
+    row = next(r for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"] if r["req"]["req_id"] == req_id)
+    assert sorted({a["bu"] for a in row["assignments"]}) == ["CROWN", "EP2"]
+
+    none = client.post(url, json={"units": []}).json()  # a person says: not a product item
+    assert none["bu"] is None and none["offering_type"] == "NONE" and none["units"] == []
+
+
+def test_workflow_order_and_roles():
+    """Fixes from the 8 Oct system test: decide and dispatch only after freeze; only the unit answers and only
+    the Bid Manager validates submitted work; re-dispatch withdraws work that no longer fits.
+    Appended by Atharv (append-only on this shared file)."""
+    client = TestClient(app)
+    BM, CROWN = {"X-Actor": "Bid%20Manager"}, {"X-Actor": "Crown%20Design%20Engineer"}
+    fresh = client.post("/api/opportunities", json={"title": "not frozen"}).json()["id"]
+    assert client.post(f"/api/opportunities/{fresh}/go-no-go", json={"outcome": "go"}).status_code == 409
+    assert client.post(f"/api/opportunities/{fresh}/dispatch").status_code == 409
+    assert client.post("/api/opportunities/OPP-9999/participation", json={"units": ["CROWN"]}).status_code == 404
+    for bad in ([], ["XYZ"], ["EPC"]):  # empty, unknown, pending
+        assert client.post(f"/api/opportunities/{fresh}/participation", json={"units": bad}).status_code == 422
+
+    seed_demo.main()
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp and i["status"] == "assigned")
+    url = f"/api/assignments/{item['id']}"
+    assert client.post(f"{url}/validate", json={"ok": True}, headers=BM).status_code == 409        # nothing submitted
+    assert client.post(f"{url}/respond", json={"compliance": "met"}, headers={"X-Actor": "EP%C2%B2%20Design%20Engineer"}).status_code == 403
+    assert client.post(f"{url}/respond", json={"compliance": "met"}, headers=CROWN).status_code == 200
+    assert client.post(f"{url}/respond", json={"compliance": "met"}, headers=CROWN).status_code == 409  # already submitted
+    assert client.post(f"{url}/validate", json={"ok": True}, headers=CROWN).status_code == 403      # no self-validation
+    assert client.post(f"{url}/validate", json={"ok": True}, headers=BM).status_code == 200
+
+    # the bid manager takes the item away from Crown: re-dispatch withdraws Crown's work and gives it to the bid desk
+    assert client.post(f"/api/opportunities/{opp}/requirements/{item['req_id']}/match", json={"units": []}, headers=BM).status_code == 200
+    client.post(f"/api/opportunities/{opp}/dispatch", headers=BM)
+    row = next(r for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"] if r["req"]["req_id"] == item["req_id"])
+    assert [a["bu"] for a in row["assignments"]] == ["BID"]
+    assert all(i["id"] != item["id"] for i in client.get("/api/inbox/CROWN").json()["items"])     # gone from Crown's inbox
+    assert client.get("/api/catalog/search?q=relay&k=-1").status_code == 422

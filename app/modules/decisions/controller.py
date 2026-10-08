@@ -1,6 +1,6 @@
 from typing import Literal
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
@@ -29,12 +29,22 @@ def decisions(opp_id: str, db: Session = Depends(get_db)):
             "participation": row(p) if p else None, "go_no_go": row(g) if g else None}
 
 
+def _record(db: Session, opp_id: str, kind: str, outcome: str, units: list[str], rationale: str, who: str,
+            bad_input: int) -> dict:
+    try:
+        return row(service.record(db, opp_id, kind, outcome, units, rationale, who))
+    except LookupError as exc:
+        raise HTTPException(404, str(exc))
+    except ValueError as exc:
+        raise HTTPException(bad_input, str(exc))
+
+
 @router.post("/opportunities/{opp_id}/participation")
 def participation(opp_id: str, body: ParticipationIn, request: Request, db: Session = Depends(get_db)):
-    return row(service.record(db, opp_id, "participation", "units", body.units, body.rationale, actor(request)))
+    return _record(db, opp_id, "participation", "units", body.units, body.rationale, actor(request), 422)
 
 
 @router.post("/opportunities/{opp_id}/go-no-go")
 def go_no_go(opp_id: str, body: GoNoGoIn, request: Request, db: Session = Depends(get_db)):
     units = service.participating_units(db, opp_id)
-    return row(service.record(db, opp_id, "go_no_go", body.outcome, units, body.rationale, actor(request)))
+    return _record(db, opp_id, "go_no_go", body.outcome, units, body.rationale, actor(request), 409)

@@ -19,7 +19,7 @@ class Assignment(Base):
     req_id: Mapped[str] = mapped_column(String(20), index=True)
     bu: Mapped[str] = mapped_column(String(20), index=True)
     owner: Mapped[str] = mapped_column(String(80))
-    status: Mapped[str] = mapped_column(String(12), default="assigned")  # assigned | submitted | validated | returned
+    status: Mapped[str] = mapped_column(String(12), default="assigned")  # assigned | submitted | validated | returned | withdrawn
     compliance: Mapped[str | None] = mapped_column(String(12))           # met | partial | not_met | exception
     product_ref: Mapped[str | None] = mapped_column(String(80))          # what meets it (product / configuration)
     response: Mapped[str] = mapped_column(Text, default="")

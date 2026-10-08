@@ -7,14 +7,15 @@ import PageHead from "@/components/shell/PageHead";
 
 type Decision = { outcome: string; units: string[]; rationale: string; decided_by: string };
 type Evidence = {
-  requirements: number; by_category: Record<string, number>; unanchored: string[];
-  suggested_units: Record<string, number>; offering_mix: Record<string, number>; unmatched: string[];
+  requirements: number; frozen: boolean; by_category: Record<string, number>; unanchored: string[];
+  suggested_units: Record<string, number>; offering_mix: Record<string, number>; unmatched: string[]; not_reviewed: number;
 };
 type Data = { evidence: Evidence; units: Unit[]; participation: Decision | null; go_no_go: Decision | null };
 
 export default function DecisionsPage() {
   const { id } = useParams<{ id: string }>();
-  const { data, reload } = useApi<Data>(`/api/opportunities/${id}/decisions`);
+  const { data, error, reload } = useApi<Data>(`/api/opportunities/${id}/decisions`);
+  if (error) return <p className="warn">Could not load the bid decision: {error}</p>;
   if (!data) return <p>Loading…</p>;
   const { evidence: ev, participation: part, go_no_go: go } = data;
 
@@ -35,6 +36,8 @@ export default function DecisionsPage() {
           {Object.keys(ev.suggested_units).length === 0 && "none yet: run matching"}</p>
         {ev.unanchored.length > 0 && <p className="warn">Unanchored: {ev.unanchored.join(", ")}</p>}
         {ev.unmatched.length > 0 && <p className="muted">Not yet matched: {ev.unmatched.length}</p>}
+        {ev.not_reviewed > 0 && <p className="muted">Product matches nobody has accepted or changed yet: {ev.not_reviewed} (Traceability, pane 3)</p>}
+        {!ev.frozen && <p className="warn">Requirements are not frozen yet: freeze them on the Requirements page before deciding go or no-go.</p>}
       </section>
 
       <section className="card">
@@ -57,12 +60,13 @@ export default function DecisionsPage() {
         {go && <p>Decision <span className="badge">{go.outcome}</span> by <strong>{go.decided_by}</strong>. {go.rationale}</p>}
         <form className="form" onSubmit={(e) => e.preventDefault()}>
           <label>Rationale <input name="rationale" /></label>
-          <button type="button" onClick={(e) => decide("go", e.currentTarget.form!)}>Go</button>
-          <button type="button" className="secondary" onClick={(e) => decide("no_go", e.currentTarget.form!)}>No-go</button>
+          <button type="button" disabled={!ev.frozen} onClick={(e) => decide("go", e.currentTarget.form!)}>Go</button>
+          <button type="button" disabled={!ev.frozen} className="secondary" onClick={(e) => decide("no_go", e.currentTarget.form!)}>No-go</button>
         </form>
       </section>
 
-      {go?.outcome === "go" && <button onClick={dispatch}>Dispatch work packages to units</button>}
+      {go?.outcome === "go" && <p><button onClick={dispatch}>Dispatch work packages to units</button>{" "}
+        <span className="muted">Repeat after changing matches or participation: new work is sent, work that no longer fits is withdrawn.</span></p>}
     </>
   );
 }
