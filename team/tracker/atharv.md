@@ -17,7 +17,7 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | A-09 | Routing payloads (M8): per-unit hand-off JSON (CTO items → CPQ seed) as a download | S4 | after 12 Oct | todo | |
 | A-10 | v1.1 bid / portfolio checks (`reference/v1.1/logic`) in the evidence pack, constants labelled placeholders | S4 | after 12 Oct | todo | |
 | A-11 | Knowledge-base queue: "Send to knowledge base" on a requirement, response or decision rationale puts it in a review queue; a curator page approves items into `past_responses` (RAG). Show as planned on 12 Oct if not built | S4 | after 12 Oct | todo | from the 8 Oct call (plan §8) |
-| A-12 | Go/no-go summary: requirements by category; how they are satisfied (fully / partly / not, from matches and unit responses); a system recommendation clearly labelled as advice (e.g. "8 of 10 criteria met"); structured decision criteria instead of only a free-text rationale; placeholders for cost vs budget, delivery vs the RFP schedule and competitor information, marked "data not yet available" | S3 | Sun 11 Oct | todo | from the 8 Oct call (plan §8) |
+| A-12 | Go/no-go summary: requirements by category; how they are satisfied (fully / partly / not, from matches and unit responses); a system recommendation clearly labelled as advice (e.g. "8 of 10 criteria met"); structured decision criteria instead of only a free-text rationale; placeholders for cost vs budget, delivery vs the RFP schedule and competitor information, marked "data not yet available" | S3 | Sun 11 Oct | done | from the 8 Oct call (plan §8). `decisions.summary()`: fully / partly / not / bid desk per requirement (answer first, else estimated from the match), counts by category, 12 criteria from `go_no_go.json` (7 assessed, 5 'data not yet available'), advice as a count; the person's judgement per criterion stored in `Decision.criteria` (reseed) |
 
 ## Blocked on / needs from others
 
@@ -36,3 +36,4 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | 8 Oct | A-06 done: engineering checks in the evidence pack. On the 840-item list they flag Cloud / Flex / JetCool matches as outside the RFP's scope | matcher run before Mon; A-07 |
 | 9 Oct | A-07 done: inbox links to the RFP and each highlighted source, Return with a required note, returned items reopen, Submit all | A-12 go/no-go summary; matcher run before Mon |
 | 9 Oct | A-08 done: multi-unit hyperscale sample as OPP-0002 ([contract] Piyush: scripts; [contract] Janvia: seed data) | A-12; matcher run before Mon |
+| 9 Oct | A-12 done: go/no-go summary with criteria, advice and structured judgement per criterion | matcher run before Mon; A-09..A-11 after 12 Oct |
