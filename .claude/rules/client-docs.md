@@ -5,11 +5,11 @@ paths:
 
 # Client-facing documents (`Documents/`)
 
-Everything in `Documents/` is shared with the client point of contact and is the project's source of truth.
+Everything in `Documents/` is shared with the Zensar point of contact and is the project's source of truth.
 
 - **Neutral voice.** Never name meeting participants (client or Zensar team). No "he said", no "the sponsor", no
   dialogue, no quoted speech. Phrase meeting content impersonally: "The review meeting of 8 Oct 2026 described…".
-  In question tables write "Client point of contact".
+  In question tables write "Zensar point of contact".
 - **Labels.** Use the existing status labels: **Intended**, **Expected (review meetings)**, **Proposed (inferred
   design)**, **Implemented (by code line)**, **Needs confirmation**. Never present an expectation as built.
 - **Keep history.** Mark superseded content as history; do not delete it.

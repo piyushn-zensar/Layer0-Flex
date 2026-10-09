@@ -14,7 +14,7 @@ Layer 0 is a proof of concept (PoC: a small build that tests whether an idea wor
 - track each team's response;
 - bring the responses together into a final response that traces back to every original requirement.
 
-This workflow is the business direction described in the review meetings (22 Sep, 5 Oct and 8 Oct 2026) and is used as the working baseline. It has not been formally signed off, and no existing build implements it end to end. The review of 8 Oct 2026 added concrete direction (three screens, roles, an agentic process, retrieval) and made the Git repository **Layer0-Flex** the single code base; it is a skeleton only on that date. The architecture assumes that EP² (Electrical Power Products) is already part of SpinCo / Axiom Solutions (written client direction), and the design includes solution components coming from EP².
+This workflow is the business direction described in the review meetings (22 Sep, 5 Oct and 8 Oct 2026) and is used as the working baseline. It has not been formally signed off, and no existing build implements it end to end. The review of 8 Oct 2026 added concrete direction (three screens, roles, an agentic process, retrieval) and made the Git repository **Layer0-Flex** the single code base; it is a skeleton only on that date. The architecture assumes that EP² (Electrical Power Products) is already part of SpinCo / Axiom Solutions (written direction from the Zensar point of contact), and the design includes solution components coming from EP².
 
 ## Who This Is For
 
@@ -50,7 +50,7 @@ Four code lines exist, named by version and folder: the **v0.3.0 bid-triage pipe
 | **Line item** | One requirement from the RFP as one row, with a unique requirement ID that traces back to its source, for example "page 5, lines 6 to 8" |
 | **Offering type** | How a unit would meet a requirement. **CTO** (configure-to-order): a base model with options chosen, handled by CPQ. **Semi-custom**: a configured product plus extra workshop work. **ETO** (engineered-to-order): no existing product, designed to the customer's requirements. Earlier tiers: `CTO_AUTOMATE` is CTO; `ETO_GUIDED` is semi-custom (guided ETO); `ETO_EXCEPTION` is ETO |
 | **BOM reference** | A pointer to the bill of materials (BOM: the parts list of a product) held in a separate system. Layer 0 reads and shows it on screen 3; it does not construct it. The BOM source system is Needs confirmation |
-| **Brand** | An acquired company name, for example Anord Mardix, Crown, EP², Flex Power Modules, JetCool, EPC Power (acquisition pending), Cloud. EP² is part of SpinCo (written client direction); brand assignment of the others stays inferred until the Form 10 |
+| **Brand** | An acquired company name, for example Anord Mardix, Crown, EP², Flex Power Modules, JetCool, EPC Power (acquisition pending), Cloud. EP² is part of SpinCo (written direction from the Zensar point of contact); brand assignment of the others stays inferred until the Form 10 |
 | **Product pillar** | Critical Power, Embedded Power, Thermal Management, Cloud |
 | **Product layer** | One of the six grid-to-chip layers, L1 to L6. "Six layers" is not the same as the six business units; there is no one-to-one mapping |
 | **Team** | The group that owns and answers requirements. The v0.3.0 knowledge base uses four: Critical Power, Embedded Power, Thermal (JetCool), Cloud |
@@ -248,7 +248,7 @@ This section says only what each code line actually does, with its caveats. **Th
 
 ### Layer0-Flex new baseline (from 8 Oct 2026)
 
-Layer0-Flex is a Git repository and the single code base. It is a modular monolith: one Python service whose modules each have a model, a view and a controller. Modularity is deliberate, so one module can change without touching the others. The architecture is not redesigned. The existing v0.3.0 modules are ported rather than rewritten; the v1.0 and v1.1 rule pieces are reused as evidence checks. All modules are treated as important: the work is to wire them in, test them and use them in the PoC (written client direction). The documents in Layer0-Flex/Documents are the source of truth; build details are in [technical-architecture.md](technical-architecture.md).
+Layer0-Flex is a Git repository and the single code base. It is a modular monolith: one Python service whose modules each have a model, a view and a controller. Modularity is deliberate, so one module can change without touching the others. The architecture is not redesigned. The existing v0.3.0 modules are ported rather than rewritten; the v1.0 and v1.1 rule pieces are reused as evidence checks. All modules are treated as important: the work is to wire them in, test them and use them in the PoC (written direction from the Zensar point of contact). The documents in Layer0-Flex/Documents are the source of truth; build details are in [technical-architecture.md](technical-architecture.md).
 
 **Status on 8 Oct 2026: stage 0 is built: a running skeleton with a demonstration seeded from the Syracuse RFP; the reader and matcher agents have not yet been run on the full RFP.** Build stages are in [technical-architecture.md](technical-architecture.md) section 13.
 

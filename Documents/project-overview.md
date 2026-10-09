@@ -4,7 +4,7 @@
 
 **Purpose.** This document explains the Layer 0 project: what it is meant to do, why it exists, what has actually been built, and what is proposed or still undecided. It is the entry point to the documentation set. Earlier framings of the idea and the chronology are kept in one place, section 11 ("How the idea evolved: history").
 
-**Who this is for.** Developers who have just joined the project, and the client point of contact who reviews the documents. You do not need electrical-engineering or Flex business knowledge. Terms are explained where they first appear.
+**Who this is for.** Developers who have just joined the project, and the Zensar point of contact who reviews the documents. You do not need electrical-engineering or Flex business knowledge. Terms are explained where they first appear.
 
 **Scope.** Project description, status and history. It does not repeat three topics that have their own documents:
 - the customer's business, products and how a bid works today: [business-and-domain-background.md](business-and-domain-background.md);
@@ -13,7 +13,7 @@
 
 **How to read the labels.**
 - **Intended** is the business direction described in the review meetings (22 Sep, 5 Oct and 8 Oct 2026). It is the working baseline for purpose and workflow. It has not been formally signed off, and the meetings are not evidence that anything is built.
-- **Expected (review meetings)** marks an explicit expectation stated in those meetings. Content from the 8 Oct 2026 meeting carries the date "(8 Oct 2026)" where the date matters. Where the client point of contact gave written direction before that meeting, the text says "written client direction".
+- **Expected (review meetings)** marks an explicit expectation stated in those meetings. Content from the 8 Oct 2026 meeting carries the date "(8 Oct 2026)" where the date matters. Where the Zensar point of contact gave written direction before that meeting, the text says "written direction from the Zensar point of contact".
 - **Proposed (inferred design)** marks a design recommendation inferred from the direction. It is not an approved technical design.
 - **Implemented (by code line)** describes only what a code line actually does, with its caveats.
 - **Needs confirmation** marks a point that remains open.
@@ -22,7 +22,7 @@
 
 Layer 0 is a proof of concept (PoC: a small build that tests whether an idea works; it is not a product) for SpinCo, the existing Flex business being spun off as Axiom Solutions. Its intended purpose is to help the business manage an incoming bid opportunity, from the moment a request for proposal (RFP: a long customer document that says what the customer wants to buy) arrives until the final bid response is assembled.
 
-Three roles matter (details in section 6). One **bid manager** has a general idea of all the business units, receives the RFP and owns the opportunity. Each business unit has a **product manager** and a **design engineer**. The bid manager sends each participating unit its part of the RFP in one simple step, the units answer, and the bid manager assembles the comprehensive response (8 Oct 2026). The architecture assumes that EP² (Electrical Power Products) is already part of SpinCo / Axiom Solutions (written client direction).
+Three roles matter (details in section 6). One **bid manager** has a general idea of all the business units, receives the RFP and owns the opportunity. Each business unit has a **product manager** and a **design engineer**. The bid manager sends each participating unit its part of the RFP in one simple step, the units answer, and the bid manager assembles the comprehensive response (8 Oct 2026). The architecture assumes that EP² (Electrical Power Products) is already part of SpinCo / Axiom Solutions (written direction from the Zensar point of contact).
 
 It should:
 - help understand the RFP;
@@ -48,7 +48,7 @@ This workflow is the business direction described in the review meetings and is 
 | Design engineer | The person in a business unit who states, per requirement, whether it is met and with what. Each unit has one (8 Oct 2026) |
 | Line item | One requirement taken from the RFP, shown as one row with a unique requirement ID that traces back to its source, for example "page 5, lines 6 to 8" |
 | Offering type | How a business unit would meet a requirement: configure-to-order (CTO), semi-custom or engineered-to-order (ETO). See section 5 |
-| Brand | An acquired company name, for example Anord Mardix, Crown, EP², Flex Power Modules, JetCool, EPC Power (pending), Cloud. EP² is taken as part of SpinCo (written client direction); the brand assignment of the others stays inferred until the Form 10 (SpinCo's registration filing) |
+| Brand | An acquired company name, for example Anord Mardix, Crown, EP², Flex Power Modules, JetCool, EPC Power (pending), Cloud. EP² is taken as part of SpinCo (written direction from the Zensar point of contact); the brand assignment of the others stays inferred until the Form 10 (SpinCo's registration filing) |
 | Product pillar | Critical Power, Embedded Power, Thermal Management, Cloud |
 | Product layer | One of the six grid-to-chip layers, L1 to L6. "Six layers" is not the same as "six companies"; there is no one-to-one mapping |
 | Team | The delivery or engineering team that owns and answers requirements. The v0.3.0 knowledge base uses four: Critical Power, Embedded Power, Thermal (JetCool), Cloud |
@@ -114,7 +114,7 @@ Detail is in [problem-mapping.md](problem-mapping.md). The core problem is how a
 - **Flex**: parent company and ultimate customer of the work.
 - **SpinCo (to become Axiom Solutions)**: the business whose bids Layer 0 would support. It sells to utilities, hyperscalers (very large cloud providers), neoclouds (new AI-infrastructure entrants), silicon providers and colocation operators; details are in the business background document. The exact separation date is Needs confirmation.
 - **Zensar**: builds the PoC.
-- **Client point of contact**: the business-side point of contact for the PoC; the review meetings of 22 Sep, 5 Oct and 8 Oct 2026 were held with this role.
+- **Zensar point of contact**: the Zensar lead for the PoC, who reviews the documents and works with the business; the review meetings of 22 Sep, 5 Oct and 8 Oct 2026 were held with this role.
 - **The Zensar team**: takes the PoC forward. The PoC code was produced with AI coding tools and has no version history.
 - **Roles (Expected (review meetings), 8 Oct 2026).** One **bid manager** has a general idea of all the business units, receives the RFP and owns the opportunity. **Each business unit has a product manager and a design engineer.** The review spoke of six business units, with EP² named as one. The working list is in the terms table (section 2) and is Needs confirmation.
 - **Intended end users (Proposed, inferred design):** the bid manager; the product managers and design engineers of the participating units; and the people who make go/no-go decisions. Titles and named individuals at SpinCo are Needs confirmation.
@@ -310,7 +310,7 @@ Whether `layer0-delivery/` is the newest "enhanced" 17-module version is also un
 | 23 Sep | Pivot to portfolio-risk intake; v1.1 rewrite planned (about 22 hours estimated) |
 | 24 and 28 Sep | v1.1 release folder and parent folder dates |
 | 5 Oct | Review meeting 2: v1.1 reviewed; three-way traceability screen missing; decision to consolidate documents before more code |
-| 8 Oct | Review meeting 3 (preceded by a written note from the client point of contact): roles, three screens, offering types, agentic process, RAG, Layer0-Flex adopted by the project team as the single code base (stage 0 skeleton); first screen walkthrough planned for 9 Oct |
+| 8 Oct | Review meeting 3 (preceded by a written note from the Zensar point of contact): roles, three screens, offering types, agentic process, RAG, Layer0-Flex adopted by the project team as the single code base (stage 0 skeleton); first screen walkthrough planned for 9 Oct |
 
 ## 12. Roadmap and next steps
 
@@ -383,10 +383,10 @@ Smaller meeting agreements (22 Sep): use the sample RFP already in the app inste
 
 ### 13.1a Direction from the 8 Oct 2026 review
 
-Each point is marked as stated in the meeting, as written client direction given before it, or as a project-team decision. Formal sign-off is still pending.
+Each point is marked as stated in the meeting, as written direction from the Zensar point of contact given before it, or as a project-team decision. Formal sign-off is still pending.
 
-1. **EP² is part of SpinCo / Axiom Solutions** (written client direction). The design includes solution components coming from EP², and the working code must include EP² products. This replaces the earlier "brand assignment inferred until the Form 10" caveat for EP² only; the caveat stays for the other brands.
-2. **Connect and test the unwired modules** (written client direction). All existing modules are important; wire them in, test them and use them in the PoC.
+1. **EP² is part of SpinCo / Axiom Solutions** (written direction from the Zensar point of contact). The design includes solution components coming from EP², and the working code must include EP² products. This replaces the earlier "brand assignment inferred until the Form 10" caveat for EP² only; the caveat stays for the other brands.
+2. **Connect and test the unwired modules** (written direction from the Zensar point of contact). All existing modules are important; wire them in, test them and use them in the PoC.
 3. **Three screens** (stated in the meeting): the original RFP, the requirement breakdown, and the requirement-to-product mapping with BOM detail. Layer 0 reads the BOM from a separate system and does not construct it.
 4. **Simple workflow** (stated in the meeting): one-step dispatch from the bid manager; checklist responses; validation; the system tracks which units have responded.
 5. **No regex** (stated in the meeting): pattern matching turned table-of-contents entries into requirements and used about 100,000 model tokens. Requirement identification must be model-based on top of deterministic layout reading. The choice of PDF tooling is not the client's concern; the quality of the result is.

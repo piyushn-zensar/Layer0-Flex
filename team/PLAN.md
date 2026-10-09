@@ -7,8 +7,9 @@ Internal working document for the build team (Piyush, Atharv, Janvia). **Not cli
 | When | What the client sees | Stage |
 |---|---|---|
 | **Fri 9 Oct 2026** | Walkthrough of the **three screens** on the Syracuse RFP (seeded data is acceptable) + walkthrough document | S0 done, S1 started |
+| **Fri 9 Oct 2026, evening IST** | 30-minute demo with the Zensar point of contact (agreed on the 8 Oct evening call) | S1–S2 |
 | **Mon 12 Oct 2026** | A **functioning** run: real RFP → agentic reading → line items → product matching (EP² and the other units) → decisions → dispatch → unit responses → consolidation | S1–S3 |
-| After 12 Oct | Consolidation drafting, knowledge-base feedback loop, change handling | S4–S5 |
+| After 12 Oct | Consolidation drafting, knowledge-base feedback loop, change handling; a package the Zensar point of contact can install and run on a laptop once the build is robust (P-14) | S4–S5 |
 
 The design is fixed: [Documents/technical-architecture.md](../Documents/technical-architecture.md). Do **not** redesign. Wire in, port, test.
 
@@ -73,6 +74,9 @@ Status lives in each person's tracker; this table is the master list. Janvia's l
 | P-08 | Switch the demo from seed to real extraction; end-to-end dry run; fix integration bugs | S3 | Mon 12 Oct AM | P-04, A-03 |
 | P-09 | Port model-change guard (M16) as a golden test over `llm_cache` | S4 | after 12 Oct | P-05 |
 | P-10 | Response-outline drafting agent (`consolidation/agent.py`, called by Janvia's page) | S4 | after 12 Oct | J-05 |
+| P-13 | Requirement history: every change kept and shown (who, when, original vs changed, all versions) from the audit log; a History view per line item on the Requirements page | S2 | Sat 10 Oct | P-06 |
+| P-14 | Laptop package for the Zensar point of contact: one Windows setup script (venv, npm install, production build, demo seed) and one run script; works without Tesseract (committed layouts) and without an API key (`mock`); short install guide; walk the client through it | S3 | Mon 12 Oct | P-08 |
+| P-15 | Add a missed requirement by selecting lines on the RFP page (link it to its source without pasting the quote) | S4 | after 12 Oct | P-06 |
 | P-11 | Changes module: addendum → delta vs. baseline → new versions → responses returned | S5 | after 12 Oct | — |
 
 ### Atharv — knowledge base, matching, decisions, work packages
@@ -89,6 +93,8 @@ Status lives in each person's tracker; this table is the master list. Janvia's l
 | A-08 | Multi-unit sample: convert `data/RFP/samples/rfp_hyperscale_campus.txt` to PDF (`scripts/txt_to_pdf.py`) and add it as a second seeded opportunity | S3 | Mon 12 Oct AM | A-04 |
 | A-09 | Routing payloads (M8): per-unit hand-off JSON (CTO items → CPQ seed) as a download | S4 | after 12 Oct | — |
 | A-10 | v1.1 bid / portfolio checks (`reference/v1.1/logic`) in the evidence pack, constants labelled placeholders | S4 | after 12 Oct | — |
+| A-11 | Knowledge-base queue: "Send to knowledge base" on a requirement, response or decision rationale puts it in a review queue; a curator page approves items into `past_responses` (RAG). Show as planned on 12 Oct if not built | S4 | after 12 Oct | A-02 |
+| A-12 | Go/no-go summary: requirements by category; how they are satisfied (fully / partly / not, from matches and unit responses); a system recommendation clearly labelled as advice (e.g. "8 of 10 criteria met"); structured decision criteria instead of only a free-text rationale; placeholders for cost vs budget, delivery vs the RFP schedule and competitor information, marked "data not yet available" | S3 | Sun 11 Oct | A-06 |
 
 ### Janvia — three screens, portfolio, consolidation, walkthrough (lighter load)
 
@@ -101,6 +107,7 @@ Status lives in each person's tracker; this table is the master list. Janvia's l
 | J-05 | Consolidation page: blocking items link to the three screens; compliance-matrix columns reviewed with the bid-manager view | S3 | Sun 11 Oct | — |
 | J-06 | Monday demo click-path checklist (in the walkthrough) and a dry run with Piyush | S3 | Mon 12 Oct AM | P-08 |
 | J-07 | Response-outline view (uses P-10) | S4 | after 12 Oct | P-10 |
+| J-08 | Compliance matrix as a professional Excel file (.xlsx), generated deterministically (openpyxl, no model): title block, frozen header row, filters, column widths, wrapped text, offering-type colours, source page and lines; keep the CSV | S3 | Sun 11 Oct | — |
 
 ## 6. Port map (existing modules → where they go)
 
@@ -129,3 +136,26 @@ All earlier code is in `reference/` (read-only). Full table with known defects: 
 | Merge conflicts | Ownership map, small commits, `pull --rebase` before push |
 | Atharv's health / availability | A-tasks ordered so S2 (matching) lands first; Piyush picks up A-07/A-08 if needed |
 | Janvia's Pro limits | UI and writing tasks; Sonnet only; no long agent runs |
+
+## 8. Client call, 8 Oct 2026 evening: suggestions and where they go
+
+Source: the call recording of 8 Oct (internal). The Zensar point of contact was positive about the progress and asked for a short demo on 9 Oct evening.
+
+| # | Suggestion | Where it goes |
+|---|---|---|
+| 1 | Demo story: the RFP arrives, the tool breaks it into requirements with traceability, people review them side by side with the RFP, split one into sub-requirements, and add a requirement the tool missed (new technology areas), linked to its source | Built (P-06). Linking a new requirement by selecting lines on the page: P-15 |
+| 2 | The system is the source of truth: every edit goes through change management on the requirement; who edited it, when, the original and every later version are kept | P-13 (history view); later changes after freeze: P-11 |
+| 3 | Continuous improvement: while reviewing or writing a response, send an item to the knowledge base; it waits in a queue until the person who maintains the knowledge base includes it | A-11 |
+| 4 | Build the knowledge base from prior proposals and their responses, so the system learns from both | A-02 (seed), A-11 (feedback), real past bids needed from the business units |
+| 5 | Go/no-go must rest on a summary: the RFP, the requirements, how each is satisfied (fully, partly, not), a system recommendation; and later customer expectations (delivery date), internal budget, product cost and competitor information. Think through what the decider looks for, not only a rationale field | A-12 now; cost, budget and competitor data are roadmap (assume the data will exist later) |
+| 6 | One professional-looking Excel file of all requirements (CSV is not enough) | J-08, generated deterministically, not by a model |
+| 7 | Bid data must not go to a public model: non-public bids need a model running inside the enterprise (for example a small language model); the PoC may keep using the hosted API | Roadmap; open decision 1 in technical-architecture §14 |
+| 8 | Ship a package the Zensar point of contact can run alone on a laptop, including the OCR dependency, and walk him through it once it is robust | P-14 (Tesseract is only needed on the parsing machine: the layouts are committed) |
+
+**Positioning to keep in every document and demo:** Layer 0 is neither a CRM nor a CPQ tool; it is the bridge between them. People stay in charge: a company will not trust the tool alone until it is proven, so every agent output is reviewed.
+
+**Roadmap (not in the PoC):**
+- an enterprise-hosted model for non-public bids;
+- cost, budget, delivery and competitor data feeding the go/no-go summary;
+- model-assisted parsing of difficult pages inside the enterprise;
+- learning from the business units' real prior proposals.

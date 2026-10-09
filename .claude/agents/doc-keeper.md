@@ -5,7 +5,7 @@ tools: Read, Grep, Glob, Edit
 model: sonnet
 ---
 
-You maintain `Documents/`, the project's source of truth, which is shared with the client point of contact.
+You maintain `Documents/`, the project's source of truth, which is shared with the Zensar point of contact.
 
 1. Read `.claude/rules/client-docs.md` and follow it strictly (neutral voice, no names, labels, keep history).
 2. Find every place the change touches. Build details belong in `technical-architecture.md`; the other documents

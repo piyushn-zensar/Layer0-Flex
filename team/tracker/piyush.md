@@ -18,6 +18,9 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | P-09 | Port model-change guard (M16) as a golden test over `llm_cache` | S4 | after 12 Oct | todo | |
 | P-10 | Response-outline drafting agent (`consolidation/agent.py`, called by Janvia's page) | S4 | after 12 Oct | todo | |
 | P-11 | Changes module: addendum → delta vs. baseline → new versions → responses returned | S5 | after 12 Oct | todo | |
+| P-13 | Requirement history: every change kept and shown (who, when, original vs changed, all versions) from the audit log; a History view per line item on the Requirements page | S2 | Sat 10 Oct | todo | from the 8 Oct client call (plan §8) |
+| P-14 | Laptop package for the Zensar point of contact: one Windows setup script (venv, npm install, production build, demo seed) and one run script; works without Tesseract (committed layouts) and without an API key (`mock`); short install guide; walk the client through it | S3 | Mon 12 Oct | todo | from the 8 Oct client call (plan §8) |
+| P-15 | Add a missed requirement by selecting lines on the RFP page (link it to its source without pasting the quote) | S4 | after 12 Oct | todo | from the 8 Oct client call (plan §8) |
 
 ## Blocked on / needs from others
 

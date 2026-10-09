@@ -4,7 +4,7 @@
 
 **Purpose.** This document describes how Layer 0 is built: the modules, the data they hold, how an RFP is read into traceable requirement line items, how those line items are matched to business-unit products, and how they move through the opportunity workflow to the final response. It is the build reference for the PoC in the **Layer0-Flex** repository.
 
-**Who this is for.** Developers building Layer 0, and the client point of contact who reviews the design. Business background is in [business-and-domain-background.md](business-and-domain-background.md); the problems are in [problem-mapping.md](problem-mapping.md); the earlier code lines and how their modules are ported are in [architecture-overview.md](architecture-overview.md).
+**Who this is for.** Developers building Layer 0, and the Zensar point of contact who reviews the design. Business background is in [business-and-domain-background.md](business-and-domain-background.md); the problems are in [problem-mapping.md](problem-mapping.md); the earlier code lines and how their modules are ported are in [architecture-overview.md](architecture-overview.md).
 
 **Status (8 Oct 2026).**
 - The **workflow** is the one described in the review meetings of 22 Sep, 5 Oct and 8 Oct 2026 ([project-overview.md](project-overview.md) section 7). It has not been formally signed off.
@@ -249,7 +249,7 @@ The provenance classes reuse the v0.3.0 `provenance/anchors.py` design; the reco
 
 ### 7.1 Catalog and knowledge base (RAG)
 
-- `business_units.json`: the working list of business units, with pillar, status, product manager and design engineer. EP² is part of SpinCo per client direction. EPC Power is listed as pending and is not offered.
+- `business_units.json`: the working list of business units, with pillar, status, product manager and design engineer. EP² is part of SpinCo per written direction from the Zensar point of contact. EPC Power is listed as pending and is not offered.
 - `products.json`: each unit's product families, offering type, description, retrieval keywords and BOM lines. The seed content is **illustrative** and must be replaced with each unit's real catalog (Needs confirmation).
 - `past_responses.json`: past RFP answers per unit. Validated responses from finished opportunities are added here, which is the database-to-knowledge-base connector (stage 4).
 - Retrieval ranks products and past responses for a requirement's text. Scores are kept as evidence.

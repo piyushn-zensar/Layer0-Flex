@@ -13,7 +13,7 @@
 **How statements are labelled.**
 
 - **Company and market facts** come from the written portfolio and market sources and are labelled where they are inferred or unverified.
-- **Review-meeting statements** (the review meetings of 22 Sep, 5 Oct and 8 Oct 2026) are the working baseline for Layer 0's purpose and workflow. Statements from the 8 Oct 2026 meeting are marked "(8 Oct 2026)" where the date matters, and written client direction given before it is marked as such. They are not verified corporate facts, and the workflow has not been formally signed off. Where a meeting statement is used for a business fact, it is marked **Needs confirmation** or "from the review meetings; needs confirmation".
+- **Review-meeting statements** (the review meetings of 22 Sep, 5 Oct and 8 Oct 2026) are the working baseline for Layer 0's purpose and workflow. Statements from the 8 Oct 2026 meeting are marked "(8 Oct 2026)" where the date matters, and written direction from the Zensar point of contact given before it is marked as such. They are not verified corporate facts, and the workflow has not been formally signed off. Where a meeting statement is used for a business fact, it is marked **Needs confirmation** or "from the review meetings; needs confirmation".
 - A statement that is an argument made by a source, not a verified fact, is marked as such.
 - Where sources disagree, the conflict is named and left open.
 - Illustrative examples are labelled **illustrative**. They are not recorded SpinCo bids.
@@ -64,13 +64,13 @@ Terms in the table, explained:
 
 ### 3.3 The brands
 
-Brand-to-SpinCo assignments are inferred until the Form 10 is filed, with one exception: written client direction (before the 8 Oct 2026 review) is that EP² is already part of SpinCo / Axiom Solutions. The Layer 0 design assumes this and includes solution components coming from EP²; the working code must include EP² products.
+Brand-to-SpinCo assignments are inferred until the Form 10 is filed, with one exception: written direction from the Zensar point of contact (before the 8 Oct 2026 review) is that EP² is already part of SpinCo / Axiom Solutions. The Layer 0 design assumes this and includes solution components coming from EP²; the working code must include EP² products.
 
 | Brand | Pillar | What it does |
 |---|---|---|
 | Anord Mardix | Critical Power | Switchgear, busway, power distribution, modular power, monitoring and services. Mostly configure-to-order |
 | Crown Technical Systems | Critical Power | Control panels, medium-voltage switchgear (arc-resistant and standard), E-Houses |
-| Electrical Power Products (EP²) | Critical Power | Substation control buildings, relay and protection panels, auxiliary power. Labelled "engineered-to-order" on Flex's website. Part of SpinCo by written client direction; the architecture includes EP² components |
+| Electrical Power Products (EP²) | Critical Power | Substation control buildings, relay and protection panels, auxiliary power. Labelled "engineered-to-order" on Flex's website. Part of SpinCo by written direction from the Zensar point of contact; the architecture includes EP² components |
 | Flex Power Modules | Embedded Power | Board-level DC-DC converters, power modules, rack power shelves |
 | JetCool | Thermal Management | Chip-level liquid cooling, cold plates, coolant distribution units |
 | EPC Power | Critical or Embedded Power (sources give both) | 800 V DC and grid-forming power conversion, some designs first-of-kind. **Pending acquisition**: $4.4 billion, announced 3 Sep 2026, close expected in Q4 2026 |
