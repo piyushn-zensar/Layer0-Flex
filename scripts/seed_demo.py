@@ -1,7 +1,8 @@
-"""Load the Syracuse demo opportunity through the real module services.
+"""Load the Syracuse demo opportunity (and the multi-unit hyperscale sample) through the real module services.
 
-    .venv\\Scripts\\python -m scripts.seed_demo          # adds the demo opportunity
+    .venv\\Scripts\\python -m scripts.seed_demo          # adds OPP Syracuse, then the hyperscale sample (A-08)
     .venv\\Scripts\\python -m scripts.seed_demo --reset  # deletes the local DB first
+main() alone (as the tests call it) seeds only Syracuse.
 
 Every step calls the same service a user action would call, so the seed doubles as an end-to-end check.
 """
@@ -25,13 +26,13 @@ from app.modules.workpackages import service as workpackages  # noqa: E402
 BM = "Bid Manager"
 
 
-def main() -> None:
-    seed = json.loads((config.SEED / "demo_syracuse.json").read_text("utf-8"))
+def main(seed_file: str = "demo_syracuse.json") -> None:
+    seed = json.loads((config.SEED / seed_file).read_text("utf-8"))
     with SessionLocal() as db:
         o = seed["opportunity"]
         opp = opportunities.create(db, o["title"], o["customer"], o["customer_type"], BM)
-        doc = opportunities.add_document(db, opp.id, "RFP-2023-20-Switchgear-Procurement-Final.pdf",
-                                         (config.ROOT / seed["document"]).read_bytes(), "main", BM)
+        pdf = config.ROOT / seed["document"]
+        doc = opportunities.add_document(db, opp.id, pdf.name, pdf.read_bytes(), "main", BM)
         print("ingested:", ingestion.ingest(db, doc.id))
 
         responses = {}
@@ -61,3 +62,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+    main("demo_hyperscale.json")  # A-08: multi-unit sample, added by Atharv ([contract] Piyush)
