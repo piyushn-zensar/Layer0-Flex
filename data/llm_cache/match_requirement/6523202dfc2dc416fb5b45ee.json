@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to legal and procedural aspects of the RFP submission process, not to a specific product or business unit offering. Therefore, no mapping to SpinCo business units or products is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

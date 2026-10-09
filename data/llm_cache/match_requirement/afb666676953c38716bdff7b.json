@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to coordination and installation of piping systems, which is a construction and installation task rather than a product requirement. Therefore, no product from the provided candidates is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

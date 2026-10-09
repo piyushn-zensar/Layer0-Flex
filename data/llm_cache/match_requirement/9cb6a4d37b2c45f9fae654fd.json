@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement specifies metal-clad switchgear designed per IEEE standards, which aligns with the product 'CROWN-ARMV' from the CROWN business unit. This product is engineered-to-order and meets the IEEE C37.20.7 standard for arc-resistant metal-clad switchgear, making it suitable for the requirement.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

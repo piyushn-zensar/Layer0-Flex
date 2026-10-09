@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to submission of certified test reports for approval drawings, which is a commercial or procedural requirement rather than a product-specific one. Therefore, no product mapping is necessary.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

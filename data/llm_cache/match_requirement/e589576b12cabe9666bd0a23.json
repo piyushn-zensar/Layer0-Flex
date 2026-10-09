@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies the provision of conduits for power connection from switchgear in a building to a location, which aligns with the capabilities of the EP2-PDC product as it involves a substation control building housing power distribution equipment. This product is suitable for engineered-to-order (ETO) offerings to meet the specific requirement.",
+    "units": [
+      {
+        "bu": "EP2",
+        "offering_type": "ETO",
+        "product_id": "EP2-PDC"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

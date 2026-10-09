@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to the Proposer's experience, stability, and performance standards, which are commercial and organizational aspects rather than specific product offerings. Therefore, no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

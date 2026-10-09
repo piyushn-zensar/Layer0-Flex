@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to compliance with policies and procedures, as well as utilization of specific business entities in contract performance. This is not a product requirement but rather a commercial or legal obligation. Therefore, no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement specifies liquid cooling at both rack and chip levels for a minimum density of 120kW per rack. The JETCOOL-CDU product provides coolant distribution units capable of managing liquid cooling at the rack level for densities up to 120kW, while the JETCOOL-PLATE product offers direct-to-chip cold plates for liquid cooling at the chip level. These products together meet the technical requirement effectively.",
+    "units": [
+      {
+        "bu": "JETCOOL",
+        "offering_type": "SEMI_CUSTOM",
+        "product_id": "JETCOOL-CDU"
+      },
+      {
+        "bu": "JETCOOL",
+        "offering_type": "CTO",
+        "product_id": "JETCOOL-PLATE"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies rack-level power and cooling integration, with compute integration coordinated separately. The product 'CLOUD-INT' from the CLOUD business unit matches this requirement as it offers rack-scale integration and testing of power and cooling systems, aligning with the scope requested.",
+    "units": [
+      {
+        "bu": "CLOUD",
+        "offering_type": "SEMI_CUSTOM",
+        "product_id": "CLOUD-INT"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

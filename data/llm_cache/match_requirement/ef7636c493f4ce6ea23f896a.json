@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies the provision of conduits for fire alarm connections in a switchgear building. The candidate 'EP2-PDC' from the EP2 business unit describes a pre-engineered substation control building that houses protection, control, and auxiliary power equipment, which aligns with the context of the requirement. This product is suitable for the described need, as it includes infrastructure for electrical and control systems.",
+    "units": [
+      {
+        "bu": "EP2",
+        "offering_type": "ETO",
+        "product_id": "EP2-PDC"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement pertains to compliance and obtaining permits, which are commercial and legal aspects of the project. These are not directly related to a specific product offering, and thus no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

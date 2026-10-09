@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to construction and finishing of interior gypsum boards, which does not align with any of the listed products. This is a construction-related specification, not a product requirement.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

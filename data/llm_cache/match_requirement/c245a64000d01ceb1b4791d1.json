@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies the erection and anchoring of a prefabricated equipment enclosure, which aligns with the description of the 'CROWN-EHOUSE' product as a pre-built transportable electrical house containing switchgear and controls. This product is suitable for the described application.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-EHOUSE"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

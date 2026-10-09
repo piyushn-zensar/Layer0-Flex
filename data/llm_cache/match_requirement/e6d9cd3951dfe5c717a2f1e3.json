@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement specifies 'Metal Clad Switchgear,' which matches the description of the product 'CROWN-ARMV' from the CROWN business unit. This product is an engineered-to-order (ETO) arc-resistant metal-clad medium-voltage switchgear lineup, meeting the IEEE C37.20.7 Type 2B standard, which aligns with the technical details provided in the requirement.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

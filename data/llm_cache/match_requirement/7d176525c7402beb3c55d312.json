@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement pertains to compliance with legal and regulatory standards, specifically M/WBE requirements under NYS Executive Law. This is not a product requirement, and thus no SpinCo business unit or product is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

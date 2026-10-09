@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement specifies metal-clad switchgear with specific features such as independent trip coils and compatibility with other breakers of the same rating. Among the candidates, 'CROWN-ARMV' from the CROWN business unit is an engineered-to-order (ETO) product that provides metal-clad medium-voltage switchgear with vacuum circuit breakers, which aligns with the requirement. Other candidates either do not match the specification or are not related to switchgear.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

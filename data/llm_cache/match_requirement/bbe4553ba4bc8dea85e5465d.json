@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to compliance with licenses and registrations, which is a commercial or legal aspect of the proposal. It does not specify a product requirement, so no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

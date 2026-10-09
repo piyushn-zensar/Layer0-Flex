@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to the submission process and communication of RFP addenda, which is a commercial and procedural aspect of the RFP. It does not specify a product or technical requirement, so no mapping to SpinCo business units or products is necessary.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

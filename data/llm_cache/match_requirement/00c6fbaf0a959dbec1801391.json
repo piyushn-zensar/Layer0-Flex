@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement pertains to the submission process and does not specify a product or service to be provided. It is a commercial or procedural requirement, and thus no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

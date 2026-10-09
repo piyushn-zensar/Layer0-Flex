@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to the number of independent trip coils for metal-clad switchgear. Among the candidates, the product 'CROWN-ARMV' from the CROWN business unit is an arc-resistant metal-clad medium-voltage switchgear, which aligns with the specification in the page header. This product is suitable for the requirement as it is engineered to order (ETO) and designed for such applications.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

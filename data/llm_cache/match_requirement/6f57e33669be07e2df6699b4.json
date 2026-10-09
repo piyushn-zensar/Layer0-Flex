@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement pertains to submission of documentation related to SDVOB goals and waiver applications, which is a commercial or administrative requirement. It does not specify a product or service to be provided, hence no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

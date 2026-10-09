@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to compliance and subcontracting goals for service-disabled veteran-owned business enterprises (SDVEs). It does not specify a product or service requirement that can be mapped to the provided candidates. Therefore, no product or business unit is applicable to this requirement.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

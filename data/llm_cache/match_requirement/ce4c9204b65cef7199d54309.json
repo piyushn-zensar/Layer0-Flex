@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement specifies metal-clad switchgear with compliance to ANSI C37.20 standards. Among the candidates, 'CROWN-ARMV' is an engineered-to-order (ETO) product that provides arc-resistant metal-clad medium-voltage switchgear, which aligns with the technical specification provided in the requirement. Other candidates either do not meet the specific technical criteria or are accessories rather than the main product.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

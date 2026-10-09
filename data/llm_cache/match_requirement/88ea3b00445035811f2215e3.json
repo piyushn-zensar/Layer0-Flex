@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to workmanship for metal-clad switchgear as specified in the Syracuse Airport Specification. Among the candidates, the product 'CROWN-ARMV' from the CROWN business unit is an engineered-to-order (ETO) arc-resistant metal-clad medium-voltage switchgear, which aligns with the specification requirements. The other candidate, 'CROWN-EHOUSE', is an electrical house and does not directly address the switchgear specification.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

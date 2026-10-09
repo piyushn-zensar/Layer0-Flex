@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement is not a product-related technical specification but rather a procedural or informational note about reviewing the Workplan and specifications. Therefore, no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

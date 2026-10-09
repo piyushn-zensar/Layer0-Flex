@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to legal and compliance aspects of the contract and does not specify a product or service to be provided. Therefore, no mapping to a product or business unit is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

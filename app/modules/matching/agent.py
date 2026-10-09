@@ -48,7 +48,9 @@ SCHEMA = {
 
 def propose(requirement: dict, candidates: list[dict]) -> dict:
     """Raises LLMUnavailable when there is no cached answer and no provider; the service then falls back."""
-    prompt = (f"Requirement {requirement['req_id']} ({requirement['category']}):\n{requirement['quote']}\n"
+    # No requirement ID in the prompt: the frozen answer is keyed by the prompt, so the same RFP text gets the same
+    # answer in every opportunity (demo, re-upload, laptop package) instead of new model calls each time.
+    prompt = (f"Requirement ({requirement['category']}):\n{requirement['quote']}\n"
               f"Page header: {requirement['header'] or '(none)'}\n\n"
               f"Candidates:\n{json.dumps(candidates, indent=1)}")
     return complete_json("match_requirement", SYSTEM, prompt, SCHEMA)

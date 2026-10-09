@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 1.0,
+    "rationale": "The requirement pertains to submission instructions and does not specify a product or service. Therefore, no mapping to business units or products is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

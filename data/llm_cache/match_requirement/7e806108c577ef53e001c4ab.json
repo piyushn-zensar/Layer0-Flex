@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies a preference for 800VDC rack-level distribution. Among the candidates, the product 'FPM-SHELF' from the FPM business unit is described as a rack power shelf supporting higher-voltage architectures, which aligns with the requirement. This product is offered as CTO, making it suitable for configuration to meet specific needs.",
+    "units": [
+      {
+        "bu": "FPM",
+        "offering_type": "CTO",
+        "product_id": "FPM-SHELF"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

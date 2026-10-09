@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to the internal review process of proposals by the Authority, which is a procedural and administrative aspect of the RFP. It does not specify a product or technical requirement, hence no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

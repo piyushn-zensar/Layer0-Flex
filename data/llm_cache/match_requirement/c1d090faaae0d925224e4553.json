@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to a commercial aspect of the RFP process, specifically requesting best and final offers. This is not a product requirement, so no mapping to business units or products is necessary.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

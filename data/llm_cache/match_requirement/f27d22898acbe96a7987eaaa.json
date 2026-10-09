@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to compliance and legal conditions regarding the proposer's financial status and obligations. It does not specify a product or technical requirement, so no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to verifying the operation of HVAC, smoke alarms, and door alarms, which are not directly related to the products listed in the candidates. This is likely a task for the bid manager to address as it does not specify a product requirement.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

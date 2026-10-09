@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement specifies a Metal Clad Switchgear lineup with detailed features such as vacuum circuit breakers, isolation switches, and protective relays. The candidate 'CROWN-ARMV' matches these specifications as it describes an arc-resistant metal-clad medium-voltage switchgear lineup with vacuum circuit breakers and other required components. This product is offered as Engineered-to-Order (ETO), which aligns with the custom nature of the requirement.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

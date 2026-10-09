@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement pertains to compliance with legal regulations regarding investment activities in Iran, as outlined in New York State General Municipal Law Section 103-g. This is not a product requirement but a legal compliance matter, and therefore no products or business units are applicable to address this requirement.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to submission and review processes for nameplates and documentation, which are commercial and procedural aspects rather than specific product requirements. Therefore, no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

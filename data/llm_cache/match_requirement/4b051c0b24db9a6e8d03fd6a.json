@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to coordination of outside air intake locations with plumbing contractors, which is a construction and planning activity rather than a product-specific requirement. Therefore, no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

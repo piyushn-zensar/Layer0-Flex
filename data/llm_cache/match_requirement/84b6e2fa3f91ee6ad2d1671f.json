@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies an external power cable entrance at the bottom rear section B2. Among the candidates, the product 'CROWN-ACC' from the CROWN business unit offers accessories for MV switchgear, including cable termination compartments, which align with the described requirement. This product is suitable for the specified cable entrance configuration.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "CTO",
+        "product_id": "CROWN-ACC"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

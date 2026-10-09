@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement specifies technical conditions for metal-clad switchgear, including ambient temperature ranges, altitude, and seismic/wind loading. Among the candidates, 'CROWN-ARMV' is an engineered-to-order (ETO) product specifically designed for metal-clad medium-voltage switchgear, meeting IEEE standards and capable of being tailored to site-specific conditions. This aligns well with the requirement.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

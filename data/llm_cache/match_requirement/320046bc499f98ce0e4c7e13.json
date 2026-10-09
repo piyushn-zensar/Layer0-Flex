@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 1.0,
+    "rationale": "The requirement pertains to legal compliance regarding MWBE Utilization Plans, which is not a product requirement. Therefore, no SpinCo business unit or product is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

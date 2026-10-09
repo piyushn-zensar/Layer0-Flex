@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies nameplates for devices in metal-clad switchgear. The candidate 'CROWN-ARMV' from the CROWN business unit is an arc-resistant metal-clad medium-voltage switchgear, which aligns with the specification header and the described requirement. This product is suitable for the application and meets the technical needs.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

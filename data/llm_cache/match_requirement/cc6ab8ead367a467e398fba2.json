@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to compliance and commercial terms regarding pricing and competition, not a product specification. Therefore, no product mapping is applicable, and the bid manager should address this requirement.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

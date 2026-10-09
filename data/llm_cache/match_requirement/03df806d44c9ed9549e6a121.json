@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to construction and installation coordination, specifically regarding tile dimensions and gypsum board alignment. This is not a product requirement but rather a directive for the general contractor. Therefore, no SpinCo business unit or product is applicable to this requirement.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

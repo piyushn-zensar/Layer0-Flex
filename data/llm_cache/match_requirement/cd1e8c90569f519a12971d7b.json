@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement specifies metal-clad switchgear suitable for operation on a solidly grounded system rated 13200 volts line-to-line, 3-phase, 4-wire, 60 hertz. Among the candidates, the product 'CROWN-ARMV' from the CROWN business unit is described as arc-resistant metal-clad medium-voltage switchgear, which matches the voltage class and type of equipment required. This product is offered as engineered-to-order (ETO), aligning with the specification's need for tailored equipment.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies that the cable is provided by the utility and terminations are done by the contractor. This does not directly pertain to a product offering from the candidates provided, as it describes work done by others. Therefore, no product is mapped to this requirement.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

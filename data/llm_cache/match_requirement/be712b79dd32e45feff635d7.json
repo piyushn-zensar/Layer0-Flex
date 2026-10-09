@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies a greenfield site in Central Texas with pending grid interconnect approval. The ANORD-POD product, described as a prefabricated modular power pod adapted to site conditions, aligns well with the need for a modular and adaptable solution for power deployment at a new site. This product is suitable for the described scenario.",
+    "units": [
+      {
+        "bu": "ANORD",
+        "offering_type": "SEMI_CUSTOM",
+        "product_id": "ANORD-POD"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

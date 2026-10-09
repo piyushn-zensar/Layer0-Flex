@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies the application of protective finishes and coatings to metal-clad switchgear, which aligns with the product 'CROWN-ARMV' from the CROWN business unit. This product is described as arc-resistant metal-clad medium-voltage switchgear, which matches the specification for the Syracuse Airport. The offering type is ETO, as the requirement involves specific finishes and coatings tailored to the customer's needs.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

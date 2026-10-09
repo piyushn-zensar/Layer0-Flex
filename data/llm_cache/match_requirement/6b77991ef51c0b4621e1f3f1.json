@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement is legal in nature and does not pertain to a specific product or business unit offering. Therefore, no mapping to products is necessary.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

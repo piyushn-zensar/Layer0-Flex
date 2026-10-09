@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement pertains to compliance goals for MWBE and EEO participation, which are commercial and legal aspects of the procurement process. It does not specify a product or technical requirement, so no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

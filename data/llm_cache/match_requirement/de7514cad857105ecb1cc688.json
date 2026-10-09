@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies a test cabinet as part of a metal-clad switchgear system. Among the candidates, the product 'CROWN-ARMV' from the CROWN business unit matches the description as it offers arc-resistant metal-clad medium-voltage switchgear, which aligns with the specification for the Syracuse Airport. This product is suitable for the engineered-to-order (ETO) offering type, as it can be tailored to include the required test cabinet and associated components.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

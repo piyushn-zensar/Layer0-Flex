@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to compliance and notification procedures related to changes in the RFP. It does not specify a product or technical solution, so no product mapping is applicable. The bid manager should address this requirement.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

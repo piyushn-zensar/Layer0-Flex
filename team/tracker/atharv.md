@@ -28,6 +28,7 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 
 | Date | Done | Next |
 |---|---|---|
+| 9 Oct 2026 | [contract] by Piyush: the requirement ID is no longer in the matcher prompt (`matching/agent.py`), so frozen answers fit any opportunity reading the same RFP; all matcher answers regenerated with GPT-4o for the 353 grouped Syracuse requirements and the 10 hyperscale items (363, old ones removed). Syracuse: Crown 112, EP² 13, FPM 1 (wrong: p.36 M/WBE form field), bid desk 227 | check the FPM match; consider a rule that form fields are never product items |
 | 8 Oct | Fixed in matching / decisions / workpackages: re-run matching no longer overwrites accepted, manual or rejected matches; a rejected match no longer brings back an older proposal; dispatch needs a "go" (409 otherwise); invalid actions, outcomes and compliance values get 422, unknown IDs 404. Regression test appended to `tests/test_smoke.py` | finish A-01 (seed, run, read §7), then A-02 |
 | 8 Oct | A-01 done. A-02 done: retrieval now ranks rack-mounted PDUs → Anord PDU, SEL-751 relay / relay programming → EP² relay panel; Syracuse demo matches unchanged | A-03 (needs Azure settings; depends on P-04) |
 | 8 Oct | A-03 done: 174 Syracuse matches (134 bid manager, 39 Crown, 1 EP²; 0 wrong-unit, 0 invalid). Found reader gap: no items from spec pages 59–61, 63–67 | reader fix ([contract] Piyush), then re-run matcher for new items |

@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement is commercial in nature, as it pertains to certification of fees and contract value. It does not specify a product or technical solution, so no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

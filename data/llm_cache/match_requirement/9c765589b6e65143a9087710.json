@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement specifies a Normal Frequency Withstand of 36 kV, rms. Among the candidates, the product 'CROWN-ARMV' from the CROWN business unit is an arc-resistant metal-clad MV switchgear suitable for voltage classes up to 38 kV, which meets the withstand voltage requirement. This product is offered as Engineered-to-Order (ETO), ensuring it can be tailored to the specific technical needs of the customer.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 1.0,
+    "rationale": "The requirement pertains to submission details, specifically the location of the device. This is not a product requirement, and thus no mapping to business units or products is necessary.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

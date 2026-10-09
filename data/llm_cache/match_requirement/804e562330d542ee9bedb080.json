@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 1.0,
+    "rationale": "The requirement pertains to compliance and submission of a utilization plan, which is not a product requirement. Therefore, no products or business units are mapped to this requirement.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

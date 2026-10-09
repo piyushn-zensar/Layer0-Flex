@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 1.0,
+    "rationale": "The requirement pertains to submission and certification information, which is not related to a product offering. Therefore, no mapping to business units or products is necessary.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

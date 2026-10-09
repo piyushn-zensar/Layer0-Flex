@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to contractor responsibilities for verifying conditions, coordinating work, and maintaining operational circuits during construction. It does not specify a product or equipment need, so no product mapping is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement is legal in nature and does not pertain to a specific product or business unit offering. It is related to contractual definitions and responsibilities, which are addressed by the bid manager.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

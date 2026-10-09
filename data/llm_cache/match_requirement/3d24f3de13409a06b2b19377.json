@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to submission instructions for proposers, specifically regarding contact information and communication with the Authority. It does not specify a product or service requirement, hence no mapping to SpinCo business units or products is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

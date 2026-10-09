@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to commercial aspects of the proposal, specifically the fee breakdown for services. It does not specify a product requirement, so no product mapping is necessary.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

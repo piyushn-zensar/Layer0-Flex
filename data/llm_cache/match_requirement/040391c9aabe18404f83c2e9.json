@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies semi-flush panel mounting of instruments, relays, and control devices on switchgear front doors. Among the candidates, 'CROWN-ARMV' from the CROWN business unit is an arc-resistant metal-clad medium-voltage switchgear lineup, which aligns with the specification for metal-clad switchgear. This product is engineered-to-order (ETO), suitable for the described technical requirement.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

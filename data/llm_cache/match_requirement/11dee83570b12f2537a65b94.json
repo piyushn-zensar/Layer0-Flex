@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies luminaires for the basement floor of the building. Among the candidates, the product 'EP2-PDC' from the EP2 business unit includes lighting as part of its features, making it suitable to meet this requirement. The other candidates do not mention lighting or luminaires explicitly.",
+    "units": [
+      {
+        "bu": "EP2",
+        "offering_type": "ETO",
+        "product_id": "EP2-PDC"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to construction and installation standards, which are not directly related to the products listed in the candidates. This is a general project requirement and does not specify a product or business unit.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

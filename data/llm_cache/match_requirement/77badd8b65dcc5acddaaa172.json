@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 1.0,
+    "rationale": "The requirement pertains to compliance and legal obligations, not a product or service offering. Therefore, no SpinCo business unit or product is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

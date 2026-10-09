@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 1.0,
+    "rationale": "The requirement pertains to commercial practices related to payment and does not specify a product or service requirement. Therefore, no mapping to SpinCo business units or products is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

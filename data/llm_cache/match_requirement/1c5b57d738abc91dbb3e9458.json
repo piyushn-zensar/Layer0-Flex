@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to compliance and legal aspects regarding findings of non-responsibility by governmental entities. It does not specify a product or service requirement, and thus no SpinCo business unit or product is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to transportation and delivery practices, which are not directly related to the products listed. This is a commercial or logistical requirement, and the bid manager would address it.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

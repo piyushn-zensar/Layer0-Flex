@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement specifies technical details for metal-clad switchgear, including construction, materials, and features. Among the candidates, the product 'CROWN-ARMV' from the CROWN business unit matches the description as it is an arc-resistant metal-clad medium-voltage switchgear designed for such applications. This product aligns with the specified technical requirements, including separable sections and compartments, steel construction, and other features.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

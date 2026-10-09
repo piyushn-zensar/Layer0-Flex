@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to inspection and testing of metal-clad switchgear, as indicated by the page header. Among the candidates, the product 'CROWN-ARMV' from the CROWN business unit is specifically described as arc-resistant metal-clad medium-voltage switchgear, which aligns with the specification. Therefore, this product is selected to meet the requirement.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

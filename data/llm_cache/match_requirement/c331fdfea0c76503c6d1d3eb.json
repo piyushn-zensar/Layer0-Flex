@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to compliance with ethical guidelines for participants in the RFP process, which is not a product requirement. Therefore, no products are mapped to this requirement.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

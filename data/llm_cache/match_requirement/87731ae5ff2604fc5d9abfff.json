@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement pertains to compliance and certification regarding SDVOB participation, which is a legal and procedural matter. It does not specify a product or service requirement that can be mapped to the provided candidates. Therefore, no product or business unit is applicable to this requirement.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

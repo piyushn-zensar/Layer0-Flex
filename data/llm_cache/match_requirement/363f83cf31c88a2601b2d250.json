@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies the general arrangement of switchgear breaker and auxiliary units as indicated in the contract documents. The candidate product 'CROWN-ARMV' from the CROWN business unit is an engineered-to-order (ETO) arc-resistant metal-clad medium-voltage switchgear lineup, which aligns with the specification for metal-clad switchgear. This product is suitable for the requirement as it provides the necessary features and compliance with IEEE standards.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 1.0,
+    "rationale": "The requirement pertains to submission and legal compliance, not a product or service offering. Therefore, no mapping to business units or products is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

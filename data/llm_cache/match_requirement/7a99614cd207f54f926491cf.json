@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 1.0,
+    "rationale": "This requirement pertains to compliance and communication protocols during the procurement process. It does not specify a product or service requirement, hence no mapping to business units or products is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

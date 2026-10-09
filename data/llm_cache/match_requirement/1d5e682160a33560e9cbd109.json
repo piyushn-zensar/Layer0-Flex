@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement pertains to submission instructions for completing an EEO Staffing Plan form, which is a commercial or administrative requirement. It does not specify a product or service deliverable, so no mapping to business units or products is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

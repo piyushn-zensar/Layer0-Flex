@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to compliance and quality control assurance, which is a commercial and procedural aspect rather than a specific product requirement. Therefore, no product mapping is necessary.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

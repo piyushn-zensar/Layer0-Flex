@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 1.0,
+    "rationale": "This requirement pertains to legal and contractual terms, not a product or business unit offering. Therefore, no mapping to SpinCo business units or products is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

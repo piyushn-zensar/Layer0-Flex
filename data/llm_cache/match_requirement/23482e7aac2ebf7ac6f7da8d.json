@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies current transformers for metal-clad switchgear with detailed technical specifications. The candidate product 'CROWN-ARMV' from the CROWN business unit is described as arc-resistant metal-clad medium-voltage switchgear, including CTs and meeting relevant IEEE standards, making it suitable for this requirement.",
+    "units": [
+      {
+        "bu": "CROWN",
+        "offering_type": "ETO",
+        "product_id": "CROWN-ARMV"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

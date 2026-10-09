@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement pertains to construction and site preparation tasks, including excavation, backfill, and piping installation. These activities are not directly related to the products listed in the candidates, which focus on modular power systems and control buildings. Therefore, no product mapping is applicable for this requirement.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

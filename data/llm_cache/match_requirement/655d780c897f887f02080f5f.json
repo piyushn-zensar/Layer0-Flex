@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement pertains to submission and documentation of solicitation efforts for M/WBE participation, which is a commercial and compliance matter. It does not directly relate to a product or service offering from the provided candidates.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

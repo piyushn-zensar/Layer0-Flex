@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement specifies that the one-line diagram is provided by the purchaser, indicating that this is not a product requirement but rather a submission or documentation requirement. Therefore, no product mapping is necessary.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

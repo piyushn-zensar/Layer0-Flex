@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.95,
+    "rationale": "The requirement pertains to legal compliance and does not specify a product or service. Therefore, no product mapping is applicable, and the bid manager should address this requirement.",
+    "units": []
+  },
+  "task": "match_requirement"
+}

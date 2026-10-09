@@ -1,0 +1,9 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "This requirement pertains to compliance and submission commitments regarding SDVOB utilization goals. It does not specify a product or service requirement, so no mapping to SpinCo business units or products is applicable.",
+    "units": []
+  },
+  "task": "match_requirement"
+}
