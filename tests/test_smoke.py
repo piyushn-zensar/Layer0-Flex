@@ -416,3 +416,22 @@ def test_returned_items_reopen_with_a_note():
     assert (back["status"], back["validation_note"], back["response"]) == ("returned", "Name the breaker model.", "first try")
     assert client.post(f"{url}/respond", json={"compliance": "met", "response": "VCB type X"}, headers=CROWN).status_code == 200
     assert next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["id"] == item["id"])["status"] == "submitted"
+
+
+def test_go_no_go_summary_and_structured_criteria():
+    """A-12: summary of how requirements are satisfied, criteria with 'data not yet available' placeholders,
+    advice that never decides, and the person's judgement per criterion stored with the decision.
+    Appended by Atharv (append-only on this shared file)."""
+    seed_demo.main()
+    client = TestClient(app)
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    s = client.get(f"/api/opportunities/{opp}/decisions").json()["summary"]
+    assert s["advice"].startswith("Advice from Layer 0") and s["advice"].endswith("A person decides.")
+    status = {c["id"]: c["status"] for c in s["criteria"]}
+    assert all(status[k] == "unknown" for k in ("cost_budget", "delivery", "competitors", "deviations", "capacity"))
+    assert status["open_questions"] == "not_met"  # Syracuse states no redundancy class (R-003 warn)
+    assert {r["level"] for r in s["rows"]} <= {"fully", "partly", "not", "bid_desk"} and len(s["rows"]) == 13
+    crit = [{"id": "coverage", "status": "met", "note": "checked"}, {"id": "cost_budget", "status": "unknown"}]
+    d = client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": crit}, headers={"X-Actor": "Bid%20Manager"}).json()
+    assert d["criteria"][0] == {"id": "coverage", "status": "met", "note": "checked"} and "summary" in d["evidence"]
+    assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": [{"id": "x", "status": "met"}]}).status_code == 422

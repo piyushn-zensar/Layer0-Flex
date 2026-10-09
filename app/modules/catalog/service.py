@@ -11,6 +11,7 @@ Public contract:
     bom(product_id) -> list[dict]               BOM lines from the BOM source system (stub: catalog JSON)
     layers() -> dict                            grid-to-chip layers, scope keywords, unit tiers (spinco_layers.json)
     engineering_rules() -> dict                 rules R-001..R-004 and generic NEC/IEC values (engineering_rules.json)
+    go_no_go() -> dict                          go/no-go criteria and placeholder thresholds (go_no_go.json)
     people() -> list[str]                       actors for the PoC user picker
     unit_of(actor) -> str | None                business-unit code of a product manager / design engineer
 """
@@ -76,6 +77,10 @@ def layers() -> dict:
 
 def engineering_rules() -> dict:
     return _load("engineering_rules")
+
+
+def go_no_go() -> dict:
+    return _load("go_no_go")
 
 
 def people() -> list[str]:

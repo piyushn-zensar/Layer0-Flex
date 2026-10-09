@@ -1,0 +1,18 @@
+{
+ "_note": "ILLUSTRATIVE go/no-go criteria for the decision summary (task A-12; plan section 8, item 5; architecture-overview (d): scope fit, deviations against past bids, engineering checks, capacity and timeline conflicts, open questions). Thresholds are PLACEHOLDERS to be agreed with the bid manager. Layer 0 gives advice; a named person decides.",
+ "coverage_threshold": 0.8,
+ "criteria": [
+  {"id": "scope_fit", "name": "Scope fit", "question": "Do the suggested units fit the RFP's scope (no unit outside the layers the RFP covers)?"},
+  {"id": "all_matched", "name": "Every requirement routed", "question": "Does every frozen requirement have a match (a unit, or the bid desk)?"},
+  {"id": "coverage", "name": "Coverage", "question": "Are enough product requirements fully or partly satisfied (at least the coverage threshold)?"},
+  {"id": "engineering_rules", "name": "Engineering rules", "question": "Does no engineering rule fail (R-001..R-004)?"},
+  {"id": "open_questions", "name": "Open questions", "question": "Are there no open questions (rule warnings, unanchored requirements)?"},
+  {"id": "matches_reviewed", "name": "Matches reviewed", "question": "Has a person accepted or changed every product match?"},
+  {"id": "pending_acquisition", "name": "No pending-acquisition dependency", "question": "Does nothing depend on a unit whose acquisition has not closed (EPC Power)?"},
+  {"id": "deviations", "name": "Deviations against past bids", "question": "How does this RFP deviate from past bids we won or lost?", "data": "not_available"},
+  {"id": "capacity", "name": "Capacity and portfolio conflicts", "question": "Do the units have capacity, given their other opportunities (task A-10)?", "data": "not_available"},
+  {"id": "cost_budget", "name": "Cost against budget", "question": "Is the product cost within the customer's budget and our margin target?", "data": "not_available"},
+  {"id": "delivery", "name": "Delivery against the RFP schedule", "question": "Can we deliver by the dates the RFP asks for?", "data": "not_available"},
+  {"id": "competitors", "name": "Competitor information", "question": "Who else is bidding and how do we compare?", "data": "not_available"}
+ ]
+}

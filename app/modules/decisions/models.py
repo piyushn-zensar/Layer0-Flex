@@ -16,5 +16,6 @@ class Decision(Base):
     units: Mapped[list] = mapped_column(JSON, default=list)  # participating business-unit codes
     evidence: Mapped[dict] = mapped_column(JSON, default=dict)
     rationale: Mapped[str] = mapped_column(Text, default="")
+    criteria: Mapped[list] = mapped_column(JSON, default=list)  # the person's judgement per criterion (A-12)
     decided_by: Mapped[str] = mapped_column(String(80))
     decided_at: Mapped[datetime] = mapped_column(default=utcnow)

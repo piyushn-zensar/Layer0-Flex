@@ -6,7 +6,34 @@ import { post, useApi } from "@/lib/api";
 import type { Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 
-type Decision = { outcome: string; units: string[]; rationale: string; decided_by: string };
+type Judgement = "met" | "not_met" | "unknown";
+type Decision = { outcome: string; units: string[]; rationale: string; decided_by: string; criteria?: { id: string; status: Judgement; note: string }[] };
+type Criterion = { id: string; name: string; question: string; status: Judgement; detail: string };
+type Summary = {
+  rows: { req_id: string; category: string; text: string; level: string; basis: string; units: string[] }[];
+  by_category: Record<string, Record<"fully" | "partly" | "not" | "bid_desk", number>>;
+  coverage: number; criteria: Criterion[]; advice: string;
+};
+const JUDGEMENT: Record<Judgement, string> = { met: "met", not_met: "not met", unknown: "not known" };
+
+// Go/no-go summary (task A-12): how each requirement is satisfied, the criteria, and advice; the person judges each criterion.
+function GoNoGoSummary({ s, oppId }: { s: Summary; oppId: string }) {
+  return (
+    <>
+      <p className="warn"><strong>{s.advice}</strong></p>
+      <h3>How the requirements are satisfied</h3>
+      <table>
+        <thead><tr><th>Category</th><th>Fully</th><th>Partly</th><th>Not</th><th>Bid desk</th></tr></thead>
+        <tbody>{Object.entries(s.by_category).map(([cat, n]) => (
+          <tr key={cat}><td>{cat}</td><td>{n.fully}</td><td>{n.partly}</td><td>{n.not}</td><td>{n.bid_desk}</td></tr>))}</tbody>
+      </table>
+      <details><summary>Per requirement ({s.rows.length}): from the unit&apos;s answer where there is one, otherwise estimated from the match</summary>
+        <ul>{s.rows.map((r) => <li key={r.req_id}><a className="mono" href={`/opportunities/${oppId}/trace#${r.req_id}`}>{r.req_id}</a>{" "}
+          <strong>{r.level.replace("_", " ")}</strong> <span className="muted">({r.basis}{r.units.length ? `: ${r.units.join(", ")}` : ""})</span> {r.text}</li>)}</ul>
+      </details>
+    </>
+  );
+}
 type Layer = { n: number; name: string; in_scope: boolean; basis: string; terms: { term: string; count: number; req_ids: string[] }[] };
 type Checks = {
   requirements_checked: number; scope: { in_scope: number[]; layers: Layer[] }; units_outside_scope: Record<string, string[]>;
@@ -54,7 +81,7 @@ function EngineeringChecks({ c, oppId }: { c: Checks; oppId: string }) {
     </section>
   );
 }
-type Data = { evidence: Evidence; units: Unit[]; participation: Decision | null; go_no_go: Decision | null };
+type Data = { evidence: Evidence; summary: Summary | null; units: Unit[]; participation: Decision | null; go_no_go: Decision | null };
 
 export default function DecisionsPage() {
   const { id } = useParams<{ id: string }>();
@@ -71,8 +98,11 @@ export default function DecisionsPage() {
   };
   const recordParticipation = (form: FormData) =>
     run(post(`/api/opportunities/${id}/participation`, { units: form.getAll("units"), rationale: form.get("rationale") }));
-  const decide = (outcome: string, form: HTMLFormElement) =>
-    run(post(`/api/opportunities/${id}/go-no-go`, { outcome, rationale: new FormData(form).get("rationale") }));
+  const decide = (outcome: string, form: HTMLFormElement) => {
+    const f = new FormData(form);
+    const criteria = (data.summary?.criteria ?? []).map((c) => ({ id: c.id, status: f.get(`crit-${c.id}`), note: f.get(`note-${c.id}`) ?? "" }));
+    run(post(`/api/opportunities/${id}/go-no-go`, { outcome, rationale: f.get("rationale"), criteria }));
+  };
   const dispatch = () => run(post<{ created: number }>(`/api/opportunities/${id}/dispatch`), (r) =>
     alert(r.created ? `${r.created} new assignments sent to the units.` : "Nothing new to send: every unit already has its work."));
 
@@ -110,8 +140,24 @@ export default function DecisionsPage() {
 
       <section className="card">
         <h2>2. Go / no-go</h2>
-        {go && <p>Decision <span className="badge">{go.outcome}</span> by <strong>{go.decided_by}</strong>. {go.rationale}</p>}
-        <form className="form" onSubmit={(e) => e.preventDefault()}>
+        {go && <p>Decision <span className="badge">{go.outcome}</span> by <strong>{go.decided_by}</strong>. {go.rationale}
+          {go.criteria && go.criteria.length > 0 && <span className="muted"> Criteria judged: {(["met", "not_met", "unknown"] as Judgement[])
+            .map((j) => `${go.criteria!.filter((c) => c.status === j).length} ${JUDGEMENT[j]}`).join(", ")}.</span>}</p>}
+        {data.summary && <GoNoGoSummary s={data.summary} oppId={id} />}
+        <form className="form compact" onSubmit={(e) => e.preventDefault()}>
+          {data.summary && <table>
+            <thead><tr><th>Criterion</th><th>Layer 0&apos;s assessment</th><th>Your judgement</th><th>Note</th></tr></thead>
+            <tbody>{data.summary.criteria.map((c) => (
+              <tr key={c.id}>
+                <td><strong>{c.name}</strong><div className="muted">{c.question}</div></td>
+                <td><span className={`badge ${c.status === "met" ? "status-approved" : c.status === "not_met" ? "status-proposed" : ""}`}>{JUDGEMENT[c.status]}</span>
+                  <div className="muted">{c.detail}</div></td>
+                <td><label><span className="sr-only">Your judgement on {c.name}</span>
+                  <select name={`crit-${c.id}`} defaultValue={go?.criteria?.find((x) => x.id === c.id)?.status ?? c.status}>
+                    {(Object.keys(JUDGEMENT) as Judgement[]).map((j) => <option key={j} value={j}>{JUDGEMENT[j]}</option>)}</select></label></td>
+                <td><label><span className="sr-only">Note on {c.name}</span><input name={`note-${c.id}`} placeholder="optional" /></label></td>
+              </tr>))}</tbody>
+          </table>}
           <label>Rationale <input name="rationale" /></label>
           <button type="button" disabled={!ev.frozen || busy} onClick={(e) => decide("go", e.currentTarget.form!)}>Go</button>
           <button type="button" disabled={!ev.frozen || busy} className="secondary" onClick={(e) => decide("no_go", e.currentTarget.form!)}>No-go</button>
