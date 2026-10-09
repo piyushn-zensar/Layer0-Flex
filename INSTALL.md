@@ -1,6 +1,6 @@
 # Install and run Layer 0 on a Windows laptop
 
-This runs the Layer 0 proof of concept on your own laptop with the demonstration opportunity, which is the public Syracuse switchgear RFP. You don't need an OCR engine, an API key or a network connection to a model.
+This runs the Layer 0 proof of concept on your own laptop with the demonstration opportunity, which is the public Syracuse switchgear RFP. It is read by the real pipeline from its frozen model answers (840 line items grouped into about 350 requirements). You don't need an OCR engine, an API key or a network connection to a model.
 
 ## Before you start (once)
 
