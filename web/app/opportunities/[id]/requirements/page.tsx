@@ -21,21 +21,25 @@ type FilterKey = keyof typeof FILTERS;
 
 export default function RequirementsPage() {
   const { id } = useParams<{ id: string }>();
-  const { data, reload } = useApi<{ requirements: Requirement[]; baseline: Baseline | null }>(`/api/opportunities/${id}/requirements`);
-  const [filter, setFilter] = useState<FilterKey>("review");
+  const { data, error, reload } = useApi<{ requirements: Requirement[]; baseline: Baseline | null }>(`/api/opportunities/${id}/requirements`);
+  const [chosen, setFilter] = useState<FilterKey>();
+  const [busy, setBusy] = useState(false);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [editing, setEditing] = useState<{ id: string; mode: "edit" | "split" }>();
 
+  const filter: FilterKey = chosen ?? (data?.baseline ? "all" : "review"); // frozen: nothing left to review
   const all = useMemo(() => data?.requirements ?? [], [data]);
   const rows = useMemo(() => all.filter((r) => FILTERS[filter].test(r)
     && (!query || `${r.req_id} ${r.text} ${r.quote}`.toLowerCase().includes(query.toLowerCase()))), [all, filter, query]);
+  if (error) return <p className="warn">{error}</p>;
   if (!data) return <p>Loading…</p>;
 
   const frozen = !!data.baseline;
   const undecided = all.filter(FILTERS.review.test).length;
   const done = () => { setSelected(new Set()); setEditing(undefined); return reload(); };
-  const act = (p: Promise<unknown>) => p.then(done, (e) => alert(e));
+  // One action at a time; on failure the form stays open with what was typed, and the API's message is shown.
+  const act = (p: Promise<unknown>) => { setBusy(true); return p.then(done, (e) => alert(e instanceof Error ? e.message : e)).finally(() => setBusy(false)); };
   const review = (reqId: string, body: object) => act(post(`/api/requirements/${reqId}/review`, body));
   const bulk = (action: string) => act(Promise.all([...selected].map((r) => post(`/api/requirements/${r}/review`, { action }))));
   const merge = () => {
@@ -49,7 +53,7 @@ export default function RequirementsPage() {
       <PageHead level={2} title="Requirements"
         help={frozen ? `Baseline ${data.baseline!.number} frozen by ${data.baseline!.frozen_by} (${data.baseline!.count} items). Later changes run as a delta.`
           : "Check each line item against its source: approve, reject, edit, split or merge. Then freeze the baseline."}>
-        {!frozen && <button disabled={undecided > 0} title={undecided ? `${undecided} line items still need a decision` : ""}
+        {!frozen && <button disabled={busy || undecided > 0} title={undecided ? `${undecided} line items still need a decision` : ""}
           onClick={() => act(post(`/api/opportunities/${id}/baselines`))}>Freeze baseline</button>}
       </PageHead>
 
@@ -118,7 +122,7 @@ export default function RequirementsPage() {
               </tr>
             );
           })}
-          {rows.length === 0 && <tr><td colSpan={6} className="muted">No line items in this view.</td></tr>}
+          {rows.length === 0 && <tr><td colSpan={frozen ? 4 : 6} className="muted">No line items in this view.</td></tr>}
         </tbody>
       </table>
 
@@ -131,7 +135,7 @@ export default function RequirementsPage() {
             <label>Short text <input name="text" /></label>
             <label>Category <select name="category">{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select></label>
             <label>Page (optional) <input name="page" type="number" min={1} className="narrow" /></label>
-            <button>Add</button>
+            <button disabled={busy}>Add</button>
           </form>
         </details>
       )}

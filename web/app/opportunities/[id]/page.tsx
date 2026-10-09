@@ -9,25 +9,34 @@ import PageHead from "@/components/shell/PageHead";
 export default function DocumentsPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  const { data, reload } = useApi<{ opportunity: Opportunity; documents: Doc[] }>(`/api/opportunities/${id}`);
+  const { data, error, reload } = useApi<{ opportunity: Opportunity; documents: Doc[] }>(`/api/opportunities/${id}`);
   const [busy, setBusy] = useState("");
+  const [message, setMessage] = useState<{ text: string; problems?: string[] }>();
+  const fail = (e: unknown) => setMessage({ text: e instanceof Error ? e.message : String(e) });
 
   async function upload(form: FormData) {
-    setBusy("Uploading…");
-    await post(`/api/opportunities/${id}/documents`, form);
-    setBusy("");
-    reload();
+    setBusy("Uploading…"); setMessage(undefined);
+    try { await post(`/api/opportunities/${id}/documents`, form); await reload(); } catch (e) { fail(e); } finally { setBusy(""); }
   }
   async function extract() {
-    setBusy("Reader agent running…");
-    await post(`/api/opportunities/${id}/requirements/extract`).catch((e) => alert(e));
-    router.push(`/opportunities/${id}/requirements`);
+    setBusy("Reader agent running… (about a minute for a 100-page RFP)"); setMessage(undefined);
+    try {
+      const r = await post<{ proposed: number; problems: string[] }>(`/api/opportunities/${id}/requirements/extract`);
+      if (r.problems.length) setMessage({ text: `${r.proposed} line items proposed, but some pages were not read:`, problems: r.problems });
+      else router.push(`/opportunities/${id}/requirements`);
+    } catch (e) { fail(e); } finally { setBusy(""); }
   }
+  const status = data?.opportunity.status;
+  const canRead = status === "new" || status === "review";
+  const unread = data?.documents.find((d) => d.role === "main" && d.status !== "ingested");
 
   return (
     <>
       <PageHead level={2} title="RFP documents"
         help={`${data?.opportunity.customer || "Customer not set"} · ${data?.opportunity.customer_type || "customer type not set"}. Upload the RFP, then let the reader agent break it into requirements.`} />
+      {error && <p className="warn">{error}</p>}
+      {message && <div className="card warn" role="alert"><p>{message.text}</p>
+        {message.problems && <ul>{message.problems.map((p) => <li key={p}>{p}</li>)}</ul>}</div>}
       <table>
         <thead><tr><th>File</th><th>Role</th><th>Pages</th><th>Status</th><th>SHA-256</th></tr></thead>
         <tbody>
@@ -44,7 +53,10 @@ export default function DocumentsPage() {
         <button disabled={!!busy}>Upload and read</button>
         <button type="button" className="secondary" onClick={reload}>Refresh status</button>
       </form>
-      <button disabled={!!busy} onClick={extract}>Run the reader agent → requirements</button> <span className="muted">{busy}</span>
+      {canRead ? (<p>
+        <button disabled={!!busy || !!unread} onClick={extract}>Run the reader agent → requirements</button>{" "}
+        <span className="muted">{busy || (unread ? "Waiting for the main RFP to be read; use Refresh status." : "")}</span></p>)
+        : <p className="muted">Requirement review has started, so the RFP is not re-read. Missed items can be added on the Requirements page.</p>}
     </>
   );
 }

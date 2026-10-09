@@ -19,8 +19,19 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
   headers.set("X-Actor", encodeURIComponent(currentActor())); // the backend records who acted
   if (init.body && !(init.body instanceof FormData)) headers.set("Content-Type", "application/json");
   const res = await fetch(path, { ...init, headers, cache: "no-store" });
-  if (!res.ok) throw new Error(`${res.status}: ${await res.text()}`);
+  if (!res.ok) throw new Error(await errorText(res));
   return res.json() as Promise<T>;
+}
+
+/** The API's own message ({"detail": ...}), not raw JSON. */
+async function errorText(res: Response): Promise<string> {
+  const body = await res.text();
+  try {
+    const d = JSON.parse(body).detail;
+    if (typeof d === "string") return d;
+    if (Array.isArray(d)) return d.map((e) => e.msg ?? String(e)).join("; ");
+  } catch { /* not JSON */ }
+  return `Request failed (${res.status})${body ? `: ${body.slice(0, 200)}` : ""}`;
 }
 
 export function post<T = unknown>(path: string, body?: unknown): Promise<T> {
@@ -31,7 +42,8 @@ export function post<T = unknown>(path: string, body?: unknown): Promise<T> {
 export function useApi<T>(path: string) {
   const [data, setData] = useState<T>();
   const [error, setError] = useState<string>();
-  const reload = useCallback(() => api<T>(path).then(setData, (e) => setError(String(e))), [path]);
+  const reload = useCallback(() => api<T>(path).then((d) => { setData(d); setError(undefined); },
+    (e) => setError(e instanceof Error ? e.message : String(e))), [path]);
   useEffect(() => {
     reload();
   }, [reload]);

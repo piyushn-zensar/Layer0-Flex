@@ -3,7 +3,7 @@
 Public contract:
     ingest(db, doc_id) -> dict            read the PDF, write the layout JSON, update document status
     layout(doc_id) -> dict                the stored layout model (see technical-architecture.md section 5.9)
-    page(doc_id, page_no) -> dict         one page: {"page", "width", "height", "method", "unreviewed", "lines": [...]}
+    page(db, doc_id, page_no) -> dict      LookupError if the document or page does not exist         one page: {"page", "width", "height", "method", "unreviewed", "lines": [...]}
     page_png(doc_id, page_no) -> bytes    rendered page image for screen 1
 
 Line numbers ("page 5, lines 6 to 8") are 1-based within each page, in reading order.
@@ -76,6 +76,10 @@ def parse(path: str, doc_id: str) -> dict:
 def ingest(db: Session, doc_id: str, refresh: bool = False) -> dict:
     """refresh=True ignores the committed layout cache (use it on the parsing machine when the parser changes)."""
     doc = opportunities.get_document(db, doc_id)
+    if doc is None:
+        raise LookupError(f"Document {doc_id!r} not found.")
+    if doc.status == "unsupported":  # e.g. a Word or CAD file: recorded, never read, never "failed"
+        return {"document": doc_id, "error": "unsupported file type; recorded but not read"}
     opportunities.set_document_status(db, doc_id, "ingesting")
     frozen = LAYOUT_CACHE / f"{doc.sha256}.json"
     try:
@@ -170,15 +174,31 @@ def _ocr_lines(p: pymupdf.Page) -> list[dict]:
 
 
 def layout(doc_id: str) -> dict:
-    return json.loads((LAYOUTS / f"{doc_id}.json").read_text("utf-8"))
+    # Document IDs are "<opportunity>-<hash>"; anything else (a path) is refused before touching the disk.
+    if not re.fullmatch(r"[A-Za-z0-9-]{1,40}", doc_id):
+        raise LookupError(f"Document {doc_id!r} not found.")
+    path = LAYOUTS / f"{doc_id}.json"
+    if not path.exists():
+        raise LookupError(f"Document {doc_id} has not been read yet.")
+    return json.loads(path.read_text("utf-8"))
 
 
-def page(doc_id: str, page_no: int) -> dict:
+def _known(db: Session, doc_id: str, page_no: int):
+    doc = opportunities.get_document(db, doc_id)
+    if doc is None:
+        raise LookupError(f"Document {doc_id!r} not found.")
+    if not 1 <= page_no <= (doc.page_count or 0):
+        raise LookupError(f"Page {page_no} not found; the document has {doc.page_count} pages.")
+    return doc
+
+
+def page(db: Session, doc_id: str, page_no: int) -> dict:
+    _known(db, doc_id, page_no)
     return layout(doc_id)["pages"][page_no - 1]
 
 
 def page_png(db: Session, doc_id: str, page_no: int) -> bytes:
-    doc = opportunities.get_document(db, doc_id)
+    doc = _known(db, doc_id, page_no)
     path = PAGES / doc.sha256 / f"{page_no}.png"  # same file, same images
     if not path.exists():
         path.parent.mkdir(parents=True, exist_ok=True)

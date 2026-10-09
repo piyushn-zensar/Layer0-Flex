@@ -12,7 +12,8 @@ DEFAULT_ACTOR = "Bid Manager"
 def actor(request: Request) -> str:
     """Who is acting. PoC: picked in the web header and sent as X-Actor (URL-encoded); real sign-in before a pilot."""
     raw = request.headers.get("x-actor") or request.cookies.get("actor")
-    return unquote(raw) if raw else DEFAULT_ACTOR
+    name = "".join(ch for ch in unquote(raw or "") if ch.isprintable()).strip()[:80]  # fits the 80-char columns
+    return name or DEFAULT_ACTOR
 
 
 def row(obj, *extra: str) -> dict:

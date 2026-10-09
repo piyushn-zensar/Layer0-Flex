@@ -15,6 +15,7 @@ export interface Baseline { number: number; count: number; frozen_by: string }
 export interface Match {
   id: number; req_id: string; bu: string | null; product_id: string | null; offering_type: OfferingType;
   confidence: number; rationale: string; method: string; status: string;
+  units: { bu: string; product_id: string; offering_type: Exclude<OfferingType, "NONE"> }[]; evidence: unknown[]; decided_by: string | null;
 }
 export interface Assignment {
   id: number; opportunity_id: string; req_id: string; bu: string; owner: string; status: string;

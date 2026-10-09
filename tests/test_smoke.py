@@ -231,3 +231,73 @@ def test_workflow_order_and_roles():
     assert [a["bu"] for a in row["assignments"]] == ["BID"]
     assert all(i["id"] != item["id"] for i in client.get("/api/inbox/CROWN").json()["items"])     # gone from Crown's inbox
     assert client.get("/api/catalog/search?q=relay&k=-1").status_code == 422
+
+
+def test_review_findings_fixed():
+    """Review of 9 Oct: path traversal, freeze guards, unknown opportunities, parallel create, ID reuse, input checks."""
+    import concurrent.futures
+
+    client = TestClient(app)
+    pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
+    sha = "893403680eda487a7fcf4968231102e10345324aefd0503d2b28b97d3347a76e"
+
+    # page endpoint: only real documents and real pages (no file paths, no page 0)
+    outside = str(ROOT / "data" / "layout_cache" / sha).replace("/", "\\")
+    assert client.get(f"/api/documents/{outside}/pages/1").status_code == 404
+    opp = client.post("/api/opportunities", json={"title": "guards"}).json()["id"]
+    doc = client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)}).json()
+    assert "path" not in doc
+    assert client.get(f"/api/documents/{doc['id']}/pages/0").status_code == 404
+    assert client.get(f"/api/documents/{doc['id']}/pages/102.png").status_code == 404
+    assert client.post(f"/api/opportunities/{opp}/documents", data={"role": "main"},
+                       files={"file": ("again.pdf", pdf + b"\n")}).status_code == 409  # one main RFP
+
+    # unknown opportunity: 404 and nothing stored
+    assert client.post("/api/opportunities/OPP-9996/documents", files={"file": ("x.pdf", pdf)}).status_code == 404
+    assert client.post("/api/opportunities/OPP-9997/baselines").status_code == 404
+
+    # freeze: needs approved items; once only; nothing changes afterwards
+    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 409  # nothing read or approved yet
+    client.post(f"/api/opportunities/{opp}/requirements/extract")
+    rows = client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]
+    first_ids = {r["req_id"] for r in rows}
+    client.post(f"/api/requirements/{rows[0]['req_id']}/review", json={"action": "reject"})
+    assert client.post(f"/api/opportunities/{opp}/requirements/extract").status_code == 409  # review started
+    assert client.post(f"/api/opportunities/{opp}/requirements", json={"quote": "  ", "category": "technical"}).status_code == 409
+    assert client.post(f"/api/opportunities/{opp}/requirements/merge",
+                       json={"req_ids": [rows[1]["req_id"], rows[2]["req_id"]], "text": " "}).status_code == 409
+    p55, p56 = (next(r for r in rows if r["page"] == n and r["provenance"] == "EXTRACTED") for n in (55, 56))
+    assert client.post(f"/api/opportunities/{opp}/requirements/merge",
+                       json={"req_ids": [p55["req_id"], p56["req_id"]], "text": "x"}).status_code == 409  # cross-page
+    for r in rows[1:]:
+        client.post(f"/api/requirements/{r['req_id']}/review", json={"action": "approve"})
+    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 200
+    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 409  # no empty baseline 2
+    assert client.post(f"/api/requirements/{rows[0]['req_id']}/review", json={"action": "approve"}).status_code == 409
+    assert len(client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]) == len(first_ids)
+
+    # status never moves backwards
+    client.post(f"/api/opportunities/{opp}/participation", json={"units": ["CROWN"]})
+    client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go"})
+    client.post(f"/api/opportunities/{opp}/dispatch")
+    client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go"})
+    assert client.get(f"/api/opportunities/{opp}").json()["opportunity"]["status"] == "dispatched"
+
+    # re-reading drafts never reuses an ID
+    opp2 = client.post("/api/opportunities", json={"title": "reread"}).json()["id"]
+    client.post(f"/api/opportunities/{opp2}/documents", files={"file": ("rfp.pdf", pdf)})
+    one = {r["req_id"] for r in client.get(f"/api/opportunities/{opp2}/requirements").json()["requirements"]} or None
+    client.post(f"/api/opportunities/{opp2}/requirements/extract")
+    a = {r["req_id"] for r in client.get(f"/api/opportunities/{opp2}/requirements").json()["requirements"]}
+    assert client.post(f"/api/opportunities/{opp2}/requirements/extract").status_code == 200  # nothing reviewed yet
+    b = {r["req_id"] for r in client.get(f"/api/opportunities/{opp2}/requirements").json()["requirements"]}
+    assert len(a) == len(b) and not (a & b) and one is None
+
+    # parallel creates all succeed with distinct IDs
+    with concurrent.futures.ThreadPoolExecutor(10) as pool:
+        made = list(pool.map(lambda i: client.post("/api/opportunities", json={"title": f"p{i}"}), range(10)))
+    assert all(r.status_code == 200 for r in made) and len({r.json()["id"] for r in made}) == 10
+
+    # acting user is cleaned and capped
+    long = client.post("/api/opportunities", json={"title": "actor"}, headers={"X-Actor": "A" * 5000 + "%0D%0A"}).json()
+    assert len(long["created_by"]) == 80

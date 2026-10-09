@@ -3,9 +3,11 @@
 Public contract (other modules call only these):
     create(db, title, customer, customer_type, actor) -> Opportunity
     get(db, opp_id) -> Opportunity | None
+    require(db, opp_id) -> Opportunity            LookupError if it does not exist (call it before any write)
     list_all(db) -> list[Opportunity]
-    set_status(db, opp_id, status, actor)
-    add_document(db, opp_id, filename, data, role, actor) -> Document   id = <opp>-<sha256[:12]>
+    set_status(db, opp_id, status, actor) -> bool  moves forward only (see FORWARD); False if the move was ignored
+    add_document(db, opp_id, filename, data, role, actor) -> Document   id = <opp>-<sha256[:12]>;
+                                                 ValueError if a second main RFP is uploaded
     get_document(db, doc_id) -> Document | None
     documents(db, opp_id) -> list[Document]
     main_document(db, opp_id) -> Document | None
@@ -13,7 +15,8 @@ Public contract (other modules call only these):
 """
 import hashlib
 
-from sqlalchemy import func, select
+from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.core import audit, config
@@ -23,37 +26,65 @@ FILES = config.STORE / "files"
 
 
 def create(db: Session, title: str, customer: str, customer_type: str, actor: str) -> Opportunity:
-    # ponytail: count-based IDs; fine for one SQLite writer, use a sequence on PostgreSQL
-    n = db.scalar(select(func.count()).select_from(Opportunity)) + 1
-    opp = Opportunity(id=f"OPP-{n:04d}", title=title, customer=customer,
-                      customer_type=customer_type, created_by=actor)
-    db.add(opp)
-    audit.record(db, actor, "created", "opportunity", opp.id, opp.id, title=title)
-    db.commit()
-    return opp
+    if not title.strip():
+        raise ValueError("A title is required.")
+    for _ in range(20):  # two people creating at once: the loser takes the next number
+        ids = db.scalars(select(Opportunity.id)).all()
+        n = max((int(i.split("-")[1]) for i in ids), default=0) + 1
+        opp = Opportunity(id=f"OPP-{n:04d}", title=title.strip(), customer=customer,
+                          customer_type=customer_type, created_by=actor)
+        db.add(opp)
+        audit.record(db, actor, "created", "opportunity", opp.id, opp.id, title=title)
+        try:
+            db.commit()
+            return opp
+        except IntegrityError:
+            db.rollback()
+    raise ValueError("Could not allocate an opportunity ID; try again.")
 
 
 def get(db: Session, opp_id: str) -> Opportunity | None:
     return db.get(Opportunity, opp_id)
 
 
+def require(db: Session, opp_id: str) -> Opportunity:
+    opp = db.get(Opportunity, opp_id)
+    if opp is None:
+        raise LookupError(f"Opportunity {opp_id} not found.")
+    return opp
+
+
 def list_all(db: Session) -> list[Opportunity]:
     return list(db.scalars(select(Opportunity).order_by(Opportunity.id.desc())))
 
 
-def set_status(db: Session, opp_id: str, status: str, actor: str) -> None:
-    assert status in STATUSES, status
-    opp = db.get(Opportunity, opp_id)
+# The status only moves forward through the workflow, so a repeated or late step (re-deciding "go" after
+# dispatch, re-reading drafts) never sends the opportunity back. Exceptions: "no_go" stops a bid at any
+# point before submission, and "go" may replace a "no_go".
+FORWARD = {s: i for i, s in enumerate(STATUSES)} | {"no_go": STATUSES.index("go")}
+
+
+def set_status(db: Session, opp_id: str, status: str, actor: str) -> bool:
+    if status not in STATUSES:
+        raise ValueError(f"Unknown status {status!r}.")
+    opp = require(db, opp_id)
+    stop_or_resume = {opp.status, status} == {"go", "no_go"} or (status == "no_go" and opp.status != "submitted")
+    if status == opp.status or (FORWARD[status] < FORWARD[opp.status] and not stop_or_resume):
+        return False
     audit.record(db, actor, "status", "opportunity", opp_id, opp_id, before=opp.status, after=status)
     opp.status = status
     db.commit()
+    return True
 
 
 def add_document(db: Session, opp_id: str, filename: str, data: bytes, role: str, actor: str) -> Document:
+    require(db, opp_id)
     sha = hashlib.sha256(data).hexdigest()
     existing = db.scalar(select(Document).where(Document.opportunity_id == opp_id, Document.sha256 == sha))
     if existing:
         return existing
+    if role == "main" and main_document(db, opp_id):
+        raise ValueError("This opportunity already has a main RFP; upload this file as an addendum, Q&A or other.")
     FILES.mkdir(parents=True, exist_ok=True)
     path = FILES / f"{sha}{'.pdf' if filename.lower().endswith('.pdf') else ''}"
     path.write_bytes(data)
