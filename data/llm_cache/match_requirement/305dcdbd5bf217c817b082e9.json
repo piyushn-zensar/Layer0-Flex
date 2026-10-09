@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "confidence": 0.9,
+    "rationale": "The requirement specifies a technical need for IT capacity with a critical load of 48 MW. Among the candidates, the product 'FPM-SHELF' from the FPM business unit is a rack power shelf designed for 48 V DC architectures, which aligns with the requirement. The offering type is CTO, as it is a catalog product with configurable options.",
+    "units": [
+      {
+        "bu": "FPM",
+        "offering_type": "CTO",
+        "product_id": "FPM-SHELF"
+      }
+    ]
+  },
+  "task": "match_requirement"
+}
