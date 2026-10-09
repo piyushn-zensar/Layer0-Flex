@@ -456,3 +456,24 @@ def test_unit_handoff_payload():
     assert {i["offering_type"] for i in items} >= {"CTO", "ETO"}  # Crown accessories (CTO) and switchgear (ETO)
     assert client.get(f"/api/opportunities/{opp}/handoff/BID").status_code == 409
     assert client.get("/api/opportunities/OPP-9999/handoff/CROWN").status_code == 404
+
+
+def test_compliance_matrix_new_columns_and_bom():
+    """J-05 part C: "Assignment status" and "Responded by" are appended (earlier columns keep their place), and the file
+    starts with a UTF-8 byte order mark so Excel reads non-ASCII text. Appended by Janvia (append-only on this shared file)."""
+    import csv
+    import io
+
+    seed_demo.main()
+    client = TestClient(app)
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    r = client.get(f"/api/opportunities/{opp}/compliance-matrix.csv")
+    assert r.status_code == 200 and r.content.startswith(b"\xef\xbb\xbf")
+    rows = list(csv.reader(io.StringIO(r.content.decode("utf-8-sig"))))
+    head = rows[0]
+    assert head[:12] == ["Requirement ID", "Source", "Category", "Requirement", "Quote", "Business unit", "Product",
+                         "Offering type", "Compliance", "Response", "Validated by", "State"]
+    assert head[12:] == ["Assignment status", "Responded by"] and all(len(row) == len(head) for row in rows)
+    status, by = head.index("Assignment status"), head.index("Responded by")
+    assert {row[status] for row in rows[1:]} >= {"validated", "assigned"}
+    assert all(row[by] for row in rows[1:] if row[status] in ("submitted", "validated"))  # an answer always has a person
