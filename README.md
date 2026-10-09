@@ -9,7 +9,9 @@ checklist, and the bid manager validates and consolidates the answers, with thre
 - Team plan, ownership and trackers: [`team/`](team/)
 - Claude Code setup shared by the team (rules, agents, skills): [`.claude/`](.claude/)
 
-## Run (Windows, Python 3.12)
+**Just want to run the demo on a Windows laptop?** Follow [INSTALL.md](INSTALL.md): double-click `setup.cmd` once, then `start.cmd`.
+
+## Run for development (Windows, Python 3.12)
 
 ```bash
 py -3.12 -m venv .venv
