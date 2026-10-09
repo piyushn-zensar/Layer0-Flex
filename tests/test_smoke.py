@@ -398,3 +398,21 @@ def test_grouping_and_duplicates():
     assert released and all(x["parent_id"] is None for x in released)
     assert client.post(f"/api/requirements/{other['req_id']}/split", json={"parts": [{"quote": "a"}, {"quote": "b"}]}).status_code == 409
     assert client.post(f"/api/requirements/{dup['req_id']}/review", json={"action": "approve"}).json()["status"] == "approved"
+
+
+def test_returned_items_reopen_with_a_note():
+    """A-07: the Bid Manager returns an answer only with a note (design 7.5); the unit sees the note and answers
+    the returned item again. Appended by Atharv (append-only on this shared file)."""
+    seed_demo.main()
+    client = TestClient(app)
+    BM, CROWN = {"X-Actor": "Bid%20Manager"}, {"X-Actor": "Crown%20Design%20Engineer"}
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp and i["status"] == "assigned")
+    url = f"/api/assignments/{item['id']}"
+    client.post(f"{url}/respond", json={"compliance": "partial", "response": "first try"}, headers=CROWN)
+    assert client.post(f"{url}/validate", json={"ok": False, "note": "  "}, headers=BM).status_code == 422
+    assert client.post(f"{url}/validate", json={"ok": False, "note": "Name the breaker model."}, headers=BM).status_code == 200
+    back = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["id"] == item["id"])
+    assert (back["status"], back["validation_note"], back["response"]) == ("returned", "Name the breaker model.", "first try")
+    assert client.post(f"{url}/respond", json={"compliance": "met", "response": "VCB type X"}, headers=CROWN).status_code == 200
+    assert next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["id"] == item["id"])["status"] == "submitted"

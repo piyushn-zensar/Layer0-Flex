@@ -1,7 +1,7 @@
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Request
-from pydantic import BaseModel
+from pydantic import BaseModel, model_validator
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
@@ -24,6 +24,12 @@ class RespondIn(BaseModel):
 class ValidateIn(BaseModel):
     ok: bool
     note: str = ""
+
+    @model_validator(mode="after")
+    def _return_needs_note(self):  # design 7.5: "returned, with a note"
+        if not self.ok and not self.note.strip():
+            raise ValueError("Say why the answer is returned (note).")
+        return self
 
 
 def _call(fn, *args):
