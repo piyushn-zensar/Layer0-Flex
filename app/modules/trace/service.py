@@ -28,6 +28,10 @@ def trace(db: Session, opp_id: str) -> dict:
     pages = ingestion.layout(doc.id)["pages"] if doc and doc.status == "ingested" else []
     matches = matching.for_opportunity(db, opp_id)
     assignments = workpackages.by_requirement(db, opp_id)
+    kids: dict[str, list] = {}  # a group's active sub-requirements, read once
+    for r in requirements.current(db, opp_id, include_children=True):
+        if r.parent_id:
+            kids.setdefault(r.parent_id, []).append(r)
     rows = []
     for req in requirements.current(db, opp_id):
         m = matches.get(req.req_id)
@@ -35,7 +39,7 @@ def trace(db: Session, opp_id: str) -> dict:
         rows.append({"req": req, "match": m, "product": product,
                      "unit": catalog.unit(m.bu) if m and m.bu else None,
                      "bom": catalog.bom(product["id"]) if product else [],
-                     "assignments": assignments.get(req.req_id, [])})
+                     "assignments": assignments.get(req.req_id, []), "children": kids.get(req.req_id, [])})
     return {"opp": opp, "doc": doc, "rows": rows,
             "pages": [{"page": p["page"], "width": p["width"], "height": p["height"],
                        "unreviewed": p["unreviewed"]} for p in pages],

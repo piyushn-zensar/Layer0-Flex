@@ -1,0 +1,17 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Submit the M/WBE Subcontractor Utilization Plan and related details"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

@@ -1,0 +1,23 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2
+        ],
+        "title": "SDVOB participation requirements"
+      },
+      {
+        "category": "submission",
+        "members": [
+          3
+        ],
+        "title": "Submission of SDVOB utilization plans"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

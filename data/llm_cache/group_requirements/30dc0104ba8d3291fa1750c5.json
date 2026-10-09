@@ -1,0 +1,39 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "title": "Switchgear testing and verification"
+      },
+      {
+        "category": "technical",
+        "members": [
+          8,
+          9,
+          10
+        ],
+        "title": "Transformer and relay testing"
+      },
+      {
+        "category": "technical",
+        "members": [
+          11,
+          12,
+          13
+        ],
+        "title": "HVAC and alarm system functionality"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

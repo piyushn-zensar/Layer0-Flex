@@ -13,7 +13,7 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | J-05 | Consolidation page: blocking items link to the three screens; compliance-matrix columns reviewed with the bid-manager view | S3 | Sun 11 Oct | todo | |
 | J-06 | Monday demo click-path checklist (in the walkthrough) and a dry run with Piyush | S3 | Mon 12 Oct AM | todo | |
 | J-07 | Response-outline view (uses P-10) | S4 | after 12 Oct | todo | |
-| J-08 | Compliance matrix as a professional Excel file (.xlsx), generated deterministically (openpyxl, no model): title block, frozen header row, filters, column widths, wrapped text, offering-type colours, source page and lines; keep the CSV | S3 | Sun 11 Oct | todo | from the 8 Oct client call (plan §8) |
+| J-08 | Compliance matrix as a professional Excel file (.xlsx), generated deterministically (openpyxl, no model): title block, frozen header row, filters, column widths, wrapped text, offering-type colours, source page and lines; keep the CSV | S3 | Sun 11 Oct | todo | from the 8 Oct call (plan §8) |
 
 ## J-03 walkthrough: review checklist (9 Oct 2026)
 

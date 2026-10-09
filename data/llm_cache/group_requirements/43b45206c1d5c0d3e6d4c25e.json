@@ -1,0 +1,51 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "title": "Proposal submission format and labeling requirements"
+      },
+      {
+        "category": "submission",
+        "members": [
+          10,
+          11
+        ],
+        "title": "Proprietary information handling"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          5,
+          6
+        ],
+        "title": "Proposal compliance and consequences"
+      },
+      {
+        "category": "schedule",
+        "members": [
+          13,
+          14
+        ],
+        "title": "Proposal submission deadline and late submission policy"
+      },
+      {
+        "category": "legal",
+        "members": [
+          9,
+          12,
+          18
+        ],
+        "title": "Authority's rights regarding proposals"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

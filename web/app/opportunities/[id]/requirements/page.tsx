@@ -1,5 +1,6 @@
 "use client";
-// Requirement review: approve, reject, edit, split, merge, add missed; then freeze the baseline.  Owner: Piyush.
+// Requirement review: approve, reject, edit, split, merge, ungroup, add missed; then freeze the baseline.  Owner: Piyush.
+// Requirements are shown in document order; a group lists its sub-requirements when expanded.
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Fragment, useMemo, useState } from "react";
@@ -13,10 +14,11 @@ const FILTERS = {
   unanchored: { label: "Unanchored", test: (r: Requirement) => r.provenance === "UNANCHORED" && !INACTIVE.has(r.status) },
   approved: { label: "Approved", test: (r: Requirement) => r.status === "approved" },
   rejected: { label: "Rejected", test: (r: Requirement) => r.status === "rejected" },
-  replaced: { label: "Split / merged", test: (r: Requirement) => r.status === "split" || r.status === "merged" },
+  duplicates: { label: "Duplicates", test: (r: Requirement) => r.status === "duplicate" },
+  replaced: { label: "Ungrouped / split / merged", test: (r: Requirement) => r.status === "split" || r.status === "merged" },
   all: { label: "All", test: () => true },
 } as const;
-const INACTIVE = new Set(["rejected", "split", "merged"]);
+const INACTIVE = new Set(["rejected", "split", "merged", "duplicate"]);
 type FilterKey = keyof typeof FILTERS;
 
 export default function RequirementsPage() {
@@ -28,11 +30,20 @@ export default function RequirementsPage() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [editing, setEditing] = useState<{ id: string; mode: "edit" | "split" }>();
   const [historyOf, setHistoryOf] = useState<string>();
+  const [open, setOpen] = useState<Set<string>>(new Set());
 
   const filter: FilterKey = chosen ?? (data?.baseline ? "all" : "review"); // frozen: nothing left to review
-  const all = useMemo(() => data?.requirements ?? [], [data]);
-  const rows = useMemo(() => all.filter((r) => FILTERS[filter].test(r)
-    && (!query || `${r.req_id} ${r.text} ${r.quote}`.toLowerCase().includes(query.toLowerCase()))), [all, filter, query]);
+  const all = useMemo(() => (data?.requirements ?? []).filter((r) => !r.parent_id), [data]); // requirements, not sub-requirements
+  const kidsOf = useMemo(() => {
+    const m = new Map<string, Requirement[]>();
+    for (const r of data?.requirements ?? []) if (r.parent_id) m.set(r.parent_id, [...(m.get(r.parent_id) ?? []), r]);
+    return m;
+  }, [data]);
+  const rows = useMemo(() => {
+    const q = query.toLowerCase();
+    const hit = (r: Requirement) => `${r.req_id} ${r.text} ${r.quote}`.toLowerCase().includes(q);
+    return all.filter((r) => FILTERS[filter].test(r) && (!q || hit(r) || (kidsOf.get(r.req_id) ?? []).some(hit)));
+  }, [all, kidsOf, filter, query]);
   if (error) return <p className="warn">{error}</p>;
   if (!data) return <p>Loading…</p>;
 
@@ -47,13 +58,69 @@ export default function RequirementsPage() {
     const text = prompt(`One-line text for the merged requirement (${selected.size} items):`);
     if (text) act(post(`/api/opportunities/${id}/requirements/merge`, { req_ids: [...selected], text }));
   };
-  const toggle = (reqId: string) => setSelected((s) => { const n = new Set(s); if (n.has(reqId)) n.delete(reqId); else n.add(reqId); return n; });
+  const flip = (set: Set<string>, reqId: string) => { const n = new Set(set); if (n.has(reqId)) n.delete(reqId); else n.add(reqId); return n; };
+  const toggle = (reqId: string) => setSelected((s) => flip(s, reqId));
+  const cols = frozen ? 4 : 6;
+
+  const line = (r: Requirement, child = false) => {
+    const active = !INACTIVE.has(r.status) && r.baseline === null;
+    const isEditing = editing?.id === r.req_id;
+    const kids = kidsOf.get(r.req_id) ?? [];
+    const group = r.kind === "group";
+    return (
+      <Fragment key={r.req_id}>
+        <tr className={`${INACTIVE.has(r.status) ? "inactive" : ""} ${child ? "child" : ""} ${group ? "group" : ""}`}>
+          {!frozen && <td>{active && !child && <input type="checkbox" aria-label={`Select ${r.req_id}`} checked={selected.has(r.req_id)} onChange={() => toggle(r.req_id)} />}</td>}
+          <td><div className="mono">{r.req_id}</div><span className="tag">{r.category}</span></td>
+          <td>{r.page ? <Link href={`/opportunities/${id}/trace#${r.parent_id ?? r.req_id}`}>{r.source}</Link> : r.source}
+            {r.provenance === "UNANCHORED" && <div className="warn">Not found on the page</div>}</td>
+          <td>
+            {isEditing && editing.mode === "edit" ? (
+              <form className="form compact" action={(f) => review(r.req_id, { action: "edit", text: f.get("text"), category: f.get("category") })}>
+                <input name="text" defaultValue={r.text} aria-label="Requirement text" />
+                <select name="category" defaultValue={r.category} aria-label="Category">{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select>
+                <span className="inline"><button>Save</button><button type="button" className="secondary" onClick={() => setEditing(undefined)}>Cancel</button></span>
+              </form>
+            ) : isEditing && editing.mode === "split" ? (
+              <form className="form compact" action={(f) => act(post(`/api/requirements/${r.req_id}/split`, {
+                parts: String(f.get("parts")).split("\n").map((q) => ({ quote: q.trim() })).filter((p) => p.quote) }))}>
+                <label>Put each part of the quote on its own line
+                  <textarea name="parts" rows={4} defaultValue={r.quote} /></label>
+                <span className="inline"><button>Split</button><button type="button" className="secondary" onClick={() => setEditing(undefined)}>Cancel</button></span>
+              </form>
+            ) : (<>
+              <div className={group ? "group-title" : ""}>{r.text}</div>
+              {group ? (
+                <button type="button" className="link expand" aria-expanded={open.has(r.req_id)} onClick={() => setOpen((s) => flip(s, r.req_id))}>
+                  {open.has(r.req_id) ? "▾" : "▸"} {kids.length} sub-requirements</button>
+              ) : <div className="quote">“{r.quote}”</div>}
+              {r.status === "duplicate" ? <div className="muted">Duplicate of {r.derived_from.join(", ")}: approve to keep it anyway</div>
+                : r.derived_from?.length > 0 && <div className="muted">From {r.derived_from.join(", ")}</div>}
+            </>)}
+          </td>
+          <td><span className={`badge status-${r.status}`}>{r.status}</span>
+            <button type="button" className="link" aria-expanded={historyOf === r.req_id}
+              onClick={() => setHistoryOf(historyOf === r.req_id ? undefined : r.req_id)}>History</button></td>
+          {!frozen && <td>{(active || r.status === "duplicate") && !isEditing && (
+            <div className="row-actions">
+              {r.status !== "approved" && <button onClick={() => review(r.req_id, { action: "approve" })}>Approve</button>}
+              {active && r.status !== "rejected" && <button className="secondary" onClick={() => review(r.req_id, { action: "reject" })}>Reject</button>}
+              {active && <button className="secondary" onClick={() => setEditing({ id: r.req_id, mode: "edit" })}>Edit</button>}
+              {active && !group && !child && <button className="secondary" onClick={() => setEditing({ id: r.req_id, mode: "split" })}>Split</button>}
+              {active && group && <button className="secondary" onClick={() => act(post(`/api/requirements/${r.req_id}/ungroup`))}>Ungroup</button>}
+            </div>)}</td>}
+        </tr>
+        {historyOf === r.req_id && <tr className="history-row"><td colSpan={cols}><History reqId={r.req_id} /></td></tr>}
+        {group && open.has(r.req_id) && kids.map((k) => line(k, true))}
+      </Fragment>
+    );
+  };
 
   return (
     <>
       <PageHead level={2} title="Requirements"
         help={frozen ? `Baseline ${data.baseline!.number} frozen by ${data.baseline!.frozen_by} (${data.baseline!.count} items). Later changes run as a delta.`
-          : "Check each line item against its source: approve, reject, edit, split or merge. Then freeze the baseline."}>
+          : `${all.filter((r) => !INACTIVE.has(r.status)).length} requirements; related line items are grouped (expand a group to see its sub-requirements). Check each against its source, then freeze the baseline.`}>
         {!frozen && <button disabled={busy || undecided > 0} title={undecided ? `${undecided} line items still need a decision` : ""}
           onClick={() => act(post(`/api/opportunities/${id}/baselines`))}>Freeze baseline</button>}
       </PageHead>
@@ -83,52 +150,8 @@ export default function RequirementsPage() {
           <th className="col-id">ID</th><th className="col-src">Source</th><th>Requirement</th><th className="col-status">Status</th>{!frozen && <th className="col-actions" />}
         </tr></thead>
         <tbody>
-          {rows.map((r) => {
-            const active = !INACTIVE.has(r.status) && r.baseline === null;
-            const isEditing = editing?.id === r.req_id;
-            return (
-              <Fragment key={r.req_id}>
-              <tr className={INACTIVE.has(r.status) ? "inactive" : ""}>
-                {!frozen && <td>{active && <input type="checkbox" aria-label={`Select ${r.req_id}`} checked={selected.has(r.req_id)} onChange={() => toggle(r.req_id)} />}</td>}
-                <td><div className="mono">{r.req_id}</div><span className="tag">{r.category}</span></td>
-                <td>{r.page ? <Link href={`/opportunities/${id}/trace#${r.req_id}`}>{r.source}</Link> : r.source}
-                  {r.provenance === "UNANCHORED" && <div className="warn">Not found on the page</div>}</td>
-                <td>
-                  {isEditing && editing.mode === "edit" ? (
-                    <form className="form compact" action={(f) => review(r.req_id, { action: "edit", text: f.get("text"), category: f.get("category") })}>
-                      <input name="text" defaultValue={r.text} aria-label="Requirement text" />
-                      <select name="category" defaultValue={r.category} aria-label="Category">{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select>
-                      <span className="inline"><button>Save</button><button type="button" className="secondary" onClick={() => setEditing(undefined)}>Cancel</button></span>
-                    </form>
-                  ) : isEditing && editing.mode === "split" ? (
-                    <form className="form compact" action={(f) => act(post(`/api/requirements/${r.req_id}/split`, {
-                      parts: String(f.get("parts")).split("\n").map((q) => ({ quote: q.trim() })).filter((p) => p.quote) }))}>
-                      <label>Put each part of the quote on its own line
-                        <textarea name="parts" rows={4} defaultValue={r.quote} /></label>
-                      <span className="inline"><button>Split</button><button type="button" className="secondary" onClick={() => setEditing(undefined)}>Cancel</button></span>
-                    </form>
-                  ) : (<>
-                    <div>{r.text}</div>
-                    <div className="quote">“{r.quote}”</div>
-                    {r.derived_from?.length > 0 && <div className="muted">From {r.derived_from.join(", ")}</div>}
-                  </>)}
-                </td>
-                <td><span className={`badge status-${r.status}`}>{r.status}</span>
-                  <button type="button" className="link" aria-expanded={historyOf === r.req_id}
-                    onClick={() => setHistoryOf(historyOf === r.req_id ? undefined : r.req_id)}>History</button></td>
-                {!frozen && <td>{active && !isEditing && (
-                  <div className="row-actions">
-                    {r.status !== "approved" && <button onClick={() => review(r.req_id, { action: "approve" })}>Approve</button>}
-                    {r.status !== "rejected" && <button className="secondary" onClick={() => review(r.req_id, { action: "reject" })}>Reject</button>}
-                    <button className="secondary" onClick={() => setEditing({ id: r.req_id, mode: "edit" })}>Edit</button>
-                    <button className="secondary" onClick={() => setEditing({ id: r.req_id, mode: "split" })}>Split</button>
-                  </div>)}</td>}
-              </tr>
-              {historyOf === r.req_id && <tr className="history-row"><td colSpan={frozen ? 4 : 6}><History reqId={r.req_id} /></td></tr>}
-              </Fragment>
-            );
-          })}
-          {rows.length === 0 && <tr><td colSpan={frozen ? 4 : 6} className="muted">No line items in this view.</td></tr>}
+          {rows.map((r) => line(r))}
+          {rows.length === 0 && <tr><td colSpan={cols} className="muted">No requirements in this view.</td></tr>}
         </tbody>
       </table>
 

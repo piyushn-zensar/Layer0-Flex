@@ -1,0 +1,18 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "title": "Compliance with M/WBE participation and related regulations"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

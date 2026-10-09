@@ -92,11 +92,14 @@ export default function TracePage() {
           <table className="rows">
             <thead><tr><th className="col-id">ID</th><th className="col-src">Source</th><th>Requirement</th></tr></thead>
             <tbody>
-              {data.rows.map(({ req }) => (
+              {data.rows.map(({ req, children }) => (
                 <tr key={req.req_id} {...rowProps(req.req_id)}>
                   <td><div className="mono trace-id">{req.req_id}</div><div className="tag">{req.category}</div></td>
                   <td className="trace-source">{req.source}{req.provenance === "UNANCHORED" && <div className="warn">unanchored</div>}</td>
-                  <td><div className="trace-text">{req.text}</div><div className="quote trace-quote">“{req.quote}”</div></td>
+                  <td><div className="trace-text">{req.text}</div>
+                    {children.length > 0 ? (
+                      <ul className="trace-children">{children.map((k) => <li key={k.req_id}>{k.text} <span className="muted">({k.source})</span></li>)}</ul>
+                    ) : <div className="quote trace-quote">“{req.quote}”</div>}</td>
                 </tr>
               ))}
             </tbody>

@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          3,
+          5
+        ],
+        "title": "Submit required M/WBE participation documents"
+      },
+      {
+        "category": "technical",
+        "members": [
+          2,
+          4
+        ],
+        "title": "Review and inquire about the Workplan and specifications"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

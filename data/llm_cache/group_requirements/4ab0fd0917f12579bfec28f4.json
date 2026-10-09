@@ -1,0 +1,34 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          2,
+          3
+        ],
+        "title": "Amend and manage RFP specifications and submissions"
+      },
+      {
+        "category": "submission",
+        "members": [
+          9,
+          11,
+          12
+        ],
+        "title": "Utilize and manage received proposal ideas and submissions"
+      },
+      {
+        "category": "commercial",
+        "members": [
+          7,
+          8,
+          14
+        ],
+        "title": "Negotiate with proposers within RFP scope"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

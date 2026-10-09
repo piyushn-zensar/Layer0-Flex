@@ -1,0 +1,43 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          5,
+          7
+        ],
+        "title": "Installation and setup of equipment enclosure"
+      },
+      {
+        "category": "technical",
+        "members": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "title": "Inspection and adjustment of breaker components"
+      },
+      {
+        "category": "technical",
+        "members": [
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "title": "Inspection and testing of power buses and related components"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

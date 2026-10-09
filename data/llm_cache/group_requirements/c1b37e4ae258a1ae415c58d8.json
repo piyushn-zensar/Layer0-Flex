@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Certification and compliance with the Prohibited Entities List"
+      },
+      {
+        "category": "legal",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Legal consequences related to the Prohibited Entities List"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

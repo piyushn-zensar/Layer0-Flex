@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Communication restrictions and consequences"
+      },
+      {
+        "category": "submission",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Requirements for submitting inquiries"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

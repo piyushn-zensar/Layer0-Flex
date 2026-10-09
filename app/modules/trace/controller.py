@@ -22,5 +22,7 @@ def trace(opp_id: str, db: Session = Depends(get_db)):
     # The match's retrieval evidence (about half the payload with 840 rows) is shown on the decision page, not here.
     rows = [r | {"req": row(r["req"], "source"),
                  "match": {k: v for k, v in row(r["match"]).items() if k != "evidence"} if r["match"] else None,
-                 "assignments": [row(a) for a in r["assignments"]]} for r in t["rows"]]
+                 "assignments": [row(a) for a in r["assignments"]],
+                 "children": [{"req_id": k.req_id, "text": k.text, "source": k.source} for k in r["children"]]}
+            for r in t["rows"]]
     return t | {"opp": row(t["opp"]), "doc": row(t["doc"]) if t["doc"] else None, "rows": rows}

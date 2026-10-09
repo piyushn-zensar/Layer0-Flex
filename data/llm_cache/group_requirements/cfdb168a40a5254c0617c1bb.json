@@ -1,0 +1,52 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Transformer fuses requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          11,
+          12
+        ],
+        "title": "CT specifications and compliance"
+      },
+      {
+        "category": "technical",
+        "members": [
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "title": "Control power circuit and breaker control requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          23,
+          24,
+          25,
+          26
+        ],
+        "title": "Wiring standards and installation"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

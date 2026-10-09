@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          4,
+          7,
+          8,
+          11
+        ],
+        "title": "Requirements for electrical system installation and modifications"
+      },
+      {
+        "category": "technical",
+        "members": [
+          5,
+          6,
+          9,
+          10
+        ],
+        "title": "Coordination and verification of existing conditions"
+      },
+      {
+        "category": "technical",
+        "members": [
+          12,
+          13,
+          14
+        ],
+        "title": "Structural and electrical support requirements"
+      },
+      {
+        "category": "submission",
+        "members": [
+          16,
+          17
+        ],
+        "title": "Submission and documentation of drawings"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

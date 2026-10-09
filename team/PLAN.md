@@ -75,8 +75,9 @@ Status lives in each person's tracker; this table is the master list. Janvia's l
 | P-09 | Port model-change guard (M16) as a golden test over `llm_cache` | S4 | after 12 Oct | P-05 |
 | P-10 | Response-outline drafting agent (`consolidation/agent.py`, called by Janvia's page) | S4 | after 12 Oct | J-05 |
 | P-13 | Requirement history: every change kept and shown (who, when, original vs changed, all versions) from the audit log; a History view per line item on the Requirements page | S2 | Sat 10 Oct | P-06 |
-| P-14 | Laptop package for the Zensar point of contact: one Windows setup script (venv, npm install, production build, demo seed) and one run script; works without Tesseract (committed layouts) and without an API key (`mock`); short install guide; walk the client through it | S3 | Mon 12 Oct | P-08 |
+| P-14 | Laptop package for the Zensar point of contact: one Windows setup script (venv, npm install, production build, demo seed) and one run script; works without Tesseract (committed layouts) and without an API key (`mock`); short install guide; walk the Zensar point of contact through it | S3 | Mon 12 Oct | P-08 |
 | P-15 | Add a missed requirement by selecting lines on the RFP page (link it to its source without pasting the quote) | S4 | after 12 Oct | P-06 |
+| P-16 | Group related line items into requirements with sub-requirements (grouping agent per page) and mark duplicates; review page and Traceability show groups | S2 | Fri 9 Oct | P-04 |
 | P-11 | Changes module: addendum → delta vs. baseline → new versions → responses returned | S5 | after 12 Oct | — |
 
 ### Atharv — knowledge base, matching, decisions, work packages
@@ -137,7 +138,7 @@ All earlier code is in `reference/` (read-only). Full table with known defects: 
 | Atharv's health / availability | A-tasks ordered so S2 (matching) lands first; Piyush picks up A-07/A-08 if needed |
 | Janvia's Pro limits | UI and writing tasks; Sonnet only; no long agent runs |
 
-## 8. Client call, 8 Oct 2026 evening: suggestions and where they go
+## 8. Call with the Zensar point of contact, 8 Oct 2026 evening: suggestions and where they go
 
 Source: the call recording of 8 Oct (internal). The Zensar point of contact was positive about the progress and asked for a short demo on 9 Oct evening.
 

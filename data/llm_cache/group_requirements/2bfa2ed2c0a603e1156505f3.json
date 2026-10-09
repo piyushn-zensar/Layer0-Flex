@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Switchgear equipment specifications"
+      },
+      {
+        "category": "technical",
+        "members": [
+          5,
+          6
+        ],
+        "title": "Switchgear operational requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

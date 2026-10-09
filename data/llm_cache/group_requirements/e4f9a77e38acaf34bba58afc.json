@@ -1,0 +1,36 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "title": "Requirements for terminal blocks and wiring connections"
+      },
+      {
+        "category": "technical",
+        "members": [
+          7,
+          8,
+          9
+        ],
+        "title": "Specifications for wiring and connectors"
+      },
+      {
+        "category": "technical",
+        "members": [
+          12,
+          13,
+          14
+        ],
+        "title": "Wire identification and labeling requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

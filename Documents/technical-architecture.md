@@ -213,6 +213,17 @@ No regular-expression or keyword fallback exists for identifying requirements (r
 - Changing a prompt or schema changes the key, so a stale answer is never reused by mistake.
 - Retrieved reference material (section 7.1) is supplied in prompts. Fine-tuning is not used.
 
+### 6.2a Grouping into requirements and sub-requirements (built 9 Oct 2026)
+
+The reader lists every obligation separately, so a list such as "submit these twelve drawings" arrives as twelve line items. On the Syracuse RFP that gave 840 line items, many of them closely related. Two steps follow the reader:
+
+1. **Duplicates** are found by text comparison, not by the model. A quote that repeats an earlier one almost word for word (often a cover-page restatement of the specification) is marked as a duplicate of the first occurrence. A reviewer can restore it.
+2. **Grouping agent.** For each page, the model receives the numbered line items and proposes groups that form one obligation: a drawing list, a list of standards, the features of one piece of equipment, the parts of one insurance requirement. It returns only item numbers and a short title. It never changes or drops an item: anything it does not place stays a requirement on its own, and invalid answers are discarded. The answers are cached and frozen like the reader's.
+
+A group is one **requirement** made of **sub-requirements**. It keeps every sub-requirement's highlight and quote. Matching, dispatch, Traceability and the final response work on requirements, that is groups and stand-alone items. Approving or rejecting a group applies to its undecided sub-requirements. **Ungroup** releases the sub-requirements as requirements again.
+
+On the Syracuse RFP: 840 line items become 353 requirements (167 groups holding 631 sub-requirements, plus 186 stand-alone items), and 23 duplicates are marked.
+
 ### 6.3 Human review and freezing
 
 The bid manager reviews each line item against its highlighted source (built 8 Oct 2026). The actions are:
@@ -238,7 +249,8 @@ requirement
   page, line_start, line_end, bboxes   the exact source
   category, section
   provenance    EXTRACTED | UNANCHORED
-  status        proposed | approved | rejected | split | merged
+  status        proposed | approved | rejected | split | merged | duplicate
+  kind          item | group;  parent_id: the group a sub-requirement belongs to
   derived_from  the line items it was split from or merged from
   baseline      frozen baseline number, empty while draft
 ```

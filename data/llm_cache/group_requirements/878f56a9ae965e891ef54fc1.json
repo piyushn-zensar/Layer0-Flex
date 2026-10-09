@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          3,
+          4,
+          6
+        ],
+        "title": "Provide tools, equipment, and documentation for technical support"
+      },
+      {
+        "category": "submission",
+        "members": [
+          2,
+          5
+        ],
+        "title": "Include required items in the cost proposal"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

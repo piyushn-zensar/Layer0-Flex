@@ -1,0 +1,37 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3,
+          13
+        ],
+        "title": "Quality conformance and inspection obligations"
+      },
+      {
+        "category": "technical",
+        "members": [
+          4,
+          5,
+          8,
+          9,
+          10
+        ],
+        "title": "Testing and operational requirements"
+      },
+      {
+        "category": "submission",
+        "members": [
+          11,
+          12
+        ],
+        "title": "Submission of test documentation"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

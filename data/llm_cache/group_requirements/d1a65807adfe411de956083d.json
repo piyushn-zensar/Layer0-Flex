@@ -1,0 +1,17 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "staffing",
+        "members": [
+          2,
+          3,
+          4
+        ],
+        "title": "Workforce distribution and employee counts"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

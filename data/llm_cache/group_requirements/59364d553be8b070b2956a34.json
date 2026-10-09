@@ -1,0 +1,77 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Switchgear compliance with ANSI/IEEE standards"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Testing and simulation requirements"
+      },
+      {
+        "category": "submission",
+        "members": [
+          5,
+          6
+        ],
+        "title": "Submission of test reports and technical documents"
+      },
+      {
+        "category": "submission",
+        "members": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          13,
+          14,
+          15,
+          18,
+          19,
+          23,
+          24
+        ],
+        "title": "Drawings for equipment design, installation, and operation"
+      },
+      {
+        "category": "submission",
+        "members": [
+          12,
+          16,
+          17,
+          20,
+          22
+        ],
+        "title": "Submission of materials and performance data"
+      },
+      {
+        "category": "submission",
+        "members": [
+          25,
+          26
+        ],
+        "title": "Anchor bolt and base plate details"
+      },
+      {
+        "category": "submission",
+        "members": [
+          27,
+          28
+        ],
+        "title": "Shipping and final drawing requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

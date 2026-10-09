@@ -26,8 +26,10 @@ class Requirement(Base):
     line_end: Mapped[int | None]
     bboxes: Mapped[list] = mapped_column(JSON, default=list)           # highlight boxes on the page, PDF points
     provenance: Mapped[str] = mapped_column(String(12), default="EXTRACTED")  # EXTRACTED | UNANCHORED
-    status: Mapped[str] = mapped_column(String(12), default="proposed")  # proposed | approved | rejected | split | merged
-    derived_from: Mapped[list] = mapped_column(JSON, default=list)       # req_ids this one was split from / merged from
+    status: Mapped[str] = mapped_column(String(12), default="proposed")  # proposed | approved | rejected | split | merged | duplicate
+    derived_from: Mapped[list] = mapped_column(JSON, default=list)       # req_ids this one was split / merged from, or duplicates
+    kind: Mapped[str] = mapped_column(String(8), default="item")         # item | group (a requirement made of sub-requirements)
+    parent_id: Mapped[str | None] = mapped_column(String(20), index=True)  # the group a sub-requirement belongs to
     baseline: Mapped[int | None]                                        # frozen baseline number, None = draft
     created_by: Mapped[str] = mapped_column(String(80))
     created_at: Mapped[datetime] = mapped_column(default=utcnow)

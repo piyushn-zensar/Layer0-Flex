@@ -1,0 +1,41 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "title": "Wire labeling and terminal block requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          8,
+          9,
+          10,
+          11,
+          14,
+          15,
+          16
+        ],
+        "title": "Relay specifications and requirements"
+      },
+      {
+        "category": "submission",
+        "members": [
+          17,
+          18,
+          19
+        ],
+        "title": "Submission of equipment parts list"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

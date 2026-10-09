@@ -1,0 +1,53 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          15
+        ],
+        "title": "Compliance with building codes and regulations"
+      },
+      {
+        "category": "submission",
+        "members": [
+          5,
+          10,
+          11
+        ],
+        "title": "Verification and notification requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          7,
+          13
+        ],
+        "title": "Coordination and preparation for construction"
+      },
+      {
+        "category": "technical",
+        "members": [
+          6,
+          8,
+          18
+        ],
+        "title": "Support and installation requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          9,
+          16,
+          17,
+          19
+        ],
+        "title": "Standards for construction quality"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

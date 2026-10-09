@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Submit workforce utilization reports"
+      },
+      {
+        "category": "submission",
+        "members": [
+          4,
+          5
+        ],
+        "title": "Include required details in workforce utilization reports"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

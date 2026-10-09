@@ -1,0 +1,34 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          6,
+          7
+        ],
+        "title": "Sanctions for contractor non-compliance"
+      },
+      {
+        "category": "commercial",
+        "members": [
+          3,
+          5
+        ],
+        "title": "Financial and legal consequences of non-compliance"
+      },
+      {
+        "category": "legal",
+        "members": [
+          4,
+          8
+        ],
+        "title": "Legal actions for non-compliance"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          4
+        ],
+        "title": "Provide equipment and accessories for a functional system"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          3,
+          5
+        ],
+        "title": "Ensure compliance with codes and standards"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

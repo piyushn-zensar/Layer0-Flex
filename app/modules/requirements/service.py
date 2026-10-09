@@ -1,12 +1,19 @@
 """Requirements: line items with exact sources, human review, frozen baseline.  Owner: Piyush.
 
 Public contract:
-    extract(db, opp_id, actor) -> dict           run the reader agent on the main document (drafts only)
+    extract(db, opp_id, actor) -> dict           reader agent on the main RFP, then duplicates marked and related
+                                                 items grouped into requirements with sub-requirements (drafts only)
     add(db, opp_id, document_id, quote, text, category, actor, section="", hint_page=None) -> Requirement
-    current(db, opp_id, include_inactive=False) -> list[Requirement]   latest version of each active line item
-                                                 (inactive = rejected, or replaced by a split / merge)
+    current(db, opp_id, include_inactive=False, include_children=False) -> list[Requirement]
+                                                 the requirements the workflow works on, in document order: groups and
+                                                 stand-alone items, not their sub-requirements (inactive = rejected,
+                                                 duplicate, or replaced by a split / merge)
+    children(db, req_id) -> list[Requirement]    the sub-requirements of a group
+    ungroup(db, req_id, actor, reason="") -> list[Requirement]   a group's sub-requirements become requirements again
     get(db, req_id) -> Requirement | None        latest version
-    review(db, req_id, action, actor, text=None, reason="", category=None)   action: approve | reject | edit
+    review(db, req_id, action, actor, text=None, reason="", category=None)   action: approve | reject | edit;
+                                                 approve / reject of a group applies to its sub-requirements;
+                                                 approving a duplicate restores it
     split(db, req_id, parts, actor, reason="") -> list[Requirement]   parts: [{"quote", "text"}], >= 2
     merge(db, opp_id, req_ids, text, actor, reason="") -> Requirement  >= 2 line items into one
     add_missed(db, opp_id, quote, text, category, actor, page=None) -> Requirement   a person adds what the agent missed
@@ -24,10 +31,11 @@ from app.core import audit
 from app.core.audit import AuditEvent
 from app.modules.ingestion import service as ingestion
 from app.modules.opportunities import service as opportunities
-from app.modules.requirements import agent, anchoring
+from app.modules.requirements import agent, anchoring, grouping
 from app.modules.requirements.models import CATEGORIES, Baseline, Requirement
 
-INACTIVE = {"rejected", "split", "merged"}
+INACTIVE = {"rejected", "split", "merged", "duplicate"}
+AGENTS = ("reader agent", "grouping agent")
 
 
 def _next_req_id(db: Session, opp_id: str) -> str:
@@ -79,6 +87,8 @@ def _draft(db: Session, req_id: str) -> Requirement:
 def split(db: Session, req_id: str, parts: list[dict], actor: str, reason: str = "") -> list[Requirement]:
     """One line item that holds several obligations becomes one item per part. Each part is anchored again."""
     req = _draft(db, req_id)
+    if req.kind == "group":
+        raise ValueError(f"{req_id} is a group; use Ungroup to release its sub-requirements.")
     parts = [p for p in parts if p.get("quote", "").strip()]
     if len(parts) < 2:
         raise ValueError("A split needs at least two parts.")
@@ -100,6 +110,8 @@ def merge(db: Session, opp_id: str, req_ids: list[str], text: str, actor: str, r
         raise ValueError("A merge needs at least two line items.")
     if any(r.opportunity_id != opp_id for r in reqs):
         raise ValueError("Line items from another opportunity cannot be merged.")
+    if any(r.kind == "group" or r.parent_id for r in reqs):
+        raise ValueError("Groups and sub-requirements cannot be merged; ungroup first.")
     if len({r.page for r in reqs}) > 1:
         # ponytail: one requirement = one page, so its highlight is complete; multi-page anchors if ever needed
         raise ValueError("Only line items on the same page can be merged; keep cross-page items separate.")
@@ -152,25 +164,80 @@ def extract(db: Session, opp_id: str, actor: str) -> dict:
     layout = ingestion.layout(doc.id)
     proposed, problems = agent.read(layout)
     for old in db.scalars(select(Requirement).where(Requirement.opportunity_id == opp_id,
-                                                    Requirement.status == "proposed",
-                                                    Requirement.created_by.startswith("reader agent"))):
-        audit.record(db, actor, "discarded", "requirement", old.req_id, opp_id, reason="re-read replaced the draft")
-        db.delete(old)  # a re-run replaces the agent's unreviewed proposals; people's additions stay
+                                                    Requirement.status.in_(["proposed", "duplicate"]))):
+        if old.created_by.startswith(AGENTS):  # a re-run replaces the agents' unreviewed proposals; people's stay
+            audit.record(db, actor, "discarded", "requirement", old.req_id, opp_id, reason="re-read replaced the draft")
+            db.delete(old)
     db.commit()
-    for item in proposed:
-        add(db, opp_id, doc.id, item["quote"], item["text"], item["category"], f"reader agent ({actor})",
-            item["section"], item["page"], commit=False, pages=layout["pages"])
+    items = [add(db, opp_id, doc.id, item["quote"], item["text"], item["category"], f"reader agent ({actor})",
+                 item["section"], item["page"], commit=False, pages=layout["pages"]) for item in proposed]
+    dups = grouping.duplicates([{"quote": r.quote} for r in items])
+    for i, first in dups.items():
+        items[i].status, items[i].derived_from = "duplicate", [items[first].req_id]
+        audit.record(db, actor, "duplicate_of", "requirement", items[i].req_id, opp_id, of=items[first].req_id)
+    unique = [r for i, r in enumerate(items) if i not in dups]
+    groups, group_problems = grouping.group([{"page": r.page, "text": r.text, "category": r.category} for r in unique])
+    for g in groups:
+        _create_group(db, opp_id, [unique[i] for i in g["members"]], g["title"], g["category"], f"grouping agent ({actor})")
     db.commit()
     opportunities.set_status(db, opp_id, "review", actor)
-    return {"proposed": len(proposed), "problems": problems}
+    return {"proposed": len(proposed), "duplicates": len(dups), "groups": len(groups),
+            "requirements": len(current(db, opp_id)), "problems": problems + group_problems}
 
 
-def current(db: Session, opp_id: str, include_inactive: bool = False) -> list[Requirement]:
+def _create_group(db: Session, opp_id: str, members: list[Requirement], title: str, category: str,
+                  actor: str) -> Requirement:
+    """One requirement made of sub-requirements on the same page. It keeps all their highlights and quotes."""
+    members = sorted(members, key=lambda r: r.line_start or 0)
+    anchored = [r for r in members if r.page]
+    first = anchored[0] if anchored else members[0]
+    g = Requirement(req_id=_next_req_id(db, opp_id), opportunity_id=opp_id, document_id=first.document_id,
+                    kind="group", text=title, category=category, section=first.section, created_by=actor,
+                    quote=" … ".join(r.quote for r in members), page=first.page,
+                    line_start=min((r.line_start for r in anchored), default=None),
+                    line_end=max((r.line_end for r in anchored), default=None),
+                    bboxes=[b for r in anchored for b in r.bboxes],
+                    provenance="EXTRACTED" if len(anchored) == len(members) else "UNANCHORED")
+    db.add(g)
+    db.flush()
+    for r in members:
+        r.parent_id = g.req_id
+    audit.record(db, actor, "grouped", "requirement", g.req_id, opp_id, text=title, category=category,
+                 members=[r.req_id for r in members])
+    return g
+
+
+def children(db: Session, req_id: str) -> list[Requirement]:
+    req = get(db, req_id)
+    if req is None:
+        return []
+    rows = [r for r in current(db, req.opportunity_id, include_inactive=True, include_children=True) if r.parent_id == req_id]
+    return rows
+
+
+def ungroup(db: Session, req_id: str, actor: str, reason: str = "") -> list[Requirement]:
+    req = _draft(db, req_id)
+    if req.kind != "group":
+        raise ValueError(f"{req_id} is not a group.")
+    kids = children(db, req_id)
+    for r in kids:
+        r.parent_id = None
+    req.status = "split"
+    audit.record(db, actor, "ungrouped", "requirement", req_id, req.opportunity_id,
+                 into=[r.req_id for r in kids], reason=reason)
+    db.commit()
+    return kids
+
+
+def current(db: Session, opp_id: str, include_inactive: bool = False,
+            include_children: bool = False) -> list[Requirement]:
     latest = (select(Requirement.req_id, func.max(Requirement.version).label("v"))
               .where(Requirement.opportunity_id == opp_id).group_by(Requirement.req_id).subquery())
     rows = db.scalars(select(Requirement).join(latest, (Requirement.req_id == latest.c.req_id)
-                                               & (Requirement.version == latest.c.v)).order_by(Requirement.req_id))
-    return [r for r in rows if include_inactive or r.status not in INACTIVE]
+                                               & (Requirement.version == latest.c.v)))
+    keep = [r for r in rows if (include_inactive or r.status not in INACTIVE) and (include_children or not r.parent_id)]
+    # document order: page, then line; items not found in the source last; a group before its own sub-requirements
+    return sorted(keep, key=lambda r: (r.page is None, r.page or 0, r.line_start or 0, r.kind != "group", r.req_id))
 
 
 def get(db: Session, req_id: str) -> Requirement | None:
@@ -193,6 +260,10 @@ def review(db: Session, req_id: str, action: str, actor: str, text: str | None =
         req.text, req.category = ((text or "").strip() or req.text), (category or req.category)
     elif action in ("approve", "reject"):
         req.status = {"approve": "approved", "reject": "rejected"}[action]
+        if req.kind == "group":  # the decision covers the sub-requirements
+            for kid in children(db, req_id):  # approve: the undecided ones; reject: every active one
+                if kid.status == "proposed" or (req.status == "rejected" and kid.status not in INACTIVE):
+                    kid.status = req.status
     else:
         raise ValueError(f"Unknown action {action!r}.")
     audit.record(db, actor, action, "requirement", req_id, req.opportunity_id, before=before,
@@ -210,7 +281,7 @@ def freeze(db: Session, opp_id: str, actor: str) -> Baseline:
     if not items:
         raise ValueError("Nothing is approved; a baseline needs at least one requirement.")
     number = 1
-    for r in items:
+    for r in items + [k for r in items if r.kind == "group" for k in children(db, r.req_id) if k.status == "approved"]:
         r.baseline = number
     b = Baseline(opportunity_id=opp_id, number=number, count=len(items), frozen_by=actor)
     db.add(b)

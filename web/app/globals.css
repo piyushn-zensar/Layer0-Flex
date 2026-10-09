@@ -184,3 +184,12 @@ tr.history-row > td { background: #f8fafc; }
 .history h3 { font-size: 13px; margin: 0 0 var(--s2); }
 .versions, .timeline { margin: 0; padding-left: 18px; } .versions li, .timeline li { margin-bottom: var(--s2); }
 @media (max-width: 1100px) { .history { grid-template-columns: 1fr; } }
+
+/* Groups and sub-requirements (requirements page) */
+.req-table tr.group > td { border-top: 1px solid var(--line-2); }
+.group-title { font-weight: 600; }
+button.link.expand { padding-left: 0; margin-top: var(--s1); }
+.req-table tr.child > td { background: #fbfcfe; font-size: 13px; }
+.req-table tr.child > td:nth-child(3), .req-table tr.child > td:nth-child(4) { padding-left: var(--s5); }
+.status-duplicate { background: #eef2f6; color: var(--muted); }
+.trace-children { margin: 6px 0 0; padding-left: 18px; font-size: 12.5px; } .trace-children li { margin-bottom: 2px; }

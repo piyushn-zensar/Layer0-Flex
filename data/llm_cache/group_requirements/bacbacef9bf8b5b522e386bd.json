@@ -1,0 +1,17 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Compliance with fair competition and anti-collusion requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

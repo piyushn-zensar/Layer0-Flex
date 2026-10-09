@@ -54,7 +54,7 @@ def _guard(fn):
 @router.get("/opportunities/{opp_id}/requirements")
 def requirements(opp_id: str, db: Session = Depends(get_db)):
     b = service.baseline(db, opp_id)
-    return {"requirements": [row(r, "source") for r in service.current(db, opp_id, include_inactive=True)],
+    return {"requirements": [row(r, "source") for r in service.current(db, opp_id, include_inactive=True, include_children=True)],
             "baseline": row(b) if b else None}
 
 
@@ -79,6 +79,11 @@ def merge(opp_id: str, body: MergeIn, request: Request, db: Session = Depends(ge
 def review(req_id: str, body: ReviewIn, request: Request, db: Session = Depends(get_db)):
     _guard(lambda: service.review(db, req_id, body.action, actor(request), body.text, body.reason, body.category))
     return row(service.get(db, req_id), "source")
+
+
+@router.post("/requirements/{req_id}/ungroup")
+def ungroup(req_id: str, request: Request, db: Session = Depends(get_db)):
+    return [row(r, "source") for r in _guard(lambda: service.ungroup(db, req_id, actor(request)))]
 
 
 @router.get("/requirements/{req_id}/history")

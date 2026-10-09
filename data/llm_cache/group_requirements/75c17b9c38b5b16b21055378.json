@@ -1,0 +1,39 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "title": "Electrical ratings and performance specifications"
+      },
+      {
+        "category": "technical",
+        "members": [
+          10,
+          11,
+          12,
+          13
+        ],
+        "title": "Voltage and operational requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          7,
+          14,
+          15
+        ],
+        "title": "Breaker design and compatibility"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

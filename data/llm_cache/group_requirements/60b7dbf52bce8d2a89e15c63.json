@@ -1,0 +1,48 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "title": "Submission requirements for proposal content and interviews"
+      },
+      {
+        "category": "commercial",
+        "members": [
+          5,
+          6
+        ],
+        "title": "Fee certification and contract value determination"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          7,
+          8,
+          9,
+          10
+        ],
+        "title": "Evaluation and compliance criteria for proposals"
+      },
+      {
+        "category": "legal",
+        "members": [
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "title": "Legal rights and actions of the Authority"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

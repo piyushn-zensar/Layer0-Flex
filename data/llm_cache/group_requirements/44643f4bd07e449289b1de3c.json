@@ -1,0 +1,45 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          4,
+          5,
+          7,
+          8,
+          9
+        ],
+        "title": "Coordinate and perform underground piping work"
+      },
+      {
+        "category": "technical",
+        "members": [
+          12,
+          14,
+          15,
+          16
+        ],
+        "title": "Coordinate and execute mechanical installation"
+      },
+      {
+        "category": "technical",
+        "members": [
+          17,
+          18
+        ],
+        "title": "Ensure proper sealing and testing of systems"
+      },
+      {
+        "category": "schedule",
+        "members": [
+          2,
+          11
+        ],
+        "title": "Plan and schedule shutdowns"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

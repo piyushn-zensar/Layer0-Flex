@@ -1,0 +1,27 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          3,
+          5,
+          8,
+          9,
+          10
+        ],
+        "title": "Handling of RFP revisions and addenda"
+      },
+      {
+        "category": "submission",
+        "members": [
+          4,
+          6
+        ],
+        "title": "Proposer's responsibility for RFP errors and modifications"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

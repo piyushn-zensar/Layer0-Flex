@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          5,
+          6,
+          14,
+          23,
+          24,
+          25
+        ],
+        "title": "Switchgear design and construction requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          16
+        ],
+        "title": "Breaker specifications and features"
+      },
+      {
+        "category": "technical",
+        "members": [
+          18,
+          19,
+          20,
+          21
+        ],
+        "title": "Billing metering and connections"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          22
+        ],
+        "title": "Switchgear compliance with standards"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

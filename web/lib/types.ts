@@ -9,7 +9,7 @@ export interface Requirement {
   req_id: string; version: number; text: string; quote: string; category: string; section: string;
   page: number | null; line_start: number | null; line_end: number | null; bboxes: number[][];
   provenance: "EXTRACTED" | "UNANCHORED"; status: string; baseline: number | null; source: string;
-  derived_from: string[]; created_by: string;
+  derived_from: string[]; created_by: string; kind: "item" | "group"; parent_id: string | null;
 }
 export interface Baseline { number: number; count: number; frozen_by: string }
 export interface Match {
@@ -30,6 +30,7 @@ export interface Page { page: number; width: number; height: number; unreviewed:
 export interface TraceRow {
   req: Requirement; match: Match | null; product: Product | null; unit: Unit | null;
   bom: { item: string; qty: string }[]; assignments: Assignment[];
+  children: { req_id: string; text: string; source: string }[];
 }
 export interface Trace { opp: Opportunity; doc: Doc | null; rows: TraceRow[]; pages: Page[]; progress: Progress }
 export interface RequirementHistory {

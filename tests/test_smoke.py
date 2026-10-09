@@ -22,6 +22,21 @@ from scripts import seed_demo  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def standalone(rows: list[dict]) -> list[dict]:
+    """Requirements that are not groups, sub-requirements or duplicates (the reader's own line items)."""
+    return [r for r in rows if r["kind"] == "item" and not r["parent_id"] and r["status"] == "proposed"
+            and r["provenance"] == "EXTRACTED"]
+
+
+def same_page(rows: list[dict], n: int) -> list[dict]:
+    """The first page with at least n stand-alone requirements."""
+    from collections import defaultdict
+    pages = defaultdict(list)
+    for r in standalone(rows):
+        pages[r["page"]].append(r)
+    return next(v for _, v in sorted(pages.items()) if len(v) >= n)
+
+
 def test_demo_flow_and_api():
     seed_demo.main()
     client = TestClient(app)
@@ -103,7 +118,7 @@ def test_requirement_review_actions():
     client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
     assert client.post(f"/api/opportunities/{opp}/requirements/extract").json()["proposed"] > 100  # frozen GPT-4o answers
     reqs = {r["req_id"]: r for r in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
-    p55 = [r for r in reqs.values() if r["page"] == 55 and r["provenance"] == "EXTRACTED"]
+    p55 = same_page(list(reqs.values()), 4)  # four stand-alone requirements on one page
 
     edited = client.post(f"/api/requirements/{p55[0]['req_id']}/review",
                          json={"action": "edit", "text": "Edited text", "category": "schedule"}).json()
@@ -259,14 +274,17 @@ def test_review_findings_fixed():
     # freeze: needs approved items; once only; nothing changes afterwards
     assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 409  # nothing read or approved yet
     client.post(f"/api/opportunities/{opp}/requirements/extract")
-    rows = client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]
-    first_ids = {r["req_id"] for r in rows}
+    everything = client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]
+    first_ids = {r["req_id"] for r in everything}
+    rows = [r for r in everything if not r["parent_id"] and r["status"] == "proposed"]  # requirements to decide
     client.post(f"/api/requirements/{rows[0]['req_id']}/review", json={"action": "reject"})
     assert client.post(f"/api/opportunities/{opp}/requirements/extract").status_code == 409  # review started
     assert client.post(f"/api/opportunities/{opp}/requirements", json={"quote": "  ", "category": "technical"}).status_code == 409
     assert client.post(f"/api/opportunities/{opp}/requirements/merge",
                        json={"req_ids": [rows[1]["req_id"], rows[2]["req_id"]], "text": " "}).status_code == 409
-    p55, p56 = (next(r for r in rows if r["page"] == n and r["provenance"] == "EXTRACTED") for n in (55, 56))
+    alone = standalone(everything)
+    p55 = alone[0]
+    p56 = next(r for r in alone if r["page"] != p55["page"])
     assert client.post(f"/api/opportunities/{opp}/requirements/merge",
                        json={"req_ids": [p55["req_id"], p56["req_id"]], "text": "x"}).status_code == 409  # cross-page
     for r in rows[1:]:
@@ -329,19 +347,54 @@ def test_requirement_history():
     opp = client.post("/api/opportunities", json={"title": "history"}).json()["id"]
     client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
     client.post(f"/api/opportunities/{opp}/requirements/extract")
-    rows = [r for r in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"] if r["page"] == 55]
+    rows = same_page(client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"], 3)
     a, b, c = (r["req_id"] for r in rows[:3])
     original = rows[0]["text"]
+    new_cat = "legal" if rows[0]["category"] != "legal" else "staffing"
     client.post(f"/api/requirements/{a}/review", json={"action": "edit", "text": "Edited once", "reason": "clearer"},
                 headers={"X-Actor": "Crown%20Design%20Engineer"})
-    client.post(f"/api/requirements/{a}/review", json={"action": "edit", "category": "schedule"})
+    client.post(f"/api/requirements/{a}/review", json={"action": "edit", "category": new_cat})
     client.post(f"/api/requirements/{a}/review", json={"action": "approve"})
     h = client.get(f"/api/requirements/{a}/history").json()
     assert [(v["label"], v["text"], v["category"]) for v in h["versions"]] == [
-        ("original", original, rows[0]["category"]), ("edited", "Edited once", rows[0]["category"]), ("edited", "Edited once", "schedule")]
+        ("original", original, rows[0]["category"]), ("edited", "Edited once", rows[0]["category"]), ("edited", "Edited once", new_cat)]
     assert h["versions"][1]["by"] == "Crown Design Engineer" and h["versions"][1]["reason"] == "clearer"
     assert [e["action"] for e in h["events"]] == ["proposed", "edit", "edit", "approve"]
     merged = client.post(f"/api/opportunities/{opp}/requirements/merge", json={"req_ids": [b, c], "text": "one"}).json()["req_id"]
     assert client.get(f"/api/requirements/{b}/history").json()["events"][-1]["details"]["into"] == merged
     assert client.get(f"/api/requirements/{merged}/history").json()["derived_from"] == [b, c]
     assert client.get("/api/requirements/REQ-9999-0001/history").status_code == 404
+
+
+def test_grouping_and_duplicates():
+    """P-16: related line items become one requirement with sub-requirements; duplicates point to the first one."""
+    client = TestClient(app)
+    pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
+    opp = client.post("/api/opportunities", json={"title": "grouping"}).json()["id"]
+    client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    r = client.post(f"/api/opportunities/{opp}/requirements/extract").json()  # frozen reader + grouping answers
+    assert r["proposed"] == 840 and r["duplicates"] == 23 and r["groups"] > 100 and r["requirements"] < 400, r
+    rows = client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]
+    by_id = {x["req_id"]: x for x in rows}
+    group = next(x for x in rows if x["kind"] == "group")
+    kids = [x for x in rows if x["parent_id"] == group["req_id"]]
+    assert len(kids) >= 2 and all(k["page"] == group["page"] for k in kids)
+    assert {tuple(b) for k in kids for b in k["bboxes"]} <= {tuple(b) for b in group["bboxes"]}  # all highlights kept
+    dup = next(x for x in rows if x["status"] == "duplicate")
+    assert by_id[dup["derived_from"][0]]["status"] != "duplicate"
+
+    # the workflow sees requirements, not sub-requirements
+    trace = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
+    assert len(trace) == r["requirements"] and all(t["req"]["parent_id"] is None for t in trace)
+    assert next(t for t in trace if t["req"]["req_id"] == group["req_id"])["children"]
+
+    # approving a group decides its sub-requirements; ungroup releases them
+    client.post(f"/api/requirements/{kids[0]['req_id']}/review", json={"action": "reject"})
+    client.post(f"/api/requirements/{group['req_id']}/review", json={"action": "approve"})
+    after = {x["req_id"]: x["status"] for x in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
+    assert after[kids[0]["req_id"]] == "rejected" and all(after[k["req_id"]] == "approved" for k in kids[1:])
+    other = next(x for x in rows if x["kind"] == "group" and x["req_id"] != group["req_id"])
+    released = client.post(f"/api/requirements/{other['req_id']}/ungroup").json()
+    assert released and all(x["parent_id"] is None for x in released)
+    assert client.post(f"/api/requirements/{other['req_id']}/split", json={"parts": [{"quote": "a"}, {"quote": "b"}]}).status_code == 409
+    assert client.post(f"/api/requirements/{dup['req_id']}/review", json={"action": "approve"}).json()["status"] == "approved"
