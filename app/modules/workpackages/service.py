@@ -13,7 +13,8 @@ Public contract:
         only that unit's product manager / design engineer (bid desk: the Bid Manager), only while assigned or
         returned. LookupError: no such assignment; PermissionError: wrong person; ValueError: wrong state
     validate(db, assignment_id, ok, note, actor)
-        only the Bid Manager, only submitted work. LookupError / PermissionError / ValueError as above
+        only the Bid Manager, only submitted work; a return (ok=False) needs a note. The unit can then answer the
+        returned item again. LookupError / PermissionError / ValueError as above
     progress(db, opp_id) -> dict[str, dict]               bu -> {"total", "submitted", "validated"} (active work)
 """
 from collections import defaultdict
@@ -125,6 +126,8 @@ def validate(db: Session, assignment_id: int, ok: bool, note: str, actor: str) -
         raise PermissionError("Only the Bid Manager validates or returns answers.")
     if a.status != "submitted":
         raise ValueError(f"This item is {a.status}; only submitted answers can be validated or returned.")
+    if not ok and not note.strip():
+        raise ValueError("A returned answer needs a note saying why (design 7.5).")
     a.status, a.validated_by, a.validation_note = ("validated" if ok else "returned"), actor, note
     audit.record(db, actor, a.status, "assignment", a.req_id, a.opportunity_id, bu=a.bu, note=note)
     db.commit()
