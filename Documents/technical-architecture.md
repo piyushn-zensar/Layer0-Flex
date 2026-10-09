@@ -222,7 +222,7 @@ The bid manager reviews each line item against its highlighted source (built 8 O
 - **merge** several line items that are one obligation. The merged item keeps every source box and the joined quote;
 - **add** a requirement the agent missed, by pasting its quote, which is anchored like any other.
 
-Split and merged originals are kept, marked as replaced, and drop out of matching, dispatch and the final response. The new items record which ones they came from. Each action is an audit event.
+Every line item has a history view (built 9 Oct 2026), rebuilt from the append-only audit log: its original wording, each later version with who changed it, when and why, and a timeline of every action on it. Split and merged originals are kept, marked as replaced, and drop out of matching, dispatch and the final response. The new items record which ones they came from. Each action is an audit event.
 
 Freezing needs every active line item to be approved or rejected. A named person then **freezes** the approved set as **baseline 1**. From then on, requirements change only through new versions created by change handling. Adding a requirement by drawing a box on the page is a later addition.
 

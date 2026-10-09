@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "EP2",
+    "confidence": 0.95,
+    "offering_type": "ETO",
+    "product_id": "EP2-RPP",
+    "rationale": "The requirement specifies furnishing relays, controls, and associated accessories for a complete functional system. The product EP2-RPP from the EP2 business unit matches this requirement as it provides substation protection and control panels built to the customer's specifications, including protective relays, auxiliary relays, control switches, metering, and associated hardware and accessories, fulfilling the requirement comprehensively."
+  },
+  "task": "match_requirement"
+}

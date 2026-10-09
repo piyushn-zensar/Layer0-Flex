@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "EP2",
+    "confidence": 0.9,
+    "offering_type": "ETO",
+    "product_id": "EP2-RPP",
+    "rationale": "The requirement specifies protective relays and controls, which aligns with the EP2-RPP product offering. This product includes protective relays, auxiliary relays, and control panels tailored to customer specifications, making it suitable for the requirement."
+  },
+  "task": "match_requirement"
+}

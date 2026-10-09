@@ -32,3 +32,8 @@ export interface TraceRow {
   bom: { item: string; qty: string }[]; assignments: Assignment[];
 }
 export interface Trace { opp: Opportunity; doc: Doc | null; rows: TraceRow[]; pages: Page[]; progress: Progress }
+export interface RequirementHistory {
+  req_id: string; quote: string; source: string; derived_from: string[];
+  versions: { n: number; at: string; by: string; label: string; text: string; category: string; reason?: string }[];
+  events: { at: string; by: string; action: string; details: Record<string, unknown> }[];
+}

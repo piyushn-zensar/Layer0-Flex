@@ -175,3 +175,12 @@ details.card summary { cursor: pointer; } details.card[open] summary { margin-bo
 .unit-count { color: var(--ink-2); white-space: nowrap; }
 .unit-bar { display: flex; height: 8px; border-radius: 999px; background: #e2e8f0; overflow: hidden; }
 .unit-bar .done { background: var(--ok); } .unit-bar .wait { background: #0ea5e9; }
+
+/* Requirement history (requirements page) */
+button.link { background: none; border: 0; color: var(--accent); padding: 0 0 0 var(--s2); min-height: 0; font-weight: 500; font-size: 12px; }
+button.link:hover { background: none; text-decoration: underline; }
+tr.history-row > td { background: #f8fafc; }
+.history { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--s5); }
+.history h3 { font-size: 13px; margin: 0 0 var(--s2); }
+.versions, .timeline { margin: 0; padding-left: 18px; } .versions li, .timeline li { margin-bottom: var(--s2); }
+@media (max-width: 1100px) { .history { grid-template-columns: 1fr; } }

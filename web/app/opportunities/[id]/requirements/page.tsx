@@ -2,10 +2,10 @@
 // Requirement review: approve, reject, edit, split, merge, add missed; then freeze the baseline.  Owner: Piyush.
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import PageHead from "@/components/shell/PageHead";
 import { post, useApi } from "@/lib/api";
-import type { Baseline, Requirement } from "@/lib/types";
+import type { Baseline, Requirement, RequirementHistory } from "@/lib/types";
 
 const CATEGORIES = ["technical", "compliance", "commercial", "schedule", "submission", "legal", "staffing"];
 const FILTERS = {
@@ -27,6 +27,7 @@ export default function RequirementsPage() {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [editing, setEditing] = useState<{ id: string; mode: "edit" | "split" }>();
+  const [historyOf, setHistoryOf] = useState<string>();
 
   const filter: FilterKey = chosen ?? (data?.baseline ? "all" : "review"); // frozen: nothing left to review
   const all = useMemo(() => data?.requirements ?? [], [data]);
@@ -86,7 +87,8 @@ export default function RequirementsPage() {
             const active = !INACTIVE.has(r.status) && r.baseline === null;
             const isEditing = editing?.id === r.req_id;
             return (
-              <tr key={r.req_id} className={INACTIVE.has(r.status) ? "inactive" : ""}>
+              <Fragment key={r.req_id}>
+              <tr className={INACTIVE.has(r.status) ? "inactive" : ""}>
                 {!frozen && <td>{active && <input type="checkbox" aria-label={`Select ${r.req_id}`} checked={selected.has(r.req_id)} onChange={() => toggle(r.req_id)} />}</td>}
                 <td><div className="mono">{r.req_id}</div><span className="tag">{r.category}</span></td>
                 <td>{r.page ? <Link href={`/opportunities/${id}/trace#${r.req_id}`}>{r.source}</Link> : r.source}
@@ -111,7 +113,9 @@ export default function RequirementsPage() {
                     {r.derived_from?.length > 0 && <div className="muted">From {r.derived_from.join(", ")}</div>}
                   </>)}
                 </td>
-                <td><span className={`badge status-${r.status}`}>{r.status}</span></td>
+                <td><span className={`badge status-${r.status}`}>{r.status}</span>
+                  <button type="button" className="link" aria-expanded={historyOf === r.req_id}
+                    onClick={() => setHistoryOf(historyOf === r.req_id ? undefined : r.req_id)}>History</button></td>
                 {!frozen && <td>{active && !isEditing && (
                   <div className="row-actions">
                     {r.status !== "approved" && <button onClick={() => review(r.req_id, { action: "approve" })}>Approve</button>}
@@ -120,6 +124,8 @@ export default function RequirementsPage() {
                     <button className="secondary" onClick={() => setEditing({ id: r.req_id, mode: "split" })}>Split</button>
                   </div>)}</td>}
               </tr>
+              {historyOf === r.req_id && <tr className="history-row"><td colSpan={frozen ? 4 : 6}><History reqId={r.req_id} /></td></tr>}
+              </Fragment>
             );
           })}
           {rows.length === 0 && <tr><td colSpan={frozen ? 4 : 6} className="muted">No line items in this view.</td></tr>}
@@ -140,5 +146,40 @@ export default function RequirementsPage() {
         </details>
       )}
     </>
+  );
+}
+
+/** Every version of a line item (who, when, what changed) and everything that happened to it, from the audit log. */
+function History({ reqId }: { reqId: string }) {
+  const { data, error } = useApi<RequirementHistory>(`/api/requirements/${reqId}/history`);
+  if (error) return <p className="warn">{error}</p>;
+  if (!data) return <p className="muted">Loading history…</p>;
+  const when = (t: string) => new Date(t.endsWith("Z") || t.includes("+") ? t : `${t}Z`).toLocaleString();
+  return (
+    <div className="history">
+      <div>
+        <h3>Versions ({data.versions.length})</h3>
+        <ol className="versions">
+          {data.versions.map((v) => (
+            <li key={v.n}>
+              <div className="muted">v{v.n} · {v.label} by <strong>{v.by}</strong> · {when(v.at)}{v.reason ? ` · reason: ${v.reason}` : ""}</div>
+              <div>{v.text} <span className="tag">{v.category}</span></div>
+            </li>
+          ))}
+        </ol>
+        <p className="quote">Source ({data.source}): “{data.quote}”</p>
+        {data.derived_from.length > 0 && <p className="muted">Created from {data.derived_from.join(", ")}</p>}
+      </div>
+      <div>
+        <h3>Timeline</h3>
+        <ul className="timeline">
+          {data.events.map((e, i) => (
+            <li key={i}><span className="muted">{when(e.at)}</span> <strong>{e.action.replace("_", " ")}</strong> by {e.by}
+              {Object.entries(e.details).filter(([, v]) => v !== "" && !(Array.isArray(v) && v.length === 0)).map(([k, v]) =>
+                <span key={k} className="muted"> · {k.replace("_", " ")}: {Array.isArray(v) ? v.join(", ") : String(v)}</span>)}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }

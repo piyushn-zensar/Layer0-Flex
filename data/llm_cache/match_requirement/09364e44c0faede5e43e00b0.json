@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.9,
+    "offering_type": "ETO",
+    "product_id": "CROWN-ARMV",
+    "rationale": "The requirement specifies bus sections with tie breakers, which aligns with the 'CROWN-ARMV' product offering of arc-resistant metal-clad MV switchgear that includes these features."
+  },
+  "task": "match_requirement"
+}

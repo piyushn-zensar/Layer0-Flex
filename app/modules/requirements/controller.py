@@ -81,6 +81,11 @@ def review(req_id: str, body: ReviewIn, request: Request, db: Session = Depends(
     return row(service.get(db, req_id), "source")
 
 
+@router.get("/requirements/{req_id}/history")
+def history(req_id: str, db: Session = Depends(get_db)):
+    return _guard(lambda: service.history(db, req_id))
+
+
 @router.post("/requirements/{req_id}/split")
 def split(req_id: str, body: SplitIn, request: Request, db: Session = Depends(get_db)):
     parts = [p.model_dump() for p in body.parts]

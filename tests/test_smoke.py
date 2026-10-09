@@ -320,3 +320,28 @@ def test_trace_and_consolidation_findings_fixed():
     assert csv.headers["content-disposition"] == f'attachment; filename="{opp}-compliance-matrix.csv"'
     rows = client.get(f"/api/opportunities/OPP-0001/trace").json()["rows"]
     assert rows and all(r["match"] is None or "evidence" not in r["match"] for r in rows)
+
+
+def test_requirement_history():
+    """P-13: every version (who, when, wording) and every event is shown; merged originals point to the merge."""
+    client = TestClient(app)
+    pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
+    opp = client.post("/api/opportunities", json={"title": "history"}).json()["id"]
+    client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    client.post(f"/api/opportunities/{opp}/requirements/extract")
+    rows = [r for r in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"] if r["page"] == 55]
+    a, b, c = (r["req_id"] for r in rows[:3])
+    original = rows[0]["text"]
+    client.post(f"/api/requirements/{a}/review", json={"action": "edit", "text": "Edited once", "reason": "clearer"},
+                headers={"X-Actor": "Crown%20Design%20Engineer"})
+    client.post(f"/api/requirements/{a}/review", json={"action": "edit", "category": "schedule"})
+    client.post(f"/api/requirements/{a}/review", json={"action": "approve"})
+    h = client.get(f"/api/requirements/{a}/history").json()
+    assert [(v["label"], v["text"], v["category"]) for v in h["versions"]] == [
+        ("original", original, rows[0]["category"]), ("edited", "Edited once", rows[0]["category"]), ("edited", "Edited once", "schedule")]
+    assert h["versions"][1]["by"] == "Crown Design Engineer" and h["versions"][1]["reason"] == "clearer"
+    assert [e["action"] for e in h["events"]] == ["proposed", "edit", "edit", "approve"]
+    merged = client.post(f"/api/opportunities/{opp}/requirements/merge", json={"req_ids": [b, c], "text": "one"}).json()["req_id"]
+    assert client.get(f"/api/requirements/{b}/history").json()["events"][-1]["details"]["into"] == merged
+    assert client.get(f"/api/requirements/{merged}/history").json()["derived_from"] == [b, c]
+    assert client.get("/api/requirements/REQ-9999-0001/history").status_code == 404

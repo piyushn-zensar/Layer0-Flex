@@ -15,6 +15,7 @@ Public contract:
 Every write refuses once the opportunity has a baseline, and LookupError for an unknown opportunity or item.
 Requirement IDs are never reused: the next number is taken over every ID ever issued, including discarded drafts.
     baseline(db, opp_id) -> Baseline | None      latest frozen baseline
+    history(db, req_id) -> dict                  every version (who, when, text, category) and every event; LookupError
 """
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -59,7 +60,7 @@ def add(db: Session, opp_id: str, document_id: str, quote: str, text: str, categ
     db.add(req)
     db.flush()  # the next _next_req_id sees this one
     audit.record(db, actor, "proposed", "requirement", req.req_id, opp_id, provenance=req.provenance,
-                 derived_from=req.derived_from)
+                 derived_from=req.derived_from, text=req.text, category=req.category, quote=req.quote)
     if commit:
         db.commit()
     return req
@@ -117,6 +118,8 @@ def merge(db: Session, opp_id: str, req_ids: list[str], text: str, actor: str, r
     db.flush()
     audit.record(db, actor, "merged", "requirement", merged.req_id, opp_id,
                  merged_from=[r.req_id for r in reqs], reason=reason)
+    for r in reqs:  # the originals' own history shows where they went
+        audit.record(db, actor, "merged_into", "requirement", r.req_id, opp_id, into=merged.req_id, reason=reason)
     db.commit()
     return merged
 
@@ -220,3 +223,43 @@ def freeze(db: Session, opp_id: str, actor: str) -> Baseline:
 def baseline(db: Session, opp_id: str) -> Baseline | None:
     return db.scalar(select(Baseline).where(Baseline.opportunity_id == opp_id)
                      .order_by(Baseline.number.desc()).limit(1))
+
+
+def history(db: Session, req_id: str) -> dict:
+    """The change history of one line item, rebuilt from the append-only audit log (it is the source of truth).
+
+    versions: the original wording, then one entry per edit that changed text or category.
+    events:   everything that happened to it (proposed, edits, approve / reject, split, merge, freeze).
+    """
+    req = get(db, req_id)
+    if req is None:
+        raise LookupError(f"{req_id} not found.")
+    events = list(db.scalars(select(AuditEvent).where(
+        AuditEvent.opportunity_id == req.opportunity_id, AuditEvent.entity == "requirement",
+        AuditEvent.entity_id == req_id).order_by(AuditEvent.id)))
+    frozen = db.scalar(select(AuditEvent).where(AuditEvent.opportunity_id == req.opportunity_id,
+                                                AuditEvent.entity == "baseline").order_by(AuditEvent.id).limit(1))
+    if frozen and req.baseline is not None:
+        events.append(frozen)
+
+    def wording(d: dict) -> dict:
+        return {"text": d.get("text"), "category": d.get("category")}
+
+    edits = [e for e in events if e.action == "edit" and wording(e.data.get("before", {})) != wording(e.data.get("after", {}))]
+    proposed = next((e for e in events if e.action == "proposed"), None)
+    if proposed and "text" in proposed.data:
+        first = wording(proposed.data)
+    elif edits:  # line items read before 9 Oct: the first edit's "before" is the original wording
+        first = wording(edits[0].data["before"])
+    else:
+        first = {"text": req.text, "category": req.category}
+    versions = [{"n": 1, "at": proposed.at if proposed else req.created_at, "by": proposed.actor if proposed else req.created_by,
+                 "label": "original", **first}]
+    for e in edits:
+        versions.append({"n": len(versions) + 1, "at": e.at, "by": e.actor, "label": "edited",
+                         "reason": e.data.get("reason", ""), **wording(e.data["after"])})
+    return {"req_id": req_id, "quote": req.quote, "source": req.source, "derived_from": req.derived_from,
+            "versions": versions,
+            "events": [{"at": e.at, "by": e.actor, "action": e.action,
+                        "details": {k: v for k, v in e.data.items() if k not in ("text", "quote", "before", "after")}}
+                       for e in events]}

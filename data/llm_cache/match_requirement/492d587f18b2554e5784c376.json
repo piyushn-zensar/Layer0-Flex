@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "bu": "CROWN",
+    "confidence": 0.85,
+    "offering_type": "CTO",
+    "product_id": "CROWN-ACC",
+    "rationale": "The product 'CROWN-ACC' explicitly mentions 'ground balls' as part of its catalog accessories for MV switchgear, which aligns with the requirement for a 1-inch diameter ground ball."
+  },
+  "task": "match_requirement"
+}
