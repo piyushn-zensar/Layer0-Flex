@@ -57,6 +57,9 @@ export default function InboxPage() {
         say what meets it, then submit. The bid manager validates or returns it with a note.</p>
       {opportunities.length > 0 && <p>Open the RFP: {opportunities.map((o) =>
         <Link key={o} className="button secondary" href={`/opportunities/${o}/trace`}>{o}</Link>)}</p>}
+      {data.unit && opportunities.length > 0 && <p>Hand-off for this unit&apos;s systems (JSON: CPQ seed, basis of design, specialist queue): {opportunities.map((o) =>
+        <a key={o} className="button secondary" href={`/api/opportunities/${o}/handoff/${bu}`}>{o}</a>)}
+        {" "}<span className="muted">Starting points for people, not a configuration or a design.</span></p>}
       {!canAnswer && !canValidate && <p className="muted">You are acting as {me}: you can read this work package but not answer it.</p>}
       {canAnswer && data.items.some(open) && <p><button disabled={busy !== undefined} onClick={submitAll}>Submit all answered rows</button>{" "}
         <span className="muted">Sends every open row where “How it is met” is filled in.</span></p>}

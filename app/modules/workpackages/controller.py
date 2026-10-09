@@ -1,6 +1,7 @@
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Request
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, model_validator
 from sqlalchemy.orm import Session
 
@@ -47,6 +48,13 @@ def _call(fn, *args):
 @router.post("/opportunities/{opp_id}/dispatch")
 def dispatch(opp_id: str, request: Request, db: Session = Depends(get_db)):
     return {"created": _call(service.dispatch, db, opp_id, actor(request))}
+
+
+@router.get("/opportunities/{opp_id}/handoff/{bu}")
+def handoff(opp_id: str, bu: str, db: Session = Depends(get_db)):
+    """The unit's hand-off payload (A-09, M8) as a JSON download."""
+    payload = _call(service.handoff, db, opp_id, bu)
+    return JSONResponse(payload, headers={"Content-Disposition": f'attachment; filename="{opp_id}-{bu}-handoff.json"'})
 
 
 @router.get("/inbox/{bu}")

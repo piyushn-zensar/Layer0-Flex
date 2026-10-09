@@ -435,3 +435,24 @@ def test_go_no_go_summary_and_structured_criteria():
     d = client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": crit}, headers={"X-Actor": "Bid%20Manager"}).json()
     assert d["criteria"][0] == {"id": "coverage", "status": "met", "note": "checked"} and "summary" in d["evidence"]
     assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": [{"id": "x", "status": "met"}]}).status_code == 422
+
+
+def test_unit_handoff_payload():
+    """A-09 (M8): per-unit hand-off JSON grouped by route; every payload needs a person; nothing claims a design.
+    Appended by Atharv (append-only on this shared file)."""
+    seed_demo.main()
+    client = TestClient(app)
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    r = client.get(f"/api/opportunities/{opp}/handoff/CROWN")
+    assert r.status_code == 200 and "attachment" in r.headers["content-disposition"]
+    p = r.json()
+    assert p["requires_human_completion"] is True and p["unit"]["code"] == "CROWN"
+    items = [i for route in p["routes"].values() for i in route["items"]]
+    assert items and all(i["quote"] and i["source"] for i in items)
+    for i in p["routes"].get("basis_of_design", {}).get("items", []):
+        assert i["basis_of_design"]["spec_claimed"] is False
+    for i in p["routes"].get("cpq_seed", {}).get("items", []):
+        assert i["offering_type"] == "CTO" and "bom_lines" in i["configuration_seed"]
+    assert {i["offering_type"] for i in items} >= {"CTO", "ETO"}  # Crown accessories (CTO) and switchgear (ETO)
+    assert client.get(f"/api/opportunities/{opp}/handoff/BID").status_code == 409
+    assert client.get("/api/opportunities/OPP-9999/handoff/CROWN").status_code == 404
