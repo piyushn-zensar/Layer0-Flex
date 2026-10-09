@@ -5,7 +5,7 @@ screen 3 = requirement -> business unit, product, offering type, BOM and unit re
 
 Public contract:
     portfolio(db) -> list[dict]
-    trace(db, opp_id) -> dict
+    trace(db, opp_id) -> dict         LookupError if the opportunity does not exist
 """
 from sqlalchemy.orm import Session
 
@@ -23,6 +23,7 @@ def portfolio(db: Session) -> list[dict]:
 
 
 def trace(db: Session, opp_id: str) -> dict:
+    opp = opportunities.require(db, opp_id)
     doc = opportunities.main_document(db, opp_id)
     pages = ingestion.layout(doc.id)["pages"] if doc and doc.status == "ingested" else []
     matches = matching.for_opportunity(db, opp_id)
@@ -35,7 +36,7 @@ def trace(db: Session, opp_id: str) -> dict:
                      "unit": catalog.unit(m.bu) if m and m.bu else None,
                      "bom": catalog.bom(product["id"]) if product else [],
                      "assignments": assignments.get(req.req_id, [])})
-    return {"opp": opportunities.get(db, opp_id), "doc": doc, "rows": rows,
+    return {"opp": opp, "doc": doc, "rows": rows,
             "pages": [{"page": p["page"], "width": p["width"], "height": p["height"],
                        "unreviewed": p["unreviewed"]} for p in pages],
             "progress": workpackages.progress(db, opp_id)}

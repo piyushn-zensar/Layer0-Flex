@@ -38,8 +38,11 @@ export default function TracePage() {
   const page = data.pages[pageNo - 1];
   const rowProps = (reqId: string) => ({
     "data-req": reqId, className: reqId === selected ? "selected" : "", onClick: () => select(reqId),
-    tabIndex: 0, "aria-selected": reqId === selected,
-    onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(reqId); } },
+    tabIndex: 0, "aria-current": reqId === selected ? ("true" as const) : undefined,
+    // Only when the row itself has focus, so buttons, links and the BOM summary inside it keep their own keys.
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if (e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); select(reqId); }
+    },
   });
 
   return (
@@ -73,6 +76,8 @@ export default function TracePage() {
               <img src={`/api/documents/${data.doc.id}/pages/${pageNo}.png`} alt={`RFP page ${pageNo}`} />
               {data.rows.filter((r) => r.req.page === pageNo).flatMap((r) => r.req.bboxes.map(([x0, y0, x1, y1], i) => (
                 <div key={`${r.req.req_id}-${i}`} title={r.req.req_id} onClick={() => select(r.req.req_id)}
+                  role="button" tabIndex={i === 0 ? 0 : -1} aria-label={`Select ${r.req.req_id}`}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(r.req.req_id); } }}
                   className={`hl${r.req.req_id === selected ? " sel" : ""}`}
                   style={{ left: `${(x0 / page.width) * 100}%`, top: `${(y0 / page.height) * 100}%`,
                     width: `${((x1 - x0) / page.width) * 100}%`, height: `${((y1 - y0) / page.height) * 100}%` }} />

@@ -301,3 +301,22 @@ def test_review_findings_fixed():
     # acting user is cleaned and capped
     long = client.post("/api/opportunities", json={"title": "actor"}, headers={"X-Actor": "A" * 5000 + "%0D%0A"}).json()
     assert len(long["created_by"]) == 80
+
+
+def test_trace_and_consolidation_findings_fixed():
+    """Review of 9 Oct (Janvia's modules): CSV formula cells, unknown opportunity 404, no evidence blob in trace."""
+    client = TestClient(app)
+    assert client.get("/api/opportunities/OPP-9999/trace").status_code == 404
+    assert client.get("/api/opportunities/OPP-9999/consolidation").status_code == 404
+    assert client.get("/api/opportunities/OPP-9999/compliance-matrix.csv").status_code == 404
+
+    pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
+    opp = client.post("/api/opportunities", json={"title": "csv"}).json()["id"]
+    client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    client.post(f"/api/opportunities/{opp}/requirements", json={
+        "quote": "Switchgear shall be Arc-resistant Type 2B.", "text": "=HYPERLINK(\"http://x\")", "category": "technical", "page": 55})
+    csv = client.get(f"/api/opportunities/{opp}/compliance-matrix.csv")
+    assert "'=HYPERLINK" in csv.text and ',=HYPERLINK' not in csv.text
+    assert csv.headers["content-disposition"] == f'attachment; filename="{opp}-compliance-matrix.csv"'
+    rows = client.get(f"/api/opportunities/OPP-0001/trace").json()["rows"]
+    assert rows and all(r["match"] is None or "evidence" not in r["match"] for r in rows)

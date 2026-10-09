@@ -11,7 +11,8 @@ type Coverage = { rows: Row[]; total: number; answered: number; blocking: string
 
 export default function ConsolidationPage() {
   const { id } = useParams<{ id: string }>();
-  const { data: cov } = useApi<Coverage>(`/api/opportunities/${id}/consolidation`);
+  const { data: cov, error } = useApi<Coverage>(`/api/opportunities/${id}/consolidation`);
+  if (error) return <p className="warn">{error}</p>;
   if (!cov) return <p>Loading…</p>;
   return (
     <>
@@ -26,7 +27,7 @@ export default function ConsolidationPage() {
             <tr key={r.req_id}>
               <td className="mono"><Link href={`/opportunities/${id}/trace#${r.req_id}`}>{r.req_id}</Link><div className="muted">{r.source}</div></td>
               <td>{r.text}</td>
-              <td>{assignments.map((a) => <div key={a.id}><strong>{a.bu}</strong> {a.compliance ?? "—"} · {a.product_ref} <span className="badge">{a.status}</span></div>)}
+              <td>{assignments.map((a) => <div key={a.id}><strong>{a.bu}</strong> {a.compliance ?? "—"}{a.product_ref ? ` · ${a.product_ref}` : ""} <span className="badge">{a.status}</span></div>)}
                 {assignments.length === 0 && <span className="muted">not assigned</span>}</td>
               <td><span className="badge">{state}</span></td>
             </tr>

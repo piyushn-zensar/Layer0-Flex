@@ -2,6 +2,7 @@
 // Opportunity header: breadcrumb, title, status and the workflow stepper.  Owner: Janvia.
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
+import { useEffect } from "react";
 import { useApi } from "@/lib/api";
 import type { Opportunity } from "@/lib/types";
 
@@ -19,7 +20,10 @@ const rank = (s: string) => (s === "no_go" ? ORDER.indexOf("go") : ORDER.indexOf
 export default function OppSteps() {
   const { id } = useParams<{ id: string }>();
   const path = usePathname();
-  const { data } = useApi<{ opportunity: Opportunity }>(`/api/opportunities/${id}`);
+  const { data, reload } = useApi<{ opportunity: Opportunity }>(`/api/opportunities/${id}`);
+  // Status changes when a page acts (freeze, go, dispatch): refresh on every step change and every few seconds.
+  useEffect(() => { reload(); }, [path, reload]);
+  useEffect(() => { const t = setInterval(reload, 5000); return () => clearInterval(t); }, [reload]);
   const base = `/opportunities/${id}`;
   const status = data?.opportunity.status ?? "new";
 
