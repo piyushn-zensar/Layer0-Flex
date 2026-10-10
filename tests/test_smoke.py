@@ -491,3 +491,25 @@ def test_rfp_search_short_term_index():
     p = found["passages"][0]
     assert p["line_start"] <= p["line_end"] and "insurance" in p["text"].lower()
     assert client.get("/api/opportunities/OPP-9999/rfp-search", params={"q": "x"}).status_code == 404
+
+
+def test_compliance_matrix_excel():
+    """J-08: customer sheet (validated answers only, customer words, sub-requirements listed) and internal tracking."""
+    import io
+
+    from openpyxl import load_workbook
+
+    seed_demo.main()  # its own opportunity: 13 line items, some answers validated
+    client = TestClient(app)
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    r = client.get(f"/api/opportunities/{opp}/compliance-matrix.xlsx")
+    assert r.status_code == 200 and r.headers["content-disposition"].endswith('-compliance-matrix.xlsx"')
+    wb = load_workbook(io.BytesIO(r.content))
+    assert wb.sheetnames == ["Compliance matrix", "Tracking"]
+    ws = wb["Compliance matrix"]
+    assert [c.value for c in ws[4]][:5] == ["Requirement ID", "RFP reference", "Requirement", "RFP wording", "Compliance"]
+    words = {row[4] for row in ws.iter_rows(min_row=5, values_only=True)}
+    assert "Comply" in words and words <= {"Comply", "Partially comply", "Does not comply", "Exception", "Open"}
+    assert all(cell.data_type != "f" for sheet in wb for row in sheet.iter_rows() for cell in row)  # never a formula
+    assert wb["Tracking"].max_row - 1 == len(client.get(f"/api/opportunities/{opp}/compliance-matrix.csv").text.strip().splitlines()) - 1
+    assert client.get("/api/opportunities/OPP-9999/compliance-matrix.xlsx").status_code == 404

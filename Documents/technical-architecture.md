@@ -360,7 +360,7 @@ Addenda, Q&A answers, change requests and execution-stage changes all use one pa
 | **Requirement review** | One opportunity | Line items with quote and source; approve, edit, reject; freeze |
 | **Decisions** | One opportunity | Evidence pack, participation, go/no-go, dispatch |
 | **Unit inbox** | One business unit | Its assignments across all opportunities, with the checklist response form and validation |
-| **Consolidation** | One opportunity | Coverage, blocking items, compliance matrix download |
+| **Final response** | One opportunity | Coverage, blocking items, compliance matrix download: an Excel workbook (a customer sheet with validated answers in customer words, in RFP order with sub-requirements and their references; an internal tracking sheet) and a CSV |
 
 Navigation: the top bar has three destinations (Opportunities, My work, Product catalog) and a New opportunity button. Inside an opportunity, a stepper follows the workflow order: RFP, Requirements, Traceability, Bid decision, Final response; a step is ticked once the opportunity has moved past it. Change handling is shown as a separate, planned link.
 

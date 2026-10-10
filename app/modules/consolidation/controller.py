@@ -36,3 +36,12 @@ def compliance_matrix(opp_id: str, db: Session = Depends(get_db)):
     name = re.sub(r"[^A-Za-z0-9-]", "_", opp_id)[:40]  # header-safe file name
     return Response(service.compliance_matrix_csv(db, opp_id), media_type="text/csv",
                     headers={"Content-Disposition": f'attachment; filename="{name}-compliance-matrix.csv"'})
+
+
+@router.get("/opportunities/{opp_id}/compliance-matrix.xlsx")
+def compliance_matrix_xlsx(opp_id: str, db: Session = Depends(get_db)):
+    _coverage(db, opp_id)  # 404 for an unknown opportunity
+    name = re.sub(r"[^A-Za-z0-9-]", "_", opp_id)[:40]
+    return Response(service.compliance_matrix_xlsx(db, opp_id),
+                    media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    headers={"Content-Disposition": f'attachment; filename="{name}-compliance-matrix.xlsx"'})

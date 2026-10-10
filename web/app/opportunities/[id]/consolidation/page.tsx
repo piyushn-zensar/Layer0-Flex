@@ -50,7 +50,8 @@ export default function ConsolidationPage() {
       <PageHead level={2} title="Final response" help="Every requirement must be answered by its business unit and validated before the response is complete." />
       <p><strong>{cov.answered} / {cov.total}</strong> requirements answered.{" "}
         {cov.blocking.length ? <span className="warn">{cov.blocking.length} still need an answer.</span> : <span className="ok">Every requirement is answered.</span>}{" "}
-        <a className="button" href={`/api/opportunities/${id}/compliance-matrix.csv`}>Download compliance matrix (CSV)</a></p>
+        <a className="button" href={`/api/opportunities/${id}/compliance-matrix.xlsx`}>Download compliance matrix (Excel)</a>{" "}
+        <a className="button secondary" href={`/api/opportunities/${id}/compliance-matrix.csv`}>CSV</a></p>
 
       {groups.length > 0 && (
         <section className="cons-blockers" aria-label="Requirements that still need an answer">

@@ -11,3 +11,4 @@ scikit-learn==1.9.1    # TF-IDF retrieval (ported from v0.3.0 rag/)
 openai==3.26.0         # Azure OpenAI (GPT-4o) via the model gateway
 pytest==9.1.1
 httpx==0.28.1          # FastAPI TestClient
+openpyxl==3.1.5        # compliance matrix as Excel (J-08), written by code, not by a model

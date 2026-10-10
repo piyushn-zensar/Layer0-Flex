@@ -6,12 +6,16 @@ Public contract:
     coverage(db, opp_id) -> dict      {"rows": [...], "total", "answered", "blocking": [req_id]}; LookupError if unknown
     compliance_matrix_csv(db, opp_id) -> str   one row per assignment, columns as in COLUMNS; starts with a UTF-8 byte
                                                order mark and its cells are safe to open in Excel (no formulas)
+    compliance_matrix_xlsx(db, opp_id) -> bytes  Excel workbook: "Compliance matrix" for the customer (validated answers,
+                                               RFP order, sub-requirements listed) and "Tracking" (the CSV's columns)
 """
 import csv
 import io
 
 from sqlalchemy.orm import Session
 
+from app.modules.catalog import service as catalog
+from app.modules.consolidation import excel
 from app.modules.matching import service as matching
 from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service as requirements
@@ -70,6 +74,21 @@ def compliance_matrix_csv(db: Session, opp_id: str) -> str:
         for a in row["assignments"] or [None]:
             w.writerow(_row(row["req"], row["match"], a, row["state"]))
     return out.getvalue()
+
+
+def compliance_matrix_xlsx(db: Session, opp_id: str) -> bytes:
+    opp = opportunities.require(db, opp_id)
+    cov = coverage(db, opp_id)
+    kids: dict[str, list] = {}  # approved sub-requirements per group, read in one pass
+    for k in requirements.current(db, opp_id, include_children=True):
+        if k.parent_id and k.status == "approved":
+            kids.setdefault(k.parent_id, []).append(k)
+    tracking = [_row(r["req"], r["match"], a, r["state"]) for r in cov["rows"] for a in r["assignments"] or [None]]
+
+    def unit_name(code: str) -> str:
+        return "Bid desk" if code == "BID" else ((catalog.unit(code) or {}).get("name") or code)
+
+    return excel.build(opp.title, opp.customer, cov["rows"], kids, unit_name, COLUMNS, tracking)
 
 
 if __name__ == "__main__":  # self-check: python -m app.modules.consolidation.service

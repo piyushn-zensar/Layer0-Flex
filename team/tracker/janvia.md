@@ -13,7 +13,7 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | J-05 | Consolidation page: blocking items link to the three screens; compliance-matrix columns reviewed with the bid-manager view | S3 | Sun 11 Oct | done | parts A+B 3827902 (blockers panel by reason, All/Open filter, links to Traceability, coloured badges); part C: compliance matrix CSV gets Assignment status and Responded by (appended, earlier columns unchanged) and a UTF-8 byte order mark for Excel; self-check and smoke test added; 8ac51a2 |
 | J-06 | Monday demo click-path checklist (in the walkthrough) and a dry run with Piyush | S3 | Mon 12 Oct AM | todo | |
 | J-07 | Response-outline view (uses P-10) | S4 | after 12 Oct | todo | |
-| J-08 | Compliance matrix as a professional Excel file (.xlsx), generated deterministically (openpyxl, no model): title block, frozen header row, filters, column widths, wrapped text, offering-type colours, source page and lines; keep the CSV | S3 | Sun 11 Oct | todo | from the 8 Oct call (plan §8) |
+| J-08 | Compliance matrix as a professional Excel file (.xlsx), generated deterministically (openpyxl, no model): title block, frozen header row, filters, column widths, wrapped text, offering-type colours, source page and lines; keep the CSV | S3 | Sun 11 Oct | done | built by Piyush on 10 Oct (team handover): Excel workbook with a customer sheet (validated answers only, Comply / Partially comply / Does not comply / Exception / Open, RFP order, sub-requirements with references) and an internal Tracking sheet (CSV columns); text-only cells; test added |
 
 ## J-03 walkthrough: review checklist (9 Oct 2026)
 
@@ -53,6 +53,7 @@ The Monday click-path checklist is J-06, a separate task.
 
 | Date | Done | Next |
 |---|---|---|
+| 10 Oct 2026 | J-08 Excel compliance matrix (done by Piyush; remaining J tasks taken over by Piyush) | J-07 with P-10; J-03 + J-06 last |
 | 8 Oct 2026 | J-01, J-02 done; client wording and loading-error follow-ups; J-03 walkthrough with 12 screenshots (tracker filled in on 9 Oct from the commits) | J-03 rename to current screen names |
 | 9 Oct 2026 | Review fixes in trace / consolidation, applied by Piyush: compliance CSV safe in Excel (formula cells quoted, safe file name, offering type of the assigned unit); 404 for unknown opportunities; trace payload 2.4 → 1.3 MB (no match evidence); header status refreshes after actions; keyboard: BOM summary and page highlights reachable, rows no longer swallow inner keys; "met · " with no product fixed; consolidation shows load errors. Regression test added | J-03 rename, J-04 portfolio |
 | 9 Oct 2026 | J-04 done: Portfolio shows a progress bar per unit (green validated, blue awaiting validation, grey not answered) with the count and a link to the unit's inbox; status chips coloured by stage; "not dispatched" when a unit list is empty | J-05 consolidation (blocking items list, matrix columns with the bid manager), then J-03 rename |
