@@ -1,6 +1,6 @@
 # RFP Ingestion Pipeline: Technical Detail
 
-Status: native text, whole-page OCR, header/footer and contents-page detection **built** (8 Oct 2026); tables and region-level OCR **Proposed (inferred design)**. This covers workflow step 1, reading the RFP, in the `ingestion` module (`app/modules/ingestion/service.py`). Its output feeds the reader agent in the `requirements` module ([technical-architecture.md](../technical-architecture.md) section 6).
+Status: native text, whole-page OCR, header/footer and contents-page detection **built** (8 Oct 2026); ruled tables **built** (9 Oct 2026, kept beside the lines); region-level OCR **Proposed (inferred design)**. This covers workflow step 1, reading the RFP, in the `ingestion` module (`app/modules/ingestion/service.py`). Its output feeds the reader agent in the `requirements` module ([technical-architecture.md](../technical-architecture.md) section 6).
 
 ## Stack
 

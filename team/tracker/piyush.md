@@ -13,7 +13,7 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | P-04 | Run reader agent on the full Syracuse PDF (`LLM_PROVIDER=azure`, GPT-4o), tune prompt/chunking, commit `data/llm_cache/read_requirements/` | S1 | Fri 9 Oct | done | re-run one page per call: 840 proposed, 808 anchored (96%); 100 answers cached; `scripts/freeze_reader.py` |
 | P-05 | Golden requirement list for Syracuse (`rfp-golden` agent) + recall/precision check script | S1 | Sat 10 Oct | review | golden list 361 items (78 uncertain), AI-drafted, needs a person's review; reader recall 26% -> 92% after one page per call; precision 54% (granularity) |
 | P-06 | Review actions: inline edit, split, merge, add a missed requirement (by quote) | S2 | Sat 10 Oct | done | edit (text+category), split (re-anchored parts), merge (keeps all boxes), add missed (anchored), bulk approve/reject, filters + search; freeze needs every item decided; regression test |
-| P-07 | Ruled tables via pdfplumber in the layout model; re-freeze layout | S2 | Sun 11 Oct | todo | |
+| P-07 | Ruled tables via pdfplumber in the layout model; re-freeze layout | S2 | Sun 11 Oct | done | 34 ruled tables (data sheet p72-74 linked), kept beside the lines; lines unchanged so all frozen answers still match; drawing sheets skipped; byte-identical re-run. Next: show table rows to the reader (needs re-generating answers for table pages) |
 | P-08 | Switch the demo from seed to real extraction; end-to-end dry run; fix integration bugs | S3 | Mon 12 Oct AM | review | `seed_demo` builds Syracuse from the real extraction (840 → 353 requirements, all approved and frozen, decided, dispatched); dry run: all pages 200, Traceability 0.84 MB in 0.4 s. Blocked on matcher answers for the 353 (retrieval-only matches are poor) |
 | P-09 | Port model-change guard (M16) as a golden test over `llm_cache` | S4 | after 12 Oct | todo | |
 | P-10 | Response-outline drafting agent (`consolidation/agent.py`, called by Janvia's page) | S4 | after 12 Oct | todo | |
@@ -41,3 +41,4 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | 9 Oct 2026 | P-14 laptop package (double-click setup and start; offline demo) | walk-through with the Zensar point of contact; P-08 after the line-item decision |
 | 9 Oct 2026 | P-16 grouping (840 → 353 requirements), duplicates marked | Atharv: re-run the matcher on the 353 requirements; P-08 demo on the real extraction |
 | 9 Oct 2026 | P-08 demo on the real extraction + dry run | matcher answers for the 353 requirements (A-03 re-run) |
+| 9 Oct 2026 | P-07 ruled tables in the layout, re-frozen | P-14 walk-through; P-09 model-change guard |

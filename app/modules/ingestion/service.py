@@ -3,16 +3,17 @@
 Public contract:
     ingest(db, doc_id) -> dict            read the PDF, write the layout JSON, update document status
     layout(doc_id) -> dict                the stored layout model (see technical-architecture.md section 5.9)
-    page(db, doc_id, page_no) -> dict      LookupError if the document or page does not exist         one page: {"page", "width", "height", "method", "unreviewed", "lines": [...]}
+    page(db, doc_id, page_no) -> dict      one page: {"page", "width", "height", "method", "unreviewed", "toc",
+                                          "lines": [...], "tables": [...]}; LookupError if the document or page does not exist
     page_png(doc_id, page_no) -> bytes    rendered page image for screen 1
 
 Line numbers ("page 5, lines 6 to 8") are 1-based within each page, in reading order.
 Coordinates are PDF points, origin top-left (PyMuPDF), rounded to 0.01.
 
-Stage 0 reads native text only. Still to build (Piyush, see team/PLAN.md):
-    OCR for pages with no text layer (Tesseract TSV via subprocess, config.TESSERACT_CMD)
-    tables (pdfplumber), headers/footers and table-of-contents detection.
-Pages with no readable text are marked unreviewed, never silently skipped (rule R5).
+Built: native text (PyMuPDF), whole-page OCR (Tesseract TSV via subprocess, config.TESSERACT_CMD), headers /
+footers and contents pages, ruled tables (pdfplumber). A table is kept beside the lines, never instead of them:
+each line inside a table cell gets "cell": [table id, row, column], so line numbers, anchors and the frozen reader
+answers do not change. Pages with no readable text are marked unreviewed, never silently skipped (rule R5).
 OCR must stay optional: on a machine without Tesseract, mark the page unreviewed ("OCR not available").
 
 Frozen parse: the parsing machine (Piyush, with Tesseract) runs `python -m scripts.freeze_layout <pdf>`,
@@ -29,6 +30,7 @@ from collections import defaultdict
 from functools import lru_cache
 from pathlib import Path
 
+import pdfplumber
 import pymupdf
 from sqlalchemy.orm import Session
 
@@ -48,6 +50,10 @@ FURNITURE_MIN_PAGES = 3    # a band line repeated on this many pages is page fur
 TOC_SHORT_LINE_WORDS = 6   # contents entries are short
 TOC_SHORT_SHARE = 0.6      # share of short lines on a page with a "Contents" heading
 TOC_LEADER_SHARE = 0.3     # share of dot-leader lines ("Scope ........ 4") that makes a contents page
+TABLE_MAX_COLS = 20        # wider ruled grids are drawing grids or form layouts, not tables
+TABLE_MIN_FILL = 0.3       # share of non-empty cells; blank forms and drawing grids fall below it
+DRAWING_EDGES = 3000       # a page with more drawn lines and boxes is a drawing sheet: no table search (slow, noise)
+COLUMN_TOLERANCE = 2.0     # points; a table continues on the next page when its column edges line up
 
 
 @lru_cache
@@ -60,13 +66,15 @@ def tesseract_version() -> str | None:
 
 
 def pipeline_version() -> str:
-    return f"pymupdf-{pymupdf.VersionBind}/tesseract-{tesseract_version() or 'none'}/layout-2"
+    return (f"pymupdf-{pymupdf.VersionBind}/pdfplumber-{pdfplumber.__version__}"
+            f"/tesseract-{tesseract_version() or 'none'}/layout-3")
 
 
 def parse(path: str, doc_id: str) -> dict:
     """PDF -> layout model. Pure function of the file and the pipeline version (no DB)."""
     with pymupdf.open(path) as pdf:
         pages = [_read_page(p) for p in pdf]
+    _add_tables(path, pages)
     _mark_furniture(pages)
     for page in pages:
         page["toc"] = _is_toc(page)
@@ -108,6 +116,56 @@ def _read_page(p: pymupdf.Page) -> dict:
     lines = _ocr_lines(p)
     return page | {"method": "ocr", "unreviewed": not lines, "reason": reason if lines else f"{reason}; OCR found no text",
                    "lines": lines}
+
+
+def _add_tables(path: str, pages: list[dict]) -> None:
+    """Ruled tables (pdfplumber "lines" strategy) as rows of cells with text and boxes, in the same page points as
+    the lines (both libraries measure from the top-left of the page). Merged cells are null."""
+    previous = None  # the last table of the previous page, for tables that continue across a page break
+    with pdfplumber.open(path) as pdf:
+        for page, pl in zip(pages, pdf.pages):
+            page["tables"] = []
+            if len(pl.lines) + len(pl.rects) + len(pl.curves) > DRAWING_EDGES:
+                previous = None
+                continue
+            for found in pl.find_tables({"vertical_strategy": "lines", "horizontal_strategy": "lines"}):
+                texts = found.extract()
+                rows = [[None if box is None else {"text": (text or "").strip(), "bbox": [round(v, 2) for v in box]}
+                         for box, text in zip(row.cells, row_text)] for row, row_text in zip(found.rows, texts)]
+                cells = [c for r in rows for c in r]
+                width = max(len(r) for r in rows)
+                filled = sum(1 for c in cells if c and c["text"]) / len(cells)
+                if len(rows) < 2 or width < 2 or width > TABLE_MAX_COLS or filled < TABLE_MIN_FILL:
+                    continue
+                table = {"id": f"p{page['page']}-t{len(page['tables']) + 1}", "bbox": [round(v, 2) for v in found.bbox],
+                         "columns": len(rows[0]), "continues_from": None, "rows": rows}
+                if not page["tables"] and previous and _same_columns(previous, table):
+                    table["continues_from"] = previous["id"]
+                page["tables"].append(table)
+            previous = page["tables"][-1] if page["tables"] else None
+            _tag_lines(page)
+
+
+def _column_edges(table: dict) -> list[float]:
+    return sorted({c["bbox"][0] for r in table["rows"] for c in r if c} | {c["bbox"][2] for r in table["rows"] for c in r if c})
+
+
+def _same_columns(a: dict, b: dict) -> bool:
+    ea, eb = _column_edges(a), _column_edges(b)
+    return len(ea) == len(eb) and all(abs(x - y) <= COLUMN_TOLERANCE for x, y in zip(ea, eb))
+
+
+def _tag_lines(page: dict) -> None:
+    """A line whose centre lies in a cell gets "cell": [table id, row, column] (0-based). Nothing else changes."""
+    for line in page["lines"]:
+        x0, y0, x1, y1 = line["bbox"]
+        cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+        line.pop("cell", None)
+        for table in page["tables"]:
+            for r, row in enumerate(table["rows"]):
+                for c, cell in enumerate(row):
+                    if cell and cell["bbox"][0] <= cx <= cell["bbox"][2] and cell["bbox"][1] <= cy <= cell["bbox"][3]:
+                        line["cell"] = [table["id"], r, c]
 
 
 def _furniture_key(text: str) -> str:
@@ -229,4 +287,28 @@ if __name__ == "__main__":  # self-check: python -m app.modules.ingestion.servic
                                                   {"text": "Body text", "bbox": [72, 400, 200, 412]}]} for n in (1, 2, 3)]
     _mark_furniture(pages)
     assert all(p["lines"][0]["furniture"] and not p["lines"][1]["furniture"] for p in pages)
+    # a ruled 3 x 2 table: kept, its cells read, its lines tagged; an empty ruled grid is not a table
+    import tempfile
+    doc = pymupdf.open()
+    pg = doc.new_page(width=400, height=300)
+    for x in (50, 200, 350):
+        pg.draw_line((x, 50), (x, 140))
+    for y in (50, 80, 110, 140):
+        pg.draw_line((50, y), (350, y))
+    for (x, y), t in zip([(55, 70), (205, 70), (55, 100), (205, 100), (55, 130), (205, 130)],
+                         ["Description", "Requirement", "Rated voltage", "15 kV", "Arc resistance", "Type 2B"]):
+        pg.insert_text((x, y), t, fontsize=10)
+    blank = doc.new_page(width=400, height=300)
+    for x in (50, 200, 350):
+        blank.draw_line((x, 50), (x, 140))
+    for y in (50, 80, 110, 140):
+        blank.draw_line((50, y), (350, y))
+    tmp = Path(tempfile.mkdtemp()) / "table.pdf"
+    doc.save(tmp)
+    model = parse(str(tmp), "selfcheck")
+    t = model["pages"][0]["tables"]
+    assert len(t) == 1 and t[0]["columns"] == 2 and [c["text"] for c in t[0]["rows"][1]] == ["Rated voltage", "15 kV"], t
+    tagged = {l["text"]: l.get("cell") for l in model["pages"][0]["lines"]}
+    assert tagged["15 kV"] == ["p1-t1", 1, 1] and tagged["Type 2B"] == ["p1-t1", 2, 1], tagged
+    assert model["pages"][1]["tables"] == []  # empty grid
     print("ingestion ok", pipeline_version())

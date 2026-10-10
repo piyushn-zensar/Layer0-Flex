@@ -157,11 +157,11 @@ This turns a PDF into a **page layout model**: a structured record of every page
 - Coordinates are PDF points (1/72 inch), origin at the top-left of the page, rounded to 0.01 so that two runs give identical output.
 - A page with no text layer is marked **unreviewed** and shown with a warning on screen 1 (rule R5). On the Syracuse RFP this is page 83.
 
-### 5.3 Region routing (whole-page OCR built 8 Oct 2026; tables and region-level OCR stage 1)
+### 5.3 Region routing (whole-page OCR built 8 Oct 2026, ruled tables 9 Oct 2026; region-level OCR later)
 
 | Situation | Method | Reason |
 |---|---|---|
-| A ruled table is found by pdfplumber | **Table** | Cell boundaries are kept; table text is not read twice |
+| A ruled table is found by pdfplumber | **Table**, kept beside the lines | Cell boundaries are kept; each line inside a cell points to its table, row and column |
 | Native text is present and readable | **Native** (PyMuPDF) | Exact text and positions |
 | Page has no text layer | **OCR**, whole page | A scanned page |
 | Native text is unusable (unmapped characters above a threshold, starting value 5%) | **OCR** for that region | A font without a character map |
@@ -170,6 +170,12 @@ This turns a PDF into a **page layout model**: a structured record of every page
 Thresholds are starting guesses, stored as data and calibrated on real SpinCo RFPs. Each routing decision is stored with its reason.
 
 **Built so far.** A page with no text layer, or whose text layer has more than 5% unmapped characters, is read by whole-page OCR. Without Tesseract (machines other than the parsing machine) such a page is flagged with the reason and never causes a failure. On the Syracuse RFP this reads page 83, a scanned drawing, into 106 lines (38 marked low-confidence), so every one of the 101 pages has a stated method. Two runs give byte-identical layouts.
+
+**Tables (built 9 Oct 2026).** pdfplumber finds ruled tables (the "lines" strategy) and the layout keeps each one as rows of cells, with text and boxes in the same page points as the lines. The lines themselves are not changed: a line inside a cell only gains a reference to its table, row and column. Line numbers, highlights and every frozen model answer therefore stay valid when tables are added.
+
+A grid is kept as a table when it has at most 20 columns and at least 30% of its cells filled; blank forms and drawing grids fall below that. Pages with more than 3,000 drawn lines and boxes are drawing sheets and are not searched. A table whose column edges line up with the last table on the previous page is linked as its continuation.
+
+On the Syracuse RFP, 34 tables are kept, including the three-page technical data sheet (pages 72 to 74, linked as one table, rows such as "Drawing Size | 24 X 36 | Inch"). 1,475 lines are tagged with their cell. Two runs give byte-identical layouts.
 
 **OCR details.** The region is rendered at 300 dpi and passed to Tesseract with fixed settings; the TSV output gives each word's box and a confidence from 0 to 100. Pixel positions are converted to page points (page x = region x + pixel x × 72 / 300). Words below a confidence threshold (starting value 60) mark the line low-confidence, and a requirement drawn from it always goes to a person. The Tesseract path is configuration (`TESSERACT_CMD`). Each call uses one thread so results do not vary between runs.
 
@@ -398,7 +404,8 @@ Each stage leaves the application running end to end. The demonstration RFP is t
 7. Whether customer-type workflow templates are needed beyond the one-step dispatch.
 
 **Known limits of stage 0:**
-- Scanned pages are read by whole-page OCR on the parsing machine only (others use the committed layout); OCR inside an otherwise native page (figure text) and tables are not yet built: tables are read as plain lines.
+- Scanned pages are read by whole-page OCR on the parsing machine only (others use the committed layout); OCR inside an otherwise native page (figure text) is not yet built.
+- Tables are in the layout, but the reader agent still reads their lines as text. Showing it the row structure ("Description | Requirement | Units") would help data sheets, but it changes the reader's input on those pages, so their answers would be regenerated. Tables without ruling lines are not detected.
 - Matching runs retrieval-only until matcher answers are generated and cached; retrieval is keyword-based.
 - The catalog, BOM lines and seeded unit responses are illustrative.
 - One acting user is picked from a list; no sign-in.
