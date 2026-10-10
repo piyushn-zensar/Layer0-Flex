@@ -428,7 +428,7 @@ def test_go_no_go_summary_and_structured_criteria():
     s = client.get(f"/api/opportunities/{opp}/decisions").json()["summary"]
     assert s["advice"].startswith("Advice from Layer 0") and s["advice"].endswith("A person decides.")
     status = {c["id"]: c["status"] for c in s["criteria"]}
-    assert all(status[k] == "unknown" for k in ("cost_budget", "delivery", "competitors", "deviations", "capacity"))
+    assert all(status[k] == "unknown" for k in ("cost_budget", "delivery", "competitors"))  # deviations, capacity: A-10
     assert status["open_questions"] == "not_met"  # Syracuse states no redundancy class (R-003 warn)
     assert {r["level"] for r in s["rows"]} <= {"fully", "partly", "not", "bid_desk"} and len(s["rows"]) == 13
     crit = [{"id": "coverage", "status": "met", "note": "checked"}, {"id": "cost_budget", "status": "unknown"}]
@@ -513,3 +513,21 @@ def test_compliance_matrix_excel():
     assert all(cell.data_type != "f" for sheet in wb for row in sheet.iter_rows() for cell in row)  # never a formula
     assert wb["Tracking"].max_row - 1 == len(client.get(f"/api/opportunities/{opp}/compliance-matrix.csv").text.strip().splitlines()) - 1
     assert client.get("/api/opportunities/OPP-9999/compliance-matrix.xlsx").status_code == 404
+
+
+def test_bid_and_portfolio_checks():
+    """A-10: data-sheet ratings vs the standard products in play, and unit workload vs capacity, as go/no-go evidence."""
+    seed_demo.main()  # its own opportunity: matched to CROWN and EP2 products, dispatched
+    client = TestClient(app)
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    d = client.get(f"/api/opportunities/{opp}/decisions").json()
+    dev, load = d["evidence"]["deviations"], d["evidence"]["workload"]
+    assert dev["placeholder"] and load["placeholder"]  # never presented as confirmed figures
+    assert "CROWN-ARMV" in dev["products"] and dev["checked"] >= 1
+    current = next(r for r in dev["rows"] if r["field"] == "Rated continuous current")  # data sheet asks 2000/1200 A
+    assert current["severity"] == "high" and current["source"].startswith("p. 74")
+    crit = {c["id"]: c for c in d["summary"]["criteria"]}
+    assert crit["deviations"]["status"] == "not_met" and "p. 74" in crit["deviations"]["detail"]
+    units = {r["bu"]: r for r in load["rows"]}
+    assert {"CROWN", "EP2"} <= set(units) and all(r["total"] >= r["open_here"] for r in units.values())
+    assert crit["capacity"]["status"] == "met" and "placeholder" in crit["capacity"]["detail"]

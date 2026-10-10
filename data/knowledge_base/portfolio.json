@@ -1,0 +1,14 @@
+{
+ "_note": "PLACEHOLDERS (task A-10), ported from the v1.1 demo, whose constants were invented to make its scenarios resolve. To be confirmed with each business unit before any real use. Layer 0 shows deviations and workload as evidence; a person decides.",
+ "standards": {
+  "CROWN-ARMV": {"rated_max_voltage_kv": 15, "continuous_current_a": 600, "momentary_ka": 25, "bil_kv": 95, "frequency_hz": 60}
+ },
+ "fields": [
+  {"field": "rated_max_voltage_kv", "name": "Rated maximum voltage", "labels": ["rated maximum voltage", "rated max voltage"], "unit": "kV", "severity": "high"},
+  {"field": "continuous_current_a", "name": "Rated continuous current", "labels": ["rated continuous current", "continuous current"], "unit": "A", "severity": "high"},
+  {"field": "momentary_ka", "name": "Momentary rating", "labels": ["momentary rating", "short-circuit rating", "short circuit rating"], "unit": "kA", "severity": "medium"},
+  {"field": "bil_kv", "name": "Basic impulse level", "labels": ["basic impulse level", "bil"], "unit": "kV", "severity": "medium"},
+  {"field": "frequency_hz", "name": "Frequency", "labels": ["frequency"], "unit": "Hz", "severity": "high", "must_equal": true}
+ ],
+ "capacity_open_items": {"CROWN": 150, "EP2": 60, "ANORD": 100, "FPM": 100, "JETCOOL": 80, "CLOUD": 80, "BID": 400}
+}

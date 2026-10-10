@@ -19,6 +19,7 @@ from sqlalchemy.orm import Session
 
 from app.core import audit
 from app.modules.catalog import service as catalog
+from app.modules.decisions import portfolio
 from app.modules.decisions.models import Decision
 from app.modules.matching import service as matching
 from app.modules.opportunities import service as opportunities
@@ -26,7 +27,7 @@ from app.modules.requirements import service as requirements
 
 
 def evidence(db: Session, opp_id: str) -> dict:
-    """ponytail: counts only. Add v1.1 bid/portfolio checks (capacity, deviations) after the Monday demo."""
+    """Counts, engineering checks (A-06), and the bid and portfolio checks (A-10: deviations, workload)."""
     reqs = requirements.current(db, opp_id)
     active = {r.req_id for r in reqs}  # matches of split, merged or rejected items no longer count
     matches = {req_id: m for req_id, m in matching.for_opportunity(db, opp_id).items() if req_id in active}
@@ -40,6 +41,8 @@ def evidence(db: Session, opp_id: str) -> dict:
         "unmatched": [r.req_id for r in reqs if r.req_id not in matches],
         "not_reviewed": sum(m.status == "proposed" and bool(m.units) for m in matches.values()),  # product matches nobody accepted
         "checks": matching.evidence_checks(db, opp_id),  # scope, tiers, engineering rules, LV solver (A-06)
+        "deviations": portfolio.deviations(db, opp_id),  # A-10: RFP data sheet vs standard product ratings
+        "workload": portfolio.workload(db, opp_id),      # A-10: open work per unit across opportunities vs capacity
     }
 
 
@@ -91,6 +94,8 @@ def summary(db: Session, opp_id: str, ev: dict | None = None) -> dict:
                            f"Rule warnings: {', '.join(warns) or 'none'}; unanchored requirements: {len(ev['unanchored'])}."),
         "matches_reviewed": (ev["not_reviewed"] == 0, f"{ev['not_reviewed']} product match(es) not yet accepted or changed by a person."),
         "pending_acquisition": (rules.get("R-004", {}).get("status") != "warn", rules.get("R-004", {}).get("note", "")),
+        "deviations": _deviations_criterion(ev["deviations"]),
+        "capacity": _capacity_criterion(ev["workload"]),
     }
     schedule = [row["req_id"] for row in rows if row["category"] == "schedule"]
     criteria = []
@@ -113,6 +118,22 @@ def summary(db: Session, opp_id: str, ev: dict | None = None) -> dict:
         "advice": (f"Advice from Layer 0: {met} of {len(assessable)} assessable criteria met; "
                    f"{len(criteria) - len(assessable)} cannot be assessed yet (data not available). A person decides."),
     }
+
+
+def _deviations_criterion(dev: dict) -> tuple[bool, str]:
+    serious = [d for d in dev["rows"] if d["severity"] in ("high", "medium")]
+    if not dev["checked"]:
+        return True, "No data-sheet rating found to compare with a standard product."
+    detail = ("; ".join(f"{d['field']}: RFP {d['rfp']} vs standard {d['standard']} ({d['product_id']}, {d['severity']}, {d['source']})"
+                        for d in serious) or f"{dev['checked']} data-sheet ratings within the standard products.")
+    return not serious, detail.rstrip(".") + ". Standards are placeholders."
+
+
+def _capacity_criterion(load: dict) -> tuple[bool, str]:
+    over = [r for r in load["rows"] if r["over"]]
+    parts = [f"{r['bu']} {r['total']}/{r['capacity']}" + (f" (also in {', '.join(r['other_opportunities'])})" if r["other_opportunities"] else "")
+             for r in load["rows"] if r["capacity"]]
+    return not over, ("Over capacity: " if over else "Open work vs capacity: ") + "; ".join(parts) + ". Capacity is a placeholder."
 
 
 def record(db: Session, opp_id: str, kind: str, outcome: str, units: list[str], rationale: str, actor: str,

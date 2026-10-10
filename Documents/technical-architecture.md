@@ -320,7 +320,12 @@ Offering types and the earlier automation tiers:
 
 ### 7.3 Participation and go/no-go (step 3)
 
-The **evidence pack** shows requirement counts by category, the units suggested by matching, the offering-type mix, unanchored items and unmatched items. The bid manager records which units take part, then go or no-go, each with a rationale. The decision record stores the evidence as it was shown. The v1.1 bid, execution and portfolio rule checks are added to the evidence pack after stage 4, with their invented constants labelled as placeholders.
+The **evidence pack** shows requirement counts by category, the units suggested by matching, the offering-type mix, unanchored items and unmatched items. The bid manager records which units take part, then go or no-go, each with a rationale. The decision record stores the evidence as it was shown. The v1.1 bid and portfolio checks are part of the evidence pack (built 10 Oct 2026), run on the real RFP rather than on hand-made records:
+
+- **Deviations from the standard product.** The ratings in the RFP's own data sheet (its ruled tables, section 5.3) are compared with the standard ratings of the products the requirements are matched to. As in v1.1, a rating above the standard for voltage, current or frequency is high severity; for impulse level or momentary rating, medium. Each deviation cites its page and data-sheet row.
+- **Capacity and portfolio conflicts.** For each unit taking part, its open work across every opportunity in Layer 0, plus what this opportunity adds, is compared with the unit's capacity. The other opportunities competing for the unit are named.
+
+Both fill a go/no-go criterion. The standard ratings and capacities (`portfolio.json`) are invented placeholders until the units confirm them, and the page and the criterion text say so. Reading a value from a data-sheet cell is value parsing, not requirement identification.
 
 ### 7.4 Dispatch (step 4: one step)
 

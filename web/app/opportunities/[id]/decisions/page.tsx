@@ -45,9 +45,39 @@ type Evidence = {
   requirements: number; frozen: boolean; by_category: Record<string, number>; unanchored: string[];
   suggested_units: Record<string, number>; offering_mix: Record<string, number>; unmatched: string[]; not_reviewed: number;
   checks: Checks;
+  deviations: { rows: { product_id: string; field: string; rfp: string; standard: string; severity: string; source: string }[];
+    checked: number; products: string[]; note: string };
+  workload: { rows: { bu: string; open_here: number; open_elsewhere: number; other_opportunities: string[]; total: number;
+    capacity: number | null; over: boolean }[]; note: string };
 };
 
 const STATUS_CLASS: Record<string, string> = { pass: "status-approved", warn: "status-proposed", fail: "status-rejected", "n/a": "" };
+
+// Bid and portfolio checks ported from v1.1 onto real data (task A-10): evidence, never a decision.
+function PortfolioChecks({ ev }: { ev: Evidence }) {
+  const d = ev.deviations, w = ev.workload;
+  return (
+    <section className="card">
+      <h2>Bid and portfolio checks</h2>
+      <h3>Deviations from the standard product</h3>
+      {d.rows.length === 0 ? <p className="ok">{d.checked ? `${d.checked} data-sheet ratings are within the standard products.` : "No data-sheet rating to compare."}</p> : (
+        <table><thead><tr><th>Product</th><th>Rating</th><th>RFP asks</th><th>Standard</th><th>Severity</th><th>Source</th></tr></thead>
+          <tbody>{d.rows.map((r, i) => (
+            <tr key={i}><td className="mono">{r.product_id}</td><td>{r.field}</td><td>{r.rfp}</td><td>{r.standard}</td>
+              <td><span className={`badge ${r.severity === "high" ? "status-rejected" : "status-proposed"}`}>{r.severity}</span></td><td>{r.source}</td></tr>))}
+          </tbody></table>)}
+      <p className="muted">{d.note}</p>
+      <h3>Workload across opportunities</h3>
+      <table><thead><tr><th>Unit</th><th>This opportunity</th><th>Other opportunities</th><th>Total open</th><th>Capacity</th></tr></thead>
+        <tbody>{w.rows.map((r) => (
+          <tr key={r.bu}><td>{r.bu}</td><td>{r.open_here}</td>
+            <td>{r.open_elsewhere}{r.other_opportunities.length > 0 && <span className="muted"> ({r.other_opportunities.join(", ")})</span>}</td>
+            <td>{r.total}</td><td>{r.capacity ?? "—"} {r.over && <span className="badge status-rejected">over</span>}</td></tr>))}
+        </tbody></table>
+      <p className="muted">{w.note}</p>
+    </section>
+  );
+}
 
 // Engineering checks ported from v0.3.0 (task A-06): evidence for the bid manager, never a decision.
 function EngineeringChecks({ c, oppId }: { c: Checks; oppId: string }) {
@@ -122,6 +152,7 @@ export default function DecisionsPage() {
       </section>
 
       {ev.frozen && <EngineeringChecks c={ev.checks} oppId={id} />}
+      {ev.frozen && <PortfolioChecks ev={ev} />}
 
       <section className="card">
         <h2>1. Which business units take part?</h2>
