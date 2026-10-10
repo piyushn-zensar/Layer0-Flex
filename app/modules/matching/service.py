@@ -1,7 +1,9 @@
 """Matching: requirement -> business unit(s), product, offering type, with evidence.  Owner: Atharv.
 
 Public contract:
-    match(db, opp_id, actor) -> dict                  propose a match for every approved requirement not yet decided
+    match(db, opp_id, actor, req_ids=None) -> dict    propose a match for every approved requirement not yet decided;
+        req_ids: only these (the changes module re-matches only what a change added or modified, so the frozen
+        page batches of the untouched requirements stay as they were)
     for_opportunity(db, opp_id) -> dict[str, Match]   latest match per req_id, unless a person rejected it.
         Match.units lists every unit [{bu, product_id, offering_type}], main unit first; Match.bu, .product_id
         and .offering_type repeat the main unit (None / "NONE" when the bid manager answers it).
@@ -50,13 +52,14 @@ BATCH = 15           # requirements per matcher call (one page; a dense page is 
 PARALLEL_CALLS = 4
 
 
-def match(db: Session, opp_id: str, actor: str) -> dict:
+def match(db: Session, opp_id: str, actor: str, req_ids: list[str] | None = None) -> dict:
     """A re-run refreshes only proposals; accepted, manual and rejected matches are a person's decision (rule R4).
 
     Token cuts (P-18): requirements outside PRODUCT_CATEGORIES go to the bid manager by rule, with no model call;
     the rest are sent one page at a time with the whole catalog in the fixed part of the prompt."""
     decided = {req_id for req_id, m in _latest(db, opp_id).items() if m.status != "proposed"}
-    reqs = [r for r in requirements.current(db, opp_id) if r.status == "approved" and r.req_id not in decided]
+    reqs = [r for r in requirements.current(db, opp_id) if r.status == "approved" and r.req_id not in decided
+            and (req_ids is None or r.req_id in req_ids)]
     evidence = dict(zip((r.req_id for r in reqs), catalog.search_many([r.quote for r in reqs], k=5)))
     products, past = catalog.products(), catalog.past_responses()
     candidates = [{"kind": "product", "id": p["id"], "bu": p["bu"]} for p in products]

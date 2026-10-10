@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "statements": [
+      {
+        "action": "modify",
+        "category": "schedule",
+        "page": 1,
+        "quote": "Section 1.9, Submission Due Date, page 5: replace \"09/15/2023 by 4:00PM\" with \"09/29/2023 by 4:00PM\".",
+        "text": "Submission Due Date is 09/29/2023 by 4:00PM."
+      },
+      {
+        "action": "modify",
+        "category": "technical",
+        "page": 1,
+        "quote": "Specification Section 1.1.E.1, page 55: replace \"eighteen (18) 15kV vacuum circuit breaker positions\" with \"twenty (20) 15kV vacuum circuit breaker positions\".",
+        "text": "Specification requires twenty (20) 15kV vacuum circuit breaker positions."
+      },
+      {
+        "action": "add",
+        "category": "technical",
+        "page": 1,
+        "quote": "Specification Section 1.1.E, page 56: add the following as item 11. \"The switchgear lineup shall be seismically qualified for the site, and the MANUFACTURER shall provide the seismic qualification report with the submittals.\"",
+        "text": "The switchgear lineup must be seismically qualified for the site, with the seismic qualification report provided with the submittals."
+      },
+      {
+        "action": "add",
+        "category": "compliance",
+        "page": 1,
+        "quote": "Specification Part 1, after Section 1.6: add the following as Section 1.7, Warranty. \"The MANUFACTURER shall warrant the switchgear lineup against defects in materials and workmanship for sixty (60) months from the date of energization.\"",
+        "text": "The MANUFACTURER shall warrant the switchgear lineup against defects in materials and workmanship for sixty (60) months from the date of energization."
+      },
+      {
+        "action": "delete",
+        "category": "submission",
+        "page": 1,
+        "quote": "Specification Section 1.1.D.3, page 55: the sentence \"In addition to other Submittal requirements, final drawings shall be submitted as AutoCAD format files.\" is deleted in its entirety.",
+        "text": "The requirement to submit final drawings as AutoCAD format files is deleted."
+      },
+      {
+        "action": "clarify",
+        "category": "technical",
+        "page": 1,
+        "quote": "Question: Is arc-resistant Type 2B construction required? Answer: Yes, arc-resistant Type 2B construction is required as specified in Section 1.1.E.2; no change.",
+        "text": "Arc-resistant Type 2B construction is required as specified in Section 1.1.E.2."
+      },
+      {
+        "action": "info",
+        "category": "submission",
+        "page": 1,
+        "quote": "Please acknowledge receipt of this addendum on the proposal form.",
+        "text": "Acknowledge receipt of this addendum on the proposal form."
+      },
+      {
+        "action": "info",
+        "category": "compliance",
+        "page": 1,
+        "quote": "All other terms and conditions of the RFP remain unchanged.",
+        "text": "All other terms and conditions of the RFP remain unchanged."
+      }
+    ]
+  },
+  "task": "read_changes"
+}

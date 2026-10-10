@@ -591,3 +591,252 @@ def test_knowledge_base_queue():
     assert sent[f"response:{done['id']}"] == "approved" and sent[f"decision:{go['id']}"] == "rejected"
     queue = client.get("/api/knowledge", params={"status": "approved"}).json()
     assert queue["learned"] >= 1 and all(i["status"] == "approved" for i in queue["items"])
+
+
+def test_change_document_against_baseline(monkeypatch, tmp_path):
+    """P-11: an addendum is read and classified against the frozen baseline (model answers stubbed, no model call),
+    a person confirms every item, and applying it makes baseline 2: a new version anchored in the addendum, a
+    removal, a new ID; the changed answer goes back to its unit and the new requirement is dispatched."""
+    from app.core.db import SessionLocal
+    from app.modules.changes import agent
+    from app.modules.workpackages import service as workpackages
+    from scripts.txt_to_pdf import convert
+
+    seed_demo.main()  # its own opportunity: 13 frozen line items, go, dispatched, some answers validated
+    client = TestClient(app)
+    BM, CROWN = {"X-Actor": "Bid%20Manager"}, {"X-Actor": "Crown%20Design%20Engineer"}
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
+    by_quote = lambda start: next(r for r in rows if r["req"]["quote"].startswith(start))
+    arc, ball = by_quote("Switchgear shall be Arc-resistant Type 2B"), by_quote("Each phase shall have 1 inch")
+    done = next(a for a in arc["assignments"] if a["status"] == "validated")
+    ball_work = [a["id"] for a in ball["assignments"]]
+    assert ball_work
+
+    lines = ["ADDENDUM NO. 1", "Bidders shall acknowledge receipt of this addendum on the bid form.",
+             "Switchgear shall be Arc-resistant Type 2C (replaces Type 2B).",
+             "Delete: Each phase shall have 1 inch diameter ground ball.",
+             "Add: The switchgear shall include one spare 1200 A vacuum breaker.",
+             "Q1: Is the Equipment Building by others? A1: Yes, no change."]
+    (tmp_path / "addendum-1.txt").write_text("\n".join(lines), "utf-8")
+    pdf = convert(tmp_path / "addendum-1.txt").read_bytes()
+    upload = lambda: client.post(f"/api/opportunities/{opp}/changes", files={"file": ("addendum-1.pdf", pdf)})
+
+    r = upload()  # mock mode, no frozen answer: refused, no change set
+    assert r.status_code == 409 and "frozen answers" in r.json()["detail"]
+    assert client.get(f"/api/opportunities/{opp}/changes").json()["sets"] == []
+
+    said = [("info", "submission", lines[1], "Acknowledge the addendum."),
+            ("modify", "compliance", "L3: " + lines[2], "Switchgear shall be arc-resistant Type 2C."),
+            ("delete", "technical", lines[3], "The 1 inch ground ball on each phase is deleted."),
+            ("add", "technical", lines[4], "Include one spare 1200 A vacuum circuit breaker."),
+            ("clarify", "technical", lines[5], "The equipment building remains by others.")]
+    want = {"modify": ("modified", "Arc-resistant Type 2B"), "delete": ("removed", "ground ball"),
+            "clarify": ("unchanged", "Equipment Building"), "add": ("added", None)}
+
+    def model(task, system, prompt, schema):  # stands in for the frozen answers of both tasks
+        if task == "read_changes":
+            assert "L3: Switchgear shall be Arc-resistant Type 2C" in prompt
+            return {"statements": [{"page": 1, "quote": q, "text": t, "category": c, "action": a} for a, c, q, t in said]}
+        assert "REQ-" not in prompt and "acknowledge" not in prompt  # no IDs; info is decided by rule
+        answers = []
+        for block in re.split(r"^\[", prompt, flags=re.M)[1:]:
+            n, action = re.match(r"(\d+)\] Reader says: (\w+)", block).groups()
+            kind, words = want[action]
+            letter = next((l for l, text in re.findall(r"^\s+([A-E])\. (.*)$", block, re.M) if words and words in text), "")
+            answers.append({"n": int(n), "change": kind, "target": letter, "new_text": "", "rationale": "stub", "confidence": 0.8})
+        return {"answers": answers}
+
+    monkeypatch.setattr(agent, "complete_json", model)
+    s = upload().json()
+    assert s["status"] == "review" and s["baseline_from"] == 1 and s["total"] == 5 and s["confirmed"] == 0
+    items = {i["action"]: i for i in s["items"]}
+    assert [i["proposed_kind"] for i in s["items"]] == ["not_a_requirement", "modified", "removed", "added", "unchanged"]
+    mod = items["modify"]
+    assert mod["quote"] == lines[2] and mod["source"] == "p. 1, line 3" and mod["bboxes"]  # anchored in the addendum
+    assert mod["proposed_target"] == arc["req"]["req_id"] and mod["target_text"] == arc["req"]["text"]
+    assert arc["req"]["req_id"] in [c["req_id"] for c in mod["candidates"]] and len(mod["candidates"]) <= 5
+    assert items["delete"]["proposed_target"] == ball["req"]["req_id"] and items["add"]["proposed_target"] is None
+    assert s["counts"] == {"added": 1, "modified": 1, "removed": 1, "unchanged": 1, "not_a_requirement": 1}
+    assert s["share"] == round(2 / 13, 3) and s["drastic"] is False and s["pages"][0]["page"] == 1
+    assert upload().status_code == 409  # one set in review at a time
+
+    url = f"/api/changes/{s['id']}"
+    q = items["clarify"]
+    assert client.post(f"{url}/items/{q['id']}", json={"kind": "modified", "target": "REQ-9999-0001"}).status_code == 409
+    assert client.post(f"{url}/items/{q['id']}", json={"kind": "removed"}).status_code == 409  # needs a target
+    assert client.post(f"{url}/items/999999", json={"kind": "added"}).status_code == 404
+    over = client.post(f"{url}/items/{q['id']}", json={"kind": "not_a_requirement", "target": arc["req"]["req_id"]},
+                       headers=CROWN).json()
+    assert (over["kind"], over["target"], over["status"], over["decided_by"]) == ("not_a_requirement", None, "confirmed",
+                                                                                   "Crown Design Engineer")
+    add = client.post(f"{url}/items/{items['add']['id']}", json={"kind": "added", "text": "One spare 1200 A breaker."}).json()
+    assert add["text"] == "One spare 1200 A breaker."
+    assert client.post(f"{url}/apply", headers=BM).status_code == 409    # three items not confirmed yet
+    assert client.post(f"{url}/apply", headers=CROWN).status_code == 403  # only the Bid Manager
+    assert client.post(f"{url}/confirm-all").json()["confirmed"] == 5
+
+    applied = client.post(f"{url}/apply", headers=BM).json()
+    res = applied["result"]
+    assert applied["status"] == "applied" and applied["baseline_to"] == 2 and applied["applied_by"] == "Bid Manager"
+    assert res["modified"] == [arc["req"]["req_id"]] and res["removed"] == [ball["req"]["req_id"]] and len(res["added"]) == 1
+    assert res["returned"] >= 1 and res["dispatched"] >= 1 and res["note"] == ""
+    assert client.post(f"{url}/apply", headers=BM).status_code == 409
+    assert client.post(f"{url}/discard", headers=BM).status_code == 409
+
+    reqs = client.get(f"/api/opportunities/{opp}/requirements").json()
+    assert reqs["baseline"]["number"] == 2 and reqs["baseline"]["count"] == 13  # one removed, one added
+    by_id = {r["req_id"]: r for r in reqs["requirements"]}
+    new_arc, new = by_id[arc["req"]["req_id"]], by_id[res["added"][0]]
+    assert (new_arc["version"], new_arc["text"], new_arc["baseline"], new_arc["status"]) == (
+        2, "Switchgear shall be arc-resistant Type 2C.", 2, "approved")
+    assert new_arc["document_id"] == s["document_id"] and new_arc["source"] == "p. 1, line 3"
+    assert by_id[ball["req"]["req_id"]]["status"] == "removed"
+    assert new["req_id"] not in {r["req"]["req_id"] for r in rows} and (new["status"], new["baseline"]) == ("approved", 2)
+    assert new["text"] == "One spare 1200 A breaker." and new["document_id"] == s["document_id"]
+    h = client.get(f"/api/requirements/{arc['req']['req_id']}/history").json()
+    assert [v["label"] for v in h["versions"]] == ["original", "revised"] and "addendum-1.pdf" in h["versions"][1]["reason"]
+    assert [e["action"] for e in h["events"]].count("frozen") == 2 and h["source"] == "p. 1, line 3"
+    assert client.post(f"/api/requirements/{new['req_id']}/review", json={"action": "edit", "text": "x"}).status_code == 409
+
+    with SessionLocal() as db:
+        back = workpackages.get(db, done["id"])
+        assert back.status == "returned" and back.validation_note.startswith("Changed by addendum-1.pdf: now reads:")
+        assert all(workpackages.get(db, i).status == "withdrawn" for i in ball_work)
+        assert workpackages.by_requirement(db, opp)[new["req_id"]]  # the added requirement is dispatched
+    trace = client.get(f"/api/opportunities/{opp}/trace").json()
+    assert [d["role"] for d in trace["docs"]] == ["main", "change"] and trace["docs"][1]["id"] == s["document_id"]
+    assert trace["doc"]["id"] == trace["docs"][0]["id"]
+    assert ball["req"]["req_id"] not in {r["req"]["req_id"] for r in trace["rows"]}
+    view = client.get(f"/api/opportunities/{opp}/changes").json()
+    assert view["baseline"] == {"number": 2, "count": 13} and view["sets"][0]["status"] == "applied"
+    assert view["sets"][0]["result"] == res and view["drastic_threshold"] == 0.25
+    assert client.get("/api/opportunities/OPP-9999/changes").status_code == 404
+
+
+def test_illustrative_addendum_frozen_answers():
+    """P-11 on the illustrative Addendum No. 1 with the frozen change-agent answers (no model call): every statement
+    is classified as the oracle expects, and applying it gives baseline 2 without moving any untouched match."""
+    import json as _json
+
+    from app.modules.requirements.anchoring import normalise
+
+    seed_demo.main()  # its own opportunity: the 13-item Syracuse seed, frozen, go, dispatched
+    client = TestClient(app)
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    oracle = _json.loads((ROOT / "data/seed/syracuse_addendum_1_expected.json").read_text("utf-8"))
+    pdf = ROOT / oracle["document"]
+    s = client.post(f"/api/opportunities/{opp}/changes", files={"file": (pdf.name, pdf.read_bytes(), "application/pdf")}).json()
+    assert s["status"] == "review" and s["total"] == len(oracle["items"])
+    for it in s["items"]:
+        want = next(o for o in oracle["items"] if normalise(o["quote"])[:50] in normalise(it["quote"]))
+        assert it["proposed_kind"] == want["kind"], (it["quote"], it["proposed_kind"])
+        if want["baseline_quote"]:  # the right baseline requirement, by its RFP wording
+            target = client.get(f"/api/requirements/{it['proposed_target']}/history").json()
+            assert normalise(want["baseline_quote"])[:40] in normalise(target["quote"]), (it["quote"], target["quote"])
+    before = {r["req"]["req_id"]: r["match"] for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"]}
+    client.post(f"/api/changes/{s['id']}/confirm-all")
+    done = client.post(f"/api/changes/{s['id']}/apply").json()
+    assert done["status"] == "applied" and done["result"]["baseline"] == 2
+    assert len(done["result"]["added"]) == 2 and len(done["result"]["modified"]) == 2 and len(done["result"]["removed"]) == 1
+    after = {r["req"]["req_id"]: r["match"] for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"]}
+    touched = set(done["result"]["added"] + done["result"]["modified"])
+    assert all(after[k]["units"] == m["units"] for k, m in before.items() if k in after and k not in touched and m)
+
+
+def test_change_set_review_findings_fixed(monkeypatch, tmp_path):
+    """P-11 adversarial review: the applied set still shows the baseline wording it was compared with; two items
+    that change one requirement are refused; a failure after the new baseline is committed is reported in the
+    note (not a 500 with a stale result); a set taken by another session (discarded / uploaded meanwhile) is not
+    applied twice; change documents keep their upload order in the requirement list."""
+    from app.core.db import SessionLocal
+    from app.modules.changes import agent
+    from app.modules.changes import service as changes
+    from app.modules.matching import service as matching
+    from scripts.txt_to_pdf import convert
+
+    seed_demo.main()  # its own opportunity: 13 frozen line items, go, dispatched, some answers validated
+    client = TestClient(app)
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
+    breakers = next(r["req"] for r in rows if r["req"]["quote"].startswith("Metal Clad Switchgear shall have eighteen"))
+
+    def stub(said):  # the reader returns these statements; the classifier says added or not_a_requirement
+        monkeypatch.setattr(agent, "read", lambda layout: [{"page": 1, "quote": q, "text": t, "category": "technical",
+                                                            "action": a} for a, q, t in said])
+        monkeypatch.setattr(agent, "classify", lambda sts: [
+            {"change": "added" if s["action"] == "add" else "not_a_requirement", "target": None, "new_text": s["text"],
+             "rationale": "stub", "confidence": 0.5} for s in sts])
+
+    def pdf(stem, lines):
+        (tmp_path / f"{stem}.txt").write_text("\n".join(lines), "utf-8")
+        return convert(tmp_path / f"{stem}.txt").read_bytes()
+
+    one = ["ADDENDUM ONE", "Add: provide spare part number 0A.", "Replace 18 with 20 breaker positions.",
+           "Replace two revenue meter positions with three."]
+    stub([("add", one[1], "Spare part 0A."), ("modify", one[2], "20 breakers"), ("modify", one[3], "3 meters")])
+    s = client.post(f"/api/opportunities/{opp}/changes", files={"file": ("o0.pdf", pdf("o0", one))}).json()
+    url, items = f"/api/changes/{s['id']}", s["items"]
+    client.post(f"{url}/items/{items[0]['id']}", json={"kind": "added"})
+    client.post(f"{url}/items/{items[1]['id']}", json={"kind": "modified", "target": breakers["req_id"],
+                                                        "text": "20 breaker positions, 2 revenue meter positions."})
+    client.post(f"{url}/items/{items[2]['id']}", json={"kind": "modified", "target": breakers["req_id"],
+                                                        "text": "18 breaker positions, 3 revenue meter positions."})
+    r = client.post(f"{url}/apply")
+    assert r.status_code == 409 and "all change" in r.json()["detail"]  # the first change would silently be lost
+    client.post(f"{url}/items/{items[2]['id']}", json={"kind": "unchanged", "target": breakers["req_id"]})
+
+    def down(*args, **kwargs):
+        raise RuntimeError("model service unavailable")
+
+    with monkeypatch.context() as m:
+        m.setattr(matching, "match", down)
+        r = client.post(f"{url}/apply")
+    assert r.status_code == 200 and r.json()["status"] == "applied" and r.json()["baseline_to"] == 2
+    res = r.json()["result"]
+    assert "follow-up stopped" in res["note"] and res["returned"] >= 1  # the returned answer is counted
+    mod = next(i for i in r.json()["items"] if i["id"] == items[1]["id"])
+    assert (mod["target_text"], mod["target_source"]) == (breakers["text"], breakers["source"])  # baseline 1 wording
+    crown = client.get(f"/api/opportunities/{opp}/handoff/CROWN").json()
+    hand = next(i for route in crown["routes"].values() for i in route["items"] if i["req_id"] == breakers["req_id"])
+    assert hand["document"] == s["document_id"] and hand["source"].startswith("p. 1")  # the addendum's page, not the RFP's
+
+    two = ["ADDENDUM TWO", "Add: provide spare part number 0B."]
+    stub([("add", two[1], "Spare part 0B.")])
+    later = pdf("t0", two)
+
+    def read_while_another_uploads(layout):  # a second upload finishes while this one is still being read
+        stub([("add", two[1], "Spare part 0B.")])
+        with SessionLocal() as other:
+            changes.upload(other, opp, "t0.pdf", later, "Bid Manager")
+        return agent.read(layout)
+
+    monkeypatch.setattr(agent, "read", read_while_another_uploads)
+    r = client.post(f"/api/opportunities/{opp}/changes", files={"file": ("r0.pdf", pdf("r0", ["RACE", "Add: x."]))})
+    assert r.status_code == 409 and "still in review" in r.json()["detail"]
+    pending = [x for x in client.get(f"/api/opportunities/{opp}/changes").json()["sets"] if x["status"] == "review"]
+    assert [x["filename"] for x in pending] == ["t0.pdf"]
+
+    client.post(f"/api/changes/{pending[0]['id']}/confirm-all")
+    with SessionLocal() as stale:  # this session read the set while it was in review; the Bid Manager discards it
+        held = changes.get(stale, pending[0]["id"])  # kept, as within one request (the identity map is weak)
+        assert held.status == "review"
+        assert client.post(f"/api/changes/{pending[0]['id']}/discard").json()["status"] == "discarded"
+        with pytest.raises(ValueError, match="meanwhile"):
+            changes.apply(stale, pending[0]["id"], "Bid Manager")
+    assert client.get(f"/api/opportunities/{opp}/changes").json()["baseline"]["number"] == 2
+
+    stub([("add", two[1], "Spare part 0B.")])
+    s3 = client.post(f"/api/opportunities/{opp}/changes", files={"file": ("t0.pdf", later)}).json()
+    client.post(f"/api/changes/{s3['id']}/confirm-all")
+    with SessionLocal() as stale:  # a person's decision read the set before the Bid Manager applied it
+        held = changes.get(stale, s3["id"])
+        assert client.post(f"/api/changes/{s3['id']}/apply").json()["baseline_to"] == 3
+        with pytest.raises(ValueError, match="meanwhile"):  # the record keeps what was applied
+            changes.decide(stale, s3["id"], s3["items"][0]["id"], "not_a_requirement", None, None, "Crown Design Engineer")
+    assert client.get(f"/api/opportunities/{opp}/changes").json()["sets"][0]["items"][0]["kind"] == "added"
+    trace = client.get(f"/api/opportunities/{opp}/trace").json()
+    order = [d["id"] for d in trace["docs"]]
+    assert order[1:] == [s["document_id"], s3["document_id"]]
+    seen = [order.index(r["req"]["document_id"]) for r in trace["rows"] if r["req"]["page"] is not None]
+    assert seen == sorted(seen)  # rows follow the documents' order: main RFP, then change documents as they came in

@@ -1,0 +1,54 @@
+{
+  "_note": "Expected classification of the illustrative Addendum No. 1 (task P-11 test oracle). The addendum is a sample written for the Layer 0 proof of concept, not issued by the Authority. One entry per change statement: the six numbered items (two modified, two added, one removed, one unchanged Q&A clarification) and the two closing info lines. Quotes are the addendum text with line breaks joined by a single space and the item number left off; the notice, title, date, intro and section headings are not statements. baseline_quote is the exact wording of the frozen baseline requirement in data/seed/demo_syracuse.json that the statement targets.",
+  "document": "data/RFP/samples/rfp_syracuse_addendum_1.pdf",
+  "items": [
+    {
+      "quote": "Section 1.9, Submission Due Date, page 5: replace \"09/15/2023 by 4:00PM\" with \"09/29/2023 by 4:00PM\".",
+      "kind": "modified",
+      "baseline_quote": "Proposals must be received via email no later than 09/15/2023 by 4:00PM at:",
+      "baseline_page": 5
+    },
+    {
+      "quote": "Specification Section 1.1.E.1, page 55: replace \"eighteen (18) 15kV vacuum circuit breaker positions\" with \"twenty (20) 15kV vacuum circuit breaker positions\".",
+      "kind": "modified",
+      "baseline_quote": "Metal Clad Switchgear shall have eighteen (18) 15kV vacuum circuit breaker positions with protective relay and controls, two (2) revenue meter positions, two sets of (2) 15kV isolation switches, bus VT's, and multi-ratio CT's as shown in Contract Documents.",
+      "baseline_page": 55
+    },
+    {
+      "quote": "Specification Section 1.1.E, page 56: add the following as item 11. \"The switchgear lineup shall be seismically qualified for the site, and the MANUFACTURER shall provide the seismic qualification report with the submittals.\"",
+      "kind": "added",
+      "baseline_quote": null,
+      "baseline_page": null
+    },
+    {
+      "quote": "Specification Part 1, after Section 1.6: add the following as Section 1.7, Warranty. \"The MANUFACTURER shall warrant the switchgear lineup against defects in materials and workmanship for sixty (60) months from the date of energization.\"",
+      "kind": "added",
+      "baseline_quote": null,
+      "baseline_page": null
+    },
+    {
+      "quote": "Specification Section 1.1.D.3, page 55: the sentence \"In addition to other Submittal requirements, final drawings shall be submitted as AutoCAD format files.\" is deleted in its entirety.",
+      "kind": "removed",
+      "baseline_quote": "In addition to other Submittal requirements, final drawings shall be submitted as AutoCAD format files.",
+      "baseline_page": 55
+    },
+    {
+      "quote": "Question: Is arc-resistant Type 2B construction required? Answer: Yes, arc-resistant Type 2B construction is required as specified in Section 1.1.E.2; no change.",
+      "kind": "unchanged",
+      "baseline_quote": "Switchgear shall be Arc-resistant Type 2B. The switchgear shall meet or exceed the most conservative interpretation of standard IEEE C37.20.7.",
+      "baseline_page": 55
+    },
+    {
+      "quote": "Please acknowledge receipt of this addendum on the proposal form.",
+      "kind": "not_a_requirement",
+      "baseline_quote": null,
+      "baseline_page": null
+    },
+    {
+      "quote": "All other terms and conditions of the RFP remain unchanged.",
+      "kind": "not_a_requirement",
+      "baseline_quote": null,
+      "baseline_page": null
+    }
+  ]
+}

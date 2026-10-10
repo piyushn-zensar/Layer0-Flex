@@ -9,6 +9,9 @@ import PageHead from "@/components/shell/PageHead";
 import MatchActions from "@/components/matching/MatchActions"; // A-05 (Atharv)
 import SendToKnowledge from "@/components/knowledge/SendToKnowledge"; // A-11 (Atharv)
 
+// P-11: what a document other than the main RFP is (its upload role).
+const ROLE: Record<string, string> = { change: "Change document", addendum: "Addendum", qa: "Q&A" };
+
 // Assignment status -> safe CSS class suffix (displayed text stays as-is).
 const statusClass = (s: string | null | undefined) =>
   `status-${String(s ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "unknown"}`;
@@ -19,10 +22,12 @@ export default function TracePage() {
   const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/opportunities/${id}/knowledge`); // A-11
   const [selected, setSelected] = useState<string>();
   const [pageNo, setPageNo] = useState(1);
+  const [docId, setDocId] = useState<string>(); // P-11: the document shown in pane 1 (default the main RFP)
 
   const select = useCallback((reqId: string) => {
     setSelected(reqId);
     const req = data?.rows.find((r) => r.req.req_id === reqId)?.req;
+    if (req && data?.docs?.some((d) => d.id === req.document_id)) setDocId(req.document_id); // a new version from an addendum
     if (req?.page) setPageNo(req.page);
     history.replaceState(null, "", `#${reqId}`);
     document.querySelectorAll(`tr[data-req="${reqId}"]`).forEach((tr) => tr.scrollIntoView({ block: "nearest", behavior: "smooth" }));
@@ -31,13 +36,22 @@ export default function TracePage() {
   useEffect(() => { // first load: the requirement in the URL hash, else the first one
     if (!data || selected) return;
     const fromHash = decodeURIComponent(location.hash.slice(1));
-    const first = data.rows.find((r) => r.req.req_id === fromHash) ?? data.rows.find((r) => r.req.page);
+    const first = data.rows.find((r) => r.req.req_id === fromHash)
+      ?? data.rows.find((r) => r.children.some((k) => k.req_id === fromHash)) // a sub-requirement (Changes links): its group
+      ?? data.rows.find((r) => r.req.page);
     if (first) select(first.req.req_id);
   }, [data, selected, select]);
 
   if (error) return <p className="warn">Unable to load this view. Please refresh the page or try again shortly.</p>;
   if (!data) return <p>Loading…</p>;
-  const page = data.pages[pageNo - 1];
+  // P-11: the main RFP first, then change documents with requirements anchored in them (older APIs send only doc + pages).
+  const docs = data.docs ?? (data.doc ? [{ id: data.doc.id, filename: data.doc.filename, role: data.doc.role, pages: data.pages }] : []);
+  const mainId = data.doc?.id ?? docs[0]?.id;
+  const shown = docs.find((d) => d.id === docId) ?? docs[0];
+  const docName = (d?: { id: string; filename: string }) => (!d || d.id === mainId ? "RFP" : d.filename);
+  const docOf = (of?: string) => (of && mainId && of !== mainId ? docs.find((d) => d.id === of)?.filename ?? "Change document" : null);
+  const pages = shown?.pages ?? [];
+  const page = pages[pageNo - 1];
   const rowProps = (reqId: string) => ({
     "data-req": reqId, className: reqId === selected ? "selected" : "", onClick: () => select(reqId),
     tabIndex: 0, "aria-current": reqId === selected ? ("true" as const) : undefined,
@@ -65,18 +79,24 @@ export default function TracePage() {
       <div className="three">
         <section className="pane">
           <h2>1 · Original RFP</h2>
-          {data.doc && page ? (<>
+          {shown && page ? (<>
+            <div className="trace-docs">
+              <span>Showing <strong>{docName(shown)}</strong>{shown.id !== mainId && <> <span className="tag">{ROLE[shown.role] ?? "Document"}</span></>}</span>
+              {docs.length > 1 && <span className="trace-doc-switch" role="group" aria-label="Document shown">{docs.map((d) => (
+                <button key={d.id} type="button" className={`chip${d.id === shown.id ? " on" : ""}`} aria-pressed={d.id === shown.id} title={d.filename}
+                  onClick={() => { setDocId(d.id); setPageNo(1); }}>{docName(d)}</button>))}</span>}
+            </div>
             <div className="pager">
               <button aria-label="Previous page" onClick={() => setPageNo(Math.max(1, pageNo - 1))}>◀</button>
-              <span>Page <input type="number" aria-label="Page number" min={1} max={data.pages.length} value={pageNo}
-                onChange={(e) => setPageNo(Math.min(data.pages.length, Math.max(1, Number(e.target.value))))} /> / {data.pages.length}</span>
-              <button aria-label="Next page" onClick={() => setPageNo(Math.min(data.pages.length, pageNo + 1))}>▶</button>
+              <span>Page <input type="number" aria-label="Page number" min={1} max={pages.length} value={pageNo}
+                onChange={(e) => setPageNo(Math.min(pages.length, Math.max(1, Number(e.target.value))))} /> / {pages.length}</span>
+              <button aria-label="Next page" onClick={() => setPageNo(Math.min(pages.length, pageNo + 1))}>▶</button>
               {page.unreviewed && <span className="warn">No text layer: page not read (needs OCR)</span>}
             </div>
             <div className="page">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/api/documents/${data.doc.id}/pages/${pageNo}.png`} alt={`RFP page ${pageNo}`} />
-              {data.rows.filter((r) => r.req.page === pageNo).flatMap((r) => r.req.bboxes.map(([x0, y0, x1, y1], i) => (
+              <img src={`/api/documents/${shown.id}/pages/${pageNo}.png`} alt={`${docName(shown)} page ${pageNo}`} />
+              {data.rows.filter((r) => r.req.page === pageNo && r.req.document_id === shown.id).flatMap((r) => r.req.bboxes.map(([x0, y0, x1, y1], i) => (
                 <div key={`${r.req.req_id}-${i}`} title={r.req.req_id} onClick={() => select(r.req.req_id)}
                   role="button" tabIndex={i === 0 ? 0 : -1} aria-label={`Select ${r.req.req_id}`}
                   onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(r.req.req_id); } }}
@@ -97,10 +117,11 @@ export default function TracePage() {
               {data.rows.map(({ req, children }) => (
                 <tr key={req.req_id} {...rowProps(req.req_id)}>
                   <td><div className="mono trace-id">{req.req_id}</div><div className="tag">{req.category}</div></td>
-                  <td className="trace-source">{req.source}{req.provenance === "UNANCHORED" && <div className="warn">unanchored</div>}</td>
+                  <td className="trace-source">{docOf(req.document_id) && <div><span className="tag">{docOf(req.document_id)}</span></div>}
+                    {req.source}{req.provenance === "UNANCHORED" && <div className="warn">unanchored</div>}</td>
                   <td><div className="trace-text">{req.text}</div>
                     {children.length > 0 ? (
-                      <ul className="trace-children">{children.map((k) => <li key={k.req_id}>{k.text} <span className="muted">({k.source})</span></li>)}</ul>
+                      <ul className="trace-children">{children.map((k) => <li key={k.req_id}>{k.text} <span className="muted">({docOf(k.document_id) ? `${docOf(k.document_id)}, ` : ""}{k.source})</span></li>)}</ul>
                     ) : <div className="quote trace-quote">“{req.quote}”</div>}
                     {req.req_id === selected && <SendToKnowledge kind="requirement" refId={req.req_id} status={sent?.[`requirement:${req.req_id}`]} onSent={reloadSent} />}</td>
                 </tr>

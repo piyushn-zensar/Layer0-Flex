@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies seismic qualification for a switchgear lineup. The CROWN-ARMV product is an arc-resistant metal-clad MV switchgear lineup, which aligns with the requirement. Seismic qualification can be part of the engineering process for this product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement pertains to a warranty clause for the switchgear lineup, which is a commercial term rather than a product specification. Therefore, it is not mapped to a specific product.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -10,6 +10,7 @@ export interface Requirement {
   page: number | null; line_start: number | null; line_end: number | null; bboxes: number[][];
   provenance: "EXTRACTED" | "UNANCHORED"; status: string; baseline: number | null; source: string;
   derived_from: string[]; created_by: string; kind: "item" | "group"; parent_id: string | null;
+  document_id: string; // the RFP, or the change document a new version comes from (P-11)
 }
 export interface Baseline { number: number; count: number; frozen_by: string }
 export interface Match {
@@ -30,11 +31,32 @@ export interface Page { page: number; width: number; height: number; unreviewed:
 export interface TraceRow {
   req: Requirement; match: Match | null; product: Product | null; unit: Unit | null;
   bom: { item: string; qty: string }[]; assignments: Assignment[];
-  children: { req_id: string; text: string; source: string }[];
+  children: { req_id: string; text: string; source: string; document_id: string }[];
 }
-export interface Trace { opp: Opportunity; doc: Doc | null; rows: TraceRow[]; pages: Page[]; progress: Progress }
+// A document shown in Traceability pane 1: the main RFP first, then change documents with requirements anchored in them (P-11).
+export interface TraceDoc { id: string; filename: string; role: string; pages: Page[] }
+export interface Trace { opp: Opportunity; doc: Doc | null; rows: TraceRow[]; pages: Page[]; progress: Progress; docs?: TraceDoc[] }
 export interface RequirementHistory {
   req_id: string; quote: string; source: string; derived_from: string[];
   versions: { n: number; at: string; by: string; label: string; text: string; category: string; reason?: string }[];
   events: { at: string; by: string; action: string; details: Record<string, unknown> }[];
 }
+
+// Changes (P-11): an addendum, Q&A or change request compared with the frozen baseline.
+export type ChangeKind = "added" | "modified" | "removed" | "unchanged" | "not_a_requirement";
+export interface ChangeItem {
+  id: number; n: number; page: number | null; line_start: number | null; line_end: number | null; bboxes: number[][]; source: string;
+  quote: string; text: string; category: string; action: "add" | "modify" | "delete" | "clarify" | "info"; // what the document says it does
+  proposed_kind: ChangeKind; proposed_target: string | null; rationale: string; confidence: number;
+  kind: ChangeKind | null; target: string | null; status: "proposed" | "confirmed"; decided_by: string | null;
+  target_text: string | null; target_source: string | null; candidates: { req_id: string; text: string; source: string }[];
+}
+export interface ChangeSet {
+  id: number; opportunity_id: string; document_id: string; filename: string; status: "review" | "applied" | "discarded";
+  created_by: string; created_at: string; applied_by: string | null; applied_at: string | null; baseline_from: number; baseline_to: number | null;
+  counts: Record<ChangeKind, number>; confirmed: number; total: number; share: number; drastic: boolean;
+  pages: { page: number; width: number; height: number }[];
+  result: { baseline: number; added: string[]; modified: string[]; removed: string[]; returned: number; dispatched: number; note: string } | null;
+  items: ChangeItem[];
+}
+export interface Changes { baseline: { number: number; count: number } | null; drastic_threshold: number; sets: ChangeSet[] }

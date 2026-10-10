@@ -18,7 +18,7 @@ const FILTERS = {
   replaced: { label: "Ungrouped / split / merged", test: (r: Requirement) => r.status === "split" || r.status === "merged" },
   all: { label: "All", test: () => true },
 } as const;
-const INACTIVE = new Set(["rejected", "split", "merged", "duplicate"]);
+const INACTIVE = new Set(["rejected", "split", "merged", "duplicate", "removed"]); // removed: by a change document (P-11)
 type FilterKey = keyof typeof FILTERS;
 
 export default function RequirementsPage() {

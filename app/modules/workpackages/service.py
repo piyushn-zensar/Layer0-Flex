@@ -18,8 +18,12 @@ Public contract:
         returned item again. LookupError / PermissionError / ValueError as above
     progress(db, opp_id) -> dict[str, dict]               bu -> {"total", "submitted", "validated"} (active work)
     handoff(db, opp_id, bu) -> dict                       per-unit hand-off payload (M8): items grouped by route
-        (CPQ seed / basis of design / specialist queue), requires_human_completion; LookupError: unknown
+        (CPQ seed / basis of design / specialist queue), each with its source document (the main RFP or a change
+        document), requires_human_completion; LookupError: unknown
         opportunity or no work for the unit; ValueError: the bid desk
+    return_for_change(db, opp_id, req_ids, note, actor) -> int   a change document changed these requirements:
+        their submitted / validated answers are returned with the note (the unit answers again), assigned and
+        returned work keeps its status and gets the note. Returns how many assignments were touched
 """
 from collections import defaultdict
 
@@ -141,6 +145,21 @@ def validate(db: Session, assignment_id: int, ok: bool, note: str, actor: str) -
     db.commit()
 
 
+def return_for_change(db: Session, opp_id: str, req_ids: list[str], note: str, actor: str) -> int:
+    """Changes module (section 8, step 5): work on a changed requirement goes back to its unit for review."""
+    touched = 0
+    for a in db.scalars(select(Assignment).where(Assignment.opportunity_id == opp_id, Assignment.req_id.in_(req_ids),
+                                                 Assignment.status != "withdrawn").order_by(Assignment.id)):
+        was = a.status
+        if a.status in ("submitted", "validated"):  # the answer was for the old wording
+            a.status, a.validated_by = "returned", actor
+        a.validation_note = note
+        audit.record(db, actor, "returned", "assignment", a.req_id, opp_id, bu=a.bu, note=note, reason="change", was=was)
+        touched += 1
+    db.commit()
+    return touched
+
+
 def progress(db: Session, opp_id: str) -> dict[str, dict]:
     out = defaultdict(lambda: {"total": 0, "submitted": 0, "validated": 0})
     for items in by_requirement(db, opp_id).values():
@@ -199,6 +218,7 @@ def handoff(db: Session, opp_id: str, bu: str) -> dict:
             route = _route(offering, unit_tier)
             item = {
                 "req_id": a.req_id, "source": req.source if req else None, "quote": req.quote if req else None,
+                "document": req.document_id if req else None,  # the source's document: a change document (P-11)
                 "requirement": req.text if req else None, "category": req.category if req else None,
                 "product_id": product_id, "product": (catalog.product(product_id) or {}).get("name"),
                 "offering_type": offering, "engineering_flags": flags.get(a.req_id, []),

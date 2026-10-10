@@ -5,7 +5,8 @@ screen 3 = requirement -> business unit, product, offering type, BOM and unit re
 
 Public contract:
     portfolio(db) -> list[dict]
-    trace(db, opp_id) -> dict         LookupError if the opportunity does not exist
+    trace(db, opp_id) -> dict         LookupError if the opportunity does not exist. "docs": the main RFP first, then
+                                      the change documents that current requirements are anchored in (P-11)
 """
 from sqlalchemy.orm import Session
 
@@ -22,6 +23,10 @@ def portfolio(db: Session) -> list[dict]:
              "progress": workpackages.progress(db, o.id)} for o in opportunities.list_all(db)]
 
 
+def _sizes(pages: list[dict]) -> list[dict]:
+    return [{"page": p["page"], "width": p["width"], "height": p["height"], "unreviewed": p["unreviewed"]} for p in pages]
+
+
 def trace(db: Session, opp_id: str) -> dict:
     opp = opportunities.require(db, opp_id)
     doc = opportunities.main_document(db, opp_id)
@@ -29,7 +34,9 @@ def trace(db: Session, opp_id: str) -> dict:
     matches = matching.for_opportunity(db, opp_id)
     assignments = workpackages.by_requirement(db, opp_id)
     kids: dict[str, list] = {}  # a group's active sub-requirements, read once
+    anchored = set()            # documents that current requirements are anchored in
     for r in requirements.current(db, opp_id, include_children=True):
+        anchored.add(r.document_id)
         if r.parent_id:
             kids.setdefault(r.parent_id, []).append(r)
     rows = []
@@ -40,7 +47,10 @@ def trace(db: Session, opp_id: str) -> dict:
                      "unit": catalog.unit(m.bu) if m and m.bu else None,
                      "bom": catalog.bom(product["id"]) if product else [],
                      "assignments": assignments.get(req.req_id, []), "children": kids.get(req.req_id, [])})
-    return {"opp": opp, "doc": doc, "rows": rows,
-            "pages": [{"page": p["page"], "width": p["width"], "height": p["height"],
-                       "unreviewed": p["unreviewed"]} for p in pages],
+    # the main RFP first, then each change document that a current requirement version is anchored in (P-11)
+    docs = [{"id": doc.id, "filename": doc.filename, "role": doc.role, "pages": _sizes(pages)}] if doc else []
+    for d in opportunities.documents(db, opp_id):
+        if d.role != "main" and d.id in anchored and d.status == "ingested":
+            docs.append({"id": d.id, "filename": d.filename, "role": d.role, "pages": _sizes(ingestion.layout(d.id)["pages"])})
+    return {"opp": opp, "doc": doc, "rows": rows, "pages": _sizes(pages), "docs": docs,
             "progress": workpackages.progress(db, opp_id)}

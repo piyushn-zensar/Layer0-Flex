@@ -47,7 +47,8 @@ export default function OppSteps() {
             );
           })}
         </ol>
-        <Link className={`step-later ${path === base + "/changes" ? "current" : ""}`} href={`${base}/changes`}>Changes (planned)</Link>
+        <Link className={`step-later ${path === base + "/changes" ? "current" : ""}`} href={`${base}/changes`}
+          aria-current={path === base + "/changes" ? "page" : undefined}>Changes</Link>
       </nav>
     </div>
   );

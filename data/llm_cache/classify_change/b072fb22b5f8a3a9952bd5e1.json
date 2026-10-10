@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "change": "modified",
+        "confidence": 0.95,
+        "n": 1,
+        "new_text": "Submit proposals by 09/29/2023 at 4:00 PM via email.",
+        "rationale": "The change document specifies a new submission due date, which modifies the existing requirement in candidate A.",
+        "target": "A"
+      },
+      {
+        "change": "modified",
+        "confidence": 0.9,
+        "n": 2,
+        "new_text": "Switchgear must include twenty (20) 15kV vacuum circuit breaker positions, meters, switches, VT’s, and CT’s.",
+        "rationale": "The change document updates the number of circuit breaker positions, modifying the requirement in candidate A.",
+        "target": "A"
+      },
+      {
+        "change": "added",
+        "confidence": 0.9,
+        "n": 3,
+        "new_text": "The switchgear lineup must be seismically qualified for the site, with the seismic qualification report provided with the submittals.",
+        "rationale": "The change introduces a new requirement not covered by any of the candidates.",
+        "target": ""
+      },
+      {
+        "change": "added",
+        "confidence": 0.9,
+        "n": 4,
+        "new_text": "The MANUFACTURER shall warrant the switchgear lineup against defects in materials and workmanship for sixty (60) months from the date of energization.",
+        "rationale": "The change introduces a new warranty requirement not covered by any of the candidates.",
+        "target": ""
+      },
+      {
+        "change": "removed",
+        "confidence": 0.95,
+        "n": 5,
+        "new_text": "Submit final drawings in AutoCAD format.",
+        "rationale": "The change document explicitly states the removal of the requirement in candidate A.",
+        "target": "A"
+      },
+      {
+        "change": "unchanged",
+        "confidence": 0.95,
+        "n": 6,
+        "new_text": "Switchgear shall be Arc-resistant Type 2B.",
+        "rationale": "The change document confirms the requirement in candidate A without modifying it.",
+        "target": "A"
+      }
+    ]
+  },
+  "task": "classify_change"
+}

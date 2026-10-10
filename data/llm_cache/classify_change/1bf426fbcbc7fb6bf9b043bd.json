@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "change": "modified",
+        "confidence": 0.95,
+        "n": 1,
+        "new_text": "Submission Due Date is 09/29/2023 by 4:00PM.",
+        "rationale": "The change document explicitly modifies the submission due date from 09/15/2023 to 09/29/2023, which corresponds to candidate A.",
+        "target": "A"
+      },
+      {
+        "change": "modified",
+        "confidence": 0.95,
+        "n": 2,
+        "new_text": "Specification requires twenty (20) 15kV vacuum circuit breaker positions.",
+        "rationale": "The change document modifies the number of vacuum circuit breaker positions from eighteen to twenty, which directly corresponds to candidate A.",
+        "target": "A"
+      },
+      {
+        "change": "added",
+        "confidence": 0.9,
+        "n": 3,
+        "new_text": "The switchgear lineup must be seismically qualified for the site, with the seismic qualification report provided with the submittals.",
+        "rationale": "The change document introduces a new requirement about seismic qualification, which is not covered by any of the candidates.",
+        "target": ""
+      },
+      {
+        "change": "added",
+        "confidence": 0.9,
+        "n": 4,
+        "new_text": "The MANUFACTURER shall warrant the switchgear lineup against defects in materials and workmanship for sixty (60) months from the date of energization.",
+        "rationale": "The change document adds a new warranty requirement, which is not covered by any of the candidates.",
+        "target": ""
+      },
+      {
+        "change": "removed",
+        "confidence": 0.95,
+        "n": 5,
+        "new_text": "In addition to other Submittal requirements, final drawings shall be submitted as AutoCAD format files.",
+        "rationale": "The change document explicitly states the removal of the requirement to submit final drawings as AutoCAD format files, which corresponds to candidate A.",
+        "target": "A"
+      },
+      {
+        "change": "unchanged",
+        "confidence": 0.95,
+        "n": 6,
+        "new_text": "Arc-resistant Type 2B construction is required as specified in Section 1.1.E.2.",
+        "rationale": "The change document confirms the requirement for arc-resistant Type 2B construction without altering the obligation, which corresponds to candidate A.",
+        "target": "A"
+      }
+    ]
+  },
+  "task": "classify_change"
+}

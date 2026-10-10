@@ -62,7 +62,7 @@ One Python API service, one database, one file store, and a Next.js web applicat
                       |  workpackages    one-step dispatch, inbox, checklist          |
                       |                  responses, validation                        |
                       |  consolidation   coverage check, compliance matrix            |
-                      |  changes         delta against the baseline (stage 5)         |
+                      |  changes         change agent -> delta vs. baseline           |
                       |  trace           three linked screens, portfolio (read-only)  |
                       |                                                               |
                       |  core: config, db, audit (append-only), model gateway, web    |
@@ -88,7 +88,7 @@ One Python API service, one database, one file store, and a Next.js web applicat
 | OCR | **Tesseract 5.5**, called as a local program with TSV output | For pages with no text layer (stage 1 work). Page 83 of the Syracuse RFP is such a page |
 | Language model | Azure OpenAI, GPT-4o deployment, through the model gateway | Structured JSON output (JSON schema, strict), temperature 0. Every answer is cached by task, model, prompt and schema |
 | Retrieval (RAG) | TF-IDF over products and past responses (ported from v0.3.0) | Explainable keyword scores; can be swapped for embeddings without changing callers |
-| Change detection | Python `difflib` | Section 8 |
+| Change classification | Change agent through the model gateway (frozen answers); TF-IDF ranks the candidate requirements | Section 8 |
 
 **Licence check (Needs confirmation before any client use).** PyMuPDF is dual-licensed: AGPL-3.0 or a commercial licence from Artifex. AGPL is acceptable for an internal PoC; a pilot or product needs a commercial licence or a replacement. pdfplumber (MIT) and Tesseract (Apache 2.0) have no such obligation.
 
@@ -282,11 +282,12 @@ requirement
   version       1, 2, ... (only the latest is current; all are kept)
   text          short restatement shown on the line item
   quote         verbatim source text
-  document_id   the document record (opportunity + file hash); the hash itself is on the document
+  document_id   the document record (opportunity + file hash); the hash itself is on the document.
+                A version made by a change points to the change document
   page, line_start, line_end, bboxes   the exact source
   category, section
   provenance    EXTRACTED | UNANCHORED
-  status        proposed | approved | rejected | split | merged | duplicate
+  status        proposed | approved | rejected | split | merged | duplicate | removed (by a change)
   kind          item | group;  parent_id: the group a sub-requirement belongs to
   derived_from  the line items it was split from or merged from
   baseline      frozen baseline number, empty while draft
@@ -357,33 +358,51 @@ For each assignment, the unit records **compliance** (met, partial, not met, exc
   - **Download.** The outline downloads as Markdown.
   - **Known limit.** The drafts can still lean promotional in tone. The page labels them as drafts to edit.
 
-## 8. Change Handling (stage 5)
+## 8. Change Handling (built 10 Oct 2026)
 
-Addenda, Q&A answers, change requests and execution-stage changes all use one path.
+Addenda, Q&A answers, change requests and execution-stage changes all use one path. It runs on the **Changes** page of an opportunity and needs a frozen baseline. A change document is a PDF.
 
-1. The change document is ingested like the RFP and linked to the same opportunity with the role "change".
-2. Its candidate requirements are compared with the frozen baseline: section first, then text similarity (`difflib`). Each item is **added, modified, removed or unchanged**.
-3. A person confirms the classification.
-4. Only affected requirements get a **new version**. Added requirements get new IDs and are matched and dispatched.
-5. Assignments of changed requirements are **returned** for review, and the owning units see them in their inbox.
-6. **A drastic change.** If the share of modified or removed requirements passes a threshold (to be set), the system suggests a new opportunity linked to the old one. A person decides.
+1. **Upload and ingestion.** The change document is uploaded on the Changes page. It is stored with the role "change", linked to the same opportunity and ingested like the RFP: same layout model, same anchoring. One change set is open per opportunity at a time. The main RFP, and a document that was already applied, are refused.
+2. **The change agent reads.** The first model step receives the change document's numbered lines; short pages share a call, as in section 6.2c. It returns each change statement with a verbatim quote, the requirement as it reads after the change, a category and an action: add, modify, delete, clarify or info. The quote is anchored in the change document as in section 6.1, and the model's own page claim is not trusted. Cover text, signatures and instructions to acknowledge receipt (info) are not requirements by rule, with no further model call.
+3. **The change agent classifies.** The second step compares each statement with the frozen baseline. The service ranks the baseline requirements by keyword similarity (TF-IDF, never the embedding search, so the ranking is the same online and offline) and shows the model up to five as candidates, lettered A to E, with their RFP wording. No requirement ID is in the prompt, so frozen answers stay valid if IDs change. The model returns the kind, the candidate letter, the wording after the change, a rationale and a confidence. A letter that names no shown candidate is dropped: the item falls back to "added" (if the reader saw an addition) or "not a requirement", with confidence 0 and a note. Both steps are frozen like the reader's answers (section 6.2). Without a model answer nothing is guessed and no change set is created (rule R5).
+4. **Kinds.** Each statement is **added** (no baseline requirement covers it), **modified** (it changes what one requirement asks), **removed** (it deletes one), **unchanged** (a clarification that repeats or explains one without changing what the bidder must do) or **not a requirement**.
+5. **A person confirms.** The Changes page lists each statement with its quote and source lines in the change document, the baseline requirement it points to, and the agent's rationale and confidence. A person confirms it, or overrides the kind, the target (any approved requirement of the baseline, not only the five candidates) and the new wording. The agent's proposal stays beside the decision, and every step is audited. Nothing is applied until every statement is confirmed.
+6. **Only the bid manager applies.** One action creates the next baseline:
+   - A **modified** requirement gets a new version with the new wording and a quote anchored in the change document. Traceability therefore shows the addendum's page and lines (section 9).
+   - An **added** requirement gets a new ID, is approved in the new baseline and is anchored in the change document.
+   - A **removed** requirement gets a version with status "removed" and leaves the active set. Removing a group removes its sub-requirements.
+   - **Unchanged** and **not a requirement** statements change nothing.
+   - The baseline number goes up by one (baseline 2 after the first change). Earlier versions are kept and appear in each requirement's history. Applying is refused if the set was read against a baseline that is no longer the latest.
+7. **Affected answers return to the units.** The assignments of a modified requirement are returned with a note that names the change document and the new wording. A submitted or validated answer becomes "returned" and appears in the unit's inbox. A changed sub-requirement returns the answers of its group; the group itself keeps its earlier version.
+8. **Only what changed is matched again.** The matcher runs on added and modified requirements only. A match that a person accepted, changed or rejected is kept (section 7.2). Every other requirement keeps its match, so the frozen page batches of the matcher stay valid and no untouched match moves.
+9. **Dispatch.** If work was dispatched before and the latest go/no-go is "go", applying also dispatches: assignments of removed requirements are withdrawn and new work is sent to the matched units or the bid desk. Otherwise the result says why it did not, and the next dispatch does it.
+10. **A drastic change.** The share is the modified plus removed requirements over the requirements in the baseline. Above a threshold (25%, a placeholder) the page shows a warning and suggests a new opportunity linked to the old one. Creating that opportunity is not built. A person decides.
 
-**Needs confirmation:** the threshold for a drastic change, and SpinCo's engineering change process.
+**Sample addendum and measured result.** `data/RFP/samples/rfp_syracuse_addendum_1.pdf` is an **illustrative** addendum written for the proof of concept. It was not issued by the customer, and its content is invented. It holds eight statements. With the Azure model, the agent classified all eight as expected, on both the 13-item demonstration and the full extraction: two modified, two added, one removed, one unchanged clarification and two not a requirement. Applied to the full Syracuse demonstration, the addendum gave baseline 2 with 349 requirements:
+- two requirements added: a seismic qualification requirement, matched to Crown, and a 60-month warranty requirement, assigned to the bid desk;
+- two modified: the proposal due date (09/15 to 09/29/2023) and the number of breaker positions (18 to 20). The second is a sub-requirement of a group whose validated Crown answer was returned with the change note;
+- one removed: the AutoCAD format requirement for final drawings;
+- 0.9% of the baseline modified or removed, so not drastic; no untouched requirement's match moved; two new assignments dispatched.
+
+The answers of the change agent for this addendum are frozen and committed, so the sample runs offline.
+
+**Needs confirmation:** the threshold for a drastic change (25% is a placeholder), and SpinCo's engineering change process.
 
 ## 9. Views
 
 | View | Level | Shows |
 |---|---|---|
 | **Portfolio** | All opportunities | Every opportunity, its status, requirement count and each unit's validated/total responses |
-| **Traceability** (the three screens) | One opportunity | (1) the RFP page with every requirement's source lines highlighted; (2) the requirement line items with ID, source and quote; (3) unit, product, offering type, rationale, BOM lines and unit responses. Selecting a requirement in any pane selects it in all three and opens its page |
+| **Traceability** (the three screens) | One opportunity | (1) the RFP page with every requirement's source lines highlighted; (2) the requirement line items with ID, source and quote; (3) unit, product, offering type, rationale, BOM lines and unit responses. Selecting a requirement in any pane selects it in all three and opens its page. Pane 1 can also show a change document (built 10 Oct 2026): when a requirement's latest version comes from one, selecting it opens that document at the page, and a switch beside the page number moves between the RFP and its change documents; the source column names the document |
 | **Requirement review** | One opportunity | Line items with quote and source; approve, edit, reject; freeze |
 | **Decisions** | One opportunity | Evidence pack, participation, go/no-go, dispatch |
 | **Unit inbox** | One business unit | Its assignments across all opportunities, with the checklist response form and validation |
 | **Knowledge base** | All opportunities | The curator's queue: waiting, approved and rejected items, with source, sender and note; approve (with an optional edit) or reject with a note |
 | **Final response** | One opportunity | Coverage, blocking items, compliance matrix download: an Excel workbook (a customer sheet with validated answers in customer words, in RFP order with sub-requirements and their references; an internal tracking sheet) and a CSV |
 | **Response outline** | One opportunity (under Final response) | The drafting agent's first draft per chapter with cited requirements, what to add or confirm, the validated answers, what is still open, related passages; Markdown download |
+| **Changes** (built 10 Oct 2026) | One opportunity | The current baseline and an upload for a change document. For each change set: the counts by kind, the share of the baseline changed with the drastic-change warning, every statement with its quote, source lines, the baseline requirement it points to, the agent's rationale and a confirm or override form, and the change document with the statements highlighted. Confirm all; apply or discard (bid manager only). After applying: the new baseline and the requirements added, modified and removed, the answers returned and the work dispatched |
 
-Navigation: the top bar has four destinations (Opportunities, My work, Product catalog, Knowledge base) and a New opportunity button. Inside an opportunity, a stepper follows the workflow order: RFP, Requirements, Traceability, Bid decision, Final response; a step is ticked once the opportunity has moved past it. Change handling is shown as a separate, planned link.
+Navigation: the top bar has four destinations (Opportunities, My work, Product catalog, Knowledge base) and a New opportunity button. Inside an opportunity, a stepper follows the workflow order: RFP, Requirements, Traceability, Bid decision, Final response; a step is ticked once the opportunity has moved past it. Changes is a separate link beside the stepper, not a step, because a change document can arrive at any time after the freeze.
 
 The acting user is chosen from a list in the header (bid manager, or a unit's product manager or design engineer). Real sign-in is added before a pilot.
 
@@ -400,12 +419,17 @@ opportunity ----< document                          (opportunities)
                         compliance, validation)
      +----< knowledge_item (KB-nnnn: requirement,   (knowledge)
                         answer or rationale; queued | approved | rejected)
+     +----< change_set ----< change_item            (changes)
+                        (one change document read against a baseline; one item
+                        per statement: proposal, decision; review | applied | discarded)
 audit_event (append-only; every module writes to it)      (core)
 business units, products, past responses: data files      (catalog)
 ```
 
 - Every table except the catalog data has an `opportunity_id`, and every page is scoped by opportunity (rule R6).
 - Requirements are versions: (req_id, version) is unique, and frozen versions are never edited.
+- A **change set** is one change document read against one baseline. It holds the baseline it was read against, that baseline's requirement count (for the share of change), the status, who read it and who applied or discarded it, and the result of applying. A **change item** is one statement: its quote and anchor in the change document, the requirement wording after the change, the agent's candidates, the agent's proposal (kind, target, rationale, confidence) and the person's decision, kept side by side.
+- Applying a change set writes new requirement versions and the next baseline row. A modified requirement gets a version whose document is the change document, with its new quote and anchor. A removed requirement gets a version with status "removed". An added requirement is a new ID. Nothing is edited in place, so every earlier baseline stays readable.
 - The audit table records who, when, which entity, before and after values and the reason. SQLite triggers reject updates and deletes on it.
 
 ## 11. Interfaces (API routes, all under `/api`)
@@ -421,8 +445,8 @@ business units, products, past responses: data files      (catalog)
 | Work packages | `POST /opportunities/{id}/dispatch`, `GET /inbox`, `GET /inbox/{bu}`, `POST /assignments/{id}/respond`, `POST /assignments/{id}/validate` |
 | Consolidation | `GET /opportunities/{id}/consolidation`, `GET /opportunities/{id}/compliance-matrix.csv`, `GET /opportunities/{id}/compliance-matrix.xlsx`, `GET /opportunities/{id}/response-outline`, `GET /opportunities/{id}/response-outline.md` |
 | Knowledge base | `POST /knowledge`, `GET /knowledge?status=`, `POST /knowledge/{kb_id}/review`, `GET /opportunities/{id}/knowledge` |
-| Views | `GET /portfolio`, `GET /opportunities/{id}/trace` |
-| Changes (stage 5) | `GET /opportunities/{id}/changes` |
+| Views | `GET /portfolio`, `GET /opportunities/{id}/trace` (also lists the change documents that current requirements are anchored in, as `docs`) |
+| Changes (built 10 Oct 2026) | `GET /opportunities/{id}/changes`, `POST /opportunities/{id}/changes` (multipart `file`: read and classify a change document), `POST /changes/{set}/items/{item}` (confirm or override one statement), `POST /changes/{set}/confirm-all`, `POST /changes/{set}/apply` (bid manager only), `POST /changes/{set}/discard` (bid manager only) |
 
 Every write uses the acting user's name.
 
@@ -432,7 +456,9 @@ Every write uses the acting user's name.
 - **Self-checks** next to non-trivial logic (built for anchoring and retrieval): `python -m app.modules.<module>.<file>`.
 - **Golden requirement list** for the Syracuse RFP (`data/golden/`, built 8 Oct 2026): 361 requirements drafted from the frozen layout independently of the reader agent, 78 marked uncertain. It is a draft until a person reviews it. `scripts/score_reader.py` measures the reader against it. First result: recall 92% of the certain items, and 54% of the reader's 840 proposals overlap a golden item. Most of the rest are finer-grained items (each listed drawing or standard as its own line item) or come from pages the golden list leaves out (blank forms, drawing sheets, the standards list). Contents pages produce no requirements.
 - **Repeatability:** ingest the same PDF twice and compare the layout model byte for byte; re-run extraction and matching and compare (cached answers make this exact).
-- **Change test** (stage 5): apply a sample addendum and check that only the affected requirements changed version.
+- **Change tests** (built 10 Oct 2026). Two tests in `tests/test_smoke.py`:
+  - One reads a generated addendum with a stubbed change agent, so no model is called. It checks the classification, the person's confirmation, that only the bid manager can apply, a new version anchored in the addendum, a removal (its work withdrawn), a new ID (its work dispatched), the returned answer, and that Traceability lists the addendum as a second document.
+  - The other uploads the illustrative sample addendum and uses its frozen change-agent answers. It checks every statement against an expected-result file (`data/seed/syracuse_addendum_1_expected.json`), then applies the set and checks that baseline 2 is created and that no match of an untouched requirement moved.
 
 ## 13. Build Stages
 
@@ -445,7 +471,7 @@ Each stage leaves the application running end to end. The demonstration RFP is t
 | 2 | Review actions (edit, split, merge, add missed); matching agent answers cached; EP² and unit catalogs refined | The bid manager can review, freeze and see a sensible unit and product for every line item | 10 to 11 Oct 2026 |
 | 3 | Decisions, dispatch, inbox, checklist responses, validation polished on the real extraction | Two units respond to their own line items; progress shows on the screens | 12 Oct 2026 (functioning version) |
 | 4 | Consolidation: coverage, compliance matrix, response-outline agent, validated responses into the knowledge base; v1.1 evidence checks | Unanswered requirements block completion; a finished opportunity enriches retrieval | after 12 Oct 2026 |
-| 5 | Change handling (delta against baseline) | A sample addendum changes only the affected requirements and returns their responses | after 12 Oct 2026 |
+| 5 | Change handling (delta against baseline) | A sample addendum changes only the affected requirements and returns their responses | First version built 10 Oct 2026 (section 8) |
 
 ## 14. Open Decisions and Known Limits
 
@@ -465,6 +491,14 @@ Each stage leaves the application running end to end. The demonstration RFP is t
 - The catalog, BOM lines and seeded unit responses are illustrative.
 - One acting user is picked from a list; no sign-in.
 - SQLite allows one writer at a time; enough for a PoC.
+
+**Known limits of change handling (first version, 10 Oct 2026):**
+- The upload is synchronous. The page waits while the change document is read and classified. With frozen answers this takes about a second; a long document read by the live model would keep the page waiting.
+- A change document must be a PDF, and one change set is open per opportunity at a time. Without a frozen or live model answer a document is refused (rule R5), so offline only the sample addendum can be read.
+- Other places that show a requirement's source, such as the compliance matrix, the response outline and the list of a group's sub-requirements in Traceability, give the page and lines of a change document without naming it. Pane 1 of Traceability highlights the lines of a change document for a requirement that has its own row, not for a changed sub-requirement shown under its group.
+- Baseline numbers are not protected against two simultaneous applies for one opportunity: a second apply could create the same number.
+- The agent sees five candidate requirements per statement, ranked by keyword similarity. When the right one is missing, a person names the requirement ID in the decision form.
+- The drastic-change threshold (25%) is a placeholder, and the suggestion of a linked opportunity is a warning only.
 
 ## 15. Reuse from Existing Code Lines
 

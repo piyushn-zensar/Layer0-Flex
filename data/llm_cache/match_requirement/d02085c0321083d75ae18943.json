@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies a modification to the number of 15kV vacuum circuit breaker positions in a switchgear lineup. The CROWN-ARMV product is a metal-clad medium-voltage switchgear lineup with vacuum circuit breakers, which matches the described requirement. The modification to the number of breaker positions indicates an engineered-to-order (ETO) offering.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement specifies seismic qualification for a switchgear lineup. The CROWN-ARMV product, being a medium-voltage switchgear lineup, is the appropriate product to meet this requirement. Seismic qualification is typically part of an engineered-to-order (ETO) offering.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 1.0,
+        "n": 3,
+        "rationale": "This requirement pertains to a warranty clause, which is a commercial term and not a product-specific technical requirement. Therefore, it is not associated with any specific product or business unit.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

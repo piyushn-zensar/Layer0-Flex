@@ -10,7 +10,7 @@ Public contract:
                                                  duplicate, or replaced by a split / merge)
     children(db, req_id) -> list[Requirement]    the sub-requirements of a group
     ungroup(db, req_id, actor, reason="") -> list[Requirement]   a group's sub-requirements become requirements again
-    get(db, req_id) -> Requirement | None        latest version
+    get(db, req_id, baseline=None) -> Requirement | None   latest version; with baseline: the version in that baseline
     review(db, req_id, action, actor, text=None, reason="", category=None)   action: approve | reject | edit;
                                                  approve / reject of a group applies to its sub-requirements;
                                                  approving a duplicate restores it
@@ -18,11 +18,22 @@ Public contract:
     merge(db, opp_id, req_ids, text, actor, reason="") -> Requirement  >= 2 line items into one
     add_missed(db, opp_id, quote, text, category, actor, page=None) -> Requirement   a person adds what the agent missed
     freeze(db, opp_id, actor) -> Baseline        approved items become baseline 1; needs a read main RFP, every item
-                                                 decided and at least one approved; once only (later: changes module)
-Every write refuses once the opportunity has a baseline, and LookupError for an unknown opportunity or item.
+                                                 decided and at least one approved; once only (later: apply_change)
+    apply_change(db, opp_id, change_doc_id, items, actor, reason, commit=True) -> dict
+                                                 the ONLY write after a freeze (changes module): items = confirmed
+                                                 [{"kind": added | modified | removed, "target", "quote", "text",
+                                                 "category", "page"}]; modified -> a new version anchored in the
+                                                 change document, removed -> a new version "removed" (a group's
+                                                 sub-requirements too), added -> a new ID; all in the next baseline.
+                                                 Returns {"baseline", "added", "modified", "removed", "affected"}
+                                                 (affected: requirements whose answers must be revisited). Atomic.
+                                                 LookupError unknown opportunity; ValueError no baseline, bad target
+Every other write refuses once the opportunity has a baseline, and LookupError for an unknown opportunity or item.
 Requirement IDs are never reused: the next number is taken over every ID ever issued, including discarded drafts.
     baseline(db, opp_id) -> Baseline | None      latest frozen baseline
     history(db, req_id) -> dict                  every version (who, when, text, category) and every event; LookupError
+    locate(quote, pages, hint_page=None) -> dict | None   a quote's page, lines and boxes in layout pages (rule R1)
+    CATEGORIES                                   the requirement categories
 """
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -34,7 +45,7 @@ from app.modules.opportunities import service as opportunities
 from app.modules.requirements import agent, anchoring, grouping
 from app.modules.requirements.models import CATEGORIES, Baseline, Requirement
 
-INACTIVE = {"rejected", "split", "merged", "duplicate"}
+INACTIVE = {"rejected", "split", "merged", "duplicate", "removed"}  # removed: deleted by a change document
 AGENTS = ("reader agent", "grouping agent")
 
 
@@ -50,6 +61,7 @@ def _next_req_id(db: Session, opp_id: str) -> str:
 
 
 def _writable(db: Session, opp_id: str) -> None:
+    """Every write except apply_change() calls this: after a freeze, requirements change only by change documents."""
     opportunities.require(db, opp_id)
     b = baseline(db, opp_id)
     if b:
@@ -236,13 +248,20 @@ def current(db: Session, opp_id: str, include_inactive: bool = False,
     rows = db.scalars(select(Requirement).join(latest, (Requirement.req_id == latest.c.req_id)
                                                & (Requirement.version == latest.c.v)))
     keep = [r for r in rows if (include_inactive or r.status not in INACTIVE) and (include_children or not r.parent_id)]
-    # document order: page, then line; items not found in the source last; a group before its own sub-requirements
-    return sorted(keep, key=lambda r: (r.page is None, r.page or 0, r.line_start or 0, r.kind != "group", r.req_id))
+    docs = opportunities.documents(db, opp_id)  # upload order
+    main = next((d.id for d in docs if d.role == "main"), None)
+    order = {d.id: n for n, d in enumerate(docs)}
+    # document order: the main RFP, then change documents in the order they came in (P-11); page, then line; items
+    # not found in the source last; a group before its own sub-requirements
+    return sorted(keep, key=lambda r: (r.page is None, r.document_id != main, order.get(r.document_id, len(order)),
+                                       r.page or 0, r.line_start or 0, r.kind != "group", r.req_id))
 
 
-def get(db: Session, req_id: str) -> Requirement | None:
-    return db.scalar(select(Requirement).where(Requirement.req_id == req_id)
-                     .order_by(Requirement.version.desc()).limit(1))
+def get(db: Session, req_id: str, baseline: int | None = None) -> Requirement | None:
+    q = select(Requirement).where(Requirement.req_id == req_id)
+    if baseline is not None:  # the version that baseline holds (a later change document may have revised it)
+        q = q.where(Requirement.baseline <= baseline)
+    return db.scalar(q.order_by(Requirement.version.desc()).limit(1))
 
 
 def review(db: Session, req_id: str, action: str, actor: str, text: str | None = None, reason: str = "",
@@ -291,6 +310,91 @@ def freeze(db: Session, opp_id: str, actor: str) -> Baseline:
     return b
 
 
+def _version(db: Session, old: Requirement, number: int, actor: str, **changes) -> Requirement:
+    """The next version of a requirement: a copy of its latest version with `changes`, in baseline `number`."""
+    fields = {c.key: getattr(old, c.key) for c in Requirement.__table__.columns if c.key not in ("id", "created_at")}
+    new = Requirement(**fields | {"version": old.version + 1, "baseline": number, "created_by": actor,
+                                  "bboxes": list(old.bboxes), "derived_from": list(old.derived_from)} | changes)
+    db.add(new)
+    return new
+
+
+def apply_change(db: Session, opp_id: str, change_doc_id: str, items: list[dict], actor: str, reason: str,
+                 commit: bool = True) -> dict:
+    """A confirmed change set becomes the next baseline (technical-architecture.md section 8). Items in document
+    order; unchanged / not_a_requirement items are not passed. Nothing is edited in place: every change is a new
+    version (or a new ID), so baseline 1 stays readable in the history. On any error nothing is stored."""
+    opportunities.require(db, opp_id)
+    b = baseline(db, opp_id)
+    if b is None:
+        raise ValueError("Nothing is frozen yet: a change document is compared with a frozen baseline.")
+    number = b.number + 1
+    out = {"baseline": number, "added": [], "modified": [], "removed": [], "affected": []}
+    try:
+        pages = ingestion.layout(change_doc_id)["pages"]
+        live = {r.req_id: r for r in current(db, opp_id, include_children=True)}  # active latest versions
+        targets = []
+        for item in items:
+            kind = item["kind"]
+            if kind in ("added", "modified") and item["category"] not in CATEGORIES:
+                raise ValueError(f"Unknown category {item['category']!r}.")
+            if kind == "added":
+                req = add(db, opp_id, change_doc_id, item["quote"], item["text"], item["category"], actor,
+                          hint_page=item.get("page"), commit=False, pages=pages)
+                req.status, req.baseline = "approved", number
+                audit.record(db, actor, "approve", "requirement", req.req_id, opp_id, reason=reason, document=change_doc_id)
+                live[req.req_id] = req
+                out["added"].append(req.req_id)
+                continue
+            old = live.get(item.get("target") or "")
+            if old is None or old.status != "approved" or old.baseline is None:
+                raise ValueError(f"{item.get('target')} is not an approved requirement of baseline {b.number}.")
+            if kind == "modified":
+                hit = anchoring.find(item["quote"], pages, item.get("page"))
+                new = _version(db, old, number, actor, document_id=change_doc_id, text=item["text"], quote=item["quote"],
+                               category=item["category"], provenance="EXTRACTED" if hit else "UNANCHORED",
+                               **(hit or {"page": None, "line_start": None, "line_end": None, "bboxes": []}))
+                db.flush()
+                audit.record(db, actor, "revised", "requirement", old.req_id, opp_id, reason=reason, document=change_doc_id,
+                             version=new.version, baseline=number, before={"text": old.text, "category": old.category,
+                             "quote": old.quote, "source": old.source}, after={"text": new.text, "category": new.category,
+                             "quote": new.quote, "source": new.source})
+                live[old.req_id] = new
+                out["modified"].append(old.req_id)
+            elif kind == "removed":
+                kids = [k for k in live.values() if k.parent_id == old.req_id] if old.kind == "group" else []
+                for r in [old] + kids:  # removing a group removes its sub-requirements
+                    live[r.req_id] = _version(db, r, number, actor, status="removed")
+                    audit.record(db, actor, "removed", "requirement", r.req_id, opp_id, reason=reason,
+                                 document=change_doc_id, version=r.version + 1, baseline=number, quote=item["quote"])
+                out["removed"].append(old.req_id)
+            else:
+                raise ValueError(f"Unknown change {kind!r}; expected added, modified or removed.")
+            targets.append(old.req_id)
+        for t in targets:  # answers to revisit: the requirement itself, or the group a sub-requirement belongs to
+            r = live[t]
+            top = r.parent_id if r.parent_id in live else r.req_id
+            if live[top].status != "removed" and top not in out["affected"]:  # removed work is withdrawn at dispatch
+                out["affected"].append(top)
+        db.flush()
+        count = sum(r.status == "approved" for r in current(db, opp_id))
+        db.add(Baseline(opportunity_id=opp_id, number=number, count=count, frozen_by=actor))
+        audit.record(db, actor, "frozen", "baseline", str(number), opp_id, count=count, document=change_doc_id,
+                     reason=reason, added=out["added"], modified=out["modified"], removed=out["removed"])
+        if commit:
+            db.commit()
+        else:  # the caller commits, together with its own record of the change (changes module)
+            db.flush()
+    except Exception:
+        db.rollback()
+        raise
+    return out
+
+
+def locate(quote: str, pages: list[dict], hint_page: int | None = None) -> dict | None:
+    return anchoring.find(quote, pages, hint_page)
+
+
 def baseline(db: Session, opp_id: str) -> Baseline | None:
     return db.scalar(select(Baseline).where(Baseline.opportunity_id == opp_id)
                      .order_by(Baseline.number.desc()).limit(1))
@@ -299,8 +403,10 @@ def baseline(db: Session, opp_id: str) -> Baseline | None:
 def history(db: Session, req_id: str) -> dict:
     """The change history of one line item, rebuilt from the append-only audit log (it is the source of truth).
 
-    versions: the original wording, then one entry per edit that changed text or category.
-    events:   everything that happened to it (proposed, edits, approve / reject, split, merge, freeze).
+    versions: the original wording, then one entry per edit that changed text or category, and one per revision
+              by a change document (label "revised", reason = the change document).
+    events:   everything that happened to it (proposed, edits, approve / reject, split, merge, each baseline it is in,
+              revised / removed by a change document).
     """
     req = get(db, req_id)
     if req is None:
@@ -308,10 +414,10 @@ def history(db: Session, req_id: str) -> dict:
     events = list(db.scalars(select(AuditEvent).where(
         AuditEvent.opportunity_id == req.opportunity_id, AuditEvent.entity == "requirement",
         AuditEvent.entity_id == req_id).order_by(AuditEvent.id)))
-    frozen = db.scalar(select(AuditEvent).where(AuditEvent.opportunity_id == req.opportunity_id,
-                                                AuditEvent.entity == "baseline").order_by(AuditEvent.id).limit(1))
-    if frozen and req.baseline is not None:
-        events.append(frozen)
+    numbers = {str(n) for n in db.scalars(select(Requirement.baseline).where(Requirement.req_id == req_id)) if n is not None}
+    events = sorted(events + list(db.scalars(select(AuditEvent).where(
+        AuditEvent.opportunity_id == req.opportunity_id, AuditEvent.entity == "baseline",
+        AuditEvent.entity_id.in_(numbers)))), key=lambda e: e.id)
 
     def wording(d: dict) -> dict:
         return {"text": d.get("text"), "category": d.get("category")}
@@ -326,8 +432,8 @@ def history(db: Session, req_id: str) -> dict:
         first = {"text": req.text, "category": req.category}
     versions = [{"n": 1, "at": proposed.at if proposed else req.created_at, "by": proposed.actor if proposed else req.created_by,
                  "label": "original", **first}]
-    for e in edits:
-        versions.append({"n": len(versions) + 1, "at": e.at, "by": e.actor, "label": "edited",
+    for e in [e for e in events if e in edits or e.action == "revised"]:
+        versions.append({"n": len(versions) + 1, "at": e.at, "by": e.actor, "label": "edited" if e.action == "edit" else "revised",
                          "reason": e.data.get("reason", ""), **wording(e.data["after"])})
     return {"req_id": req_id, "quote": req.quote, "source": req.source, "derived_from": req.derived_from,
             "versions": versions,

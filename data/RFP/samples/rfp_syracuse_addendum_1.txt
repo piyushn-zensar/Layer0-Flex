@@ -1,0 +1,41 @@
+ILLUSTRATIVE SAMPLE - NOT AN OFFICIAL DOCUMENT
+Written for the Layer 0 proof of concept. It was not issued by the Syracuse Regional
+Airport Authority, and its content is invented for demonstration.
+
+ADDENDUM NO. 1
+Request for Proposals - Switchgear Procurement, RFP Reference # 2023-20
+Syracuse Regional Airport Authority
+Date of Addendum: September 5, 2023
+
+This addendum modifies the Request for Proposals as follows. Page numbers refer to the
+RFP document. Specification means 22186.00-SPC-E01, Specification for Metal Clad
+Switchgear.
+
+A. MODIFICATIONS
+1. Section 1.9, Submission Due Date, page 5: replace "09/15/2023 by 4:00PM" with
+"09/29/2023 by 4:00PM".
+
+2. Specification Section 1.1.E.1, page 55: replace "eighteen (18) 15kV vacuum circuit
+breaker positions" with "twenty (20) 15kV vacuum circuit breaker positions".
+
+B. ADDITIONS
+3. Specification Section 1.1.E, page 56: add the following as item 11. "The switchgear
+lineup shall be seismically qualified for the site, and the MANUFACTURER shall provide
+the seismic qualification report with the submittals."
+
+4. Specification Part 1, after Section 1.6: add the following as Section 1.7, Warranty.
+"The MANUFACTURER shall warrant the switchgear lineup against defects in materials and
+workmanship for sixty (60) months from the date of energization."
+
+C. DELETIONS
+5. Specification Section 1.1.D.3, page 55: the sentence "In addition to other Submittal
+requirements, final drawings shall be submitted as AutoCAD format files." is deleted in
+its entirety.
+
+D. QUESTIONS AND ANSWERS
+6. Question: Is arc-resistant Type 2B construction required? Answer: Yes, arc-resistant
+Type 2B construction is required as specified in Section 1.1.E.2; no change.
+
+E. GENERAL
+Please acknowledge receipt of this addendum on the proposal form.
+All other terms and conditions of the RFP remain unchanged.

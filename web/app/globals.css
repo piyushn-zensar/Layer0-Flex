@@ -220,3 +220,20 @@ tr.blocking td:first-child { box-shadow: inset 3px 0 0 #d97706; }
 .kb-send { display: flex; flex-wrap: wrap; gap: var(--s2); align-items: center; margin-top: var(--s2); }
 .kb-send input { flex: 1 1 180px; min-width: 0; }
 .sev-high { background: #fee2e2; color: #991b1b; } .sev-medium { background: #fef3c7; color: #854d0e; } .sev-low { background: #eef2f6; color: var(--muted); }
+
+/* Changes (P-11) */
+.chg-drastic { padding: var(--s2) var(--s3); background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; border-radius: var(--radius); }
+.chg-result { padding: var(--s2) var(--s3); margin-bottom: var(--s3); background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius); }
+.chg-result p { margin-bottom: var(--s1); } .chg-result ul { margin: 0 0 var(--s1); padding-left: 18px; }
+.chg-doc { margin-bottom: var(--s3); } .chg-doc[open] summary { margin-bottom: var(--s2); } .chg-doc .page { max-width: 760px; }
+/* fixed columns take 524px: below ~1000px the four free columns would shrink to a letter wide, so the table scrolls in its box */
+.chg-scroll { overflow-x: auto; margin-bottom: var(--s4); } .chg-scroll > table { margin-bottom: 0; }
+.chg-items { table-layout: fixed; min-width: 980px; } .chg-items td { overflow-wrap: anywhere; } .chg-items tbody tr { cursor: pointer; }
+.chg-items .col-n { width: 44px; } .chg-items .col-src { width: 110px; } .chg-items .col-kind { width: 120px; } .chg-items .col-decide { width: 250px; }
+.chg-items tr.selected td { background: var(--sel); } .chg-items tr.selected td:first-child { box-shadow: inset 4px 0 0 var(--accent); }
+.chg-items button.link { padding: 0; white-space: normal; text-align: left; }
+.chg-decide select, .chg-decide input, .chg-decide textarea { width: 100%; }
+.chg-actions { display: flex; flex-wrap: wrap; gap: var(--s2); align-items: center; } .chg-actions .muted { flex: 1 1 320px; }
+.trace-docs { display: flex; flex-wrap: wrap; gap: var(--s2); align-items: center; justify-content: space-between; margin-bottom: var(--s2); font-size: 12px; }
+.trace-doc-switch { display: flex; flex-wrap: wrap; gap: var(--s1); }
+.trace-doc-switch .chip { display: inline-block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; min-height: 26px; padding: 2px 10px; font-size: 12px; }
