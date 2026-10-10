@@ -47,3 +47,4 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | 10 Oct 2026 | P-17 RAG indexes (long-term + per-RFP), RFP search; stale-page fix | token cuts: rule-based bid-desk items, batched matcher per page, reader line-budget batching |
 | 10 Oct 2026 | P-18 token cuts (−60% calls, −46% input tokens) | J-06 demo checklist + dry run; remaining team tasks |
 | 10 Oct 2026 | A-10 bid and portfolio checks in the go/no-go evidence; demo checklist refreshed after the P-18 renumbering; P-10 + J-07 response outline (agent + view) | A-11 knowledge-base queue |
+| 10 Oct 2026 | A-11 knowledge-base queue (module, buttons, curator page) | P-11 changes module |

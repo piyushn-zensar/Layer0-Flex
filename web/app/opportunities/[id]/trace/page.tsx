@@ -7,6 +7,7 @@ import { post, useApi } from "@/lib/api";
 import type { Trace } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import MatchActions from "@/components/matching/MatchActions"; // A-05 (Atharv)
+import SendToKnowledge from "@/components/knowledge/SendToKnowledge"; // A-11 (Atharv)
 
 // Assignment status -> safe CSS class suffix (displayed text stays as-is).
 const statusClass = (s: string | null | undefined) =>
@@ -15,6 +16,7 @@ const statusClass = (s: string | null | undefined) =>
 export default function TracePage() {
   const { id } = useParams<{ id: string }>();
   const { data, error, reload } = useApi<Trace>(`/api/opportunities/${id}/trace`);
+  const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/opportunities/${id}/knowledge`); // A-11
   const [selected, setSelected] = useState<string>();
   const [pageNo, setPageNo] = useState(1);
 
@@ -99,7 +101,8 @@ export default function TracePage() {
                   <td><div className="trace-text">{req.text}</div>
                     {children.length > 0 ? (
                       <ul className="trace-children">{children.map((k) => <li key={k.req_id}>{k.text} <span className="muted">({k.source})</span></li>)}</ul>
-                    ) : <div className="quote trace-quote">“{req.quote}”</div>}</td>
+                    ) : <div className="quote trace-quote">“{req.quote}”</div>}
+                    {req.req_id === selected && <SendToKnowledge kind="requirement" refId={req.req_id} status={sent?.[`requirement:${req.req_id}`]} onSent={reloadSent} />}</td>
                 </tr>
               ))}
             </tbody>
@@ -128,7 +131,8 @@ export default function TracePage() {
                   <td>
                     {assignments.map((a) => (
                       <div key={a.id} className="trace-assign"><strong>{a.bu}</strong> <span className={`badge trace-status ${statusClass(a.status)}`}>{a.status}</span> <span className="trace-compliance">{a.compliance}</span>
-                        {a.response && <div className="muted trace-response">{a.response}</div>}</div>
+                        {a.response && <div className="muted trace-response">{a.response}</div>}
+                        {a.status === "validated" && <SendToKnowledge kind="response" refId={a.id} status={sent?.[`response:${a.id}`]} onSent={reloadSent} />}</div>
                     ))}
                     {assignments.length === 0 && <span className="muted">not dispatched</span>}
                   </td>

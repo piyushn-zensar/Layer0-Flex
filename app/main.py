@@ -11,7 +11,7 @@ from app.core import audit, db  # noqa: F401  (audit registers its table)
 
 # Order = workflow order. Every module ships a working (possibly stub) controller, so the app runs at any stage.
 MODULES = ["opportunities", "ingestion", "requirements", "catalog", "matching", "decisions",
-           "workpackages", "consolidation", "changes", "trace"]
+           "workpackages", "consolidation", "knowledge", "changes", "trace"]
 
 app = FastAPI(title="Layer 0 API - opportunity workflow PoC")
 for name in MODULES:

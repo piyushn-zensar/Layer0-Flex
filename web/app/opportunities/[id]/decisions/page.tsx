@@ -5,9 +5,10 @@ import { useState } from "react";
 import { post, useApi } from "@/lib/api";
 import type { Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
+import SendToKnowledge from "@/components/knowledge/SendToKnowledge"; // A-11
 
 type Judgement = "met" | "not_met" | "unknown";
-type Decision = { outcome: string; units: string[]; rationale: string; decided_by: string; criteria?: { id: string; status: Judgement; note: string }[] };
+type Decision = { id: number; outcome: string; units: string[]; rationale: string; decided_by: string; criteria?: { id: string; status: Judgement; note: string }[] };
 type Criterion = { id: string; name: string; question: string; status: Judgement; detail: string };
 type Summary = {
   rows: { req_id: string; category: string; text: string; level: string; basis: string; units: string[] }[];
@@ -64,7 +65,7 @@ function PortfolioChecks({ ev }: { ev: Evidence }) {
         <table><thead><tr><th>Product</th><th>Rating</th><th>RFP asks</th><th>Standard</th><th>Severity</th><th>Source</th></tr></thead>
           <tbody>{d.rows.map((r, i) => (
             <tr key={i}><td className="mono">{r.product_id}</td><td>{r.field}</td><td>{r.rfp}</td><td>{r.standard}</td>
-              <td><span className={`badge ${r.severity === "high" ? "status-rejected" : "status-proposed"}`}>{r.severity}</span></td><td>{r.source}</td></tr>))}
+              <td><span className={`badge sev-${r.severity}`}>{r.severity}</span></td><td>{r.source}</td></tr>))}
           </tbody></table>)}
       <p className="muted">{d.note}</p>
       <h3>Workload across opportunities</h3>
@@ -72,7 +73,7 @@ function PortfolioChecks({ ev }: { ev: Evidence }) {
         <tbody>{w.rows.map((r) => (
           <tr key={r.bu}><td>{r.bu}</td><td>{r.open_here}</td>
             <td>{r.open_elsewhere}{r.other_opportunities.length > 0 && <span className="muted"> ({r.other_opportunities.join(", ")})</span>}</td>
-            <td>{r.total}</td><td>{r.capacity ?? "—"} {r.over && <span className="badge status-rejected">over</span>}</td></tr>))}
+            <td>{r.total}</td><td>{r.capacity ?? "—"} {r.over && <span className="badge sev-high">over</span>}</td></tr>))}
         </tbody></table>
       <p className="muted">{w.note}</p>
     </section>
@@ -116,6 +117,7 @@ type Data = { evidence: Evidence; summary: Summary | null; units: Unit[]; partic
 export default function DecisionsPage() {
   const { id } = useParams<{ id: string }>();
   const { data, error, reload } = useApi<Data>(`/api/opportunities/${id}/decisions`);
+  const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/opportunities/${id}/knowledge`); // A-11
   const [busy, setBusy] = useState(false);
   if (error) return <p className="warn">Could not load the bid decision: {error}</p>;
   if (!data) return <p>Loading…</p>;
@@ -156,7 +158,8 @@ export default function DecisionsPage() {
 
       <section className="card">
         <h2>1. Which business units take part?</h2>
-        {part && <p>Recorded by <strong>{part.decided_by}</strong>: {part.units.join(", ")}. {part.rationale}</p>}
+        {part && <p>Recorded by <strong>{part.decided_by}</strong>: {part.units.join(", ")}. {part.rationale}
+          {part.rationale && <> <SendToKnowledge kind="decision" refId={part.id} status={sent?.[`decision:${part.id}`]} onSent={reloadSent} /></>}</p>}
         <form className="form" action={recordParticipation}>
           {data.units.map((u) => (
             <label key={u.code} className="check">
@@ -173,7 +176,8 @@ export default function DecisionsPage() {
         <h2>2. Go / no-go</h2>
         {go && <p>Decision <span className="badge">{go.outcome}</span> by <strong>{go.decided_by}</strong>. {go.rationale}
           {go.criteria && go.criteria.length > 0 && <span className="muted"> Criteria judged: {(["met", "not_met", "unknown"] as Judgement[])
-            .map((j) => `${go.criteria!.filter((c) => c.status === j).length} ${JUDGEMENT[j]}`).join(", ")}.</span>}</p>}
+            .map((j) => `${go.criteria!.filter((c) => c.status === j).length} ${JUDGEMENT[j]}`).join(", ")}.</span>}
+          {go.rationale && <> <SendToKnowledge kind="decision" refId={go.id} status={sent?.[`decision:${go.id}`]} onSent={reloadSent} /></>}</p>}
         {data.summary && <GoNoGoSummary s={data.summary} oppId={id} />}
         <form className="form compact" onSubmit={(e) => e.preventDefault()}>
           {data.summary && <table>

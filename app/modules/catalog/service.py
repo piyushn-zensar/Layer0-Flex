@@ -7,7 +7,9 @@ Public contract:
     unit(code) -> dict | None
     products(bu=None) -> list[dict]
     product(product_id) -> dict | None
-    past_responses() -> list[dict]              past answers of the active units
+    past_responses() -> list[dict]              past answers of the active units (the matcher's fixed prompt part)
+    learned() -> list[dict]                     knowledge approved by the curator in this installation (A-11)
+    learn(entry)                                add an approved entry to the long-term index (knowledge module)
     search(query, k=5, bu=None) -> list[dict]   ranked products and past responses, each with "score"
     search_many(queries, k=5) -> list[list[dict]]   search() for many queries at once (one embedding call)
     index_mode() -> str                         "embeddings" (semantic) or "keywords" (offline fallback)
@@ -54,6 +56,22 @@ def product(product_id: str) -> dict | None:
     return next((p for p in _load("products")["products"] if p["id"] == product_id), None)
 
 
+LEARNED = "knowledge_learned.json"  # in the store (per installation, gitignored), next to the database
+
+
+def learned() -> list[dict]:
+    path = config.STORE / LEARNED
+    return json.loads(path.read_text("utf-8"))["responses"] if path.exists() else []
+
+
+def learn(entry: dict) -> None:
+    """Approved knowledge joins the search index only, never past_responses(): the matcher's fixed prompt part
+    (catalog + past responses) stays the same, so its frozen answers stay valid."""
+    entries = [e for e in learned() if e["id"] != entry["id"]] + [entry]
+    (config.STORE / LEARNED).write_text(json.dumps({"responses": entries}, indent=2, ensure_ascii=False), "utf-8")
+    _index.cache_clear()
+
+
 @lru_cache
 def _index() -> Index:
     """The long-term index: products and past responses (the knowledge the system learns into, see A-11).
@@ -62,6 +80,8 @@ def _index() -> Index:
              "text": f"{p['name']}. {p['description']} {p['keywords']}"} for p in products()]
     docs += [{"kind": "past_response", "id": r["id"], "bu": r["bu"],
               "text": f"{r['requirement']} {r['response']}"} for r in _load("past_responses")["responses"]]
+    docs += [{"kind": "past_response", "id": r["id"], "bu": r["bu"], "learned": True,
+              "text": f"{r['requirement']} {r['response']}"} for r in learned()]
     return Index(docs)
 
 

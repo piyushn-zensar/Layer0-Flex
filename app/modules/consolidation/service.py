@@ -118,7 +118,7 @@ def _answers(rows: list[dict]) -> list[dict]:
         req = r["req"]
         for a in r["assignments"]:
             if a.status == "validated" and (a.response or "").strip():
-                out.append({"req_id": req.req_id, "source": req.source, "bu": a.bu, "unit": _unit_name(a.bu),
+                out.append({"assignment_id": a.id, "req_id": req.req_id, "source": req.source, "bu": a.bu, "unit": _unit_name(a.bu),
                             "compliance": excel.COMPLIANCE_WORDS.get(a.compliance, a.compliance or ""),
                             "product": _product_name(a.product_ref), "requirement": req.text, "wording": req.quote or "",
                             "response": a.response.strip()})

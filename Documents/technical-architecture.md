@@ -300,7 +300,13 @@ The provenance classes reuse the v0.3.0 `provenance/anchors.py` design; the reco
 
 - `business_units.json`: the working list of business units, with pillar, status, product manager and design engineer. EP² is part of SpinCo per written direction from the Zensar point of contact. EPC Power is listed as pending and is not offered.
 - `products.json`: each unit's product families, offering type, description, retrieval keywords and BOM lines. The seed content is **illustrative** and must be replaced with each unit's real catalog (Needs confirmation).
-- `past_responses.json`: past RFP answers per unit. Validated responses from finished opportunities are added here, which is the database-to-knowledge-base connector (stage 4).
+- `past_responses.json`: past RFP answers per unit (illustrative seed).
+- **Knowledge-base queue** (built 10 Oct 2026). This is the database-to-knowledge-base connector:
+  - **Sending.** Anyone can send a requirement, a validated answer or a decision rationale to the knowledge base, from Traceability, the response outline or the bid decision, with a note. Answers that are not validated cannot be sent, and an item that is already queued or approved cannot be sent again.
+  - **Curating.** A curator approves or rejects each item on the Knowledge base page; in the PoC the curator is the bid manager. The curator may tidy the response text before approving, and a rejection needs a note. Every step is audited.
+  - **Approved items** join the long-term retrieval index, so matching evidence, the response outline and catalog search find them on the next opportunity. Nothing enters the knowledge base without a person's approval.
+  - **The matcher's prompt does not change.** Approved items are not added to the past responses in its fixed prompt part, so its frozen answers stay valid.
+  - **Storage.** Approved items are stored with the installation, next to the database, and a demo reset clears them. With an embedding provider, approving re-embeds the small long-term index once.
 - Retrieval ranks products and past responses for a requirement's text. Scores are kept as evidence.
 - **BOM.** Layer 0 does not construct a bill of materials. Screen 3 shows the BOM lines of the matched product, read from the BOM source system. In the PoC the source is the catalog file; the real source system is Needs confirmation.
 
@@ -373,10 +379,11 @@ Addenda, Q&A answers, change requests and execution-stage changes all use one pa
 | **Requirement review** | One opportunity | Line items with quote and source; approve, edit, reject; freeze |
 | **Decisions** | One opportunity | Evidence pack, participation, go/no-go, dispatch |
 | **Unit inbox** | One business unit | Its assignments across all opportunities, with the checklist response form and validation |
+| **Knowledge base** | All opportunities | The curator's queue: waiting, approved and rejected items, with source, sender and note; approve (with an optional edit) or reject with a note |
 | **Final response** | One opportunity | Coverage, blocking items, compliance matrix download: an Excel workbook (a customer sheet with validated answers in customer words, in RFP order with sub-requirements and their references; an internal tracking sheet) and a CSV |
 | **Response outline** | One opportunity (under Final response) | The drafting agent's first draft per chapter with cited requirements, what to add or confirm, the validated answers, what is still open, related passages; Markdown download |
 
-Navigation: the top bar has three destinations (Opportunities, My work, Product catalog) and a New opportunity button. Inside an opportunity, a stepper follows the workflow order: RFP, Requirements, Traceability, Bid decision, Final response; a step is ticked once the opportunity has moved past it. Change handling is shown as a separate, planned link.
+Navigation: the top bar has four destinations (Opportunities, My work, Product catalog, Knowledge base) and a New opportunity button. Inside an opportunity, a stepper follows the workflow order: RFP, Requirements, Traceability, Bid decision, Final response; a step is ticked once the opportunity has moved past it. Change handling is shown as a separate, planned link.
 
 The acting user is chosen from a list in the header (bid manager, or a unit's product manager or design engineer). Real sign-in is added before a pilot.
 
@@ -391,6 +398,8 @@ opportunity ----< document                          (opportunities)
      +----< decision (participation | go_no_go)     (decisions)
      +----< assignment (req_id, bu: response,       (workpackages)
                         compliance, validation)
+     +----< knowledge_item (KB-nnnn: requirement,   (knowledge)
+                        answer or rationale; queued | approved | rejected)
 audit_event (append-only; every module writes to it)      (core)
 business units, products, past responses: data files      (catalog)
 ```
@@ -411,6 +420,7 @@ business units, products, past responses: data files      (catalog)
 | Decisions | `GET /opportunities/{id}/decisions`, `POST /opportunities/{id}/participation`, `POST /opportunities/{id}/go-no-go` |
 | Work packages | `POST /opportunities/{id}/dispatch`, `GET /inbox`, `GET /inbox/{bu}`, `POST /assignments/{id}/respond`, `POST /assignments/{id}/validate` |
 | Consolidation | `GET /opportunities/{id}/consolidation`, `GET /opportunities/{id}/compliance-matrix.csv`, `GET /opportunities/{id}/compliance-matrix.xlsx`, `GET /opportunities/{id}/response-outline`, `GET /opportunities/{id}/response-outline.md` |
+| Knowledge base | `POST /knowledge`, `GET /knowledge?status=`, `POST /knowledge/{kb_id}/review`, `GET /opportunities/{id}/knowledge` |
 | Views | `GET /portfolio`, `GET /opportunities/{id}/trace` |
 | Changes (stage 5) | `GET /opportunities/{id}/changes` |
 

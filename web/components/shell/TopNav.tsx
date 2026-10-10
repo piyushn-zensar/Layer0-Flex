@@ -1,5 +1,5 @@
 "use client";
-// Global navigation: three destinations, the current one highlighted.  Owner: Janvia.
+// Global navigation: four destinations, the current one highlighted.  Owner: Janvia.
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -7,6 +7,7 @@ const LINKS = [
   { href: "/portfolio", label: "Opportunities", match: ["/portfolio", "/opportunities/"] },
   { href: "/inbox", label: "My work", match: ["/inbox"] },
   { href: "/catalog", label: "Product catalog", match: ["/catalog"] },
+  { href: "/knowledge", label: "Knowledge base", match: ["/knowledge"] }, // A-11 curator queue
 ];
 
 export default function TopNav() {

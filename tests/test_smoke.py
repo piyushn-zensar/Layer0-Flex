@@ -551,3 +551,43 @@ def test_response_outline_agent():
     md = client.get(f"/api/opportunities/{opp}/response-outline.md")
     assert md.status_code == 200 and md.text.startswith("# Response outline:") and "## 1. Technical response" in md.text
     assert client.get("/api/opportunities/OPP-9999/response-outline").status_code == 404
+
+
+def test_knowledge_base_queue():
+    """A-11: people send a requirement, a validated answer or a decision rationale; only the curator approves;
+    approved items join the long-term search index (never the matcher's fixed prompt part)."""
+    from app.modules.catalog import service as catalog
+
+    seed_demo.main()  # its own opportunity, some answers validated
+    client = TestClient(app)
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    unit = {"X-Actor": "Crown%20Product%20Manager"}
+    items = [a for rows in [client.get("/api/inbox/CROWN").json()["items"]] for a in rows if a["opportunity_id"] == opp]
+    done = next(a for a in items if a["status"] == "validated")
+    open_ = next(a for a in items if a["status"] != "validated")
+    past_before = catalog.past_responses()
+
+    kb = client.post("/api/knowledge", json={"kind": "response", "ref": str(done["id"]), "note": "reuse"}, headers=unit).json()
+    assert kb["status"] == "queued" and kb["sent_by"] == "Crown Product Manager" and kb["response"].startswith("Met.")
+    assert client.post("/api/knowledge", json={"kind": "response", "ref": str(done["id"])}).status_code == 409  # already queued
+    assert client.post("/api/knowledge", json={"kind": "response", "ref": str(open_["id"])}).status_code == 409  # not validated
+    assert client.post("/api/knowledge", json={"kind": "requirement", "ref": "REQ-9999-0001"}).status_code == 404
+    go = client.get(f"/api/opportunities/{opp}/decisions").json()["go_no_go"]
+    dec = client.post("/api/knowledge", json={"kind": "decision", "ref": str(go["id"])}).json()
+    assert dec["response"].startswith("go:")
+
+    review = f"/api/knowledge/{kb['kb_id']}/review"
+    assert client.post(review, json={"approve": True}, headers=unit).status_code == 403  # only the curator
+    assert client.post(f"/api/knowledge/{dec['kb_id']}/review", json={"approve": False}).status_code == 409  # reject needs a note
+    ok = client.post(review, json={"approve": True, "response": "Met. Two-section lineup, reusable wording."}).json()
+    assert ok["status"] == "approved" and ok["reviewed_by"] == "Bid Manager"
+    assert client.post(review, json={"approve": True}).status_code == 409  # decided once
+    assert client.post(f"/api/knowledge/{dec['kb_id']}/review", json={"approve": False, "note": "not general"}).json()["status"] == "rejected"
+
+    hits = client.get("/api/catalog", params={"q": "Two-section lineup reusable wording"}).json()["results"]
+    assert hits[0]["id"] == kb["kb_id"] and hits[0]["learned"]  # found by the long-term index
+    assert catalog.past_responses() == past_before  # the matcher's fixed prompt part is unchanged
+    sent = client.get(f"/api/opportunities/{opp}/knowledge").json()
+    assert sent[f"response:{done['id']}"] == "approved" and sent[f"decision:{go['id']}"] == "rejected"
+    queue = client.get("/api/knowledge", params={"status": "approved"}).json()
+    assert queue["learned"] >= 1 and all(i["status"] == "approved" for i in queue["items"])

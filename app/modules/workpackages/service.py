@@ -9,6 +9,7 @@ Public contract:
                                                           ValueError unless frozen and the latest go/no-go is "go"
     by_requirement(db, opp_id) -> dict[str, list[Assignment]]   active (not withdrawn) assignments
     inbox(db, bu) -> list[Assignment]                     a unit's active work across all opportunities
+    get(db, assignment_id) -> Assignment | None           one assignment
     respond(db, assignment_id, compliance, product_ref, response, actor)
         only that unit's product manager / design engineer (bid desk: the Bid Manager), only while assigned or
         returned. LookupError: no such assignment; PermissionError: wrong person; ValueError: wrong state
@@ -114,6 +115,10 @@ def respond(db: Session, assignment_id: int, compliance: str, product_ref: str |
     a.status, a.responded_by, a.responded_at = "submitted", actor, utcnow()
     audit.record(db, actor, "responded", "assignment", a.req_id, a.opportunity_id, bu=a.bu, compliance=compliance)
     db.commit()
+
+
+def get(db: Session, assignment_id: int) -> Assignment | None:
+    return db.get(Assignment, assignment_id)
 
 
 def _get(db: Session, assignment_id: int) -> Assignment:

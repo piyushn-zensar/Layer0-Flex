@@ -10,6 +10,7 @@ Public contract:
         LookupError: no such opportunity. ValueError: go/no-go before the requirements are frozen, a
         participation that is empty or names a unit that is not active, or an unknown criterion.
     latest(db, opp_id, kind) -> Decision | None
+    get(db, decision_id) -> Decision | None
     participating_units(db, opp_id) -> list[str]
 """
 from collections import Counter
@@ -166,6 +167,10 @@ def record(db: Session, opp_id: str, kind: str, outcome: str, units: list[str], 
 def latest(db: Session, opp_id: str, kind: str) -> Decision | None:
     return db.scalar(select(Decision).where(Decision.opportunity_id == opp_id, Decision.kind == kind)
                      .order_by(Decision.id.desc()).limit(1))
+
+
+def get(db: Session, decision_id: int) -> Decision | None:
+    return db.get(Decision, decision_id)
 
 
 def participating_units(db: Session, opp_id: str) -> list[str]:

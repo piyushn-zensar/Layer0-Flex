@@ -17,6 +17,7 @@ from app.core import config
 
 if "--reset" in sys.argv:
     (config.STORE / "layer0.db").unlink(missing_ok=True)
+    (config.STORE / "knowledge_learned.json").unlink(missing_ok=True)  # approved knowledge lives with the database
 
 from app.main import app  # noqa: E402,F401  (imports every module and creates tables)
 from app.core.db import SessionLocal  # noqa: E402
