@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies accessories for medium-voltage switchgear, such as NEMA pads and insulating boots. These are catalog items listed under 'CROWN-ACC' in the CROWN business unit.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement specifies medium-voltage switchgear with bus sections and a tie breaker. This matches the description of 'CROWN-ARMV' in the CROWN business unit, which provides arc-resistant metal-clad MV switchgear with bus sections and tie breakers.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement specifies relays, controls, and associated accessories for a functional system. This aligns with 'EP2-RPP' in the EP2 business unit, which provides relay and protection panels with the necessary relays, controls, and accessories.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

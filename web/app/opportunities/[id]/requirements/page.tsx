@@ -1,10 +1,12 @@
 "use client";
-// Requirement review: approve, reject, edit, split, merge, ungroup, add missed; then freeze the baseline.  Owner: Piyush.
+// Requirement review: approve, reject, edit, split, merge, ungroup, add missed (select lines or paste a quote); then
+// freeze the baseline.  Owner: Piyush.
 // Requirements are shown in document order; a group lists its sub-requirements when expanded.
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Fragment, useMemo, useState } from "react";
 import PageHead from "@/components/shell/PageHead";
+import LinePicker from "@/components/requirements/LinePicker"; // P-15
 import { post, useApi } from "@/lib/api";
 import type { Baseline, Requirement, RequirementHistory } from "@/lib/types";
 
@@ -31,6 +33,7 @@ export default function RequirementsPage() {
   const [editing, setEditing] = useState<{ id: string; mode: "edit" | "split" }>();
   const [historyOf, setHistoryOf] = useState<string>();
   const [open, setOpen] = useState<Set<string>>(new Set());
+  const [adding, setAdding] = useState(false); // the "add missed" section is open: its page viewer loads only then
 
   const filter: FilterKey = chosen ?? (data?.baseline ? "all" : "review"); // frozen: nothing left to review
   const all = useMemo(() => (data?.requirements ?? []).filter((r) => !r.parent_id), [data]); // requirements, not sub-requirements
@@ -61,6 +64,8 @@ export default function RequirementsPage() {
   const flip = (set: Set<string>, reqId: string) => { const n = new Set(set); if (n.has(reqId)) n.delete(reqId); else n.add(reqId); return n; };
   const toggle = (reqId: string) => setSelected((s) => flip(s, reqId));
   const cols = frozen ? 4 : 6;
+  // P-15: the line picker opens on the page of a selected requirement, else of the first one in view
+  const startPage = (all.find((r) => selected.has(r.req_id) && r.page) ?? rows.find((r) => r.page))?.page ?? 1;
 
   const line = (r: Requirement, child = false) => {
     const active = !INACTIVE.has(r.status) && r.baseline === null;
@@ -156,8 +161,12 @@ export default function RequirementsPage() {
       </table>
 
       {!frozen && (
-        <details className="card">
+        <details className="card" onToggle={(e) => setAdding(e.currentTarget.open)}>
           <summary><strong>Add a requirement the agent missed</strong></summary>
+          <h3 className="lp-heading">Select its lines on the RFP page</h3>
+          {adding && <LinePicker oppId={id} startPage={startPage} categories={CATEGORIES} onAdded={reload}
+            requirements={(data.requirements ?? []).filter((r) => !INACTIVE.has(r.status))} />}
+          <h3 className="lp-heading">Or paste the quote</h3>
           <form className="form" action={(f) => act(post(`/api/opportunities/${id}/requirements`, {
             quote: f.get("quote"), text: f.get("text"), category: f.get("category"), page: Number(f.get("page")) || null }))}>
             <label className="grow">Quote, copied from the RFP <textarea name="quote" rows={2} required /></label>

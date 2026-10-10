@@ -31,7 +31,9 @@ def customer_compliance(assignments: list) -> str:
 
 
 def build(title: str, customer: str, rows: list[dict], kids: dict, unit_name, tracking_columns: list[str],
-          tracking_rows: list[list[str]]) -> bytes:
+          tracking_rows: list[list[str]], source=None) -> bytes:
+    """`source(req)` is the RFP reference shown (the file name first for a requirement anchored in an addendum)."""
+    source = source or (lambda r: r.source)
     wb = Workbook()
     ws = wb.active
     ws.title = "Compliance matrix"
@@ -49,10 +51,10 @@ def build(title: str, customer: str, rows: list[dict], kids: dict, unit_name, tr
         answer = "\n".join(f"{unit_name(a.bu)}: {a.response}" for a in validated if a.response) if word != "Open" else ""
         offered = ", ".join(dict.fromkeys(
             f"{unit_name(a.bu)} ({a.product_ref})" if a.product_ref else unit_name(a.bu) for a in validated if a.bu != "BID"))
-        _append(ws, [req.req_id, req.source, req.text, req.quote if req.kind != "group" else "", word, answer, offered],
+        _append(ws, [req.req_id, source(req), req.text, req.quote if req.kind != "group" else "", word, answer, offered],
                 fill=FILLS.get(word), bold=req.kind == "group")
         for kid in kids.get(req.req_id, []):  # sub-requirements: own RFP reference, the group's answer applies
-            _append(ws, [kid.req_id, kid.source, "    " + kid.text, kid.quote, word, "", ""], fill=FILLS.get(word), muted=True)
+            _append(ws, [kid.req_id, source(kid), "    " + kid.text, kid.quote, word, "", ""], fill=FILLS.get(word), muted=True)
     _finish(ws, header_row, [w for _, w in CUSTOMER_COLUMNS])
 
     tr = wb.create_sheet("Tracking")

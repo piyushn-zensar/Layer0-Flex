@@ -1,0 +1,86 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies a 15kV metal-clad switchgear lineup, which matches the description of the CROWN-ARMV product in the catalog.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "Protective relays and controls are typically provided as part of relay and protection panels, which aligns with the EP2-RPP product.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The detailed specification of the switchgear, including vacuum circuit breakers, revenue meters, isolation switches, and CTs, matches the capabilities of the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The arc-resistant Type 2B requirement aligns with the CROWN-ARMV product, which is described as meeting IEEE C37.20.7 Type 2B.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.7,
+        "n": 5,
+        "rationale": "The equipment building is specified as 'by others,' indicating that this requirement is not for a product from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 6,
+        "rationale": "The separate utility cable termination compartment with locking capability matches the accessories provided under CROWN-ACC.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 7,
+        "rationale": "The requirement for ground balls aligns with the CROWN-ACC product, which includes ground balls as part of its accessories.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

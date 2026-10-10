@@ -6,7 +6,8 @@ screen 3 = requirement -> business unit, product, offering type, BOM and unit re
 Public contract:
     portfolio(db) -> list[dict]
     trace(db, opp_id) -> dict         LookupError if the opportunity does not exist. "docs": the main RFP first, then
-                                      the change documents that current requirements are anchored in (P-11)
+                                      the change documents that current requirements are anchored in (P-11).
+                                      Each row's "bboxes": its highlight boxes, see _highlights
 """
 from sqlalchemy.orm import Session
 
@@ -27,6 +28,16 @@ def _sizes(pages: list[dict]) -> list[dict]:
     return [{"page": p["page"], "width": p["width"], "height": p["height"], "unreviewed": p["unreviewed"]} for p in pages]
 
 
+def _highlights(req, children: list, grouped: bool) -> list:
+    """A group's boxes come from its active sub-requirements on its own page: the stored boxes are a copy taken at
+    grouping time, so after a sub-requirement is revised into an addendum or removed (P-11) they would still mark its
+    old lines. Kept as stored: an item, a group with no sub-requirement on record (`grouped`), and a group revised
+    itself (version > 1: its boxes are its own wording in the change document). Nothing is written."""
+    if req.kind != "group" or req.version > 1 or not grouped:
+        return req.bboxes
+    return [b for k in children if k.document_id == req.document_id and k.page == req.page for b in k.bboxes]
+
+
 def trace(db: Session, opp_id: str) -> dict:
     opp = opportunities.require(db, opp_id)
     doc = opportunities.main_document(db, opp_id)
@@ -39,6 +50,7 @@ def trace(db: Session, opp_id: str) -> dict:
         anchored.add(r.document_id)
         if r.parent_id:
             kids.setdefault(r.parent_id, []).append(r)
+    grouped = {r.parent_id for r in requirements.current(db, opp_id, include_inactive=True, include_children=True)}
     rows = []
     for req in requirements.current(db, opp_id):
         m = matches.get(req.req_id)
@@ -46,7 +58,8 @@ def trace(db: Session, opp_id: str) -> dict:
         rows.append({"req": req, "match": m, "product": product,
                      "unit": catalog.unit(m.bu) if m and m.bu else None,
                      "bom": catalog.bom(product["id"]) if product else [],
-                     "assignments": assignments.get(req.req_id, []), "children": kids.get(req.req_id, [])})
+                     "assignments": assignments.get(req.req_id, []), "children": kids.get(req.req_id, []),
+                     "bboxes": _highlights(req, kids.get(req.req_id, []), req.req_id in grouped)})
     # the main RFP first, then each change document that a current requirement version is anchored in (P-11)
     docs = [{"id": doc.id, "filename": doc.filename, "role": doc.role, "pages": _sizes(pages)}] if doc else []
     for d in opportunities.documents(db, opp_id):

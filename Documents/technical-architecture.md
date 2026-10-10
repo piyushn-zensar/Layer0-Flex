@@ -268,11 +268,11 @@ The bid manager reviews each line item against its highlighted source (built 8 O
 - **edit** the short text or the category;
 - **split** one line item that holds several obligations into parts. Each part is a piece of the original quote and is anchored again;
 - **merge** several line items that are one obligation. The merged item keeps every source box and the joined quote;
-- **add** a requirement the agent missed, by pasting its quote, which is anchored like any other.
+- **add** a requirement the agent missed: either select its lines on the RFP page (built 11 Oct 2026; the quote is taken word for word from those lines, without headers and footers, so it is always anchored exactly), or paste its quote, which is anchored like any other.
 
 Every line item has a history view (built 9 Oct 2026), rebuilt from the append-only audit log: its original wording, each later version with who changed it, when and why, and a timeline of every action on it. Split and merged originals are kept, marked as replaced, and drop out of matching, dispatch and the final response. The new items record which ones they came from. Each action is an audit event.
 
-Freezing needs every active line item to be approved or rejected. A named person then **freezes** the approved set as **baseline 1**. From then on, requirements change only through new versions created by change handling. Adding a requirement by drawing a box on the page is a later addition.
+Freezing needs every active line item to be approved or rejected. A named person then **freezes** the approved set as **baseline 1**. From then on, requirements change only through new versions created by change handling (section 8), including requirements found missing after the freeze.
 
 ### 6.4 The requirement record
 
@@ -347,7 +347,7 @@ For each assignment, the unit records **compliance** (met, partial, not met, exc
 ### 7.6 Consolidation (step 6)
 
 - **Coverage check.** A requirement is *answered* when every assignment for it is validated. Anything else blocks completion and is listed.
-- **Compliance matrix** export. An Excel workbook with a customer sheet (validated answers only, in customer words, in RFP order, sub-requirements with their references) and an internal tracking sheet. Every cell is written as text, never as a formula. Also a CSV: requirement ID, source (page and lines), category, requirement, quote, unit, product, offering type, compliance, response, validator, state, assignment status and responded by. The CSV starts with a UTF-8 byte order mark so that Excel reads non-ASCII text.
+- **Compliance matrix** export. An Excel workbook with a customer sheet (validated answers only, in customer words, in RFP order, sub-requirements with their references) and an internal tracking sheet. Every cell is written as text, never as a formula. Also a CSV: requirement ID, source (page and lines), category, requirement, quote, unit, product, offering type, compliance, response, validator, state, assignment status and responded by. The CSV starts with a UTF-8 byte order mark so that Excel reads non-ASCII text. A requirement whose current version comes from a change document names that document in its reference (for example "rfp_syracuse_addendum_1.pdf, p. 1, lines 14-15"); the response outline does the same.
 - **Response outline** (built 10 Oct 2026). Writing the final response remains a human task. A drafting agent gives the bid manager a first draft to edit:
   - **Chapters.** The outline follows a proposal, not the RFP's own headings: an executive summary, then one chapter per group of requirement categories (technical; compliance and legal; commercial and schedule; staffing; submission).
   - **Drafting.** The agent drafts each chapter only from the validated answers, with the RFP's wording for each one. It makes one call per chapter that has answers, plus one for the summary. It may not add products, ratings, dates, promises or qualities that the answers do not state, and it lists what the bid manager still has to add or confirm.
@@ -438,7 +438,7 @@ business units, products, past responses: data files      (catalog)
 |---|---|
 | Opportunity and documents | `GET /opportunities/new`, `POST /opportunities`, `GET /opportunities/{id}`, `POST /opportunities/{id}/documents` |
 | Layout and page images | `POST /documents/{doc}/ingest`, `GET /documents/{doc}/pages/{n}` (JSON), `GET /documents/{doc}/pages/{n}.png` |
-| Requirements | `GET /opportunities/{id}/requirements`, `POST /opportunities/{id}/requirements/extract`, `POST /requirements/{req_id}/review`, `POST /opportunities/{id}/baselines` |
+| Requirements | `GET /opportunities/{id}/requirements`, `POST /opportunities/{id}/requirements/extract`, `POST /requirements/{req_id}/review`, `POST /opportunities/{id}/requirements` (add a missed one by its quote), `POST /opportunities/{id}/requirements/from-lines` (add a missed one by selecting its lines), `POST /opportunities/{id}/baselines` |
 | Catalog | `GET /catalog`, `GET /catalog/search?q=` |
 | Matching | `POST /opportunities/{id}/match`, `POST /matches/{match_id}/decide` |
 | Decisions | `GET /opportunities/{id}/decisions`, `POST /opportunities/{id}/participation`, `POST /opportunities/{id}/go-no-go` |
@@ -455,6 +455,9 @@ Every write uses the acting user's name.
 - **Smoke test** (`tests/test_smoke.py`, built): seeds the Syracuse demo through the real services, opens every screen, downloads the compliance matrix, and checks that the audit table rejects updates. A second test fails if any module imports another module's internals.
 - **Self-checks** next to non-trivial logic (built for anchoring and retrieval): `python -m app.modules.<module>.<file>`.
 - **Golden requirement list** for the Syracuse RFP (`data/golden/`, built 8 Oct 2026): 361 requirements drafted from the frozen layout independently of the reader agent, 78 marked uncertain. It is a draft until a person reviews it. `scripts/score_reader.py` measures the reader against it. First result: recall 92% of the certain items, and 54% of the reader's 840 proposals overlap a golden item. Most of the rest are finer-grained items (each listed drawing or standard as its own line item) or come from pages the golden list leaves out (blank forms, drawing sheets, the standards list). Contents pages produce no requirements.
+- **Model-change guard** (`scripts/model_guard.py`, built 11 Oct 2026). Every frozen answer is keyed by the model name, so a new model, prompt or schema makes the frozen answers miss:
+  - `replay` runs the demo offline (the Syracuse sample, the hyperscale sample, the response outline and the illustrative addendum; `--real` adds the full reading and grouping run). It reports, per agent task, how many calls were answered from frozen answers and how many were not. Any miss fails it and names the task. `tests/test_model_guard.py` runs it as a test.
+  - `compare --model <deployment>` asks a candidate model the same questions without overwriting any frozen answer. It scores the answers per task (reader recall of the frozen quotes, the same grouping, the same main unit and product, valid outline citations, the same change classification) and blocks the switch below the thresholds. The thresholds are starting values, not yet tried on a second model.
 - **Repeatability:** ingest the same PDF twice and compare the layout model byte for byte; re-run extraction and matching and compare (cached answers make this exact).
 - **Change tests** (built 10 Oct 2026). Two tests in `tests/test_smoke.py`:
   - One reads a generated addendum with a stubbed change agent, so no model is called. It checks the classification, the person's confirmation, that only the bid manager can apply, a new version anchored in the addendum, a removal (its work withdrawn), a new ID (its work dispatched), the returned answer, and that Traceability lists the addendum as a second document.

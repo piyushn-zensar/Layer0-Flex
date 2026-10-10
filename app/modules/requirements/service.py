@@ -17,6 +17,9 @@ Public contract:
     split(db, req_id, parts, actor, reason="") -> list[Requirement]   parts: [{"quote", "text"}], >= 2
     merge(db, opp_id, req_ids, text, actor, reason="") -> Requirement  >= 2 line items into one
     add_missed(db, opp_id, quote, text, category, actor, page=None) -> Requirement   a person adds what the agent missed
+    add_from_lines(db, opp_id, page, line_start, line_end, text, category, actor) -> Requirement
+                                                 the same, by selecting lines of the main RFP: the quote is those
+                                                 lines verbatim (headers / footers left out), so the source is exact
     freeze(db, opp_id, actor) -> Baseline        approved items become baseline 1; needs a read main RFP, every item
                                                  decided and at least one approved; once only (later: apply_change)
     apply_change(db, opp_id, change_doc_id, items, actor, reason, commit=True) -> dict
@@ -154,7 +157,42 @@ def add_missed(db: Session, opp_id: str, quote: str, text: str, category: str, a
     if category not in CATEGORIES:
         raise ValueError(f"Unknown category {category!r}.")
     doc = _read_main_document(db, opp_id)
-    return add(db, opp_id, doc.id, quote, (text or quote).strip()[:200], category, actor, hint_page=page)
+    return add(db, opp_id, doc.id, quote, (text.strip() or quote.strip())[:200], category, actor, hint_page=page)
+
+
+MAX_SELECTED_LINES = 40  # a requirement is a sentence or a paragraph, not a page
+
+
+def add_from_lines(db: Session, opp_id: str, page: int, line_start: int, line_end: int, text: str, category: str,
+                   actor: str) -> Requirement:
+    """P-15: the person selects the lines on the RFP page instead of retyping the quote."""
+    try:
+        _writable(db, opp_id)
+    except ValueError as exc:
+        raise ValueError(f"{exc} A requirement missed before the freeze now comes in through the Changes page.") from exc
+    if category not in CATEGORIES:
+        raise ValueError(f"Unknown category {category!r}.")
+    doc = _read_main_document(db, opp_id)
+    pages = ingestion.layout(doc.id)["pages"]
+    if not 1 <= page <= len(pages):
+        raise ValueError(f"Page {page} not found; the RFP has {len(pages)} pages.")
+    lines = pages[page - 1]["lines"]
+    if not lines:
+        raise ValueError(f"Page {page} has no readable lines (not read; it needs OCR).")
+    last = max(line["n"] for line in lines)
+    if not 1 <= line_start <= line_end <= last:
+        raise ValueError(f"Choose lines between 1 and {last} on page {page}, the first line before the last.")
+    if line_end - line_start + 1 > MAX_SELECTED_LINES:
+        raise ValueError(f"Select at most {MAX_SELECTED_LINES} lines; split a longer passage into several requirements.")
+    # headers and footers are left out, as the reader leaves them out; the line numbers stay those of the page
+    chosen = [line for line in lines if line_start <= line["n"] <= line_end
+              and not line.get("furniture") and anchoring.normalise(line["text"])]
+    if not chosen:
+        raise ValueError("Only header or footer lines are selected; select the requirement's own lines.")
+    quote = " ".join(line["text"] for line in chosen)
+    # anchored in the selected lines only, so the source is the selection itself (never the same words elsewhere)
+    return add(db, opp_id, doc.id, quote, (text.strip() or quote.strip())[:200], category, actor, hint_page=page,
+               pages=[{"page": page, "lines": chosen}])
 
 
 def _read_main_document(db: Session, opp_id: str):

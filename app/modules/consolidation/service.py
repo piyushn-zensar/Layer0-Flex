@@ -11,6 +11,8 @@ Public contract:
     response_outline(db, opp_id) -> dict       the response-outline agent's draft per chapter (P-10), with the validated
                                                answers it rests on, what is still open, and retrieval references
     response_outline_md(db, opp_id) -> str     the same outline as Markdown, for the bid manager to edit
+Every export gives a requirement's source as "p. N, lines a-b"; one anchored in a change document (an addendum, P-11)
+names that document first: "<file name>, p. N, lines a-b".
 """
 import csv
 import io
@@ -60,10 +62,18 @@ COLUMNS = ["Requirement ID", "Source", "Category", "Requirement", "Quote", "Busi
 BOM = "\ufeff"  # Excel opens a UTF-8 CSV as UTF-8 only when it starts with a byte order mark (else it assumes ANSI)
 
 
-def _row(req, m, a, state: str) -> list[str]:
+def _sources(db: Session, opp_id: str):
+    """req -> its source for the exports: page and lines, preceded by the file name when the requirement (or
+    sub-requirement) is anchored in a document other than the main RFP (a new version from an addendum, P-11)."""
+    main = opportunities.main_document(db, opp_id)
+    names = {d.id: d.filename for d in opportunities.documents(db, opp_id) if not main or d.id != main.id}
+    return lambda req: f"{names[req.document_id]}, {req.source}" if req.document_id in names else req.source
+
+
+def _row(req, m, a, state: str, source: str | None = None) -> list[str]:
     """One matrix row; `a` is the assignment (None for a requirement that is not assigned), `m` its match."""
     return [_cell(v) for v in (
-        req.req_id, req.source, req.category, req.text, req.quote,
+        req.req_id, source or req.source, req.category, req.text, req.quote,
         a.bu if a else "", (a.product_ref if a else None) or (m.product_id if m else ""),
         _offering(m, a.bu if a else None), a.compliance if a else "", a.response if a else "",
         a.validated_by if a else "", state, a.status if a else "", a.responded_by if a else "")]
@@ -74,9 +84,10 @@ def compliance_matrix_csv(db: Session, opp_id: str) -> str:
     out.write(BOM)
     w = csv.writer(out)
     w.writerow(COLUMNS)
+    source = _sources(db, opp_id)
     for row in coverage(db, opp_id)["rows"]:
         for a in row["assignments"] or [None]:
-            w.writerow(_row(row["req"], row["match"], a, row["state"]))
+            w.writerow(_row(row["req"], row["match"], a, row["state"], source(row["req"])))
     return out.getvalue()
 
 
@@ -87,8 +98,10 @@ def compliance_matrix_xlsx(db: Session, opp_id: str) -> bytes:
     for k in requirements.current(db, opp_id, include_children=True):
         if k.parent_id and k.status == "approved":
             kids.setdefault(k.parent_id, []).append(k)
-    tracking = [_row(r["req"], r["match"], a, r["state"]) for r in cov["rows"] for a in r["assignments"] or [None]]
-    return excel.build(opp.title, opp.customer, cov["rows"], kids, _unit_name, COLUMNS, tracking)
+    source = _sources(db, opp_id)
+    tracking = [_row(r["req"], r["match"], a, r["state"], source(r["req"]))
+                for r in cov["rows"] for a in r["assignments"] or [None]]
+    return excel.build(opp.title, opp.customer, cov["rows"], kids, _unit_name, COLUMNS, tracking, source)
 
 
 # The response outline (P-10) follows a proposal, not the RFP's own headings (about 170 on Syracuse): one chapter
@@ -111,14 +124,14 @@ def _product_name(product_id: str | None) -> str:
     return ((catalog.product(product_id) or {}).get("name") or product_id or "") if product_id else ""
 
 
-def _answers(rows: list[dict]) -> list[dict]:
+def _answers(rows: list[dict], source) -> list[dict]:
     """Every validated answer of these coverage rows, in RFP order: what the agent may write from."""
     out = []
     for r in rows:
         req = r["req"]
         for a in r["assignments"]:
             if a.status == "validated" and (a.response or "").strip():
-                out.append({"assignment_id": a.id, "req_id": req.req_id, "source": req.source, "bu": a.bu, "unit": _unit_name(a.bu),
+                out.append({"assignment_id": a.id, "req_id": req.req_id, "source": source(req), "bu": a.bu, "unit": _unit_name(a.bu),
                             "compliance": excel.COMPLIANCE_WORDS.get(a.compliance, a.compliance or ""),
                             "product": _product_name(a.product_ref), "requirement": req.text, "wording": req.quote or "",
                             "response": a.response.strip()})
@@ -158,6 +171,7 @@ def _references(db: Session, opp_id: str, title: str, rows: list[dict]) -> dict:
 def response_outline(db: Session, opp_id: str) -> dict:
     opp = opportunities.require(db, opp_id)
     cov = coverage(db, opp_id)
+    source = _sources(db, opp_id)
     titles = {cid: title for cid, title, _ in CHAPTERS} | {OTHER[0]: OTHER[1]}
     by_chapter: dict[str, list] = {}
     for r in cov["rows"]:
@@ -168,13 +182,13 @@ def response_outline(db: Session, opp_id: str) -> dict:
         rows = by_chapter.get(cid)
         if not rows:
             continue
-        answers = _answers(rows)
+        answers = _answers(rows, source)
         everything += answers
         chapters.append({
             "id": cid, "title": title, "total": len(rows), "answered": sum(r["state"] == "answered" for r in rows),
             "draft": _draft(title, answers), "material": answers,
             "exceptions": [a for a in answers if a["compliance"] != "Comply"],
-            "open": [{"req_id": r["req"].req_id, "source": r["req"].source, "text": r["req"].text, "state": r["state"]}
+            "open": [{"req_id": r["req"].req_id, "source": source(r["req"]), "text": r["req"].text, "state": r["state"]}
                      for r in rows if r["state"] != "answered"],
             "references": _references(db, opp_id, title, rows)})
     order = {r["req"].req_id: i for i, r in enumerate(cov["rows"])}
@@ -227,4 +241,6 @@ if __name__ == "__main__":  # self-check: python -m app.modules.consolidation.se
     assert row[COLUMNS.index("Responded by")] == "EP\u00b2 Product Manager" and row[COLUMNS.index("Response")] == "'=cmd"
     none = _row(req, None, None, "not_assigned")  # not assigned: the new columns are empty, the row keeps its width
     assert len(none) == len(COLUMNS) and none[-2:] == ["", ""]
+    named = _row(req, m, a, "pending", "addendum-1.pdf, p. 1, line 3")  # anchored in an addendum (P-11)
+    assert named[COLUMNS.index("Source")] == "addendum-1.pdf, p. 1, line 3" and row[1] == "p. 55, line 16"
     print("consolidation ok")

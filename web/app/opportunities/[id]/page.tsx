@@ -18,9 +18,15 @@ export default function DocumentsPage() {
     `/api/opportunities/${id}/rfp-search?q=${encodeURIComponent(String(form.get("q") ?? ""))}`).then(setFound, fail);
   const fail = (e: unknown) => setMessage({ text: e instanceof Error ? e.message : String(e) });
 
-  async function upload(form: FormData) {
-    setBusy("Uploading…"); setMessage(undefined);
-    try { await post(`/api/opportunities/${id}/documents`, form); await reload(); } catch (e) { fail(e); } finally { setBusy(""); }
+  // onSubmit, not a form action: React holds state updates made inside an action until it ends, so the busy text and
+  // the disabled button would only appear after the read (a second click uploaded again); a failure keeps the file.
+  async function upload(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const file = new FormData(form); // before the inputs are disabled below
+    setBusy("Uploading and reading the RFP… (about a minute for a 100-page RFP)"); setMessage(undefined);
+    try { await post(`/api/opportunities/${id}/documents`, file); form.reset(); await reload(); } catch (err) { fail(err); }
+    finally { setBusy(""); }
   }
   async function extract() {
     setBusy("Reader agent running… (about a minute for a 100-page RFP)"); setMessage(undefined);
@@ -51,11 +57,12 @@ export default function DocumentsPage() {
           {data?.documents.length === 0 && <tr><td colSpan={5} className="muted">No documents yet.</td></tr>}
         </tbody>
       </table>
-      <form className="card form" action={upload}>
-        <label>RFP file (PDF) <input type="file" name="file" required /></label>
-        <label>Role <select name="role">{["main", "addendum", "qa", "change", "other"].map((r) => <option key={r}>{r}</option>)}</select></label>
+      <form className="card form" onSubmit={upload} aria-busy={!!busy}>
+        <label>RFP file (PDF) <input type="file" name="file" required disabled={!!busy} /></label>
+        <label>Role <select name="role" disabled={!!busy}>{["main", "addendum", "qa", "change", "other"].map((r) => <option key={r}>{r}</option>)}</select></label>
         <button disabled={!!busy}>Upload and read</button>
         <button type="button" className="secondary" onClick={reload}>Refresh status</button>
+        {busy && !canRead && <span className="muted" role="status">{busy}</span>} {/* else shown by the reader button */}
       </form>
       {data?.documents.some((d) => d.role === "main" && d.status === "ingested") && (
         <section className="card">
@@ -74,7 +81,7 @@ export default function DocumentsPage() {
         </section>)}
       {canRead ? (<p>
         <button disabled={!!busy || !!unread} onClick={extract}>Run the reader agent → requirements</button>{" "}
-        <span className="muted">{busy || (unread ? "Waiting for the main RFP to be read; use Refresh status." : "")}</span></p>)
+        <span className="muted" role="status">{busy || (unread ? "Waiting for the main RFP to be read; use Refresh status." : "")}</span></p>)
         : <p className="muted">Requirement review has started, so the RFP is not re-read. Missed items can be added on the Requirements page.</p>}
     </>
   );

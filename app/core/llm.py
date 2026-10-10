@@ -7,9 +7,16 @@ keyed by task, model, system prompt, prompt and schema. The cache is committed t
   - a re-run returns the frozen first-pass answer instead of a new one (rule R2);
   - teammates and the demo run with LLM_PROVIDER=mock and no API key;
   - changing a prompt or schema changes the key, so stale answers are never reused.
+Changing LLM_MODEL changes every key too, so a new model reuses no frozen answer: scripts/model_guard.py (P-09)
+checks that the demo replays from frozen answers, and compares a new model with them before a switch.
+
+Recording hook (for scripts/model_guard.py; no effect on any answer, and none at all when unused):
+    with llm.record() as calls: ...   every complete_json call inside the block (any thread) appends
+                                      {"task", "system", "prompt", "schema", "key", "hit"}; hit = a frozen answer existed
 """
 import hashlib
 import json
+from contextlib import contextmanager
 
 from app.core import config
 
@@ -18,12 +25,28 @@ class LLMUnavailable(RuntimeError):
     """No cached answer and no provider (or the model refused). Callers must surface this, never guess."""
 
 
+_recorders: list[list[dict]] = []  # one list per open record() block
+
+
+@contextmanager
+def record():
+    calls: list[dict] = []
+    _recorders.append(calls)
+    try:
+        yield calls
+    finally:  # by identity: list.remove() compares contents, and two open blocks can hold equal lists
+        del _recorders[next(i for i, r in enumerate(_recorders) if r is calls)]
+
+
 def complete_json(task: str, system: str, prompt: str, schema: dict) -> dict:
     key = hashlib.sha256(
         json.dumps([task, config.LLM_MODEL, system, prompt, schema], sort_keys=True).encode()
     ).hexdigest()[:24]
     path = config.LLM_CACHE / task / f"{key}.json"
-    if path.exists():
+    hit = path.exists()
+    for calls in _recorders:
+        calls.append({"task": task, "system": system, "prompt": prompt, "schema": schema, "key": key, "hit": hit})
+    if hit:
         return json.loads(path.read_text("utf-8"))["output"]
     if config.LLM_PROVIDER != "azure":
         raise LLMUnavailable(f"No cached answer for {task}/{key}; set LLM_PROVIDER=azure to generate it.")

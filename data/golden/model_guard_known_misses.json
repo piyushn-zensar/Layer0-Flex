@@ -1,0 +1,4 @@
+{
+  "_note": "Model calls of the demo replay (scripts/model_guard.py, P-09) that have no frozen answer today, each with the reason. The guard reports them as known gaps instead of failing; any other miss fails it. Remove an entry once its answer is frozen (the test fails while a listed answer exists). Never add an entry to hide a prompt or schema change: regenerate the answers instead.",
+  "misses": {}
+}

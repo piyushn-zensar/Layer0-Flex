@@ -41,6 +41,14 @@ class AddIn(BaseModel):
     page: int | None = None
 
 
+class LinesIn(BaseModel):
+    page: int
+    line_start: int
+    line_end: int
+    text: str = ""
+    category: str = "technical"
+
+
 def _guard(fn):
     """Service errors -> HTTP: unknown id 404, not allowed in this state 409."""
     try:
@@ -66,6 +74,13 @@ def extract(opp_id: str, request: Request, db: Session = Depends(get_db)):
 @router.post("/opportunities/{opp_id}/requirements")
 def add_missed(opp_id: str, body: AddIn, request: Request, db: Session = Depends(get_db)):
     req = _guard(lambda: service.add_missed(db, opp_id, body.quote, body.text, body.category, actor(request), body.page))
+    return row(req, "source")
+
+
+@router.post("/opportunities/{opp_id}/requirements/from-lines")
+def add_from_lines(opp_id: str, body: LinesIn, request: Request, db: Session = Depends(get_db)):
+    req = _guard(lambda: service.add_from_lines(db, opp_id, body.page, body.line_start, body.line_end, body.text,
+                                                body.category, actor(request)))
     return row(req, "source")
 
 
