@@ -12,7 +12,7 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | J-04 | Portfolio: per-unit progress bars, status chips, link to each unit's inbox | S2 | Sat 10 Oct | done | per-unit two-segment bars (validated, awaiting validation), status chips, unit names link to `/inbox/<unit>`, "not dispatched" when empty; `web/app/portfolio/page.tsx` + `globals.css` only; build and pytest green; cb08a93 |
 | J-05 | Consolidation page: blocking items link to the three screens; compliance-matrix columns reviewed with the bid-manager view | S3 | Sun 11 Oct | done | parts A+B 3827902 (blockers panel by reason, All/Open filter, links to Traceability, coloured badges); part C: compliance matrix CSV gets Assignment status and Responded by (appended, earlier columns unchanged) and a UTF-8 byte order mark for Excel; self-check and smoke test added; 8ac51a2 |
 | J-06 | Monday demo click-path checklist (in the walkthrough) and a dry run with Piyush | S3 | Mon 12 Oct AM | doing | `team/demo-checklist.md`: click path, script, value messages, backup paths, FAQ, dry-run list, risks (kept in team/, not Documents/: it names the team and lists internal risks). Dry run with Piyush still to do; eb2fd50 |
-| J-07 | Response-outline view (uses P-10) | S4 | after 12 Oct | todo | |
+| J-07 | Response-outline view (uses P-10) | S4 | after 12 Oct | done | built by Piyush on 10 Oct (team handover): `consolidation/outline` page, linked from Final response; executive summary and chapters with cited requirements, to add or confirm, validated answers, still open, related passages; Markdown download; the stepper keeps Final response current on its sub-pages ([contract] Janvia: `OppSteps.tsx`, one line) |
 | J-08 | Compliance matrix as a professional Excel file (.xlsx), generated deterministically (openpyxl, no model): title block, frozen header row, filters, column widths, wrapped text, offering-type colours, source page and lines; keep the CSV | S3 | Sun 11 Oct | done | built by Piyush on 10 Oct (team handover): Excel workbook with a customer sheet (validated answers only, Comply / Partially comply / Does not comply / Exception / Open, RFP order, sub-requirements with references) and an internal Tracking sheet (CSV columns); text-only cells; test added |
 
 ## J-03 walkthrough: review checklist (9 Oct 2026)
@@ -47,8 +47,8 @@ The Monday click-path checklist is J-06, a separate task.
 
 | Date | Need | From | Status |
 |---|---|---|---|
-| 10 Oct 2026 | `team/demo-checklist.md` is a new file in team/ (I own only my tracker there): please confirm it can stay, and review section 8 (dry run) and section 9 (risks) | Piyush | to ask (not blocking) |
-| 9 Oct 2026 | `Documents/technical-architecture.md` section 7.6 lists the compliance-matrix columns: add "assignment status" and "responded by" (appended after "state") and the UTF-8 byte order mark | Piyush | to ask (not blocking) |
+| 10 Oct 2026 | `team/demo-checklist.md` is a new file in team/ (I own only my tracker there): please confirm it can stay, and review section 8 (dry run) and section 9 (risks) | Piyush | answered 10 Oct: it stays in team/; sections 8-9 reviewed; numbers and hero IDs refreshed after the P-18 re-run |
+| 9 Oct 2026 | `Documents/technical-architecture.md` section 7.6 lists the compliance-matrix columns: add "assignment status" and "responded by" (appended after "state") and the UTF-8 byte order mark | Piyush | done 10 Oct: section 7.6 lists the Excel workbook, the two appended columns and the byte order mark |
 
 ## Log
 
@@ -62,3 +62,4 @@ The Monday click-path checklist is J-06, a separate task.
 | 9 Oct 2026 | J-05 parts A+B: Final response lists what blocks completion by reason (waiting for validation / for the unit / returned / not assigned) with links to Traceability, All/Open filter, marked rows, coloured state and status badges; checked on the 13-item data (4/13, 3 + 6) and on the real extraction (1/353) | J-05 part C (matrix columns with the bid manager); J-03 items 2, 5-9 |
 | 9 Oct 2026 | J-05 done: compliance matrix CSV with Assignment status and Responded by (appended) and a UTF-8 BOM so Excel reads non-ASCII text; checked on the real 353-requirement export (14 columns, 353 rows, first 12 columns identical to before); self-check and a smoke test; pytest 15 passed | J-03 items 2, 5-9; ask Piyush to update the design document column list |
 | 10 Oct 2026 | J-06 started: Monday demo checklist written as `team/demo-checklist.md` (14-step click path with a 10-minute cut, script per screen, value messages, backup navigation, client questions, dry-run list, known risks) | dry run with Piyush; J-03 retake; J-07, J-08 |
+| 10 Oct 2026 | Piyush (team handover): demo checklist refreshed after the P-18 reader re-run renumbered the requirements: hero IDs (0887, 0889, 0336, 0893, 0815, 0141, 0001), counts (814 line items, 348 requirements), advice 6 of 9, Excel download (J-08), the deviation flag (A-10) in place of the FPM flag | dry run; J-03 retake |
