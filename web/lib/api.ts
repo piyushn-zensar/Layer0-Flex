@@ -46,6 +46,12 @@ export function useApi<T>(path: string) {
     (e) => setError(e instanceof Error ? e.message : String(e))), [path]);
   useEffect(() => {
     reload();
+    // A page left open in another tab (or restored by Back) would show old data, e.g. "not frozen" after a freeze
+    // made elsewhere: fetch again whenever the tab comes back into view.
+    const onFocus = () => { if (document.visibilityState === "visible") reload(); };
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onFocus);
+    return () => { window.removeEventListener("focus", onFocus); document.removeEventListener("visibilitychange", onFocus); };
   }, [reload]);
   return { data, error, reload };
 }
