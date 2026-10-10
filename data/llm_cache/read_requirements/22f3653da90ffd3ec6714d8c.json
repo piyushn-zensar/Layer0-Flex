@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 95,
+        "quote": "Bidder/Offerer certifies that it understands and agrees to comply with the procedures of the Syracuse Regional Airport Authority relative to permissible contacts as required by State Finance Law Section 139-j (3) and Section 139-j (6) (b).",
+        "section": "PROCUREMENT LOBBYING FORM",
+        "text": "Bidder must comply with permissible contact procedures per State Finance Law."
+      },
+      {
+        "category": "compliance",
+        "page": 95,
+        "quote": "Has any governmental entity made a finding of non-responsibility regarding the individual or entity seeking to enter into this procurement contract in the previous four years?",
+        "section": "PROCUREMENT LOBBYING FORM",
+        "text": "Bidder must disclose any findings of non-responsibility in the past four years."
+      },
+      {
+        "category": "compliance",
+        "page": 95,
+        "quote": "Was the basis for the finding of non-responsibility due to a violation of State Finance Law §139-j?",
+        "section": "PROCUREMENT LOBBYING FORM",
+        "text": "Bidder must disclose if non-responsibility was due to State Finance Law §139-j violation."
+      },
+      {
+        "category": "compliance",
+        "page": 95,
+        "quote": "If “Yes,” was the basis for the finding of non-responsibility due to the intentional provision of false or incomplete information to a governmental entity?",
+        "section": "PROCUREMENT LOBBYING FORM",
+        "text": "Bidder must disclose if non-responsibility was due to false or incomplete information."
+      },
+      {
+        "category": "submission",
+        "page": 95,
+        "quote": "If “Yes” to any of the above questions, please provide details regarding the finding of non-responsibility: Governmental Entity: _______________________________________ Date of Finding of Non-Responsibility: _________________________ Basis of Finding of Non-Responsibility (attach additional sheets as necessary)",
+        "section": "PROCUREMENT LOBBYING FORM",
+        "text": "Bidder must provide details of any findings of non-responsibility."
+      },
+      {
+        "category": "compliance",
+        "page": 95,
+        "quote": "Has any governmental entity terminated or withheld a procurement contract with the above-named individual or entity due to the intentional provision of false or incomplete information?",
+        "section": "PROCUREMENT LOBBYING FORM",
+        "text": "Bidder must disclose if any contracts were terminated or withheld due to false or incomplete information."
+      },
+      {
+        "category": "submission",
+        "page": 95,
+        "quote": "If “Yes” to the above question, provide details: Governmental Entity: _________________________________________________________________________ Date of Termination or Withholding of Contract: ___________________________________________________ Basis of Termination or Withholding: (add additional pages if necessary)",
+        "section": "PROCUREMENT LOBBYING FORM",
+        "text": "Bidder must provide details of any contract terminations or withholdings."
+      },
+      {
+        "category": "compliance",
+        "page": 95,
+        "quote": "Bidder/Offerer certifies that all information provided to the Syracuse Regional Airport Authority with respect to State Finance Law Section 139-k is complete, true, and accurate.",
+        "section": "PROCUREMENT LOBBYING FORM",
+        "text": "Bidder must certify the accuracy and completeness of information provided under State Finance Law Section 139-k."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

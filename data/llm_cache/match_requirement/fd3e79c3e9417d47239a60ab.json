@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to compliance and legal terms regarding the RFP process, not a product specification or technical requirement. Therefore, no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

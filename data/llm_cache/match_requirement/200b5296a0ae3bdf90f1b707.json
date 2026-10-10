@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to submission and documentation, not a product offering. It specifies the provision of operating instructions and storage literature, which are part of the vendor's responsibilities in delivering the product, rather than the product itself.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

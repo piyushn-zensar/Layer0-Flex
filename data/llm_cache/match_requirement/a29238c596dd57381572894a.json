@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 1.0,
-    "rationale": "The requirement is commercial in nature, as indicated by the description and the lack of technical or product-specific details. Therefore, it does not pertain to a product offering, and the bid manager would address it.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to referencing a directory for certified MBWEs, which is a commercial or compliance-related aspect rather than a product requirement. Therefore, no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

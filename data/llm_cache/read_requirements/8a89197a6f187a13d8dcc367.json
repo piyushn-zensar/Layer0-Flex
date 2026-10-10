@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 13,
+        "quote": "Members, officers, staff, and employees of the Syracuse Regional Airport Authority may respond to this RFP only in accordance with the Authority’s Code of Ethics.",
+        "section": "2.9.5 CONFLICTS OF INTEREST",
+        "text": "Respondents must comply with the Authority's Code of Ethics."
+      },
+      {
+        "category": "compliance",
+        "page": 13,
+        "quote": "The selected Contractor shall be required to purchase at its own cost and expense and maintain at all times for the duration of the contract with the Authority, insurance coverage as specified below.",
+        "section": "2.9.6 INSURANCE REQUIREMENTS",
+        "text": "Contractor must maintain specified insurance coverage during the contract."
+      },
+      {
+        "category": "compliance",
+        "page": 13,
+        "quote": "The Contractor shall obtain and for the duration of the contract, maintain a Commercial General Liability insurance policy including contractual liability coverage, with minimum limits of: • Bodily Injury and Property Damage Limit $1,000,000 each occurrence • Products/Completed Operations Limit $2,000,000 aggregate • Personal Injury & Advertising Injury Limit $4,000,000 each person/organization • General Aggregate $4,000,000 applicable on a per project basis",
+        "section": "2.9.6 INSURANCE REQUIREMENTS",
+        "text": "Maintain Commercial General Liability insurance with specified minimum limits."
+      },
+      {
+        "category": "compliance",
+        "page": 13,
+        "quote": "The General Liability policy shall name the Authority and the City of Syracuse and their respective members, officers, staff, and employees as additional insureds for both ongoing and completed operations.",
+        "section": "2.9.6 INSURANCE REQUIREMENTS",
+        "text": "Name the Authority and City of Syracuse as additional insureds on the General Liability policy."
+      },
+      {
+        "category": "compliance",
+        "page": 13,
+        "quote": "The Contractor shall obtain and maintain workers' compensation and employer's liability insurance policy or policies covering its obligations in accordance with the provisions of New York Workers' Compensation Law, including Article 9 of New York Workers' Compensation Law, known as the Disability Benefits Law, and any and all rules, regulations and procedures promulgated pursuant to the New York Workers' Compensation Law.",
+        "section": "2.9.6 INSURANCE REQUIREMENTS",
+        "text": "Maintain workers' compensation and employer's liability insurance as per New York law."
+      },
+      {
+        "category": "compliance",
+        "page": 13,
+        "quote": "The Contractor shall obtain and maintain a commercial umbrella/excess insurance policy with annual aggregate coverage of at least one million Dollars ($1,000,000) for the",
+        "section": "2.9.6 INSURANCE REQUIREMENTS",
+        "text": "Maintain a commercial umbrella/excess insurance policy with at least $1,000,000 annual aggregate coverage."
+      },
+      {
+        "category": "submission",
+        "page": 14,
+        "quote": "The schedule of underlying insurance, additional insured follow form or its equivalent and endorsements must be provided to the Authority.",
+        "section": "2.9.6 INSURANCE REQUIREMENTS",
+        "text": "Provide the schedule of underlying insurance and endorsements to the Authority."
+      },
+      {
+        "category": "legal",
+        "page": 14,
+        "quote": "After a proposer(s) is recommended by the Authority’s review committee, and if necessary approved by the Authority’s Board, an agreement incorporating the agreed upon compensation and scope of services and other relevant terms will be drafted by the Authority’s counsel and submitted to the successful proposer.",
+        "section": "2.9.7 CONTRACT PREPARATION/NEGOTIATION",
+        "text": "The Authority will draft an agreement for the successful proposer after approval."
+      },
+      {
+        "category": "commercial",
+        "page": 15,
+        "quote": "Please provide a lump sum (LS) price that covers the manufacturing, furnishing, delivering, and testing of the new switchgear.",
+        "section": "Exhibit A",
+        "text": "Provide a lump sum price for manufacturing, furnishing, delivering, and testing the switchgear."
+      },
+      {
+        "category": "commercial",
+        "page": 15,
+        "quote": "Please also include in your cost proposal: 1. Special Tools necessary for installation, testing and maintenance.",
+        "section": "Exhibit A",
+        "text": "Include costs for special tools for installation, testing, and maintenance."
+      },
+      {
+        "category": "commercial",
+        "page": 15,
+        "quote": "2. Necessary drawings, instructions and test reports in the English language.",
+        "section": "Exhibit A",
+        "text": "Include costs for drawings, instructions, and test reports in English."
+      },
+      {
+        "category": "submission",
+        "page": 15,
+        "quote": "3. In addition to other Submittal requirements, final drawings shall be submitted as AutoCAD format files.",
+        "section": "Exhibit A",
+        "text": "Submit final drawings in AutoCAD format."
+      },
+      {
+        "category": "commercial",
+        "page": 15,
+        "quote": "4. Maintenance equipment and spare parts.",
+        "section": "Exhibit A",
+        "text": "Include costs for maintenance equipment and spare parts."
+      },
+      {
+        "category": "commercial",
+        "page": 15,
+        "quote": "5. Start-up and training",
+        "section": "Exhibit A",
+        "text": "Include costs for start-up and training."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

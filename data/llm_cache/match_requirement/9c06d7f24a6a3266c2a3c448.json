@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance and certification regarding SDVOB participation, which is a legal or contractual matter. It does not specify a product or service from the catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

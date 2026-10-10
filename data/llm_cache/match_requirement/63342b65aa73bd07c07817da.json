@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement is about general contractor responsibilities and does not specify a product or service from the catalog. It is a general note for the contractor to ensure compliance with project requirements.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "This requirement pertains to compliance and the integration of contract specifications with the contract drawings. It does not specify a product or service from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "This requirement involves field verification, coordination, and maintenance of existing systems, which are responsibilities of the contractor. It does not specify a product or service from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "This requirement involves the installation of raceways, cutting and patching, and providing support framing, which are general contractor responsibilities. It does not specify a product or service from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "This requirement specifies the use of certain conductors and grounding for circuits, which is a general electrical specification. It does not specify a product or service from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "This requirement involves the removal of existing electrical items, which is a general contractor responsibility. It does not specify a product or service from the catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

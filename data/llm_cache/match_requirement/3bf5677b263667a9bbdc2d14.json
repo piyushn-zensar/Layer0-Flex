@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to compliance and operational procedures, not directly to a product offering. It specifies conditions for system shutdowns and adherence to owner requirements, which are not tied to the products listed in the candidates.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

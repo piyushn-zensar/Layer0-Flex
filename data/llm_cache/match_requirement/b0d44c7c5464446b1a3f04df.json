@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.95,
-    "rationale": "The requirement pertains to compliance and documentation of efforts to include minority- and women-owned business enterprises in contracting opportunities. This is not a product requirement but rather a commercial and procedural obligation. Therefore, no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

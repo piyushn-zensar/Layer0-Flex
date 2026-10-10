@@ -1,0 +1,116 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement describes a mechanism for disconnecting transformer fuses and grounding them, which is a feature of arc-resistant metal-clad MV switchgear as per the catalog description.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "Voltage transformers (VTs) are typically part of medium-voltage switchgear systems, and the requirement specifies compliance with ANSI standards, which aligns with the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The description of current transformers and their specifications is consistent with the features of the CROWN-ARMV product, which includes medium-voltage switchgear with components like CTs.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.7,
+        "n": 4,
+        "rationale": "The provision of KWH meter sockets is a typical feature of medium-voltage switchgear, which is covered by the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 5,
+        "rationale": "Test switch assemblies are commonly included in medium-voltage switchgear for testing purposes, which aligns with the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 6,
+        "rationale": "The requirement for interlock contacts and auxiliary relays for breaker control schemes is a feature of the CROWN-ARMV product, which includes medium-voltage switchgear with such capabilities.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "The detailed control power circuit and auxiliary switch requirements are typical of medium-voltage switchgear, which is provided by the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 8,
+        "rationale": "Factory-installed internal control wiring is a standard feature of the CROWN-ARMV product, which is medium-voltage switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 9,
+        "rationale": "The wiring specifications for switchgear secondary wiring align with the features of the CROWN-ARMV product, which includes medium-voltage switchgear with internal wiring.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance with legal and procedural obligations, not to a specific product or business unit offering.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 2,
+        "rationale": "This requirement is a compliance-related question about the bidder's history and does not pertain to a specific product or business unit offering.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 3,
+        "rationale": "This requirement is a compliance-related question about the bidder's history and does not pertain to a specific product or business unit offering.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 4,
+        "rationale": "This requirement pertains to compliance with legal and procedural obligations, not to a specific product or business unit offering.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

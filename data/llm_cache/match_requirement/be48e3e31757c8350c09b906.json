@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.95,
+        "n": 1,
+        "rationale": "The requirement specifies metal-clad switchgear compliant with ANSI/IEEE C37.20.2 and arc-resistant to ANSI/IEEE C37.20.7. The catalog entry for CROWN-ARMV describes it as arc-resistant metal-clad MV switchgear meeting these standards, making it the appropriate choice.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "The requirement pertains to testing and simulation of system operation, which is a general project or quality assurance activity rather than a specific product requirement. Therefore, no product is directly associated with this requirement.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance with policies and procedures, as well as utilization of specific business entities. It does not specify a product or service from the catalog, so it is not mapped to any business unit or product.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

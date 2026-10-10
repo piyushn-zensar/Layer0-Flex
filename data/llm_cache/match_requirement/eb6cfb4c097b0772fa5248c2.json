@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 1.0,
-    "rationale": "The requirement pertains to compliance and submission of reports, which is a commercial or legal aspect of the RFP. It does not specify a product or service requirement, hence no mapping to SpinCo business units or products is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

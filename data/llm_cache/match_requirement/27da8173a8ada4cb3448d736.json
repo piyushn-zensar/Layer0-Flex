@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement is commercial in nature, specifying terms related to contract execution and compensation. It does not pertain to a specific product or business unit offering, so no mapping to products is necessary.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

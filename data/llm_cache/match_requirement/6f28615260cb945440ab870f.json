@@ -1,0 +1,140 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies standards related to high-voltage circuit breakers, which are integral to medium-voltage switchgear. The CROWN-ARMV product is a metal-clad medium-voltage switchgear lineup that includes vacuum circuit breakers, making it suitable for this requirement.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement directly references standards for metal-clad switchgear, which aligns with the CROWN-ARMV product offering, as it is a metal-clad medium-voltage switchgear lineup.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.5,
+        "n": 3,
+        "rationale": "The requirement pertains to high-voltage fuses and related equipment, which are not explicitly covered by the products in the catalog. This may require clarification from the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.5,
+        "n": 4,
+        "rationale": "Similar to requirement 3, this pertains to high-voltage fuses and related equipment, which are not explicitly covered by the products in the catalog. This may require clarification from the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.85,
+        "n": 5,
+        "rationale": "The requirement references standards for relays and relay systems, which are integral to the EP2-RPP product offering, as it includes protective relays and relay programming.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 6,
+        "rationale": "The requirement pertains to definitions for power switchgear, which aligns with the CROWN-ARMV product offering as it is a power switchgear product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.5,
+        "n": 7,
+        "rationale": "The requirement pertains to transformers, which are not explicitly covered by the products in the catalog. This may require clarification from the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.5,
+        "n": 8,
+        "rationale": "The requirement pertains to surge arresters, which are not explicitly covered by the products in the catalog. This may require clarification from the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 9,
+        "rationale": "The requirement references partial discharge measurement in power switchgear, which aligns with the CROWN-ARMV product offering as it is a power switchgear product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.5,
+        "n": 10,
+        "rationale": "The requirement pertains to separable insulated connector systems, which are not explicitly covered by the products in the catalog. This may require clarification from the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.5,
+        "n": 11,
+        "rationale": "The requirement pertains to high-voltage testing techniques, which are not explicitly covered by the products in the catalog. This may require clarification from the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.85,
+        "n": 12,
+        "rationale": "The requirement references standards for large lead storage batteries, which align with the EP2-AUX product offering as it includes station AC and DC distribution systems with battery systems.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "EP2-AUX"
+          }
+        ]
+      },
+      {
+        "confidence": 0.5,
+        "n": 13,
+        "rationale": "The requirement pertains to industrial control systems, which are not explicitly covered by the products in the catalog. This may require clarification from the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.5,
+        "n": 14,
+        "rationale": "The requirement pertains to surge arresters, which are not explicitly covered by the products in the catalog. This may require clarification from the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.85,
+        "n": 15,
+        "rationale": "The requirement references standards for power switchgear assemblies, which align with the CROWN-ARMV product offering as it is a power switchgear product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

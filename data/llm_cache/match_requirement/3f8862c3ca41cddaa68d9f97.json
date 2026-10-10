@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance and reporting obligations related to M/WBE (Minority/Women Business Enterprise) compliance. It does not specify a product or service from the catalog, and therefore, it is not a product requirement. The bid manager should address this requirement.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

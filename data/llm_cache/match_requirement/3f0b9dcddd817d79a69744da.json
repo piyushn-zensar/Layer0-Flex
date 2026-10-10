@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.95,
+        "n": 1,
+        "rationale": "The requirement specifies a Metal Clad Switchgear lineup with 15kV vacuum circuit breakers, protective relays, and other features. The CROWN-ARMV product matches this description as it is an arc-resistant metal-clad MV switchgear with vacuum circuit breakers and is offered as ETO to meet specific customer requirements.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement specifies compliance with IEEE C37.20.7 Type 2B for arc-resistant switchgear. The CROWN-ARMV product is explicitly described as meeting these standards, making it the appropriate choice.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.85,
+        "n": 3,
+        "rationale": "The requirement mentions special tools, maintenance equipment, and spare parts for the Metal Clad Switchgear. The CROWN-ACC product includes accessories and hardware for MV switchgear, which aligns with this requirement.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement involves connection to 13.2 kV feeders, which is within the range of the CROWN-ARMV product. This product is suitable for the specified voltage and application.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.95,
+        "n": 1,
+        "rationale": "The requirement specifies arc-resistant metal-clad switchgear with vacuum circuit breakers, bus sections, tie breakers, and accessories for a complete operational system. The CROWN-ARMV product matches these specifications as it provides metal-clad medium-voltage switchgear with arc-resistant construction and vacuum circuit breakers, and can be engineered to meet the specific requirements of the contract documents.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "This requirement pertains to compliance with standards and codes, which is not a product-specific requirement. The bid manager should address this aspect in the proposal.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

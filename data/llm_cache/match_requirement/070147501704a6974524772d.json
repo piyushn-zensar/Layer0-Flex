@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance with MWBE goals and does not specify a product or service from the catalog. It is a contractual and procedural requirement for the contractor to follow.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

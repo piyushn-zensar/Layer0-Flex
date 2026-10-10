@@ -1,0 +1,98 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies the manufacture of metal-clad switchgear for continuous service, which aligns with the CROWN-ARMV product description of arc-resistant metal-clad MV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "This requirement pertains to construction and installation tasks, which are typically the responsibility of the purchaser or contractor, not the product supplier.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "Internal connections are part of the assembly and testing of the metal-clad switchgear, which is covered under the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 4,
+        "rationale": "Checking internal connections and ensuring proper assembly is part of the manufacturing and testing process for the CROWN-ARMV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 5,
+        "rationale": "This requirement involves installation and alignment of the equipment, which is typically performed by the installation contractor, not the product supplier.",
+        "units": []
+      },
+      {
+        "confidence": 0.7,
+        "n": 6,
+        "rationale": "The requirement specifies a design constraint (no roof penetrations) that would be considered in the design of the CROWN-ARMV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 7,
+        "rationale": "This requirement addresses post-delivery damage caused by the purchaser, which is not directly related to the product offering.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 8,
+        "rationale": "The detailed testing and inspection procedures for breakers are part of the manufacturing and quality assurance process for the CROWN-ARMV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 9,
+        "rationale": "Testing and inspection of power buses and associated components are integral to the manufacturing and quality assurance of the CROWN-ARMV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

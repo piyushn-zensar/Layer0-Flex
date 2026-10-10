@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          2,
+          3,
+          4
+        ],
+        "title": "Disclosure of non-responsibility findings"
+      },
+      {
+        "category": "submission",
+        "members": [
+          5,
+          7
+        ],
+        "title": "Details of non-responsibility findings and contract terminations"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

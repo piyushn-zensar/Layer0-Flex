@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to construction work involving conduit duct banks, which is not directly related to the products listed in the candidates. Therefore, no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to the evaluation and selection process under the RFP, which is a commercial and procedural aspect rather than a product requirement. Therefore, no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

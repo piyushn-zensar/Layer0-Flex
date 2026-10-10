@@ -1,0 +1,16 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Certifications and confirmations of compliance"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

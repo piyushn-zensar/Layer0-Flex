@@ -1,0 +1,62 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies ratings and features typical of medium-voltage switchgear. The CROWN-ARMV product is a metal-clad medium-voltage switchgear that meets these specifications, including the required current and momentary ratings.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "This requirement pertains to compliance with contract documents and does not specify a product. It is a commercial requirement to be addressed by the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The detailed construction and safety features described align with the CROWN-ARMV product, which is designed as arc-resistant metal-clad switchgear with customizable features.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement specifies features and construction details for heavy-duty utility service switchgear, which are consistent with the capabilities of the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 5,
+        "rationale": "The nameplate requirement is part of the switchgear specification and would be included in the scope of the CROWN-ARMV product, as it is a standard feature for such equipment.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

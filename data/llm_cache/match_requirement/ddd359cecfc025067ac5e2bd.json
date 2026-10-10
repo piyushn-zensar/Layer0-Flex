@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to submission of documentation, specifically a Recommended Spare Parts List (RSPL) for equipment. This is not a product requirement but a commercial or submission requirement. Therefore, no specific product or business unit is mapped to this requirement.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

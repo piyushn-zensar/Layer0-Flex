@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 1.0,
-    "rationale": "The requirement pertains to submission, which is not a product requirement. Therefore, no mapping to business units or products is necessary.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

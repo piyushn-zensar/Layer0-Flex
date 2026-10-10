@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 1.0,
-    "rationale": "This requirement pertains to compliance and legal obligations regarding the contractor's EEO policy statement. It does not specify a product or service requirement, and therefore, no SpinCo business unit or product is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

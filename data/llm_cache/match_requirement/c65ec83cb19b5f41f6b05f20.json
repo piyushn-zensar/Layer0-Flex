@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.95,
-    "rationale": "The requirement pertains to submission and clarification processes for proposals, which are commercial and procedural aspects of the RFP. It does not specify a product or technical requirement, hence no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

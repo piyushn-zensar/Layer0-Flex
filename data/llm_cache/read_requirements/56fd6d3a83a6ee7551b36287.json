@@ -1,0 +1,36 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 37,
+        "quote": "The above work will not be further subcontracted without the express written permission of the contractor and notification of the Office.",
+        "section": "SRAA-5007",
+        "text": "Subcontracting requires contractor and Office approval."
+      },
+      {
+        "category": "compliance",
+        "page": 37,
+        "quote": "The undersigned will enter into a formal agreement for the above work with the contractor ONLY upon the Contractor's execution of a contract with the Office.",
+        "section": "SRAA-5007",
+        "text": "Formal agreement contingent on contractor's contract execution."
+      },
+      {
+        "category": "submission",
+        "page": 37,
+        "quote": "This form is to be submitted with bid attached to the Subcontractor's Information Form in a sealed envelope for each certified Minority or Women-Owned Business enterprise the Bidder/Awardee/Contractor proposes to utilize as subcontractors, service providers or suppliers.",
+        "section": "Instructions for M/WBE Subcontractors and Suppliers' Letter",
+        "text": "Submit form with bid in sealed envelope for each M/WBE entity."
+      },
+      {
+        "category": "submission",
+        "page": 37,
+        "quote": "If the MBE or WBE proposed for portion of this proposal/contract is part of a joint or other temporarily-formed business entity of independent business entities, the name and address of the joint venture or temporarily-formed business should be indicated.",
+        "section": "Instructions for M/WBE Subcontractors and Suppliers' Letter",
+        "text": "Provide name and address for joint or temporary business entities."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

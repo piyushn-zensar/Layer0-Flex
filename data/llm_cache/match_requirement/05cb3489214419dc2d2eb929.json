@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 1.0,
-    "rationale": "The requirement pertains to compliance and encourages consideration of SDVOBs in fulfilling the contract. It does not specify a product or service requirement, so no mapping to SpinCo business units or products is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

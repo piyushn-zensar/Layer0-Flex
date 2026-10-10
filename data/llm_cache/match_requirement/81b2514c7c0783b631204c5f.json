@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies medium voltage switchgear with a 15 kV rating and metal-clad construction. The CROWN-ARMV product matches this description as it is arc-resistant metal-clad medium-voltage switchgear with vacuum circuit breakers, suitable for 15 kV applications.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "The requirement specifies that transformers and meters are provided by the utility. This is not a product requirement for SpinCo, as the equipment is supplied by others.",
+        "units": []
+      },
+      {
+        "confidence": 0.85,
+        "n": 3,
+        "rationale": "The requirement describes a sequence of operation for tie breakers in a medium voltage switchgear system. The CROWN-ARMV product is suitable for this application as it includes medium voltage switchgear with vacuum circuit breakers, which can be configured to meet the specified operational requirements.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 4,
+        "rationale": "The requirement specifies that cable is provided by the utility and terminations are by the contractor. This is not a product requirement for SpinCo, as the work is performed by others.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.95,
-    "rationale": "The requirement pertains to submission and compliance documentation related to MWBE goals, which is not a product requirement. Therefore, no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

@@ -1,0 +1,74 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This is a compliance requirement and does not specify a product. The bid manager should address it.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "Factory tests are a standard part of the offering for the CROWN-ARMV product, as evidenced by its description and past responses.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The specification of bolts, nuts, and washers pertains to the construction of the metal-clad switchgear, which aligns with the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "Shop primers are related to the finish of the metal-clad switchgear, which is part of the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "This is a compliance requirement related to quality control and inspection, not a product specification. The bid manager should address it.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "This is a compliance requirement to adhere to codes and standards, not a product specification. The bid manager should address it.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "The requirement for no welding in field assembly pertains to the design and construction of the metal-clad switchgear, which aligns with the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

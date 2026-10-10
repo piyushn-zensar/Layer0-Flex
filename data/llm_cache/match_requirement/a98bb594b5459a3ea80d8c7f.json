@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to submission instructions for the proposal, which is a commercial or procedural aspect of the RFP. It does not specify a product or service requirement, so no mapping to SpinCo business units or products is necessary.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

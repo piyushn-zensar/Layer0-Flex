@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies a test cabinet with secondary contacts and control relays, which aligns with the features of the CROWN-ARMV product as it is a metal-clad MV switchgear with customizable options for control and testing.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement lists accessories and spare parts for switchgear, which are covered under the CROWN-ACC product, as it includes catalog accessories for MV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement describes the finish and coating for the switchgear, which is part of the construction and finish of the CROWN-ARMV metal-clad MV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement specifies nameplates for devices and panels, which are typically included in the scope of supply for the CROWN-ARMV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 5,
+        "rationale": "The requirement refers to general workmanship, which is a quality standard and not specific to a product. This is addressed by the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 6,
+        "rationale": "The requirement refers to compliance with contract documents, which is a legal or administrative matter and not specific to a product. This is addressed by the bid manager.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

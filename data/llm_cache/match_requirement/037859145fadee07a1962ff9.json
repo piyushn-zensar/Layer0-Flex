@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance with legal regulations regarding investment activities in Iran. It is not a product requirement and does not map to any product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 2,
+        "rationale": "This requirement discusses the Owner's rights under General Municipal Law Section 103-g and does not specify a product requirement. It is a legal/compliance matter and does not map to any product in the catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

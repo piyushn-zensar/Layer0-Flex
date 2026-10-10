@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 1.0,
-    "rationale": "The requirement pertains to compliance and equal employment opportunity policies, which are not directly related to a product or business unit offering. Therefore, no mapping to SpinCo products or units is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

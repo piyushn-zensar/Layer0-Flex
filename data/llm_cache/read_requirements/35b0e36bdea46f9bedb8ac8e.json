@@ -1,0 +1,71 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 23,
+        "quote": "Failure to timely submit a Subcontractor Quarterly Compliance Report and/or other reports or information as requested by SRAA may result in payments under the contract being delayed until such reports or other information have been received by SRAA.",
+        "section": "C",
+        "text": "Submit Subcontractor Quarterly Compliance Reports on time to avoid payment delays."
+      },
+      {
+        "category": "compliance",
+        "page": 23,
+        "quote": "Where SRAA determines that Contractor is not in compliance with the requirements of the Contract and Contractor refuses to comply with such requirements, or if Contractor is found to have willfully and intentionally failed to comply with the MWBE participation goals, Contractor shall be obligated to pay to the SRAA liquidated damages.",
+        "section": "VII.A",
+        "text": "Pay liquidated damages for non-compliance with MWBE participation goals."
+      },
+      {
+        "category": "compliance",
+        "page": 23,
+        "quote": "Such liquidated damages shall be calculated as an amount equaling the difference between: (a) all sums identified for payment to MWBEs had the Contractor achieved the contractual MWBE goals; and (b) all sums actually paid to MWBEs for work performed or materials supplied under the Contract.",
+        "section": "VII.B",
+        "text": "Liquidated damages are calculated based on the shortfall in MWBE payments."
+      },
+      {
+        "category": "compliance",
+        "page": 23,
+        "quote": "Determination of compliance or non-compliance with the Contract’s MWBE participation requirements shall be based upon the Contractor’s Utilization Plan, MWBE Sub-Contractor Quarterly Reports, and any relevant documentation related thereto.",
+        "section": "VII.C",
+        "text": "Compliance with MWBE requirements is determined by reviewing the Utilization Plan and related reports."
+      },
+      {
+        "category": "compliance",
+        "page": 23,
+        "quote": "Upon a determination that a willful and intentional failure to comply with the MWBE participation requirements has occurred, the SRAA shall withhold the amount established in paragraph B from any future payments otherwise required by this Contract.",
+        "section": "VII.D",
+        "text": "SRAA may withhold payments for willful non-compliance with MWBE requirements."
+      },
+      {
+        "category": "compliance",
+        "page": 23,
+        "quote": "All funds being withheld pursuant to this provision shall be offset as liquidated damages upon the expiration or termination of the contract, unless the Contractor comes into compliance with the MWBE requirements at any time during the term of the Contract but prior to the submission of a request for final payment on the contract.",
+        "section": "VII.D",
+        "text": "Withheld funds are offset as liquidated damages unless compliance is achieved before final payment request."
+      },
+      {
+        "category": "compliance",
+        "page": 23,
+        "quote": "All payments withheld pursuant to this provision shall be released upon SRAA’s determination that the Contractor has come into compliance.",
+        "section": "VII.D",
+        "text": "Withheld payments are released upon compliance determination by SRAA."
+      },
+      {
+        "category": "compliance",
+        "page": 23,
+        "quote": "In the event a determination has been made which requires the payment of liquidated damages and such identified sums have not been withheld by the SRAA, Contractor shall pay such liquidated damages to the SRAA within sixty (60) days after they are assessed by the SRAA unless prior to the expiration of such sixtieth day, the Contractor has filed a complaint with the Director of the Division of Minority and Woman Business Development pursuant to Subdivision 8 of Section 313 of the Executive Law in which event the liquidated damages shall be payable if Director renders a decision in favor of the SRAA.",
+        "section": "VII.E",
+        "text": "Pay liquidated damages within 60 days unless a complaint is filed and resolved in favor of the contractor."
+      },
+      {
+        "category": "compliance",
+        "page": 23,
+        "quote": "Contractors may be requested to provide additional Compliance Reports and information (i) to verify payments made to MWBEs, (ii) to verify MWBE utilization and/or, (iii) as needed to evaluate any other aspect of Contractor compliance with the requirements set forth herein.",
+        "section": "VII.E",
+        "text": "Provide additional compliance reports as requested to verify MWBE payments and utilization."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,98 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies a Basic Impulse Level (BIL) of 95 kV peak, which is a characteristic of medium-voltage switchgear. The CROWN-ARMV product is a metal-clad medium-voltage switchgear lineup that can be engineered to meet specific BIL requirements.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The Normal Frequency Withstand of 36 kV, rms, is a specification for medium-voltage switchgear. The CROWN-ARMV product is suitable for such applications and can be engineered to meet this requirement.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The frequency of 60 Hz is standard for medium-voltage switchgear in North America. The CROWN-ARMV product is designed to operate at this frequency.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The Momentary Rating of 25 kA, rms, is a typical specification for medium-voltage switchgear. The CROWN-ARMV product can be engineered to meet this rating.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "The requirement specifies the equipment type as Metal Clad Switchgear. The CROWN-ARMV product is a metal-clad medium-voltage switchgear lineup, making it the appropriate choice.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 6,
+        "rationale": "This requirement pertains to the construction and finish of interior gypsum board, which is not related to any product in the catalog. It is likely a construction specification for the building contractor.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 7,
+        "rationale": "This requirement specifies the use of metal corner beads and trim for gypsum board surfaces, which is a construction detail and not related to any product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 8,
+        "rationale": "This requirement concerns the layout and installation of tiles and gypsum board, which is a construction detail and not related to any product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 9,
+        "rationale": "This requirement specifies the provision of conduits for power connection, which is a construction and installation detail and not related to any product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 10,
+        "rationale": "This requirement specifies the provision of conduits for fire alarm connection, which is a construction and installation detail and not related to any product in the catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

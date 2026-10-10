@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to submission details, including providing a project schedule and clarifications. It does not specify a product or technical solution, so no product mapping is applicable. The bid manager should address this requirement.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

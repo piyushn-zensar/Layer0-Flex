@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Compliance with fair competition requirements"
+      },
+      {
+        "category": "legal",
+        "members": [
+          4,
+          5
+        ],
+        "title": "Legal affirmation and acknowledgment of penalties"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to marking the shipping container, which is a logistical or commercial aspect rather than a product-specific feature. Therefore, it is not mapped to any product.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

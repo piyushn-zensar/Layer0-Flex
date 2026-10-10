@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 1.0,
-    "rationale": "The requirement pertains to scheduling and contractual dates, which are not product-related. Therefore, no mapping to business units or products is necessary.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

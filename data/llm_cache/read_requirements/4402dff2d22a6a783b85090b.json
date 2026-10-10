@@ -1,0 +1,99 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 32,
+        "quote": "Contractors (to include those who submit bids/proposals in an effort to be selected for contract award as well as those successful bidders/proposers with whom SRAA enters into State contracts) must document “good faith efforts” to provide meaningful participation by New York State Certified M/WBE subcontractors or suppliers/vendors in the performance of this contract.",
+        "section": "M/WBE GOAL REQUIREMENTS",
+        "text": "Contractors must document good faith efforts to involve NYS Certified M/WBE subcontractors or suppliers."
+      },
+      {
+        "category": "compliance",
+        "page": 32,
+        "quote": "The Contractor attended any pre-bid, pre-award, or other meetings scheduled by the contracting agency or the NYS Department of Economic Development or its designee to inform certified minority- or women-owned business enterprises of contracting and subcontracting opportunities available on the project, for purposes of complying with contract participation goal requirements;",
+        "section": "M/WBE GOAL REQUIREMENTS",
+        "text": "Contractor must attend meetings to inform M/WBE enterprises of opportunities."
+      },
+      {
+        "category": "technical",
+        "page": 32,
+        "quote": "The Contractor identified economically feasible units of the project that could be contracted or subcontracted to certified minority- and women-owned business enterprises in order to increase the likelihood of participation by such enterprises on the contract;",
+        "section": "M/WBE GOAL REQUIREMENTS",
+        "text": "Contractor must identify feasible project units for M/WBE participation."
+      },
+      {
+        "category": "technical",
+        "page": 32,
+        "quote": "The Contractor undertook efforts to reasonably structure the contract scope of work for purposes of subcontracting with certified minority- and women-owned business enterprises;",
+        "section": "M/WBE GOAL REQUIREMENTS",
+        "text": "Contractor must structure work scope to enable M/WBE subcontracting."
+      },
+      {
+        "category": "submission",
+        "page": 32,
+        "quote": "The Contractor advertised in a timely fashion and in appropriate general circulation, trade and minority- and women-oriented publications, if any, concerning the contracting or subcontracting opportunity;",
+        "section": "M/WBE GOAL REQUIREMENTS",
+        "text": "Contractor must advertise opportunities in relevant publications."
+      },
+      {
+        "category": "submission",
+        "page": 32,
+        "quote": "The Contractor made written solicitations in a timely fashion to a reasonable number of certified minority- and women-owned business enterprises identified from current certified lists of such business enterprises provided or maintained by the NYS Empire State Development’s Division of Minority and Women Owned Business Development, or its designee, of the contracting or subcontracting opportunity.",
+        "section": "M/WBE GOAL REQUIREMENTS",
+        "text": "Contractor must solicit certified M/WBE enterprises from official lists."
+      },
+      {
+        "category": "submission",
+        "page": 32,
+        "quote": "The Contractor can document if any timely responses to any such advertisements and solicitations were provided by certified minority- and women-owned business enterprises;",
+        "section": "M/WBE GOAL REQUIREMENTS",
+        "text": "Contractor must document responses from M/WBE enterprises."
+      },
+      {
+        "category": "submission",
+        "page": 32,
+        "quote": "The Contractor followed-up initial solicitations by contacting the enterprises to determine whether the enterprises were interested in such contracting or subcontracting opportunity;",
+        "section": "M/WBE GOAL REQUIREMENTS",
+        "text": "Contractor must follow up on solicitations to confirm interest."
+      },
+      {
+        "category": "submission",
+        "page": 32,
+        "quote": "The Contractor provided interested certified minority- and women-owned business enterprises in a timely fashion with adequate information about the plans, specifications or terms and conditions of the State contract and requirements for the contracting or subcontracting opportunity so as to prepare an informed response to a contractor solicitation;",
+        "section": "M/WBE GOAL REQUIREMENTS",
+        "text": "Contractor must provide M/WBE enterprises with contract details for informed responses."
+      },
+      {
+        "category": "submission",
+        "page": 32,
+        "quote": "The Contractor submitted a completed, acceptable utilization plan in accordance with applicable requirements to meet goals for participation of certified minority- and women-owned business enterprises established in the State contract;",
+        "section": "M/WBE GOAL REQUIREMENTS",
+        "text": "Contractor must submit an acceptable utilization plan for M/WBE participation."
+      },
+      {
+        "category": "staffing",
+        "page": 32,
+        "quote": "The Contractor used the services of community organizations, contractor groups, state and federal business assistance offices and other organizations identified by the NYS Department of Economic Development or its designee that provide assistance in the recruitment and placement of minority- and women-owned business enterprises;",
+        "section": "M/WBE GOAL REQUIREMENTS",
+        "text": "Contractor must use services of organizations aiding M/WBE recruitment."
+      },
+      {
+        "category": "compliance",
+        "page": 33,
+        "quote": "The Contractor negotiated in good faith with certified minority- and women-owned business enterprises submitting bids, proposals, or quotations and did not, without justifiable reason, reject as unsatisfactory any bids, proposals or quotations prepared by any certified minority- or women-owned business enterprise.",
+        "section": "M/WBE GOAL REQUIREMENTS",
+        "text": "Contractor must negotiate in good faith with M/WBE enterprises."
+      },
+      {
+        "category": "commercial",
+        "page": 33,
+        "quote": "The Contractor undertook efforts to make payments for any work performed by certified minority- and women-owned business enterprises in a timely fashion so as to facilitate continued performance by certified minority- and women-owned business enterprises.",
+        "section": "M/WBE GOAL REQUIREMENTS",
+        "text": "Contractor must ensure timely payments to M/WBE enterprises."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.95,
-    "rationale": "The requirement pertains to compliance with construction codes and regulations, which is a general project requirement and not specific to any product offering. Therefore, no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

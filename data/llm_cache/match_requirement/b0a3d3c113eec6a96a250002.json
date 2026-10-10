@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to construction and testing standards for piping penetrations and mechanical systems, which are not directly related to the products listed in the candidates. This is a general construction and compliance requirement, and the bid manager would address it.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

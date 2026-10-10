@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies luminaires, which are not part of the provided product catalog. This is not a product requirement that can be matched to the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement for a battery charger aligns with the EP2-AUX product, which includes station AC and DC distribution systems, battery systems, and chargers. This product is suitable for the described need.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "EP2-AUX"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

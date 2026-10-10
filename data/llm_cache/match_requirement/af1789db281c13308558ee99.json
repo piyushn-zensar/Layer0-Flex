@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to installation compliance with state and local codes, which is typically handled by the purchaser or their contractor. No product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

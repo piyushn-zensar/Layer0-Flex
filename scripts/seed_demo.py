@@ -5,7 +5,7 @@
 main() alone (as the tests call it) seeds only Syracuse, with its 13 hand-picked line items (quick and stable).
 
 The real Syracuse demo runs the reader agent and the grouping agent from their frozen answers (no model call, no
-API key): 840 line items become about 350 requirements. Every requirement is approved and frozen, matched, the
+API key): about 810 line items become about 350 requirements. Every requirement is approved and frozen, matched, the
 bid decision is recorded, the work is dispatched, and the sample answers from the seed file are attached to the
 real requirements that cover the same RFP lines. Every step calls the same service a user action would call,
 so the seed doubles as an end-to-end check.

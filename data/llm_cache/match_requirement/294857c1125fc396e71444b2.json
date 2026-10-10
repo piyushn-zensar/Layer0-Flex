@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.95,
+        "n": 1,
+        "rationale": "The requirement specifies 15 kV metal-clad switchgear with specific ratings and features. The CROWN-ARMV product from the catalog matches this description as it is an arc-resistant metal-clad MV switchgear with vacuum circuit breakers, suitable for the specified voltage class.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement specifies rigid bus bar connections for potential transformer trays, which is a feature that can be incorporated into the CROWN-ARMV product as part of its engineered-to-order offering.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 3,
+        "rationale": "The requirement describes specific features of the circuit breaker compartment and breakers, which align with the capabilities of the CROWN-ARMV product, including vacuum circuit breakers and compatibility with SEL-751 relays.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement specifies operation on a solidly grounded 13.2 kV system, which is within the capabilities of the CROWN-ARMV product as an engineered-to-order solution.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.85,
+        "n": 5,
+        "rationale": "The requirement for a gang-operated isolation switch can be addressed within the engineered-to-order capabilities of the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "The requirement for specific metering CTs, VTs, and ground balls can be fulfilled using the CROWN-ACC product, which includes accessories for MV switchgear such as ground balls and other components.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 7,
+        "rationale": "The requirement for compliance with IEEE standards for metal-clad switchgear is inherently met by the CROWN-ARMV product, which is designed to meet IEEE C37.20.7 standards.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

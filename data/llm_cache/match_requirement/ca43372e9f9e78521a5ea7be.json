@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement is commercial in nature, as it pertains to quoting services as an option in the proposal. Therefore, it does not directly map to a product requirement, and no product units are listed.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

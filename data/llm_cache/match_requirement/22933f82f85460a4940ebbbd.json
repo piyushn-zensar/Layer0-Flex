@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance with participation goals for certified M/WBEs and does not specify a product or service from the catalog. It is a commercial or legal requirement that the bid manager should address.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

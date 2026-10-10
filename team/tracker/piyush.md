@@ -23,6 +23,7 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | P-15 | Add a missed requirement by selecting lines on the RFP page (link it to its source without pasting the quote) | S4 | after 12 Oct | todo | from the 8 Oct call (plan §8) |
 | P-16 | Group related line items into requirements with sub-requirements; mark duplicates (from the 9 Oct run: 840 items, many near-duplicates) | S2 | Fri 9 Oct | review | grouping agent + text-based duplicates; Syracuse 840 → 353 requirements (167 groups / 631 sub-requirements) + 23 duplicates; review page shows groups, Ungroup; Traceability lists sub-requirements |
 | P-17 | RAG: long-term index (products, past responses) and a short-term index per RFP (rebuilt on every load); frozen Azure embeddings with offline keyword fallback; "Search this RFP" | S3 | Sat 10 Oct | review | semantic search finds e.g. the 25 kA momentary rating (p.62) for "short-circuit rating"; 300 KB frozen vectors; test added |
+| P-18 | Token cuts: rule-based bid-desk items, matcher one call per page with the catalog as a cached prefix, reader packs short pages | S3 | Sat 10 Oct | review | calls 518 → 208, input 464k → 251k tokens, ~$2.14 → ~$1.44 per new RFP; reader recall unchanged (91.9%); stale answers removed; offline demo rebuilt (Crown 96, EP² 7, bid desk 245) |
 
 ## Blocked on / needs from others
 
@@ -44,3 +45,4 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | 9 Oct 2026 | P-08 demo on the real extraction + dry run | matcher answers for the 353 requirements (A-03 re-run) |
 | 9 Oct 2026 | P-07 ruled tables in the layout, re-frozen | P-14 walk-through; P-09 model-change guard |
 | 10 Oct 2026 | P-17 RAG indexes (long-term + per-RFP), RFP search; stale-page fix | token cuts: rule-based bid-desk items, batched matcher per page, reader line-budget batching |
+| 10 Oct 2026 | P-18 token cuts (−60% calls, −46% input tokens) | J-06 demo checklist + dry run; remaining team tasks |

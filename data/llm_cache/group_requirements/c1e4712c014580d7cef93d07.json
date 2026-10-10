@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Submission requirements for M/WBE entities and business entities"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Compliance requirements for subcontracting and formal agreements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

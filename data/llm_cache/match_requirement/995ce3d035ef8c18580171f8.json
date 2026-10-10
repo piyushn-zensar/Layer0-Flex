@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance and legal assurances from the proposer, not to a specific product or business unit. It is a matter for the bid manager to address.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

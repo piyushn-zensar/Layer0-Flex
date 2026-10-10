@@ -1,0 +1,19 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "title": "Maintain required insurance coverage"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

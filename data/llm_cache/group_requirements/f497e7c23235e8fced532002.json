@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          5
+        ],
+        "title": "Solicit and document bids from M/WBEs"
+      },
+      {
+        "category": "submission",
+        "members": [
+          3,
+          9
+        ],
+        "title": "Submission requirements for M/WBE participation"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

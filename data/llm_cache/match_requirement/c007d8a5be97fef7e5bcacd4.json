@@ -1,0 +1,113 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies integrated power and cooling infrastructure for an AI training campus. ANORD-POD provides prefabricated modular power pods, which align with the modular deployment preference. JETCOOL-CDU offers coolant distribution units for liquid cooling, meeting the cooling needs.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "ANORD-POD"
+          },
+          {
+            "bu": "JETCOOL",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "JETCOOL-CDU"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "This requirement specifies the IT capacity of the campus. It is a design parameter rather than a product requirement, so no specific product is mapped.",
+        "units": []
+      },
+      {
+        "confidence": 0.85,
+        "n": 3,
+        "rationale": "The redundancy requirement at the rack level (N+1) can be met by FPM-SHELF, which provides rack power shelves with N+1 power supply redundancy.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-SHELF"
+          }
+        ]
+      },
+      {
+        "confidence": 0.85,
+        "n": 4,
+        "rationale": "The preference for 800VDC rack-level distribution can be addressed by FPM-SHELF, which supports higher-voltage architectures suitable for this requirement.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-SHELF"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "The requirement for 120kW rack density and liquid cooling at rack and chip level can be met by JETCOOL-PLATE for direct-to-chip cooling and JETCOOL-CDU for rack-level liquid cooling.",
+        "units": [
+          {
+            "bu": "JETCOOL",
+            "offering_type": "CTO",
+            "product_id": "JETCOOL-PLATE"
+          },
+          {
+            "bu": "JETCOOL",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "JETCOOL-CDU"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 6,
+        "rationale": "This requirement describes the site location and grid interconnect status, which are contextual details rather than product requirements.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 7,
+        "rationale": "Compliance requirements such as UL, IEC 61439, and NEC Article 645 are standards to be adhered to during design and manufacturing, not specific product requirements.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 8,
+        "rationale": "The preference for prefabricated/modular systems aligns with ANORD-POD, which provides prefabricated modular power pods for fast deployment.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "ANORD-POD"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 9,
+        "rationale": "The scope includes grid interface through rack-level power and cooling. ANORD-POD can provide modular power solutions, and JETCOOL-CDU can handle the cooling requirements.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "ANORD-POD"
+          },
+          {
+            "bu": "JETCOOL",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "JETCOOL-CDU"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

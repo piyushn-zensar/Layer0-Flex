@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to compliance with Title VI of the Civil Rights Act of 1964, ensuring fair opportunity and non-discrimination in the RFP process. This is a legal and procedural requirement, not directly related to any specific product offering. Therefore, no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

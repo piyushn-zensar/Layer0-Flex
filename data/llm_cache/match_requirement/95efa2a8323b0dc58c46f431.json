@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.95,
+        "n": 1,
+        "rationale": "The requirement specifies technical parameters for medium-voltage switchgear, including short-circuit current, MVA class, and interrupting time. These align with the capabilities of the CROWN-ARMV product, which is an arc-resistant metal-clad MV switchgear designed for such applications.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement describes features of circuit breakers, such as independent trip coils and compatibility. These features are typically part of the CROWN-ARMV product, which includes vacuum circuit breakers as part of its medium-voltage switchgear lineup.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 3,
+        "rationale": "The low-frequency test voltage requirement is a standard specification for medium-voltage switchgear. The CROWN-ARMV product is designed to meet such electrical performance standards.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 4,
+        "rationale": "The basic impulse level (BIL) requirement is a standard specification for medium-voltage switchgear. The CROWN-ARMV product is engineered to meet such BIL ratings.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 5,
+        "rationale": "The nominal voltage supplies and ranges for closing, tripping, and charging motors are typical for medium-voltage switchgear. The CROWN-ARMV product includes these features as part of its design.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.95,
-    "rationale": "The requirement pertains to compliance and communication restrictions during the RFP process, which is not directly related to any product offering. Therefore, no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

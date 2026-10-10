@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement pertains to the testing and verification of metal-clad switchgear, including breaker operation, interlocks, and grounding. The CROWN-ARMV product is a metal-clad medium-voltage switchgear lineup, which matches the described equipment.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement involves testing and setting protective relays and their interaction with breakers, which aligns with the capabilities of the EP2-RPP product, a relay and protection panel designed for such applications.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "This requirement pertains to HVAC and alarm systems, which are not covered by the products in the catalog. It is likely the responsibility of the purchaser or another contractor.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

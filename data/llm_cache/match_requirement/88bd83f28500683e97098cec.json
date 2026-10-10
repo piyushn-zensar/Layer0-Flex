@@ -1,0 +1,152 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This is a compliance requirement and does not pertain to a specific product.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 2,
+        "rationale": "This is a compliance requirement and does not pertain to a specific product.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 3,
+        "rationale": "This is a compliance requirement and does not pertain to a specific product.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 4,
+        "rationale": "This is a compliance requirement and does not pertain to a specific product.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 5,
+        "rationale": "This is a compliance requirement and does not pertain to a specific product.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 6,
+        "rationale": "The requirement specifies a 15kV metal-clad switchgear lineup, which matches the description of the CROWN-ARMV product in the catalog.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 1.0,
+        "n": 7,
+        "rationale": "The requirement specifies protective relays and controls, which matches the description of the EP2-RPP product in the catalog.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      },
+      {
+        "confidence": 1.0,
+        "n": 8,
+        "rationale": "This is a reference to a standard (IEEE C62.22) and does not pertain to a specific product.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 9,
+        "rationale": "The requirement specifies characteristics of primary contacts, which are part of the metal-clad switchgear described by the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 1.0,
+        "n": 10,
+        "rationale": "The requirement specifies wire identification, which is part of the relay and protection panel described by the EP2-RPP product.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      },
+      {
+        "confidence": 1.0,
+        "n": 11,
+        "rationale": "The requirement specifies external power cable entrance, which is part of the metal-clad switchgear described by the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 1.0,
+        "n": 12,
+        "rationale": "The requirement specifies external power cable exit, which is part of the metal-clad switchgear described by the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 1.0,
+        "n": 13,
+        "rationale": "The requirement specifies the system nominal voltage, which is part of the metal-clad switchgear described by the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 1.0,
+        "n": 14,
+        "rationale": "The requirement specifies the rated maximum voltage, which is part of the metal-clad switchgear described by the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 1.0,
+        "n": 15,
+        "rationale": "The requirement specifies the rated continuous current, which is part of the metal-clad switchgear described by the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

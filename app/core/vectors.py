@@ -33,23 +33,36 @@ class Index:
 
     def search(self, query: str, k: int = 5, where=None) -> list[dict]:
         """Top-k items as {**item, "score"}; `where` filters items (e.g. one business unit)."""
-        if not query.strip() or not self.items:
-            return []
-        scores = None
-        if self.vectors is not None:
-            q = llm.embed([query])  # None offline: then keyword scoring for this query
-            if q is not None:
-                v = np.asarray(q[0], dtype=np.float32)
-                scores = self.vectors @ (v / (np.linalg.norm(v) or 1.0))
-        if scores is None:
-            if self._tfidf is None:
-                vectorizer = TfidfVectorizer(stop_words="english", ngram_range=(1, 2))
-                self._tfidf = (vectorizer, vectorizer.fit_transform(self.texts))
-            vectorizer, matrix = self._tfidf
-            scores = cosine_similarity(vectorizer.transform([query]), matrix)[0]
-        order = np.argsort(-scores, kind="stable")
+        return self.search_many([query], k, where)[0]
+
+    def search_many(self, queries: list[str], k: int = 5, where=None) -> list[list[dict]]:
+        """search() for many queries with one embedding call (one request instead of one per requirement)."""
+        if not self.items:
+            return [[] for _ in queries]
+        qv = llm.embed([q or " " for q in queries]) if self.vectors is not None else None  # None offline
         out = []
-        for i in order:
+        for i, query in enumerate(queries):
+            if not query.strip():
+                out.append([])
+                continue
+            if qv is not None:
+                v = np.asarray(qv[i], dtype=np.float32)
+                scores = self.vectors @ (v / (np.linalg.norm(v) or 1.0))
+            else:
+                scores = self._keyword_scores(query)
+            out.append(self._top(scores, k, where))
+        return out
+
+    def _keyword_scores(self, query: str) -> np.ndarray:
+        if self._tfidf is None:
+            vectorizer = TfidfVectorizer(stop_words="english", ngram_range=(1, 2))
+            self._tfidf = (vectorizer, vectorizer.fit_transform(self.texts))
+        vectorizer, matrix = self._tfidf
+        return cosine_similarity(vectorizer.transform([query]), matrix)[0]
+
+    def _top(self, scores, k: int, where) -> list[dict]:
+        out = []
+        for i in np.argsort(-scores, kind="stable"):
             if scores[i] <= 0 or (where and not where(self.items[i])):
                 continue
             out.append({**self.items[i], "score": round(float(scores[i]), 3)})

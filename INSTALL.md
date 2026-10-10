@@ -1,6 +1,6 @@
 # Install and run Layer 0 on a Windows laptop
 
-This runs the Layer 0 proof of concept on your own laptop with the demonstration opportunity, which is the public Syracuse switchgear RFP. It is read by the real pipeline from its frozen model answers (840 line items grouped into about 350 requirements). You don't need an OCR engine, an API key or a network connection to a model.
+This runs the Layer 0 proof of concept on your own laptop with the demonstration opportunity, which is the public Syracuse switchgear RFP. It is read by the real pipeline from its frozen model answers (about 810 line items grouped into about 350 requirements). You don't need an OCR engine, an API key or a network connection to a model.
 
 ## Before you start (once)
 
@@ -30,7 +30,7 @@ The address is http://localhost:3000. Use the **Acting as** drop-down at the top
 | Works on the laptop | Needs the project's model connection or OCR machine |
 |---|---|
 | The demonstration opportunity: requirements, traceability, bid decision, work packages, final response, compliance matrix | Reading a **new** RFP with the reader agent. The Syracuse RFP has frozen answers, so it can be re-read offline |
-| Uploading the Syracuse RFP again and re-reading it (840 line items from the frozen answers) | OCR of scanned pages in a new RFP |
+| Uploading the Syracuse RFP again and re-reading it (about 810 line items from the frozen answers) | OCR of scanned pages in a new RFP |
 | Requirement review: edit, split, merge, add, history | Model-based product matching for new line items. Keyword matching is used instead and labelled as such |
 
 ## If something goes wrong

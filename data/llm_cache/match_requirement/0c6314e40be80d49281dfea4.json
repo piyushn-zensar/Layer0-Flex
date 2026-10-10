@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 1.0,
-    "rationale": "The requirement pertains to a submission of an EEO policy statement, which is a commercial or legal requirement and not related to a product offering. Therefore, no mapping to SpinCo business units or products is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

@@ -14,6 +14,7 @@ Public contract:
         units suggested outside the scope, over the frozen approved requirements (see checks.py)
 """
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -45,35 +46,65 @@ def _row(opp_id: str, req_id: str, units: list[dict], **fields) -> Match:
                  offering_type=main["offering_type"], **fields)
 
 
+BATCH = 15           # requirements per matcher call (one page; a dense page is split)
+PARALLEL_CALLS = 4
+
+
 def match(db: Session, opp_id: str, actor: str) -> dict:
-    """A re-run refreshes only proposals; accepted, manual and rejected matches are a person's decision (rule R4)."""
+    """A re-run refreshes only proposals; accepted, manual and rejected matches are a person's decision (rule R4).
+
+    Token cuts (P-18): requirements outside PRODUCT_CATEGORIES go to the bid manager by rule, with no model call;
+    the rest are sent one page at a time with the whole catalog in the fixed part of the prompt."""
     decided = {req_id for req_id, m in _latest(db, opp_id).items() if m.status != "proposed"}
     reqs = [r for r in requirements.current(db, opp_id) if r.status == "approved" and r.req_id not in decided]
-    method_count = defaultdict(int)
-    layouts = {}
+    evidence = dict(zip((r.req_id for r in reqs), catalog.search_many([r.quote for r in reqs], k=5)))
+    products, past = catalog.products(), catalog.past_responses()
+    candidates = [{"kind": "product", "id": p["id"], "bu": p["bu"]} for p in products]
+    layouts: dict = {}
+    results: dict[str, tuple[dict, str]] = {}
+    batches = []
     for req in reqs:
-        hits = catalog.search(req.quote, k=5)
-        header = _header(req, layouts)
-        # lines like "Apply an epoxy finish" name no equipment: add the products the page header points to
-        seen = {h["id"] for h in hits}
-        candidates = hits + [h for h in catalog.search(header, k=10) if h["kind"] == "product" and h["id"] not in seen][:2]
+        if req.category not in PRODUCT_CATEGORIES:
+            results[req.req_id] = ({"units": [], "confidence": 1.0, "rationale":
+                                    f"A {req.category} requirement, not a product item: the bid manager answers it."}, "rule")
+        elif batches and batches[-1][0] == (req.document_id, req.page) and len(batches[-1][1]) < BATCH:
+            batches[-1][1].append(req)
+        else:
+            batches.append(((req.document_id, req.page), [req]))
+
+    def ask(batch):
+        (_, page), items = batch
+        header = _header(items[0], layouts)
         try:
-            proposal = agent.propose({"req_id": req.req_id, "category": req.category, "quote": req.quote,
-                                      "header": header}, candidates)
-            out, method = agent.checked(proposal, candidates), "agent"
-            if out is None:  # the model named only things that are not candidate products
-                named = [u["product_id"] for u in proposal["units"]]
-                out, method = _retrieval_only(req, hits), "retrieval_only"
-                out["rationale"] = f"Model answer {named} has no candidate product. {out['rationale']}"
+            return items, agent.propose_page(header, [{"category": r.category, "quote": r.quote} for r in items],
+                                             products, past)
         except agent.LLMUnavailable:
-            out, method = _retrieval_only(req, hits), "retrieval_only"
+            return items, [None] * len(items)
+
+    for r in reqs:  # load layouts once, before the threads read them
+        if r.page is not None:
+            _header(r, layouts)
+    with ThreadPoolExecutor(PARALLEL_CALLS) as pool:
+        for items, answers in pool.map(ask, batches):
+            for req, answer in zip(items, answers):
+                out = agent.checked(answer, candidates) if answer else None
+                if out is not None:
+                    results[req.req_id] = (out, "agent")
+                else:
+                    fallback = _retrieval_only(req, evidence[req.req_id])
+                    if answer:  # the model named only things that are not catalog products
+                        fallback["rationale"] = f"Model answer {[u['product_id'] for u in answer['units']]} has no catalog product. {fallback['rationale']}"
+                    results[req.req_id] = (fallback, "retrieval_only")
+    method_count = defaultdict(int)
+    for req in reqs:
+        out, method = results[req.req_id]
         m = _row(opp_id, req.req_id, out["units"], confidence=out["confidence"], rationale=out["rationale"],
-                 evidence=candidates, method=method)
+                 evidence=evidence[req.req_id], method=method)
         db.add(m)
         method_count[method] += 1
         audit.record(db, actor, "proposed", "match", req.req_id, opp_id, units=m.units, method=method)
     db.commit()
-    return {"matched": len(reqs), "kept": len(decided), **method_count}
+    return {"matched": len(reqs), "kept": len(decided), "calls": len(batches), **method_count}
 
 
 def _header(req, layouts: dict) -> str:

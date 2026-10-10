@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement specifies technical details about the primary contacts, but no candidates were provided to match against. Therefore, no product or business unit can be selected to fulfill this requirement.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

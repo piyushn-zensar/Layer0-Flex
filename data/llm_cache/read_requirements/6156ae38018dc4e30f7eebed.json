@@ -1,0 +1,57 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 38,
+        "quote": "Form SRAA - 5007 Completed",
+        "section": "M/WBE CONTRACTOR PARTICIPATION BID/PROPOSAL",
+        "text": "The bidder must complete Form SRAA - 5007."
+      },
+      {
+        "category": "submission",
+        "page": 38,
+        "quote": "Specify in detail the particular work items to be performed thereof and associated dollar amounts",
+        "section": "M/WBE CONTRACTOR PARTICIPATION BID/PROPOSAL",
+        "text": "The bidder must specify work items and associated dollar amounts."
+      },
+      {
+        "category": "submission",
+        "page": 38,
+        "quote": "Signature of MWBE Contractor",
+        "section": "M/WBE CONTRACTOR PARTICIPATION BID/PROPOSAL",
+        "text": "The MWBE contractor must provide their signature."
+      },
+      {
+        "category": "submission",
+        "page": 39,
+        "quote": "I certify that on (Date) I contacted the following New York State Certified Minority/Women Business Enterprises by registered mail to obtain bids for work to be performed on the above-mentioned contract.",
+        "section": "M/WBE CONTRACTOR UNAVAILABILITY CERTIFICATION",
+        "text": "The bidder must certify contacting NYS Certified MWBEs by registered mail for bids."
+      },
+      {
+        "category": "submission",
+        "page": 39,
+        "quote": "List the names of M/WBEs and type of work that bids were requested",
+        "section": "M/WBE CONTRACTOR UNAVAILABILITY CERTIFICATION",
+        "text": "The bidder must list names of MWBEs and work types for bid requests."
+      },
+      {
+        "category": "submission",
+        "page": 39,
+        "quote": "To the best of my knowledge and belief, said New York State Certified Minority/Women Business Enterprise contractor(s) was unavailable for work on this project, or unable to prepare a bid for the following reasons:",
+        "section": "M/WBE CONTRACTOR UNAVAILABILITY CERTIFICATION",
+        "text": "The bidder must provide reasons for MWBE unavailability or inability to bid."
+      },
+      {
+        "category": "submission",
+        "page": 39,
+        "quote": "Signature of Prime Consultant/Contractor",
+        "section": "M/WBE CONTRACTOR UNAVAILABILITY CERTIFICATION",
+        "text": "The prime consultant/contractor must provide their signature."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

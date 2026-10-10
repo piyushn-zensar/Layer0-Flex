@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance and legal terms of the RFP process, not to a specific product or business unit.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 2,
+        "rationale": "This requirement is a compliance notice related to Title VI of the Civil Rights Act and does not specify a product or business unit.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

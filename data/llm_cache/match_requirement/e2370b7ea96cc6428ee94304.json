@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.95,
-    "rationale": "The requirement pertains to submission and amendment processes for the RFP, which are administrative and procedural aspects of the bid. It does not specify a product or technical solution, so no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

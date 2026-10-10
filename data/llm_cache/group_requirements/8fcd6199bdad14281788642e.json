@@ -1,0 +1,17 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "MWBE bid request documentation"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

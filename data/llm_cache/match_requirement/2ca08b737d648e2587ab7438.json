@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement pertains to submission details regarding anchor bolts and related specifications, which are not directly tied to a product offering. This is a commercial or documentation requirement, and the bid manager would address it.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

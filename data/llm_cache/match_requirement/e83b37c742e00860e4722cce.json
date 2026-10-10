@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement primarily pertains to installation, grounding, and electrical connections, which are tasks typically performed by the contractor and do not directly specify a product or business unit offering. Therefore, no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

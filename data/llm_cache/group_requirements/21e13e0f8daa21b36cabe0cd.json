@@ -1,0 +1,23 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          3
+        ],
+        "title": "Submission of required forms and signatures"
+      },
+      {
+        "category": "submission",
+        "members": [
+          2
+        ],
+        "title": "Specification of work items and associated costs"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

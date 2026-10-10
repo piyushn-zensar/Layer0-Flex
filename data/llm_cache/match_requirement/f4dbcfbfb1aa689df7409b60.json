@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance with M/WBE participation and legal obligations under NYS Executive Law and related regulations. It does not specify a product or service requirement from the catalog, so it is not applicable to the listed products.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -221,14 +221,14 @@ No regular-expression or keyword fallback exists for identifying requirements (r
 
 ### 6.2a Grouping into requirements and sub-requirements (built 9 Oct 2026)
 
-The reader lists every obligation separately, so a list such as "submit these twelve drawings" arrives as twelve line items. On the Syracuse RFP that gave 840 line items, many of them closely related. Two steps follow the reader:
+The reader lists every obligation separately, so a list such as "submit these twelve drawings" arrives as twelve line items. On the Syracuse RFP that gave about 810 line items, many of them closely related. Two steps follow the reader:
 
 1. **Duplicates** are found by text comparison, not by the model. A quote that repeats an earlier one almost word for word (often a cover-page restatement of the specification) is marked as a duplicate of the first occurrence. A reviewer can restore it.
 2. **Grouping agent.** For each page, the model receives the numbered line items and proposes groups that form one obligation: a drawing list, a list of standards, the features of one piece of equipment, the parts of one insurance requirement. It returns only item numbers and a short title. It never changes or drops an item: anything it does not place stays a requirement on its own, and invalid answers are discarded. The answers are cached and frozen like the reader's.
 
 A group is one **requirement** made of **sub-requirements**. It keeps every sub-requirement's highlight and quote. Matching, dispatch, Traceability and the final response work on requirements, that is groups and stand-alone items. Approving or rejecting a group applies to its undecided sub-requirements. **Ungroup** releases the sub-requirements as requirements again.
 
-On the Syracuse RFP: 840 line items become 353 requirements (167 groups holding 631 sub-requirements, plus 186 stand-alone items), and 23 duplicates are marked.
+On the Syracuse RFP: 814 line items become 348 requirements (162 groups and the stand-alone items), and 21 duplicates are marked.
 
 ### 6.2b Retrieval indexes: long-term knowledge and the per-RFP index (built 10 Oct 2026)
 
@@ -242,6 +242,24 @@ Retrieval-augmented generation (RAG) uses two kinds of vector index, built on on
 Embeddings come from the Azure embedding deployment (`text-embedding-3-small`, shortened to 256 dimensions) through the model gateway. Like model answers, they are frozen: the vectors of a set of texts are stored under a hash of the texts and committed for the sample RFP and the knowledge base. Re-indexing unchanged text therefore costs nothing, and the Syracuse index (about 600 passages) takes about 8 seconds the first time. Without the embedding service, for example on the offline laptop package, an index falls back to keyword (TF-IDF) search and says so.
 
 The short-term index does not reduce the reader's input: every page still has to be read once to find its requirements. Its value is retrieval across the whole RFP. Whatever feeds a frozen prompt must give the same result online and offline, so prompts never depend on which search mode is available.
+
+### 6.2c Keeping model calls and tokens down (built 10 Oct 2026)
+
+Measured on the Syracuse RFP (101 pages), one first read of a new RFP:
+
+| | Before | After |
+|---|---|---|
+| Model calls | 518 | 208 |
+| Input tokens | about 464k | about 251k |
+| Output tokens | about 98k | about 81k |
+| Cost at GPT-4o list price | about $2.10 | about $1.40, less with the cached catalog prefix |
+
+Three changes:
+1. **Rules first.** Only technical and compliance requirements go to the matcher. Submission, schedule, commercial, legal and staffing requirements go to the bid manager by rule, with no model call (136 of 348 on Syracuse; the model had sent almost all of them there anyway).
+2. **One matcher call per page.** The rules and the whole catalog (products and past responses, about 1,450 tokens) form the fixed opening of every call, which the model service caches and bills at a discount; then come all the product requirements of that page. Each answer is still checked against the catalog. 353 calls become 62.
+3. **Short pages share a reader call** while their lines total 60 or fewer (at most 4 pages); longer pages stay alone. A page that stays alone keeps its exact earlier prompt and frozen answer. Reader accuracy is unchanged: recall 91.9% against the golden list.
+
+Answers are frozen as before, so a re-read of the same RFP makes no call at all. A cheaper model for grouping and matching (a `gpt-4o-mini` deployment) would cut the cost about tenfold again; it needs a new Azure deployment.
 
 ### 6.3 Human review and freezing
 

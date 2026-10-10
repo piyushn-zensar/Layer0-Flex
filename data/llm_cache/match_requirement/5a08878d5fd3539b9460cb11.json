@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.95,
-    "rationale": "The requirement pertains to commercial terms and conditions, specifically regarding cost disallowance and payment withholding due to noncompliance. This is not a product requirement, and thus no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

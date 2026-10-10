@@ -162,14 +162,14 @@ def test_one_requirement_several_units(monkeypatch):
     from app.modules.matching import service as matching
     from app.modules.workpackages import service as workpackages
 
-    def two_units(requirement, candidates):  # first two candidate products from different units
+    def two_units(header, requirements, products, past):  # per requirement: two catalog products from different units
         units = {}
-        for c in candidates:
-            if c["kind"] == "product":
-                units.setdefault(c["bu"], {"bu": c["bu"], "product_id": c["id"], "offering_type": c["offering_type"]})
-        return {"units": list(units.values())[:2], "confidence": 0.9, "rationale": "stub"}
+        for p in products:
+            units.setdefault(p["bu"], {"bu": p["bu"], "product_id": p["id"], "offering_type": p["offering_type"]})
+        pick = list(units.values())[:2]
+        return [{"n": i, "units": pick, "confidence": 0.9, "rationale": "stub"} for i in range(1, len(requirements) + 1)]
 
-    monkeypatch.setattr(agent, "propose", two_units)
+    monkeypatch.setattr(agent, "propose_page", two_units)  # P-18: one matcher call per page
     seed_demo.main()  # its own opportunity (matched retrieval-only, then dispatched)
     with SessionLocal() as db:
         opp = TestClient(app).get("/api/portfolio").json()[0]["opp"]["id"]
@@ -373,7 +373,7 @@ def test_grouping_and_duplicates():
     opp = client.post("/api/opportunities", json={"title": "grouping"}).json()["id"]
     client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
     r = client.post(f"/api/opportunities/{opp}/requirements/extract").json()  # frozen reader + grouping answers
-    assert r["proposed"] == 840 and r["duplicates"] == 23 and r["groups"] > 100 and r["requirements"] < 400, r
+    assert r["proposed"] == 814 and r["duplicates"] == 21 and r["groups"] > 100 and r["requirements"] < 400, r
     rows = client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]
     by_id = {x["req_id"]: x for x in rows}
     group = next(x for x in rows if x["kind"] == "group")

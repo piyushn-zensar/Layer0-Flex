@@ -1,0 +1,19 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "commercial",
+        "members": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ],
+        "title": "Provide a comprehensive cost breakdown for the switchgear project"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

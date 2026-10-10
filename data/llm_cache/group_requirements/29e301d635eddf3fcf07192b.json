@@ -1,0 +1,43 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          2,
+          8
+        ],
+        "title": "Switchgear standards compliance"
+      },
+      {
+        "category": "submission",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Submission requirements for project schedule and clarifications"
+      },
+      {
+        "category": "technical",
+        "members": [
+          1,
+          7,
+          10,
+          12
+        ],
+        "title": "Switchgear components and accessories"
+      },
+      {
+        "category": "technical",
+        "members": [
+          5,
+          6,
+          9
+        ],
+        "title": "Switchgear installation and maintenance tools and equipment"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

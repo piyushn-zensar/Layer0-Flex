@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement does not specify a product or business unit, and no candidates are provided to match against. This is likely a general technical requirement that does not directly map to a specific product offering.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

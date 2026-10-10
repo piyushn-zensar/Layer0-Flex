@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.95,
+        "n": 1,
+        "rationale": "The requirement specifies features and construction details typical of metal-clad medium-voltage switchgear, such as door arrangements, material specifications, and compartmentalization. The CROWN-ARMV product matches these requirements as it is an arc-resistant metal-clad MV switchgear designed to IEEE standards.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The power supply and wiring specifications align with the requirements for medium-voltage switchgear, which typically includes control and power circuits with specified voltage and wire sizes. The CROWN-ARMV product is suitable for these requirements.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.85,
+        "n": 3,
+        "rationale": "The environmental and structural requirements, such as temperature range, altitude, and seismic/wind loading, are consistent with the operational conditions for medium-voltage switchgear. The CROWN-ARMV product is designed to meet such conditions.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

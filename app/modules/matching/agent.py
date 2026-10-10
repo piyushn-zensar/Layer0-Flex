@@ -1,4 +1,9 @@
-"""Matcher agent: requirement + retrieved catalog evidence -> business unit(s), product, offering type."""
+"""Matcher agent: the product requirements of one page -> business unit(s), product, offering type for each.
+
+One call per page (P-18), not per requirement. The rules and the whole catalog come first in the system message;
+that part is the same in every call, so the service's prompt cache bills it at a discount after the first call.
+No requirement ID is in the prompt: the frozen answer is keyed by the prompt, so the same RFP text gets the same
+answer in every opportunity (demo, re-upload, laptop package)."""
 import json
 
 from app.core.llm import LLMUnavailable, complete_json
@@ -6,10 +11,10 @@ from app.modules.matching.models import OFFERING_TYPES
 
 MAX_UNITS = 3  # ponytail: guard against a talkative answer flooding inboxes; raise if real bids need more
 
-SYSTEM = """You map one requirement from a customer RFP to the SpinCo business units and products that would
-meet it. You may only choose products from the candidates given: product_id must be the id of a candidate
-whose kind is "product". Candidates of kind "past_response" are evidence only, never a product_id.
-"units" lists the unit and product for each part of the requirement, the main one first. List more than one
+SYSTEM = """You map requirements from one page of a customer RFP to the SpinCo business units and products that
+would meet them. Answer every numbered requirement once, with its number in "n". You may only choose products
+from the CATALOG below: product_id must be one of its product ids. PAST RESPONSES are evidence only.
+"units" lists the unit and product for each part of a requirement, the main one first. List more than one
 only when the requirement needs products from several business units.
 The page header names the document part the requirement comes from (for example a specification for one
 piece of equipment). A line about construction, materials, finish, nameplates, wiring, testing, shipping or
@@ -20,11 +25,12 @@ SEMI_CUSTOM = configured product plus additional workshop work for this customer
 ETO = engineered-to-order (designed for this requirement).
 Return an empty "units" list when it is not a product requirement (commercial, submission, legal, or work
 stated as by others or done by the purchaser): the bid manager answers it.
-Explain the choice in one or two sentences that cite the candidates you used."""
+Explain each choice in one or two sentences that cite the catalog entries you used."""
 
-SCHEMA = {
+ANSWER = {
     "type": "object",
     "properties": {
+        "n": {"type": "integer"},
         "units": {
             "type": "array",
             "items": {
@@ -41,19 +47,32 @@ SCHEMA = {
         "confidence": {"type": "number"},
         "rationale": {"type": "string"},
     },
-    "required": ["units", "confidence", "rationale"],
+    "required": ["n", "units", "confidence", "rationale"],
     "additionalProperties": False,
 }
+SCHEMA = {"type": "object", "properties": {"answers": {"type": "array", "items": ANSWER}},
+          "required": ["answers"], "additionalProperties": False}
 
 
-def propose(requirement: dict, candidates: list[dict]) -> dict:
-    """Raises LLMUnavailable when there is no cached answer and no provider; the service then falls back."""
-    # No requirement ID in the prompt: the frozen answer is keyed by the prompt, so the same RFP text gets the same
-    # answer in every opportunity (demo, re-upload, laptop package) instead of new model calls each time.
-    prompt = (f"Requirement ({requirement['category']}):\n{requirement['quote']}\n"
-              f"Page header: {requirement['header'] or '(none)'}\n\n"
-              f"Candidates:\n{json.dumps(candidates, indent=1)}")
-    return complete_json("match_requirement", SYSTEM, prompt, SCHEMA)
+def catalog_text(products: list[dict], past: list[dict]) -> str:
+    """The fixed part of every call: the catalog and past responses, in a stable order."""
+    lines = ["CATALOG (product id | unit | usual offering type | name: description)"]
+    lines += [f"{p['id']} | {p['bu']} | {p['offering_type']} | {p['name']}: {p['description']}" for p in products]
+    lines += ["", "PAST RESPONSES (evidence only)"]
+    lines += [f"{r['id']} | {r['bu']} | {r['requirement']} -> {r['response']}" for r in past]
+    return "\n".join(lines)
+
+
+def propose_page(header: str, requirements: list[dict], products: list[dict], past: list[dict]) -> list[dict | None]:
+    """One answer per requirement (same order); None where the model gave no answer for that number.
+    Raises LLMUnavailable when there is no cached answer and no provider; the service then falls back."""
+    prompt = (f"Page header: {header or '(none)'}\n\nRequirements:\n"
+              + "\n".join(f"{i}. ({r['category']}) {r['quote']}" for i, r in enumerate(requirements, 1)))
+    answers = complete_json("match_requirement", SYSTEM + "\n\n" + catalog_text(products, past), prompt, SCHEMA)["answers"]
+    by_n = {}
+    for a in answers:
+        by_n.setdefault(a["n"], a)  # the first answer for a number counts
+    return [by_n.get(i) for i in range(1, len(requirements) + 1)]
 
 
 def page_header(page: dict) -> str:
@@ -78,7 +97,7 @@ def checked(out: dict, candidates: list[dict]) -> dict | None:
     return out | {"units": units[:MAX_UNITS]}
 
 
-__all__ = ["propose", "page_header", "checked", "LLMUnavailable"]
+__all__ = ["propose_page", "catalog_text", "page_header", "checked", "LLMUnavailable"]
 
 
 if __name__ == "__main__":  # self-check: python -m app.modules.matching.agent

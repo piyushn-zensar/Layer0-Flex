@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to the terms and conditions of the RFP process, specifically the rights of the Syracuse Regional Airport Authority regarding the handling of proposals. It does not specify a product or service requirement, so no product from the catalog is applicable.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

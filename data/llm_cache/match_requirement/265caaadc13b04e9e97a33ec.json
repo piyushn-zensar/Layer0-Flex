@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "This requirement pertains to compliance and negotiation practices with certified minority- and women-owned business enterprises. It does not specify a product or service requirement, and thus no SpinCo business unit or product is applicable. The bid manager should address this requirement.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

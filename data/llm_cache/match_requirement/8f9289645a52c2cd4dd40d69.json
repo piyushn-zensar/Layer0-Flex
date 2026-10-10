@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement specifies a Basic Impulse Level (BIL) of 95 kV peak, which is a technical specification related to electrical equipment. However, none of the provided candidates directly address this requirement or offer products suitable for this specification. Therefore, no product mapping is possible based on the given candidates.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

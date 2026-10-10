@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "schedule",
+        "page": 1,
+        "quote": "Submission Deadline: September 15, 2023 by 4pm",
+        "section": "Submission Deadline",
+        "text": "Proposals must be submitted by September 15, 2023, 4pm."
+      },
+      {
+        "category": "compliance",
+        "page": 1,
+        "quote": "Proposers are prohibited from contact related to this procurement with any Syracuse Regional Airport Authority member, officer, staff or employee other than the designated contact person (if any) and/or the designated email address for contact.",
+        "section": "Procurement Lobbying Law",
+        "text": "Proposers must only contact the designated person or email regarding this procurement."
+      },
+      {
+        "category": "submission",
+        "page": 1,
+        "quote": "All contacts/inquiries shall be made by email only to the following address: bids@syrairport.org",
+        "section": "Contact Information",
+        "text": "All inquiries must be sent via email to bids@syrairport.org."
+      },
+      {
+        "category": "submission",
+        "page": 1,
+        "quote": "ALL PROPOSALS MUST BE RECEIVED VIA EMAIL PRIOR TO 4PM ON FRIDAY, SEPTEMBER 15.",
+        "section": "Proposal Submission",
+        "text": "Proposals must be submitted electronically via email before 4pm on September 15."
+      },
+      {
+        "category": "submission",
+        "page": 1,
+        "quote": "PROPOSALS ARE ONLY ACCEPTED ELECTRONICALLY AND MUST BE ADDRESSED TO: bids@syrairport.org",
+        "section": "Proposal Submission",
+        "text": "Proposals must be submitted electronically to bids@syrairport.org."
+      },
+      {
+        "category": "submission",
+        "page": 1,
+        "quote": "PLEASE PRINT THE WORDS “RFP REFERENCE # 2023-20” ON THE FRONT OF THE PROPOSAL.",
+        "section": "Proposal Identification",
+        "text": "Proposals must include the text 'RFP REFERENCE # 2023-20' on the front."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

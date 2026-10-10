@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.9,
-    "rationale": "The requirement specifies a technical aspect, but no candidates are provided to match it to a product. Therefore, no mapping can be made.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

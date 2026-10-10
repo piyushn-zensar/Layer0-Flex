@@ -1,9 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "confidence": 0.95,
-    "rationale": "The requirement pertains to submission and certification compliance, which is a commercial and legal aspect of the proposal process. It does not specify a product or technical requirement, so no product mapping is applicable.",
-    "units": []
-  },
-  "task": "match_requirement"
-}

@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance with building codes and regulations, which is not specific to any product in the catalog. It is a general construction requirement.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 2,
+        "rationale": "This requirement is about the contractor's responsibility to verify conditions and does not specify any product from the catalog. It is a general construction requirement.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 3,
+        "rationale": "This requirement involves construction practices and structural support, which are not related to any specific product in the catalog. It is a general construction requirement.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 4,
+        "rationale": "This requirement is about coordination among trades and does not specify any product from the catalog. It is a general construction requirement.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 5,
+        "rationale": "This requirement pertains to general construction and finishing standards, which are not specific to any product in the catalog. It is a general construction requirement.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -7,7 +7,9 @@ Public contract:
     unit(code) -> dict | None
     products(bu=None) -> list[dict]
     product(product_id) -> dict | None
+    past_responses() -> list[dict]              past answers of the active units
     search(query, k=5, bu=None) -> list[dict]   ranked products and past responses, each with "score"
+    search_many(queries, k=5) -> list[list[dict]]   search() for many queries at once (one embedding call)
     index_mode() -> str                         "embeddings" (semantic) or "keywords" (offline fallback)
     bom(product_id) -> list[dict]               BOM lines from the BOM source system (stub: catalog JSON)
     layers() -> dict                            grid-to-chip layers, scope keywords, unit tiers (spinco_layers.json)
@@ -41,6 +43,12 @@ def products(bu: str | None = None) -> list[dict]:
     return [p for p in _load("products")["products"] if p["bu"] in active and (bu is None or p["bu"] == bu)]
 
 
+def past_responses() -> list[dict]:
+    """Past RFP answers of the active units (long-term knowledge; evidence for matching and drafting)."""
+    active = {u["code"] for u in units()}
+    return [r for r in _load("past_responses")["responses"] if r["bu"] in active]
+
+
 def product(product_id: str) -> dict | None:
     return next((p for p in _load("products")["products"] if p["id"] == product_id), None)
 
@@ -58,6 +66,10 @@ def _index() -> Index:
 
 def search(query: str, k: int = 5, bu: str | None = None) -> list[dict]:
     return _index().search(query, k, where=(lambda d: d["bu"] == bu) if bu else None)
+
+
+def search_many(queries: list[str], k: int = 5) -> list[list[dict]]:
+    return _index().search_many(queries, k)
 
 
 def index_mode() -> str:
