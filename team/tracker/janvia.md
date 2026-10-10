@@ -11,7 +11,7 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | J-03 | Walkthrough document `Documents/walkthrough.md` with screenshots (`Documents/images/`), neutral voice | S1 | Fri 9 Oct | review | 60faf7a walkthrough + 12 screenshots. Review 9 Oct: not client-ready yet; checklist below. Refresh: 10 screenshots from the current UI, text on current names, checklist 1, 3, 4, 10, 11 done; items 2, 5-9 open; 93e695a |
 | J-04 | Portfolio: per-unit progress bars, status chips, link to each unit's inbox | S2 | Sat 10 Oct | done | per-unit two-segment bars (validated, awaiting validation), status chips, unit names link to `/inbox/<unit>`, "not dispatched" when empty; `web/app/portfolio/page.tsx` + `globals.css` only; build and pytest green; cb08a93 |
 | J-05 | Consolidation page: blocking items link to the three screens; compliance-matrix columns reviewed with the bid-manager view | S3 | Sun 11 Oct | done | parts A+B 3827902 (blockers panel by reason, All/Open filter, links to Traceability, coloured badges); part C: compliance matrix CSV gets Assignment status and Responded by (appended, earlier columns unchanged) and a UTF-8 byte order mark for Excel; self-check and smoke test added; 8ac51a2 |
-| J-06 | Monday demo click-path checklist (in the walkthrough) and a dry run with Piyush | S3 | Mon 12 Oct AM | todo | |
+| J-06 | Monday demo click-path checklist (in the walkthrough) and a dry run with Piyush | S3 | Mon 12 Oct AM | doing | `team/demo-checklist.md`: click path, script, value messages, backup paths, FAQ, dry-run list, risks (kept in team/, not Documents/: it names the team and lists internal risks). Dry run with Piyush still to do; eb2fd50 |
 | J-07 | Response-outline view (uses P-10) | S4 | after 12 Oct | todo | |
 | J-08 | Compliance matrix as a professional Excel file (.xlsx), generated deterministically (openpyxl, no model): title block, frozen header row, filters, column widths, wrapped text, offering-type colours, source page and lines; keep the CSV | S3 | Sun 11 Oct | done | built by Piyush on 10 Oct (team handover): Excel workbook with a customer sheet (validated answers only, Comply / Partially comply / Does not comply / Exception / Open, RFP order, sub-requirements with references) and an internal Tracking sheet (CSV columns); text-only cells; test added |
 
@@ -47,6 +47,7 @@ The Monday click-path checklist is J-06, a separate task.
 
 | Date | Need | From | Status |
 |---|---|---|---|
+| 10 Oct 2026 | `team/demo-checklist.md` is a new file in team/ (I own only my tracker there): please confirm it can stay, and review section 8 (dry run) and section 9 (risks) | Piyush | to ask (not blocking) |
 | 9 Oct 2026 | `Documents/technical-architecture.md` section 7.6 lists the compliance-matrix columns: add "assignment status" and "responded by" (appended after "state") and the UTF-8 byte order mark | Piyush | to ask (not blocking) |
 
 ## Log
@@ -60,3 +61,4 @@ The Monday click-path checklist is J-06, a separate task.
 | 9 Oct 2026 | J-03 refresh: 10 screenshots from the current UI (Requirements, Bid decision and Final response each joined from two captures), walkthrough text on current names and definitions, "as of" date line; checklist items 1, 3, 4, 10, 11 done; the Open button opens Traceability (not the RFP step) | J-03 items 2, 5-9 after P-08; J-05 |
 | 9 Oct 2026 | J-05 parts A+B: Final response lists what blocks completion by reason (waiting for validation / for the unit / returned / not assigned) with links to Traceability, All/Open filter, marked rows, coloured state and status badges; checked on the 13-item data (4/13, 3 + 6) and on the real extraction (1/353) | J-05 part C (matrix columns with the bid manager); J-03 items 2, 5-9 |
 | 9 Oct 2026 | J-05 done: compliance matrix CSV with Assignment status and Responded by (appended) and a UTF-8 BOM so Excel reads non-ASCII text; checked on the real 353-requirement export (14 columns, 353 rows, first 12 columns identical to before); self-check and a smoke test; pytest 15 passed | J-03 items 2, 5-9; ask Piyush to update the design document column list |
+| 10 Oct 2026 | J-06 started: Monday demo checklist written as `team/demo-checklist.md` (14-step click path with a 10-minute cut, script per screen, value messages, backup navigation, client questions, dry-run list, known risks) | dry run with Piyush; J-03 retake; J-07, J-08 |
