@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "gaps": [
+      "Confirm that the consolidated schedule is attached to the bid.",
+      "Verify that the schedule includes all required elements as per the RFP.",
+      "Ensure the schedule format aligns with the customer's expectations.",
+      "Check for any additional customer-specific requirements for the schedule."
+    ],
+    "paragraphs": [
+      {
+        "cites": [
+          1
+        ],
+        "text": "The proposer has included a consolidated project schedule as part of the bid submission. This schedule addresses the requirements outlined in the RFP, including timelines for drawings, factory shipment, site delivery, lead time after receipt of order (ARO), and field works."
+      }
+    ]
+  },
+  "task": "draft_outline"
+}

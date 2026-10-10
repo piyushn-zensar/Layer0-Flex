@@ -209,3 +209,9 @@ tr.blocking td:first-child { box-shadow: inset 3px 0 0 #d97706; }
 .cons-status-submitted { background: #e0f2fe; color: #075985; }
 .cons-status-returned { background: #fee2e2; color: #991b1b; }
 .passages { margin: var(--s2) 0 0; padding-left: 20px; } .passages li { margin-bottom: var(--s2); line-height: 1.45; } input.wide { min-width: 420px; }
+
+/* Response outline (J-07) */
+.outline-para { line-height: 1.6; max-width: 80ch; }
+.outline-gaps { background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius); padding: var(--s2) var(--s3); margin: var(--s3) 0; }
+.outline-gaps ul { margin: var(--s1) 0 0; }
+.card details { margin-top: var(--s3); } .card details summary { cursor: pointer; font-weight: 600; }

@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "gaps": [],
+    "paragraphs": [
+      {
+        "cites": [
+          1
+        ],
+        "text": "The proposer confirms compliance with the customer's requirement for rack density and liquid cooling. The solution utilizes direct-to-chip cold plates combined with row-level cooling distribution units (CDUs), which are specifically sized to support a minimum of 120 kW per rack."
+      }
+    ]
+  },
+  "task": "draft_outline"
+}

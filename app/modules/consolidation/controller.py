@@ -45,3 +45,17 @@ def compliance_matrix_xlsx(opp_id: str, db: Session = Depends(get_db)):
     return Response(service.compliance_matrix_xlsx(db, opp_id),
                     media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     headers={"Content-Disposition": f'attachment; filename="{name}-compliance-matrix.xlsx"'})
+
+
+@router.get("/opportunities/{opp_id}/response-outline")
+def response_outline(opp_id: str, db: Session = Depends(get_db)):
+    _coverage(db, opp_id)  # 404 for an unknown opportunity
+    return service.response_outline(db, opp_id)
+
+
+@router.get("/opportunities/{opp_id}/response-outline.md")
+def response_outline_md(opp_id: str, db: Session = Depends(get_db)):
+    _coverage(db, opp_id)
+    name = re.sub(r"[^A-Za-z0-9-]", "_", opp_id)[:40]
+    return Response(service.response_outline_md(db, opp_id), media_type="text/markdown; charset=utf-8",
+                    headers={"Content-Disposition": f'attachment; filename="{name}-response-outline.md"'})

@@ -8,6 +8,9 @@ Public contract:
                                                order mark and its cells are safe to open in Excel (no formulas)
     compliance_matrix_xlsx(db, opp_id) -> bytes  Excel workbook: "Compliance matrix" for the customer (validated answers,
                                                RFP order, sub-requirements listed) and "Tracking" (the CSV's columns)
+    response_outline(db, opp_id) -> dict       the response-outline agent's draft per chapter (P-10), with the validated
+                                               answers it rests on, what is still open, and retrieval references
+    response_outline_md(db, opp_id) -> str     the same outline as Markdown, for the bid manager to edit
 """
 import csv
 import io
@@ -15,7 +18,8 @@ import io
 from sqlalchemy.orm import Session
 
 from app.modules.catalog import service as catalog
-from app.modules.consolidation import excel
+from app.modules.consolidation import agent, excel
+from app.modules.ingestion import service as ingestion
 from app.modules.matching import service as matching
 from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service as requirements
@@ -84,11 +88,128 @@ def compliance_matrix_xlsx(db: Session, opp_id: str) -> bytes:
         if k.parent_id and k.status == "approved":
             kids.setdefault(k.parent_id, []).append(k)
     tracking = [_row(r["req"], r["match"], a, r["state"]) for r in cov["rows"] for a in r["assignments"] or [None]]
+    return excel.build(opp.title, opp.customer, cov["rows"], kids, _unit_name, COLUMNS, tracking)
 
-    def unit_name(code: str) -> str:
-        return "Bid desk" if code == "BID" else ((catalog.unit(code) or {}).get("name") or code)
 
-    return excel.build(opp.title, opp.customer, cov["rows"], kids, unit_name, COLUMNS, tracking)
+# The response outline (P-10) follows a proposal, not the RFP's own headings (about 170 on Syracuse): one chapter
+# per group of requirement categories, in this order, plus an executive summary.
+CHAPTERS = [("technical", "Technical response", {"technical"}),
+            ("compliance", "Compliance, legal and contract terms", {"compliance", "legal"}),
+            ("commercial", "Commercial terms and schedule", {"commercial", "schedule"}),
+            ("staffing", "Project team and staffing", {"staffing"}),
+            ("submission", "Submission requirements", {"submission"})]
+OTHER = ("other", "Other requirements")
+SUMMARY_ANSWERS = 40  # the executive summary drafts from the first validated answers in RFP order (one small call)
+PAST_PER_UNIT = 2
+
+
+def _unit_name(code: str) -> str:
+    return "Bid desk" if code == "BID" else ((catalog.unit(code) or {}).get("name") or code)
+
+
+def _product_name(product_id: str | None) -> str:
+    return ((catalog.product(product_id) or {}).get("name") or product_id or "") if product_id else ""
+
+
+def _answers(rows: list[dict]) -> list[dict]:
+    """Every validated answer of these coverage rows, in RFP order: what the agent may write from."""
+    out = []
+    for r in rows:
+        req = r["req"]
+        for a in r["assignments"]:
+            if a.status == "validated" and (a.response or "").strip():
+                out.append({"req_id": req.req_id, "source": req.source, "bu": a.bu, "unit": _unit_name(a.bu),
+                            "compliance": excel.COMPLIANCE_WORDS.get(a.compliance, a.compliance or ""),
+                            "product": _product_name(a.product_ref), "requirement": req.text, "wording": req.quote or "",
+                            "response": a.response.strip()})
+    return out
+
+
+def _past(answers: list[dict]) -> list[str]:
+    """Past responses of the units that answered (house style only), chosen without search: see agent.py."""
+    units, out = {a["bu"] for a in answers}, []
+    for bu in sorted(units):
+        out += [f"{p['requirement']} {p['response']}" for p in catalog.past_responses() if p["bu"] == bu][:PAST_PER_UNIT]
+    return out
+
+
+def _draft(title: str, answers: list[dict]) -> dict:
+    d = agent.draft(title, [{k: a[k] for k in ("unit", "compliance", "product", "requirement", "wording", "response")}
+                            for a in answers], _past(answers))
+    paragraphs = [{"text": p["text"], "sources": list(dict.fromkeys(answers[c - 1]["req_id"] for c in p["cites"]))}
+                  for p in d["paragraphs"]]
+    return {k: v for k, v in d.items() if k != "paragraphs"} | {"paragraphs": paragraphs}
+
+
+def _references(db: Session, opp_id: str, title: str, rows: list[dict]) -> dict:
+    """Both retrieval indexes, for the bid manager to read beside the draft (never in the prompt)."""
+    query = " ".join([title] + [r["req"].text for r in rows[:3]])
+    try:
+        rfp = ingestion.search_rfp(db, opp_id, query, k=3)
+    except LookupError:
+        rfp = {"mode": "", "passages": []}
+    past = [h for h in catalog.search(query, k=8) if h.get("kind") == "past_response"][:3]
+    return {"rfp": [{"page": p["page"], "line_start": p["line_start"], "line_end": p["line_end"], "text": p["text"][:300]}
+                    for p in rfp["passages"]],
+            "past": [{"id": h["id"], "bu": h["bu"], "text": h["text"][:300]} for h in past],
+            "mode": {"rfp": rfp["mode"], "knowledge": catalog.index_mode()}}
+
+
+def response_outline(db: Session, opp_id: str) -> dict:
+    opp = opportunities.require(db, opp_id)
+    cov = coverage(db, opp_id)
+    titles = {cid: title for cid, title, _ in CHAPTERS} | {OTHER[0]: OTHER[1]}
+    by_chapter: dict[str, list] = {}
+    for r in cov["rows"]:
+        cid = next((cid for cid, _, cats in CHAPTERS if r["req"].category in cats), OTHER[0])
+        by_chapter.setdefault(cid, []).append(r)
+    chapters, everything = [], []
+    for cid, title in titles.items():
+        rows = by_chapter.get(cid)
+        if not rows:
+            continue
+        answers = _answers(rows)
+        everything += answers
+        chapters.append({
+            "id": cid, "title": title, "total": len(rows), "answered": sum(r["state"] == "answered" for r in rows),
+            "draft": _draft(title, answers), "material": answers,
+            "exceptions": [a for a in answers if a["compliance"] != "Comply"],
+            "open": [{"req_id": r["req"].req_id, "source": r["req"].source, "text": r["req"].text, "state": r["state"]}
+                     for r in rows if r["state"] != "answered"],
+            "references": _references(db, opp_id, title, rows)})
+    order = {r["req"].req_id: i for i, r in enumerate(cov["rows"])}
+    first = sorted(everything, key=lambda a: order[a["req_id"]])[:SUMMARY_ANSWERS]
+    return {"opportunity": {"id": opp.id, "title": opp.title, "customer": opp.customer},
+            "total": cov["total"], "answered": cov["answered"], "validated_answers": len(everything),
+            "summary": _draft("Executive summary", first), "chapters": chapters,
+            "note": "A first draft for the bid manager to edit, written only from validated answers; every paragraph "
+                    "cites its requirements. Writing the final response stays a human task."}
+
+
+def response_outline_md(db: Session, opp_id: str) -> str:
+    """The outline as Markdown, to paste into the proposal template and edit."""
+    o = response_outline(db, opp_id)
+
+    def paragraphs(d: dict) -> list[str]:
+        if not d["drafted"]:
+            return [f"_Not drafted: {d['note'] or 'no validated answer yet.'}_", ""]
+        out = []
+        for p in d["paragraphs"]:
+            out += [f"{p['text']} [{', '.join(p['sources'])}]", ""]
+        return out + [f"- To add or confirm: {g}" for g in d["gaps"]] + ([""] if d["gaps"] else [])
+
+    lines = [f"# Response outline: {o['opportunity']['title']}", "",
+             f"DRAFT for the bid manager to edit. {o['answered']} of {o['total']} requirements answered and validated.", "",
+             "## Executive summary", ""] + paragraphs(o["summary"])
+    for n, c in enumerate(o["chapters"], 1):
+        lines += [f"## {n}. {c['title']}", "", f"{c['answered']} of {c['total']} requirements answered.", ""]
+        lines += paragraphs(c["draft"])
+        if c["material"]:
+            lines += ["### Validated answers", ""] + [
+                f"- {a['req_id']} ({a['source']}), {a['unit']}, {a['compliance']}: {a['response']}" for a in c["material"]] + [""]
+        if c["open"]:
+            lines += [f"### Still open ({len(c['open'])})", ""] + [f"- {r['req_id']} ({r['source']}): {r['text']}" for r in c["open"]] + [""]
+    return "\n".join(lines)
 
 
 if __name__ == "__main__":  # self-check: python -m app.modules.consolidation.service

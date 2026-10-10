@@ -1,0 +1,21 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "gaps": [],
+    "paragraphs": [
+      {
+        "cites": [
+          1
+        ],
+        "text": "The proposer offers a two-section 15 kV arc-resistant metal-clad switchgear lineup, as specified in the RFP. This configuration meets the requirement for a metal-clad switchgear system designed to handle medium voltage applications with enhanced safety features."
+      },
+      {
+        "cites": [
+          2
+        ],
+        "text": "The proposed switchgear lineup includes 18 vacuum circuit breaker positions equipped with protective relays and controls, two revenue metering compartments, and two sets of isolation switches. Additionally, the lineup incorporates bus voltage transformers (VTs) and multi-ratio current transformers (CTs), ensuring compliance with the detailed specifications provided in the RFP."
+      }
+    ]
+  },
+  "task": "draft_outline"
+}

@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "gaps": [
+      "Confirm compliance with all specific accessory requirements mentioned in the RFP.",
+      "Verify the inclusion of protective relay and controls in the proposed lineup.",
+      "Ensure the revenue meter positions meet the RFP specifications.",
+      "Clarify the configuration of isolation switches and bus VT’s."
+    ],
+    "paragraphs": [
+      {
+        "cites": [
+          1
+        ],
+        "text": "The proposer offers a two-section 15 kV arc-resistant metal-clad lineup as part of the switchgear components and accessories specified in the RFP. This lineup includes vacuum circuit breaker positions, protective relay and controls, revenue meter positions, isolation switches, bus VT’s, and multi-ratio CTs, as required."
+      }
+    ]
+  },
+  "task": "draft_outline"
+}

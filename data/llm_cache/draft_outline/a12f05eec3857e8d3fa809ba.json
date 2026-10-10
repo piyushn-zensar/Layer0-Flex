@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "gaps": [
+      "Confirm compliance with all specific requirements stated in the RFP.",
+      "Verify the inclusion of all accessories and components as per the RFP.",
+      "Ensure alignment with the customer's site layout and installation specifications.",
+      "Review the executive summary for completeness and alignment with the proposal."
+    ],
+    "paragraphs": [
+      {
+        "cites": [
+          1
+        ],
+        "text": "Crown Technical Systems proposes to supply a two-section 15 kV arc-resistant metal-clad lineup for the Syracuse Airport project. This lineup includes eighteen 15 kV vacuum circuit breaker positions equipped with protective relays and controls, two revenue meter positions, two sets of 15 kV isolation switches, bus voltage transformers (VTs), and multi-ratio current transformers (CTs)."
+      }
+    ]
+  },
+  "task": "draft_outline"
+}

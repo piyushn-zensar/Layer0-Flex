@@ -1,0 +1,15 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "gaps": [],
+    "paragraphs": [
+      {
+        "cites": [
+          1
+        ],
+        "text": "The proposer offers a solution that meets the customer's requirement for rack density and cooling. The JetCool system utilizes direct-to-chip cold plates combined with row-level CDUs, which are specifically sized to support a minimum of 120 kW per rack."
+      }
+    ]
+  },
+  "task": "draft_outline"
+}

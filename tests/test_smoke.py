@@ -531,3 +531,23 @@ def test_bid_and_portfolio_checks():
     units = {r["bu"]: r for r in load["rows"]}
     assert {"CROWN", "EP2"} <= set(units) and all(r["total"] >= r["open_here"] for r in units.values())
     assert crit["capacity"]["status"] == "met" and "placeholder" in crit["capacity"]["detail"]
+
+
+def test_response_outline_agent():
+    """P-10 + J-07: the drafting agent writes only from validated answers (frozen drafts, no model call), every
+    paragraph cites them, open requirements are listed and never drafted, and the outline downloads as Markdown."""
+    seed_demo.main()  # its own opportunity: 13 line items, 4 validated answers
+    client = TestClient(app)
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    o = client.get(f"/api/opportunities/{opp}/response-outline").json()
+    validated = {a["req_id"] for c in o["chapters"] for a in c["material"]}
+    assert o["validated_answers"] == len(validated) > 0 and o["summary"]["drafted"]
+    for d in [o["summary"]] + [c["draft"] for c in o["chapters"]]:
+        assert all(p["sources"] and set(p["sources"]) <= validated for p in d["paragraphs"])  # cites validated answers only
+    by_id = {c["id"]: c for c in o["chapters"]}
+    assert by_id["technical"]["draft"]["drafted"] and sum(c["total"] for c in o["chapters"]) == o["total"]
+    assert all(not c["draft"]["drafted"] for c in o["chapters"] if not c["material"])  # nothing drafted without answers
+    assert all(r["req_id"] not in validated or r["state"] != "answered" for c in o["chapters"] for r in c["open"])
+    md = client.get(f"/api/opportunities/{opp}/response-outline.md")
+    assert md.status_code == 200 and md.text.startswith("# Response outline:") and "## 1. Technical response" in md.text
+    assert client.get("/api/opportunities/OPP-9999/response-outline").status_code == 404

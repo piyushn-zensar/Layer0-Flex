@@ -36,7 +36,7 @@ export default function OppSteps() {
       <nav aria-label="Workflow steps">
         <ol className="stepper">
           {STEPS.map((s, i) => {
-            const current = path === base + s.suffix;
+            const current = path === base + s.suffix || (s.suffix !== "" && path.startsWith(base + s.suffix + "/")); // sub-pages too
             const done = rank(status) >= rank(s.doneFrom);
             return (
               <li key={s.label} className={`${current ? "current" : ""} ${done ? "done" : ""}`}>

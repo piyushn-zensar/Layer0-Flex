@@ -340,8 +340,16 @@ For each assignment, the unit records **compliance** (met, partial, not met, exc
 ### 7.6 Consolidation (step 6)
 
 - **Coverage check.** A requirement is *answered* when every assignment for it is validated. Anything else blocks completion and is listed.
-- **Compliance matrix** export (CSV): requirement ID, source (page and lines), category, requirement, quote, unit, product, offering type, compliance, response, validator, state.
-- Writing the final response document remains a human task. A drafting agent that assembles validated responses into an outline for the bid manager to edit is a stage 4 addition.
+- **Compliance matrix** export. An Excel workbook with a customer sheet (validated answers only, in customer words, in RFP order, sub-requirements with their references) and an internal tracking sheet. Every cell is written as text, never as a formula. Also a CSV: requirement ID, source (page and lines), category, requirement, quote, unit, product, offering type, compliance, response, validator, state, assignment status and responded by. The CSV starts with a UTF-8 byte order mark so that Excel reads non-ASCII text.
+- **Response outline** (built 10 Oct 2026). Writing the final response remains a human task. A drafting agent gives the bid manager a first draft to edit:
+  - **Chapters.** The outline follows a proposal, not the RFP's own headings: an executive summary, then one chapter per group of requirement categories (technical; compliance and legal; commercial and schedule; staffing; submission).
+  - **Drafting.** The agent drafts each chapter only from the validated answers, with the RFP's wording for each one. It makes one call per chapter that has answers, plus one for the summary. It may not add products, ratings, dates, promises or qualities that the answers do not state, and it lists what the bid manager still has to add or confirm.
+  - **Citations.** Every paragraph cites the answers it rests on. A paragraph without a valid citation is removed.
+  - **Open requirements.** These are listed, never drafted. Answers that are not full compliance are shown separately.
+  - **Related passages.** Passages from both retrieval indexes (this RFP and past responses) are shown beside the draft. They are kept out of the prompt, so a frozen draft does not depend on whether search runs on embeddings or keywords.
+  - **Without a model answer.** When no model answer is available, the chapter shows the validated answers as they are, marked as not drafted.
+  - **Download.** The outline downloads as Markdown.
+  - **Known limit.** The drafts can still lean promotional in tone. The page labels them as drafts to edit.
 
 ## 8. Change Handling (stage 5)
 
@@ -366,6 +374,7 @@ Addenda, Q&A answers, change requests and execution-stage changes all use one pa
 | **Decisions** | One opportunity | Evidence pack, participation, go/no-go, dispatch |
 | **Unit inbox** | One business unit | Its assignments across all opportunities, with the checklist response form and validation |
 | **Final response** | One opportunity | Coverage, blocking items, compliance matrix download: an Excel workbook (a customer sheet with validated answers in customer words, in RFP order with sub-requirements and their references; an internal tracking sheet) and a CSV |
+| **Response outline** | One opportunity (under Final response) | The drafting agent's first draft per chapter with cited requirements, what to add or confirm, the validated answers, what is still open, related passages; Markdown download |
 
 Navigation: the top bar has three destinations (Opportunities, My work, Product catalog) and a New opportunity button. Inside an opportunity, a stepper follows the workflow order: RFP, Requirements, Traceability, Bid decision, Final response; a step is ticked once the opportunity has moved past it. Change handling is shown as a separate, planned link.
 
@@ -401,7 +410,7 @@ business units, products, past responses: data files      (catalog)
 | Matching | `POST /opportunities/{id}/match`, `POST /matches/{match_id}/decide` |
 | Decisions | `GET /opportunities/{id}/decisions`, `POST /opportunities/{id}/participation`, `POST /opportunities/{id}/go-no-go` |
 | Work packages | `POST /opportunities/{id}/dispatch`, `GET /inbox`, `GET /inbox/{bu}`, `POST /assignments/{id}/respond`, `POST /assignments/{id}/validate` |
-| Consolidation | `GET /opportunities/{id}/consolidation`, `GET /opportunities/{id}/compliance-matrix.csv` |
+| Consolidation | `GET /opportunities/{id}/consolidation`, `GET /opportunities/{id}/compliance-matrix.csv`, `GET /opportunities/{id}/compliance-matrix.xlsx`, `GET /opportunities/{id}/response-outline`, `GET /opportunities/{id}/response-outline.md` |
 | Views | `GET /portfolio`, `GET /opportunities/{id}/trace` |
 | Changes (stage 5) | `GET /opportunities/{id}/changes` |
 
