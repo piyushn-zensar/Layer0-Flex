@@ -208,3 +208,4 @@ tr.blocking td:first-child { box-shadow: inset 3px 0 0 #d97706; }
 .cons-state-pending, .cons-status-assigned { background: #fef3c7; color: #854d0e; }
 .cons-status-submitted { background: #e0f2fe; color: #075985; }
 .cons-status-returned { background: #fee2e2; color: #991b1b; }
+.passages { margin: var(--s2) 0 0; padding-left: 20px; } .passages li { margin-bottom: var(--s2); line-height: 1.45; } input.wide { min-width: 420px; }

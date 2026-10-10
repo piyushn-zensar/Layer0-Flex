@@ -52,3 +52,20 @@ def _azure(task: str, system: str, prompt: str, schema: dict) -> dict:
     if choice.finish_reason == "length":
         raise LLMUnavailable("Answer truncated at max_tokens; send a smaller chunk.")
     return json.loads(choice.message.content)
+
+
+def embed(texts: list[str]) -> list[list[float]] | None:
+    """Embeddings for retrieval (Azure, EMBEDDING_DIMS long), or None when no provider is set (mock): the caller
+    then falls back to keyword search. Freezing happens one level up (app/core/vectors.py caches whole indexes)."""
+    if config.LLM_PROVIDER != "azure" or not texts:
+        return None
+    from openai import AzureOpenAI
+
+    client = AzureOpenAI(azure_endpoint=config.AZURE_OPENAI_ENDPOINT, api_key=config.AZURE_OPENAI_API_KEY,
+                         api_version=config.EMBEDDING_API_VERSION)
+    out: list[list[float]] = []
+    for i in range(0, len(texts), 256):  # the service takes at most a few hundred inputs per request
+        batch = [t[:8000] or " " for t in texts[i:i + 256]]
+        response = client.embeddings.create(model=config.EMBEDDING_MODEL, input=batch, dimensions=config.EMBEDDING_DIMS)
+        out += [d.embedding for d in sorted(response.data, key=lambda d: d.index)]
+    return out

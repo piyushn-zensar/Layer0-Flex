@@ -28,3 +28,9 @@ def page(doc_id: str, page_no: int, db: Session = Depends(get_db)):
 @router.get("/documents/{doc_id}/pages/{page_no:int}.png")
 def page_png(doc_id: str, page_no: int, db: Session = Depends(get_db)):
     return Response(_found(service.page_png, db, doc_id, page_no), media_type="image/png")
+
+
+@router.get("/opportunities/{opp_id}/rfp-search")
+def rfp_search(opp_id: str, q: str, k: int = 8, db: Session = Depends(get_db)):
+    """Search the opportunity's RFP (its short-term RAG index): passages with page and line numbers."""
+    return _found(service.search_rfp, db, opp_id, q, max(1, min(k, 25)))

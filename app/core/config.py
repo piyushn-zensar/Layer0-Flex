@@ -22,6 +22,10 @@ AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT") or os.getenv("ENDPOIN
 AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY", "")
 AZURE_OPENAI_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION") or os.getenv("API_VERSION") or "2024-10-21"
 LLM_MODEL = os.getenv("AZURE_OPENAI_DEPLOYMENT") or os.getenv("DEPLOYMENT_NAME") or "gpt-4o"  # part of the cache key
+EMBEDDING_MODEL = os.getenv("EMBEDDING_DEPLOYMENT_NAME") or "text-embedding-3-small"   # Azure deployment name
+EMBEDDING_API_VERSION = os.getenv("EMBEDDING_API_VERSION") or "2024-02-01"
+EMBEDDING_DIMS = 256                                   # text-embedding-3 can shorten its vectors; plenty for retrieval
+VECTOR_CACHE = DATA / "vector_cache"                   # committed: frozen embeddings of sample RFPs and the knowledge base
 
 TESSERACT_CMD = os.getenv(
     "TESSERACT_CMD", str(Path(os.getenv("LOCALAPPDATA", "")) / "Tesseract-OCR" / "tesseract.exe")

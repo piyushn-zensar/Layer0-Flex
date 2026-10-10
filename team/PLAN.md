@@ -78,6 +78,8 @@ Status lives in each person's tracker; this table is the master list. Janvia's l
 | P-14 | Laptop package for the Zensar point of contact: one Windows setup script (venv, npm install, production build, demo seed) and one run script; works without Tesseract (committed layouts) and without an API key (`mock`); short install guide; walk the Zensar point of contact through it | S3 | Mon 12 Oct | P-08 |
 | P-15 | Add a missed requirement by selecting lines on the RFP page (link it to its source without pasting the quote) | S4 | after 12 Oct | P-06 |
 | P-16 | Group related line items into requirements with sub-requirements (grouping agent per page) and mark duplicates; review page and Traceability show groups | S2 | Fri 9 Oct | P-04 |
+| P-17 | RAG indexes: long-term (knowledge base) and short-term per RFP (rebuilt on load); RFP search | S3 | Sat 10 Oct | P-07 |
+| P-18 | Token cuts: rule-based bid-desk items, batched matcher per page with the catalog in a cached prefix, reader line-budget batching; regenerate answers | S3 | Sat 10 Oct | P-17 |
 | P-11 | Changes module: addendum → delta vs. baseline → new versions → responses returned | S5 | after 12 Oct | — |
 
 ### Atharv — knowledge base, matching, decisions, work packages

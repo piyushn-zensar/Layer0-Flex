@@ -1,4 +1,4 @@
-"""Catalog: business units, products, past responses and the retrieval (RAG) index.  Owner: Atharv.
+"""Catalog: business units, products, past responses and the long-term retrieval (RAG) index.  Owner: Atharv.
 
 Rules as data (rule R7): everything here is read from data/knowledge_base/*.json.
 
@@ -8,6 +8,7 @@ Public contract:
     products(bu=None) -> list[dict]
     product(product_id) -> dict | None
     search(query, k=5, bu=None) -> list[dict]   ranked products and past responses, each with "score"
+    index_mode() -> str                         "embeddings" (semantic) or "keywords" (offline fallback)
     bom(product_id) -> list[dict]               BOM lines from the BOM source system (stub: catalog JSON)
     layers() -> dict                            grid-to-chip layers, scope keywords, unit tiers (spinco_layers.json)
     engineering_rules() -> dict                 rules R-001..R-004 and generic NEC/IEC values (engineering_rules.json)
@@ -18,10 +19,8 @@ Public contract:
 import json
 from functools import lru_cache
 
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-
 from app.core import config
+from app.core.vectors import Index
 
 
 @lru_cache
@@ -47,22 +46,22 @@ def product(product_id: str) -> dict | None:
 
 
 @lru_cache
-def _index():
-    """TF-IDF over products and past responses (ported from v0.3.0 rag/indexer.py).
-    ponytail: TF-IDF keyword retrieval; swap for embeddings when the catalog outgrows exact-word matching."""
+def _index() -> Index:
+    """The long-term index: products and past responses (the knowledge the system learns into, see A-11).
+    Semantic (embeddings, frozen in data/vector_cache) with a keyword fallback offline; see app/core/vectors.py."""
     docs = [{"kind": "product", "id": p["id"], "bu": p["bu"], "offering_type": p["offering_type"],
              "text": f"{p['name']}. {p['description']} {p['keywords']}"} for p in products()]
     docs += [{"kind": "past_response", "id": r["id"], "bu": r["bu"],
               "text": f"{r['requirement']} {r['response']}"} for r in _load("past_responses")["responses"]]
-    vectorizer = TfidfVectorizer(stop_words="english", ngram_range=(1, 2))
-    return docs, vectorizer, vectorizer.fit_transform([d["text"] for d in docs])
+    return Index(docs)
 
 
 def search(query: str, k: int = 5, bu: str | None = None) -> list[dict]:
-    docs, vectorizer, matrix = _index()
-    scores = cosine_similarity(vectorizer.transform([query]), matrix)[0]
-    ranked = sorted(zip(docs, scores), key=lambda x: x[1], reverse=True)
-    return [{**d, "score": round(float(s), 3)} for d, s in ranked if s > 0 and (bu is None or d["bu"] == bu)][:k]
+    return _index().search(query, k, where=(lambda d: d["bu"] == bu) if bu else None)
+
+
+def index_mode() -> str:
+    return _index().mode
 
 
 def bom(product_id: str) -> list[dict]:

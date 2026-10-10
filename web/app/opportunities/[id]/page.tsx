@@ -2,7 +2,7 @@
 // Documents: upload the RFP, see ingestion status, run the reader agent.  Owner: Piyush.
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { post, useApi } from "@/lib/api";
+import { api, post, useApi } from "@/lib/api";
 import type { Doc, Opportunity } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 
@@ -12,6 +12,10 @@ export default function DocumentsPage() {
   const { data, error, reload } = useApi<{ opportunity: Opportunity; documents: Doc[] }>(`/api/opportunities/${id}`);
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState<{ text: string; problems?: string[] }>();
+  type Passage = { page: number; line_start: number; line_end: number; text: string; score: number };
+  const [found, setFound] = useState<{ mode: string; passages: Passage[] }>();
+  const search = (form: FormData) => api<{ mode: string; passages: Passage[] }>(
+    `/api/opportunities/${id}/rfp-search?q=${encodeURIComponent(String(form.get("q") ?? ""))}`).then(setFound, fail);
   const fail = (e: unknown) => setMessage({ text: e instanceof Error ? e.message : String(e) });
 
   async function upload(form: FormData) {
@@ -53,6 +57,21 @@ export default function DocumentsPage() {
         <button disabled={!!busy}>Upload and read</button>
         <button type="button" className="secondary" onClick={reload}>Refresh status</button>
       </form>
+      {data?.documents.some((d) => d.role === "main" && d.status === "ingested") && (
+        <section className="card">
+          <h2>Search this RFP</h2>
+          <form className="inline" action={search}>
+            <label><span className="sr-only">Question</span>
+              <input name="q" required placeholder="e.g. what short-circuit rating is required?" className="wide" /></label>
+            <button>Search</button>
+          </form>
+          {found && (<>
+            <p className="muted">{found.mode === "embeddings" ? "Meaning-based search" : "Keyword search (no embedding service: offline)"} over the RFP's passages.</p>
+            <ol className="passages">{found.passages.map((p) => (
+              <li key={`${p.page}-${p.line_start}`}><span className="mono">p. {p.page}, lines {p.line_start}-{p.line_end}</span> {p.text}</li>))}
+              {found.passages.length === 0 && <li className="muted">Nothing found.</li>}</ol>
+          </>)}
+        </section>)}
       {canRead ? (<p>
         <button disabled={!!busy || !!unread} onClick={extract}>Run the reader agent → requirements</button>{" "}
         <span className="muted">{busy || (unread ? "Waiting for the main RFP to be read; use Refresh status." : "")}</span></p>)

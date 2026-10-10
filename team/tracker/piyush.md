@@ -22,6 +22,7 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | P-14 | Laptop package for the Zensar point of contact: one Windows setup script (venv, npm install, production build, demo seed) and one run script; works without Tesseract (committed layouts) and without an API key (`mock`); short install guide; walk the Zensar point of contact through it | S3 | Mon 12 Oct | review | setup.cmd / start.cmd / reset-demo.cmd + INSTALL.md; no OCR engine or API key needed for the demo; clean-copy install tested; walk-through with the Zensar point of contact still to do |
 | P-15 | Add a missed requirement by selecting lines on the RFP page (link it to its source without pasting the quote) | S4 | after 12 Oct | todo | from the 8 Oct call (plan §8) |
 | P-16 | Group related line items into requirements with sub-requirements; mark duplicates (from the 9 Oct run: 840 items, many near-duplicates) | S2 | Fri 9 Oct | review | grouping agent + text-based duplicates; Syracuse 840 → 353 requirements (167 groups / 631 sub-requirements) + 23 duplicates; review page shows groups, Ungroup; Traceability lists sub-requirements |
+| P-17 | RAG: long-term index (products, past responses) and a short-term index per RFP (rebuilt on every load); frozen Azure embeddings with offline keyword fallback; "Search this RFP" | S3 | Sat 10 Oct | review | semantic search finds e.g. the 25 kA momentary rating (p.62) for "short-circuit rating"; 300 KB frozen vectors; test added |
 
 ## Blocked on / needs from others
 
@@ -42,3 +43,4 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | 9 Oct 2026 | P-16 grouping (840 → 353 requirements), duplicates marked | Atharv: re-run the matcher on the 353 requirements; P-08 demo on the real extraction |
 | 9 Oct 2026 | P-08 demo on the real extraction + dry run | matcher answers for the 353 requirements (A-03 re-run) |
 | 9 Oct 2026 | P-07 ruled tables in the layout, re-frozen | P-14 walk-through; P-09 model-change guard |
+| 10 Oct 2026 | P-17 RAG indexes (long-term + per-RFP), RFP search; stale-page fix | token cuts: rule-based bid-desk items, batched matcher per page, reader line-budget batching |

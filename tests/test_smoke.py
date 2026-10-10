@@ -477,3 +477,17 @@ def test_compliance_matrix_new_columns_and_bom():
     status, by = head.index("Assignment status"), head.index("Responded by")
     assert {row[status] for row in rows[1:]} >= {"validated", "assigned"}
     assert all(row[by] for row in rows[1:] if row[status] in ("submitted", "validated"))  # an answer always has a person
+
+
+def test_rfp_search_short_term_index():
+    """The opportunity's RFP is indexed when it is loaded (short-term RAG) and searchable with exact sources."""
+    client = TestClient(app)
+    pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
+    opp = client.post("/api/opportunities", json={"title": "rfp search"}).json()["id"]
+    assert client.get(f"/api/opportunities/{opp}/rfp-search", params={"q": "insurance"}).status_code == 404  # not read yet
+    doc = client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)}).json()
+    found = client.get(f"/api/opportunities/{opp}/rfp-search", params={"q": "general liability insurance limits", "k": 3}).json()
+    assert found["passages"] and found["passages"][0]["page"] == 13, found  # the insurance requirements
+    p = found["passages"][0]
+    assert p["line_start"] <= p["line_end"] and "insurance" in p["text"].lower()
+    assert client.get("/api/opportunities/OPP-9999/rfp-search", params={"q": "x"}).status_code == 404

@@ -230,6 +230,19 @@ A group is one **requirement** made of **sub-requirements**. It keeps every sub-
 
 On the Syracuse RFP: 840 line items become 353 requirements (167 groups holding 631 sub-requirements, plus 186 stand-alone items), and 23 duplicates are marked.
 
+### 6.2b Retrieval indexes: long-term knowledge and the per-RFP index (built 10 Oct 2026)
+
+Retrieval-augmented generation (RAG) uses two kinds of vector index, built on one shared helper (`app/core/vectors.py`):
+
+| Index | Holds | Lifetime | Used for |
+|---|---|---|---|
+| **Long-term** | Business-unit products and past responses; later, approved answers from finished bids (knowledge-base queue) | Grows as the business learns | Product search, matching evidence, response drafting |
+| **Short-term** (one per RFP) | The RFP split into passages (about one paragraph each), with page and line numbers; headers and footers left out | Rebuilt every time the RFP is loaded; belongs to its opportunity only (rule R6) | "Search this RFP", drafting answers from the RFP's own wording, matching addenda to the baseline |
+
+Embeddings come from the Azure embedding deployment (`text-embedding-3-small`, shortened to 256 dimensions) through the model gateway. Like model answers, they are frozen: the vectors of a set of texts are stored under a hash of the texts and committed for the sample RFP and the knowledge base. Re-indexing unchanged text therefore costs nothing, and the Syracuse index (about 600 passages) takes about 8 seconds the first time. Without the embedding service, for example on the offline laptop package, an index falls back to keyword (TF-IDF) search and says so.
+
+The short-term index does not reduce the reader's input: every page still has to be read once to find its requirements. Its value is retrieval across the whole RFP. Whatever feeds a frozen prompt must give the same result online and offline, so prompts never depend on which search mode is available.
+
 ### 6.3 Human review and freezing
 
 The bid manager reviews each line item against its highlighted source (built 8 Oct 2026). The actions are:

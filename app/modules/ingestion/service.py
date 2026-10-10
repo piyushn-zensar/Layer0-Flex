@@ -6,6 +6,9 @@ Public contract:
     page(db, doc_id, page_no) -> dict      one page: {"page", "width", "height", "method", "unreviewed", "toc",
                                           "lines": [...], "tables": [...]}; LookupError if the document or page does not exist
     page_png(doc_id, page_no) -> bytes    rendered page image for screen 1
+    search_rfp(db, opp_id, query, k=8) -> dict   the short-term RAG index of the opportunity's main RFP:
+                                          {"mode", "passages": [{"page", "line_start", "line_end", "text", "score"}]}
+    rfp_index(doc_id) -> Index            built (re-indexed) every time the RFP is ingested
 
 Line numbers ("page 5, lines 6 to 8") are 1-based within each page, in reading order.
 Coordinates are PDF points, origin top-left (PyMuPDF), rounded to 0.01.
@@ -35,6 +38,7 @@ import pymupdf
 from sqlalchemy.orm import Session
 
 from app.core import config
+from app.core.vectors import Index
 from app.modules.opportunities import service as opportunities
 
 LAYOUT_CACHE = config.DATA / "layout_cache"   # committed: frozen parses of sample RFPs
@@ -99,8 +103,46 @@ def ingest(db: Session, doc_id: str, refresh: bool = False) -> dict:
     LAYOUTS.mkdir(parents=True, exist_ok=True)
     (LAYOUTS / f"{doc_id}.json").write_text(json.dumps(model, sort_keys=True, ensure_ascii=False), "utf-8")
     opportunities.set_document_status(db, doc_id, "ingested", page_count=len(pages))
-    return {"document": doc_id, "page_count": len(pages),
+    _rfp_index.cache_clear()  # the RFP was (re)loaded: rebuild its short-term index (frozen vectors make this free)
+    index = rfp_index(doc_id)
+    return {"document": doc_id, "page_count": len(pages), "index": index.mode, "passages": len(index.items),
             "unreviewed_pages": [p["page"] for p in pages if p["unreviewed"]]}
+
+
+PASSAGE_CHARS = 500  # a passage: consecutive body lines of one page, about one paragraph
+
+
+def passages(model: dict) -> list[dict]:
+    """The RFP as retrievable passages with their exact source (page and line range). Headers and footers are left out."""
+    out = []
+    for page in model["pages"]:
+        chunk: list[dict] = []
+        for line in [l for l in page["lines"] if not l.get("furniture")] + [None]:
+            if chunk and (line is None or sum(len(l["text"]) for l in chunk) + len(line["text"]) > PASSAGE_CHARS):
+                out.append({"page": page["page"], "line_start": chunk[0]["n"], "line_end": chunk[-1]["n"],
+                            "text": " ".join(l["text"] for l in chunk)})
+                chunk = []
+            if line is not None:
+                chunk.append(line)
+    return out
+
+
+def rfp_index(doc_id: str) -> Index:
+    return _rfp_index(doc_id)
+
+
+@lru_cache(maxsize=8)
+def _rfp_index(doc_id: str) -> Index:
+    return Index(passages(layout(doc_id)))
+
+
+def search_rfp(db: Session, opp_id: str, query: str, k: int = 8) -> dict:
+    opportunities.require(db, opp_id)
+    doc = opportunities.main_document(db, opp_id)
+    if doc is None or doc.status != "ingested":
+        raise LookupError("The main RFP has not been read yet.")
+    index = rfp_index(doc.id)
+    return {"mode": index.mode, "passages": index.search(query, k)}
 
 
 def _read_page(p: pymupdf.Page) -> dict:
@@ -311,4 +353,6 @@ if __name__ == "__main__":  # self-check: python -m app.modules.ingestion.servic
     tagged = {l["text"]: l.get("cell") for l in model["pages"][0]["lines"]}
     assert tagged["15 kV"] == ["p1-t1", 1, 1] and tagged["Type 2B"] == ["p1-t1", 2, 1], tagged
     assert model["pages"][1]["tables"] == []  # empty grid
+    chunks = passages({"pages": [{"page": 1, "lines": [{"n": i, "text": "x" * 200, "furniture": i == 1} for i in range(1, 6)]}]})
+    assert [(c["line_start"], c["line_end"]) for c in chunks] == [(2, 3), (4, 5)], chunks  # header left out, ~500 chars each
     print("ingestion ok", pipeline_version())
