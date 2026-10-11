@@ -34,6 +34,12 @@ async function errorText(res: Response): Promise<string> {
   return `Request failed (${res.status})${body ? `: ${body.slice(0, 200)}` : ""}`;
 }
 
+/** One line for a toast or an inline alert from whatever a request rejected with: the API's detail, never "Error: …". */
+export function errorMessage(e: unknown, fallback = "Something went wrong. Please try again."): string {
+  const text = e instanceof Error ? e.message : typeof e === "string" ? e : "";
+  return text.replace(/^Error:\s*/, "").replace(/^\d{3}:\s*/, "").trim() || fallback;
+}
+
 export function post<T = unknown>(path: string, body?: unknown): Promise<T> {
   return api<T>(path, { method: "POST", body: body instanceof FormData ? body : JSON.stringify(body ?? {}) });
 }

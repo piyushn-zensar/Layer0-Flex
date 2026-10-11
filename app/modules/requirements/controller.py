@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 
 from app.core.db import get_db
 from app.core.web import actor, row
+from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service
 
 router = APIRouter(tags=["requirements"])
@@ -61,6 +62,7 @@ def _guard(fn):
 
 @router.get("/opportunities/{opp_id}/requirements")
 def requirements(opp_id: str, db: Session = Depends(get_db)):
+    _guard(lambda: opportunities.require(db, opp_id))  # an unknown opportunity is a 404, not an empty list
     b = service.baseline(db, opp_id)
     return {"requirements": [row(r, "source") for r in service.current(db, opp_id, include_inactive=True, include_children=True)],
             "baseline": row(b) if b else None}

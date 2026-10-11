@@ -4,11 +4,9 @@ import Link from "next/link";
 import { useApi } from "@/lib/api";
 import type { Opportunity, Progress } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
+import { Alert, EmptyState, Skeleton, StatusBadge } from "@/components/ui";
 
 type Item = { opp: Opportunity; requirements: number; progress: Progress };
-
-// Opportunity status -> chip class; the text shown is the stored status ("no_go" reads "no-go").
-const statusClass = (s: string) => `opp-status-${s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "unknown"}`;
 
 // One line per unit: link to its work package, the count, and a two-segment bar (validated, then awaiting validation).
 function UnitProgress({ progress }: { progress: Progress }) {
@@ -39,22 +37,31 @@ export default function PortfolioPage() {
   const { data, error } = useApi<Item[]>("/api/portfolio");
   return (
     <div className="content">
-      <PageHead title="Opportunities" help="Every RFP in progress, with how far each business unit has answered." />
-      {error && <p className="warn">{error}</p>}
-      <table>
-        <thead><tr><th>ID</th><th>Title</th><th>Customer</th><th>Status</th><th>Requirements</th><th>Unit responses (validated / total)</th><th /></tr></thead>
-        <tbody>
-          {data?.map(({ opp, requirements, progress }) => (
-            <tr key={opp.id}>
-              <td className="mono">{opp.id}</td><td>{opp.title}</td><td>{opp.customer}</td>
-              <td><span className={`badge opp-status ${statusClass(opp.status)}`}>{opp.status.replace("_", "-")}</span></td><td>{requirements}</td>
-              <td><UnitProgress progress={progress} /></td>
-              <td><Link className="button" href={`/opportunities/${opp.id}/trace`}>Open</Link></td>
-            </tr>
-          ))}
-          {data?.length === 0 && <tr><td colSpan={7} className="muted">No opportunities. Create one, or run <span className="mono">python -m scripts.seed_demo</span>.</td></tr>}
-        </tbody>
-      </table>
+      <PageHead title="Opportunities" help="Every RFP in progress, with how far each business unit has answered.">
+        <Link className="button" href="/opportunities/new">New opportunity</Link>
+      </PageHead>
+      <Alert kind="error">{error}</Alert>
+      {!data && !error && <Skeleton lines={4} />}
+      {data?.length === 0 && (
+        <EmptyState title="No opportunities yet" hint={<>Create one, or run <span className="mono">python -m scripts.seed_demo</span> for the demo data.</>}>
+          <Link className="button" href="/opportunities/new">New opportunity</Link>
+        </EmptyState>)}
+      {data && data.length > 0 && (
+        <table className="portfolio">
+          <thead><tr><th>ID</th><th>Title</th><th>Customer</th><th>Status</th><th className="num">Requirements</th><th>Unit responses (validated / total)</th><th scope="col" aria-label="Open" /></tr></thead>
+          <tbody>
+            {data.map(({ opp, requirements, progress }) => (
+              <tr key={opp.id}>
+                <td className="mono"><Link href={`/opportunities/${opp.id}`}>{opp.id}</Link></td>
+                <td><Link href={`/opportunities/${opp.id}/trace`} className="portfolio-title">{opp.title}</Link></td>
+                <td>{opp.customer || <span className="muted">not set</span>}</td>
+                <td><StatusBadge status={opp.status} kind="opp" /></td><td className="num">{requirements}</td>
+                <td><UnitProgress progress={progress} /></td>
+                <td><Link className="button secondary sm" href={`/opportunities/${opp.id}/trace`} aria-label={`Open ${opp.id}`}>Open</Link></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>)}
     </div>
   );
 }

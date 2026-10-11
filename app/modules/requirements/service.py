@@ -13,7 +13,9 @@ Public contract:
     get(db, req_id, baseline=None) -> Requirement | None   latest version; with baseline: the version in that baseline
     review(db, req_id, action, actor, text=None, reason="", category=None)   action: approve | reject | edit;
                                                  approve / reject of a group applies to its sub-requirements;
-                                                 approving a duplicate restores it
+                                                 approving a duplicate or a rejected item restores it (a rejected
+                                                 group with its rejected sub-requirements); a review that changes
+                                                 nothing (the same action twice) records no event
     split(db, req_id, parts, actor, reason="") -> list[Requirement]   parts: [{"quote", "text"}], >= 2
     merge(db, opp_id, req_ids, text, actor, reason="") -> Requirement  >= 2 line items into one
     add_missed(db, opp_id, quote, text, category, actor, page=None) -> Requirement   a person adds what the agent missed
@@ -311,6 +313,7 @@ def review(db: Session, req_id: str, action: str, actor: str, text: str | None =
     if req.status in ("split", "merged"):
         raise ValueError(f"{req_id} is {req.status}; review its replacement instead.")
     before = {"status": req.status, "text": req.text, "category": req.category}
+    kids_changed = 0
     if action == "edit":
         if category and category not in CATEGORIES:
             raise ValueError(f"Unknown category {category!r}.")
@@ -318,13 +321,20 @@ def review(db: Session, req_id: str, action: str, actor: str, text: str | None =
     elif action in ("approve", "reject"):
         req.status = {"approve": "approved", "reject": "rejected"}[action]
         if req.kind == "group":  # the decision covers the sub-requirements
-            for kid in children(db, req_id):  # approve: the undecided ones; reject: every active one
-                if kid.status == "proposed" or (req.status == "rejected" and kid.status not in INACTIVE):
+            # approve: the undecided ones (and the rejected ones when the group itself is restored from rejected);
+            # reject: every active one
+            restore = {"proposed", "rejected"} if before["status"] == "rejected" else {"proposed"}
+            for kid in children(db, req_id):
+                if (kid.status in restore and req.status == "approved") or \
+                        (req.status == "rejected" and kid.status not in INACTIVE):
                     kid.status = req.status
+                    kids_changed += 1
     else:
         raise ValueError(f"Unknown action {action!r}.")
-    audit.record(db, actor, action, "requirement", req_id, req.opportunity_id, before=before,
-                 after={"status": req.status, "text": req.text, "category": req.category}, reason=reason)
+    after = {"status": req.status, "text": req.text, "category": req.category}
+    if after == before and not kids_changed:  # a repeated click: nothing changed, so no history event
+        return
+    audit.record(db, actor, action, "requirement", req_id, req.opportunity_id, before=before, after=after, reason=reason)
     db.commit()
 
 

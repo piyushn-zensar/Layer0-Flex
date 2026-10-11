@@ -3,15 +3,14 @@
 // shift-click the last, or type the line numbers. The quote stored is those lines verbatim, so its source is exact.
 // Page headers and footers in the range are left out, as the reader leaves them out.  Owner: Piyush.
 import { useEffect, useMemo, useState } from "react";
-import { api, post, useApi } from "@/lib/api";
+import { Alert, Busy, Skeleton } from "@/components/ui";
+import { api, errorMessage as message, post, useApi } from "@/lib/api";
 import type { Doc, Requirement } from "@/lib/types";
 
 const MAX_LINES = 40; // as the API (requirements.service.MAX_SELECTED_LINES)
 
 interface Line { n: number; text: string; bbox: number[]; furniture?: boolean }
 interface LayoutPage { page: number; width: number; height: number; unreviewed: boolean; lines: Line[] }
-
-const message = (e: unknown) => (e instanceof Error ? e.message : String(e));
 
 export default function LinePicker({ oppId, startPage, categories, requirements, onAdded }: {
   oppId: string; startPage: number; categories: string[];
@@ -53,9 +52,9 @@ export default function LinePicker({ oppId, startPage, categories, requirements,
     return s;
   }, [requirements, docId, pageNo]);
 
-  if (oppError) return <p className="warn">{oppError}</p>;
-  if (!opp) return <p className="muted">Loading the RFP…</p>;
-  if (!docId) return <p className="muted">Upload the main RFP and wait until it has been read.</p>;
+  if (oppError) return <Alert kind="error">{oppError}</Alert>;
+  if (!opp) return <Skeleton lines={3} />;
+  if (!docId) return <Alert kind="info">Upload the main RFP and wait until it has been read.</Alert>;
 
   const last = page ? Math.max(0, ...page.lines.map((l) => l.n)) : 0;
   const a = Number.parseInt(from, 10);
@@ -99,7 +98,8 @@ export default function LinePicker({ oppId, startPage, categories, requirements,
           <span>Page <input type="number" aria-label="RFP page number" min={1} max={pageCount} value={pageNo}
             onChange={(e) => goTo(Number(e.target.value))} /> / {pageCount}</span>
           <button type="button" aria-label="Next page" disabled={pageNo >= pageCount} onClick={() => goTo(pageNo + 1)}>▶</button>
-          {page?.unreviewed && <span className="warn">No text layer: this page was not read (needs OCR)</span>}
+          {page?.unreviewed && <span className="warn" role="status">No text layer: this page was not read (needs OCR)</span>}
+          {!page && loaded?.key !== key && <Busy label="Loading the page lines…" />}
         </div>
         <div className="page lp-page">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -116,7 +116,7 @@ export default function LinePicker({ oppId, startPage, categories, requirements,
             );
           })}
         </div>
-        {!page && <p className="muted">{loaded?.key === key && loaded.error ? <span className="warn">{loaded.error}</span> : "Loading the page lines…"}</p>}
+        {!page && loaded?.key === key && loaded.error && <Alert kind="error">{loaded.error}</Alert>}
         <p className="muted lp-legend"><span><i className="lp-swatch covered" /> already a requirement</span>
           <span><i className="lp-swatch on" /> selected</span> <span><i className="lp-swatch furniture" /> header or footer (left out)</span></p>
       </div>
@@ -141,8 +141,8 @@ export default function LinePicker({ oppId, startPage, categories, requirements,
         <label>Category <select value={category} onChange={(e) => setCategory(e.target.value)}>
           {categories.map((c) => <option key={c}>{c}</option>)}</select></label>
         <span className="inline"><button disabled={busy || !quote || !!problem}>{busy ? "Adding…" : "Add requirement"}</button></span>
-        {error && <p className="warn" role="alert">{error}</p>}
-        {added && <p className="ok" role="status">{added}</p>}
+        <Alert kind="error" onClose={() => setError(undefined)}>{error}</Alert>
+        <Alert kind="success" onClose={() => setAdded(undefined)}>{added}</Alert>
       </form>
     </div>
   );

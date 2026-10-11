@@ -1,0 +1,28 @@
+/* Requirements pages: requirement review, groups, history, line picker, changes.  Owned by the requirements page group; globals.css holds the foundation. */
+
+/* ---------- Requirement review ---------- */
+.filters input[type="search"] { flex: 1 1 200px; max-width: 320px; }
+.req-table .col-status { width: 112px; }
+.req-table td.status-cell .badge { margin-bottom: var(--s1); }
+.req-table td.status-cell button.link { display: block; padding-left: 0; }
+.req-table .quote { overflow-wrap: anywhere; }
+.req-table .group-title + .expand { display: inline-flex; }
+/* inline forms (edit, split) fill the Requirement column; the error sits between the fields and the buttons */
+.req-table .form.compact input, .req-table .form.compact textarea, .req-table .form.compact select { width: 100%; }
+.form-error { margin: 0; }
+/* the merge field opens as a second row of the bulk bar */
+.bulkbar .bulk-merge { flex: 1 1 100%; padding-top: var(--s2); border-top: 1px solid var(--info-line); }
+.bulkbar .bulk-merge .grow { flex: 1 1 280px; }
+.bulkbar .bulk-merge .form-error { flex: 1 1 100%; }
+/* add-missed card: the summary is the card title */
+details.card > summary { font-size: var(--fs-lg); }
+details.card > summary .muted { font-weight: 400; margin-left: var(--s2); }
+details.card[open] > summary { padding-bottom: var(--s3); border-bottom: 1px solid var(--line); }
+.lp-side .alert { margin-bottom: 0; }
+
+@media (max-width: 640px) {
+  .filters input[type="search"] { max-width: none; }
+  details.card > summary .muted { display: block; margin-left: 0; }
+  .req-table .col-actions { width: 180px; }
+  .bulkbar .bulk-merge .inline { margin-bottom: 0; }
+}

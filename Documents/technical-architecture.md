@@ -81,8 +81,8 @@ One Python API service, one database, one file store, and a Next.js web applicat
 |---|---|---|
 | Language | Python 3.12 | Used by every earlier code line |
 | API | FastAPI + Pydantic | JSON routes under `/api`; interactive docs at `/docs` |
-| Web | Next.js (App Router, TypeScript, React), plain CSS | One route folder per module's pages; `/api/*` is proxied to the FastAPI service |
-| Database | SQLAlchemy 2 over SQLite for the PoC | Same code runs on PostgreSQL for several concurrent writers. Tables are created at start-up; migrations are added before a pilot |
+| Web | Next.js (App Router, TypeScript, React), plain CSS | One route folder per module's pages; `/api/*` is proxied to the FastAPI service. A small shared set of design tokens and primitives (status badges, alerts, toasts, confirm dialog, empty and loading states; `web/components/ui/`) keeps every page consistent (11 Oct 2026) |
+| Database | SQLAlchemy 2 over SQLite for the PoC | SQLite in WAL mode with a 30 s lock wait, so page loads and a bulk review do not block each other. Same code runs on PostgreSQL for several concurrent writers. Tables are created at start-up; migrations are added before a pilot |
 | Native PDF text | **PyMuPDF** | Lines with positions, page sizes, page rendering for screen 1 |
 | Ruled tables | **pdfplumber** | Table and cell boundaries (stage 1 work) |
 | OCR | **Tesseract 5.5**, called as a local program with TSV output | For pages with no text layer (stage 1 work). Page 83 of the Syracuse RFP is such a page |
@@ -458,6 +458,7 @@ Every write uses the acting user's name.
 - **Model-change guard** (`scripts/model_guard.py`, built 11 Oct 2026). Every frozen answer is keyed by the model name, so a new model, prompt or schema makes the frozen answers miss:
   - `replay` runs the demo offline (the Syracuse sample, the hyperscale sample, the response outline and the illustrative addendum; `--real` adds the full reading and grouping run). It reports, per agent task, how many calls were answered from frozen answers and how many were not. Any miss fails it and names the task. `tests/test_model_guard.py` runs it as a test.
   - `compare --model <deployment>` asks a candidate model the same questions without overwriting any frozen answer. It scores the answers per task (reader recall of the frozen quotes, the same grouping, the same main unit and product, valid outline citations, the same change classification) and blocks the switch below the thresholds. The thresholds are starting values, not yet tried on a second model.
+- **Regression tests from the review pass** (`tests/test_poc_pass.py`, 11 Oct 2026): nine tests for defects found while testing every user journey, for example a bulk approve of hundreds of items at once, re-reading a document that was already uploaded, and resuming after a no-go.
 - **Repeatability:** ingest the same PDF twice and compare the layout model byte for byte; re-run extraction and matching and compare (cached answers make this exact).
 - **Change tests** (built 10 Oct 2026). Two tests in `tests/test_smoke.py`:
   - One reads a generated addendum with a stubbed change agent, so no model is called. It checks the classification, the person's confirmation, that only the bid manager can apply, a new version anchored in the addendum, a removal (its work withdrawn), a new ID (its work dispatched), the returned answer, and that Traceability lists the addendum as a second document.

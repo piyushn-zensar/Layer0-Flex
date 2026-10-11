@@ -1,0 +1,33 @@
+/* Traceability page: the three linked panes and match actions.  Owned by the trace page group; globals.css holds the foundation. */
+
+/* ---- Pane 3: match status line and actions (MatchActions) ---- */
+.match-actions { margin-top: var(--s2); }
+.match-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1) var(--s2); margin-bottom: var(--s1); }
+.match-meta .badge { margin: 0; }
+.match-actions .busy { align-self: center; }
+.pane .empty { margin: var(--s3) 0 0; padding: var(--s5) var(--s3); }
+.rows th.col-id { width: 118px; } .rows .trace-id { white-space: nowrap; } /* a full REQ id on one line */
+.rows .trace-source .tag { white-space: normal; overflow-wrap: anywhere; } /* a change document's file name wraps in its cell instead of running over the next one */
+.trace-assign .badge { margin-right: var(--s1); }
+.trace-assign .trace-status { text-transform: none; }
+.toolbar .badge { margin-right: var(--s1); font-weight: 500; }
+.kb-send { margin-top: var(--s1); } .kb-send .warn { flex-basis: 100%; }
+
+/* ---- Decisions page ---- */
+.dec-units { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); border: 0; padding: 0; margin: 0; min-width: 0; }
+.card details.dec-unanchored { margin: 0 0 var(--s3); } .dec-unanchored summary { cursor: pointer; font-weight: 600; } .dec-unanchored p { margin-top: var(--s1); }
+.dec-layers { margin: 0 0 var(--s3); padding-left: 18px; } .dec-layers li { margin-bottom: var(--s1); }
+.dec-rules td:nth-child(2) { white-space: nowrap; }
+.dec-criteria td:nth-child(3) select { min-width: 110px; } .dec-criteria td:nth-child(4) input { width: 100%; min-width: 120px; }
+.decisions .form.compact > .row { margin-top: var(--s1); }
+/* the criteria table scrolls in its box on a phone: .form wraps, so a stretched item would take the table's own width */
+.decisions .form.compact > .table-scroll { width: 100%; min-width: 0; margin-bottom: 0; }
+.decisions .card-head .badge { margin: 0 var(--s1); }
+
+@media (max-width: 640px) {
+  .three { min-height: 0; } .pane { max-height: 60vh; }
+  .trace-legend .tag { white-space: normal; max-width: 100%; } /* the Semi-custom legend is wider than a phone */
+  .rows th.col-id { width: 108px; } .rows th.col-src { width: 26%; } .rows th.col-unit { width: 44%; }
+  .rows td { padding-inline: var(--s2); }
+  .pane .row-actions button { flex: 1 1 auto; }
+}

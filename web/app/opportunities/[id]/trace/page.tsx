@@ -3,26 +3,34 @@
 // Selecting a requirement in any pane selects it in all three and opens its source page.  Owner: Janvia.
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { post, useApi } from "@/lib/api";
+import { errorMessage, post, useApi } from "@/lib/api";
 import type { Trace } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
+import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
 import MatchActions from "@/components/matching/MatchActions"; // A-05 (Atharv)
 import SendToKnowledge from "@/components/knowledge/SendToKnowledge"; // A-11 (Atharv)
 
 // P-11: what a document other than the main RFP is (its upload role).
 const ROLE: Record<string, string> = { change: "Change document", addendum: "Addendum", qa: "Q&A" };
 
-// Assignment status -> safe CSS class suffix (displayed text stays as-is).
-const statusClass = (s: string | null | undefined) =>
-  `status-${String(s ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "unknown"}`;
-
 export default function TracePage() {
   const { id } = useParams<{ id: string }>();
+  const toast = useToast();
   const { data, error, reload } = useApi<Trace>(`/api/opportunities/${id}/trace`);
   const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/opportunities/${id}/knowledge`); // A-11
   const [selected, setSelected] = useState<string>();
   const [pageNo, setPageNo] = useState(1);
   const [docId, setDocId] = useState<string>(); // P-11: the document shown in pane 1 (default the main RFP)
+  const [matching, setMatching] = useState(false);
+
+  // Runs the matching agent over the requirements that nobody has decided yet (accepted, manual and rejected stay).
+  const matchProducts = () => {
+    setMatching(true);
+    post<{ matched: number; kept: number }>(`/api/opportunities/${id}/match`)
+      .then((r) => { toast.success(`Matching done: ${r.matched} requirement(s) matched, ${r.kept} kept as decided.`); return reload(); },
+        (e) => toast.error(errorMessage(e)))
+      .finally(() => setMatching(false));
+  };
 
   const select = useCallback((reqId: string) => {
     setSelected(reqId);
@@ -42,8 +50,8 @@ export default function TracePage() {
     if (first) select(first.req.req_id);
   }, [data, selected, select]);
 
-  if (error) return <p className="warn">Unable to load this view. Please refresh the page or try again shortly.</p>;
-  if (!data) return <p>Loading…</p>;
+  if (error) return <Alert kind="error" title="Could not load the traceability view.">{error}</Alert>; // UX-10
+  if (!data) return <Skeleton lines={4} />;
   // P-11: the main RFP first, then change documents with requirements anchored in them (older APIs send only doc + pages).
   const docs = data.docs ?? (data.doc ? [{ id: data.doc.id, filename: data.doc.filename, role: data.doc.role, pages: data.pages }] : []);
   const mainId = data.doc?.id ?? docs[0]?.id;
@@ -65,10 +73,13 @@ export default function TracePage() {
     <>
       <PageHead level={2} title="Traceability"
         help="Original RFP, requirement breakdown and product mapping side by side. Select a requirement in any pane to follow it across all three.">
-        <button className="secondary" onClick={() => post(`/api/opportunities/${id}/match`).then(reload, alert)}>Match products</button>
+        {matching && <Busy label="Matching…" />}
+        <button className="secondary" disabled={matching} onClick={matchProducts}>Match products</button>
       </PageHead>
       <div className="toolbar">
-        <span className="muted">Unit responses: {Object.entries(data.progress).map(([bu, p]) => <span key={bu} className="tag">{bu} {p.validated}/{p.total} validated</span>)}
+        <span className="muted">Unit responses: {Object.entries(data.progress).map(([bu, p]) => (
+          <StatusBadge key={bu} status={p.validated === p.total ? "validated" : p.submitted > 0 ? "submitted" : "assigned"}
+            label={`${bu} ${p.validated}/${p.total} validated`} title={`${p.submitted} of ${p.total} answers submitted`} />))}
           {Object.keys(data.progress).length === 0 && "not sent to units yet"}</span>
       </div>
       <div className="trace-legend" aria-label="Offering type legend">
@@ -110,7 +121,7 @@ export default function TracePage() {
 
         <section className="pane">
           <h2>2 · Requirement breakdown</h2>
-          {data.rows.length === 0 ? <p className="muted trace-empty">No requirements extracted.</p> : (
+          {data.rows.length === 0 ? <EmptyState title="No requirements yet" hint="Nothing has been extracted from the RFP for this opportunity." /> : (
           <table className="rows">
             <thead><tr><th className="col-id">ID</th><th className="col-src">Source</th><th>Requirement</th></tr></thead>
             <tbody>
@@ -118,7 +129,8 @@ export default function TracePage() {
                 <tr key={req.req_id} {...rowProps(req.req_id)}>
                   <td><div className="mono trace-id">{req.req_id}</div><div className="tag">{req.category}</div></td>
                   <td className="trace-source">{docOf(req.document_id) && <div><span className="tag">{docOf(req.document_id)}</span></div>}
-                    {req.source}{req.provenance === "UNANCHORED" && <div className="warn">unanchored</div>}</td>
+                    {/* UX-14: the same badge as the Requirements page */}
+                    {req.provenance === "UNANCHORED" ? <StatusBadge status="medium" kind="severity" label="unanchored" title="Quote not located on the page; check the source manually" /> : req.source}</td>
                   <td><div className="trace-text">{req.text}</div>
                     {children.length > 0 ? (
                       <ul className="trace-children">{children.map((k) => <li key={k.req_id}>{k.text} <span className="muted">({docOf(k.document_id) ? `${docOf(k.document_id)}, ` : ""}{k.source})</span></li>)}</ul>
@@ -132,7 +144,7 @@ export default function TracePage() {
 
         <section className="pane">
           <h2>3 · Product mapping and responses</h2>
-          {data.rows.length === 0 ? <p className="muted trace-empty">No product mappings or responses available.</p> : (
+          {data.rows.length === 0 ? <EmptyState title="Nothing to map yet" hint="Product mappings and unit responses appear here once requirements exist." /> : (
           <table className="rows">
             <thead><tr><th className="col-id">ID</th><th>Unit · product</th><th>Response</th></tr></thead>
             <tbody>
@@ -142,16 +154,18 @@ export default function TracePage() {
                   <td>
                     {m?.bu ? (<>
                       <div className="trace-unit">{unit?.name ?? m.bu}</div>
-                      <div className="trace-product">{product?.name ?? m.product_id} <span className={`tag ${m.offering_type}`}>{m.offering_type}</span></div>
+                      <div className="trace-product">{product?.name ?? m.product_id} <StatusBadge status={m.offering_type} kind="offering" /></div>
                       <div className="muted trace-rationale">{m.rationale}</div>
                       {bom.length > 0 && <details className="trace-bom"><summary>Bill of materials ({bom.length} lines)</summary>
                         <ul>{bom.map((b) => <li key={b.item}>{b.item} — {b.qty}</li>)}</ul></details>}
-                    </>) : <span className="muted">{m ? "Bid manager (not a product item)" : "not matched yet"}</span>}
+                    </>) : <span className="muted">{m?.status === "rejected" ? "rejected: choose a unit with Change" // QA-11, once the API sends rejected matches
+                      : m ? "Bid manager (not a product item)" : "not matched yet"}</span>}
                     <MatchActions oppId={id} reqId={req.req_id} match={m} dispatched={assignments.length > 0} onDone={reload} />
                   </td>
                   <td>
                     {assignments.map((a) => (
-                      <div key={a.id} className="trace-assign"><strong>{a.bu}</strong> <span className={`badge trace-status ${statusClass(a.status)}`}>{a.status}</span> <span className="trace-compliance">{a.compliance}</span>
+                      <div key={a.id} className="trace-assign"><strong>{a.bu}</strong> <StatusBadge status={a.status} className="trace-status" />
+                        {a.compliance && <StatusBadge status={a.compliance} kind="compliance" className="trace-compliance" />}
                         {a.response && <div className="muted trace-response">{a.response}</div>}
                         {a.status === "validated" && <SendToKnowledge kind="response" refId={a.id} status={sent?.[`response:${a.id}`]} onSent={reloadSent} />}</div>
                     ))}

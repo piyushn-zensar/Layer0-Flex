@@ -8,6 +8,7 @@ from app.core.db import get_db
 from app.core.web import actor, row
 from app.modules.catalog import service as catalog
 from app.modules.decisions import service
+from app.modules.opportunities import service as opportunities
 
 router = APIRouter(tags=["decisions"])
 
@@ -31,6 +32,10 @@ class GoNoGoIn(BaseModel):
 
 @router.get("/opportunities/{opp_id}/decisions")
 def decisions(opp_id: str, db: Session = Depends(get_db)):
+    try:
+        opportunities.require(db, opp_id)  # an unknown opportunity is a 404, not an empty evidence pack
+    except LookupError as exc:
+        raise HTTPException(404, str(exc))
     p, g = service.latest(db, opp_id, "participation"), service.latest(db, opp_id, "go_no_go")
     ev = service.evidence(db, opp_id)
     return {"evidence": ev, "summary": service.summary(db, opp_id, ev) if ev["frozen"] else None, "units": catalog.units(),

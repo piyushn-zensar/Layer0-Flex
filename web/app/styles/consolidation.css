@@ -1,0 +1,34 @@
+/* Consolidation pages: bid decision, final response, response outline, changes.  Owned by the consolidation page group; globals.css holds the foundation. */
+
+/* ---------- Final response ---------- */
+.cons-summary { font-size: var(--fs-lg); }
+.cons-table .col-id { width: 130px; } .cons-table .col-units { width: 30%; } .cons-table .col-state { width: 150px; }
+.cons-unit { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s2); align-items: center; } /* unit, compliance, product, status on one line */
+.cons-unit + .cons-unit { margin-top: var(--s1); padding-top: var(--s1); border-top: 1px dashed var(--line); }
+.cons-unit .badge { margin-right: 0; }
+.cons-table td .badge + .muted { margin-top: var(--s1); }
+
+/* ---------- Response outline ---------- */
+.outline-summary { max-width: 110ch; } .outline-summary .badge { vertical-align: middle; }
+.outline .card-head h3 { font-size: var(--fs-lg); color: var(--ink); } /* chapters are the page's sections, not sub-headings */
+.outline .card-head { margin-bottom: var(--s2); }
+.outline .card .alert { margin-top: var(--s2); }
+.outline .card details .table-scroll { margin: var(--s2) 0 0; }
+.outline-answers th:nth-child(4) { min-width: 320px; }
+
+/* ---------- Changes ---------- */
+.chg-upload .form { align-items: center; }
+.chg-upload .form label { font-weight: 600; }
+.chg-upload .form input[type="file"] { min-height: 34px; max-width: 100%; }
+.chg-upload .alert { margin: var(--s3) 0 0; }
+.chg-set .card-head h3 { font-size: var(--fs-lg); color: var(--ink); } /* a change set is the page's main section */
+.chg-set .card-head h3 .badge { vertical-align: middle; margin-left: var(--s1); }
+.chg-set > .alert { margin-top: var(--s2); }
+.chg-items tr:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.chg-items .col-kind .badge { margin-right: 0; }
+.chg-items .muted > button.link { margin-left: var(--s2); } /* "Confirmed by X  Change" */
+.chg-actions .alert { flex: 1 1 100%; margin: var(--s1) 0 0; }
+@media (max-width: 640px) {
+  .cons-group-label { flex-basis: 100%; }
+  .chg-upload .form > * { flex: 1 1 100%; } .chg-upload .form input[type="file"] { width: 100%; }
+}

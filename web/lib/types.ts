@@ -2,6 +2,14 @@
 // Add a field here when a controller starts returning it.
 
 export type OfferingType = "CTO" | "SEMI_CUSTOM" | "ETO" | "NONE";
+// The status vocabularies (kept as `string` on the shapes below so a new backend value never breaks a page);
+// <StatusBadge> colours every one of them. OpportunityStatus is the workflow order of the stepper.
+export type OpportunityStatus = "new" | "reading" | "review" | "frozen" | "go" | "no_go" | "dispatched" | "consolidating" | "submitted";
+export type RequirementStatus = "proposed" | "approved" | "rejected" | "merged" | "split" | "duplicate";
+export type MatchStatus = "proposed" | "accepted" | "rejected";
+export type AssignmentStatus = "assigned" | "submitted" | "validated" | "returned" | "withdrawn";
+export type Severity = "high" | "medium" | "low";
+export interface Person { name: string; bu: string | null } // /api/people: who "Acting as" can be
 
 export interface Opportunity { id: string; title: string; customer: string; customer_type: string; status: string; created_by: string }
 export interface Doc { id: string; sha256: string; filename: string; role: string; status: string; page_count: number }

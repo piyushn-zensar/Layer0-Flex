@@ -6,7 +6,9 @@ cd /d "%~dp0"
 if not exist .venv\Scripts\python.exe (echo Run setup.cmd first. & exit /b 1)
 if not exist web\.next\BUILD_ID (echo Run setup.cmd first. & exit /b 1)
 
-start "Layer 0 API" /min .venv\Scripts\python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+rem --timeout-keep-alive 75: the web app's proxy reuses idle connections; uvicorn's default closes them after 5 s,
+rem which now and then made a page load fail with "socket hang up"
+start "Layer 0 API" /min .venv\Scripts\python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --timeout-keep-alive 75
 start "Layer 0 web" /min cmd /c "cd /d web && npm start -- -p 3000"
 
 echo Starting Layer 0...

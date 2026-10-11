@@ -5,7 +5,8 @@ Public contract (other modules call only these):
     get(db, opp_id) -> Opportunity | None
     require(db, opp_id) -> Opportunity            LookupError if it does not exist (call it before any write)
     list_all(db) -> list[Opportunity]
-    set_status(db, opp_id, status, actor) -> bool  moves forward only (see FORWARD); False if the move was ignored
+    set_status(db, opp_id, status, actor) -> bool  moves forward only (see FORWARD); False if the move was ignored;
+                                                 "go" after a "no_go" resumes at the status the stop replaced
     add_document(db, opp_id, filename, data, role, actor) -> Document   id = <opp>-<sha256[:12]>;
                                                  ValueError if a second main RFP is uploaded
     get_document(db, doc_id) -> Document | None
@@ -20,6 +21,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.core import audit, config
+from app.core.audit import AuditEvent
 from app.modules.opportunities.models import STATUSES, Document, Opportunity
 
 FILES = config.STORE / "files"
@@ -71,10 +73,22 @@ def set_status(db: Session, opp_id: str, status: str, actor: str) -> bool:
     stop_or_resume = {opp.status, status} == {"go", "no_go"} or (status == "no_go" and opp.status != "submitted")
     if status == opp.status or (FORWARD[status] < FORWARD[opp.status] and not stop_or_resume):
         return False
+    if status == "go" and opp.status == "no_go":
+        status = _resumed_status(db, opp_id)
     audit.record(db, actor, "status", "opportunity", opp_id, opp_id, before=opp.status, after=status)
     opp.status = status
     db.commit()
     return True
+
+
+def _resumed_status(db: Session, opp_id: str) -> str:
+    """A "go" after a "no_go" resumes where the bid stopped (e.g. dispatched), not at "go": the audit log holds the
+    status the stop replaced."""
+    events = db.scalars(select(AuditEvent).where(AuditEvent.entity == "opportunity", AuditEvent.entity_id == opp_id,
+                                                 AuditEvent.action == "status").order_by(AuditEvent.id.desc()))
+    stop = next((e for e in events if e.data.get("after") == "no_go"), None)
+    was = stop.data.get("before") if stop else None
+    return was if was in FORWARD and FORWARD[was] > FORWARD["go"] else "go"
 
 
 def add_document(db: Session, opp_id: str, filename: str, data: bytes, role: str, actor: str) -> Document:

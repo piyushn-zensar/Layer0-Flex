@@ -1,16 +1,26 @@
 """Database engine, session and the declarative Base every module's models.py uses."""
 from datetime import datetime, timezone
 
-from sqlalchemy import create_engine, inspect, text
+from sqlalchemy import create_engine, event, inspect, text
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 from app.core import config
 
+# timeout: a writer waits for the lock instead of failing with "database is locked" when the web app sends
+# several writes at once (bulk approve); the default is 5 s
 engine = create_engine(
     config.DATABASE_URL,
-    connect_args={"check_same_thread": False} if config.DATABASE_URL.startswith("sqlite") else {},
+    connect_args={"check_same_thread": False, "timeout": 30} if config.DATABASE_URL.startswith("sqlite") else {},
 )
 SessionLocal = sessionmaker(engine, expire_on_commit=False)
+
+
+if engine.dialect.name == "sqlite":
+    @event.listens_for(engine, "connect")
+    def _pragmas(conn, _record):
+        """WAL: readers never block a writer and a writer never blocks readers (page loads during a bulk review)."""
+        conn.execute("PRAGMA journal_mode=WAL")
+        conn.execute("PRAGMA busy_timeout=30000")
 
 
 class Base(DeclarativeBase):
@@ -54,4 +64,4 @@ def _check_columns() -> None:
     if missing:
         raise SchemaOutOfDate(
             f"The local database is older than the code (missing: {', '.join(missing)}). Stop the API, then run "
-            "'.venv\Scripts\python -m scripts.seed_demo --reset' (or reset-demo.cmd) to rebuild the demo data.")
+            "'.venv\\Scripts\\python -m scripts.seed_demo --reset' (or reset-demo.cmd) to rebuild the demo data.")

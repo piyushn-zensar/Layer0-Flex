@@ -10,7 +10,7 @@ from app.core.web import actor, row
 from app.modules.catalog import service as catalog
 from app.modules.requirements import service as requirements
 from app.modules.workpackages import service
-from app.modules.workpackages.models import COMPLIANCE
+from app.modules.workpackages.models import BID_DESK, COMPLIANCE
 
 router = APIRouter(tags=["workpackages"])
 AssignmentId = Path(ge=1, le=2**31 - 1)
@@ -59,6 +59,9 @@ def handoff(opp_id: str, bu: str, db: Session = Depends(get_db)):
 
 @router.get("/inbox/{bu}")
 def inbox(bu: str, db: Session = Depends(get_db)):
+    if bu != BID_DESK and catalog.unit(bu) is None:
+        raise HTTPException(404, f"Unit {bu} not found.")
+
     def item(a):
         req = requirements.get(db, a.req_id)  # None if the requirement was deleted after dispatch
         return row(a) | {"requirement": row(req, "source") if req else None}

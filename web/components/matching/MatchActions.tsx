@@ -1,25 +1,37 @@
 "use client";
 // Screen-3 actions on one requirement's match: accept, reject, or change its units and products.  Owner: Atharv.
-// Used inside the trace page's selectable rows: clicks and keys stay in here so they don't move the row selection.
+// Used inside the trace page's selectable rows: clicks on the buttons and the change form stay in here so they don't
+// move the row selection; a click on the status line still selects the row (QA-11).
 import { useState } from "react";
-import { api, post } from "@/lib/api";
+import { api, errorMessage, post } from "@/lib/api";
 import type { Match, Product, Unit } from "@/lib/types";
+import { Busy, StatusBadge, offeringLabel, useToast } from "@/components/ui";
 
 type Offering = "CTO" | "SEMI_CUSTOM" | "ETO";
 type MatchUnit = { bu: string; product_id: string; offering_type: Offering };
 type Props = { oppId: string; reqId: string; match: (Match & { units?: MatchUnit[] }) | null; dispatched: boolean; onDone: () => void };
 
 const OFFERINGS: Offering[] = ["CTO", "SEMI_CUSTOM", "ETO"];
+// QA-04: how the match came about (matching.service stores the method; "rule" is a non-product category routed to the bid desk)
+const METHOD: Record<string, string> = {
+  manual: "set by a person", agent: "proposed by the matching agent",
+  rule: "routed to the bid desk by rule (not a product category)", retrieval_only: "closest catalog entry (no agent answer)",
+};
+const stop = (e: React.SyntheticEvent) => e.stopPropagation();
 
 export default function MatchActions({ oppId, reqId, match: m, dispatched, onDone }: Props) {
+  const toast = useToast();
   const [catalog, setCatalog] = useState<{ units: Unit[]; products: Product[] }>();
   const [draft, setDraft] = useState<MatchUnit[]>();
   const [busy, setBusy] = useState(false);
-  const fail = (e: unknown) => { setBusy(false); alert(e); };
+  const fail = (e: unknown) => { setBusy(false); toast.error(errorMessage(e)); };
 
   const decide = (action: "accept" | "reject") => {
     setBusy(true);
-    post(`/api/matches/${m!.id}/decide`, { action }).then(() => { setBusy(false); onDone(); }, fail);
+    post(`/api/matches/${m!.id}/decide`, { action }).then(() => {
+      setBusy(false); onDone();
+      toast.success(action === "accept" ? `${reqId}: match accepted.` : `${reqId}: match rejected. Use Change to pick a unit.`);
+    }, fail);
   };
   const openChange = () => {
     setDraft(m?.units ?? []);
@@ -30,7 +42,7 @@ export default function MatchActions({ oppId, reqId, match: m, dispatched, onDon
     setBusy(true);
     post(`/api/opportunities/${oppId}/requirements/${reqId}/match`,
       { units: draft!.map(({ product_id, offering_type }) => ({ product_id, offering_type })) })
-      .then(() => { setBusy(false); setDraft(undefined); onDone(); }, fail);
+      .then(() => { setBusy(false); setDraft(undefined); onDone(); toast.success(`${reqId}: match saved.`); }, fail);
   };
   const product = (id: string) => catalog?.products.find((p) => p.id === id);
   const setRow = (i: number, change: Partial<MatchUnit>) => setDraft(draft!.map((u, j) => (j === i ? { ...u, ...change } : u)));
@@ -41,24 +53,22 @@ export default function MatchActions({ oppId, reqId, match: m, dispatched, onDon
   const others = (m?.units ?? []).slice(1);
 
   return (
-    <div onClick={(e) => e.stopPropagation()} onKeyDown={(e) => e.stopPropagation()}>
+    <div className="match-actions">
       {others.length > 0 && <div className="muted">Also: {others.map((u) => `${u.bu} · ${u.product_id}`).join(", ")}</div>}
-      {m && <div className="muted">
-        <span className={`badge status-${m.status === "accepted" ? "approved" : m.status}`}>{m.status}</span>
-        {m.method === "manual" ? "set by a person" : m.method === "agent" ? "proposed by the matching agent" : "closest catalog entry (no agent answer)"}
-      </div>}
+      {m && <div className="muted match-meta"><StatusBadge status={m.status} /> {METHOD[m.method] ?? m.method}</div>}
 
       {draft === undefined ? (
-        <div className="row-actions">
+        <div className="row-actions" onClick={stop} onKeyDown={stop}>
           {m?.status === "proposed" && <>
             <button disabled={busy} onClick={() => decide("accept")}>Accept</button>
             <button disabled={busy} className="secondary" onClick={() => decide("reject")}>Reject</button>
           </>}
           <button disabled={busy} className="secondary" onClick={openChange}>Change</button>
+          {busy && <Busy label="Saving…" />}
         </div>
       ) : (
-        <div className="form compact">
-          {!catalog && <span className="muted">Loading catalog…</span>}
+        <div className="form compact" onClick={stop} onKeyDown={stop}>
+          {!catalog && <Busy label="Loading catalog…" />}
           {catalog && draft.map((u, i) => (
             <div key={i} className="row-actions">
               <label><span className="sr-only">Product</span>
@@ -75,7 +85,7 @@ export default function MatchActions({ oppId, reqId, match: m, dispatched, onDon
               </label>
               <label><span className="sr-only">Offering type</span>
                 <select value={u.offering_type} onChange={(e) => setRow(i, { offering_type: e.target.value as Offering })}>
-                  {OFFERINGS.map((o) => <option key={o} value={o}>{o}</option>)}
+                  {OFFERINGS.map((o) => <option key={o} value={o}>{offeringLabel(o)}</option>)}
                 </select>
               </label>
               <button className="secondary" aria-label={`Remove ${u.product_id}`} onClick={() => setDraft(draft.filter((_, j) => j !== i))}>Remove</button>
@@ -85,9 +95,10 @@ export default function MatchActions({ oppId, reqId, match: m, dispatched, onDon
           {dispatched && <span className="warn">Already sent to units: dispatch again on the Decisions page to apply this change.
             Added units get the work (if they take part); removed units have theirs withdrawn.</span>}
           <div className="row-actions">
-            <button className="secondary" disabled={!catalog} onClick={addRow}>Add unit</button>
+            <button className="secondary" disabled={!catalog || busy} onClick={addRow}>Add unit</button>
             <button disabled={busy || !catalog} onClick={save}>Save</button>
-            <button className="secondary" onClick={() => setDraft(undefined)}>Cancel</button>
+            <button className="secondary" disabled={busy} onClick={() => setDraft(undefined)}>Cancel</button>
+            {busy && <Busy label="Saving…" />}
           </div>
         </div>
       )}

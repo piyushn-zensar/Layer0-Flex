@@ -96,8 +96,8 @@ def _claim(db: Session, s: ChangeSet, status: str) -> None:
 
 
 def _unavailable(filename: str) -> ValueError:
-    return ValueError(f"{filename} has no frozen answers from the change agent (mock mode): "
-                      "set LLM_PROVIDER=azure to read it.")
+    return ValueError(f"No frozen answers exist for {filename} in this offline demo; "
+                      "connect the model service to read new documents.")
 
 
 def upload(db: Session, opp_id: str, filename: str, data: bytes, actor: str) -> ChangeSet:

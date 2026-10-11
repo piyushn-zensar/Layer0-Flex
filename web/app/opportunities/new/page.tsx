@@ -1,29 +1,43 @@
 "use client";
 // New opportunity.  Owner: Piyush.
 import { useRouter } from "next/navigation";
-import { post } from "@/lib/api";
+import { useState } from "react";
+import { errorMessage, post } from "@/lib/api";
 import type { Opportunity } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
+import { Alert, Busy } from "@/components/ui";
 
 const CUSTOMER_TYPES = ["utility", "hyperscaler", "neocloud", "colocation", "silicon provider", "public sector"];
 
 export default function NewOpportunityPage() {
   const router = useRouter();
-  async function create(form: FormData) {
-    const opp = await post<Opportunity>("/api/opportunities", Object.fromEntries(form));
-    router.push(`/opportunities/${opp.id}`);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState<string>();
+  // QA-02: a blank or whitespace-only title is caught here and a failed request shows its message instead of the route error page.
+  async function create(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const title = String(form.get("title") ?? "").trim();
+    if (!title) { setMessage("A title is required."); return; }
+    setBusy(true); setMessage(undefined);
+    try {
+      const opp = await post<Opportunity>("/api/opportunities", { ...Object.fromEntries(form), title });
+      router.push(`/opportunities/${opp.id}`);
+    } catch (err) { setMessage(errorMessage(err)); setBusy(false); }
   }
   return (
     <div className="content">
       <PageHead title="New opportunity" help="One opportunity per RFP. Upload the RFP on the next page." />
-      <form className="card form" action={create}>
-        <label>Title <input name="title" required placeholder="e.g. Syracuse switchgear procurement" /></label>
-        <label>Customer <input name="customer" /></label>
+      <form className="card form" onSubmit={create} aria-busy={busy}>
+        <label>Title <input name="title" required placeholder="e.g. Syracuse switchgear procurement" aria-invalid={message === "A title is required." ? true : undefined} disabled={busy} /></label>
+        <label>Customer <input name="customer" placeholder="optional" disabled={busy} /></label>
         <label>Customer type
-          <select name="customer_type"><option value="">—</option>{CUSTOMER_TYPES.map((t) => <option key={t}>{t}</option>)}</select>
+          <select name="customer_type" disabled={busy}><option value="">—</option>{CUSTOMER_TYPES.map((t) => <option key={t}>{t}</option>)}</select>
         </label>
-        <button>Create</button>
+        <button disabled={busy}>Create</button>
+        {busy && <Busy label="Creating…" />}
       </form>
+      <Alert kind="error">{message}</Alert>
     </div>
   );
 }

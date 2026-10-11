@@ -45,12 +45,14 @@ def _ingest_in_background(doc_id: str):
 async def upload(opp_id: str, request: Request, background: BackgroundTasks, role: str = Form("main"),
                  file: UploadFile = File(...), db: Session = Depends(get_db)):
     data = await file.read()
+    known = {d.id for d in service.documents(db, opp_id)}
     try:
         doc = service.add_document(db, opp_id, file.filename, data, role, actor(request))
     except LookupError as exc:
         raise HTTPException(404, str(exc))
     except ValueError as exc:
         raise HTTPException(409, str(exc))
-    if doc.status == "uploaded":
+    if doc.status == "uploaded":  # also a re-upload of a file whose reading never finished: it is read again
         background.add_task(_ingest_in_background, doc.id)
-    return _doc(doc)
+    # existing: the same file was attached before (same content), so nothing new was added; the page can say so
+    return _doc(doc) | {"existing": doc.id in known}

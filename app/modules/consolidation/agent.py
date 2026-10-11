@@ -68,8 +68,10 @@ def draft(title: str, answers: list[dict], past: list[str]) -> dict:
     try:
         answer = complete_json("draft_outline", SYSTEM, prompt(title, answers, past), SCHEMA)
     except LLMUnavailable:
+        # the demo laptop replays frozen answers: a chapter whose validated set changed since they were frozen has none
         return {"drafted": False, "paragraphs": [], "gaps": [], "dropped": 0,
-                "note": "No model answer for these validated answers yet: the answers are shown as they are."}
+                "note": "Draft not refreshed: the model service is not connected in this demo, so the validated "
+                        "answers are shown as they are."}
     paragraphs, gaps, dropped = guard(answer, len(answers))
     note = f"{dropped} paragraph(s) without a valid citation removed." if dropped else ""
     return {"drafted": bool(paragraphs), "paragraphs": paragraphs, "gaps": gaps, "dropped": dropped, "note": note}

@@ -134,7 +134,8 @@ def _capacity_criterion(load: dict) -> tuple[bool, str]:
     over = [r for r in load["rows"] if r["over"]]
     parts = [f"{r['bu']} {r['total']}/{r['capacity']}" + (f" (also in {', '.join(r['other_opportunities'])})" if r["other_opportunities"] else "")
              for r in load["rows"] if r["capacity"]]
-    return not over, ("Over capacity: " if over else "Open work vs capacity: ") + "; ".join(parts) + ". Capacity is a placeholder."
+    return not over, (("Over capacity: " if over else "Open work vs capacity: ") + ("; ".join(parts) if parts else "no unit work yet")
+                      + ". Capacity is a placeholder.")
 
 
 def record(db: Session, opp_id: str, kind: str, outcome: str, units: list[str], rationale: str, actor: str,

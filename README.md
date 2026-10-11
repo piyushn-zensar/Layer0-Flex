@@ -24,6 +24,8 @@ cd web && npm install && npm run dev                     # second terminal: web 
 
 Open http://localhost:3000/opportunities/OPP-0001/trace for the three screens. Tests: `.venv/Scripts/python -m pytest -q`.
 
+Next steps and ideas for later iterations: [SUGGESTIONS.md](SUGGESTIONS.md).
+
 ## Layout
 
 ```text
