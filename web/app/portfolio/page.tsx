@@ -38,7 +38,7 @@ export default function PortfolioPage() {
   return (
     <div className="content">
       <PageHead title="Opportunities" help="Every RFP in progress, with how far each business unit has answered.">
-        <Link className="button" href="/opportunities/new">New opportunity</Link>
+        <Link className="button" href="/opportunities/new" data-tour="portfolio-new">New opportunity</Link>
       </PageHead>
       <Alert kind="error">{error}</Alert>
       {!data && !error && <Skeleton lines={4} />}
@@ -47,17 +47,17 @@ export default function PortfolioPage() {
           <Link className="button" href="/opportunities/new">New opportunity</Link>
         </EmptyState>)}
       {data && data.length > 0 && (
-        <table className="portfolio">
-          <thead><tr><th>ID</th><th>Title</th><th>Customer</th><th>Status</th><th className="num">Requirements</th><th>Unit responses (validated / total)</th><th scope="col" aria-label="Open" /></tr></thead>
+        <table className="portfolio" data-tour="portfolio-table">
+          <thead><tr><th data-tour="portfolio-col-id">ID</th><th data-tour="portfolio-col-title">Title</th><th data-tour="portfolio-col-customer">Customer</th><th data-tour="portfolio-col-status">Status</th><th className="num" data-tour="portfolio-col-requirements">Requirements</th><th data-tour="portfolio-col-units">Unit responses (validated / total)</th><th scope="col" aria-label="Open" /></tr></thead>
           <tbody>
             {data.map(({ opp, requirements, progress }) => (
-              <tr key={opp.id}>
+              <tr key={opp.id} data-tour={`portfolio-row-${opp.id}`}>
                 <td className="mono"><Link href={`/opportunities/${opp.id}`}>{opp.id}</Link></td>
                 <td><Link href={`/opportunities/${opp.id}/trace`} className="portfolio-title">{opp.title}</Link></td>
                 <td>{opp.customer || <span className="muted">not set</span>}</td>
-                <td><StatusBadge status={opp.status} kind="opp" /></td><td className="num">{requirements}</td>
-                <td><UnitProgress progress={progress} /></td>
-                <td><Link className="button secondary sm" href={`/opportunities/${opp.id}/trace`} aria-label={`Open ${opp.id}`}>Open</Link></td>
+                <td data-tour={`portfolio-status-${opp.id}`}><StatusBadge status={opp.status} kind="opp" /></td><td className="num" data-tour={`portfolio-reqs-${opp.id}`}>{requirements}</td>
+                <td data-tour={`portfolio-units-${opp.id}`}><UnitProgress progress={progress} /></td>
+                <td><Link className="button secondary sm" href={`/opportunities/${opp.id}/trace`} aria-label={`Open ${opp.id}`} data-tour={`portfolio-open-${opp.id}`}>Open</Link></td>
               </tr>
             ))}
           </tbody>

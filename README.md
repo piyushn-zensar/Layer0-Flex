@@ -23,6 +23,7 @@ cd web && npm install && npm run dev                     # second terminal: web 
 ```
 
 Open http://localhost:3000/opportunities/OPP-0001/trace for the three screens. Tests: `.venv/Scripts/python -m pytest -q`.
+The guided walkthrough attaches the bundled samples (`GET /api/samples`, `.../documents/from-sample`, `.../changes/from-sample`) through the same code as a file upload; see [INSTALL.md](INSTALL.md).
 
 Next steps and ideas for later iterations: [SUGGESTIONS.md](SUGGESTIONS.md).
 

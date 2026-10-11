@@ -40,22 +40,22 @@ export default function ChangesPage() {
   return (
     <>
       {head}
-      {data.baseline ? <p>Current baseline <strong>{data.baseline.number}</strong>: {data.baseline.count} requirements.</p>
-        : <Alert kind="warn">The requirements must be frozen first: freeze the baseline on the <Link href={`/opportunities/${id}/requirements`}>Requirements</Link> page, then read change documents against it.</Alert>}
+      {data.baseline ? <p data-tour="chg-baseline">Current baseline <strong>{data.baseline.number}</strong>: {data.baseline.count} requirements.</p>
+        : <div data-tour="chg-no-baseline"><Alert kind="warn">The requirements must be frozen first: freeze the baseline on the <Link href={`/opportunities/${id}/requirements`}>Requirements</Link> page, then read change documents against it.</Alert></div>}
       {data.baseline && (
-        <form className="card chg-upload" onSubmit={upload} aria-busy={!!busy}>
+        <form className="card chg-upload" onSubmit={upload} aria-busy={!!busy} data-tour="chg-upload">
           <div className="card-head"><h3>Read a change document</h3><span className="muted">An addendum, Q&A answers or a change request, as a PDF.</span></div>
           <div className="form">
             <label htmlFor="chg-file">Change document (PDF)</label>
-            <input id="chg-file" type="file" name="file" accept=".pdf,application/pdf" required disabled={inReview || !!busy} aria-describedby="chg-file-hint" />
-            <button disabled={!!busy || inReview}>Read the change document</button>
+            <input id="chg-file" type="file" name="file" accept=".pdf,application/pdf" required disabled={inReview || !!busy} aria-describedby="chg-file-hint" data-tour="chg-file" />
+            <button disabled={!!busy || inReview} data-tour="chg-upload-button">Read the change document</button>
             {busy ? <Busy label={busy} /> : <span id="chg-file-hint" className="muted">{inReview ? "Apply or discard the change set in review first." : "Read against the current baseline."}</span>}
           </div>
           <Alert kind="error" onClose={() => setMessage(undefined)}>{message}</Alert>
         </form>)}
       {data.sets.length === 0 ? (
-        <EmptyState title="No change documents read yet" hint={data.baseline ? "Read an addendum, Q&A answers or a change request above; each change statement is compared with the frozen baseline." : "Freeze the baseline first."} />
-      ) : data.sets.map((s) => <ChangeSetCard key={s.id} set={s} oppId={id} threshold={data.drastic_threshold} onChanged={changed} />)}
+        <div data-tour="chg-empty"><EmptyState title="No change documents read yet" hint={data.baseline ? "Read an addendum, Q&A answers or a change request above; each change statement is compared with the frozen baseline." : "Freeze the baseline first."} /></div>
+      ) : data.sets.map((s, i) => <ChangeSetCard key={s.id} set={s} oppId={id} threshold={data.drastic_threshold} onChanged={changed} tour={i === 0} />)}
     </>
   );
 }

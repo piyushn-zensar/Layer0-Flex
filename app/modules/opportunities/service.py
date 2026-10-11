@@ -13,6 +13,9 @@ Public contract (other modules call only these):
     documents(db, opp_id) -> list[Document]
     main_document(db, opp_id) -> Document | None
     set_document_status(db, doc_id, status, page_count=None)
+    samples() -> list[dict]                      the bundled sample documents (name, filename, kind, pages,
+                                                 description; never a path), for the walkthrough's "Use example"
+    sample_file(name, kind) -> (filename, bytes)  ValueError for an unknown name or a sample of another kind
 """
 import hashlib
 
@@ -25,6 +28,45 @@ from app.core.audit import AuditEvent
 from app.modules.opportunities.models import STATUSES, Document, Opportunity
 
 FILES = config.STORE / "files"
+
+# Sample documents the walkthrough (and anyone without a file at hand) can attach instead of uploading one. A
+# whitelist: the API serves these names only, never a path. kind "rfp" goes in as the main RFP, kind "change" as a
+# change document. Only the Syracuse RFP has frozen reader answers, so it is the one new opportunity that can be
+# read offline; the addendum's frozen change-agent answers match the demo opportunity's requirement set only.
+SAMPLES = {
+    "syracuse_rfp": {
+        "path": "RFP-2023-20-Switchgear-Procurement-Final.pdf", "filename": "RFP-2023-20-Switchgear-Procurement-Final.pdf",
+        "kind": "rfp", "pages": 101,
+        "description": "Syracuse Regional Airport Authority, RFP 2023-20 Switchgear Procurement: the public RFP behind "
+                       "the demo opportunity. Read offline from frozen answers: about 810 line items grouped into "
+                       "about 350 requirements, each anchored to its page and lines."},
+    "hyperscale_rfp": {
+        "path": "samples/rfp_hyperscale_campus.pdf", "filename": "rfp_hyperscale_campus.pdf",
+        "kind": "rfp", "pages": 1,
+        "description": "Fictional one-page RFP for a 48 MW hyperscale AI training campus (800 VDC distribution, "
+                       "liquid cooling): the multi-unit case. It has no frozen reader answers, so reading it needs "
+                       "the model connection."},
+    "syracuse_addendum_1": {
+        "path": "samples/rfp_syracuse_addendum_1.pdf", "filename": "rfp_syracuse_addendum_1.pdf",
+        "kind": "change", "pages": 1,
+        "description": "Illustrative Addendum No. 1 to the Syracuse RFP, written for the PoC: it revises, removes and "
+                       "adds requirements against the frozen baseline. Its frozen change-agent answers match the demo "
+                       "opportunity's requirement set only."},
+}
+
+
+def samples() -> list[dict]:
+    return [{"name": name} | {k: v for k, v in s.items() if k != "path"} for name, s in SAMPLES.items()]
+
+
+def sample_file(name: str, kind: str) -> tuple[str, bytes]:
+    s = SAMPLES.get(name)
+    if s is None:
+        raise ValueError(f"Unknown sample {name!r}; see /api/samples.")
+    if s["kind"] != kind:
+        raise ValueError(f"Sample {name!r} is {'a change document' if s['kind'] == 'change' else 'an RFP'}, "
+                         f"not {'a change document' if kind == 'change' else 'an RFP'}.")
+    return s["filename"], (config.DATA / "RFP" / s["path"]).read_bytes()
 
 
 def create(db: Session, title: str, customer: str, customer_type: str, actor: str) -> Opportunity:

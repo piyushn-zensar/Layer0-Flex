@@ -28,13 +28,13 @@ export default function NewOpportunityPage() {
   return (
     <div className="content">
       <PageHead title="New opportunity" help="One opportunity per RFP. Upload the RFP on the next page." />
-      <form className="card form" onSubmit={create} aria-busy={busy}>
-        <label>Title <input name="title" required placeholder="e.g. Syracuse switchgear procurement" aria-invalid={message === "A title is required." ? true : undefined} disabled={busy} /></label>
-        <label>Customer <input name="customer" placeholder="optional" disabled={busy} /></label>
-        <label>Customer type
+      <form className="card form" onSubmit={create} aria-busy={busy} data-tour="intake-form">
+        <label data-tour="intake-title">Title <input name="title" required placeholder="e.g. Syracuse switchgear procurement" aria-invalid={message === "A title is required." ? true : undefined} disabled={busy} /></label>
+        <label data-tour="intake-customer">Customer <input name="customer" placeholder="optional" disabled={busy} /></label>
+        <label data-tour="intake-customer-type">Customer type
           <select name="customer_type" disabled={busy}><option value="">—</option>{CUSTOMER_TYPES.map((t) => <option key={t}>{t}</option>)}</select>
         </label>
-        <button disabled={busy}>Create</button>
+        <button disabled={busy} data-tour="intake-create">Create</button>
         {busy && <Busy label="Creating…" />}
       </form>
       <Alert kind="error">{message}</Alert>

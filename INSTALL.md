@@ -33,6 +33,10 @@ The address is http://localhost:3000. Use the **Acting as** drop-down at the top
 | Uploading the Syracuse RFP again and re-reading it (about 810 line items from the frozen answers) | OCR of scanned pages in a new RFP |
 | Requirement review: edit, split, merge, add, history | Model-based product matching for new line items. Keyword matching is used instead and labelled as such |
 
+### The walkthrough and the sample documents
+
+The guided walkthrough (opened from the web application) takes you through every screen on an opportunity it creates itself. Where a screen asks for a file, it uses **Use example** instead of a file upload: the API lists the bundled samples under `/api/samples` (the Syracuse RFP, a fictional one-page hyperscale RFP and an illustrative Syracuse addendum) and attaches them through the same path as an upload, so what you see is exactly what a real file does. Offline, only the Syracuse RFP can be read as a new opportunity, and the addendum's frozen answers match the demonstration opportunity (OPP-0001) only; any other document needs the model connection.
+
 ## If something goes wrong
 
 | Message | What to do |

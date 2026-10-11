@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 from app.core.db import get_db
 from app.core.web import actor
 from app.modules.changes import service
+from app.modules.opportunities import service as opportunities
 
 router = APIRouter(tags=["changes"])
 
@@ -39,6 +40,19 @@ def upload(opp_id: str, request: Request, file: UploadFile = File(...), db: Sess
     """Synchronous: the change document is read and classified before the answer (frozen answers make it quick)."""
     data = file.file.read()
     return service.view(db, _call(service.upload, db, opp_id, file.filename or "change.pdf", data, actor(request)))
+
+
+class SampleIn(BaseModel):
+    name: str
+
+
+@router.post("/opportunities/{opp_id}/changes/from-sample")
+def upload_sample(opp_id: str, body: SampleIn, request: Request, db: Session = Depends(get_db)):
+    """A bundled sample change document (GET /api/samples, kind "change") goes through upload() exactly like a file.
+    In mock mode a 409 says no frozen answers exist when the opportunity's requirements differ from the demo's."""
+    _call(opportunities.require, db, opp_id)
+    filename, data = _call(opportunities.sample_file, body.name, "change")
+    return service.view(db, _call(service.upload, db, opp_id, filename, data, actor(request)))
 
 
 @router.post("/changes/{set_id}/items/{item_id}")

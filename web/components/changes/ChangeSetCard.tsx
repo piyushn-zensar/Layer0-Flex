@@ -16,8 +16,9 @@ const pct = (x: number) => `${x > 0 && x < 0.1 ? (x * 100).toFixed(1) : Math.rou
 const kindOf = (i: ChangeItem) => i.kind ?? i.proposed_kind; // the person's decision, else the proposal
 const WORDING = new Set<ChangeKind>(["added", "modified"]); // the kinds that carry a new wording
 
-export default function ChangeSetCard({ set, oppId, threshold, onChanged }:
-  { set: ChangeSet; oppId: string; threshold: number; onChanged: () => void }) {
+export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour = false }:
+  { set: ChangeSet; oppId: string; threshold: number; onChanged: () => void; tour?: boolean }) {
+  const t = (id: string) => (tour ? id : undefined); // walkthrough targets (data-tour), only on the newest set
   const [filter, setFilter] = useState<ChangeKind>();
   const [selected, setSelected] = useState<number>();
   const [pageNo, setPageNo] = useState(set.items.find((i) => i.page)?.page ?? 1);
@@ -57,32 +58,36 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged }:
   };
 
   return (
-    <section className="card chg-set" aria-labelledby={`change-set-${set.id}`}>
-      <div className="card-head">
+    <section className="card chg-set" aria-labelledby={`change-set-${set.id}`} data-tour={t("chg-set")}>
+      <div className="card-head" data-tour={t("chg-set-head")}>
         <h3 id={`change-set-${set.id}`}>{set.filename} <StatusBadge status={set.status} label={STATUS_LABEL[set.status]} /></h3>
         <span className="muted">{set.confirmed} / {set.total} confirmed</span>
       </div>
-      <p className="muted">Read by {set.created_by} on {when(set.created_at)}, against baseline {set.baseline_from}.
+      <p className="muted" data-tour={t("chg-set-meta")}>Read by {set.created_by} on {when(set.created_at)}, against baseline {set.baseline_from}.
         {applied && set.applied_at && <> Applied by {set.applied_by} on {when(set.applied_at)}: baseline {set.baseline_to}.</>}
         {set.status === "discarded" && <> Discarded{set.applied_by && ` by ${set.applied_by}`}{set.applied_at && ` on ${when(set.applied_at)}`}: nothing was applied.</>}</p>
 
-      {set.drastic ? (
-        <Alert kind="error" title="Drastic change"><strong>{pct(set.share)} of the baseline is modified or removed</strong> (threshold {pct(threshold)}, placeholder):
-          consider a new opportunity linked to this one. A person decides.</Alert>
-      ) : <p className="muted">{pct(set.share)} of the baseline is modified or removed (drastic above {pct(threshold)}, placeholder).</p>}
+      <div data-tour={t("chg-set-share")}>
+        {set.drastic ? (
+          <Alert kind="error" title="Drastic change"><strong>{pct(set.share)} of the baseline is modified or removed</strong> (threshold {pct(threshold)}, placeholder):
+            consider a new opportunity linked to this one. A person decides.</Alert>
+        ) : <p className="muted">{pct(set.share)} of the baseline is modified or removed (drastic above {pct(threshold)}, placeholder).</p>}
+      </div>
 
       {r && (
-        <Alert kind="success" title={`Baseline ${r.baseline} frozen with the changes.`}>
-          <ul>
-            <li>Added: {ids(r.added)}</li>
-            <li>Modified (new version): {ids(r.modified)}</li>
-            <li>Removed: {ids(r.removed, gone)}</li>
-            <li>{r.returned} unit answer(s) returned for review; {r.dispatched} new assignment(s) sent to the units.</li>
-          </ul>
-          {r.note && <p className="muted">{r.note}</p>}
-        </Alert>)}
+        <div data-tour={t("chg-set-result")}>
+          <Alert kind="success" title={`Baseline ${r.baseline} frozen with the changes.`}>
+            <ul>
+              <li>Added: {ids(r.added)}</li>
+              <li>Modified (new version): {ids(r.modified)}</li>
+              <li>Removed: {ids(r.removed, gone)}</li>
+              <li>{r.returned} unit answer(s) returned for review; {r.dispatched} new assignment(s) sent to the units.</li>
+            </ul>
+            {r.note && <p className="muted">{r.note}</p>}
+          </Alert>
+        </div>)}
 
-      <div className="filters" role="group" aria-label={`Filter the change statements of ${set.filename}`}>
+      <div className="filters" role="group" aria-label={`Filter the change statements of ${set.filename}`} data-tour={t("chg-set-filters")}>
         <button type="button" className="chip" aria-pressed={!filter} onClick={() => setFilter(undefined)}>All <span>{set.total}</span></button>
         {(Object.keys(KINDS) as ChangeKind[]).map((k) => (
           <button key={k} type="button" className="chip" aria-pressed={filter === k}
@@ -90,19 +95,20 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged }:
       </div>
 
       {set.pages.length > 0 && (
-        <details ref={docRef} className="chg-doc">
+        <details ref={docRef} className="chg-doc" data-tour={t("chg-doc")}>
           <summary>Change document ({set.pages.length} page{set.pages.length === 1 ? "" : "s"})</summary>
-          <ChangeDocument set={set} pageNo={pageNo} onPage={setPageNo} selected={selected} onSelect={fromPage} />
+          <ChangeDocument set={set} pageNo={pageNo} onPage={setPageNo} selected={selected} onSelect={fromPage} tour={tour} />
         </details>)}
 
-      <div className="chg-scroll">
+      <div className="chg-scroll" data-tour={t("chg-items")}>
       <table className="chg-items">
         <thead><tr>
-          <th className="col-n">#</th><th className="col-src">Source</th><th>Quote</th><th className="col-kind">Proposed</th>
-          <th>Target in the baseline</th><th>New wording</th><th>Rationale</th><th className="col-decide">Decision</th>
+          <th className="col-n">#</th><th className="col-src" data-tour={t("chg-col-source")}>Source</th><th data-tour={t("chg-col-quote")}>Quote</th><th className="col-kind" data-tour={t("chg-col-proposed")}>Proposed</th>
+          <th data-tour={t("chg-col-target")}>Target in the baseline</th><th data-tour={t("chg-col-wording")}>New wording</th><th data-tour={t("chg-col-rationale")}>Rationale</th><th className="col-decide" data-tour={t("chg-col-decision")}>Decision</th>
         </tr></thead>
         <tbody>
-          {items.map((i) => {
+          {items.map((i, idx) => {
+            const first = tour && idx === 0; // the walkthrough points at the first row shown
             const target = i.status === "confirmed" ? i.target : i.proposed_target;
             const kind = kindOf(i);
             // After apply the API sends the target's latest version: for a modified one that is the new wording, not
@@ -110,7 +116,7 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged }:
             const revised = applied && kind === "modified";
             return (
               // The row itself is focusable so the keyboard can select a change (Enter); its own controls keep their keys.
-              <tr key={i.id} data-change={i.id} className={i.id === selected ? "selected" : ""} tabIndex={0}
+              <tr key={i.id} data-change={i.id} className={i.id === selected ? "selected" : ""} tabIndex={0} data-tour={first ? "chg-row-1" : undefined}
                 onClick={() => select(i)} onKeyDown={(e) => { if (e.key === "Enter" && e.target === e.currentTarget) select(i, true); }}>
                 <td className="mono">{i.n}</td>
                 <td>{i.page ? <button type="button" className="link" title="Show on the change document"
@@ -125,7 +131,7 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged }:
                   : <span className="muted">{kind === "added" ? "new requirement" : "—"}</span>}</td>
                 <td>{WORDING.has(kind) ? <>{i.text}<div><span className="tag">{i.category}</span></div></> : <span className="muted">—</span>}</td>
                 <td className="muted">{i.rationale}</td>
-                <td><ChangeDecision setId={set.id} item={i} editable={review} onDone={onChanged} /></td>
+                <td data-tour={first ? "chg-decision" : undefined}><ChangeDecision setId={set.id} item={i} editable={review} onDone={onChanged} tour={first} /></td>
               </tr>
             );
           })}
@@ -135,11 +141,11 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged }:
       </div>
 
       {review && (
-        <div className="chg-actions" aria-busy={!!busy}>
-          <button type="button" className="secondary" disabled={!!busy || set.confirmed === set.total} onClick={() => run("confirm-all", "Confirming…", "Every proposal confirmed.")}>Confirm all proposals</button>
-          <button type="button" disabled={!!busy || !bidManager || set.confirmed < set.total}
+        <div className="chg-actions" aria-busy={!!busy} data-tour={t("chg-actions")}>
+          <button type="button" className="secondary" disabled={!!busy || set.confirmed === set.total} data-tour={t("chg-confirm-all")} onClick={() => run("confirm-all", "Confirming…", "Every proposal confirmed.")}>Confirm all proposals</button>
+          <button type="button" disabled={!!busy || !bidManager || set.confirmed < set.total} data-tour={t("chg-apply")}
             onClick={() => run("apply", "Applying: new versions, matching and dispatch…", "Changes applied: a new baseline is frozen and the affected answers are back with the units.")}>Apply to requirements</button>
-          <button type="button" className="danger secondary" disabled={!!busy || !bidManager} onClick={discard}>Discard</button>
+          <button type="button" className="danger secondary" disabled={!!busy || !bidManager} data-tour={t("chg-discard")} onClick={discard}>Discard</button>
           {busy && <Busy label={busy} />}
           <span className="muted">{set.confirmed < set.total ? `${set.total - set.confirmed} change(s) still need a person's confirmation. ` : ""}
             Only the Bid Manager applies or discards{bidManager ? "" : "; switch with Acting as"}. Applying creates the new versions, freezes a new baseline and returns the affected answers to the units.</span>

@@ -10,13 +10,13 @@ import { useApi } from "@/lib/api";
 import type { Opportunity } from "@/lib/types";
 import StatusBadge from "@/components/ui/StatusBadge";
 
-// Workflow order. A step is ticked once the opportunity status has moved past it.
+// Workflow order. A step is ticked once the opportunity status has moved past it. `tour` is the walkthrough's data-tour id.
 const STEPS = [
-  { suffix: "", label: "RFP", doneFrom: "reading" },
-  { suffix: "/requirements", label: "Requirements", doneFrom: "frozen" },
-  { suffix: "/trace", label: "Traceability", doneFrom: "go" },
-  { suffix: "/decisions", label: "Bid decision", doneFrom: "go" },
-  { suffix: "/consolidation", label: "Final response", doneFrom: "submitted" },
+  { suffix: "", label: "RFP", doneFrom: "reading", tour: "step-rfp" },
+  { suffix: "/requirements", label: "Requirements", doneFrom: "frozen", tour: "step-requirements" },
+  { suffix: "/trace", label: "Traceability", doneFrom: "go", tour: "step-trace" },
+  { suffix: "/decisions", label: "Bid decision", doneFrom: "go", tour: "step-decisions" },
+  { suffix: "/consolidation", label: "Final response", doneFrom: "submitted", tour: "step-consolidation" },
 ];
 const ORDER = ["new", "reading", "review", "frozen", "go", "no_go", "dispatched", "consolidating", "submitted"];
 const rank = (s: string) => (s === "no_go" ? ORDER.indexOf("go") : ORDER.indexOf(s));
@@ -40,18 +40,18 @@ export default function OppSteps() {
   const onChanges = path === base + "/changes";
 
   return (
-    <div className="opp-head">
+    <div className="opp-head" data-tour="opp-head">
       <div className="opp-title">
         <nav className="crumbs" aria-label="Breadcrumb"><Link href="/portfolio">Opportunities</Link><span aria-hidden>›</span><span className="mono">{id}</span></nav>
-        <h1>{data?.opportunity.title ?? id} {data && <StatusBadge status={status} kind="opp" className="opp-status lg" label={status.replace("_", "-")} />}</h1>
+        <h1>{data?.opportunity.title ?? id} {data && <span data-tour="opp-status"><StatusBadge status={status} kind="opp" className="opp-status lg" label={status.replace("_", "-")} /></span>}</h1>
       </div>
       <nav aria-label="Workflow steps">
-        <ol className="stepper">
+        <ol className="stepper" data-tour="stepper">
           {STEPS.map((s, i) => {
             const current = path === base + s.suffix || (s.suffix !== "" && path.startsWith(base + s.suffix + "/")); // sub-pages too
             const done = rank(status) >= rank(s.doneFrom);
             return (
-              <li key={s.label} className={`${current ? "current" : ""} ${done ? "done" : ""}`}>
+              <li key={s.label} className={`${current ? "current" : ""} ${done ? "done" : ""}`} data-tour={s.tour}>
                 <Link href={base + s.suffix} aria-current={current ? "step" : undefined} title={done ? `${s.label}: done` : undefined}>
                   <span className="step-no" aria-hidden>{done ? "✓" : i + 1}</span>{s.label}{done && <span className="sr-only"> (done)</span>}
                 </Link>
@@ -59,7 +59,7 @@ export default function OppSteps() {
             );
           })}
         </ol>
-        <Link className={`step-later ${onChanges ? "current" : ""}`} href={`${base}/changes`} aria-current={onChanges ? "page" : undefined}>
+        <Link className={`step-later ${onChanges ? "current" : ""}`} href={`${base}/changes`} aria-current={onChanges ? "page" : undefined} data-tour="step-changes">
           <span className="step-no" aria-hidden>Δ</span>Changes
         </Link>
       </nav>

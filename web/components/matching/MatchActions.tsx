@@ -9,7 +9,9 @@ import { Busy, StatusBadge, offeringLabel, useToast } from "@/components/ui";
 
 type Offering = "CTO" | "SEMI_CUSTOM" | "ETO";
 type MatchUnit = { bu: string; product_id: string; offering_type: Offering };
-type Props = { oppId: string; reqId: string; match: (Match & { units?: MatchUnit[] }) | null; dispatched: boolean; onDone: () => void };
+type Props = { oppId: string; reqId: string; match: (Match & { units?: MatchUnit[] }) | null; dispatched: boolean; onDone: () => void;
+  /** Walkthrough targets (data-tour="match-*"): the trace page sets it on the selected row only, so each id is unique. */
+  tour?: boolean };
 
 const OFFERINGS: Offering[] = ["CTO", "SEMI_CUSTOM", "ETO"];
 // QA-04: how the match came about (matching.service stores the method; "rule" is a non-product category routed to the bid desk)
@@ -19,8 +21,9 @@ const METHOD: Record<string, string> = {
 };
 const stop = (e: React.SyntheticEvent) => e.stopPropagation();
 
-export default function MatchActions({ oppId, reqId, match: m, dispatched, onDone }: Props) {
+export default function MatchActions({ oppId, reqId, match: m, dispatched, onDone, tour }: Props) {
   const toast = useToast();
+  const t = (name: string) => (tour ? name : undefined);
   const [catalog, setCatalog] = useState<{ units: Unit[]; products: Product[] }>();
   const [draft, setDraft] = useState<MatchUnit[]>();
   const [busy, setBusy] = useState(false);
@@ -53,21 +56,21 @@ export default function MatchActions({ oppId, reqId, match: m, dispatched, onDon
   const others = (m?.units ?? []).slice(1);
 
   return (
-    <div className="match-actions">
-      {others.length > 0 && <div className="muted">Also: {others.map((u) => `${u.bu} · ${u.product_id}`).join(", ")}</div>}
-      {m && <div className="muted match-meta"><StatusBadge status={m.status} /> {METHOD[m.method] ?? m.method}</div>}
+    <div className="match-actions" data-tour={t("match-actions")}>
+      {others.length > 0 && <div className="muted" data-tour={t("match-others")}>Also: {others.map((u) => `${u.bu} · ${u.product_id}`).join(", ")}</div>}
+      {m && <div className="muted match-meta" data-tour={t("match-meta")}><StatusBadge status={m.status} /> {METHOD[m.method] ?? m.method}</div>}
 
       {draft === undefined ? (
-        <div className="row-actions" onClick={stop} onKeyDown={stop}>
+        <div className="row-actions" onClick={stop} onKeyDown={stop} data-tour={t("match-buttons")}>
           {m?.status === "proposed" && <>
-            <button disabled={busy} onClick={() => decide("accept")}>Accept</button>
-            <button disabled={busy} className="secondary" onClick={() => decide("reject")}>Reject</button>
+            <button disabled={busy} onClick={() => decide("accept")} data-tour={t("match-accept")}>Accept</button>
+            <button disabled={busy} className="secondary" onClick={() => decide("reject")} data-tour={t("match-reject")}>Reject</button>
           </>}
-          <button disabled={busy} className="secondary" onClick={openChange}>Change</button>
+          <button disabled={busy} className="secondary" onClick={openChange} data-tour={t("match-change")}>Change</button>
           {busy && <Busy label="Saving…" />}
         </div>
       ) : (
-        <div className="form compact" onClick={stop} onKeyDown={stop}>
+        <div className="form compact" onClick={stop} onKeyDown={stop} data-tour={t("match-form")}>
           {!catalog && <Busy label="Loading catalog…" />}
           {catalog && draft.map((u, i) => (
             <div key={i} className="row-actions">
@@ -92,12 +95,12 @@ export default function MatchActions({ oppId, reqId, match: m, dispatched, onDon
             </div>
           ))}
           {catalog && draft.length === 0 && <span className="muted">No unit: the bid manager answers it (not a product item).</span>}
-          {dispatched && <span className="warn">Already sent to units: dispatch again on the Decisions page to apply this change.
+          {dispatched && <span className="warn" data-tour={t("match-dispatched-warning")}>Already sent to units: dispatch again on the Decisions page to apply this change.
             Added units get the work (if they take part); removed units have theirs withdrawn.</span>}
           <div className="row-actions">
-            <button className="secondary" disabled={!catalog || busy} onClick={addRow}>Add unit</button>
-            <button disabled={busy || !catalog} onClick={save}>Save</button>
-            <button className="secondary" disabled={busy} onClick={() => setDraft(undefined)}>Cancel</button>
+            <button className="secondary" disabled={!catalog || busy} onClick={addRow} data-tour={t("match-add-unit")}>Add unit</button>
+            <button disabled={busy || !catalog} onClick={save} data-tour={t("match-save")}>Save</button>
+            <button className="secondary" disabled={busy} onClick={() => setDraft(undefined)} data-tour={t("match-cancel")}>Cancel</button>
             {busy && <Busy label="Saving…" />}
           </div>
         </div>

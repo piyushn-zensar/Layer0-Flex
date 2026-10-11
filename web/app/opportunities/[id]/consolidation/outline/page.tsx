@@ -27,43 +27,56 @@ export default function OutlinePage() {
   const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/opportunities/${id}/knowledge`); // A-11
   const head = (
     <PageHead level={2} title="Response outline" help={HELP}>
-      <Link className="button secondary" href={`/opportunities/${id}/consolidation`}>Back to Final response</Link>
-      {o && <a className="button" href={`/api/opportunities/${id}/response-outline.md`}>Download outline (Markdown)</a>}
+      <Link className="button secondary" href={`/opportunities/${id}/consolidation`} data-tour="outline-back">Back to Final response</Link>
+      {o && <a className="button" href={`/api/opportunities/${id}/response-outline.md`} data-tour="outline-download">Download outline (Markdown)</a>}
     </PageHead>);
   if (error) return <>{head}<Alert kind="error">{error}</Alert></>;
   if (!o) return <>{head}<p><Busy label="Drafting the outline…" /></p><Skeleton lines={4} /></>;
   const ref = (reqId: string) => <Link key={reqId} className="mono" href={`/opportunities/${id}/trace#${reqId}`} title="Open in Traceability">{reqId}</Link>;
 
-  const DraftView = ({ d }: { d: Draft }) => d.drafted ? (
-    <>
+  // Walkthrough targets (data-tour): the first block of each kind on the page, so a step can point at it.
+  const drafts = [o.summary, ...o.chapters.map((c) => c.draft)]; // index 0 = executive summary, n + 1 = chapter n
+  const firstDrafted = drafts.findIndex((d) => d.drafted);
+  const firstGaps = drafts.findIndex((d) => d.drafted && d.gaps.length > 0);
+  const firstNotDrafted = drafts.findIndex((d) => !d.drafted);
+  const firstChapter = (test: (c: Chapter) => boolean) => o.chapters.findIndex(test);
+  const firstAnswers = firstChapter((c) => c.material.length > 0);
+  const firstExceptions = firstChapter((c) => c.exceptions.length > 0);
+  const firstOpen = firstChapter((c) => c.open.length > 0);
+  const firstRefs = firstChapter((c) => c.references.rfp.length > 0 || c.references.past.length > 0);
+
+  const DraftView = ({ d, n }: { d: Draft; n: number }) => d.drafted ? (
+    <div data-tour={n === firstDrafted ? "outline-drafted" : undefined}>
       {d.paragraphs.map((p, i) => (
         <p key={i} className="outline-para">{p.text} <span className="muted">[{p.sources.map((s, j) => <span key={s}>{j > 0 && ", "}{ref(s)}</span>)}]</span></p>
       ))}
-      {d.gaps.length > 0 && <div className="outline-gaps"><strong>To add or confirm</strong><ul>{d.gaps.map((g) => <li key={g}>{g}</li>)}</ul></div>}
+      {d.gaps.length > 0 && <div className="outline-gaps" data-tour={n === firstGaps ? "outline-gaps" : undefined}><strong>To add or confirm</strong><ul>{d.gaps.map((g) => <li key={g}>{g}</li>)}</ul></div>}
       {d.note && <p className="muted">{d.note}</p>}
-    </>
-  ) : <p className="muted">Not drafted: {d.note}</p>;
+    </div>
+  ) : <p className="muted" data-tour={n === firstNotDrafted ? "outline-not-drafted" : undefined}>Not drafted: {d.note}</p>;
 
   return (
     <div className="outline">
       {head}
-      <p className="outline-summary"><StatusBadge status="proposed" label="Draft" /> <strong>{o.answered} / {o.total}</strong> requirements answered and validated ({o.validated_answers} validated answers).{" "}
+      <p className="outline-summary" data-tour="outline-summary"><StatusBadge status="proposed" label="Draft" /> <strong>{o.answered} / {o.total}</strong> requirements answered and validated ({o.validated_answers} validated answers).{" "}
         <span className="muted">{o.note}</span></p>
 
-      <section className="card">
+      <section className="card" data-tour="outline-exec">
         <div className="card-head"><h3>Executive summary</h3></div>
-        <DraftView d={o.summary} />
+        <DraftView d={o.summary} n={0} />
       </section>
 
-      {o.chapters.length === 0 && <EmptyState title="No chapters to draft yet" hint="The outline follows the RFP's sections once the requirements are frozen." />}
+      {o.chapters.length === 0 && <div data-tour="outline-empty"><EmptyState title="No chapters to draft yet" hint="The outline follows the RFP's sections once the requirements are frozen." /></div>}
       {o.chapters.map((c, n) => (
-        <section key={c.id} className="card">
+        <section key={c.id} className="card" data-tour={`outline-chapter-${n + 1}`}>
           <div className="card-head"><h3>{n + 1}. {c.title}</h3><span className="muted">{c.answered} of {c.total} answered</span></div>
-          <DraftView d={c.draft} />
+          <DraftView d={c.draft} n={n + 1} />
           {c.exceptions.length > 0 && (
-            <Alert kind="warn" title="Not full compliance">{c.exceptions.map((a, i) => <span key={a.req_id + a.unit}>{i > 0 && "; "}{ref(a.req_id)} {a.unit}: {a.compliance}</span>)}</Alert>)}
+            <div data-tour={n === firstExceptions ? "outline-exceptions" : undefined}>
+              <Alert kind="warn" title="Not full compliance">{c.exceptions.map((a, i) => <span key={a.req_id + a.unit}>{i > 0 && "; "}{ref(a.req_id)} {a.unit}: {a.compliance}</span>)}</Alert>
+            </div>)}
           {c.material.length > 0 && (
-            <details><summary>Validated answers ({c.material.length})</summary>
+            <details data-tour={n === firstAnswers ? "outline-answers" : undefined}><summary>Validated answers ({c.material.length})</summary>
               <div className="table-scroll">
               <table className="outline-answers"><thead><tr><th>Requirement</th><th>Unit</th><th>Compliance</th><th>Answer</th><th>Knowledge base</th></tr></thead>
                 <tbody>{c.material.map((a) => (
@@ -74,12 +87,12 @@ export default function OutlinePage() {
               </div>
             </details>)}
           {c.open.length > 0 && (
-            <details><summary>Still open ({c.open.length})</summary>
+            <details data-tour={n === firstOpen ? "outline-open" : undefined}><summary>Still open ({c.open.length})</summary>
               <ul>{c.open.slice(0, OPEN_SHOWN).map((r) => <li key={r.req_id}>{ref(r.req_id)} <span className="muted">{r.source}</span> {r.text}</li>)}</ul>
               {c.open.length > OPEN_SHOWN && <p className="muted">and {c.open.length - OPEN_SHOWN} more: see <Link href={`/opportunities/${id}/consolidation`}>Final response</Link>.</p>}
             </details>)}
           {(c.references.rfp.length > 0 || c.references.past.length > 0) && (
-            <details><summary>Related passages</summary>
+            <details data-tour={n === firstRefs ? "outline-refs" : undefined}><summary>Related passages</summary>
               {c.references.rfp.length > 0 && <><p className="muted">In this RFP ({c.references.mode.rfp} search)</p>
                 <ul>{c.references.rfp.map((p) => <li key={`${p.page}-${p.line_start}`}><span className="mono">p. {p.page}, lines {p.line_start}-{p.line_end}</span> {p.text}</li>)}</ul></>}
               {c.references.past.length > 0 && <><p className="muted">Past responses ({c.references.mode.knowledge} search; illustrative)</p>

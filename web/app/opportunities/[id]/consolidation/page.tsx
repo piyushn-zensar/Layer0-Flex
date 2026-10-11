@@ -52,15 +52,15 @@ export default function ConsolidationPage() {
     <>
       {/* UX-12: the downloads and the outline are page actions, not part of the sentence */}
       <PageHead level={2} title="Final response" help={HELP}>
-        <Link className="button secondary" href={`/opportunities/${id}/consolidation/outline`}>Response outline (draft)</Link>
-        <a className="button secondary" href={`/api/opportunities/${id}/compliance-matrix.csv`}>CSV</a>
-        <a className="button" href={`/api/opportunities/${id}/compliance-matrix.xlsx`}>Download compliance matrix (Excel)</a>
+        <Link className="button secondary" href={`/opportunities/${id}/consolidation/outline`} data-tour="cons-outline-link">Response outline (draft)</Link>
+        <a className="button secondary" href={`/api/opportunities/${id}/compliance-matrix.csv`} data-tour="cons-csv">CSV</a>
+        <a className="button" href={`/api/opportunities/${id}/compliance-matrix.xlsx`} data-tour="cons-xlsx">Download compliance matrix (Excel)</a>
       </PageHead>
-      <p className="cons-summary"><strong>{cov.answered} / {cov.total}</strong> requirements answered.{" "}
+      <p className="cons-summary" data-tour="cons-summary"><strong>{cov.answered} / {cov.total}</strong> requirements answered.{" "}
         {cov.blocking.length ? <span className="warn">{cov.blocking.length} still need an answer.</span> : <span className="ok">Every requirement is answered.</span>}</p>
 
       {groups.length > 0 && (
-        <section className="cons-blockers" aria-label="Requirements that still need an answer">
+        <section className="cons-blockers" aria-label="Requirements that still need an answer" data-tour="cons-blockers">
           <h3>Needs an answer</h3>
           {groups.map((g) => (
             <div key={g.key} className="cons-group">
@@ -75,18 +75,20 @@ export default function ConsolidationPage() {
       )}
 
       {cov.rows.length === 0 ? (
-        <EmptyState title="No requirements in the baseline yet" hint="Approve and freeze the requirements first; the coverage check runs against the frozen baseline.">
-          <Link className="button secondary" href={`/opportunities/${id}/requirements`}>Requirements</Link>
-        </EmptyState>
+        <div data-tour="cons-empty">
+          <EmptyState title="No requirements in the baseline yet" hint="Approve and freeze the requirements first; the coverage check runs against the frozen baseline.">
+            <Link className="button secondary" href={`/opportunities/${id}/requirements`}>Requirements</Link>
+          </EmptyState>
+        </div>
       ) : (
         <>
-          <div className="filters" role="group" aria-label="Show">
+          <div className="filters" role="group" aria-label="Show" data-tour="cons-filter">
             <button type="button" className="chip" aria-pressed={!onlyOpen} onClick={() => setOnlyOpen(false)}>All <span>{cov.total}</span></button>
             <button type="button" className="chip" aria-pressed={onlyOpen} onClick={() => setOnlyOpen(true)}>Open <span>{open.length}</span></button>
           </div>
 
-          <table className="cons-table">
-            <thead><tr><th className="col-id">ID</th><th>Requirement</th><th className="col-units">Units and responses</th><th className="col-state">State</th></tr></thead>
+          <table className="cons-table" data-tour="cons-table">
+            <thead><tr><th className="col-id">ID</th><th>Requirement</th><th className="col-units" data-tour="cons-col-units">Units and responses</th><th className="col-state" data-tour="cons-col-state">State</th></tr></thead>
             <tbody>
               {shown.map((row) => {
                 const { requirement: r, assignments, state } = row;

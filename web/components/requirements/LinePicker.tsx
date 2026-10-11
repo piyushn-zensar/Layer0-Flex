@@ -91,17 +91,17 @@ export default function LinePicker({ oppId, startPage, categories, requirements,
   }
 
   return (
-    <div className="lp">
+    <div className="lp" data-tour="lp-root">
       <div className="lp-viewer">
-        <div className="pager">
-          <button type="button" aria-label="Previous page" disabled={pageNo <= 1} onClick={() => goTo(pageNo - 1)}>◀</button>
-          <span>Page <input type="number" aria-label="RFP page number" min={1} max={pageCount} value={pageNo}
+        <div className="pager" data-tour="lp-pager">
+          <button type="button" data-tour="lp-prev" aria-label="Previous page" disabled={pageNo <= 1} onClick={() => goTo(pageNo - 1)}>◀</button>
+          <span>Page <input type="number" data-tour="lp-page-input" aria-label="RFP page number" min={1} max={pageCount} value={pageNo}
             onChange={(e) => goTo(Number(e.target.value))} /> / {pageCount}</span>
-          <button type="button" aria-label="Next page" disabled={pageNo >= pageCount} onClick={() => goTo(pageNo + 1)}>▶</button>
+          <button type="button" data-tour="lp-next" aria-label="Next page" disabled={pageNo >= pageCount} onClick={() => goTo(pageNo + 1)}>▶</button>
           {page?.unreviewed && <span className="warn" role="status">No text layer: this page was not read (needs OCR)</span>}
           {!page && loaded?.key !== key && <Busy label="Loading the page lines…" />}
         </div>
-        <div className="page lp-page">
+        <div className="page lp-page" data-tour="lp-page">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={`/api/documents/${docId}/pages/${pageNo}.png`} alt={`RFP page ${pageNo}`} draggable={false} />
           {/* Mouse selection; the line-number fields beside the page are the keyboard way to select. */}
@@ -117,32 +117,32 @@ export default function LinePicker({ oppId, startPage, categories, requirements,
           })}
         </div>
         {!page && loaded?.key === key && loaded.error && <Alert kind="error">{loaded.error}</Alert>}
-        <p className="muted lp-legend"><span><i className="lp-swatch covered" /> already a requirement</span>
+        <p className="muted lp-legend" data-tour="lp-legend"><span><i className="lp-swatch covered" /> already a requirement</span>
           <span><i className="lp-swatch on" /> selected</span> <span><i className="lp-swatch furniture" /> header or footer (left out)</span></p>
       </div>
 
-      <form className="form compact lp-side" onSubmit={submit} aria-label="Add a requirement from selected lines">
+      <form className="form compact lp-side" data-tour="lp-side" onSubmit={submit} aria-label="Add a requirement from selected lines">
         <p className="muted">Click the first line of the requirement on the page, then shift-click its last line. Or type the line numbers.</p>
-        <div className="lp-range">
-          <label>From line <input type="number" className="narrow" min={1} max={last || undefined} value={from}
+        <div className="lp-range" data-tour="lp-range">
+          <label>From line <input type="number" data-tour="lp-from" className="narrow" min={1} max={last || undefined} value={from}
             onChange={(e) => { setFrom(e.target.value); setPivot(Number.parseInt(e.target.value, 10) || undefined); setAdded(undefined); }} /></label>
-          <label>To line <input type="number" className="narrow" min={1} max={last || undefined} value={to} placeholder={from}
+          <label>To line <input type="number" data-tour="lp-to" className="narrow" min={1} max={last || undefined} value={to} placeholder={from}
             onChange={(e) => { setTo(e.target.value); setAdded(undefined); }} /></label>
-          {from && <button type="button" className="secondary" onClick={clear}>Clear</button>}
+          {from && <button type="button" data-tour="lp-clear" className="secondary" onClick={clear}>Clear</button>}
         </div>
-        <div aria-live="polite">
+        <div aria-live="polite" data-tour="lp-preview">
           {problem ? <p className="warn">{problem}</p>
             : quote ? (<>
               <div className="muted">Quote that will be stored (p. {pageNo}, {a === b ? `line ${a}` : `lines ${a}-${b}`})</div>
               <blockquote className="lp-quote">{quote}</blockquote>
             </>) : <p className="muted">No lines selected.</p>}
         </div>
-        <label>Short text (optional; default: the quote) <input value={text} maxLength={200} onChange={(e) => setText(e.target.value)} /></label>
-        <label>Category <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <label>Short text (optional; default: the quote) <input data-tour="lp-text" value={text} maxLength={200} onChange={(e) => setText(e.target.value)} /></label>
+        <label>Category <select data-tour="lp-category" value={category} onChange={(e) => setCategory(e.target.value)}>
           {categories.map((c) => <option key={c}>{c}</option>)}</select></label>
-        <span className="inline"><button disabled={busy || !quote || !!problem}>{busy ? "Adding…" : "Add requirement"}</button></span>
-        <Alert kind="error" onClose={() => setError(undefined)}>{error}</Alert>
-        <Alert kind="success" onClose={() => setAdded(undefined)}>{added}</Alert>
+        <span className="inline"><button data-tour="lp-add" disabled={busy || !quote || !!problem}>{busy ? "Adding…" : "Add requirement"}</button></span>
+        {error && <div data-tour="lp-error"><Alert kind="error" onClose={() => setError(undefined)}>{error}</Alert></div>}
+        {added && <div data-tour="lp-added"><Alert kind="success" onClose={() => setAdded(undefined)}>{added}</Alert></div>}
       </form>
     </div>
   );

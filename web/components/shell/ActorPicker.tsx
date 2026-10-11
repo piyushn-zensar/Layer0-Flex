@@ -9,7 +9,7 @@ export default function ActorPicker() {
   const [actor, setLocal] = useState("Bid Manager");
   useEffect(() => setLocal(currentActor()), []);
   return (
-    <div className="actor">
+    <div className="actor" data-tour="shell-actor">
       <label htmlFor="actor-select">Acting as</label>
       <select id="actor-select" value={actor} title="Switch the person acting in this PoC"
         onChange={(e) => { setActor(e.target.value); location.reload(); }}>

@@ -404,6 +404,8 @@ The answers of the change agent for this addendum are frozen and committed, so t
 
 Navigation: the top bar has four destinations (Opportunities, My work, Product catalog, Knowledge base) and a New opportunity button. Inside an opportunity, a stepper follows the workflow order: RFP, Requirements, Traceability, Bid decision, Final response; a step is ticked once the opportunity has moved past it. Changes is a separate link beside the stepper, not a step, because a change document can arrive at any time after the freeze.
 
+**Guided walkthrough** (built 11 Oct 2026). The web app carries an embedded, step-by-step walkthrough of the whole workflow: 12 chapters and about 220 steps that spotlight each control, explain what it does and why, ask for the real action (with one-click examples that load the sample RFP and the illustrative addendum), wait for the result and explain it. It offers itself once per server start, can be skipped, resumed, restarted or opened by chapter from the Walkthrough button, and keeps its place across page reloads. `WALKTHROUGH_GUIDE.md` lists every chapter, screen and step.
+
 The acting user is chosen from a list in the header (bid manager, or a unit's product manager or design engineer). Real sign-in is added before a pilot.
 
 ## 10. Data Model

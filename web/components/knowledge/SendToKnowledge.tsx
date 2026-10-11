@@ -14,9 +14,9 @@ export default function SendToKnowledge({ kind, refId, status, onSent }:
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
   if (status && status !== "rejected")
-    return <StatusBadge status={status} label={status === "approved" ? "in knowledge base" : "sent to knowledge base"} />;
+    return <StatusBadge status={status} label={status === "approved" ? "in knowledge base" : "sent to knowledge base"} className="kb-sent" />;
   if (!open)
-    return <button type="button" className="link" onClick={(e) => { e.stopPropagation(); setOpen(true); }}>Send to knowledge base</button>;
+    return <button type="button" className="link" data-tour="kb-send-button" onClick={(e) => { e.stopPropagation(); setOpen(true); }}>Send to knowledge base</button>;
 
   async function send(form: FormData) {
     setBusy(true); setError(undefined);
@@ -26,9 +26,9 @@ export default function SendToKnowledge({ kind, refId, status, onSent }:
     } catch (e) { setError(errorMessage(e)); } finally { setBusy(false); }
   }
   return (
-    <form className="kb-send" action={send} onClick={(e) => e.stopPropagation()} onKeyDown={(e) => e.stopPropagation()}>
-      <input name="note" placeholder="Why keep it? (optional)" maxLength={2000} aria-label="Note for the curator" autoFocus disabled={busy} />
-      <button className="sm" disabled={busy}>{busy ? "Sending…" : "Send"}</button>
+    <form className="kb-send" action={send} onClick={(e) => e.stopPropagation()} onKeyDown={(e) => e.stopPropagation()} data-tour="kb-send-form">
+      <input name="note" placeholder="Why keep it? (optional)" maxLength={2000} aria-label="Note for the curator" autoFocus disabled={busy} data-tour="kb-send-note" />
+      <button className="sm" disabled={busy} data-tour="kb-send-submit">{busy ? "Sending…" : "Send"}</button>
       <button type="button" className="secondary sm" disabled={busy} onClick={() => setOpen(false)}>Cancel</button>
       {error && <span className="warn" role="alert">{error}</span>}
     </form>

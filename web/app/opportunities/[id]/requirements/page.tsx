@@ -92,57 +92,68 @@ export default function RequirementsPage() {
   const cols = frozen ? 4 : 6;
   // P-15: the line picker opens on the page of a selected requirement, else of the first one in view
   const startPage = (all.find((r) => selected.has(r.req_id) && r.page) ?? rows.find((r) => r.page))?.page ?? 1;
+  // Select every selectable row in the current view (the filter and search) at once; the bulk bar then acts on them.
+  const selectable = rows.filter((r) => !INACTIVE.has(r.status) && r.baseline === null).map((r) => r.req_id);
+  const allSelected = selectable.length > 0 && selectable.every((rid) => selected.has(rid));
+  // Walkthrough targets (data-tour): the first row in view carries the row-level ids, and the first row of each kind
+  // (group, unanchored, duplicate, sub-requirement, splittable item) carries its own, so a step can spotlight one.
+  const marked = new Set<string>();
+  const first = (tourId: string) => (marked.has(tourId) ? undefined : (marked.add(tourId), tourId));
 
   const line = (r: Requirement, child = false) => {
     const active = !INACTIVE.has(r.status) && r.baseline === null;
     const isEditing = editing?.id === r.req_id;
     const kids = kidsOf.get(r.req_id) ?? [];
     const group = r.kind === "group";
+    const lead = !child && first("req-row-first") !== undefined; // the first row in view
+    const at = (tourId: string) => (lead ? tourId : undefined);
     return (
       <Fragment key={r.req_id}>
-        <tr className={`${INACTIVE.has(r.status) ? "inactive" : ""} ${child ? "child" : ""} ${group ? "group" : ""}`}>
-          {!frozen && <td>{active && !child && <input type="checkbox" aria-label={`Select ${r.req_id}`} checked={selected.has(r.req_id)} onChange={() => toggle(r.req_id)} />}</td>}
-          <td><div className="mono">{r.req_id}</div><span className="tag">{r.category}</span></td>
+        <tr data-tour={lead ? "req-row-first" : child ? first("req-row-child") : undefined}
+          className={`${INACTIVE.has(r.status) ? "inactive" : ""} ${child ? "child" : ""} ${group ? "group" : ""}`}>
+          {!frozen && <td>{active && !child && <input type="checkbox" data-tour={at("req-row-check")} aria-label={`Select ${r.req_id}`} checked={selected.has(r.req_id)} onChange={() => toggle(r.req_id)} />}</td>}
+          <td><div className="mono" data-tour={at("req-row-id")}>{r.req_id}</div><span className="tag" data-tour={at("req-row-category")}>{r.category}</span></td>
           {/* UX-14: an unanchored item says so once, as a badge, instead of a source line plus a warning */}
-          <td>{r.provenance === "UNANCHORED"
-            ? <StatusBadge status="medium" kind="severity" label="unanchored" title="Quote not located on the page; check the source manually" />
+          <td data-tour={at("req-row-source")}>{r.provenance === "UNANCHORED"
+            ? <span data-tour={first("req-badge-unanchored")}><StatusBadge status="medium" kind="severity" label="unanchored" title="Quote not located on the page; check the source manually" /></span>
             : r.page ? <Link href={`/opportunities/${id}/trace#${r.parent_id ?? r.req_id}`}>{r.source}</Link> : r.source}</td>
           <td>
             {isEditing && editing.mode === "edit" ? (
-              <form className="form compact" aria-label={`Edit ${r.req_id}`}
+              <form className="form compact" data-tour="req-edit-form" aria-label={`Edit ${r.req_id}`}
                 action={(f) => review(r.req_id, { action: "edit", text: f.get("text"), category: f.get("category") }, `${r.req_id} saved.`, r.req_id)}>
-                <input name="text" defaultValue={r.text} aria-label="Requirement text" required maxLength={MAX_TEXT} autoFocus />
-                <select name="category" defaultValue={r.category} aria-label="Category">{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select>
+                <input name="text" data-tour="req-edit-text" defaultValue={r.text} aria-label="Requirement text" required maxLength={MAX_TEXT} autoFocus />
+                <select name="category" data-tour="req-edit-category" defaultValue={r.category} aria-label="Category">{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select>
                 {errorAt(r.req_id)}
-                <span className="inline"><button disabled={busy}>{busy ? "Saving…" : "Save"}</button><button type="button" className="secondary" onClick={() => openForm()}>Cancel</button></span>
+                <span className="inline"><button data-tour="req-edit-save" disabled={busy}>{busy ? "Saving…" : "Save"}</button><button type="button" className="secondary" onClick={() => openForm()}>Cancel</button></span>
               </form>
             ) : isEditing && editing.mode === "split" ? (
-              <form className="form compact" aria-label={`Split ${r.req_id}`} action={(f) => split(r, String(f.get("parts")))}>
+              <form className="form compact" data-tour="req-split-form" aria-label={`Split ${r.req_id}`} action={(f) => split(r, String(f.get("parts")))}>
                 <label>Put each part of the quote on its own line
-                  <textarea name="parts" rows={4} defaultValue={r.quote} autoFocus /></label>
+                  <textarea name="parts" data-tour="req-split-parts" rows={4} defaultValue={r.quote} autoFocus /></label>
                 {errorAt(r.req_id)}
                 <span className="inline"><button disabled={busy}>{busy ? "Splitting…" : "Split"}</button><button type="button" className="secondary" onClick={() => openForm()}>Cancel</button></span>
               </form>
             ) : (<>
-              <div className={group ? "group-title" : ""}>{r.text}</div>
+              <div className={group ? "group-title" : ""} data-tour={at("req-row-text")}>{r.text}</div>
               {group ? (
-                <button type="button" className="link expand" aria-expanded={open.has(r.req_id)} onClick={() => setOpen((s) => flip(s, r.req_id))}>
+                <button type="button" className="link expand" data-tour={first("req-group-expand")} aria-expanded={open.has(r.req_id)} onClick={() => setOpen((s) => flip(s, r.req_id))}>
                   {open.has(r.req_id) ? "▾" : "▸"} {kids.length} sub-requirements</button>
-              ) : <div className="quote">“{r.quote}”</div>}
-              {r.status === "duplicate" ? <div className="muted">Duplicate of {r.derived_from.join(", ")}: approve to keep it anyway</div>
-                : r.derived_from?.length > 0 && <div className="muted">From {r.derived_from.join(", ")}</div>}
+              ) : <div className="quote" data-tour={at("req-row-quote")}>“{r.quote}”</div>}
+              {r.status === "duplicate" ? <div className="muted" data-tour={first("req-row-duplicate")}>Duplicate of {r.derived_from.join(", ")}: approve to keep it anyway</div>
+                : r.derived_from?.length > 0 && <div className="muted" data-tour={first("req-row-derived")}>From {r.derived_from.join(", ")}</div>}
             </>)}
           </td>
-          <td className="status-cell"><StatusBadge status={r.status} />
-            <button type="button" className="link" aria-expanded={historyOf === r.req_id}
+          <td className="status-cell" data-tour={at("req-row-status")}><StatusBadge status={r.status} />
+            <button type="button" className="link" data-tour={at("req-action-history")} aria-expanded={historyOf === r.req_id}
               onClick={() => setHistoryOf(historyOf === r.req_id ? undefined : r.req_id)}>History</button></td>
-          {!frozen && <td>{(active || r.status === "duplicate") && !isEditing && (
-            <div className="row-actions">
-              {r.status !== "approved" && <button disabled={busy} onClick={() => review(r.req_id, { action: "approve" })}>Approve</button>}
-              {active && r.status !== "rejected" && <button className="secondary" disabled={busy} onClick={() => review(r.req_id, { action: "reject" })}>Reject</button>}
-              {active && <button className="secondary" disabled={busy} onClick={() => openForm({ id: r.req_id, mode: "edit" })}>Edit</button>}
-              {active && !group && !child && <button className="secondary" disabled={busy} onClick={() => openForm({ id: r.req_id, mode: "split" })}>Split</button>}
-              {active && group && <button className="secondary" disabled={busy}
+          {/* a rejected item or a duplicate keeps Approve: approving restores it (service contract) */}
+          {!frozen && <td>{(active || r.status === "duplicate" || r.status === "rejected") && !isEditing && (
+            <div className="row-actions" data-tour={at("req-row-actions")}>
+              {r.status !== "approved" && <button data-tour={at("req-action-approve")} disabled={busy} onClick={() => review(r.req_id, { action: "approve" })}>Approve</button>}
+              {active && r.status !== "rejected" && <button className="secondary" data-tour={at("req-action-reject")} disabled={busy} onClick={() => review(r.req_id, { action: "reject" })}>Reject</button>}
+              {active && <button className="secondary" data-tour={at("req-action-edit")} disabled={busy} onClick={() => openForm({ id: r.req_id, mode: "edit" })}>Edit</button>}
+              {active && !group && !child && <button className="secondary" data-tour={first("req-action-split")} disabled={busy} onClick={() => openForm({ id: r.req_id, mode: "split" })}>Split</button>}
+              {active && group && <button className="secondary" data-tour={first("req-action-ungroup")} disabled={busy}
                 onClick={() => act(post(`/api/requirements/${r.req_id}/ungroup`), `${r.req_id} ungrouped: its ${kids.length} sub-requirements stand on their own.`)}>Ungroup</button>}
             </div>)}</td>}
         </tr>
@@ -156,12 +167,12 @@ export default function RequirementsPage() {
     <>
       {confirmDialog}
       <PageHead level={2} title="Requirements"
-        help={frozen ? <>Baseline {data.baseline!.number} frozen by {data.baseline!.frozen_by} ({data.baseline!.count} items).
-            Later changes run as a delta on the <Link href={`/opportunities/${id}/changes`}>Changes</Link> step.</>
-          : `${activeCount} requirements; related line items are grouped (expand a group to see its sub-requirements). Check each against its source, then freeze the baseline.`}>
+        help={frozen ? <span data-tour="req-baseline">Baseline {data.baseline!.number} frozen by {data.baseline!.frozen_by} ({data.baseline!.count} items).
+            Later changes run as a delta on the <Link href={`/opportunities/${id}/changes`}>Changes</Link> step.</span>
+          : <span data-tour="req-help">{activeCount} requirements; related line items are grouped (expand a group to see its sub-requirements). Check each against its source, then freeze the baseline.</span>}>
         {busy && <Busy label="Saving…" />}
-        {!frozen && undecided > 0 && <span className="muted nowrap">{undecided} still to decide</span>}
-        {!frozen && <button disabled={busy || undecided > 0} title={undecided ? `${undecided} line items still need a decision` : ""} onClick={freeze}>Freeze baseline</button>}
+        {!frozen && undecided > 0 && <span className="muted nowrap" data-tour="req-undecided">{undecided} still to decide</span>}
+        {!frozen && <button data-tour="req-freeze" disabled={busy || undecided > 0} title={undecided ? `${undecided} line items still need a decision` : ""} onClick={freeze}>Freeze baseline</button>}
       </PageHead>
 
       {all.length === 0 ? (
@@ -169,26 +180,26 @@ export default function RequirementsPage() {
           <Link className="button secondary" href={`/opportunities/${id}`}>Go to the RFP step</Link>
         </EmptyState>
       ) : (<>
-        <div className="filters" role="tablist" aria-label="Filter line items">
+        <div className="filters" role="tablist" aria-label="Filter line items" data-tour="req-filters">
           {(Object.keys(FILTERS) as FilterKey[]).map((k) => (
-            <button key={k} role="tab" aria-selected={filter === k} className={`chip ${filter === k ? "on" : ""}`} onClick={() => setFilter(k)}>
+            <button key={k} role="tab" data-tour={`req-filter-${k}`} aria-selected={filter === k} className={`chip ${filter === k ? "on" : ""}`} onClick={() => setFilter(k)}>
               {FILTERS[k].label} <span>{all.filter(FILTERS[k].test).length}</span>
             </button>
           ))}
-          <input type="search" placeholder="Search ID or text" value={query} onChange={(e) => setQuery(e.target.value)} aria-label="Search line items" />
+          <input type="search" data-tour="req-search" placeholder="Search ID or text" value={query} onChange={(e) => setQuery(e.target.value)} aria-label="Search line items" />
         </div>
 
         {!frozen && selected.size > 0 && (
-          <div className="bulkbar" role="region" aria-label="Selected line items">
+          <div className="bulkbar" role="region" aria-label="Selected line items" data-tour="req-bulkbar">
             <strong>{selected.size} selected</strong>
-            <button disabled={busy} onClick={() => bulk("approve")}>Approve</button>
-            <button className="secondary" disabled={busy} onClick={() => bulk("reject")}>Reject</button>
-            <button className="secondary" disabled={busy || selected.size < 2 || merging} onClick={() => { setFormError(undefined); setMerging(true); }}>Merge into one</button>
-            <button className="secondary" disabled={busy} onClick={() => { setSelected(new Set()); setMerging(false); }}>Clear</button>
+            <button data-tour="req-bulk-approve" disabled={busy} onClick={() => bulk("approve")}>Approve</button>
+            <button className="secondary" data-tour="req-bulk-reject" disabled={busy} onClick={() => bulk("reject")}>Reject</button>
+            <button className="secondary" data-tour="req-bulk-merge" disabled={busy || selected.size < 2 || merging} onClick={() => { setFormError(undefined); setMerging(true); }}>Merge into one</button>
+            <button className="secondary" data-tour="req-bulk-clear" disabled={busy} onClick={() => { setSelected(new Set()); setMerging(false); }}>Clear</button>
             {merging && selected.size >= 2 && (
-              <form className="form bulk-merge" aria-label="Merge the selected line items" action={(f) => merge(String(f.get("text")))}>
+              <form className="form bulk-merge" data-tour="req-merge-form" aria-label="Merge the selected line items" action={(f) => merge(String(f.get("text")))}>
                 <label className="grow">One-line text for the merged requirement ({selected.size} items)
-                  <input name="text" required maxLength={MAX_TEXT} autoFocus /></label>
+                  <input name="text" data-tour="req-merge-text" required maxLength={MAX_TEXT} autoFocus /></label>
                 <span className="inline"><button disabled={busy}>{busy ? "Merging…" : "Merge"}</button>
                   <button type="button" className="secondary" onClick={() => { setMerging(false); setFormError(undefined); }}>Cancel</button></span>
                 {errorAt("merge")}
@@ -197,10 +208,13 @@ export default function RequirementsPage() {
           </div>
         )}
 
-        <table className="req-table">
+        <table className="req-table" data-tour="req-table">
           <thead><tr>
-            {!frozen && <th className="col-check"><span className="sr-only">Select</span></th>}
-            <th className="col-id">ID</th><th className="col-src">Source</th><th>Requirement</th><th className="col-status">Status</th>{!frozen && <th className="col-actions">Actions</th>}
+            {!frozen && <th className="col-check" data-tour="req-col-check">
+              <input type="checkbox" data-tour="req-select-all" aria-label="Select all line items in view" disabled={selectable.length === 0}
+                checked={allSelected} onChange={() => setSelected(allSelected ? new Set() : new Set(selectable))} /></th>}
+            <th className="col-id" data-tour="req-col-id">ID</th><th className="col-src" data-tour="req-col-source">Source</th><th data-tour="req-col-text">Requirement</th>
+            <th className="col-status" data-tour="req-col-status">Status</th>{!frozen && <th className="col-actions" data-tour="req-col-actions">Actions</th>}
           </tr></thead>
           <tbody>
             {rows.map((r) => line(r))}
@@ -212,20 +226,20 @@ export default function RequirementsPage() {
       </>)}
 
       {!frozen && (
-        <details className="card" onToggle={(e) => setAdding(e.currentTarget.open)}>
-          <summary><strong>Add a requirement the agent missed</strong> <span className="muted">select its lines on the RFP page, or paste the quote</span></summary>
+        <details className="card" data-tour="req-add" onToggle={(e) => setAdding(e.currentTarget.open)}>
+          <summary data-tour="req-add-summary"><strong>Add a requirement the agent missed</strong> <span className="muted">select its lines on the RFP page, or paste the quote</span></summary>
           <h3 className="lp-heading">Select its lines on the RFP page</h3>
           {adding && <LinePicker oppId={id} startPage={startPage} categories={CATEGORIES} onAdded={reload}
             requirements={(data.requirements ?? []).filter((r) => !INACTIVE.has(r.status))} />}
           <h3 className="lp-heading">Or paste the quote</h3>
-          <form className="form" aria-label="Add a requirement from a pasted quote" action={(f) => act(post(`/api/opportunities/${id}/requirements`, {
+          <form className="form" data-tour="req-paste-form" aria-label="Add a requirement from a pasted quote" action={(f) => act(post(`/api/opportunities/${id}/requirements`, {
             quote: f.get("quote"), text: f.get("text"), category: f.get("category"), page: Number(f.get("page")) || null }),
             "Requirement added; it is in the list, to review like the others.", "add")}>
-            <label className="grow">Quote, copied from the RFP <textarea name="quote" rows={2} required /></label>
-            <label>Short text <span className="field-hint">(optional; default: the quote)</span> <input name="text" maxLength={MAX_TEXT} /></label>
-            <label>Category <select name="category">{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select></label>
-            <label>Page <span className="field-hint">(optional)</span> <input name="page" type="number" min={1} className="narrow" /></label>
-            <button disabled={busy}>{busy ? "Adding…" : "Add"}</button>
+            <label className="grow">Quote, copied from the RFP <textarea name="quote" data-tour="req-paste-quote" rows={2} required /></label>
+            <label>Short text <span className="field-hint">(optional; default: the quote)</span> <input name="text" data-tour="req-paste-text" maxLength={MAX_TEXT} /></label>
+            <label>Category <select name="category" data-tour="req-paste-category">{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select></label>
+            <label>Page <span className="field-hint">(optional)</span> <input name="page" type="number" data-tour="req-paste-page" min={1} className="narrow" /></label>
+            <button data-tour="req-paste-add" disabled={busy}>{busy ? "Adding…" : "Add"}</button>
           </form>
           {errorAt("add")}
         </details>
@@ -241,8 +255,8 @@ function History({ reqId }: { reqId: string }) {
   if (!data) return <Skeleton lines={3} />;
   const when = (t: string) => new Date(t.endsWith("Z") || t.includes("+") ? t : `${t}Z`).toLocaleString();
   return (
-    <div className="history">
-      <div>
+    <div className="history" data-tour="req-history">
+      <div data-tour="req-history-versions">
         <h3>Versions ({data.versions.length})</h3>
         <ol className="versions">
           {data.versions.map((v) => (
@@ -255,7 +269,7 @@ function History({ reqId }: { reqId: string }) {
         <p className="quote">Source ({data.source}): “{data.quote}”</p>
         {data.derived_from.length > 0 && <p className="muted">Created from {data.derived_from.join(", ")}</p>}
       </div>
-      <div>
+      <div data-tour="req-history-timeline">
         <h3>Timeline</h3>
         <ul className="timeline">
           {data.events.map((e, i) => (

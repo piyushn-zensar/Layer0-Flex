@@ -1,0 +1,71 @@
+/* Guided walkthrough: backdrop, spotlight, step bubble, launcher dialog.  Owner: tour engine.
+   Z-order: backdrop 30 (above cards, sticky heads and bulk bars; below the app's dialogs at 40 so a confirmation a
+   step asks for stays usable), bubble 45 (above those dialogs), launcher 48, toasts stay on top at 50. */
+
+.tour-dim { position: fixed; background: rgba(15, 23, 42, .55); z-index: 30; }
+.tour-dim-all { inset: 0; }
+.tour-dim-hole { background: transparent; cursor: not-allowed; }
+.tour-dim-pass { pointer-events: none; } /* action steps: the page stays usable everywhere, the spotlight only points */
+.tour-done { color: var(--ok, #15803d); }
+.tour-ring { position: fixed; z-index: 31; pointer-events: none; border-radius: var(--radius); box-shadow: 0 0 0 2px var(--accent), 0 0 0 6px rgba(3, 105, 161, .25); transition: top .15s, left .15s, width .15s, height .15s; }
+
+.tour-bubble { position: fixed; z-index: 45; width: min(440px, calc(100vw - 16px)); max-height: calc(100vh - 16px); overflow: auto; background: var(--card); color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-2); padding: var(--s4); outline: none; transition: top .15s, left .15s; }
+.tour-bubble:focus-visible { box-shadow: var(--shadow-2), var(--focus); }
+.tour-bubble.docked { top: auto !important; left: 8px !important; right: 8px; bottom: 8px; transform: none !important; width: auto; max-height: 60vh; }
+.tour-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s2); }
+.tour-crumb { display: flex; flex-direction: column; gap: 2px; font-size: var(--fs-sm); color: var(--muted-2); }
+.tour-chapter { font-weight: 600; color: var(--accent); }
+.tour-x { background: none; border: 0; color: var(--muted-2); font-size: 20px; line-height: 1; min-height: 0; padding: 0 var(--s1); }
+.tour-x:hover { background: var(--surface-2); color: var(--ink); }
+.tour-title { font-size: var(--fs-lg); margin: var(--s2) 0 var(--s2); }
+.tour-body p { margin: 0 0 var(--s2); color: var(--ink-2); line-height: 1.45; }
+.tour-body p:last-child { margin-bottom: 0; }
+.tour-body code, .tour-instruction code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92em; background: var(--surface-2); padding: 0 3px; border-radius: 4px; }
+.tour-note { margin: var(--s2) 0 0; font-size: var(--fs-sm); color: var(--muted-2); }
+.tour-fallback { background: var(--pending-bg); color: var(--pending-ink); border: 1px solid var(--pending-line); border-radius: var(--radius-sm); padding: var(--s2) var(--s3); }
+.tour-instruction { margin: var(--s3) 0 0; padding: var(--s2) var(--s3); background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: var(--radius-sm); color: var(--info-ink); }
+.tour-waiting { display: flex; align-items: center; gap: var(--s2); }
+.tour-error { margin: var(--s2) 0 0; padding: var(--s2) var(--s3); background: var(--bad-bg); color: var(--bad-ink); border: 1px solid var(--bad-line); border-radius: var(--radius-sm); font-size: var(--fs-sm); }
+.tour-actions { display: flex; justify-content: space-between; align-items: center; gap: var(--s2); flex-wrap: wrap; margin-top: var(--s3); }
+.tour-actions-left, .tour-actions-right { display: flex; gap: var(--s2); align-items: center; flex-wrap: wrap; }
+.tour-continue { font-size: var(--fs-sm); }
+.tour-foot { display: flex; gap: var(--s2); align-items: center; flex-wrap: wrap; margin-top: var(--s3); padding-top: var(--s2); border-top: 1px solid var(--line); font-size: var(--fs-sm); color: var(--muted-2); }
+.tour-foot .link { font-size: var(--fs-sm); }
+.tour-keys { margin-left: auto; }
+.tour-spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: tour-spin .8s linear infinite; vertical-align: -1px; }
+@keyframes tour-spin { to { transform: rotate(360deg); } }
+
+/* chapter list (bubble menu and launcher) */
+.tour-menu, .tour-launch-chapters { list-style: none; margin: var(--s2) 0 0; padding: 0; border: 1px solid var(--line); border-radius: var(--radius-sm); max-height: 40vh; overflow: auto; }
+.tour-menu li, .tour-launch-chapters li { border-bottom: 1px solid var(--line); }
+.tour-menu li:last-child, .tour-launch-chapters li:last-child { border-bottom: 0; }
+.tour-menu li.current, .tour-launch-chapters li.current { background: var(--accent-soft); }
+.tour-menu .link, .tour-launch-chapters .link { display: flex; gap: var(--s2); align-items: flex-start; justify-content: flex-start; width: 100%; text-align: left; white-space: normal;
+  padding: var(--s2) var(--s3); color: var(--ink); text-decoration: none; background: transparent; border: 0; border-radius: 0; }
+.tour-menu .link:hover:not(:disabled), .tour-launch-chapters .link:hover:not(:disabled) { background: var(--surface-2); }
+.tour-menu .link:disabled, .tour-launch-chapters .link:disabled { color: var(--muted-2); cursor: default; background: transparent; border: 0; }
+.tour-menu .link:disabled .tour-menu-title, .tour-launch-chapters .link:disabled .tour-menu-title { color: var(--muted-2); }
+.tour-menu-no { flex: 0 0 22px; height: 22px; border-radius: 50%; background: var(--surface-3); color: var(--muted); font-size: var(--fs-sm); font-weight: 600; display: grid; place-items: center; }
+li.done .tour-menu-no { background: var(--ok-bg); color: var(--ok); }
+li.current .tour-menu-no { background: var(--accent); color: var(--accent-ink); }
+.tour-menu-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1 1 auto; overflow-wrap: anywhere; }
+.tour-menu-title { font-weight: 600; color: var(--ink); }
+.tour-menu-sum { font-size: var(--fs-sm); color: var(--muted-2); font-weight: 400; }
+
+/* launcher dialog */
+.tour-launch-backdrop { position: fixed; inset: 0; z-index: 48; display: grid; place-items: center; padding: var(--s4); background: rgba(15, 23, 42, .45); }
+.tour-launch-dialog { width: min(620px, 100%); max-height: calc(100vh - 32px); overflow: auto; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-2); padding: var(--s5); }
+.tour-launch-head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--s2); }
+.tour-launch-head h2 { margin: 0; }
+.tour-launch-about { margin: var(--s3) 0; padding-left: 20px; color: var(--ink-2); }
+.tour-launch-about li { margin-bottom: var(--s1); }
+.tour-launch-time { color: var(--ink-2); margin: 0 0 var(--s2); }
+.tour-launch-actions { display: flex; justify-content: flex-end; gap: var(--s2); margin-top: var(--s4); flex-wrap: wrap; }
+.topbar .tour-launch { min-height: 32px; padding: 5px 12px; }
+.topbar .tour-launch.raised { position: relative; z-index: 32; } /* above the backdrop (30) and the ring (31) while the walkthrough runs */
+
+@media (max-width: 700px) {
+  .tour-launch-dialog { padding: var(--s4); }
+  .tour-keys { display: none; }
+}

@@ -23,14 +23,14 @@ const JUDGEMENT: Record<Judgement, string> = { met: "met", not_met: "not met", u
 function GoNoGoSummary({ s, oppId }: { s: Summary; oppId: string }) {
   return (
     <>
-      <Alert kind="info"><strong>{s.advice}</strong></Alert>
+      <div data-tour="dec-advice"><Alert kind="info"><strong>{s.advice}</strong></Alert></div>
       <h3>How the requirements are satisfied</h3>
-      <table className="dense">
+      <table className="dense" data-tour="dec-by-category">
         <thead><tr><th>Category</th><th className="num">Fully</th><th className="num">Partly</th><th className="num">Not</th><th className="num">Bid desk</th></tr></thead>
         <tbody>{Object.entries(s.by_category).map(([cat, n]) => (
           <tr key={cat}><td>{cat}</td><td className="num">{n.fully}</td><td className="num">{n.partly}</td><td className="num">{n.not}</td><td className="num">{n.bid_desk}</td></tr>))}</tbody>
       </table>
-      <details><summary>Per requirement ({s.rows.length}): from the unit&apos;s answer where there is one, otherwise estimated from the match</summary>
+      <details data-tour="dec-per-req"><summary>Per requirement ({s.rows.length}): from the unit&apos;s answer where there is one, otherwise estimated from the match</summary>
         <ul className="per-req">{s.rows.map((r) => <li key={r.req_id}><a className="mono" href={`/opportunities/${oppId}/trace#${r.req_id}`}>{r.req_id}</a>{" "}
           <strong>{r.level.replace("_", " ")}</strong> <span className="muted">({r.basis}{r.units.length ? `: ${r.units.join(", ")}` : ""})</span> {r.text}</li>)}</ul>
       </details>
@@ -58,18 +58,18 @@ type Evidence = {
 function PortfolioChecks({ ev }: { ev: Evidence }) {
   const d = ev.deviations, w = ev.workload;
   return (
-    <section className="card">
+    <section className="card" data-tour="dec-portfolio">
       <div className="card-head"><h2>Bid and portfolio checks</h2><span className="muted">Evidence for the bid manager, never a decision.</span></div>
       <h3>Deviations from the standard product</h3>
-      {d.rows.length === 0 ? <p className="ok">{d.checked ? `${d.checked} data-sheet ratings are within the standard products.` : "No data-sheet rating to compare."}</p> : (
-        <table className="dense"><thead><tr><th>Product</th><th>Rating</th><th>RFP asks</th><th>Standard</th><th>Severity</th><th>Source</th></tr></thead>
+      {d.rows.length === 0 ? <p className="ok" data-tour="dec-deviations">{d.checked ? `${d.checked} data-sheet ratings are within the standard products.` : "No data-sheet rating to compare."}</p> : (
+        <table className="dense" data-tour="dec-deviations"><thead><tr><th>Product</th><th>Rating</th><th>RFP asks</th><th>Standard</th><th>Severity</th><th>Source</th></tr></thead>
           <tbody>{d.rows.map((r, i) => (
             <tr key={i}><td className="mono">{r.product_id}</td><td>{r.field}</td><td>{r.rfp}</td><td>{r.standard}</td>
               <td><StatusBadge status={r.severity} kind="severity" /></td><td>{r.source}</td></tr>))}
           </tbody></table>)}
       <p className="muted">{d.note}</p>
       <h3>Workload across opportunities</h3>
-      <table className="dense"><thead><tr><th>Unit</th><th className="num">This opportunity</th><th>Other opportunities</th><th className="num">Total open</th><th>Capacity</th></tr></thead>
+      <table className="dense" data-tour="dec-workload"><thead><tr><th>Unit</th><th className="num">This opportunity</th><th>Other opportunities</th><th className="num">Total open</th><th>Capacity</th></tr></thead>
         <tbody>{w.rows.map((r) => (
           <tr key={r.bu}><td>{r.bu}</td><td className="num">{r.open_here}</td>
             <td>{r.open_elsewhere}{r.other_opportunities.length > 0 && <span className="muted"> ({r.other_opportunities.join(", ")})</span>}</td>
@@ -85,30 +85,32 @@ function EngineeringChecks({ c, oppId }: { c: Checks; oppId: string }) {
   const req = (id: string) => <a key={id} className="mono" href={`/opportunities/${oppId}/trace#${id}`}>{id}</a>;
   const outside = Object.entries(c.units_outside_scope);
   return (
-    <section className="card">
+    <section className="card" data-tour="dec-eng-checks">
       <div className="card-head"><h2>Engineering checks</h2>
         <span className="muted">Over {c.requirements_checked} frozen requirements. Illustrative rules ported from the earlier code line; to be confirmed with SpinCo engineering.</span></div>
       <h3>Scope: layers this RFP covers</h3>
-      <ul className="dec-layers">{c.scope.layers.map((l) => (
+      <ul className="dec-layers" data-tour="dec-eng-scope">{c.scope.layers.map((l) => (
         <li key={l.n}><StatusBadge status={l.in_scope ? "pass" : "n/a"} label={l.in_scope ? "in scope" : "not in scope"} />
           {" "}{l.n}. {l.name} <span className="muted">({l.basis})</span>
           {l.terms.length > 0 && <div className="muted">{l.terms.map((t) => <span key={t.term}>“{t.term}” ×{t.count} in {t.req_ids.map(req)}; </span>)}</div>}
         </li>))}</ul>
-      {outside.length > 0 && <Alert kind="warn">Suggested although nothing in the RFP points to their layers: {outside.map(([bu, ids]) => `${bu} (${ids.length})`).join(", ")}. Check these matches.</Alert>}
+      {outside.length > 0 && <div data-tour="dec-eng-outside"><Alert kind="warn">Suggested although nothing in the RFP points to their layers: {outside.map(([bu, ids]) => `${bu} (${ids.length})`).join(", ")}. Check these matches.</Alert></div>}
       <h3>Rules</h3>
-      <table className="dense dec-rules"><tbody>{c.rules.map((r) => (
+      <table className="dense dec-rules" data-tour="dec-eng-rules"><tbody>{c.rules.map((r) => (
         <tr key={r.id}><td className="mono">{r.id}</td><td><StatusBadge status={r.status} /></td>
           <td>{r.note}<div className="muted">{r.rule}</div></td></tr>))}</tbody></table>
       <h3>Offering type against each unit&apos;s default tier</h3>
-      {c.tier_flags.length === 0 ? <p className="muted">No flags.</p> : (
-        <details><summary>{c.tier_flags.length} item(s) need an engineer&apos;s confirmation</summary>
+      {c.tier_flags.length === 0 ? <p className="muted" data-tour="dec-eng-tiers">No flags.</p> : (
+        <details data-tour="dec-eng-tiers"><summary>{c.tier_flags.length} item(s) need an engineer&apos;s confirmation</summary>
           <ul className="per-req">{c.tier_flags.map((f, i) => <li key={i}>{req(f.req_id)} {f.bu} · {f.product_id}: {f.note}</li>)}</ul></details>)}
+      <div data-tour="dec-eng-solver">
       <h3>Low-voltage solver</h3>
       <p><StatusBadge status={c.solver.status === "NOT_SOLVABLE" ? "n/a" : "pass"} label={c.solver.status.replace(/_/g, " ").toLowerCase()} /></p>
       {c.solver.reasons.length > 0 && <ul>{c.solver.reasons.map((r) => <li key={r} className="muted">{r}</li>)}</ul>}
       {c.solver.working.length > 0 && <table className="dense"><tbody>{c.solver.working.map((w) => (
         <tr key={w.step}><td>{w.step}</td><td className="mono">{w.expression} = {w.result} {w.unit}</td><td className="muted">{w.reference}</td></tr>))}</tbody></table>}
       {c.solver.warnings.map((w) => <p key={w} className="warn">{w}</p>)}
+      </div>
     </section>
   );
 }
@@ -150,29 +152,29 @@ export default function DecisionsPage() {
   return (
     <div className="decisions">
       <PageHead level={2} title="Bid decision" help="Review the evidence, choose the participating business units, decide go or no-go, then send each unit its work." />
-      <section className="card">
+      <section className="card" data-tour="dec-evidence">
         <div className="card-head"><h2>Evidence</h2>
-          <span className="muted">{ev.requirements} requirements · {Object.entries(ev.by_category).map(([k, v]) => `${k} ${v}`).join(", ")}</span></div>
-        <p>Offering mix: {Object.entries(ev.offering_mix).map(([k, v]) => <StatusBadge key={k} status={k} kind="offering" label={`${offeringLabel(k)} ${v}`} />)}</p>
-        <p>Suggested units: {Object.entries(ev.suggested_units).map(([k, v]) => <strong key={k}>{k} ({v}) </strong>)}
+          <span className="muted" data-tour="dec-evidence-counts">{ev.requirements} requirements · {Object.entries(ev.by_category).map(([k, v]) => `${k} ${v}`).join(", ")}</span></div>
+        <p data-tour="dec-offering-mix">Offering mix: {Object.entries(ev.offering_mix).map(([k, v]) => <StatusBadge key={k} status={k} kind="offering" label={`${offeringLabel(k)} ${v}`} />)}</p>
+        <p data-tour="dec-suggested-units">Suggested units: {Object.entries(ev.suggested_units).map(([k, v]) => <strong key={k}>{k} ({v}) </strong>)}
           {Object.keys(ev.suggested_units).length === 0 && "none yet: run matching"}</p>
-        {ev.unanchored.length > 0 && <details className="dec-unanchored"><summary className="warn">Unanchored: {ev.unanchored.length} requirement(s) without a place in the RFP</summary>
+        {ev.unanchored.length > 0 && <details className="dec-unanchored" data-tour="dec-unanchored"><summary className="warn">Unanchored: {ev.unanchored.length} requirement(s) without a place in the RFP</summary>
           <p className="muted mono">{ev.unanchored.join(", ")}</p></details>}
-        {ev.unmatched.length > 0 && <p className="muted">Not yet matched: {ev.unmatched.length}</p>}
-        {ev.not_reviewed > 0 && <p className="muted">Product matches nobody has accepted or changed yet: {ev.not_reviewed} (Traceability, pane 3)</p>}
-        {!ev.frozen && <Alert kind="warn">Requirements are not frozen yet: freeze them on the Requirements page before deciding go or no-go.</Alert>}
+        {ev.unmatched.length > 0 && <p className="muted" data-tour="dec-unmatched">Not yet matched: {ev.unmatched.length}</p>}
+        {ev.not_reviewed > 0 && <p className="muted" data-tour="dec-not-reviewed">Product matches nobody has accepted or changed yet: {ev.not_reviewed} (Traceability, pane 3)</p>}
+        {!ev.frozen && <div data-tour="dec-not-frozen"><Alert kind="warn">Requirements are not frozen yet: freeze them on the Requirements page before deciding go or no-go.</Alert></div>}
       </section>
 
       {ev.frozen && <EngineeringChecks c={ev.checks} oppId={id} />}
       {ev.frozen && <PortfolioChecks ev={ev} />}
 
-      <section className="card">
+      <section className="card" data-tour="dec-participation">
         <div className="card-head"><h2>1. Which business units take part?</h2>
-          {part && <span className="muted">Recorded by <strong>{part.decided_by}</strong>: {part.units.join(", ")}</span>}</div>
+          {part && <span className="muted" data-tour="dec-part-recorded">Recorded by <strong>{part.decided_by}</strong>: {part.units.join(", ")}</span>}</div>
         {part && <p>{part.rationale}
           {part.rationale && <> <SendToKnowledge kind="decision" refId={part.id} status={sent?.[`decision:${part.id}`]} onSent={reloadSent} /></>}</p>}
         <form className="form" action={recordParticipation}>
-          <fieldset className="dec-units"><legend className="sr-only">Business units</legend>
+          <fieldset className="dec-units" data-tour="dec-units"><legend className="sr-only">Business units</legend>
             {data.units.map((u) => (
               <label key={u.code} className="check">
                 <input type="checkbox" name="units" value={u.code}
@@ -180,22 +182,22 @@ export default function DecisionsPage() {
               </label>
             ))}
           </fieldset>
-          <label>Rationale <input name="rationale" /></label>
-          <button disabled={!!busy}>Record participation</button>
+          <label data-tour="dec-part-rationale">Rationale <input name="rationale" /></label>
+          <button disabled={!!busy} data-tour="dec-part-record">Record participation</button>
           {busy === "participation" && <Busy label="Recording…" />}
         </form>
       </section>
 
-      <section className="card">
+      <section className="card" data-tour="dec-gonogo">
         <div className="card-head"><h2>2. Go / no-go</h2>
-          {go && <span className="muted">Decision <StatusBadge status={go.outcome} kind="opp" label={go.outcome.replace("_", "-")} /> by <strong>{go.decided_by}</strong></span>}</div>
+          {go && <span className="muted" data-tour="dec-gng-recorded">Decision <StatusBadge status={go.outcome} kind="opp" label={go.outcome.replace("_", "-")} /> by <strong>{go.decided_by}</strong></span>}</div>
         {go && <p>{go.rationale}
           {go.criteria && go.criteria.length > 0 && <span className="muted"> Criteria judged: {(["met", "not_met", "unknown"] as Judgement[])
             .map((j) => `${go.criteria!.filter((c) => c.status === j).length} ${JUDGEMENT[j]}`).join(", ")}.</span>}
           {go.rationale && <> <SendToKnowledge kind="decision" refId={go.id} status={sent?.[`decision:${go.id}`]} onSent={reloadSent} /></>}</p>}
         {data.summary && <GoNoGoSummary s={data.summary} oppId={id} />}
         <form className="form compact" onSubmit={(e) => e.preventDefault()}>
-          {data.summary && <div className="table-scroll"><table className="dec-criteria">
+          {data.summary && <div className="table-scroll" data-tour="dec-criteria"><table className="dec-criteria">
             <thead><tr><th>Criterion</th><th>Layer 0&apos;s assessment</th><th>Your judgement</th><th>Note</th></tr></thead>
             <tbody>{data.summary.criteria.map((c) => (
               <tr key={c.id}>
@@ -208,21 +210,21 @@ export default function DecisionsPage() {
                 <td><label><span className="sr-only">Note on {c.name}</span><input name={`note-${c.id}`} placeholder="optional" /></label></td>
               </tr>))}</tbody>
           </table></div>}
-          <label>Rationale <input name="rationale" /></label>
+          <label data-tour="dec-gng-rationale">Rationale <input name="rationale" /></label>
           <div className="row">
-            <button type="button" disabled={!ev.frozen || !!busy} onClick={(e) => decide("go", e.currentTarget.form!)}>Go</button>
-            <button type="button" disabled={!ev.frozen || !!busy} className="danger secondary" onClick={(e) => decide("no_go", e.currentTarget.form!)}>No-go</button>
+            <button type="button" disabled={!ev.frozen || !!busy} onClick={(e) => decide("go", e.currentTarget.form!)} data-tour="dec-go">Go</button>
+            <button type="button" disabled={!ev.frozen || !!busy} className="danger secondary" onClick={(e) => decide("no_go", e.currentTarget.form!)} data-tour="dec-no-go">No-go</button>
             {busy === "decision" && <Busy label="Recording…" />}
             {!ev.frozen && <span className="muted">Freeze the requirements first.</span>}
           </div>
         </form>
       </section>
 
-      {go?.outcome === "go" && <section className="card">
+      {go?.outcome === "go" && <section className="card" data-tour="dec-dispatch">
         <div className="card-head"><h2>3. Send the work to the units</h2>
           <span className="muted">Repeat after changing matches or participation: new work is sent, work that no longer fits is withdrawn.</span></div>
         <div className="row">
-          <button disabled={!!busy} onClick={dispatch}>Dispatch work packages to units</button>
+          <button disabled={!!busy} onClick={dispatch} data-tour="dec-dispatch-button">Dispatch work packages to units</button>
           {busy === "dispatch" && <Busy label="Dispatching…" />}
         </div>
       </section>}

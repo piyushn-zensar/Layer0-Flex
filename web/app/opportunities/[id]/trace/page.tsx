@@ -60,6 +60,11 @@ export default function TracePage() {
   const docOf = (of?: string) => (of && mainId && of !== mainId ? docs.find((d) => d.id === of)?.filename ?? "Change document" : null);
   const pages = shown?.pages ?? [];
   const page = pages[pageNo - 1];
+  // Walkthrough targets (tour/chapters/trace.ts): "trace-sel-*" ids sit on the selected row only, so each id is unique;
+  // the first group and the first unanchored requirement get one id each.
+  const sel = (reqId: string, name: string) => (reqId === selected ? name : undefined);
+  const firstGroup = data.rows.find((r) => r.children.length > 0)?.req.req_id;
+  const firstUnanchored = data.rows.find((r) => r.req.provenance === "UNANCHORED")?.req.req_id;
   const rowProps = (reqId: string) => ({
     "data-req": reqId, className: reqId === selected ? "selected" : "", onClick: () => select(reqId),
     tabIndex: 0, "aria-current": reqId === selected ? ("true" as const) : undefined,
@@ -74,41 +79,42 @@ export default function TracePage() {
       <PageHead level={2} title="Traceability"
         help="Original RFP, requirement breakdown and product mapping side by side. Select a requirement in any pane to follow it across all three.">
         {matching && <Busy label="Matching…" />}
-        <button className="secondary" disabled={matching} onClick={matchProducts}>Match products</button>
+        <button className="secondary" disabled={matching} onClick={matchProducts} data-tour="trace-match-button">Match products</button>
       </PageHead>
       <div className="toolbar">
-        <span className="muted">Unit responses: {Object.entries(data.progress).map(([bu, p]) => (
+        <span className="muted" data-tour="trace-unit-responses">Unit responses: {Object.entries(data.progress).map(([bu, p]) => (
           <StatusBadge key={bu} status={p.validated === p.total ? "validated" : p.submitted > 0 ? "submitted" : "assigned"}
             label={`${bu} ${p.validated}/${p.total} validated`} title={`${p.submitted} of ${p.total} answers submitted`} />))}
           {Object.keys(data.progress).length === 0 && "not sent to units yet"}</span>
       </div>
-      <div className="trace-legend" aria-label="Offering type legend">
+      <div className="trace-legend" aria-label="Offering type legend" data-tour="trace-legend">
         <span className="tag CTO"><strong>CTO</strong> Configure-to-order: catalog product with options (CPQ)</span>
         <span className="tag SEMI_CUSTOM"><strong>Semi-custom</strong> Configured product plus workshop work for this customer</span>
         <span className="tag ETO"><strong>ETO</strong> Engineered-to-order: designed for this requirement</span>
       </div>
-      <div className="three">
-        <section className="pane">
+      <div className="three" data-tour="trace-panes">
+        <section className="pane" data-tour="trace-pane-1">
           <h2>1 · Original RFP</h2>
           {shown && page ? (<>
-            <div className="trace-docs">
+            <div className="trace-docs" data-tour="trace-docs">
               <span>Showing <strong>{docName(shown)}</strong>{shown.id !== mainId && <> <span className="tag">{ROLE[shown.role] ?? "Document"}</span></>}</span>
-              {docs.length > 1 && <span className="trace-doc-switch" role="group" aria-label="Document shown">{docs.map((d) => (
+              {docs.length > 1 && <span className="trace-doc-switch" role="group" aria-label="Document shown" data-tour="trace-doc-switch">{docs.map((d) => (
                 <button key={d.id} type="button" className={`chip${d.id === shown.id ? " on" : ""}`} aria-pressed={d.id === shown.id} title={d.filename}
                   onClick={() => { setDocId(d.id); setPageNo(1); }}>{docName(d)}</button>))}</span>}
             </div>
-            <div className="pager">
+            <div className="pager" data-tour="trace-pager">
               <button aria-label="Previous page" onClick={() => setPageNo(Math.max(1, pageNo - 1))}>◀</button>
               <span>Page <input type="number" aria-label="Page number" min={1} max={pages.length} value={pageNo}
                 onChange={(e) => setPageNo(Math.min(pages.length, Math.max(1, Number(e.target.value))))} /> / {pages.length}</span>
               <button aria-label="Next page" onClick={() => setPageNo(Math.min(pages.length, pageNo + 1))}>▶</button>
-              {page.unreviewed && <span className="warn">No text layer: page not read (needs OCR)</span>}
+              {page.unreviewed && <span className="warn" data-tour="trace-unreviewed-warning">No text layer: page not read (needs OCR)</span>}
             </div>
-            <div className="page">
+            <div className="page" data-tour="trace-page-image">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={`/api/documents/${shown.id}/pages/${pageNo}.png`} alt={`${docName(shown)} page ${pageNo}`} />
               {data.rows.filter((r) => r.req.page === pageNo && r.req.document_id === shown.id).flatMap((r) => r.req.bboxes.map(([x0, y0, x1, y1], i) => (
                 <div key={`${r.req.req_id}-${i}`} title={r.req.req_id} onClick={() => select(r.req.req_id)}
+                  data-tour={i === 0 ? sel(r.req.req_id, "trace-highlight-selected") : undefined}
                   role="button" tabIndex={i === 0 ? 0 : -1} aria-label={`Select ${r.req.req_id}`}
                   onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(r.req.req_id); } }}
                   className={`hl${r.req.req_id === selected ? " sel" : ""}`}
@@ -119,33 +125,34 @@ export default function TracePage() {
           </>) : <p className="muted trace-empty">No RFP page available.</p>}
         </section>
 
-        <section className="pane">
+        <section className="pane" data-tour="trace-pane-2">
           <h2>2 · Requirement breakdown</h2>
           {data.rows.length === 0 ? <EmptyState title="No requirements yet" hint="Nothing has been extracted from the RFP for this opportunity." /> : (
-          <table className="rows">
+          <table className="rows" data-tour="trace-table-2">
             <thead><tr><th className="col-id">ID</th><th className="col-src">Source</th><th>Requirement</th></tr></thead>
             <tbody>
               {data.rows.map(({ req, children }) => (
                 <tr key={req.req_id} {...rowProps(req.req_id)}>
-                  <td><div className="mono trace-id">{req.req_id}</div><div className="tag">{req.category}</div></td>
-                  <td className="trace-source">{docOf(req.document_id) && <div><span className="tag">{docOf(req.document_id)}</span></div>}
+                  <td data-tour={sel(req.req_id, "trace-sel-id")}><div className="mono trace-id">{req.req_id}</div><div className="tag">{req.category}</div></td>
+                  <td className="trace-source" data-tour={sel(req.req_id, "trace-sel-source")}>{docOf(req.document_id) && <div><span className="tag">{docOf(req.document_id)}</span></div>}
                     {/* UX-14: the same badge as the Requirements page */}
-                    {req.provenance === "UNANCHORED" ? <StatusBadge status="medium" kind="severity" label="unanchored" title="Quote not located on the page; check the source manually" /> : req.source}</td>
-                  <td><div className="trace-text">{req.text}</div>
+                    {req.provenance === "UNANCHORED" ? <span data-tour={req.req_id === firstUnanchored ? "trace-unanchored" : undefined}>
+                      <StatusBadge status="medium" kind="severity" label="unanchored" title="Quote not located on the page; check the source manually" /></span> : req.source}</td>
+                  <td data-tour={sel(req.req_id, "trace-sel-text")}><div className="trace-text">{req.text}</div>
                     {children.length > 0 ? (
-                      <ul className="trace-children">{children.map((k) => <li key={k.req_id}>{k.text} <span className="muted">({docOf(k.document_id) ? `${docOf(k.document_id)}, ` : ""}{k.source})</span></li>)}</ul>
+                      <ul className="trace-children" data-tour={req.req_id === firstGroup ? "trace-group" : undefined}>{children.map((k) => <li key={k.req_id}>{k.text} <span className="muted">({docOf(k.document_id) ? `${docOf(k.document_id)}, ` : ""}{k.source})</span></li>)}</ul>
                     ) : <div className="quote trace-quote">“{req.quote}”</div>}
-                    {req.req_id === selected && <SendToKnowledge kind="requirement" refId={req.req_id} status={sent?.[`requirement:${req.req_id}`]} onSent={reloadSent} />}</td>
+                    {req.req_id === selected && <span data-tour="trace-send-knowledge"><SendToKnowledge kind="requirement" refId={req.req_id} status={sent?.[`requirement:${req.req_id}`]} onSent={reloadSent} /></span>}</td>
                 </tr>
               ))}
             </tbody>
           </table>)}
         </section>
 
-        <section className="pane">
+        <section className="pane" data-tour="trace-pane-3">
           <h2>3 · Product mapping and responses</h2>
           {data.rows.length === 0 ? <EmptyState title="Nothing to map yet" hint="Product mappings and unit responses appear here once requirements exist." /> : (
-          <table className="rows">
+          <table className="rows" data-tour="trace-table-3">
             <thead><tr><th className="col-id">ID</th><th>Unit · product</th><th>Response</th></tr></thead>
             <tbody>
               {data.rows.map(({ req, match: m, unit, product, bom, assignments }) => (
@@ -153,16 +160,16 @@ export default function TracePage() {
                   <td className="mono trace-id">{req.req_id}</td>
                   <td>
                     {m?.bu ? (<>
-                      <div className="trace-unit">{unit?.name ?? m.bu}</div>
-                      <div className="trace-product">{product?.name ?? m.product_id} <StatusBadge status={m.offering_type} kind="offering" /></div>
-                      <div className="muted trace-rationale">{m.rationale}</div>
-                      {bom.length > 0 && <details className="trace-bom"><summary>Bill of materials ({bom.length} lines)</summary>
+                      <div className="trace-unit" data-tour={sel(req.req_id, "trace-sel-unit")}>{unit?.name ?? m.bu}</div>
+                      <div className="trace-product" data-tour={sel(req.req_id, "trace-sel-product")}>{product?.name ?? m.product_id} <StatusBadge status={m.offering_type} kind="offering" /></div>
+                      <div className="muted trace-rationale" data-tour={sel(req.req_id, "trace-sel-rationale")}>{m.rationale}</div>
+                      {bom.length > 0 && <details className="trace-bom" data-tour={sel(req.req_id, "trace-sel-bom")}><summary>Bill of materials ({bom.length} lines)</summary>
                         <ul>{bom.map((b) => <li key={b.item}>{b.item} — {b.qty}</li>)}</ul></details>}
-                    </>) : <span className="muted">{m?.status === "rejected" ? "rejected: choose a unit with Change" // QA-11, once the API sends rejected matches
+                    </>) : <span className="muted" data-tour={sel(req.req_id, "trace-sel-unit")}>{m?.status === "rejected" ? "rejected: choose a unit with Change" // QA-11, once the API sends rejected matches
                       : m ? "Bid manager (not a product item)" : "not matched yet"}</span>}
-                    <MatchActions oppId={id} reqId={req.req_id} match={m} dispatched={assignments.length > 0} onDone={reload} />
+                    <MatchActions oppId={id} reqId={req.req_id} match={m} dispatched={assignments.length > 0} onDone={reload} tour={req.req_id === selected} />
                   </td>
-                  <td>
+                  <td data-tour={sel(req.req_id, "trace-sel-response")}>
                     {assignments.map((a) => (
                       <div key={a.id} className="trace-assign"><strong>{a.bu}</strong> <StatusBadge status={a.status} className="trace-status" />
                         {a.compliance && <StatusBadge status={a.compliance} kind="compliance" className="trace-compliance" />}
