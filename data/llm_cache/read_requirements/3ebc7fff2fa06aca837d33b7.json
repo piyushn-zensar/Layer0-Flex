@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "commercial",
+        "page": 4,
+        "quote": "These planning estimates are the common quotation basis, not purchase commitments. Only POs and expressly authorised materials bind the buyer.",
+        "section": "3",
+        "text": "Planning estimates are not commitments; only POs and authorized materials bind the buyer."
+      },
+      {
+        "category": "schedule",
+        "page": 4,
+        "quote": "Production months start at signed mass-production (MP) release.",
+        "section": "3",
+        "text": "Production months begin after MP release is signed."
+      },
+      {
+        "category": "schedule",
+        "page": 4,
+        "quote": "Week 8; bring-up, interface and power verification",
+        "section": "3",
+        "text": "Deliver 30 units for EVT by week 8 for bring-up, interface, and power verification."
+      },
+      {
+        "category": "schedule",
+        "page": 4,
+        "quote": "Week 14; environmental, safety, EMC and security testing",
+        "section": "3",
+        "text": "Deliver 50 units for DVT by week 14 for environmental, safety, EMC, and security testing."
+      },
+      {
+        "category": "schedule",
+        "page": 4,
+        "quote": "Week 20; one controlled production lot on intended line",
+        "section": "3",
+        "text": "Deliver 300 units for PVT by week 20 for a controlled production lot."
+      },
+      {
+        "category": "schedule",
+        "page": 4,
+        "quote": "Months 1-3: 500/month; 4-6: 1,000/month; 7-12: 1,250/month",
+        "section": "3",
+        "text": "Deliver 12,000 units in Year 1 with specified monthly rates."
+      },
+      {
+        "category": "schedule",
+        "page": 4,
+        "quote": "2,000/month / 3,000/month planning basis",
+        "section": "3",
+        "text": "Plan for 24,000 units in Year 2 and 36,000 units in Year 3."
+      },
+      {
+        "category": "schedule",
+        "page": 4,
+        "quote": "Available within 8 weeks of a written request, subject to authorised material cover",
+        "section": "3",
+        "text": "Provide surge capacity of 4,000 units/month within 8 weeks of request."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "Plan, risk register, compliance matrix, architecture and proposed BOM.",
+        "section": "3.1",
+        "text": "Provide G0 deliverables including plan, risk register, compliance matrix, architecture, and BOM by week 2."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "30 units; bring-up report; DFM/DFT review; software/security design.",
+        "section": "3.1",
+        "text": "Provide G1 deliverables including 30 units, bring-up report, DFM/DFT review, and software/security design by week 8."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "50 units; approved test reports; compliance file; frozen design.",
+        "section": "3.1",
+        "text": "Provide G2 deliverables including 50 units, test reports, compliance file, and frozen design by week 14."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "300 units; yield/capability report; fixtures; traceability export.",
+        "section": "3.1",
+        "text": "Provide G3 deliverables including 300 units, yield report, fixtures, and traceability export by week 20."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "Mandatory defects closed; signed release pack; training and capacity evidence.",
+        "section": "3.1",
+        "text": "Provide G4 deliverables including defect closure, release pack, training, and capacity evidence by week 24."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "Submit a resourced critical-path schedule with component lead times.",
+        "section": "3.1",
+        "text": "Submit a critical-path schedule with component lead times."
+      },
+      {
+        "category": "schedule",
+        "page": 4,
+        "quote": "Notify slippage in two business days and provide a recovery plan in five.",
+        "section": "3.1",
+        "text": "Notify schedule slippage in 2 days and provide a recovery plan in 5 days."
+      },
+      {
+        "category": "compliance",
+        "page": 4,
+        "quote": "The 380 NPI units are additional to 72,000 series units and are not saleable without separate release.",
+        "section": "3.2",
+        "text": "NPI units are additional to series units and require separate release for sale."
+      },
+      {
+        "category": "submission",
+        "page": 4,
+        "quote": "Include test-consumed units; disclose allocation and quote extra samples.",
+        "section": "3.2",
+        "text": "Include test-consumed units, disclose allocation, and quote extra samples."
+      },
+      {
+        "category": "schedule",
+        "page": 4,
+        "quote": "Hold weekly reviews through MP and monthly reviews thereafter.",
+        "section": "3.2",
+        "text": "Conduct weekly reviews through MP and monthly reviews afterward."
+      },
+      {
+        "category": "compliance",
+        "page": 4,
+        "quote": "Gate transition, tooling replication and production shipments require written buyer release.",
+        "section": "3.2",
+        "text": "Gate transitions, tooling replication, and shipments need written buyer release."
+      },
+      {
+        "category": "schedule",
+        "page": 4,
+        "quote": "Buyer review is due in five business days; delay requires a documented schedule adjustment, not automatic approval.",
+        "section": "3.2",
+        "text": "Buyer review takes 5 days; delays need documented schedule adjustments."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

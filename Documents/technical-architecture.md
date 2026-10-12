@@ -299,8 +299,10 @@ The provenance classes reuse the v0.3.0 `provenance/anchors.py` design; the reco
 
 ### 7.1 Catalog and knowledge base (RAG)
 
-- `business_units.json`: the working list of business units, with pillar, status, product manager and design engineer. EP² is part of SpinCo per written direction from the Zensar point of contact. EPC Power is listed as pending and is not offered.
-- `products.json`: each unit's product families, offering type, description, retrieval keywords and BOM lines. The seed content is **illustrative** and must be replaced with each unit's real catalog (Needs confirmation).
+- `business_units.json`: the working list of business units, with pillar, status, product manager and design engineer, and a link to each unit's public page. EP² is part of SpinCo per written direction from the Zensar point of contact. EPC Power is listed as pending and is not offered. Two Flex group units outside SpinCo, EMS (design, engineering and manufacturing services) and AFS (fulfillment, logistics and aftermarket services), are active and labelled as needing confirmation; their roles are placeholders.
+- `products.json`: each unit's product families (61, updated 12 Oct 2026), offering type, description, retrieval keywords, source link and BOM lines. The families come from **public Flex web pages** (retrieved 12 Oct 2026); the BOM lines and CROWN-ACC remain illustrative. Every active family is in the matcher's fixed prompt part, so a change to this file invalidates every frozen matcher answer (they were regenerated on 12 Oct 2026). Scope, offering types and family boundaries still **need confirmation** with each unit.
+- **Overlapping families.** Two units publish similar families: Crown and EP² both make relay panels, and Crown makes both arc-resistant and standard switchgear. The matcher reads only each family's name and description, so the routing rule is written into the descriptions: protective relays and relay panels go to EP², metal-clad switchgear goes to the arc-resistant family unless the RFP says it is not arc-resistant. This is a PoC rule, to be confirmed with the units.
+- `catalog_items.json`: the models and series of each family (76), with specs and a source link. They are **not** in the matcher's prompt: they go into the long-term retrieval index (after products and past responses) and appear on the catalog page under their family. The retrieval-only fallback uses a model hit for its family only when no product was retrieved.
 - `past_responses.json`: past RFP answers per unit (illustrative seed).
 - **Knowledge-base queue** (built 10 Oct 2026). This is the database-to-knowledge-base connector:
   - **Sending.** Anyone can send a requirement, a validated answer or a decision rationale to the knowledge base, from Traceability, the response outline or the bid decision, with a note. Answers that are not validated cannot be sent, and an item that is already queued or approved cannot be sent again.
@@ -308,7 +310,7 @@ The provenance classes reuse the v0.3.0 `provenance/anchors.py` design; the reco
   - **Approved items** join the long-term retrieval index, so matching evidence, the response outline and catalog search find them on the next opportunity. Nothing enters the knowledge base without a person's approval.
   - **The matcher's prompt does not change.** Approved items are not added to the past responses in its fixed prompt part, so its frozen answers stay valid.
   - **Storage.** Approved items are stored with the installation, next to the database, and a demo reset clears them. With an embedding provider, approving re-embeds the small long-term index once.
-- Retrieval ranks products and past responses for a requirement's text. Scores are kept as evidence.
+- Retrieval ranks products, models and past responses for a requirement's text. Scores are kept as evidence.
 - **BOM.** Layer 0 does not construct a bill of materials. Screen 3 shows the BOM lines of the matched product, read from the BOM source system. In the PoC the source is the catalog file; the real source system is Needs confirmation.
 
 ### 7.2 Matching (step 2)

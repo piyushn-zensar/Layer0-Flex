@@ -1,0 +1,40 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "schedule",
+        "members": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "title": "Delivery schedule for units across different phases"
+      },
+      {
+        "category": "submission",
+        "members": [
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "title": "Submission of deliverables for different gates"
+      },
+      {
+        "category": "schedule",
+        "members": [
+          15,
+          18,
+          20
+        ],
+        "title": "Schedule management and reporting requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 3,
+        "quote": "Quote a complete unit with enclosure, DIN clip, mating terminal plugs, labels and printed quick-start sheet.",
+        "section": "2.1 Included deliverables and boundaries",
+        "text": "Provide a complete unit with specified components."
+      },
+      {
+        "category": "technical",
+        "page": 3,
+        "quote": "Include schematics, editable PCB sources and fabrication data, assembly drawings, BOM/approved vendor list (AVL), CAD/STEP files, source and build instructions for supplier software, test source, fixture drawings, work instructions and verification records.",
+        "section": "2.1 Included deliverables and boundaries",
+        "text": "Provide detailed technical documentation and data."
+      },
+      {
+        "category": "submission",
+        "page": 3,
+        "quote": "Deliver in English using native formats plus PDF.",
+        "section": "2.1 Included deliverables and boundaries",
+        "text": "Deliver documentation in English and specified formats."
+      },
+      {
+        "category": "compliance",
+        "page": 3,
+        "quote": "Cloud hosting, site installation, field wiring and customer cabinet certification are excluded.",
+        "section": "2.1 Included deliverables and boundaries",
+        "text": "Supplier is not responsible for hosting, installation, wiring, or certification."
+      },
+      {
+        "category": "staffing",
+        "page": 3,
+        "quote": "The supplier remains responsible for subcontractors.",
+        "section": "2.1 Included deliverables and boundaries",
+        "text": "Supplier must manage subcontractors."
+      },
+      {
+        "category": "compliance",
+        "page": 3,
+        "quote": "No design, material, site or process change is authorised without the change-control process in Section 7.3.",
+        "section": "2.1 Included deliverables and boundaries",
+        "text": "Follow the change-control process for any modifications."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

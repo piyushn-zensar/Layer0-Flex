@@ -159,7 +159,7 @@ const chapter: TourChapter = {
       id: "trace-unit-responses", route: ROUTE, target: "trace-unit-responses", placement: "bottom",
       title: "Unit responses at a glance",
       body: [
-        "The toolbar sums up the units' work on this opportunity: one badge per unit with *validated / total*, for example **CROWN 1/96 validated**; hover to see how many answers were submitted. The badge is green when everything is validated, blue while answers are coming in, amber while items are still only assigned. BID is the bid desk.",
+        "The toolbar sums up the units' work on this opportunity: one badge per unit with *validated / total*, for example **CROWN 1/98 validated**; hover to see how many answers were submitted. The badge is green when everything is validated, blue while answers are coming in, amber while items are still only assigned. BID is the bid desk.",
         "Before dispatch it reads *not sent to units yet*. The same numbers appear on the portfolio page and feed the consolidation step.",
       ],
     },
@@ -169,7 +169,7 @@ const chapter: TourChapter = {
       body: [
         "**Match products** runs the matching agent over every approved requirement that nobody has decided yet. It proposes, for each one, the business unit(s), the product and the offering type, with a rationale; accepted, manually set and rejected matches are a person's decision and are kept as they are (the toast reports them as *kept*).",
         "How it works: requirements outside the product categories (anything but technical and compliance) go to the bid desk **by rule**, without a model call. The rest are sent **one page at a time** (at most 15 per call) with the page's header block and the whole product catalog and past responses in the prompt; the answer may only name catalog products, the unit is taken from the product, and at most three units are kept per requirement. An empty answer means *not a product item*.",
-        "When no model answer exists, the fallback is **retrieval only**: the closest catalog entry by text similarity, labelled as such in the row (\"closest catalog entry (no agent answer)\"), or the bid desk when nothing is close enough. For the Syracuse RFP the frozen answers give 348 matches in 61 page calls: 212 by the agent, 136 by rule; Crown 96, EP2 7, bid desk 245.",
+        "When no model answer exists, the fallback is **retrieval only**: the closest catalog entry by text similarity, labelled as such in the row (\"closest catalog entry (no agent answer)\"), or the bid desk when nothing is close enough. For the Syracuse RFP the frozen answers give 348 matches in 61 page calls: 212 by the agent, 136 by rule; Crown 91, EP2 1, bid desk 256.",
       ],
     },
     {
@@ -189,7 +189,7 @@ const chapter: TourChapter = {
       title: "What appeared in pane 3",
       body: [
         "Every row now has a match. Product items show their unit, product and offering badge; the other rows read *Bid manager (not a product item)* with the rationale \"A schedule requirement, not a product item: the bid manager answers it\" (or legal, commercial, submission, staffing). Each match also shows its status badge (**proposed**) and how it came about: *proposed by the matching agent* or *routed to the bid desk by rule*.",
-        "For the Syracuse RFP: 103 product matches (Crown Technical Systems 96, EP² 7), of which 96 ETO, 5 CTO and 2 Semi-custom; 245 go to the bid desk. The walkthrough selected the first matched product row so the next steps can read it.",
+        "For the Syracuse RFP: 103 product matches (Crown Technical Systems 98, EP² 5), of which 97 ETO, 5 CTO and 1 Semi-custom; 245 go to the bid desk. The walkthrough selected the first matched product row so the next steps can read it.",
         "Limitations to keep in mind: the agent only sees the page's text and the catalog, so a product it does not know cannot be proposed; and *proposed* means exactly that: nothing is sent to a unit until a person decides and dispatches.",
       ],
     },
@@ -206,7 +206,7 @@ const chapter: TourChapter = {
       id: "trace-sel-rationale", route: ROUTE, target: "trace-sel-rationale", placement: "left", onEnter: selectRow(hasUnit),
       title: "The rationale",
       body: [
-        "The rationale is the agent's one- or two-sentence explanation citing the catalog entries it used, for example for `REQ-0001-0887`: \"The requirement specifies a Metal Clad Switchgear lineup with 15kV vacuum circuit breakers, protective relays, and other features. The CROWN-ARMV product matches this description…\". Read it as a reviewer would: does the cited product really cover the quoted text?",
+        "The rationale is the agent's one- or two-sentence explanation citing the catalog entries it used, for example for `REQ-0001-0887`: \"The requirement specifies a metal-clad switchgear lineup with 15kV vacuum circuit breakers, protective relays, and other components. The CROWN-ARMV product is a metal-clad medium-voltage switchgear lineup…\". Read it as a reviewer would: does the cited product really cover the quoted text?",
         "The agent also returns a confidence (0.95 for that example) which is stored with the match and its retrieval evidence; the trace keeps the payload small and shows the rationale, the status and the method line below it.",
       ],
       fallback: "The selected requirement has no product match, so there is no rationale to show.",

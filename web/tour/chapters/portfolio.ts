@@ -71,7 +71,7 @@ const chapter: TourChapter = {
       body: [
         "After dispatch every approved requirement is assigned to the business unit(s) the matching step chose, or to the **BID** bid desk when no unit matched (commercial, legal and submission items the bid manager answers). Each line here is one unit: its code links to that unit's inbox, then **validated / total**, then a bar.",
         "The bar has two segments: green for answers the bid manager has **validated**, blue for answers **awaiting validation** (submitted but not yet checked). The rest of the bar is work not answered yet. Hover a line for the exact numbers, e.g. \"1 validated, 1 awaiting validation, 94 not answered\" for Crown on the Syracuse demo.",
-        "Reading the demo: Syracuse went to **BID** (245 items), **CROWN** (96) and **EP2** (7). A unit that shows *not dispatched* has no assignments yet, either because the opportunity has not reached dispatch or because the unit did not take part in this bid.",
+        "Reading the demo: Syracuse went to **BID** (245 items), **CROWN** (98) and **EP2** (5). A unit that shows *not dispatched* has no assignments yet, either because the opportunity has not reached dispatch or because the unit did not take part in this bid.",
         "Returned answers (the bid manager sent them back with a note) count as not answered until the unit submits again, so the bar is an honest view of what is still open.",
       ],
     },
@@ -84,7 +84,7 @@ const chapter: TourChapter = {
       fallback: "OPP-0001 is the Syracuse Regional Airport Authority RFP 2023-20, Switchgear Procurement.",
       body: [
         "The first seeded opportunity is a real public RFP: **Syracuse Regional Airport Authority, RFP 2023-20 Switchgear Procurement**, 101 pages, customer type *public sector*. It asks for a 15 kV two-section arc-resistant metal-clad switchgear lineup with relays, controls and accessories.",
-        "The seed ran the same services a person would use: the RFP was read, 348 requirements were approved and frozen, matching proposed Crown Technical Systems (switchgear) and EP² (relays and controls), the bid decision is **go**, and the work was dispatched. Two sample answers were attached to Crown's rows, one of them validated, so you can see every state at once.",
+        "The seed ran the same services a person would use: the RFP was read, 348 requirements were approved and frozen, matching proposed Crown Technical Systems (switchgear, relays and controls) and EP² (auxiliary power), the bid decision is **go**, and the work was dispatched. Two sample answers were attached to Crown's rows, one of them validated, so you can see every state at once.",
         "Everything the agents produced for this RFP comes from **frozen answers**: the model's replies were recorded once and are replayed, so the demo is repeatable offline and identical on every machine. The walkthrough will create a copy of this opportunity in chapter 4 so you can go through the steps yourself.",
       ],
     },

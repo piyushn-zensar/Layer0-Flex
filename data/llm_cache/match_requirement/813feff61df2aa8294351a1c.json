@@ -1,0 +1,86 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.95,
+        "n": 1,
+        "rationale": "The requirement specifies a 15kV metal-clad switchgear lineup. The CROWN-ARMV product is a metal-clad MV switchgear lineup that supports 15kV and is arc-resistant, which aligns with the specification.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "Protective relays and controls are specified. The EP2-RPP product provides protective relays and relay panels, which are suitable for this requirement.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 3,
+        "rationale": "The detailed specification of the switchgear, including breaker positions, meters, isolation switches, and CTs, matches the capabilities of the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 4,
+        "rationale": "The requirement for arc-resistant Type 2B switchgear per IEEE C37.20.7 is directly met by the CROWN-ARMV product, which is designed to meet these standards.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 5,
+        "rationale": "The equipment building is specified to be provided by others, so this is not a product requirement.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "A separate utility cable termination compartment with locking capability is required. The CROWN-ACC product includes accessories for MV switchgear, such as cable termination compartments, which meet this requirement.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "The requirement for each phase to have a 1-inch diameter ground ball can be met with the CROWN-ACC product, which includes ground balls as part of its accessories for MV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

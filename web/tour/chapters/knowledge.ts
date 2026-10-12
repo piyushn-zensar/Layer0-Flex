@@ -222,7 +222,7 @@ const chapter: TourChapter = {
       target: "catalog-search",
       placement: "bottom",
       body: [
-        "The **Product catalog** is the knowledge the matcher and the units work from: the business units, their products with offering types, and the illustrative past responses, all read from `data/knowledge_base/*.json` (rules as data). The help line says it plainly: **illustrative seed data, to be confirmed with each unit**.",
+        "The **Product catalog** is the knowledge the matcher and the units work from: the business units, their product families with offering types and their published models, and the illustrative past responses, all read from `data/knowledge_base/*.json` (rules as data). The line at the top says it plainly: families and models come from **public Flex web pages (retrieved 12 Oct 2026), to be confirmed with each unit**.",
         "At the top, a search box over the long-term index; below, one card per unit. Nothing on this page writes; it is the reference the other screens link to (product names in Traceability, BOM lines in the hand-off, people in \"Acting as\").",
       ],
     },
@@ -262,7 +262,7 @@ const chapter: TourChapter = {
       body: [
         "The box queries `GET /api/catalog?q=…`: the **long-term index** of product descriptions, seeded past responses and curator-approved knowledge, the best hits (at most ten). It is the same retrieval the matcher uses for its evidence, so you can see for yourself why a requirement was sent to a unit.",
         "Ranking: when embeddings are available, the query and every entry are compared by **meaning** (cosine similarity of the frozen vectors in `data/vector_cache`; new learned entries need the embedding service once, or fall back); without them it is a **keyword** score. The score column shows the number used for ranking.",
-        "Example: \"arc resistant 15kV metal clad switchgear\" ranks PAST-CROWN-001 (a past Crown answer) and the product CROWN-ARMV at the top, then Crown's other products and an EP² relay response far below.",
+        "Example: \"arc resistant 15kV metal clad switchgear\" ranks PAST-CROWN-001 (a past Crown answer) and the product CROWN-ARMV at the top, then the Arc-Resistant Switchgear model of CROWN-ARMV and the family CROWN-MCSG, with other units' entries far below.",
       ],
       example: {
         label: "Search: arc resistant 15kV metal clad switchgear",

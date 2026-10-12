@@ -1,0 +1,99 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 15,
+        "quote": "Legal entity / registered address",
+        "section": "Form A",
+        "text": "Provide the legal entity name and registered address."
+      },
+      {
+        "category": "submission",
+        "page": 15,
+        "quote": "Proposed factory / country",
+        "section": "Form A",
+        "text": "Specify the proposed factory and country."
+      },
+      {
+        "category": "submission",
+        "page": 15,
+        "quote": "Bid contact / email / telephone",
+        "section": "Form A",
+        "text": "Provide contact details including email and telephone."
+      },
+      {
+        "category": "commercial",
+        "page": 15,
+        "quote": "TEC excluding recoverable GST / validity",
+        "section": "Form A",
+        "text": "State the total estimated cost excluding GST and its validity period."
+      },
+      {
+        "category": "schedule",
+        "page": 15,
+        "quote": "Lead time / MP release commitment",
+        "section": "Form A",
+        "text": "Specify the lead time and mass production release commitment date."
+      },
+      {
+        "category": "submission",
+        "page": 15,
+        "quote": "Addenda acknowledged",
+        "section": "Form A",
+        "text": "Acknowledge all addenda with their numbers and dates."
+      },
+      {
+        "category": "submission",
+        "page": 15,
+        "quote": "Reproduce and expand this matrix in XLSX for all 38 IDs (HW, ME, SW, MF, QA, LG) and every subsection, table and commercial term.",
+        "section": "Form B",
+        "text": "Provide a compliance matrix in XLSX format for all specified IDs and terms."
+      },
+      {
+        "category": "compliance",
+        "page": 15,
+        "quote": "C = complies; PC = partly complies; NC = does not comply.",
+        "section": "Form B",
+        "text": "Use compliance codes C, PC, and NC in the matrix."
+      },
+      {
+        "category": "compliance",
+        "page": 15,
+        "quote": "Cite evidence for C; for PC/NC give the exact departure, alternative, cost/time impact and closure date.",
+        "section": "Form B",
+        "text": "Provide evidence for compliance and details for partial/non-compliance."
+      },
+      {
+        "category": "compliance",
+        "page": 15,
+        "quote": "\"Noted\" is not compliance.",
+        "section": "Form B",
+        "text": "Do not use \"Noted\" as a compliance response."
+      },
+      {
+        "category": "legal",
+        "page": 15,
+        "quote": "The undersigned is authorised to bind the bidder and certifies independent, non-collusive pricing; disclosure of conflicts and material subcontractors; complete scope pricing; and information accurate to the best of the bidder's knowledge.",
+        "section": "Form C",
+        "text": "Certify pricing, conflict disclosure, subcontractor details, and accuracy of information."
+      },
+      {
+        "category": "compliance",
+        "page": 15,
+        "quote": "All addenda are acknowledged and departures are confined to Form B and its attachments.",
+        "section": "Form C",
+        "text": "Acknowledge all addenda and confine departures to Form B."
+      },
+      {
+        "category": "legal",
+        "page": 15,
+        "quote": "The bidder accepts reference checks, site audit and the stated offer validity, and understands that this RFP creates no purchase commitment.",
+        "section": "Form C",
+        "text": "Accept reference checks, site audits, and offer validity; acknowledge no purchase commitment."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

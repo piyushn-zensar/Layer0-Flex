@@ -1,0 +1,183 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "schedule",
+        "page": 9,
+        "quote": "Supplier shall submit the design verification plan by week 4.",
+        "section": "8 Qualification and acceptance",
+        "text": "Submit the design verification plan by week 4."
+      },
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "Freeze standard editions and regional applicability at G0 using those applicable on the RFP issue date; later regulatory changes follow change control.",
+        "section": "8 Qualification and acceptance",
+        "text": "Freeze standard editions and regional applicability at G0; follow change control for later regulatory changes."
+      },
+      {
+        "category": "submission",
+        "page": 9,
+        "quote": "Test reports shall identify configuration, software version, sample serials, limits, equipment and calibration status.",
+        "section": "8 Qualification and acceptance",
+        "text": "Include configuration, software version, sample serials, limits, equipment, and calibration status in test reports."
+      },
+      {
+        "category": "technical",
+        "page": 9,
+        "quote": "Accredited lab: IEC/EN 62368-1 safety; EN IEC 61000-6-2 industrial immunity; EN IEC 61000-6-4 emissions; FCC Part 15 Subpart B Class A.",
+        "section": "QA-01 Safety and EMC",
+        "text": "Use accredited labs for specified safety, immunity, emissions, and FCC compliance tests."
+      },
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "Pass applicable limits on the released configuration. State any jurisdiction-specific approval gaps.",
+        "section": "QA-01 Safety and EMC",
+        "text": "Ensure compliance with applicable limits and disclose jurisdiction-specific approval gaps."
+      },
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "Provide EU RoHS 2011/65/EU including (EU) 2015/863 evidence, REACH SVHC declaration and applicable India BIS applicability assessment.",
+        "section": "QA-02 Materials and market access",
+        "text": "Provide evidence for EU RoHS, REACH SVHC, and India BIS compliance."
+      },
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "No undisclosed restricted substances.",
+        "section": "QA-02 Materials and market access",
+        "text": "Ensure no undisclosed restricted substances are present."
+      },
+      {
+        "category": "commercial",
+        "page": 9,
+        "quote": "Buyer owns market declarations; supplier supplies the technical file and required testing.",
+        "section": "QA-02 Materials and market access",
+        "text": "Supplier provides technical file and testing; buyer owns market declarations."
+      },
+      {
+        "category": "technical",
+        "page": 9,
+        "quote": "Six DVT units: powered -20 C and +60 C, 8 h at each; 10 thermal cycles -20/+60 C, 1 h dwell; separate 96 h 40 C/93% RH unpowered damp-heat test.",
+        "section": "QA-03 Environment",
+        "text": "Perform specified environmental tests on six DVT units."
+      },
+      {
+        "category": "technical",
+        "page": 9,
+        "quote": "All six pass functional checks before/after; no damage, data loss or corrosion. Humidity test per IEC 60068-2-78.",
+        "section": "QA-03 Environment",
+        "text": "Ensure all six units pass functional checks and meet IEC 60068-2-78 humidity test standards."
+      },
+      {
+        "category": "technical",
+        "page": 9,
+        "quote": "Three additional DVT units: ME-05 vibration/shock; three packaged units: ISTA 2A distribution sequence.",
+        "section": "QA-04 Mechanical",
+        "text": "Test three DVT units for vibration/shock and three packaged units for ISTA 2A distribution sequence."
+      },
+      {
+        "category": "technical",
+        "page": 9,
+        "quote": "All pass functional checks; no loose parts, rail release or product damage. Packaging remains protective.",
+        "section": "QA-04 Mechanical",
+        "text": "Ensure functional checks pass, no damage occurs, and packaging remains protective."
+      },
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "Zero unresolved mandatory failures or exploitable critical/high findings without written acceptance.",
+        "section": "QA-05 Security and endurance",
+        "text": "Ensure no unresolved mandatory failures or exploitable critical/high findings without written acceptance."
+      },
+      {
+        "category": "technical",
+        "page": 9,
+        "quote": "Three DVT units: Section 6 workload, HW-07 update tests and HW-08 power cycling; independent security review of production configuration.",
+        "section": "QA-05 Security and endurance",
+        "text": "Perform specified tests and security review on three DVT units."
+      },
+      {
+        "category": "technical",
+        "page": 9,
+        "quote": "300-unit lot; calibrated production line; 30 consecutive samples for each agreed critical dimension/process characteristic.",
+        "section": "QA-06 PVT capability",
+        "text": "Provide a 300-unit lot with calibrated production line and sample testing."
+      },
+      {
+        "category": "technical",
+        "page": 9,
+        "quote": "First-pass yield >=98%; final functional pass 100%; Cpk >=1.33 on agreed stable, measurable characteristics.",
+        "section": "QA-06 PVT capability",
+        "text": "Ensure specified yield, functional pass rate, and Cpk values."
+      },
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "Any failed qualification item shall produce a corrective action and repeat of the affected test on three fresh units, or the larger sample required by the standard.",
+        "section": "8.1 Failure handling and gate acceptance",
+        "text": "Address failed qualification items with corrective action and retesting."
+      },
+      {
+        "category": "commercial",
+        "page": 9,
+        "quote": "Supplier-funded retest is required for supplier-caused failures.",
+        "section": "8.1 Failure handling and gate acceptance",
+        "text": "Supplier funds retests for failures caused by them."
+      },
+      {
+        "category": "technical",
+        "page": 9,
+        "quote": "Reuse samples only under the approved test plan; retain at least five DVT units as reference units.",
+        "section": "8.1 Failure handling and gate acceptance",
+        "text": "Reuse samples only with approval; retain five DVT units as references."
+      },
+      {
+        "category": "schedule",
+        "page": 9,
+        "quote": "Buyer may witness tests on ten business days notice.",
+        "section": "8.1 Failure handling and gate acceptance",
+        "text": "Allow buyer to witness tests with ten business days notice."
+      },
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "A gate is accepted only by signed approval against its deliverables.",
+        "section": "8.1 Failure handling and gate acceptance",
+        "text": "Require signed approval for gate acceptance."
+      },
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "Conditional acceptance shall list the open issue, owner, containment and due date; safety, regulatory and identity-security failures block release.",
+        "section": "8.1 Failure handling and gate acceptance",
+        "text": "List open issues for conditional acceptance; block release for critical failures."
+      },
+      {
+        "category": "compliance",
+        "page": 9,
+        "quote": "Sampling does not waive the obligation that every delivered unit conforms.",
+        "section": "8.1 Failure handling and gate acceptance",
+        "text": "Ensure all delivered units conform regardless of sampling."
+      },
+      {
+        "category": "submission",
+        "page": 9,
+        "quote": "DVT provides 50 units. Allocate the above samples, destructive lab samples and retained references within that quantity; disclose the allocation in the bid.",
+        "section": "8.1 Failure handling and gate acceptance",
+        "text": "Provide 50 DVT units and disclose sample allocation in the bid."
+      },
+      {
+        "category": "commercial",
+        "page": 9,
+        "quote": "If a proposed lab programme needs more units, price them explicitly on page 12.",
+        "section": "8.1 Failure handling and gate acceptance",
+        "text": "Price additional units for lab programs explicitly on page 12."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

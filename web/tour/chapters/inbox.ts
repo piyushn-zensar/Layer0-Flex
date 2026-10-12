@@ -63,7 +63,7 @@ const chapter: TourChapter = {
       route: "/inbox/CROWN",
       target: "inbox-table",
       placement: "top",
-      fallback: "The Crown table lists the 96 Syracuse rows assigned to Crown Technical Systems.",
+      fallback: "The Crown table lists the 98 Syracuse rows assigned to Crown Technical Systems.",
       body: [
         "You are still acting as the Bid Manager. On a unit's package the bid manager cannot type answers (only the unit's own **product manager** or **design engineer** can, the API answers 403 otherwise) but sees everything, and gets **Validate / Return** buttons on submitted rows plus a line \"n submitted answer(s) waiting for validation\".",
         "A third person, say EP²'s product manager, would see the blue banner \"You are acting as …: you can read this work package but not answer it.\" Reading is open to everyone in the PoC; writing is tied to the role.",
@@ -119,7 +119,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       fallback: "As an answering person the page says how many rows are open, e.g. \"94 open row(s)\" for Crown on the demo.",
       body: [
-        "Now the page is yours to answer: the header gains **Submit all answered rows** and the line \"n open row(s)\" counts what is *assigned* or *returned*. On the Syracuse demo Crown has 96 rows: 94 open, one already submitted and one validated by the seed.",
+        "Now the page is yours to answer: the header gains **Submit all answered rows** and the line \"n open row(s)\" counts what is *assigned* or *returned*. On the Syracuse demo Crown has 98 rows: 89 open, one already submitted and one validated by the seed.",
         "Rows keep their place in the table whatever their status, so a unit works top to bottom and the bid manager sees the same order.",
       ],
     },

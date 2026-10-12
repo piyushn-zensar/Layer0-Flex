@@ -1,0 +1,71 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "page": 13,
+        "quote": "Accept these proposed terms or redline them in Form B. Award requires a signed agreement and PO. Exceptions may affect responsiveness or score; supplier standard terms are not automatically accepted.",
+        "section": "12",
+        "text": "Bidders must accept or redline the proposed terms in Form B; exceptions may affect evaluation."
+      },
+      {
+        "category": "legal",
+        "page": 13,
+        "quote": "Term: three years from G4, extendable by two years by mutual agreement. Precedence: signed agreement/amendments; signed statement of work; RFP addenda; this RFP; accepted proposal; administrative PO terms. PO quantity/date releases operate within the agreement. Mandatory law prevails.",
+        "section": "12.1",
+        "text": "The contract term is three years, extendable by two years, with specified document precedence."
+      },
+      {
+        "category": "legal",
+        "page": 13,
+        "quote": "Buyer owns paid-for project-specific designs, tooling, fixtures and records. Supplier retains disclosed pre-existing IP and grants a perpetual, worldwide, transferable licence to embedded background IP sufficient to use, maintain and have the product manufactured. List third-party licences and any restrictions; limits on transfer rights need express acceptance.",
+        "section": "12.2",
+        "text": "Buyer owns project-specific IP; supplier retains pre-existing IP but grants a license for its use."
+      },
+      {
+        "category": "legal",
+        "page": 13,
+        "quote": "Use confidential information only for this programme; protect it with reasonable care and limit access to approved personnel/subcontractors. Protection lasts five years after termination, or while legally secret for trade secrets. Return/delete buyer information on request except legally retained records. Publicity and logo use need written consent.",
+        "section": "12.2",
+        "text": "Confidential information must be protected and used only for the program, with specific handling and retention rules."
+      },
+      {
+        "category": "legal",
+        "page": 13,
+        "quote": "Supplier warrants conformity to the approved specification and freedom from liens. Supplier-caused delivery delay attracts agreed liquidated damages of 0.5% of the delayed PO-line value per completed week, capped at 5% of that value, subject to applicable law. No duplicate recovery for the same loss. Approved buyer-caused or force-majeure delays are excluded.",
+        "section": "12.3",
+        "text": "Supplier must ensure conformity to specifications and is liable for delays, with specified penalties."
+      },
+      {
+        "category": "legal",
+        "page": 13,
+        "quote": "Proposed aggregate liability cap: 100% of amounts paid or payable under the agreement in the preceding 12 months; during the first year, the committed first-year order value. Fraud, wilful misconduct, death/personal injury from negligence, confidentiality breach and third-party IP infringement are excluded from the cap. Neither party is liable for indirect/consequential loss except where included in an express third-party indemnity.",
+        "section": "12.3",
+        "text": "Liability is capped at 100% of payments in the last 12 months, with specific exclusions."
+      },
+      {
+        "category": "compliance",
+        "page": 13,
+        "quote": "Maintain general/product liability cover of INR 100 million per occurrence and aggregate, statutory employee cover and INR 50 million cyber cover; evidence is due before kickoff. Buyer may audit on ten business days notice, immediately for material safety/security events. Comply with export-control, anti-bribery, labour and environmental law.",
+        "section": "12.4",
+        "text": "Supplier must maintain specified insurance and comply with legal and audit requirements."
+      },
+      {
+        "category": "legal",
+        "page": 13,
+        "quote": "Either party may terminate a material breach not cured within 30 days of notice. Buyer may terminate for convenience on 60 days notice, paying for conforming completed goods, approved work in process and authorised unavoidable commitments after mitigation; no lost future profit. Deliver paid-for tooling, design files and records within 30 days and offer up to 90 days of transition support at agreed rates.",
+        "section": "12.5",
+        "text": "Termination terms include breach and convenience, with specific obligations for both parties."
+      },
+      {
+        "category": "legal",
+        "page": 13,
+        "quote": "Notify force majeure within five business days, mitigate and provide a recovery plan; either party may terminate affected work after 60 days. Indian law governs. Escalate disputes to executives for 30 days, then arbitrate under the Arbitration and Conciliation Act, 1996, by one mutually appointed arbitrator, seat Pune, language English. Courts at Pune have jurisdiction for permitted court proceedings.",
+        "section": "12.6",
+        "text": "Force majeure and dispute resolution terms are specified, including arbitration and jurisdiction."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

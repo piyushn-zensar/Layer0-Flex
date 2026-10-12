@@ -7,6 +7,10 @@
 /* Catalog */
 .catalog-search { margin-bottom: var(--s4); flex-wrap: wrap; } .catalog-search input { min-width: 280px; }
 .catalog-products { margin: 0; padding-left: 18px; } .catalog-products li { margin-bottom: var(--s1); }
+.catalog-provenance { margin: 0 0 var(--s3); font-size: var(--fs-sm); }
+.catalog-source { font-size: var(--fs-sm); }
+.card details.catalog-models { margin: var(--s1) 0 var(--s2); font-size: var(--fs-sm); } .card details.catalog-models summary { font-weight: 400; cursor: pointer; color: var(--accent); }
+.catalog-models ul { margin: var(--s1) 0 0; padding-left: 18px; overflow-wrap: anywhere; }
 
 /* RFP documents: the search box gives way on a phone instead of forcing a sideways scroll */
 .rfp-search { flex-wrap: wrap; }

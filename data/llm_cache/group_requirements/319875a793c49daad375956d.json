@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          4,
+          6
+        ],
+        "title": "Requirements for test record handling and submission"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          3,
+          5
+        ],
+        "title": "Requirements for record compliance and security"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

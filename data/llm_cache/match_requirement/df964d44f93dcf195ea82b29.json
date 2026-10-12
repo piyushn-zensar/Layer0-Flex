@@ -1,0 +1,110 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies the manufacture of complete metal-clad switchgear for continuous service, which aligns with the description of the CROWN-ARMV product in the catalog as it is the default for metal-clad switchgear lines.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "The requirement specifies the provision of openings in structures, which is typically the responsibility of the construction contractor or the purchaser, not the switchgear manufacturer. Thus, no product is applicable.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "The requirement to make all internal connections aligns with the scope of work for the CROWN-ARMV product, as it involves the assembly and internal wiring of the switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 4,
+        "rationale": "Checking internal connections and ensuring proper torque is part of the quality assurance process for the CROWN-ARMV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 5,
+        "rationale": "Erecting the equipment enclosure and ensuring it is level and anchored is part of the installation process for the CROWN-ARMV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 6,
+        "rationale": "The requirement to avoid roof penetrations is a design consideration for the CROWN-ARMV switchgear enclosures.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 7,
+        "rationale": "Replacing or repairing damaged panels or components is part of the warranty and service scope for the CROWN-ARMV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 8,
+        "rationale": "The detailed inspection and testing of breakers and components are part of the commissioning process for the CROWN-ARMV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 9,
+        "rationale": "The inspection and testing of buses, instruments, and connections are part of the commissioning and quality assurance process for the CROWN-ARMV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

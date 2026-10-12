@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.95,
+        "n": 1,
+        "rationale": "The requirement specifies metal-clad switchgear with accessories such as NEMA four-hole pads and insulating boots, as well as relays and controls for a complete operational system. The CROWN-ARMV product from the catalog matches this description as it is arc-resistant metal-clad MV switchgear with vacuum breakers and the ability to include bus, ties, metering, and other components. The accessories like NEMA pads and insulating boots can be included as part of the configuration.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "This requirement pertains to compliance with standards and codes for circuit breakers and equipment. It does not specify a product but rather outlines compliance requirements for the equipment provided. The bid manager should address this.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

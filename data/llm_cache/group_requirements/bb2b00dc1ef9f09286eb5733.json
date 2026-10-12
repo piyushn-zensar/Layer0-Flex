@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Provide a complete unit and its technical documentation"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          4,
+          6
+        ],
+        "title": "Compliance requirements for responsibilities and change control"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

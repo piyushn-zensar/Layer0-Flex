@@ -1,0 +1,127 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "page": 14,
+        "quote": "Provide legal/tax registration; the site's valid ISO 9001 certificate; two comparable programmes delivered in the last five years; three references; named team/capacity plan; and signed prices/deviations. Disclose insolvency, material litigation and conflicts of interest.",
+        "section": "13.1 Mandatory eligibility review",
+        "text": "Submit legal/tax registration, ISO 9001 certificate, program examples, references, team plan, signed prices, and disclose legal issues."
+      },
+      {
+        "category": "compliance",
+        "page": 14,
+        "quote": "Unresolved mandatory technical departures, refusal of traceability/secure provisioning or an incomplete price basis are nonresponsive.",
+        "section": "13.1 Mandatory eligibility review",
+        "text": "Ensure no unresolved technical departures, refusal of traceability, or incomplete price basis."
+      },
+      {
+        "category": "compliance",
+        "page": 14,
+        "quote": "Material requirement changes require an addendum to all bidders; ambiguities may be clarified individually.",
+        "section": "13.1 Mandatory eligibility review",
+        "text": "Material requirement changes must be communicated to all bidders; ambiguities can be clarified individually."
+      },
+      {
+        "category": "technical",
+        "page": 14,
+        "quote": "Technical design and compliance: 30 - Requirement coverage; design rationale; thermal/security maturity; verification quality.",
+        "section": "13.1 Evaluation criterion",
+        "text": "Provide technical design and compliance details, including requirement coverage, design rationale, and verification quality."
+      },
+      {
+        "category": "technical",
+        "page": 14,
+        "quote": "Quality and manufacturing capability: 20 - Site/process controls, audit results, test coverage, traceability and comparable outcomes.",
+        "section": "13.1 Evaluation criterion",
+        "text": "Demonstrate quality and manufacturing capability, including site controls, audits, and traceability."
+      },
+      {
+        "category": "schedule",
+        "page": 14,
+        "quote": "Programme and supply-chain readiness: 15 - Credible gate schedule, resourcing, component risk, continuity and capacity.",
+        "section": "13.1 Evaluation criterion",
+        "text": "Show program and supply-chain readiness, including schedule, resources, and risk management."
+      },
+      {
+        "category": "commercial",
+        "page": 14,
+        "quote": "Commercial value: 25 - TEC comparison using Section 11.1; completeness of assumptions and price validity.",
+        "section": "13.1 Evaluation criterion",
+        "text": "Provide commercial value assessment, including TEC comparison and price validity."
+      },
+      {
+        "category": "legal",
+        "page": 14,
+        "quote": "Service and contract acceptance: 10 - Warranty/repair capability, support commitments, transfer rights and contract departures.",
+        "section": "13.1 Evaluation criterion",
+        "text": "Detail service and contract acceptance, including warranty, support, and contract terms."
+      },
+      {
+        "category": "compliance",
+        "page": 14,
+        "quote": "Non-price ratings: 0 absent; 1 major weakness; 2 partly credible; 3 meets; 4 evidenced advantage; 5 exceptional evidenced advantage.",
+        "section": "13.1 Evaluation criterion",
+        "text": "Understand the non-price rating scale from 0 to 5 based on evidence and credibility."
+      },
+      {
+        "category": "compliance",
+        "page": 14,
+        "quote": "Qualify with 52.5/75 non-price points and 18/30 technical points.",
+        "section": "13.1 Evaluation criterion",
+        "text": "Achieve at least 52.5/75 non-price points and 18/30 technical points to qualify."
+      },
+      {
+        "category": "commercial",
+        "page": 14,
+        "quote": "Price points = 25 x lowest eligible TEC / bidder TEC. Highest total is preferred subject to audit, references and contract.",
+        "section": "13.1 Evaluation criterion",
+        "text": "Price points are calculated based on TEC; highest total score is preferred."
+      },
+      {
+        "category": "compliance",
+        "page": 14,
+        "quote": "Ties: higher technical score, then lower TEC.",
+        "section": "13.1 Evaluation criterion",
+        "text": "In case of ties, higher technical score and lower TEC are preferred."
+      },
+      {
+        "category": "submission",
+        "page": 14,
+        "quote": "Volume A Technical: Offer and site profile; compliance matrix; architecture/BOM risks; NPI schedule; test/quality plans; security and service approach.",
+        "section": "13.2 Required response structure",
+        "text": "Include technical offer, compliance matrix, risks, schedule, and plans in Volume A."
+      },
+      {
+        "category": "submission",
+        "page": 14,
+        "quote": "Volume B Commercial: P01-P12; cost workbook; annual price breakdown; taxes/freight/duties; payment acceptance; contract redlines; TEC.",
+        "section": "13.2 Required response structure",
+        "text": "Include cost workbook, price breakdown, taxes, payment terms, and TEC in Volume B."
+      },
+      {
+        "category": "submission",
+        "page": 14,
+        "quote": "Volume C Forms and evidence: Forms A-C; addenda; deviations; ISO certificate; insurance commitment; references; subcontractors; background IP.",
+        "section": "13.2 Required response structure",
+        "text": "Include forms, addenda, ISO certificate, insurance, references, and IP in Volume C."
+      },
+      {
+        "category": "submission",
+        "page": 14,
+        "quote": "Cross-reference evidence by page. Unsupported marketing claims receive no credit.",
+        "section": "13.2 Required response structure",
+        "text": "Cross-reference evidence by page; unsupported claims are not credited."
+      },
+      {
+        "category": "submission",
+        "page": 14,
+        "quote": "State named resources, capacity and dependencies; generic capability material does not replace the response matrix.",
+        "section": "13.2 Required response structure",
+        "text": "Provide named resources, capacity, and dependencies; avoid generic material."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,15 +1,15 @@
 # Demo checklist: Monday 12 Oct 2026 (J-06)
 
 Internal. For the two presenters (Piyush, Janvia). The quoted lines are for the client audience; everything else is for us.
-Written on 10 Oct 2026 from the running app and `Documents/walkthrough.md`; numbers and hero IDs refreshed on 10 Oct 2026 after the P-18 reader re-run (it renumbered the requirements). The Changes step (13) was added on 10 Oct 2026 (P-11) and checked on a fresh reseed in mock mode. Re-check the numbers and IDs after any pull or reseed.
+Written on 10 Oct 2026 from the running app and `Documents/walkthrough.md`; numbers and hero IDs refreshed on 10 Oct 2026 after the P-18 reader re-run (it renumbered the requirements). The Changes step (13) was added on 10 Oct 2026 (P-11) and checked on a fresh reseed in mock mode. Numbers and hero lines refreshed again on 12 Oct 2026 after the catalog update (families and models from public Flex pages; the matcher's frozen answers were regenerated). Re-check the numbers and IDs after any pull or reseed.
 
 ## 1. The demo data today
 
 | Fact | Value |
 |---|---|
-| Opportunities | **OPP-0001** Syracuse switchgear (101-page RFP) and **OPP-0002** AI training campus (10 requirements, 6 units) |
+| Opportunities | **OPP-0001** Syracuse switchgear (101-page RFP) and **OPP-0002** AI training campus (10 requirements; ANORD, CLOUD, FPM, JETCOOL and the bid desk) |
 | OPP-0001 | 814 line items grouped into **348 requirements** (162 groups, 607 sub-requirements, 21 duplicates) |
-| Units | BID 245, CROWN 96, EP2 7 |
+| Units | BID 245, CROWN 98, EP2 5 |
 | Answers | **1 of 348 validated**, 1 submitted and waiting for validation |
 | Open flags | 32 unanchored, 103 product matches nobody has accepted, rule R-003 warning, one data-sheet rating above the standard product (continuous current, p. 74) |
 | Bid decision | Evidence, engineering checks, bid and portfolio checks, "Advice from Layer 0: 6 of 9 assessable criteria met; 3 cannot be assessed yet (data not available). A person decides." |
@@ -23,8 +23,8 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 |---|---|---|
 | REQ-0001-0887 | 55 | Validated Crown answer, four sub-requirements: the traceability story |
 | REQ-0001-0889 | 56 | Submitted: the bid manager validates it live |
-| REQ-0001-0336 | 55 | Crown item (13.2 kV feeders), assigned and unanswered: answer it live |
-| REQ-0001-0893 | 57 | Relays: matched to the EP² relay and protection panel (ETO) |
+| REQ-0001-0359 | 57 | Crown item (IEEE 1291 partial-discharge measurement), assigned and unanswered: answer it live |
+| REQ-0001-0893 | 57 | Relays: matched to the EP² relay and protection panel (EP2-RPP, ETO) |
 | REQ-0001-0815 | 1 | Group with three sub-requirements (submission requirements) |
 | REQ-0001-0141 | none | Unanchored: shows the tool says so when it cannot find the source |
 | REQ-0001-0001 | 1 | Bid desk item (the deadline) |
@@ -45,16 +45,16 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 | 2 | OPP-0001, **RFP** | Show the file row | 101 pages, "ingested", fingerprint | ☐ |
 | 3 | **Requirements** | Filters (Unanchored 32, Duplicates 21); expand REQ-0001-0815; click **History** on one | Groups, sub-requirements, exact quotes, who changed what | ☐ |
 | 4 | **Traceability** (**cut**) | Select **REQ-0001-0887** | Page 55 highlighted, three panels follow | ☐ |
-| 5 | Traceability | Select **REQ-0001-0893** | EP² relay panel, ETO | ☐ |
+| 5 | Traceability | Select **REQ-0001-0893** | EP² relay and protection panel (EP2-RPP), ETO | ☐ |
 | 6 | Traceability (**cut**) | **Accept** the match on 0887 | Match status changes; the unaccepted count drops by one | ☐ |
 | 7 | **Bid decision** | Evidence, the bid and portfolio checks card, participation, go decision, the advice box, one criterion's judgement | Advice, flags, the continuous-current deviation (p. 74), "a person decides" | ☐ |
-| 8 | Acting as **Crown Product Manager**, then **My work** (**cut**) | Answer **REQ-0001-0336**: met, product, how it is met, **Submit** | Status changes to "submitted" | ☐ |
-| 9 | Acting as **Bid Manager**, Opportunities, unit code **CROWN** (**cut**) | **Validate** REQ-0001-0889 and REQ-0001-0336 | Status changes to "validated" | ☐ |
+| 8 | Acting as **Crown Product Manager**, then **My work** (**cut**) | Answer **REQ-0001-0359**: met, product, how it is met, **Submit** | Status changes to "submitted" | ☐ |
+| 9 | Acting as **Bid Manager**, Opportunities, unit code **CROWN** (**cut**) | **Validate** REQ-0001-0889 and REQ-0001-0359 | Status changes to "validated" | ☐ |
 | 10 | **Final response** (**cut**) | Show the count and the blocker panel, click a blocker link, then the Open filter | Count moves from 1 to 3 of 348; groups by reason; the link lands in Traceability | ☐ |
 | 11 | Final response | **Download compliance matrix (Excel)**; the CSV link is beside it | Customer sheet (validated answers only, Comply / Open, RFP order) and an internal Tracking sheet | ☐ |
 | 12 | CROWN work package | Open "Hand-off for this unit's systems" | JSON download: starting points, not a design | ☐ |
 | 13 | **Changes** (**cut**). Do it last: it changes the demo data | Acting as **Bid Manager**. Upload the sample addendum, show the eight statements, **Confirm all proposals**, **Apply to requirements** (details below) | Eight classified statements (2 modified, 2 added, 1 removed, 1 unchanged, 2 not a requirement); baseline 2; REQ-0001-0887 back with Crown; two new requirements | ☐ |
-| 14 | Product catalog | Scroll the units and products | Illustrative data, to be confirmed | ☐ |
+| 14 | Product catalog | Scroll the units, families and models | Families and models from public Flex pages, to be confirmed with each unit | ☐ |
 
 **Step 13 in detail (about 3 minutes; reset afterwards).** Say first that the addendum is an illustration written for the demo, not a customer document.
 
@@ -74,7 +74,7 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 1. **Opportunities.** "One place for every bid. For the Syracuse RFP, 348 requirements and how far each unit has answered. The bar is validated work first, then work awaiting validation."
 2. **RFP.** "The customer's 101-page PDF is the starting point. Everything we show traces back to this file."
 3. **Requirements.** "The reader turned 814 raw line items into 348 requirements by grouping related ones and flagging duplicates. Each has its exact quote and page, and nothing is invented. When the source cannot be found it says so: 32 are unanchored, and a person decides." On History: "Every change is kept: who, when, original and changed."
-4. **Traceability.** "Pick a requirement. The RFP page jumps to it, the breakdown follows, and the proposed unit and product appear. This one goes to Crown." On 0893: "Relays go to Electrical Power Products." On Accept: "The system proposes, a person accepts."
+4. **Traceability.** "Pick a requirement. The RFP page jumps to it, the breakdown follows, and the proposed unit and product appear. This one goes to Crown." On 0893: "Relays go to Electrical Power Products' relay and protection panels." On Accept: "The system proposes, a person accepts."
 5. **Bid decision.** "Evidence first: categories, the mix of offering types, the suggested units. The engineering checks flag open points. The bid and portfolio checks compare the RFP's data sheet with our standard products: here the continuous current asked is above the standard rating. Those standards are placeholders for now. The advice says how many criteria are met, and the bid manager records their own judgement. A person decides."
 6. **My work.** "Each unit sees only its own lines. The Crown product manager answers: met, with which product and how." As bid manager: "The bid manager validates, or returns it with a note."
 7. **Final response.** "Every requirement must be answered and validated. What is still open is listed by reason, with links back to the source. Nothing disappears."

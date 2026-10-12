@@ -7,10 +7,12 @@ Public contract:
     unit(code) -> dict | None
     products(bu=None) -> list[dict]
     product(product_id) -> dict | None
+    items(family=None) -> list[dict]            models/series of the families (catalog_items.json); not in the matcher prompt
     past_responses() -> list[dict]              past answers of the active units (the matcher's fixed prompt part)
     learned() -> list[dict]                     knowledge approved by the curator in this installation (A-11)
     learn(entry)                                add an approved entry to the long-term index (knowledge module)
-    search(query, k=5, bu=None) -> list[dict]   ranked products and past responses, each with "score"
+    search(query, k=5, bu=None) -> list[dict]   ranked products, past responses and catalog items (kind
+                                                "catalog_item", with "family"), each with "score"
     search_many(queries, k=5) -> list[list[dict]]   search() for many queries at once (one embedding call)
     index_mode() -> str                         "embeddings" (semantic) or "keywords" (offline fallback)
     bom(product_id) -> list[dict]               BOM lines from the BOM source system (stub: catalog JSON)
@@ -56,6 +58,11 @@ def product(product_id: str) -> dict | None:
     return next((p for p in _load("products")["products"] if p["id"] == product_id), None)
 
 
+def items(family: str | None = None) -> list[dict]:
+    active = {u["code"] for u in units()}
+    return [i for i in _load("catalog_items")["items"] if i["bu"] in active and (family is None or i["family"] == family)]
+
+
 LEARNED = "knowledge_learned.json"  # in the store (per installation, gitignored), next to the database
 
 
@@ -74,7 +81,7 @@ def learn(entry: dict) -> None:
 
 @lru_cache
 def _index() -> Index:
-    """The long-term index: products and past responses (the knowledge the system learns into, see A-11).
+    """The long-term index: products, past responses and catalog items (the knowledge the system learns into, A-11).
     Semantic (embeddings, frozen in data/vector_cache) with a keyword fallback offline; see app/core/vectors.py."""
     docs = [{"kind": "product", "id": p["id"], "bu": p["bu"], "offering_type": p["offering_type"],
              "text": f"{p['name']}. {p['description']} {p['keywords']}"} for p in products()]
@@ -82,6 +89,9 @@ def _index() -> Index:
               "text": f"{r['requirement']} {r['response']}"} for r in _load("past_responses")["responses"]]
     docs += [{"kind": "past_response", "id": r["id"], "bu": r["bu"], "learned": True,
               "text": f"{r['requirement']} {r['response']}"} for r in learned()]
+    offering = {p["id"]: p["offering_type"] for p in products()}
+    docs += [{"kind": "catalog_item", "id": i["id"], "bu": i["bu"], "family": i["family"],
+              "offering_type": offering[i["family"]], "text": f"{i['name']} {i['model']} {i['specs']}"} for i in items()]
     return Index(docs)
 
 
@@ -138,8 +148,6 @@ if __name__ == "__main__":  # self-check: python -m app.modules.catalog.service
         ("Protective Relays and Controls.", "EP2-RPP"),
         ("Metal Clad Switchgear shall have eighteen (18) 15kV vacuum circuit breaker positions", "CROWN-ARMV"),
         ("Switchgear shall be Arc-resistant Type 2B", "CROWN-ARMV"),
-        # by others: the documents give Syracuse to Crown (+ EP² relays only); scope is the matcher's call
-        ("Metal Clad Switchgear shall be mounted within a fully enclosed Equipment Building (by others).", "CROWN-ARMV"),
         ("Separate utility incoming Cable termination compartment is required, that allows the utility to lock.", "CROWN-ACC"),
         ("Each phase shall have 1 inch diameter ground ball.", "CROWN-ACC"),
         ("The MANUFACTURER shall provide a NEMA four-hole pad and insulating boots", "CROWN-ACC"),
@@ -154,8 +162,13 @@ if __name__ == "__main__":  # self-check: python -m app.modules.catalog.service
     ]:
         assert top(q)["id"] == want, (q, top(q)["id"], want)
     # unit only, where two products of the unit are both fair
+    # by others: the documents give Syracuse to Crown (+ EP² relays only); scope is the matcher's call. The line does
+    # not say arc-resistant, so Crown's non-arc metal-clad family (CROWN-MCSG) is as fair as CROWN-ARMV in keyword mode
+    assert top("Metal Clad Switchgear shall be mounted within a fully enclosed Equipment Building (by others).")["bu"] == "CROWN"
     assert top("Rack density: minimum 120kW per rack, liquid cooling required at rack and chip level")["bu"] == "JETCOOL"
     assert top("Distribution: one dedicated power distribution cabinet")["bu"] == "ANORD"
     assert top("48 V DC rack power shelf with N+1 power supply units")["bu"] == "FPM"
     assert unit_of("EP² Design Engineer") == "EP2"
+    hit = next(h for h in search("BMR491 quarter brick 1,300 W", k=10) if h["kind"] == "catalog_item")
+    assert hit["family"] == "FPM-DCDC" and all(i["family"] == "FPM-DCDC" for i in items("FPM-DCDC"))
     print("catalog ok")

@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "This requirement pertains to the evaluation and compliance process for proposals, which is a commercial and procedural aspect of the RFP. It does not specify a product or technical requirement, so no catalog product is applicable.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

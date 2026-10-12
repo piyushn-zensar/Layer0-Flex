@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 7,
+        "quote": "Provide an actively maintained Linux LTS BSP with bootloader, drivers and reproducible offline build instructions. Support supplier-delivered code for five years from MP release.",
+        "section": "6 Software integration and cybersecurity",
+        "text": "Provide a Linux LTS BSP with bootloader, drivers, and offline build instructions, supported for five years."
+      },
+      {
+        "category": "technical",
+        "page": 7,
+        "quote": "Support Modbus RTU/TCP and MQTT 3.1.1 over TLS 1.2 or 1.3 through the buyer device agent. Expose documented interfaces for network settings, time sync, I/O and health.",
+        "section": "6 Software integration and cybersecurity",
+        "text": "Support Modbus RTU/TCP and MQTT 3.1.1 over TLS 1.2/1.3 and provide documented interfaces."
+      },
+      {
+        "category": "technical",
+        "page": 7,
+        "quote": "Verify every executable boot stage and update image; reject unsigned, modified or rollback-blocked images. Permit only buyer-authorised signed recovery images.",
+        "section": "6 Software integration and cybersecurity",
+        "text": "Verify boot stages and update images, rejecting unauthorized or modified ones."
+      },
+      {
+        "category": "technical",
+        "page": 7,
+        "quote": "Provision a per-unit key and X.509 identity using a buyer-approved PKI workflow. Private keys shall not appear in logs, exports or general factory storage. No shared default passwords.",
+        "section": "6 Software integration and cybersecurity",
+        "text": "Provision per-unit keys and X.509 identities using buyer-approved PKI workflow, ensuring private key security."
+      },
+      {
+        "category": "technical",
+        "page": 7,
+        "quote": "Provide SPDX or CycloneDX software bill of materials for each release, including dependencies and licences. Resolve exploitable critical/high findings before MP; exceptions require written risk acceptance.",
+        "section": "6 Software integration and cybersecurity",
+        "text": "Provide software bill of materials for each release and resolve critical vulnerabilities before MP."
+      },
+      {
+        "category": "technical",
+        "page": 7,
+        "quote": "Lock debug interfaces in production. Restrict services to an approved allowlist; log security events; protect credentials and configuration at rest.",
+        "section": "6 Software integration and cybersecurity",
+        "text": "Secure debug interfaces, restrict services, log security events, and protect sensitive data."
+      },
+      {
+        "category": "compliance",
+        "page": 7,
+        "quote": "Notify buyer within 24 h of a confirmed security incident or exploitable critical flaw. Supply mitigation within 72 h and verified patch within 30 days unless buyer approves another plan.",
+        "section": "6 Software integration and cybersecurity",
+        "text": "Notify buyer of security incidents within 24 hours and provide mitigation within 72 hours."
+      },
+      {
+        "category": "technical",
+        "page": 7,
+        "quote": "Demonstrate 1,000 16-bit Modbus registers per second: 800 over Ethernet and 100 over each RS-485 link at 115.2 kbit/s using block reads. Publish an aggregate 10 kB MQTT payload every second over TLS, while logging local health once per second. Use a 100 Mbit/s test LAN with round-trip latency below 5 ms.",
+        "section": "6.1 Reproducible performance workload",
+        "text": "Demonstrate specific Modbus and MQTT performance metrics under defined conditions."
+      },
+      {
+        "category": "technical",
+        "page": 7,
+        "quote": "Over an eight-hour run, gateway-added time from completed poll to publish shall be <=250 ms at the 99th percentile, with no lost acquired records, CPU utilisation averaging <=70% and no unbounded memory growth.",
+        "section": "6.1 Reproducible performance workload",
+        "text": "Ensure performance metrics are met during an eight-hour run."
+      },
+      {
+        "category": "technical",
+        "page": 7,
+        "quote": "Buffer at least 24 hours of this telemetry during network loss and forward it in order after reconnection without blocking fresh collection.",
+        "section": "6.1 Reproducible performance workload",
+        "text": "Buffer 24 hours of telemetry during network loss and forward it after reconnection."
+      },
+      {
+        "category": "schedule",
+        "page": 7,
+        "quote": "Buyer shall supply the device-agent interface at G0 and a frozen test build by week 6. Supplier shall provide a simulator until then and price integration in NRE.",
+        "section": "6.2 Software ownership and test dependencies",
+        "text": "Provide a simulator until week 6 and include integration in NRE."
+      },
+      {
+        "category": "legal",
+        "page": 7,
+        "quote": "The buyer retains the device agent; the supplier owns defects in its BSP, drivers and provisioning tools. Joint defects require a shared root-cause review within five business days.",
+        "section": "6.2 Software ownership and test dependencies",
+        "text": "Supplier owns defects in BSP and tools; joint defects require review within five days."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

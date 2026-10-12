@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "page": 10,
+        "quote": "Supplier shall propose a factory acceptance test (FAT) procedure covering every requirement and obtain approval before PVT.",
+        "section": "Production test and traceability",
+        "text": "Propose and get approval for FAT procedure before PVT."
+      },
+      {
+        "category": "technical",
+        "page": 10,
+        "quote": "Escapes, retests and rework shall remain visible in the original serial history.",
+        "section": "Production test and traceability",
+        "text": "Ensure escapes, retests, and rework are traceable in serial history."
+      },
+      {
+        "category": "technical",
+        "page": 10,
+        "quote": "Electrical and interface test: 100% units: input current at 18/24/36 VDC, both Ethernet links at negotiated 1 Gbit/s, both RS-485 ports, LEDs, USB, memory and watchdog. Record numeric limits and readings.",
+        "section": "Control",
+        "text": "Perform electrical and interface tests on all units and record results."
+      },
+      {
+        "category": "technical",
+        "page": 10,
+        "quote": "Identity and software test: 100% units: unique serial/MAC/certificate pairing; firmware hash; secure boot status; debug lock; provisioned key presence; no secret-key export. Reject duplicates.",
+        "section": "Control",
+        "text": "Test identity and software on all units, ensuring uniqueness and security."
+      },
+      {
+        "category": "technical",
+        "page": 10,
+        "quote": "Burn-in and final functional test: 100% units: four hours at 50 C running the Section 6.1 workload, then final test at room temperature. Zero unexplained restart, communication failure or test-limit breach.",
+        "section": "Control",
+        "text": "Conduct burn-in and final functional tests on all units under specified conditions."
+      },
+      {
+        "category": "technical",
+        "page": 10,
+        "quote": "Lot inspection: ISO 2859-1 normal single sampling, general level II: major AQL 0.65, minor AQL 1.5. Select sample and Ac/Re numbers from actual lot size. Safety, identity and wrong-configuration checks are 100% with zero defects.",
+        "section": "Lot inspection",
+        "text": "Perform lot inspection per ISO 2859-1 standards with specified AQLs."
+      },
+      {
+        "category": "technical",
+        "page": 10,
+        "quote": "Rejected lots: Quarantine the lot; investigate; perform 100% screening of affected attributes and rework; resubmit with fresh lot sampling. No shipment on failed inspection without buyer concession.",
+        "section": "Rejected lots",
+        "text": "Handle rejected lots with quarantine, investigation, rework, and resubmission."
+      },
+      {
+        "category": "compliance",
+        "page": 10,
+        "quote": "Retain genealogy and raw test records for seven years after shipment.",
+        "section": "Records and release package",
+        "text": "Keep test records for seven years post-shipment."
+      },
+      {
+        "category": "submission",
+        "page": 10,
+        "quote": "Export CSV/JSON using at least: serial_number, model, hardware_revision, pcb_lot, firmware_hash, test_station, calibration_due, UTC_timestamp, test_id, lower_limit, measured_value, upper_limit, result and operator_id.",
+        "section": "Records and release package",
+        "text": "Provide test records in CSV/JSON format with specified fields."
+      },
+      {
+        "category": "compliance",
+        "page": 10,
+        "quote": "Restrict access and maintain tamper-evident backups.",
+        "section": "Records and release package",
+        "text": "Ensure restricted access and tamper-evident backups for records."
+      },
+      {
+        "category": "submission",
+        "page": 10,
+        "quote": "Two business days before dispatch, submit the signed conformity certificate, serial list, test summary, concessions, firmware manifest and packing list.",
+        "section": "Records and release package",
+        "text": "Submit required documents two business days before dispatch."
+      },
+      {
+        "category": "schedule",
+        "page": 10,
+        "quote": "Contain faults within 24 hours; provide root cause in five business days and close corrective action in 15 business days.",
+        "section": "Records and release package",
+        "text": "Address faults within specified timeframes."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,162 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "schedule",
+        "page": 2,
+        "quote": "12 October 2026 / acknowledge participation by 16 October 2026",
+        "section": "Tender event",
+        "text": "Bidder must acknowledge participation by 16 October 2026."
+      },
+      {
+        "category": "schedule",
+        "page": 2,
+        "quote": "23 October 2026, 17:00 IST; cite section and requirement ID",
+        "section": "Tender event",
+        "text": "Questions close on 23 October 2026 at 17:00 IST, citing section and requirement ID."
+      },
+      {
+        "category": "schedule",
+        "page": 2,
+        "quote": "30 October 2026; issued to all registered bidders",
+        "section": "Tender event",
+        "text": "Consolidated answers and final addendum issued by 30 October 2026."
+      },
+      {
+        "category": "schedule",
+        "page": 2,
+        "quote": "13 November 2026, 17:00 IST; late offers may be rejected",
+        "section": "Tender event",
+        "text": "Proposals must be received by 13 November 2026 at 17:00 IST; late offers may be rejected."
+      },
+      {
+        "category": "schedule",
+        "page": 2,
+        "quote": "16-27 November 2026; demonstrations may be requested",
+        "section": "Tender event",
+        "text": "Evaluation and clarification occur between 16-27 November 2026; demonstrations may be requested."
+      },
+      {
+        "category": "schedule",
+        "page": 2,
+        "quote": "11 December 2026 / 14 December 2026 (subject to contract)",
+        "section": "Tender event",
+        "text": "Intended award on 11 December 2026 and kickoff on 14 December 2026, subject to contract."
+      },
+      {
+        "category": "submission",
+        "page": 2,
+        "quote": "Submit a searchable, signed technical PDF and a separately marked commercial PDF with its editable XLSX price workbook to the designated contact on page 1.",
+        "section": "Submission and communications",
+        "text": "Submit a signed technical PDF and commercial PDF with editable XLSX price workbook."
+      },
+      {
+        "category": "submission",
+        "page": 2,
+        "quote": "Use subject 2026-EMS-017 | Bidder legal name | Proposal.",
+        "section": "Submission and communications",
+        "text": "Use specified subject format for submission emails."
+      },
+      {
+        "category": "submission",
+        "page": 2,
+        "quote": "Maximum email size is 20 MB; request an upload route before closing if larger.",
+        "section": "Submission and communications",
+        "text": "Email submissions must not exceed 20 MB; request upload route if larger."
+      },
+      {
+        "category": "submission",
+        "page": 2,
+        "quote": "Receipt time at the buyer controls.",
+        "section": "Submission and communications",
+        "text": "Buyer controls receipt time for submissions."
+      },
+      {
+        "category": "submission",
+        "page": 2,
+        "quote": "Acknowledgement is not acceptance.",
+        "section": "Submission and communications",
+        "text": "Acknowledgement of submission does not imply acceptance."
+      },
+      {
+        "category": "compliance",
+        "page": 2,
+        "quote": "Only the designated contact may issue procurement instructions.",
+        "section": "Submission and communications",
+        "text": "Only the designated contact can issue procurement instructions."
+      },
+      {
+        "category": "compliance",
+        "page": 2,
+        "quote": "Questions and responses affecting scope will be circulated anonymously by numbered addendum.",
+        "section": "Submission and communications",
+        "text": "Scope-related questions and responses will be circulated anonymously via numbered addendum."
+      },
+      {
+        "category": "legal",
+        "page": 2,
+        "quote": "Oral statements are not binding.",
+        "section": "Submission and communications",
+        "text": "Oral statements are not binding."
+      },
+      {
+        "category": "submission",
+        "page": 2,
+        "quote": "Bidders shall acknowledge every addendum in Form A.",
+        "section": "Submission and communications",
+        "text": "Bidders must acknowledge every addendum in Form A."
+      },
+      {
+        "category": "commercial",
+        "page": 2,
+        "quote": "Offers shall remain valid for 120 calendar days from closing.",
+        "section": "Submission and communications",
+        "text": "Offers must remain valid for 120 days from closing."
+      },
+      {
+        "category": "commercial",
+        "page": 2,
+        "quote": "All bid preparation costs are borne by the bidder.",
+        "section": "Submission and communications",
+        "text": "Bid preparation costs are the bidder's responsibility."
+      },
+      {
+        "category": "compliance",
+        "page": 2,
+        "quote": "Shall denotes a mandatory requirement. Should denotes a preference.",
+        "section": "Interpretation and document control",
+        "text": "'Shall' indicates mandatory requirements; 'should' indicates preferences."
+      },
+      {
+        "category": "compliance",
+        "page": 2,
+        "quote": "Requirements, tables and dimensioned figures are normative unless labelled illustrative.",
+        "section": "Interpretation and document control",
+        "text": "Requirements, tables, and figures are normative unless marked illustrative."
+      },
+      {
+        "category": "compliance",
+        "page": 2,
+        "quote": "State each departure in Form B; silence is not an approved exception.",
+        "section": "Interpretation and document control",
+        "text": "State departures in Form B; silence is not an exception."
+      },
+      {
+        "category": "compliance",
+        "page": 2,
+        "quote": "Buyer changes to requirements or dates will be made only by written addendum.",
+        "section": "Interpretation and document control",
+        "text": "Buyer changes to requirements or dates are only via written addendum."
+      },
+      {
+        "category": "legal",
+        "page": 2,
+        "quote": "The buyer may cancel, reject all offers or request a best and final offer without an obligation to award.",
+        "section": "Interpretation and document control",
+        "text": "Buyer may cancel, reject offers, or request final offers without obligation to award."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

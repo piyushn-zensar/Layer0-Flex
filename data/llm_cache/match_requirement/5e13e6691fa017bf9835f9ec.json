@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance with M/WBE requirements and the submission of a waiver form. It does not specify a product or service that can be matched to the catalog. Therefore, it is not a product requirement, and the bid manager should address it.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -49,7 +49,7 @@ const chapter: TourChapter = {
       id: "decisions-offering-mix", route: ROUTE, target: "dec-offering-mix", placement: "bottom",
       title: "Offering mix",
       body: [
-        "One badge per offering type with the number of matches: for the demo **ETO 96, CTO 5, Semi-custom 2, NONE 245**. NONE is the bid desk (not a product item). A mix dominated by ETO, as here, means engineering effort rather than catalog quoting; the summary below counts ETO and Semi-custom as *partly* satisfied until a unit confirms.",
+        "One badge per offering type with the number of matches: for the demo **ETO 97, CTO 5, Semi-custom 1, NONE 245**. NONE is the bid desk (not a product item). A mix dominated by ETO, as here, means engineering effort rather than catalog quoting; the summary below counts ETO and Semi-custom as *partly* satisfied until a unit confirms.",
         "Before matching this line is empty: run **Match products** on the Traceability page first.",
       ],
     },
@@ -57,7 +57,7 @@ const chapter: TourChapter = {
       id: "decisions-suggested-units", route: ROUTE, target: "dec-suggested-units", placement: "bottom",
       title: "Suggested units",
       body: [
-        "Each business unit that appears in at least one match, with the number of requirements it is matched to: **CROWN (96) EP2 (7)** for the Syracuse switchgear RFP. A requirement with several units counts once for each. Rejected matches do not count.",
+        "Each business unit that appears in at least one match, with the number of requirements it is matched to: **CROWN (98) EP2 (5)** for the Syracuse switchgear RFP. A requirement with several units counts once for each. Rejected matches do not count.",
         "These suggestions pre-tick the participation checkboxes below. They are the matcher's view; the participation decision is yours.",
       ],
     },
@@ -162,7 +162,7 @@ const chapter: TourChapter = {
       title: "Workload across opportunities",
       body: [
         "Per unit: open work on this opportunity (what dispatch would create, or has created), open work elsewhere with the competing opportunity IDs, the total and the placeholder capacity (Crown 150, EP² 60, Anord Mardix 100, FPM 100, JetCool 80, Cloud 80, bid desk 400). An *over* badge appears when the total exceeds capacity, and the criterion *Capacity and portfolio conflicts* is then not met.",
-        "Open work means assigned, submitted or returned items; validated and withdrawn ones are done. The demo shows BID 249/400 (also in OPP-0002), CROWN 95/150, EP2 7/60.",
+        "Open work means assigned, submitted or returned items; validated and withdrawn ones are done. The demo shows BID 251/400 (also in OPP-0002), CROWN 97/150, EP2 5/60.",
       ],
       fallback: "The workload table appears once the requirements are frozen.",
     },
@@ -186,12 +186,12 @@ const chapter: TourChapter = {
       id: "decisions-part-rationale", route: ROUTE, target: "dec-part-rationale", placement: "top",
       title: "Participation rationale",
       body: [
-        "A free-text reason for the record. Keep it short and factual; it is shown on this card, stored with the decision and can be sent to the knowledge base as a reusable precedent (\"for switchgear RFPs of this kind, Crown leads and EP² supplies protection panels\").",
+        "A free-text reason for the record. Keep it short and factual; it is shown on this card, stored with the decision and can be sent to the knowledge base as a reusable precedent (\"for switchgear RFPs of this kind, Crown leads and EP² supplies auxiliary power\").",
       ],
       example: {
         label: "Fill an example rationale",
         apply: (ctx) => setValue(input(ctx, "dec-participation", "rationale"),
-          "Crown Technical Systems leads the 15 kV metal-clad switchgear; EP² supplies the relay and protection panels. No other unit is in scope."),
+          "Crown Technical Systems leads the 15 kV metal-clad switchgear, relay panels included; EP² supplies the station auxiliary power. No other unit is in scope."),
       },
     },
     {
@@ -226,7 +226,7 @@ const chapter: TourChapter = {
       title: "How the requirements are satisfied",
       body: [
         "Per category, how many requirements are **fully**, **partly** or **not** satisfied, and how many go to the **bid desk**. Where a unit has answered, its compliance wins (met = fully, partial = partly, not met or exception = not; with several units the weakest answer counts). Otherwise the level is estimated from the match: CTO = fully, Semi-custom and ETO = partly, no match = not, no units = bid desk.",
-        "For the demo: technical 7 fully, 94 partly, 45 bid desk; compliance 2 partly, 64 bid desk; every other category entirely bid desk. **Coverage** is the share of product requirements fully or partly satisfied: 100% of 103 here, against a placeholder threshold of 80%.",
+        "For the demo: technical 7 fully, 95 partly, 44 bid desk; compliance 1 partly, 65 bid desk; every other category entirely bid desk. **Coverage** is the share of product requirements fully or partly satisfied: 100% of 92 here, against a placeholder threshold of 80%.",
       ],
       fallback: "The table appears once the requirements are frozen.",
     },
@@ -242,7 +242,7 @@ const chapter: TourChapter = {
       id: "decisions-criteria", route: ROUTE, target: "dec-criteria", placement: "top", skipIf: notFrozen,
       title: "Criteria: Layer 0's assessment and your judgement",
       body: [
-        "Twelve criteria from go_no_go.json, each with the question it answers. **Layer 0's assessment** is computed from the evidence: *met* or *not met* with the detail (for example *Open questions*: \"Rule warnings: R-003; unanchored requirements: 32\", *Matches reviewed*: \"103 product match(es) not yet accepted or changed by a person\", *Deviations*: the 2000/1200 A vs 600 A row). Three are *not known*: data not yet available.",
+        "Twelve criteria from go_no_go.json, each with the question it answers. **Layer 0's assessment** is computed from the evidence: *met* or *not met* with the detail (for example *Open questions*: \"Rule warnings: R-003; unanchored requirements: 32\", *Matches reviewed*: \"92 product match(es) not yet accepted or changed by a person\", *Deviations*: the 2000/1200 A vs 600 A row). Three are *not known*: data not yet available.",
         "**Your judgement** is a select per criterion (met, not met, not known), pre-set to Layer 0's assessment, plus an optional note. You may disagree with any assessment; what you choose is stored with the decision, and the recorded line later shows \"Criteria judged: n met, n not met, n not known\". Thresholds (80% coverage, capacities, standard ratings) are placeholders to be agreed with the bid manager.",
       ],
       fallback: "The criteria table appears once the requirements are frozen.",
@@ -295,7 +295,7 @@ const chapter: TourChapter = {
       id: "decisions-dispatch", route: ROUTE, target: "dec-dispatch", placement: "top",
       title: "3. Send the work to the units",
       body: [
-        "Dispatch creates the work packages: for every frozen approved requirement, **one assignment per participating unit it is matched to** (with the unit's first product as the reference), or, when none of its units takes part or it is not a product item, one assignment for the **bid desk**. Each unit's assignments are owned by its design engineer; the bid desk's by the Bid Manager. For the demo that was 348 assignments: Crown 96, EP² 7, bid desk 245.",
+        "Dispatch creates the work packages: for every frozen approved requirement, **one assignment per participating unit it is matched to** (with the unit's first product as the reference), or, when none of its units takes part or it is not a product item, one assignment for the **bid desk**. Each unit's assignments are owned by its design engineer; the bid desk's by the Bid Manager. For the demo that was 348 assignments: Crown 91, EP² 1, bid desk 256.",
         "It is repeatable: after changing matches or participation, dispatch again. New work is sent, work that no longer fits is **withdrawn**, and withdrawn work that fits again is **reopened** with its earlier answer kept for reference. Existing assignments are never duplicated.",
         "Preconditions: frozen requirements and a latest decision of *go*. The opportunity status becomes *dispatched*.",
       ],
@@ -316,7 +316,7 @@ const chapter: TourChapter = {
       id: "decisions-dispatch-result", route: ROUTE, target: "dec-dispatch", placement: "top",
       title: "What dispatch produced",
       body: [
-        "The toast reads **\"N new assignment(s) sent to the units.\"** (348 on a fresh Syracuse opportunity) or, when nothing changed since the last dispatch, *\"Nothing new to send: every unit already has its work.\"* The status badge shows *dispatched*; on the Traceability page the Response column of every row now shows its assignments as *assigned*, and the toolbar counts them per unit (CROWN 0/96 validated, EP2 0/7, BID 0/245).",
+        "The toast reads **\"N new assignment(s) sent to the units.\"** (348 on a fresh Syracuse opportunity) or, when nothing changed since the last dispatch, *\"Nothing new to send: every unit already has its work.\"* The status badge shows *dispatched*; on the Traceability page the Response column of every row now shows its assignments as *assigned*, and the toolbar counts them per unit (CROWN 0/91 validated, EP2 0/1, BID 0/256).",
         "Next: the units' **Inbox** (chapter 8), where each unit's product manager or design engineer answers their items with a compliance level and text, and the bid manager validates or returns them. Those answers flow back into pane 3 here and into the summary's *fully / partly / not* counts.",
       ],
       fallback: "Dispatch has not run yet on this opportunity.",

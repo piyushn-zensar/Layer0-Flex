@@ -271,7 +271,7 @@ Opportunity choice: Create your own in chapter 4, or choose "Use the demo opport
 | Bid decision | Introduction | Evidence first, then a person decides | Read | Centred bubble | decisions-intro |
 | Bid decision | Evidence counts | Counts by category | Read | Spotlight on card head | decisions-evidence |
 | Bid decision | Offering mix | ETO, CTO, Semi-custom, NONE | Read | Spotlight on line | decisions-offering-mix |
-| Bid decision | Suggested units | CROWN (96), EP2 (7) | Read | Spotlight on line | decisions-suggested-units |
+| Bid decision | Suggested units | CROWN (98), EP2 (5) | Read | Spotlight on line | decisions-suggested-units |
 | Bid decision | Unanchored | 32 open questions | Read | Details opened | decisions-unanchored |
 | Bid decision | Not yet matched | When it appears | Read | Fallback when none | decisions-unmatched |
 | Bid decision | Matches not reviewed | 103 in the demo | Read | Line or fallback | decisions-not-reviewed |

@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies details about terminal blocks and wiring within the switchgear. Based on the catalog, the CROWN-ARMV product is the appropriate choice as it is the default for metal-clad switchgear lines, which would include terminal blocks and wiring.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement pertains to the representation of devices within the switchgear enclosure. The CROWN-ARMV product is suitable as it is the default for metal-clad switchgear lines, which would include the specified devices and their arrangement.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement specifies control and lockout switches within the switchgear. The CROWN-ARMV product is the default for metal-clad switchgear lines, which would include these components.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 4,
+        "rationale": "The requirement specifies protective relays and relay programming for operational switchgear. The EP2-RPP product is the appropriate choice as it is designed for protective relays and substation relay and protection panels, including relay programming and settings.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "The requirement specifies the mounting of instruments, relays, and control devices on the switchgear front doors. The CROWN-ARMV product is the default for metal-clad switchgear lines, which would include these features.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "The requirement specifies the material for the main contacts and secondary disconnecting devices in the switchgear. The CROWN-ARMV product is the default for metal-clad switchgear lines, which would include these components.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "The requirement specifies accessories and spare parts for the switchgear. The CROWN-ACC product is the appropriate choice as it includes catalog accessories for MV switchgear, which would be stored in the equipment enclosure as specified.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

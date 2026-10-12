@@ -1,0 +1,113 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "Quote in INR, excluding recoverable GST. Show GST, HSN/SAC, origin, import duties and freight separately.",
+        "section": "11",
+        "text": "Provide pricing in INR, excluding recoverable GST, and itemize taxes and duties."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "Cover all mandatory scope; enter a numeric value or \"Included\" on every line.",
+        "section": "11",
+        "text": "Ensure all mandatory scope is covered and provide numeric values or 'Included'."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "Fixed; separately list buyer-owned tools and useful life",
+        "section": "P02",
+        "text": "List buyer-owned tools and their useful life separately."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "Fixed; lab fees, reports and required retest allowance",
+        "section": "P03",
+        "text": "Include fixed costs for lab fees, reports, and retest allowances."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "30 units x rate / 50 units x rate; exclude P01-P03 duplication",
+        "section": "P04/P05",
+        "text": "Provide rates for 30 and 50 units, excluding duplication of P01-P03."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "300 units x rate; normal test/pack included",
+        "section": "P06",
+        "text": "Provide rate for 300 units, including normal testing and packing."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "12,000 units x firm unit price for production year 1",
+        "section": "P07",
+        "text": "Provide firm unit price for 12,000 units in production year 1."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "24,000 units x firm unit price for production year 2",
+        "section": "P08",
+        "text": "Provide firm unit price for 24,000 units in production year 2."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "36,000 units x firm unit price for production year 3",
+        "section": "P09",
+        "text": "Provide firm unit price for 36,000 units in production year 3."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "36 monthly series shipments; add NPI freight if excluded from P04-P06",
+        "section": "P10",
+        "text": "Include delivery charges for 36 monthly shipments, adding NPI freight if not in P04-P06."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "Five-year BSP/security support and licences; no unit-price duplication",
+        "section": "P11",
+        "text": "Provide five-year BSP/security support and licenses without duplicating unit prices."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "Additional DVT unit rate; depot repair; optional 24-month warranty extension",
+        "section": "P12",
+        "text": "Itemize additional DVT unit rate, depot repair, and optional 24-month warranty extension."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "Three-year evaluated cost (TEC) = P01 + P02 + P03 + (30 x P04 rate) + (50 x P05 rate) + (300 x P06 rate) + (12,000 x P07) + (24,000 x P08) + (36,000 x P09) + P10 + P11 + declared non-recoverable import duties. Exclude recoverable GST and P12 options. State every assumption; no mandatory charge may be placed in options.",
+        "section": "11.1",
+        "text": "Calculate TEC as specified, excluding recoverable GST and P12 options, and state all assumptions."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "Break down material, labour, test, overhead, freight, margin and warranty costs. State MOQ, order multiple and lead times. Annual-tier prices are firm; changes require signed amendment. Disclose currency exposure and assumed FX rate/date; no automatic indexation applies.",
+        "section": "11.2",
+        "text": "Provide cost breakdown, MOQ, lead times, and disclose currency exposure and FX assumptions."
+      },
+      {
+        "category": "commercial",
+        "page": 12,
+        "quote": "Pay P01-P03 on accepted milestones: 20% at G0, 30% at G2, 30% at G3 and 20% at G4. Invoice NPI/series units on delivery. Correct, undisputed invoices are payable within 45 days after receipt and acceptance; acceptance shall not be unreasonably delayed.",
+        "section": "11.2",
+        "text": "Follow specified payment milestones and invoice terms for NPI/series units."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

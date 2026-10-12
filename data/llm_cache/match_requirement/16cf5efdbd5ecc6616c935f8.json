@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "Requirement 1 is a compliance and legal statement about the Authority's rights and terms for the RFP process. It does not specify a product or service requirement, so no product from the catalog applies.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 2,
+        "rationale": "Requirement 2 is a compliance notice related to Title VI of the Civil Rights Act of 1964. It ensures fair treatment of disadvantaged business enterprises in the RFP process. This is not a product or service requirement, so no product from the catalog applies.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

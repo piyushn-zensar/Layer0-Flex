@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance and solicitation practices for M/WBEs, which is not related to a specific product or business unit offering. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 2,
+        "rationale": "This requirement involves dividing work to encourage M/WBE participation, which is a procedural and compliance matter, not a product or service offering. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 3,
+        "rationale": "This requirement relates to non-discrimination policies, which are compliance and HR-related, not tied to any specific product or business unit. The bid manager should address this.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

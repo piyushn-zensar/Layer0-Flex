@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies medium voltage switchgear with specific ratings and features, which aligns with the CROWN-ARMV product description for arc-resistant metal-clad MV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement specifies that the utility will provide the transformers and meters, so this is not a product requirement for SpinCo.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "The tie breaker sequence of operation and interlock switch requirements are typically part of the control and protection features of medium voltage switchgear, which aligns with the CROWN-ARMV product description.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement specifies that the cable is provided by the utility and terminations are by the contractor, so this is not a product requirement for SpinCo.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

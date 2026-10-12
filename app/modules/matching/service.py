@@ -33,11 +33,13 @@ MIN_SCORE = 0.08  # ponytail: starting guess; calibrate on real RFPs
 
 
 def _retrieval_only(req, hits) -> dict:
-    """Fallback when no model answer exists: top catalog hit for product items, else the bid manager."""
-    top = next((h for h in hits if h["kind"] == "product"), None)
+    """Fallback when no model answer exists: top catalog hit for product items, else the bid manager.
+    A product hit wins; a catalog item (model/series) hit stands for its family only when no product was retrieved."""
+    top = (next((h for h in hits if h["kind"] == "product"), None)
+           or next((h for h in hits if h["kind"] == "catalog_item"), None))
     if req.category not in PRODUCT_CATEGORIES or not top or top["score"] < MIN_SCORE:
         return {"units": [], "confidence": 0.0, "rationale": "Not matched to a product; the bid manager answers it."}
-    return {"units": [{"bu": top["bu"], "product_id": top["id"], "offering_type": top["offering_type"]}],
+    return {"units": [{"bu": top["bu"], "product_id": top.get("family", top["id"]), "offering_type": top["offering_type"]}],
             "confidence": top["score"], "rationale": f"Closest catalog entry {top['id']} (retrieval score {top['score']})."}
 
 

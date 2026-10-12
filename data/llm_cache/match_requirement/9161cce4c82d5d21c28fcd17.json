@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies technical parameters for metal-clad switchgear, including short-circuit current, MVA class, and interrupting ratings. The CROWN-ARMV product is the appropriate choice as it is designed for metal-clad MV switchgear with similar specifications.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement describes features of circuit breakers, which are components of metal-clad switchgear. The CROWN-ARMV product includes vacuum breakers and is suitable for this requirement.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The low-frequency test voltage is a specification for metal-clad switchgear. The CROWN-ARMV product is designed to meet such technical requirements.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The basic impulse level is a standard specification for metal-clad switchgear. The CROWN-ARMV product is engineered to meet these standards.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "The nominal voltage supplies and ranges are part of the specifications for the switchgear's operational requirements. The CROWN-ARMV product is suitable for these parameters.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

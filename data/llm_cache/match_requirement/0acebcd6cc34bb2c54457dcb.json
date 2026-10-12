@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.95,
+        "n": 1,
+        "rationale": "The requirement specifies details for metal-clad switchgear construction, including panel material, compartment separation, and other features. These align with the description of CROWN-ARMV, which is arc-resistant metal-clad MV switchgear built to IEEE C37.20.2 standards.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The power supply and wiring specifications are typical for switchgear applications. CROWN-ARMV, as a metal-clad MV switchgear product, is designed to accommodate such electrical requirements.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.85,
+        "n": 3,
+        "rationale": "The environmental and site conditions, including temperature range, altitude, and seismic/wind loading, are relevant to the installation and operation of metal-clad switchgear. CROWN-ARMV is suitable for such conditions as it is designed for robust and reliable operation in various environments.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -7,7 +7,7 @@ router = APIRouter(tags=["catalog"])
 
 @router.get("/catalog")
 def catalog(q: str = ""):
-    return {"units": service.units(include_pending=True), "products": service.products(),
+    return {"units": service.units(include_pending=True), "products": service.products(), "items": service.items(),
             "results": service.search(q, k=10) if q else []}
 
 

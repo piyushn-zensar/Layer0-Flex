@@ -31,8 +31,8 @@ export interface Assignment {
   compliance: string | null; product_ref: string | null; response: string; responded_by: string | null;
   validated_by: string | null; validation_note: string;
 }
-export interface Unit { code: string; name: string; pillar: string; status: string; focus: string; product_manager: string; design_engineer: string }
-export interface Product { id: string; bu: string; name: string; offering_type: OfferingType; description: string; bom: { item: string; qty: string }[] }
+export interface Unit { code: string; name: string; pillar: string; status: string; focus: string; product_manager: string; design_engineer: string; source_url?: string }
+export interface Product { id: string; bu: string; name: string; offering_type: OfferingType; description: string; bom: { item: string; qty: string }[]; source_url?: string }
 export interface Progress { [bu: string]: { total: number; submitted: number; validated: number } }
 export interface Page { page: number; width: number; height: number; unreviewed: boolean }
 
