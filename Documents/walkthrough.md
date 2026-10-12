@@ -1,9 +1,5 @@
 # Layer 0 Walkthrough
 
-*Walkthrough as of 11 Oct 2026. It describes the demonstration build of that date, with demonstration data.*
-
-*Note: the screenshots are being retaken. Where a screenshot shows older numbers (for example 13 requirements), the text gives the current figures.*
-
 ## 1. Overview
 
 Layer 0 helps manage a bid opportunity from the customer's request for proposal (RFP) to a consolidated response. It reads the RFP into numbered requirements with exact sources, proposes a business unit and product for each, records participation and go/no-go decisions, and collects and consolidates each unit's response. Every response stays traceable to its requirement and to the RFP page it came from.
@@ -72,6 +68,7 @@ The form asks for a **title**, the **customer** and the **customer type**. The p
 - Each document shows its **file name**, **role** ("main" for the RFP), **page count** (101), **status** ("ingested") and a document fingerprint.
 - A further PDF can be added by choosing a file and a role and selecting **Upload and read**. **Refresh status** updates the status column.
 - Once requirement review has started, the page states that the RFP is not read again, and that missed items can be added on the Requirements page.
+- **How the requirements are produced.** A model (the reader agent) reads the RFP page by page and returns each requirement with its exact quotation. Layer 0 then checks every quotation against the page and records its page, lines and position. A quotation that cannot be found on the page is marked "unanchored" (see section 7). The model's answers are stored (frozen), so a second reading gives the same list and the review starts from a consistent set of requirements. No keyword or pattern rule is used to find requirements.
 
 ## 7. Requirements Review
 
@@ -83,8 +80,10 @@ The form asks for a **title**, the **customer** and the **customer type**. The p
 
 - A note states that Baseline 1 was frozen by the Bid Manager with 348 items. Later changes are handled as a difference from this baseline.
 - Filters show the requirements by review state (To review, Unanchored, Approved, Rejected, Duplicates, Ungrouped / split / merged, All), each with a count, and a search box finds an ID or text.
-- Each requirement has an **ID** (for example REQ-0001-0001), a **category** (technical, compliance, commercial, schedule, submission, legal or staffing), a **source** (page and lines of the RFP) and a **status**. All 348 requirements in the example are "approved".
+- Each requirement has an **ID** (for example REQ-0001-0001), a **category** (one of seven: technical, compliance, commercial, schedule, submission, legal or staffing), a **source** (page and lines of the RFP) and a **status**. All 348 requirements in the example are "approved".
 - The requirement is stated in plain language, with the **exact quotation** from the RFP beneath it.
+- Each requirement is decided one by one. **Approve** and **Reject** record the decision, **Edit** changes the wording, and **Split** turns a requirement that holds several obligations into parts, one quotation per part. Selecting several rows opens a bar that approves or rejects them together (bulk approve or reject) or merges them with **Merge into one**, when they state a single obligation. A requirement the agent missed is added with **Add a requirement the agent missed**, by selecting lines on the RFP page or pasting a quotation. Every action is recorded with the person who took it.
+- **Freeze baseline** is available only when every requirement has been reviewed: the page shows how many are still to decide, and the button stays unavailable until none is left. Freezing records the baseline (Baseline 1 in the example). After that, requirements are not edited in place; later changes go through the Changes step (section 12).
 - A group (162 in the example) can be expanded to show its sub-requirements, each with its own source. A duplicate points to the line item it repeats.
 - 32 requirements are "unanchored": their wording could not be located at an exact place in the RFP, so they are listed under their own filter for checking.
 
@@ -110,6 +109,8 @@ This capability is presented through the Traceability step, which brings togethe
 - The line above the panels shows each unit's validated responses (for example, 1 of 96 for Crown Technical Systems).
 - **Match products** proposes a business unit and product for each requirement.
 - A proposed match can be accepted, rejected or changed.
+- **Change** lets a person pick the unit and product themselves. A requirement can be assigned to more than one business unit when the work needs it: **Add unit** adds a further unit, and **Remove** takes one away. The first unit is the main unit, and each unit receives its part of the work when the work packages are dispatched (section 9).
+- The **Bill of materials** under a proposed product is read from a separate BOM system; Layer 0 does not build one. In this demonstration the lines come from the catalog file and are illustrative demonstration data. The real BOM source system **needs confirmation**.
 - A requirement that is not a product item is shown as belonging to the **Bid manager**.
 
 **Traceability.** From one requirement the reader can see its exact RFP wording and location, the product proposed for it and the response it received. The same ID and source then appear in the unit's work package under My work and in the Final response.
@@ -131,10 +132,15 @@ This capability is presented through the Traceability step, which brings togethe
 *Figure 6. The Bid decision step.*
 
 1. **Evidence.** The number of requirements by category (348 in total), the offering mix (ETO 96, CTO 5, Semi-custom 2, NONE 245, where NONE means requirements that are not product items) and the suggested units, each with a count (Crown Technical Systems 96, Electrical Power Products 7). The page states that the requirements must be frozen on the Requirements page before go or no-go is decided.
-2. **Which business units take part?** The bid manager selects the participating units from the list, may enter a rationale, and selects **Record participation**. The screen shows who recorded the choice.
-3. **Go / no-go.** The bid manager selects **Go** or **No-go**, with a rationale field. The screen shows the decision and who made it.
+2. **Engineering checks.** Shown once the requirements are frozen. They are evidence for the bid manager, never a decision. The rules are illustrative, ported from an earlier version of Layer 0, and **need confirmation** with SpinCo engineering. They are applied to the frozen requirements and cover four things:
+   - **Scope:** which of six layers the RFP covers (Grid Interface; Utility / Facility Electrical; Power Distribution; Rack and Board Power; Thermal Management; Compute and Integration). Each layer is shown as in scope or not in scope, with its number of hits against a threshold of 3 and the requirements cited. In the example, two layers are in scope: Utility / Facility Electrical and Power Distribution.
+   - **Rules R-001 to R-004:** each shown as pass, warn or not applicable. They cover 800 VDC compatibility, liquid cooling at high rack density, the redundancy class and any dependency on EPC Power, whose acquisition has not closed. In the example, R-003 warns because the redundancy class is not stated.
+   - **Offering type against each unit's default tier:** lists the matches that need an engineer's confirmation (5 in the example).
+   - **Low-voltage solver:** reports "not solvable" when the requirements include equipment such as medium-voltage switchgear, which needs protection coordination and an arc-flash study rather than arithmetic.
+3. **Which business units take part?** The bid manager selects the participating units from the list, may enter a rationale, and selects **Record participation**. The screen shows who recorded the choice.
+4. **Go / no-go.** The bid manager selects **Go** or **No-go**, with a rationale field. The screen shows the decision and who made it. The decision can be recorded only after the requirements are frozen; before that, the page asks for the freeze on the Requirements page.
 
-**Dispatch work packages to units** then sends each participating unit its requirements. The page notes that dispatch is repeated after changing matches or participation: new work is sent, and work that no longer fits is withdrawn.
+**Dispatch work packages to units** then sends each participating unit its requirements. It needs both a frozen baseline and a "go" decision: after a no-go, or before the freeze, nothing is dispatched. Only frozen, approved requirements are sent, and the opportunity then has the status "dispatched". The page notes that dispatch is repeated after changing matches or participation: new work is sent, and work that no longer fits is withdrawn.
 
 ## 10. Work Packages and Responses
 
