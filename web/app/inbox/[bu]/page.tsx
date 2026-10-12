@@ -12,6 +12,7 @@ import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/comp
 
 type Item = Assignment & { requirement: Requirement | null };
 type Data = { bu: string; unit: Unit | null; compliance: string[]; items: Item[] };
+type Portfolio = { progress: Record<string, { total: number; submitted: number; validated: number }> }[];
 
 const BID_MANAGER = "Bid Manager";
 const open = (a: Item) => a.status === "assigned" || a.status === "returned";
@@ -19,6 +20,7 @@ const open = (a: Item) => a.status === "assigned" || a.status === "returned";
 export default function InboxPage() {
   const { bu } = useParams<{ bu: string }>();
   const { data, error, reload } = useApi<Data>(`/api/inbox/${bu}`);
+  const { data: portfolio } = useApi<Portfolio>("/api/portfolio");  // unit switcher: which units have work, and waiting answers
   const toast = useToast();
   const [busy, setBusy] = useState<number | "all">();      // what is being saved: no double submit
   const [returning, setReturning] = useState<number>();     // the item whose return note is being written
@@ -37,6 +39,9 @@ export default function InboxPage() {
   // While the walkthrough runs it names its opportunity on <html data-tour-opp>, and that opportunity's rows come first.
   const focus = typeof document !== "undefined" ? document.documentElement.getAttribute("data-tour-opp") : null;
   const firstOf = (test: (a: Item) => boolean) => (data.items.find((a) => test(a) && a.opportunity_id === focus) ?? data.items.find(test))?.id;
+  // Every unit with work, and how many of its answers wait for validation (progress.submitted includes validated ones).
+  const waiting: Record<string, number> = { BID: 0 };
+  for (const o of portfolio ?? []) for (const [u, p] of Object.entries(o.progress)) waiting[u] = (waiting[u] ?? 0) + p.submitted - p.validated;
   const firstOpen = firstOf(open), firstSubmitted = firstOf((a) => a.status === "submitted"), firstReturned = firstOf((a) => a.status === "returned");
   const answer = (a: Item, form: FormData) => post(`/api/assignments/${a.id}/respond`, Object.fromEntries(form));
   const run = (key: number, request: () => Promise<unknown>, done: string) => {
@@ -69,6 +74,13 @@ export default function InboxPage() {
         {canAnswer && openCount > 0 && <button disabled={busy !== undefined} onClick={submitAll} data-tour="inbox-submit-all">Submit all answered rows</button>}
         {busy === "all" && <Busy label="Sending…" />}
       </PageHead>
+      <nav className="row inbox-links" aria-label="Work packages" data-tour="inbox-units">
+        <span>Work package:</span>
+        {Object.keys(waiting).sort((a, b) => (a === "BID" ? -1 : b === "BID" ? 1 : a.localeCompare(b))).map((u) => (
+          <Link key={u} href={`/inbox/${u}`} className={`chip${u === bu ? " on" : ""}`} aria-current={u === bu ? "page" : undefined}>
+            {u === "BID" ? "Bid desk" : u}{canValidate && waiting[u] > 0 && <span>{waiting[u]} to validate</span>}
+          </Link>))}
+      </nav>
       {opportunities.length > 0 && (
         <div className="row inbox-links" data-tour="inbox-links">
           <span>Open the RFP:</span>

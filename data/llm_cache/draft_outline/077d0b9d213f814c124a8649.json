@@ -1,0 +1,21 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "gaps": [],
+    "paragraphs": [
+      {
+        "cites": [
+          1
+        ],
+        "text": "The proposer offers a two-section 15 kV arc-resistant metal-clad lineup as specified in the RFP. This lineup includes eighteen 15 kV vacuum circuit breaker positions, protective relays and controls, two revenue meter positions, two sets of 15 kV isolation switches, bus voltage transformers (VTs), and multi-ratio current transformers (CTs)."
+      },
+      {
+        "cites": [
+          2
+        ],
+        "text": "The equipment provided includes a standard catalog termination kit, which features NEMA four-hole pads and insulating boots for incoming and outgoing cable connections. This ensures compatibility with up to two 750 MCM 15 kV cables per phase, as required by the RFP."
+      }
+    ]
+  },
+  "task": "draft_outline"
+}
