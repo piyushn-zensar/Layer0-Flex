@@ -12,10 +12,11 @@ const MAX_LINES = 40; // as the API (requirements.service.MAX_SELECTED_LINES)
 interface Line { n: number; text: string; bbox: number[]; furniture?: boolean }
 interface LayoutPage { page: number; width: number; height: number; unreviewed: boolean; lines: Line[] }
 
-export default function LinePicker({ oppId, startPage, categories, requirements, onAdded }: {
+export default function LinePicker({ oppId, startPage, categories, requirements, onAdded, resolve }: {
   oppId: string; startPage: number; categories: string[];
   requirements: Requirement[]; // active ones: their lines are shown as already captured
   onAdded: () => unknown;
+  resolve?: { reqId: string; text: string; category: string }; // link an exception to these lines instead of adding a new requirement
 }) {
   const { data: opp, error: oppError } = useApi<{ documents: Doc[] }>(`/api/opportunities/${oppId}`);
   const doc = opp?.documents.find((d) => d.role === "main");
@@ -27,8 +28,8 @@ export default function LinePicker({ oppId, startPage, categories, requirements,
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [pivot, setPivot] = useState<number>(); // the line a shift-click extends from
-  const [text, setText] = useState("");
-  const [category, setCategory] = useState(categories[0]);
+  const [text, setText] = useState(resolve?.text ?? "");
+  const [category, setCategory] = useState(resolve && categories.includes(resolve.category) ? resolve.category : categories[0]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
   const [added, setAdded] = useState<string>();
@@ -82,10 +83,10 @@ export default function LinePicker({ oppId, startPage, categories, requirements,
     if (busy || !quote || problem) return;
     setBusy(true); setError(undefined); setAdded(undefined);
     try {
-      const req = await post<Requirement>(`/api/opportunities/${oppId}/requirements/from-lines`,
-        { page: pageNo, line_start: a, line_end: b, text, category });
-      clear(); setText("");
-      setAdded(`${req.req_id} added (${req.source}); it is in the list, to review like the others.`);
+      const body = { page: pageNo, line_start: a, line_end: b, text, category };
+      const req = await post<Requirement>(resolve ? `/api/requirements/${resolve.reqId}/resolve` : `/api/opportunities/${oppId}/requirements/from-lines`, body);
+      clear(); setText(resolve ? text : "");
+      setAdded(resolve ? `${req.req_id} linked to ${req.source}; it is now in the register.` : `${req.req_id} added (${req.source}); it is in the register.`);
       await onAdded();
     } catch (err) { setError(message(err)); } finally { setBusy(false); }
   }
@@ -140,7 +141,7 @@ export default function LinePicker({ oppId, startPage, categories, requirements,
         <label>Short text (optional; default: the quote) <input data-tour="lp-text" value={text} maxLength={200} onChange={(e) => setText(e.target.value)} /></label>
         <label>Category <select data-tour="lp-category" value={category} onChange={(e) => setCategory(e.target.value)}>
           {categories.map((c) => <option key={c}>{c}</option>)}</select></label>
-        <span className="inline"><button data-tour="lp-add" disabled={busy || !quote || !!problem}>{busy ? "Adding…" : "Add requirement"}</button></span>
+        <span className="inline"><button data-tour="lp-add" disabled={busy || !quote || !!problem}>{busy ? "Saving…" : resolve ? "Link to these lines" : "Add requirement"}</button></span>
         {error && <div data-tour="lp-error"><Alert kind="error" onClose={() => setError(undefined)}>{error}</Alert></div>}
         {added && <div data-tour="lp-added"><Alert kind="success" onClose={() => setAdded(undefined)}>{added}</Alert></div>}
       </form>

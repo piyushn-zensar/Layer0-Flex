@@ -36,7 +36,7 @@ def test_add_requirement_from_selected_lines():
     assert req["quote"] == quote and req["text"] == quote[:200]
     assert (req["provenance"], req["page"], req["line_start"], req["line_end"]) == ("EXTRACTED", 55, 52, 53)
     assert req["bboxes"] == [lines[52]["bbox"], lines[53]["bbox"]] and req["source"] == "p. 55, lines 52-53"
-    assert req["document_id"] == doc and req["status"] == "proposed" and req["created_by"] == "Crown Design Engineer"
+    assert req["document_id"] == doc and req["status"] == "approved" and req["created_by"] == "Crown Design Engineer"
     h = client.get(f"/api/requirements/{req['req_id']}/history").json()
     assert [e["action"] for e in h["events"]] == ["proposed"] and h["events"][0]["by"] == "Crown Design Engineer"
     assert h["versions"][0]["text"] == quote[:200] and h["source"] == "p. 55, lines 52-53"

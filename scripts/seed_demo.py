@@ -5,7 +5,7 @@
 main() alone (as the tests call it) seeds only Syracuse, with its 13 hand-picked line items (quick and stable).
 
 The real Syracuse demo runs the reader agent and the grouping agent from their frozen answers (no model call, no
-API key): about 810 line items become about 350 requirements. Every requirement is approved and frozen, matched, the
+API key): about 810 line items become about 350 requirements. The register (verified sources) is frozen, matched, the
 bid decision is recorded, the work is dispatched, and the sample answers from the seed file are attached to the
 real requirements that cover the same RFP lines. Every step calls the same service a user action would call,
 so the seed doubles as an end-to-end check.
@@ -48,8 +48,7 @@ def main(seed_file: str = "demo_syracuse.json", real: bool = False) -> None:
             responses = {}
             for item in seed["requirements"]:
                 req = requirements.add(db, opp.id, doc.id, item["quote"], item["text"], item["category"],
-                                       "reader agent (seed)", item["section"], item["page"])
-                requirements.review(db, req.req_id, "approve", BM)
+                                       "reader agent (seed)", item["section"], item["page"])  # verified: in the register
                 if "response" in item:
                     responses[req.req_id] = item["response"]
                 print(f"  {req.req_id} {req.provenance:10} {req.source}")
@@ -71,13 +70,11 @@ def main(seed_file: str = "demo_syracuse.json", real: bool = False) -> None:
 
 
 def _read_and_review(db, opp_id: str, doc_id: str, seed: dict) -> dict:
-    """Reader + grouping from frozen answers, every requirement approved. Returns {req_id: sample response}."""
+    """Reader + grouping from frozen answers into the register. Returns {req_id: sample response}."""
     result = requirements.extract(db, opp_id, BM)
     print("read:", {k: v for k, v in result.items() if k != "problems"}, "problems:", len(result["problems"]))
-    reqs = requirements.current(db, opp_id)
-    for r in reqs:
-        requirements.review(db, r.req_id, "approve", BM)
-    print(f"approved: {len(reqs)} requirements")
+    reqs = requirements.current(db, opp_id)  # the register: verified sources only (C-02); no approve step
+    print(f"register: {len(reqs)} requirements, exception queue: {len(requirements.exceptions(db, opp_id))}")
     # attach each sample answer to the real requirement that covers the same lines (first one wins)
     pages = ingestion.layout(doc_id)["pages"]
     responses = {}

@@ -69,12 +69,12 @@ def test_parallel_reviews_do_not_fail_with_database_locked(client, draft):
 
 
 def test_repeated_approve_records_one_event(client, draft):
-    """QA-16: the same decision twice is one history event, not two."""
+    """QA-16: the same decision twice is one history event, not two (P-22: the decision is an exclusion)."""
     (req,) = _add(client, draft, 1)
     for _ in range(2):
-        assert client.post(f"/api/requirements/{req}/review", json={"action": "approve"}).status_code == 200
+        assert client.post(f"/api/requirements/{req}/review", json={"action": "reject", "reason": "not a requirement"}).status_code == 200
     actions = [e["action"] for e in client.get(f"/api/requirements/{req}/history").json()["events"]]
-    assert actions == ["proposed", "approve"]
+    assert actions == ["proposed", "reject"]
     # an edit that changes the wording is still recorded
     client.post(f"/api/requirements/{req}/review", json={"action": "edit", "text": "new wording"})
     assert [e["action"] for e in client.get(f"/api/requirements/{req}/history").json()["events"]][-1] == "edit"
@@ -83,7 +83,7 @@ def test_repeated_approve_records_one_event(client, draft):
 def test_approving_a_rejected_item_or_group_restores_it(client, draft):
     """QA-03: a mis-click on Reject is undone with Approve; a restored group brings its sub-requirements back."""
     (req,) = _add(client, draft, 1)
-    client.post(f"/api/requirements/{req}/review", json={"action": "reject"})
+    client.post(f"/api/requirements/{req}/review", json={"action": "reject", "reason": "not a requirement"})
     assert client.post(f"/api/requirements/{req}/review", json={"action": "approve"}).json()["status"] == "approved"
 
     a, b = _add(client, draft, 2)
@@ -91,7 +91,7 @@ def test_approving_a_rejected_item_or_group_restores_it(client, draft):
         group = requirements._create_group(db, draft, [requirements.get(db, a), requirements.get(db, b)],
                                            "two items", "technical", "grouping agent (test)").req_id
         db.commit()
-    client.post(f"/api/requirements/{group}/review", json={"action": "reject"})
+    client.post(f"/api/requirements/{group}/review", json={"action": "reject", "reason": "not a requirement"})
     rows = {r["req_id"]: r["status"] for r in client.get(f"/api/opportunities/{draft}/requirements").json()["requirements"]}
     assert (rows[group], rows[a], rows[b]) == ("rejected", "rejected", "rejected")
     client.post(f"/api/requirements/{group}/review", json={"action": "approve"})

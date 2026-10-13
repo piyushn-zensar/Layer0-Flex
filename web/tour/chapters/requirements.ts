@@ -7,6 +7,8 @@ import type { TourChapter, TourCtx, TourStep } from "../types";
 
 const ROUTE = "/opportunities/{opp}/requirements";
 /** After the freeze nothing on this page can change: action steps do not apply. */
+// P-22: the register has no approve step; these steps wait for buttons that no longer exist (J-15 rewrites the chapter)
+const RETIRED = () => true;
 const LOCKED = statusIn("frozen", "go", "no_go", "dispatched", "consolidating", "submitted");
 
 type Field = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
@@ -37,9 +39,10 @@ const chipCount = (ctx: TourCtx, key: string) => {
 };
 const chipSelected = (ctx: TourCtx, key: string) => ctx.el(`req-filter-${key}`)?.getAttribute("aria-selected") === "true";
 
-/** Show a filter: the one named, else the list the review works on ("To review", or "All" once frozen). */
+/** Show a filter: the one named, else the register ("In register", or "All" once frozen). The old "review" filter
+ * is now the register. */
 const showList = (key?: string) => (ctx: TourCtx) => {
-  const want = key ?? (ctx.el("req-baseline") ? "all" : "review");
+  const want = key === "review" ? "register" : key ?? (ctx.el("req-baseline") ? "all" : "register");
   if (!chipSelected(ctx, want)) ctx.el(`req-filter-${want}`)?.click();
 };
 const clearSearch = (ctx: TourCtx) => { const s = field(ctx, "req-search"); if (s && s.value) setValue(s, ""); };
@@ -260,6 +263,7 @@ const chapter: TourChapter = {
     }),
     action({
       id: "requirements-approve",
+      skipIf: RETIRED,
       title: "Approve one item",
       target: "req-action-approve",
       placement: "left",
@@ -276,6 +280,7 @@ const chapter: TourChapter = {
     }),
     action({
       id: "requirements-reject",
+      skipIf: RETIRED,
       title: "Reject one item",
       target: "req-action-reject",
       placement: "left",
@@ -292,6 +297,7 @@ const chapter: TourChapter = {
     }),
     action({
       id: "requirements-restore",
+      skipIf: RETIRED,
       title: "Restore it: approve the rejected item",
       target: "req-action-approve",
       placement: "left",
@@ -565,8 +571,8 @@ const chapter: TourChapter = {
     }),
     action({
       id: "requirements-reject-added",
-      title: "Reject the added item again",
-      target: "req-action-reject",
+      title: "Exclude the added item again",
+      target: "req-action-exclude",
       placement: "left",
       onEnter: async (ctx) => {
         showList("review")(ctx);
@@ -580,7 +586,7 @@ const chapter: TourChapter = {
         + "answers valid in the next chapter.",
         "In real use you would of course keep what you added; the reject here is only to leave the demo data as the reader proposed it.",
       ],
-      instruction: "Press Reject on the row shown.",
+      instruction: "Press Exclude: not a requirement on the row shown, give a reason (e.g. \"walkthrough exercise\") and confirm.",
       done: async (ctx) => {
         const id = ctx.get<string>("req.addedId");
         if (!id) return true;
@@ -622,6 +628,7 @@ const chapter: TourChapter = {
     }),
     action({
       id: "requirements-select-all",
+      skipIf: RETIRED,
       title: "Select everything that is left",
       target: "req-select-all",
       placement: "bottom",
@@ -638,6 +645,7 @@ const chapter: TourChapter = {
     }),
     action({
       id: "requirements-approve-all",
+      skipIf: RETIRED,
       title: "Approve everything that is left",
       target: "req-bulk-approve",
       placement: "bottom",

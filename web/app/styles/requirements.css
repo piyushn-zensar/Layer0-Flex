@@ -26,3 +26,5 @@ details.card[open] > summary { padding-bottom: var(--s3); border-bottom: 1px sol
   .req-table .col-actions { width: 180px; }
   .bulkbar .bulk-merge .inline { margin-bottom: 0; }
 }
+
+.exceptions { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s3); }

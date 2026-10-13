@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def standalone(rows: list[dict]) -> list[dict]:
     """Requirements that are not groups, sub-requirements or duplicates (the reader's own line items)."""
-    return [r for r in rows if r["kind"] == "item" and not r["parent_id"] and r["status"] == "proposed"
+    return [r for r in rows if r["kind"] == "item" and not r["parent_id"] and r["status"] == "approved"
             and r["provenance"] == "EXTRACTED"]
 
 
@@ -112,7 +112,7 @@ def test_people_decide_and_dispatch_needs_go():
 
 
 def test_requirement_review_actions():
-    """P-06: edit, split, merge, add missed; freeze needs every line item decided; replaced items leave the flow."""
+    """P-06: edit, split, merge, add missed; the register freezes as it is (P-22: no approve step); replaced items leave the flow."""
     client = signed_in()
     opp = client.post("/api/opportunities", json={"title": "review actions"}).json()["id"]
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
@@ -142,11 +142,6 @@ def test_requirement_review_actions():
                          json={"quote": "Each phase shall have 1 inch diameter ground ball.", "category": "technical", "page": 55}).json()
     assert missed["provenance"] == "EXTRACTED" and missed["page"] == 55
 
-    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 409  # undecided items left
-    rows = client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]
-    for r in rows:
-        if r["status"] == "proposed":
-            client.post(f"/api/requirements/{r['req_id']}/review", json={"action": "approve"})
     assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 200
     statuses = {r["req_id"]: r["status"] for r in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
     assert statuses[p55[1]["req_id"]] == "split" and statuses[p55[2]["req_id"]] == "merged"
@@ -277,8 +272,9 @@ def test_review_findings_fixed():
     client.post(f"/api/opportunities/{opp}/requirements/extract")
     everything = client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]
     first_ids = {r["req_id"] for r in everything}
-    rows = [r for r in everything if not r["parent_id"] and r["status"] == "proposed"]  # requirements to decide
-    client.post(f"/api/requirements/{rows[0]['req_id']}/review", json={"action": "reject"})
+    rows = [r for r in everything if not r["parent_id"] and r["status"] == "approved"]  # the register (P-22)
+    assert client.post(f"/api/requirements/{rows[0]['req_id']}/review", json={"action": "reject"}).status_code == 409  # no reason
+    client.post(f"/api/requirements/{rows[0]['req_id']}/review", json={"action": "reject", "reason": "not a requirement"})
     assert client.post(f"/api/opportunities/{opp}/requirements/extract").status_code == 409  # review started
     assert client.post(f"/api/opportunities/{opp}/requirements", json={"quote": "  ", "category": "technical"}).status_code == 409
     assert client.post(f"/api/opportunities/{opp}/requirements/merge",
@@ -288,8 +284,6 @@ def test_review_findings_fixed():
     p56 = next(r for r in alone if r["page"] != p55["page"])
     assert client.post(f"/api/opportunities/{opp}/requirements/merge",
                        json={"req_ids": [p55["req_id"], p56["req_id"]], "text": "x"}).status_code == 409  # cross-page
-    for r in rows[1:]:
-        client.post(f"/api/requirements/{r['req_id']}/review", json={"action": "approve"})
     assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 200
     assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 409  # no empty baseline 2
     assert client.post(f"/api/requirements/{rows[0]['req_id']}/review", json={"action": "approve"}).status_code == 409
@@ -355,12 +349,12 @@ def test_requirement_history():
     client.post(f"/api/requirements/{a}/review", json={"action": "edit", "text": "Edited once", "reason": "clearer"},
                 headers=auth("crown.de"))
     client.post(f"/api/requirements/{a}/review", json={"action": "edit", "category": new_cat})
-    client.post(f"/api/requirements/{a}/review", json={"action": "approve"})
+    client.post(f"/api/requirements/{a}/review", json={"action": "reject", "reason": "not a requirement"})
     h = client.get(f"/api/requirements/{a}/history").json()
     assert [(v["label"], v["text"], v["category"]) for v in h["versions"]] == [
         ("original", original, rows[0]["category"]), ("edited", "Edited once", rows[0]["category"]), ("edited", "Edited once", new_cat)]
     assert h["versions"][1]["by"] == "Crown Design Engineer" and h["versions"][1]["reason"] == "clearer"
-    assert [e["action"] for e in h["events"]] == ["proposed", "edit", "edit", "approve"]
+    assert [e["action"] for e in h["events"]] == ["proposed", "edit", "edit", "reject"]
     merged = client.post(f"/api/opportunities/{opp}/requirements/merge", json={"req_ids": [b, c], "text": "one"}).json()["req_id"]
     assert client.get(f"/api/requirements/{b}/history").json()["events"][-1]["details"]["into"] == merged
     assert client.get(f"/api/requirements/{merged}/history").json()["derived_from"] == [b, c]
@@ -389,8 +383,8 @@ def test_grouping_and_duplicates():
     assert len(trace) == r["requirements"] and all(t["req"]["parent_id"] is None for t in trace)
     assert next(t for t in trace if t["req"]["req_id"] == group["req_id"])["children"]
 
-    # approving a group decides its sub-requirements; ungroup releases them
-    client.post(f"/api/requirements/{kids[0]['req_id']}/review", json={"action": "reject"})
+    # excluding a sub-requirement leaves the rest of its group in the register; ungroup releases them
+    client.post(f"/api/requirements/{kids[0]['req_id']}/review", json={"action": "reject", "reason": "not a requirement"})
     client.post(f"/api/requirements/{group['req_id']}/review", json={"action": "approve"})
     after = {x["req_id"]: x["status"] for x in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
     assert after[kids[0]["req_id"]] == "rejected" and all(after[k["req_id"]] == "approved" for k in kids[1:])
@@ -874,3 +868,53 @@ def test_sign_in():
     from app.modules.catalog import service as catalog
     names = set(catalog.people()) | {"Administrator"}
     assert all(a["name"] in names and a["role"] in core_auth.ROLES for a in core_auth.accounts().values())
+
+
+def test_register_and_exception_queue():
+    """P-22 (C-02): verified sources enter the register directly; the rest wait in the exception queue, outside it,
+    until linked to their lines or dismissed with a reason."""
+    client = signed_in()
+    pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
+    opp = client.post("/api/opportunities", json={"title": "exception queue"}).json()["id"]
+    client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    url = f"/api/opportunities/{opp}/requirements"
+    found = client.post(url, json={"quote": "Each phase shall have 1 inch diameter ground ball.", "page": 55}).json()
+    assert (found["status"], found["provenance"]) == ("approved", "EXTRACTED")
+    lost, other = (client.post(url, json={"quote": f"The vendor shall paint the switchgear {c}.", "page": 55}).json()
+                   for c in ("purple", "orange"))
+    assert (lost["status"], lost["provenance"], lost["page"]) == ("exception", "UNANCHORED", None)
+
+    listed = client.get(url).json()
+    assert listed["exceptions"] == 2
+    queue = client.get(f"{url}/exceptions").json()
+    assert [q["req_id"] for q in queue] == [lost["req_id"], other["req_id"]]
+    assert queue[0]["suggested_page"] == 55 and "page 55" in queue[0]["reason"]
+    assert client.get(f"/api/opportunities/{opp}/trace").json()["rows"][0]["req"]["req_id"] == found["req_id"]
+    assert len(client.get(f"/api/opportunities/{opp}/trace").json()["rows"]) == 1  # exceptions are not in the flow
+
+    # never into the register without a verified source
+    review = f"/api/requirements/{lost['req_id']}/review"
+    assert client.post(review, json={"action": "approve"}).status_code == 409
+    assert client.post(review, json={"action": "reject", "reason": "x"}).status_code == 409  # dismiss it instead
+
+    # resolve: the selected lines become its quote and source
+    page = {line["n"]: line for line in client.get(f"/api/documents/{found['document_id']}/pages/55").json()["lines"]}
+    resolved = client.post(f"/api/requirements/{lost['req_id']}/resolve",
+                           json={"page": 55, "line_start": 52, "line_end": 53}, headers=auth("crown.de")).json()
+    assert (resolved["status"], resolved["provenance"], resolved["source"]) == ("approved", "EXTRACTED", "p. 55, lines 52-53")
+    assert resolved["quote"] == f"{page[52]['text']} {page[53]['text']}" and resolved["text"] == lost["text"]
+    assert client.post(f"/api/requirements/{lost['req_id']}/resolve",
+                       json={"page": 55, "line_start": 52, "line_end": 53}).status_code == 409  # no longer an exception
+
+    # dismiss: a reason is required
+    dismiss = f"/api/requirements/{other['req_id']}/dismiss"
+    assert client.post(dismiss, json={"reason": "  "}).status_code == 409
+    assert client.post(dismiss, json={"reason": "not in this RFP"}).json()["status"] == "dismissed"
+    assert client.get(f"{url}/exceptions").json() == [] and client.get(url).json()["exceptions"] == 0
+    actions = [e["action"] for e in client.get(f"/api/requirements/{lost['req_id']}/history").json()["events"]]
+    assert actions == ["proposed", "resolved"] and client.get(f"/api/requirements/{other['req_id']}/history").json()["events"][-1]["details"]["reason"] == "not in this RFP"
+
+    # open exceptions never block the baseline; nothing in it lacks a source
+    client.post(url, json={"quote": "The vendor shall paint the switchgear green.", "page": 55})
+    assert client.post(f"/api/opportunities/{opp}/baselines").json()["count"] == 2
+    assert client.post(dismiss.replace(other["req_id"], lost["req_id"]), json={"reason": "x"}).status_code == 409  # frozen

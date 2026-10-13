@@ -50,6 +50,18 @@ class LinesIn(BaseModel):
     category: str = "technical"
 
 
+class ResolveIn(BaseModel):
+    page: int
+    line_start: int
+    line_end: int
+    text: str = ""
+    category: str | None = None
+
+
+class DismissIn(BaseModel):
+    reason: str
+
+
 def _guard(fn):
     """Service errors -> HTTP: unknown id 404, not allowed in this state 409."""
     try:
@@ -64,8 +76,15 @@ def _guard(fn):
 def requirements(opp_id: str, db: Session = Depends(get_db)):
     _guard(lambda: opportunities.require(db, opp_id))  # an unknown opportunity is a 404, not an empty list
     b = service.baseline(db, opp_id)
-    return {"requirements": [row(r, "source") for r in service.current(db, opp_id, include_inactive=True, include_children=True)],
-            "baseline": row(b) if b else None}
+    rows = service.current(db, opp_id, include_inactive=True, include_children=True)
+    return {"requirements": [row(r, "source") for r in rows], "baseline": row(b) if b else None,
+            "exceptions": sum(r.status == "exception" for r in rows)}
+
+
+@router.get("/opportunities/{opp_id}/requirements/exceptions")
+def exceptions(opp_id: str, db: Session = Depends(get_db)):
+    _guard(lambda: opportunities.require(db, opp_id))
+    return service.exceptions(db, opp_id)
 
 
 @router.post("/opportunities/{opp_id}/requirements/extract")
@@ -96,6 +115,17 @@ def merge(opp_id: str, body: MergeIn, request: Request, db: Session = Depends(ge
 def review(req_id: str, body: ReviewIn, request: Request, db: Session = Depends(get_db)):
     _guard(lambda: service.review(db, req_id, body.action, actor(request), body.text, body.reason, body.category))
     return row(service.get(db, req_id), "source")
+
+
+@router.post("/requirements/{req_id}/resolve")
+def resolve(req_id: str, body: ResolveIn, request: Request, db: Session = Depends(get_db)):
+    return row(_guard(lambda: service.resolve(db, req_id, body.page, body.line_start, body.line_end, actor(request),
+                                              body.text, body.category)), "source")
+
+
+@router.post("/requirements/{req_id}/dismiss")
+def dismiss(req_id: str, body: DismissIn, request: Request, db: Session = Depends(get_db)):
+    return row(_guard(lambda: service.dismiss(db, req_id, body.reason, actor(request))), "source")
 
 
 @router.post("/requirements/{req_id}/ungroup")

@@ -5,7 +5,7 @@ export type OfferingType = "CTO" | "SEMI_CUSTOM" | "ETO" | "NONE";
 // The status vocabularies (kept as `string` on the shapes below so a new backend value never breaks a page);
 // <StatusBadge> colours every one of them. OpportunityStatus is the workflow order of the stepper.
 export type OpportunityStatus = "new" | "reading" | "review" | "frozen" | "go" | "no_go" | "dispatched" | "consolidating" | "submitted";
-export type RequirementStatus = "proposed" | "approved" | "rejected" | "merged" | "split" | "duplicate";
+export type RequirementStatus = "proposed" | "approved" | "rejected" | "merged" | "split" | "duplicate" | "exception" | "dismissed" | "removed";
 export type MatchStatus = "proposed" | "accepted" | "rejected";
 export type AssignmentStatus = "assigned" | "submitted" | "validated" | "returned" | "withdrawn";
 export type Severity = "high" | "medium" | "low";
@@ -27,6 +27,12 @@ export interface Requirement {
   derived_from: string[]; created_by: string; kind: "item" | "group"; parent_id: string | null;
   document_id: string; // the RFP, or the change document a new version comes from (P-11)
 }
+// Requirement register (C-02/C-05): approved = in the register; exception / dismissed sit outside it.
+export const STATUS_LABELS: Record<string, string> = { approved: "In register", rejected: "Excluded: not a requirement", exception: "Source not verified",
+  dismissed: "Dismissed", duplicate: "Duplicate", proposed: "Proposed", split: "Split", merged: "Merged", removed: "Removed" };
+export const statusLabel = (s: string) => STATUS_LABELS[s] ?? s.replace(/_/g, " ");
+// An exception-queue row: the proposed text whose source could not be verified, with the reader's page hint and the reason.
+export interface RequirementException extends Requirement { suggested_page: number | null; reason: string }
 export interface Baseline { number: number; count: number; frozen_by: string }
 export interface Match {
   id: number; req_id: string; bu: string | null; product_id: string | null; offering_type: OfferingType;
