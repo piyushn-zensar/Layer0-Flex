@@ -14,6 +14,14 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | J-06 | Monday demo click-path checklist (in the walkthrough) and a dry run with Piyush | S3 | Mon 12 Oct AM | doing | `team/demo-checklist.md`: click path, script, value messages, backup paths, FAQ, dry-run list, risks (kept in team/, not Documents/: it names the team and lists internal risks). Dry run with Piyush still to do; eb2fd50 |
 | J-07 | Response-outline view (uses P-10) | S4 | after 12 Oct | done | built by Piyush on 10 Oct (team handover): `consolidation/outline` page, linked from Final response; executive summary and chapters with cited requirements, to add or confirm, validated answers, still open, related passages; Markdown download; the stepper keeps Final response current on its sub-pages ([contract] Janvia: `OppSteps.tsx`, one line) |
 | J-08 | Compliance matrix as a professional Excel file (.xlsx), generated deterministically (openpyxl, no model): title block, frozen header row, filters, column widths, wrapped text, offering-type colours, source page and lines; keep the CSV | S3 | Sun 11 Oct | done | built by Piyush on 10 Oct (team handover): Excel workbook with a customer sheet (validated answers only, Comply / Partially comply / Does not comply / Exception / Open, RFP order, sub-requirements with references) and an internal Tracking sheet (CSV columns); text-only cells; test added |
+| J-09 | Terminology in the shell (Bids, New bid), the portfolio (Bids list), trace and consolidation; stepper per technical-architecture §16.2 (RFP · Requirements · Traceability · Assessment · Compliance matrix · Bid decision; Changes separate) | It2 (C-01) | CP1 Wed 14 | todo | depends on: — |
+| J-14 | Demo data: remove the hyperscale bid from `data/seed` (with P-26); find 2–3 independent public switchgear or substation RFPs (issuer, link, pages, why it is public) in `team/independent-rfp-candidates.md` | It2 (C-11) | CP1 Wed 14 | todo | depends on: — |
+| J-10 | Shell: signed-in name, role and unit; **Sign out**; remove the Acting as picker (`GET /api/auth/me`) | It2 (C-09) | Thu 15 | todo | depends on: P-20 |
+| J-11 | Compliance matrix screen (consolidation route): `GET /api/opportunities/{id}/compliance-matrix`, table, filters, row detail panel, hover reason on partial / non-compliant, source preview (page PNG and highlight boxes), Excel and CSV with the new columns | It2 (C-13, C-14) | Target Mon 19 | todo | depends on: A-18 fields (empty until) |
+| J-12 | Three panes: enlarge / restore, a lock per pane, unit responses only after Send for assessment | It2 (C-15) | Target Mon 19 | todo | depends on: — |
+| J-13 | Activity view (uses P-27) and links from matrix rows to response history (A-21) | It2 (C-16) | Target Mon 19 | todo | depends on: P-27, A-21 |
+| J-15 | Walkthrough: chapters for the new words, steps and roles (sign-in instead of Acting as); the bubble never covers its target and can be minimised; `Documents/walkthrough.md` and screenshots | It2 (C-22, C-01) | Mon 19 (last) | todo | depends on: everything |
+| J-16 | Priority 3 note: spreadsheet tools (Row Zero, Quadratic, Gigasheet) against the built-in matrix, `team/spreadsheet-tools.md` | It2 (C-21) | if time | todo | depends on: — |
 
 ## J-03 walkthrough: review checklist (9 Oct 2026)
 
@@ -43,6 +51,16 @@ Voice, structure and the "Planned" labels are good. Fix the items below before t
 
 The Monday click-path checklist is J-06, a separate task.
 
+## Iteration 2 (13–19 Oct 2026): start here
+
+Plan, contracts and dates: [team/PLAN.md](../PLAN.md) section 9; design: `Documents/technical-architecture.md` section 16 (16.2 glossary and steps, 16.7 matrix and panes); change register: `Documents/changes.md`. Use Sonnet; no long agent runs.
+
+- **Start now (no dependencies):** J-09 terminology and the new stepper, J-14 demo data and independent RFP candidates, J-12 three panes.
+- **Build against contracts:** response fields `reason`, `conditions`, `workaround`, `next_steps` (Atharv A-18) show as empty cells until they land; `GET /api/auth/me` (Piyush P-20) for J-10; activity API (P-27) for J-13.
+- **Others wait on you:** J-14 candidates (Piyush P-26 picks one; needed by Wed 14).
+- **Walkthrough last (J-15):** after the screens settle on Sat 17 / Sun 18; sign-in replaces Acting as in every chapter.
+- **Checkpoints:** CP1 Wed 14 (J-09, J-14); CP2 Fri 16 (J-10); Target Mon 19 (J-11, J-12, J-13, J-15).
+
 ## Blocked on / needs from others
 
 | Date | Need | From | Status |
@@ -64,3 +82,4 @@ The Monday click-path checklist is J-06, a separate task.
 | 10 Oct 2026 | J-06 started: Monday demo checklist written as `team/demo-checklist.md` (14-step click path with a 10-minute cut, script per screen, value messages, backup navigation, client questions, dry-run list, known risks) | dry run with Piyush; J-03 retake; J-07, J-08 |
 | 10 Oct 2026 | Piyush (team handover): demo checklist refreshed after the P-18 reader re-run renumbered the requirements: hero IDs (0887, 0889, 0336, 0893, 0815, 0141, 0001), counts (814 line items, 348 requirements), advice 6 of 9, Excel download (J-08), the deviation flag (A-10) in place of the FPM flag | dry run; J-03 retake |
 | 11 Oct 2026 | Piyush (team handover): walkthrough text updated (Changes built, current demo numbers, Excel matrix, response outline, knowledge base); RFP upload button can no longer be clicked twice; screenshots still to retake | J-03 screenshots; dry run |
+| 13 Oct 2026 | Iteration 2 planned from the 12 Oct review: tasks J-09, J-14, J-10, J-11, J-12, J-13, J-15, J-16 added (team/PLAN.md section 9) | J-09, J-14 for CP1 Wed 14 Oct |

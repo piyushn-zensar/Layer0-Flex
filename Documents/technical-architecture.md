@@ -13,6 +13,8 @@
 - The document-reading tools (PyMuPDF, pdfplumber, Tesseract OCR) were decided by the project team on 7 Oct 2026. Everything else is **Proposed (inferred design)** unless it is marked built.
 - Open points are in section 14 and are marked **Needs confirmation** where they appear.
 
+**Status update (13 Oct 2026).** The review of 12 Oct 2026 changed the workflow (revision 3): the bid manager summarises, routes and coordinates; the units' product managers and design engineers assess; go/no-go follows their assessment; only source-backed requirements enter the register; the first extraction is preserved as an immutable snapshot; users sign in with assigned roles. The change register is [changes.md](changes.md) (C-01 to C-22) and the target build design is **section 16** (Proposed (inferred design)). Sections 6.3, 7.3, 7.4, 7.5 and 9 describe the build as of 12 Oct 2026; where section 16 differs, section 16 is the target and those passages are history.
+
 ## 2. What the System Must Do
 
 Layer 0 follows one opportunity from the arrival of the RFP to the final response. The roles are the **bid manager**, who owns the opportunity and knows all the business units, and, in each business unit, a **product manager** and a **design engineer** (Expected, review meetings).
@@ -274,6 +276,8 @@ Every line item has a history view (built 9 Oct 2026), rebuilt from the append-o
 
 Freezing needs every active line item to be approved or rejected. A named person then **freezes** the approved set as **baseline 1**. From then on, requirements change only through new versions created by change handling (section 8), including requirements found missing after the freeze.
 
+> **Superseded by the 12 Oct 2026 review (history).** Per-requirement approve or reject by the bid manager and the "every item decided" freeze rule are replaced by the source-backed register, the exception queue, the immutable extraction snapshot and extraction corrections (section 16.3; changes.md C-02, C-04, C-05).
+
 ### 6.4 The requirement record
 
 ```text
@@ -340,11 +344,15 @@ Both fill a go/no-go criterion. The standard ratings and capacities (`portfolio.
 
 On a go decision, one action creates an **assignment** for each requirement and its matched participating unit, owned by that unit's design engineer. Items that are not product items are assigned to the **bid desk** (the bid manager). A requirement may have assignments for several units. A unit's **work package** is its set of assignments, shown in its inbox with the main RFP and each line item's source. Dispatch can be repeated safely; it does not duplicate assignments.
 
+> **Superseded by the 12 Oct 2026 review (history).** Dispatch will no longer wait for a go decision: the bid manager sends the published register for assessment, and go/no-go follows the units' assessment. Product requirements without a unit become "Needs an owner" instead of falling back to the bid desk (section 16.5; changes.md C-06, C-08).
+
 Workflow templates per customer type (mandatory and optional steps) are not built. The review of 8 Oct asked to keep the workflow to one step.
 
 ### 7.5 Checklist responses and validation (step 5)
 
 For each assignment, the unit records **compliance** (met, partial, not met, exception), the product or configuration that meets it, and a short response. The bid manager then **validates** it (validated) or **returns** it (returned, with a note). Every action is audited. Unit progress (validated out of total) is shown on the portfolio and on the three screens.
+
+> **Superseded by the 12 Oct 2026 review (history).** Compliance becomes fully, partially or non-compliant with reason, conditions, workaround and next steps; the unit's product manager validates by default (configurable), and the bid manager checks completeness without certifying technical answers (section 16.5; changes.md C-07, C-12).
 
 ### 7.6 Consolidation (step 6)
 
@@ -409,6 +417,8 @@ Navigation: the top bar has four destinations (Opportunities, My work, Product c
 **Guided walkthrough** (built 11 Oct 2026). The web app carries an embedded, step-by-step walkthrough of the whole workflow: 12 chapters and about 220 steps that spotlight each control, explain what it does and why, ask for the real action (with one-click examples that load the sample RFP and the illustrative addendum), wait for the result and explain it. It offers itself once per server start, can be skipped, resumed, restarted or opened by chapter from the Walkthrough button, and keeps its place across page reloads. `WALKTHROUGH_GUIDE.md` lists every chapter, screen and step.
 
 The acting user is chosen from a list in the header (bid manager, or a unit's product manager or design engineer). Real sign-in is added before a pilot.
+
+> **Superseded by the 12 Oct 2026 review (history).** The "Acting as" list is replaced by sign-in with assigned roles enforced by the server (section 16.6; changes.md C-09). The navigation and step names change as listed in section 16.2.
 
 ## 10. Data Model
 
@@ -508,6 +518,8 @@ Each stage leaves the application running end to end. The demonstration RFP is t
 - The agent sees five candidate requirements per statement, ranked by keyword similarity. When the right one is missing, a person names the requirement ID in the decision form.
 - The drastic-change threshold (25%) is a placeholder, and the suggestion of a linked opportunity is a warning only.
 
+**Decisions needed after the 12 Oct 2026 review (Needs confirmation):** the exact document types; whether the visible bid ID changes; the default validation sequence inside a unit; the independent validation RFP; sign-in for a pilot (single sign-on or an internal role model); the priority of Word and Excel documents ([changes.md](changes.md) section 7).
+
 ## 15. Reuse from Existing Code Lines
 
 The earlier code is copied, read-only, into `reference/` in the repository and ported module by module. The full M1-to-M17 port table is in [architecture-overview.md](architecture-overview.md).
@@ -525,3 +537,134 @@ The earlier code is copied, read-only, into `reference/` in the repository and p
 | Event log, edit, split and merge ideas | v1.0 | core audit, requirements review |
 
 Each piece is ported only when its stage needs it, with its known defects fixed or recorded.
+
+## 16. Target Design after the 12 Oct 2026 Review (Proposed (inferred design))
+
+This section is the build design for the changes in [changes.md](changes.md). It is written so that the module owners can build in parallel: each subsection names the module that owns it and fixes the interface the others rely on. Nothing here is built yet; each part is marked built as it lands.
+
+### 16.1 Rules for this iteration
+
+- **Contracts first, stored values stable.** API paths (`/api/opportunities/...`), table names, stored status values and identifiers stay as they are, unless a subsection below changes them. Visible labels change on the screens (section 16.2). This keeps the frozen model answers, the tests and the other modules working while each part is rebuilt.
+- **The module rules do not change.** Modules talk only through `service.py`; every write is an audit event; every model call goes through the gateway.
+- **Every new rule is enforced in the backend**, not only in the screens.
+
+### 16.2 Visible terms (glossary for every screen, message, export and walkthrough step)
+
+| Today | Target |
+|---|---|
+| Opportunities / Opportunity | **Bids** / **Bid** |
+| New opportunity | **New bid** |
+| Role (of a document): main, addendum, qa, change, other | **Document type**: Main RFP, Addendum, Clarification / Q&A, Change request, Other (stored values unchanged) |
+| Requirements review (approve / reject) | **Requirements**: the register, the exception queue and corrections |
+| UNANCHORED / unanchored | **Source not verified** (in the exception queue only) |
+| provenance EXTRACTED | **Source verified** (or not shown) |
+| Bid desk | **Bid desk (commercial and submission items)** |
+| met / partial / not_met / exception | **Fully compliant / Partially compliant / Non-compliant** (exception retired) |
+| Final response | **Compliance matrix** |
+| Bid decision (participation, go/no-go, dispatch) | **Assessment** (summary, participation, routing, Send for assessment) and **Bid decision** (go/no-go only) |
+| Acting as | Signed-in user and Sign out |
+
+Stepper inside a bid: **1 RFP · 2 Requirements · 3 Traceability · 4 Assessment · 5 Compliance matrix · 6 Bid decision**, with **Changes** as a separate link. Top bar: **Bids · My work · Product catalog · Knowledge base**, **New bid**, the signed-in user, **Sign out**, **Walkthrough**.
+
+### 16.3 Requirement register, exception queue and extraction snapshot (owner: requirements, changes)
+
+**Register.** The requirement register is the set of current requirements with status `approved` (shown as "In register"). Only requirements with verified source evidence (`provenance = EXTRACTED`) may have that status; the service refuses anything else. `requirements.current()` keeps returning the register, so matching, dispatch, consolidation and trace are unchanged.
+
+**Extraction admits directly.** When the reader runs, each anchored, non-duplicate candidate enters the register as `approved` with `origin = "extraction"`; duplicates stay `duplicate`; a candidate whose quote cannot be verified gets the new status **`exception`** (inactive, outside the register). There is no per-requirement approve step.
+
+**Exception queue.** `requirements.exceptions(db, opp_id)` lists the `exception` rows with the page the reader suggested and the reason. Resolving: link it to its lines (`resolve`: same rules as add-from-lines; the row becomes `approved`, origin `correction`) or `dismiss` with a reason (status `dismissed`, inactive). Both are audit events.
+
+**Snapshot.** New table `extraction_snapshot`: `id`, `opportunity_id`, `document_id`, `number` (1 = E1), `reason`, `created_by`, `created_at`, `model`, `pipeline_version`, `coverage` (JSON), `items` (JSON: every candidate with quote, text, category, section, spans, group, duplicate-of, status). Rows are never updated or deleted (database triggers, as for the audit log). The first extract writes E1. A second extract writes E2 only when called with a reason by a named person; the earlier snapshot stays readable.
+
+**Versions and origins.** New column `requirement.origin`: `extraction`, `correction` or `customer_change`. Before the register is published, corrections (edit, split, merge, add a missed requirement, exclude as not a requirement, resolve an exception) change the working rows and record the reason; E1 keeps the original. After publishing, a correction creates a new version and the next baseline, like a customer change but without a change document, with the page, person and reason; affected unit answers are returned for review (`workpackages.return_for_change`). Change documents set `origin = "customer_change"`. Requirement history labels each version with its origin.
+
+**Exclusion.** "Not a requirement" (an extraction mistake) uses status `rejected` with a required reason, shown as "Excluded: not a requirement". It is never used for a requirement a unit cannot meet; that stays in the register and is answered non-compliant.
+
+**Publishing.** `POST /api/opportunities/{id}/baselines` keeps its path and now means **publish the register for assessment**: it needs a read main RFP and at least one requirement in the register. Open exceptions do not block it; they are listed as open questions on the summary. Re-publishing after corrections creates the next baseline.
+
+**Coverage.** `extract` returns and stores `coverage`: `pages`, `pages_read`, `pages_unreadable`, `chunks`, `chunks_failed`, `candidates`, `admitted`, `exceptions`, `duplicates`, `groups`.
+
+New and changed endpoints (owner: requirements):
+
+| Method and path | Purpose |
+|---|---|
+| `GET /api/opportunities/{id}/extraction` | Snapshots (number, created by, reason, coverage), newest first |
+| `GET /api/opportunities/{id}/extraction/{n}` | One snapshot's items |
+| `POST /api/opportunities/{id}/requirements/extract` | Body adds optional `reason`; refused without a reason when a snapshot exists |
+| `GET /api/opportunities/{id}/requirements` | Rows add `origin` and `spans`; response adds `exceptions` count and `coverage` |
+| `POST /api/requirements/{req_id}/resolve` | Body `{page, line_start, line_end, text?, category?}`: link an exception to its lines |
+| `POST /api/requirements/{req_id}/dismiss` | Body `{reason}` (required) |
+| `POST /api/requirements/{req_id}/review` | `approve` removed from the screens; `reject` needs a `reason` and means "exclude: not a requirement"; `edit` unchanged |
+| `POST /api/opportunities/{id}/corrections` | After publishing: `{kind: add / edit / split / merge / exclude, ..., reason}` creates versions and the next baseline |
+
+### 16.4 Source anchoring and coverage (owner: requirements, ingestion)
+
+- The reader's answer schema adds `lines`: the line labels it read each requirement from (for example `["L12", "L13"]`, with the page). The quote is verified against those lines first, then against the page, then the whole document.
+- `requirement.spans` (JSON): one or more `{document_id, page, line_start, line_end, bboxes}`; the existing `page`, `line_start`, `line_end`, `bboxes` hold the first span for the other modules.
+- Normalisation joins words hyphenated across a line break; among several occurrences the one nearest to the reader's lines wins; a quote may continue across a page break as two spans.
+- The reader's frozen answers are regenerated with the live model (the answer format changes). The golden list measures recall before and after.
+
+### 16.5 Routing, assessment and decision (owner: decisions, workpackages, matching)
+
+**Assessment step** (new screen `/opportunities/{id}/assessment`): the bid summary (counts by category and offering type, major sections, suggested units, open questions: exceptions, requirements needing an owner, rule warnings, open questions and comments), participation, the routing table (requirement → unit → specialist), and **Send for assessment**, which calls publish (16.3) then dispatch. After sending: progress per unit.
+
+**Dispatch.** Needs a published baseline and participation; no longer needs a go decision. A recorded no-go stops further dispatch and withdraws open work. Product requirements without a unit are not dispatched: they are listed as **Needs an owner** until a person assigns a unit (manual match) or records a capability gap (a non-compliant answer with the reason, owned by the bid manager). The bid desk (`BID`) receives only items the matcher routes there by rule as non-product items.
+
+**Workflow configuration** (new file `data/knowledge_base/workflow.json`, owner: workpackages):
+
+```json
+{"respond": {"unit": ["design_engineer", "product_manager"], "BID": ["bid_manager"]},
+ "validate": {"unit": ["product_manager"], "BID": ["bid_manager"]},
+ "return_with_question": ["bid_manager"]}
+```
+
+**Assignment response** (table `assignment`, new nullable columns): `reason` (what is not met and why), `conditions`, `workaround`, `next_steps`. Compliance keeps its stored values `met`, `partial`, `not_met`, shown as Fully / Partially / Non-compliant; `exception` is no longer offered (old rows show "Exception (earlier value)"). `reason` is required for `partial` and `not_met`. Statuses are unchanged (`assigned`, `submitted`, `validated`, `returned`, `withdrawn`); `validated` now means validated by the unit's configured authority. The bid manager's "return with a question" uses `returned` with the note.
+
+**Go/no-go** (Bid decision screen, after the compliance matrix): the **bid manager** makes the final call; there is no separate or configurable approver role (project-team decision, 13 Oct 2026). criteria file `go_no_go.json` without `cost_budget` and `competitors`; `delivery` becomes `schedule` ("Schedule: can the units meet the RFP's dates?") from the unit responses to schedule requirements; coverage and matches-reviewed become assessment completeness and compliance from validated responses. Recording go/no-go with missing assessments is allowed with a warning.
+
+### 16.6 Identity and permissions (owner: core; enforcement in every module)
+
+- **Accounts.** `data/accounts.json`: `username`, `name` (shown and stored as the actor), `role` (`bid_manager`, `product_manager`, `design_engineer`, `admin`), `bu` (for unit roles). Demonstration accounts mirror today's people list. The proof-of-concept password comes from `.env` (`DEMO_PASSWORD`).
+- **Session: simple JWT** (project-team decision, 13 Oct 2026). `POST /api/auth/login {username, password}` returns a JSON Web Token signed with HS256 (`JWT_SECRET` in `.env`; library PyJWT) with the claims `sub` (username), `name`, `role`, `bu` and `exp` (8 hours), and also sets it in an HttpOnly cookie `layer0_token` so the browser sends it through the `/api` proxy. The API accepts the token from the cookie or from an `Authorization: Bearer` header (scripts and tests). `POST /api/auth/logout` clears the cookie; `GET /api/auth/me` returns the claims. No refresh tokens, no token store: an expired token means signing in again. Every other `/api` route needs a valid token (401 otherwise). The `X-Actor` header and the "Bid Manager" default are removed.
+- **Helpers** (`app/core/web.py`): `user(request)` returns the signed-in account; `actor(request)` keeps returning its name, so existing service calls keep working; `require(request, *roles)` raises 403 with a clear message.
+- **Default permissions** (configuration: `workflow.json` for unit work, code for the rest):
+
+| Action | Bid manager | Product manager (own unit) | Design engineer (own unit) | Administrator |
+|---|---|---|---|---|
+| Read bids, sources, requirements, matrix | yes | yes | yes | yes |
+| Create a bid, upload documents, run the reader, publish | yes | - | - | - |
+| Extraction corrections, resolve or dismiss exceptions | yes | yes | yes | - |
+| Product match changes, participation, routing, dispatch | yes | - | - | - |
+| Respond to an assignment | bid desk items | yes | yes | - |
+| Validate a unit response | bid desk items | yes | - | - |
+| Return an answer with a question | yes | yes (own unit) | - | - |
+| Record go/no-go | yes | - | - | - |
+| Apply or discard a change set | yes | - | - | - |
+| Curate the knowledge base | yes | - | - | - |
+| Manage accounts and configuration | - | - | - | yes (files in the proof of concept) |
+
+- **Web.** A sign-in page (`/login`); any 401 sends the browser there; the top bar shows the signed-in name, role and unit and **Sign out**; the walkthrough switches roles by signing in as a demonstration account.
+
+### 16.7 Compliance matrix, three panes, history and comments (owner: consolidation, trace, workpackages, core)
+
+- **Compliance matrix screen** (`/opportunities/{id}/consolidation`): `GET /api/opportunities/{id}/compliance-matrix` returns one row per requirement and assignment with requirement, source (spans), unit, product, compliance, reason, conditions, workaround, next steps, state and history count; filters by unit, compliance, state and category; a row opens a detail panel; hovering a partial or non-compliant status shows its reason; a source reference opens a page preview with the lines highlighted (page image and highlight boxes from the existing endpoints). Excel and CSV gain the new columns; the customer sheet uses Fully / Partially / Non-compliant.
+- **Three panes:** enlarge and restore each pane; a lock per pane (locked panes follow the selection, unlocked panes stay); unit responses in pane 3 only after the bid is sent for assessment.
+- **History:** `GET /api/assignments/{id}/history` (every submission, validation, return, change with before and after); `GET /api/opportunities/{id}/activity` (the audit log of the bid, filterable by entity, requirement, unit, person; read-only) shown on an **Activity** view.
+- **Questions and comments:** new table `comment` (`id`, `opportunity_id`, `req_id`, `assignment_id` (optional), `author`, `text`, `kind` question or comment, `status` open or closed, `created_at`, `closed_by`, `closed_at`); `GET/POST /api/opportunities/{id}/comments`, `POST /api/comments/{id}/close`. Open questions count on the summary and block completion of consolidation.
+
+### 16.8 Demonstration data (owner: seed)
+
+The seeded demonstration contains only electrical-domain bids: the Syracuse switchgear RFP and, once frozen, an independent public switchgear or substation RFP from another issuer. The hyperscale sample stays in `data/RFP/samples` for tests but is no longer seeded.
+
+### 16.9 Interface summary for parallel work
+
+| Contract | Provided by | Used by | Until it lands |
+|---|---|---|---|
+| `requirements.current()` = register (status `approved`, source verified) | requirements | matching, decisions, workpackages, consolidation, trace | Unchanged semantics today |
+| `requirements.exceptions(db, opp_id)` → rows | requirements | decisions (summary open questions) | Return `[]` |
+| `POST /api/opportunities/{id}/baselines` = publish | requirements | Assessment screen (Send for assessment) | Today's freeze |
+| `workpackages.dispatch` without go | workpackages | Assessment screen, changes | — |
+| Assignment rows with `reason`, `conditions`, `workaround`, `next_steps` | workpackages | consolidation (matrix, exports), trace, knowledge | Fields absent → shown empty |
+| `web.user(request)`, `GET /api/auth/me`, 401 on no session | core | every module, shell | `actor()` keeps working |
+| `GET /api/opportunities/{id}/activity` | core / opportunities | Activity view | — |
+| Step routes `/assessment`, `/consolidation` (matrix), `/decisions` (go/no-go only) | shell | every page | Old routes stay until switched |

@@ -162,3 +162,88 @@ Source: the call recording of 8 Oct (internal). The Zensar point of contact was 
 - cost, budget, delivery and competitor data feeding the go/no-go summary;
 - model-assisted parsing of difficult pages inside the enterprise;
 - learning from the business units' real prior proposals.
+
+
+## 9. Iteration 2 (13–19 Oct 2026): changes from the 12 Oct review
+
+Source of truth: [Documents/changes.md](../Documents/changes.md) (C-01 to C-22, client-facing) and the target design with all interface contracts in [Documents/technical-architecture.md](../Documents/technical-architecture.md) **section 16**. The as-built baseline is in `Documents/current-system/`.
+
+Two team decisions on 13 Oct 2026 (Piyush): **the bid manager makes the final go/no-go call** (no configured approver role); **auth is simple JWT** (PyJWT, HS256, `JWT_SECRET`, 8 h, HttpOnly cookie `layer0_token` or `Authorization: Bearer`; no refresh tokens, no external identity service).
+
+### 9.1 Dates
+
+| When | Checkpoint | Must show |
+|---|---|---|
+| **Wed 14 Oct** | CP1 | C-01 terminology; C-02 exception queue (unverified text out of the register); C-10 criteria fixed; C-11 hyperscale bid removed from the seed; C-06 dispatch without go (backend) |
+| **Fri 16 Oct** | CP2 | C-05 Assessment screen + Send for assessment; C-06 end to end; C-07 roles and validation; C-08 Needs an owner; C-09 JWT sign-in on every page; C-04 snapshot E1 + correction origins; C-12 extended responses |
+| **Mon 19 Oct** | Target | C-13/C-14 interactive compliance matrix with source preview; C-15 panes; C-16 history + activity; C-17 comments; C-03 anchoring + regenerated reader answers; C-11 independent RFP; C-22 walkthrough; docs refreshed |
+
+### 9.2 How to work in parallel this iteration
+
+1. **Contracts first (technical-architecture §16.9).** Build against the contract, not against a teammate's unfinished code. Until a contract lands, use the stated fallback (for example `requirements.exceptions()` returns `[]`, missing response fields show as empty cells, `actor()` keeps returning a name).
+2. **Stored values and API paths stay** (`/api/opportunities/...`, `approved`, `met` / `partial` / `not_met`). Change **labels**, not data, unless your task says otherwise. This keeps frozen answers, tests and the other modules green.
+3. **New columns are nullable; there are no migrations.** After pulling a model change, run `reset-demo.cmd` (or `python -m scripts.seed_demo --reset`).
+4. **Tests use a login helper once P-20 lands** (`tests/conftest.py`, Piyush). Until then tests keep sending `X-Actor`.
+5. Same rules as section 2: own files only, `[contract]` commits for unavoidable cross-module additions, `pytest -q` before every push, tracker updated with the commit.
+
+### 9.3 New paths and owners (also in `.claude/rules/ownership.md`)
+
+| Path | Owner |
+|---|---|
+| `app/core/auth.py`, `data/accounts.json`, `web/app/login/**`, `web/components/tour/TourProvider.tsx` (sign-in switching) | Piyush |
+| `web/app/opportunities/[id]/assessment/**`, `data/knowledge_base/workflow.json`, the `comment` table (in `workpackages`) | Atharv |
+| `web/tour/chapters/**`, `web/components/tour/TourOverlay.tsx`, `web/components/tour/TourLauncher.tsx`, `team/independent-rfp-candidates.md`, `team/spreadsheet-tools.md` | Janvia |
+
+### 9.4 Tasks
+
+Priority 1 first; within a person, top to bottom. CP = checkpoint.
+
+#### Piyush (core, auth, requirements, changes, ingestion)
+
+| ID | Task | Changes | Due | Depends on |
+|---|---|---|---|---|
+| P-19 | Terminology on own screens and messages: New bid, RFP step (**Document type** select: Main RFP, Addendum, Clarification / Q&A, Change request, Other; stored values unchanged), Requirements, Changes; "Bid … not found." in own modules' messages; label helpers in `web/lib/types.ts` | C-01 | CP1 Wed 14 | — |
+| P-20 | JWT auth backend: `app/core/auth.py` (PyJWT HS256, claims `sub`, `name`, `role`, `bu`, `exp`), `data/accounts.json` (section 9.5), `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`, 401 on every other `/api` route, `web.user()` and `web.require()`; `actor()` returns the token's name; remove `X-Actor` and the "Bid Manager" default; `.env.example` (`JWT_SECRET`, `DEMO_PASSWORD`); `requirements.txt` (PyJWT); `tests/conftest.py` login helper | C-09 | Thu 15 AM | — |
+| P-21 | Web auth: `web/lib/api.ts` (no `X-Actor`, cookie sent, 401 goes to `/login`), sign-in page `web/app/login/page.tsx`, the walkthrough engine switches roles by signing in as a demo account (`ctx.signInAs`) | C-09 | Thu 15 | P-20 |
+| P-22 | Register and exception queue: reader items without verified source get status `exception` (never `approved`); the service refuses `approved` without `EXTRACTED`; `requirements.exceptions()`; `POST /api/requirements/{id}/resolve` (lines) and `/dismiss` (reason); anchored extraction items enter the register directly; Requirements page with Register and Exceptions tabs, no Approve / Reject buttons, "Exclude: not a requirement" with a reason | C-02, C-05 | CP1 (queue), CP2 (resolve) | — |
+| P-23 | Snapshot and origins: `extraction_snapshot` table (append-only trigger), E1 on the first extract, a re-read only with a reason (E2); `requirement.origin`; corrections after publish create versions and the next baseline and return affected answers (`workpackages.return_for_change`); `POST /api/opportunities/{id}/corrections`; `GET …/extraction` and `…/extraction/{n}`; `POST …/baselines` = publish (no "every item decided" rule); change documents set `customer_change` and ask for the document type | C-04, C-05 | CP2 Fri 16 | P-22 |
+| P-25 | Enforce permissions in opportunities, ingestion, requirements and changes (technical-architecture §16.6 matrix) | C-09 | CP2 Fri 16 | P-20 |
+| P-27 | `GET /api/opportunities/{id}/activity`: the bid's audit log, filters entity / requirement / unit / person, read-only | C-16 | Sat 17 | — |
+| P-24 | Anchoring: the reader schema adds line references; verify against them; multi-span (`requirement.spans`), cross-page, hyphenation join, nearest occurrence; regenerate `read_requirements` (Azure) and score against the golden list; `coverage` in the extract result and on the RFP step | C-03 | Target Mon 19 (answers by Sun 18) | P-22 |
+| P-26 | Seed: drop the hyperscale bid (CP1); seed accounts; read and freeze the independent RFP (layout and reader answers) once chosen | C-11 | CP1 / Target | J-14 |
+| P-28 | Investigations (priority 3): Word / Excel into the layout model (spike); past Flex responses for extraction (note) | C-18, C-19 | if time | — |
+| P-29 | Docs: mark built parts in technical-architecture §16 and changes.md; refresh `Documents/current-system/` at the end | all | Mon 19 | everything |
+
+#### Atharv (catalog, matching, decisions, work packages)
+
+| ID | Task | Changes | Due | Depends on |
+|---|---|---|---|---|
+| A-13 | Terminology on own screens and messages (Bid decision, My work, Product catalog); compliance shown as Fully / Partially / Non-compliant | C-01 | CP1 Wed 14 | — |
+| A-14 | Dispatch without go: needs a published baseline and participation only; a no-go stops dispatch and withdraws open work; tests | C-06 | CP1 Wed 14 | — |
+| A-15 | Criteria: `go_no_go.json` drops `cost_budget` and `competitors`; `delivery` becomes `schedule` ("Schedule: can the units meet the RFP's dates?") from unit responses; no "A-10" text in questions; coverage and matches-reviewed from validated responses; Bid decision page = go/no-go only, after assessment, warning when incomplete, **the bid manager decides** | C-10, C-06 | CP1 (criteria), CP2 (page) | — |
+| A-16 | Assessment screen `/opportunities/[id]/assessment`: bid summary (counts by category and offering, major sections, suggested units, open questions = `requirements.exceptions()` + needs-owner + rule warnings), participation, routing table, **Send for assessment** (`POST …/baselines` then `POST …/dispatch`), unit progress | C-05 | CP2 Fri 16 | `exceptions()` returns `[]` until P-22 |
+| A-17 | `data/knowledge_base/workflow.json` (respond: DE and PM; validate: PM; bid desk: BM; return with a question: BM); validation by the unit's configured role; inbox actions per role | C-07 | CP2 Fri 16 | P-20 (roles); names until then |
+| A-18 | Response fields on `assignment`: `reason`, `conditions`, `workaround`, `next_steps` (nullable); `reason` required for partial and non-compliant; `exception` no longer offered; inbox form; the fields in every assignment row (contract for J-11) | C-12 | CP2 Fri 16 | — |
+| A-19 | Needs an owner: product requirements without a unit are not dispatched and are listed; the bid desk only for rule-routed non-product items; capability gap = non-compliant with a reason | C-08 | CP2 Fri 16 | — |
+| A-20 | Enforce permissions in matching, decisions, workpackages and catalog | C-09 | CP2 Fri 16 | P-20 |
+| A-21 | `GET /api/assignments/{id}/history` and the history in the inbox | C-16 | Sat 17 | — |
+| A-22 | Questions and comments: `comment` table, `GET` / `POST /api/opportunities/{id}/comments`, `POST /api/comments/{id}/close`; on Assessment and in the inbox; open questions block consolidation | C-17 | Sun 18 | — |
+| A-23 | Matcher answers for the independent RFP | C-11 | Target | P-26 |
+| A-24 | Optional: summary counts link to Traceability filtered (`?category=`, `?offering=`) | C-20 | optional | J-12 |
+
+#### Janvia (shell, portfolio, trace, consolidation, walkthrough): lighter load, Sonnet
+
+| ID | Task | Changes | Due | Depends on |
+|---|---|---|---|---|
+| J-09 | Terminology in the shell (Bids, New bid), the portfolio (Bids list), trace and consolidation; stepper per technical-architecture §16.2 (RFP · Requirements · Traceability · Assessment · Compliance matrix · Bid decision; Changes separate) | C-01 | CP1 Wed 14 | — |
+| J-14 | Demo data: remove the hyperscale bid from `data/seed` (with P-26); find 2–3 independent public switchgear or substation RFPs (issuer, link, pages, why it is public) in `team/independent-rfp-candidates.md` | C-11 | CP1 Wed 14 | — |
+| J-10 | Shell: signed-in name, role and unit; **Sign out**; remove the Acting as picker (`GET /api/auth/me`) | C-09 | Thu 15 | P-20 |
+| J-11 | Compliance matrix screen (consolidation route): `GET /api/opportunities/{id}/compliance-matrix`, table, filters, row detail panel, hover reason on partial / non-compliant, source preview (page PNG and highlight boxes), Excel and CSV with the new columns | C-13, C-14 | Target Mon 19 | A-18 fields (empty until) |
+| J-12 | Three panes: enlarge / restore, a lock per pane, unit responses only after Send for assessment | C-15 | Target Mon 19 | — |
+| J-13 | Activity view (uses P-27) and links from matrix rows to response history (A-21) | C-16 | Target Mon 19 | P-27, A-21 |
+| J-15 | Walkthrough: chapters for the new words, steps and roles (sign-in instead of Acting as); the bubble never covers its target and can be minimised; `Documents/walkthrough.md` and screenshots | C-22, C-01 | Mon 19 (last) | everything |
+| J-16 | Priority 3 note: spreadsheet tools (Row Zero, Quadratic, Gigasheet) against the built-in matrix, `team/spreadsheet-tools.md` | C-21 | if time | — |
+
+### 9.5 Demo accounts (contract for P-20, J-10, J-15, A-17)
+
+`data/accounts.json` holds one account per person in today's people list (`bid.manager`; `ep2.pm`, `ep2.de`, `crown.pm`, `crown.de`, `anord.pm`, `anord.de`, `fpm.pm`, `fpm.de`, `jetcool.pm`, `jetcool.de`, `cloud.pm`, `cloud.de`, `ems.pm`, `ems.de`, `afs.pm`, `afs.de`) with `name` equal to today's display name, so stored actor names and frozen data stay valid, plus `admin`. The password for all of them comes from `DEMO_PASSWORD` in `.env`.

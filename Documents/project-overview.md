@@ -117,11 +117,24 @@ Detail is in [problem-mapping.md](problem-mapping.md). The core problem is how a
 - **Zensar point of contact**: the Zensar lead for the PoC, who reviews the documents and works with the business; the review meetings of 22 Sep, 5 Oct and 8 Oct 2026 were held with this role.
 - **The Zensar team**: takes the PoC forward. The PoC code was produced with AI coding tools and has no version history.
 - **Roles (Expected (review meetings), 8 Oct 2026).** One **bid manager** has a general idea of all the business units, receives the RFP and owns the opportunity. **Each business unit has a product manager and a design engineer.** The review spoke of six business units, with EP² named as one. The working list is in the terms table (section 2) and is Needs confirmation.
+- **Roles (Expected (review meetings), 12 Oct 2026).** The **bid manager** is not a system administrator and does not approve technical requirements: the bid manager reads the summary of the RFP, routes the work to the units and named specialists, coordinates, consolidates the responses and makes the final go/no-go call; there is no separate approver role (project-team decision, 13 Oct 2026). In each unit the **product manager** brings broad product experience and assesses product fit; the **design engineer** works through the design implications, deviations and workarounds. Roles come from each person's profile and are enforced by the system; how approvals run is configurable per customer. Details: [changes.md](changes.md) C-05, C-07, C-09.
 - **Intended end users (Proposed, inferred design):** the bid manager; the product managers and design engineers of the participating units; and the people who make go/no-go decisions. Titles and named individuals at SpinCo are Needs confirmation.
 
 ## 7. Target workflow (Intended)
 
-This is the business direction described in the review meetings, updated by the review of 8 Oct 2026. No code line implements it end to end. The new baseline (Layer0-Flex, section 10.4) is at stage 0: a running skeleton with a seeded demonstration.
+**Revision 3 (Expected (review meetings), 12 Oct 2026).** The review of 12 Oct 2026 changed the order and the owners of the steps:
+
+1. **Intake and extraction (system).** The documents are kept unchanged and read into **source-backed requirements**. The first extraction is preserved as an immutable snapshot. Text without verifiable source evidence goes to an exception queue, outside the requirement register. The system proposes a business unit and product for each requirement.
+2. **Initial understanding (bid manager).** A high-level summary: what the customer wants, the major sections, the suggested units and the open questions. No per-requirement approve or reject.
+3. **Routing (bid manager).** Choose the participating units, send the requirements to the units and specialists for assessment, add questions, resolve requirements without an owner.
+4. **Product and engineering assessment (each unit's product manager and design engineer).** Fully, partially or non-compliant, with reasons, conditions, workarounds and next steps; validated inside the unit.
+5. **Consolidation (bid manager).** The interactive compliance matrix, missing answers and conflicts, the decision summary.
+6. **Go / no-go (bid manager).** The bid manager makes the final call with the specialists' evidence, after the assessment. There is no separate approver role.
+7. **Changes.** Customer changes and extraction corrections are versioned on top of the stable reference and kept distinguishable.
+
+The full register of changes, with acceptance criteria and the delivery checkpoints of 14, 16 and 19 Oct 2026, is [changes.md](changes.md). **The revision 2 text below is history:** its order (go/no-go before dispatch), the bid manager's approval of every requirement and the bid manager's validation of every response are superseded.
+
+**Revision 2 (history, 8 Oct 2026).** This is the business direction described in the review meetings, updated by the review of 8 Oct 2026. No code line implements it end to end. The new baseline (Layer0-Flex, section 10.4) is at stage 0: a running skeleton with a seeded demonstration.
 
 The workflow is deliberately simple, and the review asked for it to be kept to one dispatch step. Think of different groups writing different chapters of one proposal.
 
@@ -314,6 +327,10 @@ Whether `layer0-delivery/` is the newest "enhanced" 17-module version is also un
 
 ## 12. Roadmap and next steps
 
+### 12.0a Current plan (from 13 Oct 2026)
+
+The next iteration builds the changes from the 12 Oct 2026 review ([changes.md](changes.md)). Checkpoints: **Wed 14 Oct 2026** (business terminology, exception queue, corrected decision checks, off-domain demonstration bid removed, dispatch no longer waiting for go); **Fri 16 Oct 2026** (bid summary and routing, assessment before go/no-go, unit roles, sign-in, extraction snapshot, extended unit responses); **Mon 19 Oct 2026** (interactive compliance matrix with clickable sources, three-pane controls, history and activity log, questions and comments, stronger anchoring, an independent validation RFP; the improved demonstration shown to real users). The plan below (from 8 Oct 2026) is history: its stages 0 to 5 are built.
+
 ### 12.0 Current plan (from 8 Oct 2026)
 
 **Timeline (Expected (review meetings), 8 Oct 2026).**
@@ -396,6 +413,22 @@ Each point is marked as stated in the meeting, as written direction from the Zen
 9. **Concurrency and retention** (stated in the meeting): unique requirement IDs across opportunities, a workspace per engagement, and append-only retention for the life of the project and beyond.
 10. **Layer0-Flex is the single code base** (project-team decision, 8 Oct 2026), as in section 10.4.
 
+### 13.1b Direction from the 12 Oct 2026 review
+
+Stated in the meeting unless marked otherwise; formal sign-off is still pending. Details and acceptance criteria are in [changes.md](changes.md).
+
+1. **Business-ready over more features.** Accurate, using the business's words, realistic roles, convincing for real Flex users.
+2. **Business terminology.** "Bids" instead of "Opportunities"; "Document type" instead of the role of a document; no developer wording (C-01).
+3. **Every requirement traces to its source.** Requirements without verifiable source evidence are kept apart from the register; other extraction techniques should be explored (C-02, C-03).
+4. **The first extraction is a stable reference** tied to the customer document; temperature zero for extraction (C-04).
+5. **The bid manager summarises, routes and consolidates**, does not approve technical requirements, and makes the final go/no-go call (project-team decision, 13 Oct 2026: no separate approver role) (C-05).
+6. **Go/no-go follows the specialists' assessment** (C-06); product managers and design engineers have distinct responsibilities; workflows are configurable (C-07).
+7. **Roles through assigned identities**, later through IAM or an internal role model (C-09).
+8. **Remove cost against budget**; reword the schedule check; review the other checks; stay within intake, requirement understanding and qualification (C-10).
+9. **Relevant demonstration data** and an independent validation RFP (C-11).
+10. **An interactive compliance matrix** with reasons, workarounds, next steps and clickable sources; three-pane controls; complete history (C-12 to C-17).
+11. **Selective improvements**: Word and Excel documents (CAD excluded), past Flex responses for extraction, drill-down, spreadsheet tools, an unobtrusive walkthrough (C-18 to C-22).
+
 ### 13.2 Decisions recorded in the written sources (earlier iterations)
 
 - 22 Sep: rewrite the documents to match the code instead of building the missing stages.
@@ -432,5 +465,7 @@ Each point is marked as stated in the meeting, as written direction from the Zen
 - [problem-mapping.md](problem-mapping.md) lists each business problem (PM-001 to PM-018, grouped as core workflow, supporting capabilities, and commitments, capacity and volume) and each PoC or project problem (PM-101 to PM-112) with impact, solution options and success criteria. The identifiers were created for documentation traceability only.
 - [architecture-overview.md](architecture-overview.md) explains the modules, stages and data flow of each code line and where Layer 0 sits next to existing systems.
 - [technical-architecture.md](technical-architecture.md) is the build design for the next version: how an RFP is read into anchored requirements (PyMuPDF, pdfplumber, Tesseract OCR), the data model, the workflow modules, change handling, the views and the build order.
+- [changes.md](changes.md) is the register of the changes decided after the review of 12 Oct 2026 (C-01 to C-22): the revised workflow, what changes, acceptance criteria, checkpoints and open questions. The target build design for them is section 16 of technical-architecture.md.
+- [current-system/](current-system/) describes the system as built at commit 4c6d866 (13 Oct 2026) in four documents: system architecture, technical architecture, every screen, and every API endpoint. Each one lists which of its sections the changes affect.
 - A team plan exists outside this Documents folder; it tracks work and is not part of the source of truth.
 - Original files are kept unchanged. Where a source is superseded (earlier "agentic CPQ" documents, all catch-rate and ROI figures, the original problem and solution documents), this document describes it only as history (section 11).

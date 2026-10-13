@@ -16,6 +16,8 @@ Layer 0 is a proof of concept (PoC: a small build that tests whether an idea wor
 
 This workflow is the business direction described in the review meetings (22 Sep, 5 Oct and 8 Oct 2026) and is used as the working baseline. It has not been formally signed off, and no existing build implements it end to end. The review of 8 Oct 2026 added concrete direction (three screens, roles, an agentic process, retrieval) and made the Git repository **Layer0-Flex** the single code base; it is a skeleton only on that date. The architecture assumes that EP² (Electrical Power Products) is already part of SpinCo / Axiom Solutions (written direction from the Zensar point of contact), and the design includes solution components coming from EP².
 
+**Update from the review of 12 Oct 2026 (Expected (review meetings)).** The order and owners changed (revision 3): the system extracts **source-backed requirements** and preserves the first extraction as an immutable snapshot; text without verifiable source evidence goes to an exception queue; the bid manager reads a summary and **routes the requirements to the units for assessment** without approving them one by one; each unit's product manager and design engineer assess them (fully, partially or non-compliant, with reasons and workarounds) and the unit validates its answer; the bid manager consolidates them in an interactive compliance matrix; **go/no-go follows the assessment**. Users sign in with assigned roles. The register of changes is [changes.md](changes.md); the build design is [technical-architecture.md](technical-architecture.md) section 16. The seven steps and the flow below describe revision 2 and are kept as history where they differ (go/no-go before dispatch; bid-manager approval of requirements and validation of responses).
+
 ## Who This Is For
 
 Developers who have just joined the Layer 0 PoC and who have no electrical-engineering or Flex background. Business background is in [business-and-domain-background.md](business-and-domain-background.md); the project story is in [project-overview.md](project-overview.md); the problems this architecture must address are in [problem-mapping.md](problem-mapping.md).
@@ -76,6 +78,8 @@ The intended workflow has seven steps (status: Intended). Since 8 Oct 2026 it is
 7. **Bring the responses together** into the final bid response with complete traceability, and check that every requirement is answered or explicitly excluded.
 
 Cross-cutting at every step: human approval and accountability; an audit history of decisions and changes; handling of clarifications (customer questions and answers), addenda and change requests against the affected requirements; concurrency (several RFPs and people at once; requirement IDs unique across opportunities; a workspace per engagement); and append-only retention of all opportunity data for the life of the project and beyond, because warranty clauses apply (8 Oct 2026). The review meetings described incremental handling of change requests, with a drastically changed RFP treated as a new opportunity (Expected (review meetings)).
+
+> **Revised order (12 Oct 2026).** 1 read and extract source-backed requirements (exceptions kept apart) → 2 bid summary → 3 participation and routing ("Send for assessment") → 4 product and engineering assessment by the units → 5 consolidation in the compliance matrix → 6 go/no-go with the specialists' evidence → changes versioned throughout. Steps 3 and 4 above (go/no-go, then the workflow) move after the assessment.
 
 ### The traceability chain and three screens
 
@@ -144,12 +148,15 @@ Everything in this section is **Proposed (inferred design)** unless stated. It i
  (c) product matching against business-unit offerings (RAG)
           |        -> business unit, product, offering type; BOM reference
           |
- (d) go/no-go decision record  <--- named person decides; evidence assembled
-          |  (go)
- (e) opportunity workflow creation + work assignment
+ (d) bid summary + routing ("Send for assessment")  <--- bid manager; no
+          |                                          per-requirement approval
+ (e) unit assessment: product manager + design engineer (fully / partially /
+          |   non-compliant, reasons, workarounds); validated inside the unit
+ (f) consolidation: interactive compliance matrix, gaps and conflicts
           |
- (f) team-response tracking
-          |
+ (f2) go/no-go decision record  <--- bid manager makes the final call, with the specialists'
+          |                            evidence (revised 12 Oct 2026; earlier:
+          |                            go/no-go before work assignment)
 
  (g) coverage check + traceability into final response
           |

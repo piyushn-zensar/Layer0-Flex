@@ -41,7 +41,7 @@ The intended workflow (status: Intended; not signed off; not implemented end to 
 | Cross-cutting: human approval, audit history, clarifications, addenda and change requests | PM-005, PM-013, PM-017; PM-009 (later contract phases); defects in PM-106 |
 | Volume pressure on all steps | PM-014 |
 | The whole process run by agents under people's approval | PM-112 |
-| Project and PoC problems that block or weaken the steps above | PM-101 to PM-112 (see Part B for the step each one affects) |
+| Project and PoC problems that block or weaken the steps above | PM-101 to PM-118 (see Part B for the step each one affects; PM-113 to PM-118 come from the review of 12 Oct 2026, see [changes.md](changes.md)) |
 
 ## Problem index
 
@@ -96,6 +96,12 @@ Part A is grouped for prominence. A1 is the core workflow; A2 holds supporting c
 | PM-110 | [Code versions and documents are fragmented and contradictory (no version control)](#pm-110-code-versions-and-documents-are-fragmented-and-contradictory-no-version-control) |
 | PM-111 | [Integrations with downstream systems exist only as stubs](#pm-111-integrations-with-downstream-systems-exist-only-as-stubs) |
 | PM-112 | [The PoC has no agentic process](#pm-112-the-poc-has-no-agentic-process) |
+| PM-113 | [Requirements without verified source evidence can enter the requirement set](#pm-113-requirements-without-verified-source-evidence-can-enter-the-requirement-set) |
+| PM-114 | [The workflow decides before the specialists assess, and gives the bid manager technical authority](#pm-114-the-workflow-decides-before-the-specialists-assess-and-gives-the-bid-manager-technical-authority) |
+| PM-115 | [The first extraction is not preserved as a stable reference](#pm-115-the-first-extraction-is-not-preserved-as-a-stable-reference) |
+| PM-116 | [Users choose their own role; there is no authenticated identity](#pm-116-users-choose-their-own-role-there-is-no-authenticated-identity) |
+| PM-117 | [Developer wording and off-domain demonstration data weaken credibility](#pm-117-developer-wording-and-off-domain-demonstration-data-weaken-credibility) |
+| PM-118 | [The compliance matrix is only a download, and partial compliance has no explanation](#pm-118-the-compliance-matrix-is-only-a-download-and-partial-compliance-has-no-explanation) |
 
 The worked examples are near the end of the document.
 
@@ -1310,6 +1316,174 @@ Earlier iterations were framed as triage, extraction or decision support (PM-101
 ### Dependencies and constraints
 PM-102 (wire and test the modules), PM-103 (model-based identification), PM-106 (freeze and audit log), PM-018 (retrieval knowledge). Choice of model and hosting remains open.
 
+
+---
+
+## PM-113: Requirements without verified source evidence can enter the requirement set
+
+### Problem
+A requirement whose quote cannot be found in the RFP is kept as "unanchored" and can still be approved, frozen, matched, dispatched and exported. Customers and reviewers cannot check it against the RFP, and it may be the model's invention.
+
+### Context and current behavior
+**Workflow step affected: 1 (read and understand), and everything after it.**
+
+- **Expected (review meetings), 12 Oct 2026:** every requirement must trace to its original source, ideally page, paragraph and line; requirements without a source mapping are kept apart from validated ones; other extraction techniques should be explored. The review called unverified requirements a potential go/no-go issue.
+- **Implemented (by code line), Layer0-Flex at 13 Oct 2026:** 33 of 976 requirement rows on the Syracuse demonstration are unanchored; they are part of baseline 1 ([current-system/01-system-architecture.md](current-system/01-system-architecture.md) section 10.3).
+- The anchoring requires the whole quote on one page, matches an exact normalised substring, takes the first occurrence and fails on words hyphenated across lines.
+
+### Evidence or symptoms
+The unanchored badge appears in the work packages and the evidence pack lists 32 unanchored top-level requirements on the demonstration bid.
+
+### Impact
+A single invented or misplaced requirement undermines trust in all of them, and a unit may spend effort answering something the customer never asked.
+
+### Cause
+Anchoring was designed to flag, not to exclude; the reader returns only a quote, not the lines it read.
+
+### Expected solution
+**Expected (review meetings):** keep unverified text out of the requirement set and visible for investigation.
+
+**Proposed (inferred design):** a source-backed register with an exception queue; the reader returns line references; multi-span and cross-page anchoring; extraction coverage measured separately from traceability ([changes.md](changes.md) C-02, C-03).
+
+### Success criteria
+- No requirement without verified source evidence in the register, the matrix, the exports or the decision summary.
+- Every exception is visible, resolved by linking it to its lines or dismissed with a reason.
+- Fewer exceptions than today's 33 on the Syracuse RFP, with no loss of recall against the golden list.
+
+### Dependencies and constraints
+PM-003, PM-013, PM-107. The reader's frozen answers must be regenerated when its answer format changes.
+
+## PM-114: The workflow decides before the specialists assess, and gives the bid manager technical authority
+
+### Problem
+The bid manager approves every requirement, records go/no-go before any unit sees the work, and validates every unit answer. The review described a different practice: the bid manager coordinates; product managers and design engineers assess; the decision follows their assessment.
+
+### Context and current behavior
+**Workflow steps affected: 2 to 7.**
+
+- **Expected (review meetings), 12 Oct 2026:** the bid manager reads the summary, routes, consolidates and makes the final decision (project-team decision, 13 Oct 2026), and is not a system administrator; the RFP is distributed to product managers and design engineers first; the informed decision follows their feedback; workflows are configurable.
+- **Implemented (by code line):** dispatch needs a recorded "go"; only the bid manager validates answers; product manager and design engineer have the same rights; items without a unit fall back to the bid desk ([current-system/02-technical-architecture.md](current-system/02-technical-architecture.md) sections 13 and 14).
+
+### Evidence or symptoms
+The evidence needed for go/no-go (unit compliance) arrives only after the decision is recorded.
+
+### Impact
+Decisions are taken without the specialists' evidence, and the bid manager is made accountable for technical judgements outside the role.
+
+### Cause
+Revision 2 of the workflow placed go/no-go before dispatch and kept the bid manager as the single approver.
+
+### Expected solution
+**Expected (review meetings):** summary → routing → assessment by the units → consolidation → go/no-go.
+
+**Proposed (inferred design):** an Assessment step with "Send for assessment"; dispatch without go; validation by the unit's configured authority; explicit "Needs an owner" ([changes.md](changes.md) C-05 to C-08).
+
+### Success criteria
+- A bid goes from read to routed without any per-requirement approval.
+- Go/no-go is recorded with the units' assessment shown.
+- A design engineer cannot validate; the bid manager cannot certify a technical answer.
+
+### Dependencies and constraints
+PM-008, PM-015, PM-016, PM-116.
+
+## PM-115: The first extraction is not preserved as a stable reference
+
+### Problem
+The first interpretation of the RFP (which passages are requirements and how they are divided) is not stored as such. Before review, a re-read replaces the earlier drafts; before the freeze, edits change rows in place; after the freeze, a requirement missed by the extraction can only come in through a change document.
+
+### Context and current behavior
+**Workflow steps affected: 1 and changes (cross-cutting).**
+
+- **Expected (review meetings), 12 Oct 2026:** the initial extracted interpretation becomes a stable reference tied to the customer document; temperature zero for extraction.
+- **Implemented (by code line):** cached model answers, baseline 1, new versions and baselines for addenda, an append-only audit log ([current-system/01-system-architecture.md](current-system/01-system-architecture.md) section 10).
+
+### Evidence or symptoms
+There is no way to show the first extraction exactly as produced after corrections, and no way to tell an extraction correction from a customer change.
+
+### Impact
+A silent re-run or correction can change the starting reference; disputes about what the RFP was read to require cannot be settled.
+
+### Cause
+Freezing was tied to the bid manager's approval rather than to the extraction itself.
+
+### Expected solution
+**Proposed (inferred design):** an immutable extraction snapshot (E1); versioned corrections and customer changes with their origin; temperature zero kept, but repeatability from stored results ([changes.md](changes.md) C-04).
+
+### Success criteria
+- E1 can be shown unchanged after any correction or addendum.
+- Every version names its origin (extraction, correction, customer change), the person and the reason.
+
+### Dependencies and constraints
+PM-106, PM-112, PM-005.
+
+## PM-116: Users choose their own role; there is no authenticated identity
+
+### Problem
+Anyone can act as any person by choosing a name in the header; the server trusts that name and defaults to the bid manager.
+
+### Context and current behavior
+**Cross-cutting.**
+
+- **Expected (review meetings), 12 Oct 2026:** roles are assigned through a person's profile; later IAM or an internal role model; no unrestricted role switching.
+- **Implemented (by code line):** an "Acting as" list sent as a header ([current-system/02-technical-architecture.md](current-system/02-technical-architecture.md) section 22).
+
+### Impact
+Accountability and the audit trail depend on a name anyone can type; role rules can be bypassed.
+
+### Expected solution
+**Proposed (inferred design):** sign-in with demonstration accounts, roles and units enforced by the server, Sign out instead of "Acting as" ([changes.md](changes.md) C-09); enterprise single sign-on for a pilot (Needs confirmation).
+
+### Success criteria
+- Requests without a session are refused; every forbidden action is refused by the server for every role.
+
+### Dependencies and constraints
+PM-013, PM-114.
+
+## PM-117: Developer wording and off-domain demonstration data weaken credibility
+
+### Problem
+The screens use developer terms ("Opportunities", "Role" of a document, raw status values) and the demonstration includes a fictional AI training campus bid outside the business's domain.
+
+### Context and current behavior
+**Cross-cutting (presentation).**
+
+- **Expected (review meetings), 12 Oct 2026:** "Bids" and "Document type"; no developer terminology; only relevant switchgear and electrical examples; an independent RFP for validation.
+- **Implemented (by code line):** [current-system/03-ui-view.md](current-system/03-ui-view.md) sections 4, 7 and 9.
+
+### Impact
+Real users judge the tool by its words and examples first; unfamiliar terms and off-domain bids distract from the value.
+
+### Expected solution
+A shared glossary applied on every screen, message, export and walkthrough step; seeded demonstration limited to electrical-domain bids; an independent public switchgear or substation RFP read end to end ([changes.md](changes.md) C-01, C-11).
+
+### Success criteria
+- No developer term on any screen; only electrical-domain bids in the list; the independent RFP runs end to end.
+
+### Dependencies and constraints
+PM-109.
+
+## PM-118: The compliance matrix is only a download, and partial compliance has no explanation
+
+### Problem
+Unit answers carry a compliance value and one short text. Partial compliance has no reason, conditions, workaround or next steps, and the matrix can only be read by downloading a file.
+
+### Context and current behavior
+**Workflow steps affected: 6 and 7.**
+
+- **Expected (review meetings), 12 Oct 2026:** fully, partially or non-compliant with rationale, comments, workaround and next steps entered by the technical teams; the matrix opened in the application with row details, hover explanations and clickable source references; download kept.
+- **Implemented (by code line):** [current-system/03-ui-view.md](current-system/03-ui-view.md) sections 13 and 16.
+
+### Impact
+The bid manager cannot see why a requirement is only partly met without opening files and asking the unit.
+
+### Expected solution
+Extended unit responses and an interactive compliance matrix with source previews ([changes.md](changes.md) C-12 to C-14).
+
+### Success criteria
+- A partially compliant answer cannot be submitted without its reason; the whole matrix can be filtered and inspected in the browser; each source reference opens its highlighted lines.
+
+### Dependencies and constraints
+PM-007, PM-016, PM-017.
 
 ---
 
