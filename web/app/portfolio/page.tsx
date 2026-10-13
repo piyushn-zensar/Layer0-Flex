@@ -1,5 +1,5 @@
 "use client";
-// Portfolio: every opportunity with unit progress.  Owner: Janvia.
+// Portfolio: every bid with unit progress.  Owner: Janvia.
 import Link from "next/link";
 import { useApi } from "@/lib/api";
 import type { Opportunity, Progress } from "@/lib/types";
@@ -37,14 +37,14 @@ export default function PortfolioPage() {
   const { data, error } = useApi<Item[]>("/api/portfolio");
   return (
     <div className="content">
-      <PageHead title="Opportunities" help="Every RFP in progress, with how far each business unit has answered.">
-        <Link className="button" href="/opportunities/new" data-tour="portfolio-new">New opportunity</Link>
+      <PageHead title="Bids" help="Every bid in progress, with how far each business unit has answered.">
+        <Link className="button" href="/opportunities/new" data-tour="portfolio-new">New bid</Link>
       </PageHead>
       <Alert kind="error">{error}</Alert>
       {!data && !error && <Skeleton lines={4} />}
       {data?.length === 0 && (
-        <EmptyState title="No opportunities yet" hint={<>Create one, or run <span className="mono">python -m scripts.seed_demo</span> for the demo data.</>}>
-          <Link className="button" href="/opportunities/new">New opportunity</Link>
+        <EmptyState title="No bids yet" hint={<>Create one, or run <span className="mono">python -m scripts.seed_demo</span> for the demo data.</>}>
+          <Link className="button" href="/opportunities/new">New bid</Link>
         </EmptyState>)}
       {data && data.length > 0 && (
         <table className="portfolio" data-tour="portfolio-table">

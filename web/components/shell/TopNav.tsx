@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 // `tour` is the data-tour id the guided walkthrough spotlights (web/tour/chapters/navigation.ts).
 const LINKS = [
-  { href: "/portfolio", label: "Opportunities", match: ["/portfolio", "/opportunities/"], tour: "shell-nav-opportunities" },
+  { href: "/portfolio", label: "Bids", match: ["/portfolio", "/opportunities/"], tour: "shell-nav-opportunities" },
   { href: "/inbox", label: "My work", match: ["/inbox"], tour: "shell-nav-mywork" },
   { href: "/catalog", label: "Product catalog", match: ["/catalog"], tour: "shell-nav-catalog" },
   { href: "/knowledge", label: "Knowledge base", match: ["/knowledge"], tour: "shell-nav-knowledge" }, // A-11 curator queue

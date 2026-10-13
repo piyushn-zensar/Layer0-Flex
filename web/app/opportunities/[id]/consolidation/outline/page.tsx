@@ -18,7 +18,7 @@ type Chapter = {
 };
 type Outline = { total: number; answered: number; validated_answers: number; summary: Draft; chapters: Chapter[]; note: string };
 
-const OPEN_SHOWN = 8; // open requirements listed per chapter before the link to Final response
+const OPEN_SHOWN = 8; // open requirements listed per chapter before the link to the Compliance matrix
 const HELP = "A first draft for the bid manager to edit, written by the drafting agent only from validated answers. Every paragraph cites its requirements; nothing is drafted for open ones.";
 
 export default function OutlinePage() {
@@ -27,7 +27,7 @@ export default function OutlinePage() {
   const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/opportunities/${id}/knowledge`); // A-11
   const head = (
     <PageHead level={2} title="Response outline" help={HELP}>
-      <Link className="button secondary" href={`/opportunities/${id}/consolidation`} data-tour="outline-back">Back to Final response</Link>
+      <Link className="button secondary" href={`/opportunities/${id}/consolidation`} data-tour="outline-back">Back to Compliance matrix</Link>
       {o && <a className="button" href={`/api/opportunities/${id}/response-outline.md`} data-tour="outline-download">Download outline (Markdown)</a>}
     </PageHead>);
   if (error) return <>{head}<Alert kind="error">{error}</Alert></>;
@@ -89,7 +89,7 @@ export default function OutlinePage() {
           {c.open.length > 0 && (
             <details data-tour={n === firstOpen ? "outline-open" : undefined}><summary>Still open ({c.open.length})</summary>
               <ul>{c.open.slice(0, OPEN_SHOWN).map((r) => <li key={r.req_id}>{ref(r.req_id)} <span className="muted">{r.source}</span> {r.text}</li>)}</ul>
-              {c.open.length > OPEN_SHOWN && <p className="muted">and {c.open.length - OPEN_SHOWN} more: see <Link href={`/opportunities/${id}/consolidation`}>Final response</Link>.</p>}
+              {c.open.length > OPEN_SHOWN && <p className="muted">and {c.open.length - OPEN_SHOWN} more: see <Link href={`/opportunities/${id}/consolidation`}>Compliance matrix</Link>.</p>}
             </details>)}
           {(c.references.rfp.length > 0 || c.references.past.length > 0) && (
             <details data-tour={n === firstRefs ? "outline-refs" : undefined}><summary>Related passages</summary>

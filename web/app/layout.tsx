@@ -13,7 +13,7 @@ import "./styles/trace.css";
 import "./styles/consolidation.css";
 import "./styles/tour.css";
 
-export const metadata: Metadata = { title: "Layer 0", description: "Opportunity workflow PoC" };
+export const metadata: Metadata = { title: "Layer 0", description: "Bid workflow PoC" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -23,10 +23,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* The guided walkthrough (components/tour) wraps the shell so its button, overlay and dialog share one state. */}
           <TourProvider>
             <header className="topbar">
-              <Link className="brand" href="/portfolio" data-tour="shell-brand"><span className="brand-mark" aria-hidden>L0</span>Layer 0 <span className="brand-sub">Opportunity workflow</span></Link>
+              <Link className="brand" href="/portfolio" data-tour="shell-brand"><span className="brand-mark" aria-hidden>L0</span>Layer 0 <span className="brand-sub">Bid workflow</span></Link>
               <TopNav />
               <div className="topbar-right">
-                <Link className="button" href="/opportunities/new" data-tour="shell-new-opportunity">New opportunity</Link>
+                <Link className="button" href="/opportunities/new" data-tour="shell-new-opportunity">New bid</Link>
                 <ActorPicker />
                 <WalkthroughButton />
               </div>

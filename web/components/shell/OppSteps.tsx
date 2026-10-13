@@ -1,5 +1,5 @@
 "use client";
-// Opportunity header: breadcrumb, title, status and the workflow stepper.  Owner: Janvia.
+// Bid header: breadcrumb, title, status and the workflow stepper.  Owner: Janvia.
 // A page that changes the status (freeze, go/no-go, dispatch, apply/discard a change set) refreshes this header at once with
 //   window.dispatchEvent(new Event("opp-status-changed"))
 // right after its own reload(); otherwise the header catches up on the next poll (5 s).
@@ -10,13 +10,17 @@ import { useApi } from "@/lib/api";
 import type { Opportunity } from "@/lib/types";
 import StatusBadge from "@/components/ui/StatusBadge";
 
-// Workflow order. A step is ticked once the opportunity status has moved past it. `tour` is the walkthrough's data-tour id.
+// Workflow order (technical-architecture 16.2): RFP, Requirements, Traceability, Assessment, Compliance matrix, Bid decision.
+// A step is ticked once the bid status has moved past it. `tour` is the walkthrough's data-tour id.
+// Until the Assessment page lands (A-16, route /assessment), Assessment and Bid decision share the /decisions page: the first
+// step that matches the path is the current one. Then point Assessment at "/assessment" and keep Bid decision on "/decisions".
 const STEPS = [
   { suffix: "", label: "RFP", doneFrom: "reading", tour: "step-rfp" },
   { suffix: "/requirements", label: "Requirements", doneFrom: "frozen", tour: "step-requirements" },
   { suffix: "/trace", label: "Traceability", doneFrom: "go", tour: "step-trace" },
-  { suffix: "/decisions", label: "Bid decision", doneFrom: "go", tour: "step-decisions" },
-  { suffix: "/consolidation", label: "Final response", doneFrom: "submitted", tour: "step-consolidation" },
+  { suffix: "/decisions", label: "Assessment", doneFrom: "dispatched", tour: "step-decisions" },
+  { suffix: "/consolidation", label: "Compliance matrix", doneFrom: "submitted", tour: "step-consolidation" },
+  { suffix: "/decisions", label: "Bid decision", doneFrom: "go", tour: "step-bid-decision" },
 ];
 const ORDER = ["new", "reading", "review", "frozen", "go", "no_go", "dispatched", "consolidating", "submitted"];
 const rank = (s: string) => (s === "no_go" ? ORDER.indexOf("go") : ORDER.indexOf(s));
@@ -42,13 +46,14 @@ export default function OppSteps() {
   return (
     <div className="opp-head" data-tour="opp-head">
       <div className="opp-title">
-        <nav className="crumbs" aria-label="Breadcrumb"><Link href="/portfolio">Opportunities</Link><span aria-hidden>›</span><span className="mono">{id}</span></nav>
+        <nav className="crumbs" aria-label="Breadcrumb"><Link href="/portfolio">Bids</Link><span aria-hidden>›</span><span className="mono">{id}</span></nav>
         <h1>{data?.opportunity.title ?? id} {data && <span data-tour="opp-status"><StatusBadge status={status} kind="opp" className="opp-status lg" label={status.replace("_", "-")} /></span>}</h1>
       </div>
       <nav aria-label="Workflow steps">
         <ol className="stepper" data-tour="stepper">
           {STEPS.map((s, i) => {
-            const current = path === base + s.suffix || (s.suffix !== "" && path.startsWith(base + s.suffix + "/")); // sub-pages too
+            const onPage = path === base + s.suffix || (s.suffix !== "" && path.startsWith(base + s.suffix + "/")); // sub-pages too
+            const current = onPage && STEPS.findIndex((o) => o.suffix === s.suffix) === i; // a shared page highlights its first step only
             const done = rank(status) >= rank(s.doneFrom);
             return (
               <li key={s.label} className={`${current ? "current" : ""} ${done ? "done" : ""}`} data-tour={s.tour}>

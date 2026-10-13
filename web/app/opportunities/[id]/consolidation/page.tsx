@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useApi } from "@/lib/api";
+import { complianceLabel } from "@/lib/types";
 import type { Assignment, Requirement } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, EmptyState, Skeleton, StatusBadge } from "@/components/ui";
@@ -37,7 +38,7 @@ export default function ConsolidationPage() {
   const { id } = useParams<{ id: string }>();
   const { data: cov, error } = useApi<Coverage>(`/api/opportunities/${id}/consolidation`);
   const [onlyOpen, setOnlyOpen] = useState(false);
-  const head = <PageHead level={2} title="Final response" help={HELP} />;
+  const head = <PageHead level={2} title="Compliance matrix" help={HELP} />;
   if (error) return <>{head}<Alert kind="error">{error}</Alert></>;
   if (!cov) return <>{head}<Skeleton lines={4} /></>;
 
@@ -51,7 +52,7 @@ export default function ConsolidationPage() {
   return (
     <>
       {/* UX-12: the downloads and the outline are page actions, not part of the sentence */}
-      <PageHead level={2} title="Final response" help={HELP}>
+      <PageHead level={2} title="Compliance matrix" help={HELP}>
         <Link className="button secondary" href={`/opportunities/${id}/consolidation/outline`} data-tour="cons-outline-link">Response outline (draft)</Link>
         <a className="button secondary" href={`/api/opportunities/${id}/compliance-matrix.csv`} data-tour="cons-csv">CSV</a>
         <a className="button" href={`/api/opportunities/${id}/compliance-matrix.xlsx`} data-tour="cons-xlsx">Download compliance matrix (Excel)</a>
@@ -98,7 +99,7 @@ export default function ConsolidationPage() {
                     <td>{r.text}</td>
                     <td>{assignments.map((a) => (
                       <div key={a.id} className="cons-unit"><strong>{a.bu}</strong>
-                        {a.compliance ? <StatusBadge status={a.compliance} kind="compliance" /> : <span className="muted">no compliance yet</span>}
+                        {a.compliance ? <StatusBadge status={a.compliance} kind="compliance" label={complianceLabel(a.compliance)} /> : <span className="muted">no compliance yet</span>}
                         {a.product_ref && <span className="muted">{a.product_ref}</span>}
                         <StatusBadge status={a.status} /></div>))}
                       {assignments.length === 0 && <span className="muted">not assigned</span>}</td>

@@ -4,14 +4,12 @@
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { errorMessage, post, useApi } from "@/lib/api";
+import { complianceLabel, docTypeLabel, sourceLabel } from "@/lib/types";
 import type { Trace } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
 import MatchActions from "@/components/matching/MatchActions"; // A-05 (Atharv)
 import SendToKnowledge from "@/components/knowledge/SendToKnowledge"; // A-11 (Atharv)
-
-// P-11: what a document other than the main RFP is (its upload role).
-const ROLE: Record<string, string> = { change: "Change document", addendum: "Addendum", qa: "Q&A" };
 
 export default function TracePage() {
   const { id } = useParams<{ id: string }>();
@@ -97,7 +95,7 @@ export default function TracePage() {
           <h2>1 · Original RFP</h2>
           {shown && page ? (<>
             <div className="trace-docs" data-tour="trace-docs">
-              <span>Showing <strong>{docName(shown)}</strong>{shown.id !== mainId && <> <span className="tag">{ROLE[shown.role] ?? "Document"}</span></>}</span>
+              <span>Showing <strong>{docName(shown)}</strong>{shown.id !== mainId && <> <span className="tag">{docTypeLabel(shown.role)}</span></>}</span>
               {docs.length > 1 && <span className="trace-doc-switch" role="group" aria-label="Document shown" data-tour="trace-doc-switch">{docs.map((d) => (
                 <button key={d.id} type="button" className={`chip${d.id === shown.id ? " on" : ""}`} aria-pressed={d.id === shown.id} title={d.filename}
                   onClick={() => { setDocId(d.id); setPageNo(1); }}>{docName(d)}</button>))}</span>}
@@ -127,7 +125,7 @@ export default function TracePage() {
 
         <section className="pane" data-tour="trace-pane-2">
           <h2>2 · Requirement breakdown</h2>
-          {data.rows.length === 0 ? <EmptyState title="No requirements yet" hint="Nothing has been extracted from the RFP for this opportunity." /> : (
+          {data.rows.length === 0 ? <EmptyState title="No requirements yet" hint="Nothing has been extracted from the RFP for this bid." /> : (
           <table className="rows" data-tour="trace-table-2">
             <thead><tr><th className="col-id">ID</th><th className="col-src">Source</th><th>Requirement</th></tr></thead>
             <tbody>
@@ -137,7 +135,7 @@ export default function TracePage() {
                   <td className="trace-source" data-tour={sel(req.req_id, "trace-sel-source")}>{docOf(req.document_id) && <div><span className="tag">{docOf(req.document_id)}</span></div>}
                     {/* UX-14: the same badge as the Requirements page */}
                     {req.provenance === "UNANCHORED" ? <span data-tour={req.req_id === firstUnanchored ? "trace-unanchored" : undefined}>
-                      <StatusBadge status="medium" kind="severity" label="unanchored" title="Quote not located on the page; check the source manually" /></span> : req.source}</td>
+                      <StatusBadge status="medium" kind="severity" label={sourceLabel(req.provenance)} title="Quote not located on the page; check the source manually" /></span> : req.source}</td>
                   <td data-tour={sel(req.req_id, "trace-sel-text")}><div className="trace-text">{req.text}</div>
                     {children.length > 0 ? (
                       <ul className="trace-children" data-tour={req.req_id === firstGroup ? "trace-group" : undefined}>{children.map((k) => <li key={k.req_id}>{k.text} <span className="muted">({docOf(k.document_id) ? `${docOf(k.document_id)}, ` : ""}{k.source})</span></li>)}</ul>
@@ -172,7 +170,7 @@ export default function TracePage() {
                   <td data-tour={sel(req.req_id, "trace-sel-response")}>
                     {assignments.map((a) => (
                       <div key={a.id} className="trace-assign"><strong>{a.bu}</strong> <StatusBadge status={a.status} className="trace-status" />
-                        {a.compliance && <StatusBadge status={a.compliance} kind="compliance" className="trace-compliance" />}
+                        {a.compliance && <StatusBadge status={a.compliance} kind="compliance" label={complianceLabel(a.compliance)} className="trace-compliance" />}
                         {a.response && <div className="muted trace-response">{a.response}</div>}
                         {a.status === "validated" && <SendToKnowledge kind="response" refId={a.id} status={sent?.[`response:${a.id}`]} onSent={reloadSent} />}</div>
                     ))}
