@@ -3,7 +3,7 @@
 // retrieval index used by matching evidence, the response outline and catalog search.  Owner: Atharv.
 import Link from "next/link";
 import { useState } from "react";
-import { currentActor, errorMessage, post, useApi } from "@/lib/api";
+import { errorMessage, post, useApi, useMe } from "@/lib/api";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
 
@@ -47,17 +47,18 @@ function Review({ item, onDone, first }: { item: Item; onDone: () => void; first
 export default function KnowledgePage() {
   const [tab, setTab] = useState<(typeof TABS)[number]["key"]>("queued");
   const { data, error, reload } = useApi<Data>("/api/knowledge");
+  const me = useMe();
   if (error) return <div className="content"><PageHead title="Knowledge base" /><Alert kind="error">{error}</Alert></div>;
   if (!data) return <div className="content"><PageHead title="Knowledge base" /><Skeleton lines={4} /></div>;
   const shown = data.items.filter((i) => i.status === tab);
-  const curator = currentActor() === data.curator;
+  const curator = me?.name === data.curator;
 
   return (
     <div className="content">
       <PageHead title="Knowledge base"
         help="Requirements, validated answers and decision rationales that people sent from an opportunity. The curator approves what the next bids should learn from; approved items are found by matching, the response outline and catalog search." />
       <p data-tour="kb-learned">{data.learned} approved item(s) in the long-term index, next to the illustrative past responses of the <Link href="/catalog">product catalog</Link>.</p>
-      {!curator && <div data-tour="kb-curator-note"><Alert kind="info">Only the curator ({data.curator}) approves or rejects; switch with “Acting as” in the top bar.</Alert></div>}
+      {!curator && <div data-tour="kb-curator-note"><Alert kind="info">Only the curator ({data.curator}) approves or rejects; sign in as the curator to do so.</Alert></div>}
       <div className="row kb-tabs" role="group" aria-label="Filter by status" data-tour="kb-tabs">
         {TABS.map((t) => (
           <button key={t.key} type="button" className="chip" aria-pressed={tab === t.key} onClick={() => setTab(t.key)} data-tour={`kb-tab-${t.key}`}>

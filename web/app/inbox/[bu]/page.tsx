@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { currentActor, errorMessage, post, useApi } from "@/lib/api";
+import { errorMessage, post, useApi, useMe } from "@/lib/api";
 import type { Assignment, Requirement, Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
@@ -20,7 +20,8 @@ const open = (a: Item) => a.status === "assigned" || a.status === "returned";
 export default function InboxPage() {
   const { bu } = useParams<{ bu: string }>();
   const { data, error, reload } = useApi<Data>(`/api/inbox/${bu}`);
-  const { data: portfolio } = useApi<Portfolio>("/api/portfolio");  // unit switcher: which units have work, and waiting answers
+  const { data: portfolio } = useApi<Portfolio>("/api/portfolio");
+  const me = useMe()?.name ?? "";  // unit switcher: which units have work, and waiting answers
   const toast = useToast();
   const [busy, setBusy] = useState<number | "all">();      // what is being saved: no double submit
   const [returning, setReturning] = useState<number>();     // the item whose return note is being written
@@ -29,7 +30,6 @@ export default function InboxPage() {
   if (error) return <div className="content"><PageHead title="My work" /><Alert kind="error">Could not load this work package: {error}</Alert></div>;
   if (!data) return <div className="content"><PageHead title="My work" /><Skeleton lines={4} /></div>;
 
-  const me = currentActor();
   const canAnswer = data.unit ? [data.unit.product_manager, data.unit.design_engineer].includes(me) : me === BID_MANAGER;
   const canValidate = me === BID_MANAGER;
   const opportunities = [...new Set(data.items.map((a) => a.opportunity_id))];
@@ -92,7 +92,7 @@ export default function InboxPage() {
             <span className="muted">Starting points for people, not a configuration or a design.</span>
           </>}
         </div>)}
-      {!canAnswer && !canValidate && <div data-tour="inbox-readonly"><Alert kind="info">You are acting as {me}: you can read this work package but not answer it. Switch with “Acting as” in the top bar.</Alert></div>}
+      {!canAnswer && !canValidate && <div data-tour="inbox-readonly"><Alert kind="info">You are signed in as {me}: you can read this work package but not answer it. Sign in as one of this unit's people to answer.</Alert></div>}
       {canAnswer && openCount > 0 && <p className="muted" data-tour="inbox-open-count">{openCount} open row(s). “Submit all answered rows” sends every open row where “How it is met” is filled in.</p>}
       {canValidate && toValidate > 0 && <p className="muted" data-tour="inbox-to-validate">{toValidate} submitted answer(s) waiting for validation.</p>}
       {data.items.length === 0 ? <EmptyState title="Nothing assigned" hint="Requirements appear here once the bid manager dispatches an opportunity to this unit." /> : (

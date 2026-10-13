@@ -1,26 +1,48 @@
 "use client";
-// API client for the FastAPI backend (proxied at /api).  Owner: Piyush.
+// API client for the FastAPI backend (proxied at /api), and sign-in.  Owner: Piyush.
 import { useCallback, useEffect, useState } from "react";
 
-const DEFAULT_ACTOR = "Bid Manager";
+export const LOGIN = "/login";
+/** sessionStorage key for the demo password typed on the sign-in page, so the walkthrough can switch roles. */
+const DEMO_PASSWORD_KEY = "layer0.demo-password";
 
-export function currentActor(): string {
-  if (typeof document === "undefined") return DEFAULT_ACTOR;
-  const m = document.cookie.match(/(?:^|; )actor=([^;]*)/);
-  return m ? decodeURIComponent(m[1]) : DEFAULT_ACTOR;
-}
-
-export function setActor(name: string) {
-  document.cookie = `actor=${encodeURIComponent(name)}; path=/; max-age=31536000`;
-}
-
+/** Every request carries the HttpOnly layer0_token cookie (the /api proxy is same-origin). A 401 means no valid
+ * token: the browser goes to the sign-in page and comes back to this page afterwards. */
 export async function api<T = unknown>(path: string, init: RequestInit = {}): Promise<T> {
   const headers = new Headers(init.headers);
-  headers.set("X-Actor", encodeURIComponent(currentActor())); // the backend records who acted
   if (init.body && !(init.body instanceof FormData)) headers.set("Content-Type", "application/json");
-  const res = await fetch(path, { ...init, headers, cache: "no-store" });
+  const res = await fetch(path, { ...init, headers, cache: "no-store", credentials: "same-origin" });
+  if (res.status === 401 && !path.startsWith("/api/auth/login") && typeof location !== "undefined" && location.pathname !== LOGIN) {
+    location.assign(`${LOGIN}?next=${encodeURIComponent(location.pathname + location.search)}`);
+  }
   if (!res.ok) throw new Error(await errorText(res));
   return res.json() as Promise<T>;
+}
+
+/** The signed-in user: GET /api/auth/me (the token's claims plus role_label). */
+export interface Me { sub: string; name: string; role: string; role_label: string; bu: string | null; exp: number }
+
+/** POST /api/auth/login; the API sets the cookie. Keeps the password for this tab only (demo accounts share it). */
+export async function signIn(username: string, password: string): Promise<Me> {
+  const { user } = await post<{ user: Me }>("/api/auth/login", { username, password });
+  // ponytail: the PoC's one shared demo password, kept per tab so the walkthrough can sign in as another role
+  try { sessionStorage.setItem(DEMO_PASSWORD_KEY, password); } catch { /* storage blocked */ }
+  return user;
+}
+
+/** Sign in as another demo account with the password typed on the sign-in page (asks again if it is not known). */
+export async function signInAs(username: string): Promise<Me> {
+  let password: string | null = null;
+  try { password = sessionStorage.getItem(DEMO_PASSWORD_KEY); } catch { /* storage blocked */ }
+  password ??= window.prompt(`Password to sign in as ${username}`);
+  if (!password) throw new Error("Sign-in cancelled.");
+  return signIn(username, password);
+}
+
+export async function signOut(): Promise<void> {
+  try { sessionStorage.removeItem(DEMO_PASSWORD_KEY); } catch { /* storage blocked */ }
+  await post("/api/auth/logout");
+  location.assign(LOGIN);
 }
 
 /** The API's own message ({"detail": ...}), not raw JSON. */
@@ -42,6 +64,11 @@ export function errorMessage(e: unknown, fallback = "Something went wrong. Pleas
 
 export function post<T = unknown>(path: string, body?: unknown): Promise<T> {
   return api<T>(path, { method: "POST", body: body instanceof FormData ? body : JSON.stringify(body ?? {}) });
+}
+
+/** The signed-in user (undefined while loading). */
+export function useMe(): Me | undefined {
+  return useApi<Me>("/api/auth/me").data;
 }
 
 /** Fetch on mount; call reload() after an action. */

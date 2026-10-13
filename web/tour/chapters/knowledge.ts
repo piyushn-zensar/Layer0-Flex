@@ -128,7 +128,7 @@ const chapter: TourChapter = {
       body: [
         "In the PoC the curator is the **Bid Manager**; a named knowledge-curator role arrives with sign-in. Anyone can read the queue, but `POST /api/knowledge/<id>/review` is refused for everyone else (\"Only the knowledge curator (in the PoC, the Bid Manager) approves knowledge.\").",
       ],
-      example: { label: "Act as Bid Manager", apply: (ctx) => ctx.setActor(BM) },
+      example: { label: "Act as Bid Manager", apply: (ctx) => ctx.signInAs("bid.manager") },
       done: (ctx) => ctx.actor === BM,
     },
     {

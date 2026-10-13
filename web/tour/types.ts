@@ -5,7 +5,7 @@
 export interface TourCtx {
   /** The opportunity the walkthrough works on: the one created in chapter 4, else the seeded demo OPP-0001. */
   oppId: string;
-  /** Current "Acting as" person (the actor cookie). */
+  /** The signed-in person's display name (GET /api/auth/me), e.g. "Bid Manager", "Crown Product Manager". */
   actor: string;
   /** Current pathname. */
   pathname: string;
@@ -15,14 +15,15 @@ export interface TourCtx {
   get: <T = unknown>(key: string) => T | undefined;
   /** Client-side navigation (Next router). */
   go: (path: string) => void;
-  /** GET /api/... as the current actor; rejects on a non-2xx. */
+  /** GET /api/... as the signed-in person; rejects on a non-2xx. */
   api: <T = unknown>(path: string) => Promise<T>;
-  /** POST /api/... as the current actor; rejects on a non-2xx. */
+  /** POST /api/... as the signed-in person; rejects on a non-2xx. */
   post: <T = unknown>(path: string, body?: unknown) => Promise<T>;
   /** The element a data-tour id points at, if it is on the page right now. */
   el: (tourId: string) => HTMLElement | null;
-  /** Set the acting person (cookie) and re-fetch the pages. */
-  setActor: (name: string) => void;
+  /** Sign in as a demo account (data/accounts.json username, e.g. "crown.pm"), then reload: every page re-fetches as
+   * that person and the walkthrough resumes at the same step. Rejects when the sign-in fails. */
+  signInAs: (username: string) => Promise<void>;
 }
 
 export type Placement = "auto" | "top" | "bottom" | "left" | "right";

@@ -14,11 +14,13 @@
 //     enabled only when it is true. "Continue anyway" always works. Previous re-enters the step, so done() is
 //     re-checked; explain steps are safe to revisit (no API call is made by the engine itself).
 //   - ctx.oppId defaults to DEMO_OPP. A chapter may set it with `ctx.oppId = id` (the property has a setter) or
-//     ctx.set("oppId", id); both persist. ctx.setActor(name) writes the actor cookie, saves progress and reloads
-//     the page: every page re-fetches as that person and the walkthrough resumes at the same step.
+//     ctx.set("oppId", id); both persist. ctx.signInAs(username) signs in as that demo account (the password typed on
+//     the sign-in page), saves progress and reloads the page: every page re-fetches as that person and the
+//     walkthrough resumes at the same step. ctx.actor is the signed-in name from GET /api/auth/me.
+//   - On the sign-in page the walkthrough is hidden (status "loading"); its progress is kept for after sign-in.
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { api, currentActor, post, setActor as setActorCookie } from "@/lib/api";
+import { api, post, signInAs, type Me } from "@/lib/api";
 import { CHAPTERS, DEMO_OPP, STEPS, resolveRoute, type TourChapter, type TourCtx, type TourStep } from "@/tour";
 
 export type TourStatus = "loading" | "offered" | "running" | "skipped" | "done";
@@ -74,7 +76,7 @@ const noop = () => {};
 const emptyCtx: TourCtx = {
   oppId: DEMO_OPP, actor: "Bid Manager", pathname: "/", data: {}, set: noop, get: () => undefined, go: noop,
   api: () => Promise.reject(new Error("walkthrough not mounted")), post: () => Promise.reject(new Error("walkthrough not mounted")),
-  el: () => null, setActor: noop,
+  el: () => null, signInAs: () => Promise.reject(new Error("walkthrough not mounted")),
 };
 const Ctx = createContext<TourApi>({
   status: "loading", index: 0, step: null, chapter: null, stepInChapter: 0, chapterSteps: 0, total: STEPS.length, ctx: emptyCtx,
@@ -132,8 +134,8 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
       api: (path) => api(path),
       post: (path, body) => post(path, body),
       el: findEl,
-      setActor: (name) => {
-        setActorCookie(name);
+      signInAs: async (username) => {
+        await signInAs(username);
         const stored = readStored();
         if (stored) writeStored({ ...stored, ctx: { oppId: oppId, data: dataRef.current } }); // progress first, then the reload
         location.reload();
@@ -147,14 +149,16 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
   const ctxRef = useRef(ctx);
   ctxRef.current = ctx;
 
-  const step: Step | null = status === "running" ? STEPS[index] ?? null : null;
+  // Hidden on the sign-in page (nothing there may call the API); the stored progress is untouched.
+  const shown: TourStatus = pathname === "/login" ? "loading" : status;
+  const step: Step | null = shown === "running" ? STEPS[index] ?? null : null;
   const chapter = step ? CHAPTERS.find((c) => c.id === step.chapter) ?? null : null;
   const stepInChapter = step && chapter ? index - firstIndex(chapter.id) + 1 : 0;
 
   // ----- session + stored progress (once per page load) -----
   useEffect(() => {
-    setActorState(currentActor());
     let cancelled = false;
+    if (pathname !== "/login") api<Me>("/api/auth/me").then((me) => { if (!cancelled) setActorState(me.name); }, () => { /* 401: lib/api goes to sign-in */ });
     (async () => {
       let id = "";
       try { id = (await (await fetch("/tour-session", { cache: "no-store" })).json()).id as string; } catch { id = "no-session"; }
@@ -302,10 +306,10 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
   const canResume = status === "running" || (status === "skipped" && index > 0);
 
   const value = useMemo<TourApi>(() => ({
-    status, index, step, chapter, stepInChapter, chapterSteps: chapter?.steps.length ?? 0, total: STEPS.length, ctx, target, done, busy, error,
+    status: shown, index, step, chapter, stepInChapter, chapterSteps: chapter?.steps.length ?? 0, total: STEPS.length, ctx, target, done, busy, error,
     dialogOpen, openDialog: () => setDialogOpen(true), closeDialog: () => setDialogOpen(false),
     start, resume, restart, next, prev, skip, exit, goToChapter, finish, applyExample, chapterDone, canResume,
-  }), [status, index, step, chapter, stepInChapter, ctx, target, done, busy, error, dialogOpen, start, resume, restart, next, prev, skip, exit,
+  }), [shown, index, step, chapter, stepInChapter, ctx, target, done, busy, error, dialogOpen, start, resume, restart, next, prev, skip, exit,
     goToChapter, finish, applyExample, chapterDone, canResume]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

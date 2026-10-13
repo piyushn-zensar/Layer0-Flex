@@ -323,7 +323,7 @@ const chapter: TourChapter = {
       instruction: "Acting as Bid Manager, click 'Apply to requirements' and wait for the green result block.",
       example: {
         label: "Act as Bid Manager",
-        apply: (ctx) => { if (ctx.actor !== BID_MANAGER) ctx.setActor(BID_MANAGER); },
+        apply: (ctx) => (ctx.actor !== BID_MANAGER ? ctx.signInAs("bid.manager") : undefined),
       },
       done: present("chg-set-result"),
       fallback: "'Apply to requirements' is in the action row of a set in review; it is enabled for the Bid Manager once every row is confirmed.",

@@ -65,6 +65,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: var(--s4) 0; }
 .actor select { max-width: 260px; min-height: 32px; padding: 4px var(--s2); font-size: var(--fs-md); background: rgba(255, 255, 255, .1);
   border-color: rgba(255, 255, 255, .25); color: #fff; }
 .actor select option { color: var(--ink); }
+.actor a { color: #fff; }
 
 /* ---------- Opportunity header: breadcrumb + title + workflow stepper ---------- */
 .opp-head { background: var(--card); border-bottom: 1px solid var(--line); padding: var(--s4) var(--page-x) 0; }
@@ -227,6 +228,10 @@ button.link:disabled { background: none; color: var(--muted-2); }
 .toast-text { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
 .toast .alert-close { color: #fff; }
 @keyframes toast-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+/* Sign-in page (app/login): covers the shell, whose parts need a token. */
+.login { position: fixed; inset: 0; z-index: 35; display: grid; place-items: center; padding: var(--s4); background: var(--bg); }
+.login .form { width: min(360px, 100%); margin: 0; }
+.login h1 { display: flex; gap: var(--s2); align-items: center; margin: 0 0 var(--s2); font-size: 1.25rem; }
 .dialog-backdrop { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; padding: var(--s4); background: rgba(15, 23, 42, .45); }
 .dialog { width: min(440px, 100%); background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-2); padding: var(--s5); }
 .dialog h2 { margin-bottom: var(--s2); } .dialog p { color: var(--ink-2); }

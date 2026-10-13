@@ -108,7 +108,7 @@ const chapter: TourChapter = {
         "The PoC has no sign-in. **Acting as** in the top bar writes an `actor` cookie; every API call sends it as the `X-Actor` header, the backend records that name on each event (who proposed, approved, answered, validated) and enforces the few role rules: only a unit's product manager or design engineer answers its rows, only the Bid Manager validates, dispatches, freezes and curates.",
         "The people in the list come from the catalog: the Bid Manager plus each active unit's product manager and design engineer. A real identity provider and named roles replace the picker later; the audit trail and the rules stay as they are.",
       ],
-      example: { label: "Act as Crown Product Manager", apply: (ctx) => ctx.setActor(CROWN_PM) },
+      example: { label: "Act as Crown Product Manager", apply: (ctx) => ctx.signInAs("crown.pm") },
       done: (ctx) => ctx.actor === CROWN_PM,
     },
     {
@@ -216,7 +216,7 @@ const chapter: TourChapter = {
       body: [
         "Validation is the bid manager's step: `POST /api/assignments/<id>/validate` is refused for anyone else (\"Only the Bid Manager validates or returns answers.\"). Switch back and the same page shows **Validate** and **Return** on every submitted row.",
       ],
-      example: { label: "Act as Bid Manager", apply: (ctx) => ctx.setActor(BM) },
+      example: { label: "Act as Bid Manager", apply: (ctx) => ctx.signInAs("bid.manager") },
       done: (ctx) => ctx.actor === BM,
     },
     {

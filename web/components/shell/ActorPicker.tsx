@@ -1,20 +1,15 @@
 "use client";
-// PoC user picker: bid manager, or a unit's product manager / design engineer.  Owner: Janvia.
-// Changing it sets the "actor" cookie (sent as X-Actor) and reloads, so every page re-fetches as that person.
-import { useEffect, useState } from "react";
-import { currentActor, setActor, useApi } from "@/lib/api";
+// Signed-in person (GET /api/auth/me) and a link to sign in as someone else.  Owner: Janvia.
+// P-21 stand-in for the old "Acting as" picker; J-10 adds role, unit and Sign out.
+import Link from "next/link";
+import { useMe } from "@/lib/api";
 
 export default function ActorPicker() {
-  const { data: people } = useApi<{ name: string; bu: string | null }[]>("/api/people");
-  const [actor, setLocal] = useState("Bid Manager");
-  useEffect(() => setLocal(currentActor()), []);
+  const me = useMe();
   return (
     <div className="actor" data-tour="shell-actor">
-      <label htmlFor="actor-select">Acting as</label>
-      <select id="actor-select" value={actor} title="Switch the person acting in this PoC"
-        onChange={(e) => { setActor(e.target.value); location.reload(); }}>
-        {(people ?? [{ name: actor, bu: null }]).map((p) => <option key={p.name}>{p.name}</option>)}
-      </select>
+      <span>{me?.name ?? "…"}</span>
+      <Link href="/login" title="Sign in as someone else">Switch</Link>
     </div>
   );
 }

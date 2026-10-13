@@ -3,7 +3,7 @@
 // person's decision, the change document with highlights, then apply or discard; after apply, what it did.  Owner: Piyush.
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { currentActor, errorMessage, post } from "@/lib/api";
+import { errorMessage, post, useMe } from "@/lib/api";
 import type { ChangeItem, ChangeKind, ChangeSet } from "@/lib/types";
 import { Alert, Busy, StatusBadge, useConfirm, useToast } from "@/components/ui";
 import ChangeDecision, { KINDS, KindBadge } from "@/components/changes/ChangeDecision";
@@ -29,7 +29,7 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour =
   const docRef = useRef<HTMLDetailsElement>(null);
   const review = set.status === "review";
   const applied = set.status === "applied";
-  const bidManager = currentActor() === BID_MANAGER;
+  const bidManager = useMe()?.name === BID_MANAGER;
   const items = set.items.filter((i) => !filter || kindOf(i) === filter);
   const r = set.result;
 
