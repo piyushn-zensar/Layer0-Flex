@@ -32,7 +32,7 @@ def create(body: OpportunityIn, request: Request, db: Session = Depends(get_db))
 def detail(opp_id: str, db: Session = Depends(get_db)):
     opp = service.get(db, opp_id)
     if not opp:
-        raise HTTPException(404, f"{opp_id} not found")
+        raise HTTPException(404, f"Bid {opp_id} not found.")
     return {"opportunity": row(opp), "documents": [_doc(d) for d in service.documents(db, opp_id)]}
 
 
@@ -79,7 +79,7 @@ def upload_sample(opp_id: str, body: SampleIn, request: Request, background: Bac
                   db: Session = Depends(get_db)):
     """Attach a sample RFP as the main document: the same storing, reading, JSON and status transitions as an upload."""
     if not service.get(db, opp_id):
-        raise HTTPException(404, f"Opportunity {opp_id} not found.")
+        raise HTTPException(404, f"Bid {opp_id} not found.")
     try:
         filename, data = service.sample_file(body.name, "rfp")
     except ValueError as exc:

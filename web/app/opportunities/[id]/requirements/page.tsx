@@ -9,12 +9,12 @@ import PageHead from "@/components/shell/PageHead";
 import LinePicker from "@/components/requirements/LinePicker"; // P-15
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useConfirm, useToast } from "@/components/ui";
 import { errorMessage, post, useApi } from "@/lib/api";
-import type { Baseline, Requirement, RequirementHistory } from "@/lib/types";
+import { sourceLabel, type Baseline, type Requirement, type RequirementHistory } from "@/lib/types";
 
 const CATEGORIES = ["technical", "compliance", "commercial", "schedule", "submission", "legal", "staffing"];
 const FILTERS = {
   review: { label: "To review", test: (r: Requirement) => r.status === "proposed" },
-  unanchored: { label: "Unanchored", test: (r: Requirement) => r.provenance === "UNANCHORED" && !INACTIVE.has(r.status) },
+  unanchored: { label: "Source not verified", test: (r: Requirement) => r.provenance === "UNANCHORED" && !INACTIVE.has(r.status) },
   approved: { label: "Approved", test: (r: Requirement) => r.status === "approved" },
   rejected: { label: "Rejected", test: (r: Requirement) => r.status === "rejected" },
   duplicates: { label: "Duplicates", test: (r: Requirement) => r.status === "duplicate" },
@@ -113,9 +113,9 @@ export default function RequirementsPage() {
           className={`${INACTIVE.has(r.status) ? "inactive" : ""} ${child ? "child" : ""} ${group ? "group" : ""}`}>
           {!frozen && <td>{active && !child && <input type="checkbox" data-tour={at("req-row-check")} aria-label={`Select ${r.req_id}`} checked={selected.has(r.req_id)} onChange={() => toggle(r.req_id)} />}</td>}
           <td><div className="mono" data-tour={at("req-row-id")}>{r.req_id}</div><span className="tag" data-tour={at("req-row-category")}>{r.category}</span></td>
-          {/* UX-14: an unanchored item says so once, as a badge, instead of a source line plus a warning */}
+          {/* UX-14: an unanchored item (shown as "source not verified") says so once, as a badge, instead of a source line plus a warning */}
           <td data-tour={at("req-row-source")}>{r.provenance === "UNANCHORED"
-            ? <span data-tour={first("req-badge-unanchored")}><StatusBadge status="medium" kind="severity" label="unanchored" title="Quote not located on the page; check the source manually" /></span>
+            ? <span data-tour={first("req-badge-unanchored")}><StatusBadge status="medium" kind="severity" label={sourceLabel(r.provenance).toLowerCase()} title="Quote not located on the page; check the source manually" /></span>
             : r.page ? <Link href={`/opportunities/${id}/trace#${r.parent_id ?? r.req_id}`}>{r.source}</Link> : r.source}</td>
           <td>
             {isEditing && editing.mode === "edit" ? (
@@ -275,7 +275,7 @@ function History({ reqId }: { reqId: string }) {
           {data.events.map((e, i) => (
             <li key={i}><span className="muted">{when(e.at)}</span> <strong>{e.action.replace("_", " ")}</strong> by {e.by}
               {Object.entries(e.details).filter(([, v]) => v !== "" && !(Array.isArray(v) && v.length === 0)).map(([k, v]) =>
-                <span key={k} className="muted"> · {k.replace("_", " ")}: {Array.isArray(v) ? v.join(", ") : String(v)}</span>)}</li>
+                <span key={k} className="muted"> · {k === "provenance" ? sourceLabel(String(v)).toLowerCase() : <>{k.replace("_", " ")}: {Array.isArray(v) ? v.join(", ") : String(v)}</>}</span>)}</li>
           ))}
         </ul>
       </div>

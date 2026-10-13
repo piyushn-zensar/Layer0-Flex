@@ -126,7 +126,7 @@ def merge(db: Session, opp_id: str, req_ids: list[str], text: str, actor: str, r
     if len(reqs) < 2:
         raise ValueError("A merge needs at least two line items.")
     if any(r.opportunity_id != opp_id for r in reqs):
-        raise ValueError("Line items from another opportunity cannot be merged.")
+        raise ValueError("Line items from another bid cannot be merged.")
     if any(r.kind == "group" or r.parent_id for r in reqs):
         raise ValueError("Groups and sub-requirements cannot be merged; ungroup first.")
     if len({r.page for r in reqs}) > 1:

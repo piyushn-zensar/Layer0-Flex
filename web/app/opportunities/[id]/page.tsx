@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { api, errorMessage, post, useApi } from "@/lib/api";
-import type { Doc, Opportunity } from "@/lib/types";
+import { DOC_TYPES, docTypeLabel, type Doc, type Opportunity } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, Skeleton, StatusBadge, useToast } from "@/components/ui";
 
@@ -53,7 +53,7 @@ export default function DocumentsPage() {
   const form = (
     <form className={started ? "form" : "card form"} onSubmit={upload} aria-busy={!!busy} data-tour="rfp-upload-form">
       <label data-tour="rfp-file">RFP file (PDF) <input type="file" name="file" required disabled={!!busy} /></label>
-      <label data-tour="rfp-role">Role <select name="role" defaultValue={started ? "addendum" : "main"} disabled={!!busy}>{["main", "addendum", "qa", "change", "other"].map((r) => <option key={r}>{r}</option>)}</select></label>
+      <label data-tour="rfp-role">Document type <select name="role" defaultValue={started ? "addendum" : "main"} disabled={!!busy}>{Object.entries(DOC_TYPES).map(([v, l]) => <option key={v} value={v}>{l}</option>)}</select></label>
       <button disabled={!!busy} data-tour="rfp-upload">Upload and read</button>
       <button type="button" className="secondary" disabled={!!busy} onClick={reload} data-tour="rfp-refresh">Refresh status</button>
       {busy && !canRead && <Busy label={busy} />} {/* else shown by the reader button */}
@@ -69,10 +69,10 @@ export default function DocumentsPage() {
       {!data && !error && <Skeleton lines={3} />}
       {data && (
         <table className="docs" data-tour="rfp-docs-table">
-          <thead><tr><th>File</th><th>Role</th><th className="num">Pages</th><th>Status</th><th>Received</th></tr></thead>
+          <thead><tr><th>File</th><th>Document type</th><th className="num">Pages</th><th>Status</th><th>Received</th></tr></thead>
           <tbody>
             {data.documents.map((d) => (
-              <tr key={d.id} data-tour={d.role === "main" ? "rfp-doc-main" : `rfp-doc-${d.id}`}><td>{d.filename}</td><td>{d.role}</td><td className="num">{d.page_count}</td>
+              <tr key={d.id} data-tour={d.role === "main" ? "rfp-doc-main" : `rfp-doc-${d.id}`}><td>{d.filename}</td><td>{docTypeLabel(d.role)}</td><td className="num">{d.page_count}</td>
                 <td data-tour={d.role === "main" ? "rfp-doc-status" : undefined}><StatusBadge status={d.status} /></td>
                 <td title={`SHA-256 ${d.sha256}`} data-tour={d.role === "main" ? "rfp-doc-received" : undefined}>{received(d) || <span className="mono">{d.sha256.slice(0, 12)}</span>}</td></tr>
             ))}
@@ -80,7 +80,7 @@ export default function DocumentsPage() {
           </tbody>
         </table>)}
       {data && (started
-        ? <details className="card" data-tour="rfp-add-another"><summary><strong>Add another document</strong> <span className="muted">(addendum, Q&amp;A, change)</span></summary>{form}</details>
+        ? <details className="card" data-tour="rfp-add-another"><summary><strong>Add another document</strong> <span className="muted">(addendum, clarification / Q&amp;A, change request)</span></summary>{form}</details>
         : form)}
       {data?.documents.some((d) => d.role === "main" && d.status === "ingested") && (
         <section className="card" data-tour="rfp-search">

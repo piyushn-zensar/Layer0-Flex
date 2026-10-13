@@ -38,7 +38,7 @@ SAMPLES = {
         "path": "RFP-2023-20-Switchgear-Procurement-Final.pdf", "filename": "RFP-2023-20-Switchgear-Procurement-Final.pdf",
         "kind": "rfp", "pages": 101,
         "description": "Syracuse Regional Airport Authority, RFP 2023-20 Switchgear Procurement: the public RFP behind "
-                       "the demo opportunity. Read offline from frozen answers: about 810 line items grouped into "
+                       "the demo bid. Read offline from frozen answers: about 810 line items grouped into "
                        "about 350 requirements, each anchored to its page and lines."},
     "hyperscale_rfp": {
         "path": "samples/rfp_hyperscale_campus.pdf", "filename": "rfp_hyperscale_campus.pdf",
@@ -51,7 +51,7 @@ SAMPLES = {
         "kind": "change", "pages": 1,
         "description": "Illustrative Addendum No. 1 to the Syracuse RFP, written for the PoC: it revises, removes and "
                        "adds requirements against the frozen baseline. Its frozen change-agent answers match the demo "
-                       "opportunity's requirement set only."},
+                       "bid's requirement set only."},
 }
 
 
@@ -84,7 +84,7 @@ def create(db: Session, title: str, customer: str, customer_type: str, actor: st
             return opp
         except IntegrityError:
             db.rollback()
-    raise ValueError("Could not allocate an opportunity ID; try again.")
+    raise ValueError("Could not allocate a bid ID; try again.")
 
 
 def get(db: Session, opp_id: str) -> Opportunity | None:
@@ -94,7 +94,7 @@ def get(db: Session, opp_id: str) -> Opportunity | None:
 def require(db: Session, opp_id: str) -> Opportunity:
     opp = db.get(Opportunity, opp_id)
     if opp is None:
-        raise LookupError(f"Opportunity {opp_id} not found.")
+        raise LookupError(f"Bid {opp_id} not found.")
     return opp
 
 
@@ -140,7 +140,7 @@ def add_document(db: Session, opp_id: str, filename: str, data: bytes, role: str
     if existing:
         return existing
     if role == "main" and main_document(db, opp_id):
-        raise ValueError("This opportunity already has a main RFP; upload this file as an addendum, Q&A or other.")
+        raise ValueError("This bid already has a main RFP; upload this file as an addendum, clarification / Q&A, change request or other document.")
     FILES.mkdir(parents=True, exist_ok=True)
     path = FILES / f"{sha}{'.pdf' if filename.lower().endswith('.pdf') else ''}"
     path.write_bytes(data)

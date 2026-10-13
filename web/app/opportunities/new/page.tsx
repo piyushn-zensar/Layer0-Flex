@@ -1,5 +1,5 @@
 "use client";
-// New opportunity.  Owner: Piyush.
+// New bid.  Owner: Piyush.
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { errorMessage, post } from "@/lib/api";
@@ -27,7 +27,7 @@ export default function NewOpportunityPage() {
   }
   return (
     <div className="content">
-      <PageHead title="New opportunity" help="One opportunity per RFP. Upload the RFP on the next page." />
+      <PageHead title="New bid" help="One bid per RFP. Upload the RFP on the next page." />
       <form className="card form" onSubmit={create} aria-busy={busy} data-tour="intake-form">
         <label data-tour="intake-title">Title <input name="title" required placeholder="e.g. Syracuse switchgear procurement" aria-invalid={message === "A title is required." ? true : undefined} disabled={busy} /></label>
         <label data-tour="intake-customer">Customer <input name="customer" placeholder="optional" disabled={busy} /></label>

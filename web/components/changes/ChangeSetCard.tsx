@@ -70,7 +70,7 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour =
       <div data-tour={t("chg-set-share")}>
         {set.drastic ? (
           <Alert kind="error" title="Drastic change"><strong>{pct(set.share)} of the baseline is modified or removed</strong> (threshold {pct(threshold)}, placeholder):
-            consider a new opportunity linked to this one. A person decides.</Alert>
+            consider a new bid linked to this one. A person decides.</Alert>
         ) : <p className="muted">{pct(set.share)} of the baseline is modified or removed (drastic above {pct(threshold)}, placeholder).</p>}
       </div>
 
