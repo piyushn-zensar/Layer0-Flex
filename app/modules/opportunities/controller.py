@@ -2,6 +2,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPExcepti
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
+from app.core import audit
 from app.core.db import SessionLocal, get_db
 from app.core.web import BID_MANAGER, actor, require, row
 from app.modules.ingestion import service as ingestion
@@ -35,6 +36,15 @@ def detail(opp_id: str, db: Session = Depends(get_db)):
     if not opp:
         raise HTTPException(404, f"Bid {opp_id} not found.")
     return {"opportunity": row(opp), "documents": [_doc(d) for d in service.documents(db, opp_id)]}
+
+
+@router.get("/opportunities/{opp_id}/activity")
+def activity(opp_id: str, entity: str | None = None, req_id: str | None = None, bu: str | None = None,
+             person: str | None = None, before: int | None = None, limit: int = 200, db: Session = Depends(get_db)):
+    """The bid's activity log (C-16): every recorded event, newest first, read-only, open to everyone signed in."""
+    if not service.get(db, opp_id):
+        raise HTTPException(404, f"Bid {opp_id} not found.")
+    return audit.activity(db, opp_id, entity, req_id, bu, person, before, limit)
 
 
 def _ingest_in_background(doc_id: str):

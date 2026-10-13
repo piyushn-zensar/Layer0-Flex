@@ -1026,3 +1026,30 @@ def test_permissions_in_bids_documents_requirements_and_changes():
     assert client.post(f"/api/opportunities/{opp}/corrections", json=corr, headers=admin).status_code == 403
     assert client.post(f"/api/opportunities/{opp}/changes", data={"role": "addendum"},
                        files={"file": ("a.pdf", pdf)}, headers=de).status_code == 403
+
+
+def test_bid_activity_log():
+    """P-27 (C-16): the bid's audit log, newest first, read-only, filtered by entity, requirement, unit and person."""
+    client = signed_in()
+    if client.get("/api/opportunities/OPP-0001").status_code == 404:
+        seed_demo.main()
+    url = "/api/opportunities/OPP-0001/activity"
+    everything = client.get(url, headers=auth("ep2.de")).json()  # everyone signed in reads it
+    events, filters = everything["events"], everything["filters"]
+    assert everything["total"] >= len(events) > 10 and [e["id"] for e in events] == sorted((e["id"] for e in events), reverse=True)
+    assert {"opportunity", "requirement", "assignment", "baseline"} <= set(filters["entities"])
+    assert "Bid Manager" in filters["people"] and "CROWN" in filters["units"]
+
+    crown = client.get(url, params={"bu": "CROWN"}).json()["events"]
+    assert crown and all(e["data"]["bu"] == "CROWN" for e in crown)
+    req = next(e["entity_id"] for e in crown if e["entity"] == "assignment")
+    trail = client.get(url, params={"req_id": req}).json()["events"]  # the requirement, its match and its answers
+    assert {"requirement", "assignment"} <= {e["entity"] for e in trail} and all(e["entity_id"] == req for e in trail)
+    mine = client.get(url, params={"person": "Bid Manager", "entity": "baseline"}).json()["events"]
+    assert mine and all((e["actor"], e["entity"]) == ("Bid Manager", "baseline") for e in mine)
+
+    page1 = client.get(url, params={"limit": 5}).json()
+    page2 = client.get(url, params={"limit": 5, "before": page1["next_before"]}).json()
+    assert [e["id"] for e in page1["events"] + page2["events"]] == [e["id"] for e in events[:10]]
+    assert client.get("/api/opportunities/OPP-9999/activity").status_code == 404
+    assert client.post(url).status_code == 405  # read-only
