@@ -82,5 +82,5 @@ def test_sample_errors(client):
         assert r.status_code == 409, (route, name, r.text)
     # a change document needs a frozen baseline, as for an upload
     r = client.post(f"/api/opportunities/{opp}/changes/from-sample", json={"name": "syracuse_addendum_1"})
-    assert r.status_code == 409 and "Freeze the requirements first" in r.json()["detail"]
+    assert r.status_code == 409 and "Publish the register first" in r.json()["detail"]
     assert client.get(f"/api/opportunities/{opp}").json()["documents"] == []  # nothing was stored

@@ -26,7 +26,25 @@ export interface Requirement {
   provenance: "EXTRACTED" | "UNANCHORED"; status: string; baseline: number | null; source: string;
   derived_from: string[]; created_by: string; kind: "item" | "group"; parent_id: string | null;
   document_id: string; // the RFP, or the change document a new version comes from (P-11)
+  origin?: Origin | null; // where this version came from (P-23); null = data from before origin was recorded
 }
+export type Origin = "extraction" | "correction" | "customer_change";
+export const ORIGIN_LABELS: Record<string, string> = { extraction: "Extraction", correction: "Correction", customer_change: "Customer change" };
+export const originLabel = (o: string | null | undefined) => (o ? ORIGIN_LABELS[o] ?? o.replace(/_/g, " ") : "");
+
+// Extraction snapshots (P-23): E1 is the first read, never changed; E2... are later reads asked for with a reason.
+export type Coverage = Record<string, number>; // pages, candidates, admitted, exceptions, duplicates, groups, problems (more keys may follow)
+export const COVERAGE_LABELS: Record<string, string> = { pages: "pages", candidates: "candidates", admitted: "in the register", exceptions: "exceptions",
+  duplicates: "duplicates", groups: "groups", problems: "problems" };
+export const coverageLabel = (k: string) => COVERAGE_LABELS[k] ?? k.replace(/_/g, " ");
+export const snapshotName = (n: number) => `E${n}`;
+export interface Snapshot { number: number; document_id: string; created_by: string; created_at: string; reason: string; model: string; pipeline_version: string; coverage: Coverage | null }
+export interface SnapshotItem {
+  req_id: string; text: string; quote: string; category: string; section: string; page: number | null; line_start: number | null; line_end: number | null;
+  status: string; group: string | null; duplicate_of: string | null;
+}
+export interface SnapshotDetail extends Snapshot { items: SnapshotItem[] }
+export interface CorrectionResult { baseline: number; added: string[]; modified: string[]; removed: string[]; affected: string[]; returned: number; dispatched: number; note: string }
 // Requirement register (C-02/C-05): approved = in the register; exception / dismissed sit outside it.
 export const STATUS_LABELS: Record<string, string> = { approved: "In register", rejected: "Excluded: not a requirement", exception: "Source not verified",
   dismissed: "Dismissed", duplicate: "Duplicate", proposed: "Proposed", split: "Split", merged: "Merged", removed: "Removed" };
@@ -59,7 +77,7 @@ export interface TraceDoc { id: string; filename: string; role: string; pages: P
 export interface Trace { opp: Opportunity; doc: Doc | null; rows: TraceRow[]; pages: Page[]; progress: Progress; docs?: TraceDoc[] }
 export interface RequirementHistory {
   req_id: string; quote: string; source: string; derived_from: string[];
-  versions: { n: number; at: string; by: string; label: string; text: string; category: string; reason?: string }[];
+  versions: { n: number; at: string; by: string; label: string; origin?: Origin | null; text: string; category: string; reason?: string }[];
   events: { at: string; by: string; action: string; details: Record<string, unknown> }[];
 }
 

@@ -5,12 +5,21 @@ with a verified source (provenance EXTRACTED: document, page, lines, verbatim te
 gets status "exception": outside the register, listed by exceptions(), resolved by linking it to its lines or
 dismissed with a reason. There is no per-requirement approve step: add() admits or queues by the anchoring result.
 
+Snapshot and origins (C-04): every reading is stored as an extraction snapshot (E1, E2, ...; append-only). Every row
+names its origin: extraction (the reader), correction (a person fixed the reading) or customer_change (a change
+document). Before publishing, corrections change the working rows; after publishing, each correction is a new
+version in the next baseline, like a customer change but without a change document (apply_correction).
+
 Public contract:
-    extract(db, opp_id, actor) -> dict           reader agent on the main RFP, then duplicates marked and related
+    extract(db, opp_id, actor, reason="") -> dict   reader agent on the main RFP, then duplicates marked and related
                                                  items grouped into requirements with sub-requirements; anchored
-                                                 items enter the register, the others the exception queue
-    add(db, opp_id, document_id, quote, text, category, actor, section="", hint_page=None) -> Requirement
-                                                 status "approved" when the quote is found, else "exception"
+                                                 items enter the register, the others the exception queue; writes
+                                                 snapshot E1, or E2... when read again, which needs a reason
+    snapshots(db, opp_id) -> list[ExtractionSnapshot]   newest first
+    snapshot(db, opp_id, number) -> ExtractionSnapshot  LookupError
+    add(db, opp_id, document_id, quote, text, category, actor, section="", hint_page=None, origin="extraction")
+                                                 -> Requirement; status "approved" when the quote is found, else
+                                                 "exception"
     current(db, opp_id, include_inactive=False, include_children=False) -> list[Requirement]
                                                  the register, in document order: groups and stand-alone items, not
                                                  their sub-requirements (inactive = rejected, duplicate, exception,
@@ -20,7 +29,8 @@ Public contract:
     resolve(db, req_id, page, line_start, line_end, actor, text="", category=None) -> Requirement
                                                  link an exception to its lines (add_from_lines rules): it enters the
                                                  register with those lines as its quote
-    dismiss(db, req_id, reason, actor) -> Requirement   an exception that is not a requirement; reason required
+    dismiss(db, req_id, reason, actor) -> Requirement   an exception that is not a requirement; reason required;
+                                                 also after publishing (an exception is outside the register)
     children(db, req_id) -> list[Requirement]    the sub-requirements of a group
     ungroup(db, req_id, actor, reason="") -> list[Requirement]   a group's sub-requirements become requirements again
     get(db, req_id, baseline=None) -> Requirement | None   latest version; with baseline: the version in that baseline
@@ -36,11 +46,18 @@ Public contract:
     add_from_lines(db, opp_id, page, line_start, line_end, text, category, actor) -> Requirement
                                                  the same, by selecting lines of the main RFP: the quote is those
                                                  lines verbatim (headers / footers left out), so the source is exact
-    freeze(db, opp_id, actor) -> Baseline        the register becomes baseline 1; needs a read main RFP and at least
-                                                 one requirement in it; open exceptions do not block it; once only
-                                                 (later: apply_change)
+    freeze(db, opp_id, actor) -> Baseline        publish: the register becomes baseline 1; needs a read main RFP
+                                                 and at least one requirement in it; open exceptions do not block
+                                                 it; once only (later: apply_correction, apply_change)
+    apply_correction(db, opp_id, kind, body, actor, reason, commit=True) -> dict
+                                                 after publishing: a person corrects the reading, reason required.
+                                                 kind: add {page, line_start, line_end, text?, category} | edit
+                                                 {req_id, text?, category?} | split {req_id, parts} | merge {req_ids,
+                                                 text} | exclude {req_id} | resolve {req_id, page, line_start,
+                                                 line_end, text?, category?}. New versions (origin correction) in
+                                                 the next baseline. Returns as apply_change. Atomic
     apply_change(db, opp_id, change_doc_id, items, actor, reason, commit=True) -> dict
-                                                 the ONLY write after a freeze (changes module): items = confirmed
+                                                 a customer change (changes module): items = confirmed
                                                  [{"kind": added | modified | removed, "target", "quote", "text",
                                                  "category", "page"}]; modified -> a new version anchored in the
                                                  change document, removed -> a new version "removed" (a group's
@@ -49,27 +66,33 @@ Public contract:
                                                  Returns {"baseline", "added", "modified", "removed", "affected"}
                                                  (affected: requirements whose answers must be revisited). Atomic.
                                                  LookupError unknown opportunity; ValueError no baseline, bad target
-Every other write refuses once the opportunity has a baseline, and LookupError for an unknown opportunity or item.
+Every other write (except dismiss) refuses once the register is published, and LookupError for an unknown
+opportunity or item.
 Requirement IDs are never reused: the next number is taken over every ID ever issued, including discarded drafts.
     baseline(db, opp_id) -> Baseline | None      latest frozen baseline
-    history(db, req_id) -> dict                  every version (who, when, text, category) and every event; LookupError
+    history(db, req_id) -> dict                  every version (who, when, text, category, origin) and every event;
+                                                 LookupError
     locate(quote, pages, hint_page=None) -> dict | None   a quote's page, lines and boxes in layout pages (rule R1)
     CATEGORIES                                   the requirement categories
 """
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.core import audit
+import hashlib
+
+from app.core import audit, config
 from app.core.audit import AuditEvent
 from app.modules.ingestion import service as ingestion
 from app.modules.opportunities import service as opportunities
 from app.modules.requirements import agent, anchoring, grouping
-from app.modules.requirements.models import CATEGORIES, Baseline, Requirement
+from app.modules.requirements.models import CATEGORIES, Baseline, ExtractionSnapshot, Requirement
 
 # removed: deleted by a change document; exception: source not verified (the queue); dismissed: an exception that is
 # not a requirement
 INACTIVE = {"rejected", "split", "merged", "duplicate", "removed", "exception", "dismissed"}
 AGENTS = ("reader agent", "grouping agent")
+# the reader's and the grouping agent's instructions: a snapshot names the pipeline that produced it
+PIPELINE_VERSION = hashlib.sha256((agent.SYSTEM + grouping.SYSTEM).encode()).hexdigest()[:12]
 
 
 def _next_req_id(db: Session, opp_id: str) -> str:
@@ -84,27 +107,30 @@ def _next_req_id(db: Session, opp_id: str) -> str:
 
 
 def _writable(db: Session, opp_id: str) -> None:
-    """Every write except apply_change() calls this: after a freeze, requirements change only by change documents."""
+    """Every write before publishing calls this: after it, requirements change only by corrections (with a reason)
+    and change documents, each a new version in the next baseline."""
     opportunities.require(db, opp_id)
     b = baseline(db, opp_id)
     if b:
-        raise ValueError(f"Requirements are frozen in baseline {b.number}; later changes go through the changes module.")
+        raise ValueError(f"The register is published (baseline {b.number}); correct it with a reason, or through a "
+                         "change document.")
 
 
 def add(db: Session, opp_id: str, document_id: str, quote: str, text: str, category: str, actor: str,
         section: str = "", hint_page: int | None = None, derived_from: list[str] | None = None,
-        commit: bool = True, pages: list[dict] | None = None) -> Requirement:
+        commit: bool = True, pages: list[dict] | None = None, origin: str = "extraction") -> Requirement:
     if not quote.strip():
         raise ValueError("A requirement needs a quote copied from the RFP.")
     hit = anchoring.find(quote, pages if pages is not None else ingestion.layout(document_id)["pages"], hint_page)
     req = Requirement(req_id=_next_req_id(db, opp_id), opportunity_id=opp_id, document_id=document_id,
                       text=text, quote=quote, category=category, section=section, created_by=actor,
                       derived_from=derived_from or [], provenance="EXTRACTED" if hit else "UNANCHORED",
-                      status="approved" if hit else "exception", **(hit or {}))
+                      status="approved" if hit else "exception", origin=origin, **(hit or {}))
     db.add(req)
     db.flush()  # the next _next_req_id sees this one
     audit.record(db, actor, "proposed", "requirement", req.req_id, opp_id, provenance=req.provenance, status=req.status,
-                 hint_page=hint_page, derived_from=req.derived_from, text=req.text, category=req.category, quote=req.quote)
+                 hint_page=hint_page, derived_from=req.derived_from, text=req.text, category=req.category, quote=req.quote,
+                 origin=origin)
     if commit:
         db.commit()
     return req
@@ -129,7 +155,8 @@ def split(db: Session, req_id: str, parts: list[dict], actor: str, reason: str =
     if len(parts) < 2:
         raise ValueError("A split needs at least two parts.")
     children = [add(db, req.opportunity_id, req.document_id, p["quote"], p.get("text") or p["quote"][:200],
-                    req.category, actor, req.section, req.page, [req.req_id], commit=False) for p in parts]
+                    req.category, actor, req.section, req.page, [req.req_id], commit=False, origin="correction")
+                for p in parts]
     req.status = "split"
     audit.record(db, actor, "split", "requirement", req_id, req.opportunity_id,
                  into=[c.req_id for c in children], reason=reason)
@@ -158,7 +185,7 @@ def merge(db: Session, opp_id: str, req_ids: list[str], text: str, actor: str, r
         quote=" … ".join(r.quote for r in reqs), category=first.category, section=first.section, created_by=actor,
         derived_from=[r.req_id for r in reqs], page=first.page,
         line_start=first.line_start, line_end=max(r.line_end or 0 for r in reqs),
-        bboxes=[b for r in reqs for b in r.bboxes],
+        bboxes=[b for r in reqs for b in r.bboxes], origin="correction",
         provenance="EXTRACTED" if all(r.provenance == "EXTRACTED" for r in reqs) else "UNANCHORED")
     merged.status = "approved" if merged.provenance == "EXTRACTED" else "exception"
     db.add(merged)
@@ -179,7 +206,8 @@ def add_missed(db: Session, opp_id: str, quote: str, text: str, category: str, a
     if category not in CATEGORIES:
         raise ValueError(f"Unknown category {category!r}.")
     doc = _read_main_document(db, opp_id)
-    return add(db, opp_id, doc.id, quote, (text.strip() or quote.strip())[:200], category, actor, hint_page=page)
+    return add(db, opp_id, doc.id, quote, (text.strip() or quote.strip())[:200], category, actor, hint_page=page,
+               origin="correction")
 
 
 MAX_SELECTED_LINES = 40  # a requirement is a sentence or a paragraph, not a page
@@ -198,7 +226,7 @@ def add_from_lines(db: Session, opp_id: str, page: int, line_start: int, line_en
     quote = " ".join(line["text"] for line in chosen)
     # anchored in the selected lines only, so the source is the selection itself (never the same words elsewhere)
     return add(db, opp_id, doc.id, quote, (text.strip() or quote.strip())[:200], category, actor, hint_page=page,
-               pages=[{"page": page, "lines": chosen}])
+               pages=[{"page": page, "lines": chosen}], origin="correction")
 
 
 def _selected_lines(db: Session, opp_id: str, page: int, line_start: int, line_end: int):
@@ -230,14 +258,19 @@ def _read_main_document(db: Session, opp_id: str):
     return doc
 
 
-def extract(db: Session, opp_id: str, actor: str) -> dict:
+def extract(db: Session, opp_id: str, actor: str, reason: str = "") -> dict:
     _writable(db, opp_id)
     doc = _read_main_document(db, opp_id)
+    earlier = snapshots(db, opp_id)
+    if earlier and not reason.strip():
+        e = earlier[0]
+        raise ValueError(f"The RFP was read before (E{e.number}, {e.created_by}); give a reason to read it again. "
+                         f"E{e.number} stays readable.")
     reviewed = db.scalar(select(func.count()).select_from(AuditEvent).where(
         AuditEvent.opportunity_id == opp_id, AuditEvent.entity == "requirement",
         AuditEvent.action.in_(["approve", "reject", "edit", "split", "merged", "resolved", "dismissed"])))
     if reviewed:
-        raise ValueError(f"Review has started ({reviewed} review actions); re-reading would lose that work. "
+        raise ValueError(f"Corrections were made ({reviewed}); reading again would lose them. "
                          "Add what is missing with 'Add a requirement' instead.")
     layout = ingestion.layout(doc.id)
     proposed, problems = agent.read(layout)
@@ -265,17 +298,46 @@ def extract(db: Session, opp_id: str, actor: str) -> dict:
     # exceptions and duplicates are then left out of the groups
     unique = [r for i, r in enumerate(items) if i not in dups]
     groups, group_problems = grouping.group([{"page": r.page, "text": r.text, "category": r.category} for r in unique])
-    created = 0
+    made = []
     for g in groups:
         members = [unique[i] for i in g["members"] if unique[i].status == "approved"]
         if len(members) >= 2:
-            _create_group(db, opp_id, members, g["title"], g["category"], f"grouping agent ({actor})")
-            created += 1
+            made.append(_create_group(db, opp_id, members, g["title"], g["category"], f"grouping agent ({actor})"))
+    coverage = {"pages": len(layout["pages"]), "candidates": len(proposed),
+                "admitted": sum(r.status == "approved" for r in items), "exceptions": sum(r.status == "exception" for r in items),
+                "duplicates": len(dups), "groups": len(made), "problems": len(problems + group_problems)}
+    snap = ExtractionSnapshot(opportunity_id=opp_id, document_id=doc.id, number=len(earlier) + 1, reason=reason.strip(),
+                              created_by=actor, model=config.LLM_MODEL, pipeline_version=PIPELINE_VERSION,
+                              coverage=coverage, items=[_snapshot_item(r) for r in items + made])
+    db.add(snap)
+    db.flush()
+    audit.record(db, actor, "read", "extraction_snapshot", str(snap.number), opp_id, document=doc.id,
+                 reason=snap.reason, coverage=coverage)
     db.commit()
     opportunities.set_status(db, opp_id, "review", actor)
-    return {"proposed": len(proposed), "duplicates": len(dups), "groups": created,
-            "requirements": len(current(db, opp_id)), "exceptions": sum(r.status == "exception" for r in items),
-            "problems": problems + group_problems}
+    return {"proposed": len(proposed), "duplicates": len(dups), "groups": len(made),
+            "requirements": len(current(db, opp_id)), "exceptions": coverage["exceptions"], "snapshot": snap.number,
+            "coverage": coverage, "problems": problems + group_problems}
+
+
+def _snapshot_item(r: Requirement) -> dict:
+    return {"req_id": r.req_id, "kind": r.kind, "text": r.text, "quote": r.quote, "category": r.category,
+            "section": r.section, "page": r.page, "line_start": r.line_start, "line_end": r.line_end,
+            "status": r.status, "group": r.parent_id,
+            "duplicate_of": r.derived_from[0] if r.status == "duplicate" and r.derived_from else None}
+
+
+def snapshots(db: Session, opp_id: str) -> list[ExtractionSnapshot]:
+    return list(db.scalars(select(ExtractionSnapshot).where(ExtractionSnapshot.opportunity_id == opp_id)
+                           .order_by(ExtractionSnapshot.number.desc())))
+
+
+def snapshot(db: Session, opp_id: str, number: int) -> ExtractionSnapshot:
+    s = db.scalar(select(ExtractionSnapshot).where(ExtractionSnapshot.opportunity_id == opp_id,
+                                                   ExtractionSnapshot.number == number))
+    if s is None:
+        raise LookupError(f"Extraction snapshot E{number} not found.")
+    return s
 
 
 def _create_group(db: Session, opp_id: str, members: list[Requirement], title: str, category: str,
@@ -289,7 +351,7 @@ def _create_group(db: Session, opp_id: str, members: list[Requirement], title: s
                     quote=" … ".join(r.quote for r in members), page=first.page,
                     line_start=min((r.line_start for r in anchored), default=None),
                     line_end=max((r.line_end for r in anchored), default=None),
-                    bboxes=[b for r in anchored for b in r.bboxes],
+                    bboxes=[b for r in anchored for b in r.bboxes], origin="extraction",
                     provenance="EXTRACTED" if len(anchored) == len(members) else "UNANCHORED")
     g.status = "approved" if g.provenance == "EXTRACTED" else "exception"
     db.add(g)
@@ -340,11 +402,12 @@ def exceptions(db: Session, opp_id: str) -> list[dict]:
     return out
 
 
-def _exception(db: Session, req_id: str) -> Requirement:
+def _exception(db: Session, req_id: str, published_ok: bool = False) -> Requirement:
     req = get(db, req_id)
     if req is None:
         raise LookupError(f"{req_id} not found.")
-    _writable(db, req.opportunity_id)
+    if not published_ok:
+        _writable(db, req.opportunity_id)
     if req.status != "exception":
         raise ValueError(f"{req_id} is not in the exception queue.")
     return req
@@ -362,7 +425,7 @@ def resolve(db: Session, req_id: str, page: int, line_start: int, line_end: int,
     if not hit:
         raise ValueError("The selected lines have no text to link; select the requirement's own lines.")
     before = {"quote": req.quote, "document_id": req.document_id}
-    req.document_id, req.quote, req.provenance, req.status = doc.id, quote, "EXTRACTED", "approved"
+    req.document_id, req.quote, req.provenance, req.status, req.origin = doc.id, quote, "EXTRACTED", "approved", "correction"
     req.page, req.line_start, req.line_end, req.bboxes = hit["page"], hit["line_start"], hit["line_end"], hit["bboxes"]
     req.text, req.category = (text.strip() or req.text), (category or req.category)
     audit.record(db, actor, "resolved", "requirement", req_id, req.opportunity_id, before=before,
@@ -375,7 +438,7 @@ def dismiss(db: Session, req_id: str, reason: str, actor: str) -> Requirement:
     """An exception that is not a requirement leaves the queue; it stays readable with its reason."""
     if not reason.strip():
         raise ValueError("Give a reason for dismissing it.")
-    req = _exception(db, req_id)
+    req = _exception(db, req_id, published_ok=True)
     req.status = "dismissed"
     audit.record(db, actor, "dismissed", "requirement", req_id, req.opportunity_id, reason=reason.strip())
     db.commit()
@@ -448,9 +511,6 @@ def review(db: Session, req_id: str, action: str, actor: str, text: str | None =
 def freeze(db: Session, opp_id: str, actor: str) -> Baseline:
     _writable(db, opp_id)
     _read_main_document(db, opp_id)
-    undecided = [r.req_id for r in current(db, opp_id) if r.status == "proposed"]
-    if undecided:
-        raise ValueError(f"{len(undecided)} line items still need approve or reject before freezing.")
     items = [r for r in current(db, opp_id) if r.status == "approved"]
     if not items:
         raise ValueError("The register is empty; a baseline needs at least one requirement.")
@@ -499,7 +559,7 @@ def apply_change(db: Session, opp_id: str, change_doc_id: str, items: list[dict]
                 raise ValueError(f"Unknown category {item['category']!r}.")
             if kind == "added":
                 req = add(db, opp_id, change_doc_id, item["quote"], item["text"], item["category"], actor,
-                          hint_page=item.get("page"), commit=False, pages=pages)
+                          hint_page=item.get("page"), commit=False, pages=pages, origin="customer_change")
                 if req.status == "exception":  # outside the register, listed in the exception queue
                     out.setdefault("exceptions", []).append(req.req_id)
                     continue
@@ -517,7 +577,7 @@ def apply_change(db: Session, opp_id: str, change_doc_id: str, items: list[dict]
                     raise ValueError(f"The new wording of {old.req_id} is not in the change document, so it cannot "
                                      "enter the register; correct the item's quote or mark it unchanged.")
                 new = _version(db, old, number, actor, document_id=change_doc_id, text=item["text"], quote=item["quote"],
-                               category=item["category"], provenance="EXTRACTED", **hit)
+                               category=item["category"], provenance="EXTRACTED", origin="customer_change", **hit)
                 db.flush()
                 audit.record(db, actor, "revised", "requirement", old.req_id, opp_id, reason=reason, document=change_doc_id,
                              version=new.version, baseline=number, before={"text": old.text, "category": old.category,
@@ -528,26 +588,178 @@ def apply_change(db: Session, opp_id: str, change_doc_id: str, items: list[dict]
             elif kind == "removed":
                 kids = [k for k in live.values() if k.parent_id == old.req_id] if old.kind == "group" else []
                 for r in [old] + kids:  # removing a group removes its sub-requirements
-                    live[r.req_id] = _version(db, r, number, actor, status="removed")
+                    live[r.req_id] = _version(db, r, number, actor, status="removed", origin="customer_change")
                     audit.record(db, actor, "removed", "requirement", r.req_id, opp_id, reason=reason,
                                  document=change_doc_id, version=r.version + 1, baseline=number, quote=item["quote"])
                 out["removed"].append(old.req_id)
             else:
                 raise ValueError(f"Unknown change {kind!r}; expected added, modified or removed.")
             targets.append(old.req_id)
-        for t in targets:  # answers to revisit: the requirement itself, or the group a sub-requirement belongs to
-            r = live[t]
-            top = r.parent_id if r.parent_id in live else r.req_id
-            if live[top].status != "removed" and top not in out["affected"]:  # removed work is withdrawn at dispatch
-                out["affected"].append(top)
-        db.flush()
-        count = sum(r.status == "approved" for r in current(db, opp_id))
-        db.add(Baseline(opportunity_id=opp_id, number=number, count=count, frozen_by=actor))
-        audit.record(db, actor, "frozen", "baseline", str(number), opp_id, count=count, document=change_doc_id,
-                     reason=reason, added=out["added"], modified=out["modified"], removed=out["removed"])
+        _close_baseline(db, opp_id, out, targets, live, actor, reason, document=change_doc_id)
         if commit:
             db.commit()
         else:  # the caller commits, together with its own record of the change (changes module)
+            db.flush()
+    except Exception:
+        db.rollback()
+        raise
+    return out
+
+
+def _close_baseline(db: Session, opp_id: str, out: dict, targets: list[str], live: dict, actor: str, reason: str,
+                    **details) -> None:
+    """The answers to revisit (affected) and the next baseline row with its audit event: shared by change documents
+    and corrections."""
+    for t in targets:  # answers to revisit: the requirement itself, or the group a sub-requirement belongs to
+        r = live[t]
+        top = r.parent_id if r.parent_id in live else r.req_id
+        if live[top].status not in INACTIVE and top not in out["affected"]:  # removed work is withdrawn at dispatch
+            out["affected"].append(top)
+    db.flush()
+    count = sum(r.status == "approved" for r in current(db, opp_id))
+    db.add(Baseline(opportunity_id=opp_id, number=out["baseline"], count=count, frozen_by=actor))
+    audit.record(db, actor, "frozen", "baseline", str(out["baseline"]), opp_id, count=count, reason=reason,
+                 added=out["added"], modified=out["modified"], removed=out["removed"], **details)
+
+
+CORRECTIONS = ("add", "edit", "split", "merge", "exclude", "resolve")
+
+
+def apply_correction(db: Session, opp_id: str, kind: str, body: dict, actor: str, reason: str,
+                     commit: bool = True) -> dict:
+    """After publishing, a person corrects how the RFP was read (C-04): never in place, always a new version (origin
+    correction) or a new ID in the next baseline, with the person and the reason. On any error nothing is stored."""
+    opportunities.require(db, opp_id)
+    b = baseline(db, opp_id)
+    if b is None:
+        raise ValueError("The register is not published yet: correct it directly on the Requirements page.")
+    if not reason.strip():
+        raise ValueError("Give a reason for the correction.")
+    if kind not in CORRECTIONS:
+        raise ValueError(f"Unknown correction {kind!r}; expected one of {', '.join(CORRECTIONS)}.")
+    reason, number = reason.strip(), b.number + 1
+    out = {"baseline": number, "added": [], "modified": [], "removed": [], "affected": []}
+    category = body.get("category")
+    if category and category not in CATEGORIES:
+        raise ValueError(f"Unknown category {category!r}.")
+    try:
+        live = {r.req_id: r for r in current(db, opp_id, include_children=True)}  # active latest versions
+        targets = []
+
+        def published(req_id: str) -> Requirement:
+            r = live.get(req_id or "")
+            if r is None or r.status != "approved" or r.baseline is None:
+                raise ValueError(f"{req_id} is not a requirement of baseline {b.number}.")
+            return r
+
+        def lines() -> tuple:
+            doc, chosen = _selected_lines(db, opp_id, int(body.get("page") or 0), int(body.get("line_start") or 0),
+                                          int(body.get("line_end") or 0))
+            quote = " ".join(line["text"] for line in chosen)
+            return doc, quote, [{"page": body["page"], "lines": chosen}]
+
+        def event(action: str, req_id: str, **data):
+            audit.record(db, actor, action, "requirement", req_id, opp_id, reason=reason, baseline=number,
+                         correction=kind, **data)
+
+        if kind == "add":
+            if category is None:
+                raise ValueError("Choose a category.")
+            doc, quote, pages = lines()
+            req = add(db, opp_id, doc.id, quote, (body.get("text") or "").strip()[:200] or quote[:200], category, actor,
+                      hint_page=body["page"], commit=False, pages=pages, origin="correction")
+            req.baseline = number
+            event("corrected", req.req_id, before={}, after={"text": req.text, "category": req.category,
+                                                            "source": req.source})
+            live[req.req_id] = req
+            out["added"].append(req.req_id)
+        elif kind == "resolve":
+            req = get(db, body.get("req_id") or "")
+            if req is None or req.opportunity_id != opp_id or req.status != "exception":
+                raise ValueError(f"{body.get('req_id')} is not in the exception queue.")
+            doc, quote, pages = lines()
+            hit = anchoring.find(quote, pages, body["page"])
+            if not hit:
+                raise ValueError("The selected lines have no text to link; select the requirement's own lines.")
+            new = _version(db, req, number, actor, document_id=doc.id, quote=quote, provenance="EXTRACTED",
+                           status="approved", origin="correction", text=(body.get("text") or "").strip() or req.text,
+                           category=category or req.category, **hit)
+            db.flush()
+            event("resolved", req.req_id, version=new.version, before={"quote": req.quote},
+                  after={"quote": new.quote, "source": new.source, "text": new.text, "category": new.category})
+            live[req.req_id] = new
+            out["added"].append(req.req_id)
+        elif kind == "edit":
+            old = published(body.get("req_id"))
+            text = (body.get("text") or "").strip()[:200] or old.text
+            if (text, category or old.category) == (old.text, old.category):
+                raise ValueError("Nothing to correct: the text and the category are unchanged.")
+            new = _version(db, old, number, actor, text=text, category=category or old.category, origin="correction")
+            db.flush()
+            event("corrected", old.req_id, version=new.version, before={"text": old.text, "category": old.category},
+                  after={"text": new.text, "category": new.category})
+            live[old.req_id] = new
+            out["modified"].append(old.req_id)
+            targets.append(old.req_id)
+        elif kind == "exclude":
+            old = published(body.get("req_id"))
+            kids = [k for k in live.values() if k.parent_id == old.req_id] if old.kind == "group" else []
+            for r in [old] + kids:  # excluding a group excludes its sub-requirements
+                live[r.req_id] = _version(db, r, number, actor, status="rejected", origin="correction")
+                event("reject", r.req_id, version=r.version + 1)
+            out["removed"].append(old.req_id)
+            targets.append(old.req_id)
+        elif kind == "split":
+            old = published(body.get("req_id"))
+            if old.kind == "group" or old.parent_id:
+                raise ValueError(f"{old.req_id} is a group or a sub-requirement; exclude it and add its parts from lines.")
+            parts = [p for p in body.get("parts") or [] if (p.get("quote") or "").strip()]
+            if len(parts) < 2:
+                raise ValueError("A split needs at least two parts.")
+            pages = ingestion.layout(old.document_id)["pages"]
+            for n, p in enumerate(parts, 1):
+                part = add(db, opp_id, old.document_id, p["quote"], (p.get("text") or p["quote"])[:200], old.category,
+                           actor, old.section, old.page, [old.req_id], commit=False, pages=pages, origin="correction")
+                if part.status != "approved":
+                    raise ValueError(f"Part {n} is not found in the source; copy it exactly from the document.")
+                part.baseline = number
+                live[part.req_id] = part
+                out["added"].append(part.req_id)
+            live[old.req_id] = _version(db, old, number, actor, status="split", origin="correction")
+            event("split", old.req_id, into=out["added"])
+            out["removed"].append(old.req_id)
+            targets.append(old.req_id)
+        elif kind == "merge":
+            olds = [published(r) for r in dict.fromkeys(body.get("req_ids") or [])]
+            text = (body.get("text") or "").strip()[:200]
+            if len(olds) < 2 or not text:
+                raise ValueError("A merge needs at least two requirements and a short text.")
+            if any(r.kind == "group" or r.parent_id for r in olds):
+                raise ValueError("Groups and sub-requirements cannot be merged.")
+            if len({(r.document_id, r.page) for r in olds}) > 1:
+                raise ValueError("Only requirements on the same page can be merged.")
+            olds.sort(key=lambda r: r.line_start or 0)
+            first = olds[0]
+            merged = Requirement(
+                req_id=_next_req_id(db, opp_id), opportunity_id=opp_id, document_id=first.document_id, text=text,
+                quote=" … ".join(r.quote for r in olds), category=category or first.category, section=first.section,
+                created_by=actor, derived_from=[r.req_id for r in olds], page=first.page, line_start=first.line_start,
+                line_end=max(r.line_end or 0 for r in olds), bboxes=[x for r in olds for x in r.bboxes],
+                provenance="EXTRACTED", status="approved", origin="correction", baseline=number)
+            db.add(merged)
+            db.flush()
+            event("merged", merged.req_id, merged_from=merged.derived_from)
+            for r in olds:
+                live[r.req_id] = _version(db, r, number, actor, status="merged", origin="correction")
+                event("merged_into", r.req_id, into=merged.req_id)
+                out["removed"].append(r.req_id)
+                targets.append(r.req_id)
+            live[merged.req_id] = merged
+            out["added"].append(merged.req_id)
+        _close_baseline(db, opp_id, out, targets, live, actor, reason, correction=kind)
+        if commit:
+            db.commit()
+        else:  # the caller commits, together with its follow-up (changes module)
             db.flush()
     except Exception:
         db.rollback()
@@ -567,8 +779,9 @@ def baseline(db: Session, opp_id: str) -> Baseline | None:
 def history(db: Session, req_id: str) -> dict:
     """The change history of one line item, rebuilt from the append-only audit log (it is the source of truth).
 
-    versions: the original wording, then one entry per edit that changed text or category, and one per revision
-              by a change document (label "revised", reason = the change document).
+    versions: the original wording, then one entry per edit that changed text or category, one per correction
+              after publishing or exception linked to its lines (label "corrected") and one per revision by a change
+              document (label "revised", reason = the change document); each with its origin.
     events:   everything that happened to it (proposed, edits, approve / reject, split, merge, each baseline it is in,
               revised / removed by a change document).
     """
@@ -594,10 +807,15 @@ def history(db: Session, req_id: str) -> dict:
         first = wording(edits[0].data["before"])
     else:
         first = {"text": req.text, "category": req.category}
+    v1 = db.scalar(select(Requirement.origin).where(Requirement.req_id == req_id).order_by(Requirement.version).limit(1))
     versions = [{"n": 1, "at": proposed.at if proposed else req.created_at, "by": proposed.actor if proposed else req.created_by,
-                 "label": "original", **first}]
-    for e in [e for e in events if e in edits or e.action == "revised"]:
-        versions.append({"n": len(versions) + 1, "at": e.at, "by": e.actor, "label": "edited" if e.action == "edit" else "revised",
+                 "label": "original", "origin": (proposed.data.get("origin") if proposed else None) or v1 or "extraction",
+                 **first}]
+    labels = {"edit": ("edited", "correction"), "corrected": ("corrected", "correction"),
+              "resolved": ("corrected", "correction"), "revised": ("revised", "customer_change")}
+    for e in [e for e in events if e in edits or e.action in ("corrected", "resolved", "revised")]:
+        label, origin = labels[e.action]
+        versions.append({"n": len(versions) + 1, "at": e.at, "by": e.actor, "label": label, "origin": origin,
                          "reason": e.data.get("reason", ""), **wording(e.data["after"])})
     return {"req_id": req_id, "quote": req.quote, "source": req.source, "derived_from": req.derived_from,
             "versions": versions,

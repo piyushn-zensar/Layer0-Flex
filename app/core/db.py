@@ -37,18 +37,23 @@ def get_db():
         yield db
 
 
+APPEND_ONLY = ("audit_event", "extraction_snapshot")
+
+
 def init_db():
-    """Create tables for every imported module, and make the audit log append-only (rule R8).
+    """Create tables for every imported module, and make the audit log and the extraction snapshots append-only
+    (rule R8; technical-architecture section 16.3).
     ponytail: create_all, no migrations. Delete data/store/layer0.db after a model change; add Alembic for the pilot."""
     Base.metadata.create_all(engine)
     _check_columns()
     if engine.dialect.name == "sqlite":
         with engine.begin() as conn:
-            for op in ("UPDATE", "DELETE"):
-                conn.execute(text(
-                    f"CREATE TRIGGER IF NOT EXISTS audit_event_no_{op.lower()} BEFORE {op} ON audit_event "
-                    "BEGIN SELECT RAISE(ABORT, 'audit_event is append-only'); END"
-                ))
+            for table in APPEND_ONLY:
+                for op in ("UPDATE", "DELETE"):
+                    conn.execute(text(
+                        f"CREATE TRIGGER IF NOT EXISTS {table}_no_{op.lower()} BEFORE {op} ON {table} "
+                        f"BEGIN SELECT RAISE(ABORT, '{table} is append-only'); END"
+                    ))
 
 
 class SchemaOutOfDate(RuntimeError):

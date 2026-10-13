@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { errorMessage, post, useApi } from "@/lib/api";
-import type { Changes } from "@/lib/types";
+import { DOC_TYPES, type Changes } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { STATUS_EVENT } from "@/components/shell/OppSteps";
 import { Alert, Busy, EmptyState, Skeleton, useToast } from "@/components/ui";
@@ -41,20 +41,25 @@ export default function ChangesPage() {
     <>
       {head}
       {data.baseline ? <p data-tour="chg-baseline">Current baseline <strong>{data.baseline.number}</strong>: {data.baseline.count} requirements.</p>
-        : <div data-tour="chg-no-baseline"><Alert kind="warn">The requirements must be frozen first: freeze the baseline on the <Link href={`/opportunities/${id}/requirements`}>Requirements</Link> page, then read change documents against it.</Alert></div>}
+        : <div data-tour="chg-no-baseline"><Alert kind="warn">The requirements must be published first: publish the register on the <Link href={`/opportunities/${id}/requirements`}>Requirements</Link> page, then read change documents against it.</Alert></div>}
       {data.baseline && (
         <form className="card chg-upload" onSubmit={upload} aria-busy={!!busy} data-tour="chg-upload">
           <div className="card-head"><h3>Read a change document</h3><span className="muted">An addendum, Q&A answers or a change request, as a PDF.</span></div>
           <div className="form">
             <label htmlFor="chg-file">Change document (PDF)</label>
             <input id="chg-file" type="file" name="file" accept=".pdf,application/pdf" required disabled={inReview || !!busy} aria-describedby="chg-file-hint" data-tour="chg-file" />
+            <label htmlFor="chg-role">Document type</label>
+            <select id="chg-role" name="role" required defaultValue="" disabled={inReview || !!busy} data-tour="chg-role">
+              <option value="" disabled>Choose a type…</option>
+              {(["addendum", "qa", "change"] as const).map((v) => <option key={v} value={v}>{DOC_TYPES[v]}</option>)}
+            </select>
             <button disabled={!!busy || inReview} data-tour="chg-upload-button">Read the change document</button>
             {busy ? <Busy label={busy} /> : <span id="chg-file-hint" className="muted">{inReview ? "Apply or discard the change set in review first." : "Read against the current baseline."}</span>}
           </div>
           <Alert kind="error" onClose={() => setMessage(undefined)}>{message}</Alert>
         </form>)}
       {data.sets.length === 0 ? (
-        <div data-tour="chg-empty"><EmptyState title="No change documents read yet" hint={data.baseline ? "Read an addendum, Q&A answers or a change request above; each change statement is compared with the frozen baseline." : "Freeze the baseline first."} /></div>
+        <div data-tour="chg-empty"><EmptyState title="No change documents read yet" hint={data.baseline ? "Read an addendum, Q&A answers or a change request above; each change statement is compared with the frozen baseline." : "Publish the register first."} /></div>
       ) : data.sets.map((s, i) => <ChangeSetCard key={s.id} set={s} oppId={id} threshold={data.drastic_threshold} onChanged={changed} tour={i === 0} />)}
     </>
   );

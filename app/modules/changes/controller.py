@@ -1,6 +1,6 @@
 from typing import Literal
 
-from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
@@ -16,6 +16,20 @@ class DecideIn(BaseModel):
     kind: Literal["added", "modified", "removed", "unchanged", "not_a_requirement"]  # = models.KINDS
     target: str | None = Field(None, max_length=20)
     text: str | None = Field(None, max_length=2000)
+
+
+class CorrectionIn(BaseModel):
+    """POST /api/opportunities/{id}/corrections: the fields each kind needs (requirements.apply_correction)."""
+    kind: Literal["add", "edit", "split", "merge", "exclude", "resolve"]
+    reason: str = Field(max_length=1000)
+    req_id: str | None = Field(None, max_length=20)
+    req_ids: list[str] | None = None
+    text: str | None = Field(None, max_length=2000)
+    category: str | None = None
+    page: int | None = None
+    line_start: int | None = None
+    line_end: int | None = None
+    parts: list[dict] | None = None
 
 
 def _call(fn, *args):
@@ -36,10 +50,18 @@ def changes(opp_id: str, db: Session = Depends(get_db)):
 
 
 @router.post("/opportunities/{opp_id}/changes")
-def upload(opp_id: str, request: Request, file: UploadFile = File(...), db: Session = Depends(get_db)):
-    """Synchronous: the change document is read and classified before the answer (frozen answers make it quick)."""
+def upload(opp_id: str, request: Request, file: UploadFile = File(...), role: str = Form("change"),
+           db: Session = Depends(get_db)):
+    """Synchronous: the change document is read and classified before the answer (frozen answers make it quick).
+    role: the document type (addendum, qa, change)."""
     data = file.file.read()
-    return service.view(db, _call(service.upload, db, opp_id, file.filename or "change.pdf", data, actor(request)))
+    return service.view(db, _call(service.upload, db, opp_id, file.filename or "change.pdf", data, actor(request), role))
+
+
+@router.post("/opportunities/{opp_id}/corrections")
+def correct(opp_id: str, body: CorrectionIn, request: Request, db: Session = Depends(get_db)):
+    fields = body.model_dump(exclude={"kind", "reason"}, exclude_none=True)
+    return _call(service.correct, db, opp_id, body.kind, fields, body.reason, actor(request))
 
 
 class SampleIn(BaseModel):

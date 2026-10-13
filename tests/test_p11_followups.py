@@ -30,12 +30,24 @@ def test_exports_name_the_addendum():
     seed_demo.main()  # its own opportunity: frozen, go, dispatched, some answers validated
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    s = client.post(f"/api/opportunities/{opp}/changes",
+    assert client.post(f"/api/opportunities/{opp}/changes", data={"role": "main"},
+                       files={"file": (ADDENDUM.name, ADDENDUM.read_bytes(), "application/pdf")}).status_code == 409
+    s = client.post(f"/api/opportunities/{opp}/changes", data={"role": "addendum"},
                     files={"file": (ADDENDUM.name, ADDENDUM.read_bytes(), "application/pdf")}).json()
     client.post(f"/api/changes/{s['id']}/confirm-all")
     res = client.post(f"/api/changes/{s['id']}/apply").json()["result"]
     breaker = opp.replace("OPP-", "REQ-") + "-0005"
     assert breaker in res["modified"]
+    docs = {d["id"]: d["role"] for d in client.get(f"/api/opportunities/{opp}").json()["documents"]}
+    assert docs[s["document_id"]] == "addendum"  # P-23: the person states the document type
+    reqs = {r["req_id"]: r for r in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
+    assert reqs[breaker]["origin"] == "customer_change"
+    # P-23: a correction after publishing returns the corrected requirement's answers, like a customer change
+    fixed = client.post(f"/api/opportunities/{opp}/corrections",
+                        json={"kind": "edit", "req_id": breaker, "text": "Breakers per the addendum", "reason": "clearer"}).json()
+    assert fixed["baseline"] == res["baseline"] + 1 and fixed["affected"] == [breaker] and fixed["returned"] >= 1
+    versions = client.get(f"/api/requirements/{breaker}/history").json()["versions"]
+    assert [(v["label"], v["origin"]) for v in versions][-2:] == [("revised", "customer_change"), ("corrected", "correction")]
     rows = {r["req"]["req_id"]: r["req"] for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"]}
     assert rows[breaker]["document_id"] == s["document_id"] and rows[breaker]["source"] == "p. 1, lines 14-15"
     named = f"{ADDENDUM.name}, p. 1, lines 14-15"

@@ -62,6 +62,10 @@ class DismissIn(BaseModel):
     reason: str
 
 
+class ExtractIn(BaseModel):
+    reason: str = ""
+
+
 def _guard(fn):
     """Service errors -> HTTP: unknown id 404, not allowed in this state 409."""
     try:
@@ -77,8 +81,27 @@ def requirements(opp_id: str, db: Session = Depends(get_db)):
     _guard(lambda: opportunities.require(db, opp_id))  # an unknown opportunity is a 404, not an empty list
     b = service.baseline(db, opp_id)
     rows = service.current(db, opp_id, include_inactive=True, include_children=True)
+    latest = next(iter(service.snapshots(db, opp_id)), None)
     return {"requirements": [row(r, "source") for r in rows], "baseline": row(b) if b else None,
-            "exceptions": sum(r.status == "exception" for r in rows)}
+            "exceptions": sum(r.status == "exception" for r in rows), "coverage": latest.coverage if latest else None}
+
+
+def _snapshot(s, items: bool = False) -> dict:
+    out = {k: getattr(s, k) for k in ("number", "document_id", "created_by", "created_at", "reason", "model",
+                                       "pipeline_version", "coverage")}
+    return out | {"items": s.items} if items else out
+
+
+@router.get("/opportunities/{opp_id}/extraction")
+def snapshots(opp_id: str, db: Session = Depends(get_db)):
+    _guard(lambda: opportunities.require(db, opp_id))
+    return [_snapshot(s) for s in service.snapshots(db, opp_id)]
+
+
+@router.get("/opportunities/{opp_id}/extraction/{number}")
+def snapshot(opp_id: str, number: int, db: Session = Depends(get_db)):
+    _guard(lambda: opportunities.require(db, opp_id))
+    return _snapshot(_guard(lambda: service.snapshot(db, opp_id, number)), items=True)
 
 
 @router.get("/opportunities/{opp_id}/requirements/exceptions")
@@ -88,8 +111,8 @@ def exceptions(opp_id: str, db: Session = Depends(get_db)):
 
 
 @router.post("/opportunities/{opp_id}/requirements/extract")
-def extract(opp_id: str, request: Request, db: Session = Depends(get_db)):
-    return _guard(lambda: service.extract(db, opp_id, actor(request)))
+def extract(opp_id: str, request: Request, body: ExtractIn | None = None, db: Session = Depends(get_db)):
+    return _guard(lambda: service.extract(db, opp_id, actor(request), body.reason if body else ""))
 
 
 @router.post("/opportunities/{opp_id}/requirements")

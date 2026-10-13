@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { api, errorMessage, post, useApi } from "@/lib/api";
-import { DOC_TYPES, docTypeLabel, type Doc, type Opportunity } from "@/lib/types";
+import { DOC_TYPES, docTypeLabel, snapshotName, type Doc, type Opportunity, type Snapshot } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, Skeleton, StatusBadge, useToast } from "@/components/ui";
 
@@ -14,6 +14,8 @@ export default function DocumentsPage() {
   const router = useRouter();
   const toast = useToast();
   const { data, error, reload } = useApi<{ opportunity: Opportunity; documents: Received[] }>(`/api/opportunities/${id}`);
+  const { data: snapshots } = useApi<Snapshot[]>(`/api/opportunities/${id}/extraction`);
+  const readBefore = (snapshots?.length ?? 0) > 0; // a snapshot exists: reading again needs a reason (E2, E3...)
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState<{ text: string; problems?: string[] }>();
   type Passage = { page: number; line_start: number; line_end: number; text: string; score: number };
@@ -36,12 +38,13 @@ export default function DocumentsPage() {
     try { await post(`/api/opportunities/${id}/documents`, file); form.reset(); await reload(); toast.success("Document received and read."); } catch (err) { fail(err); }
     finally { setBusy(""); }
   }
-  async function extract() {
+  async function extract(reason?: string) {
     setBusy("Reader agent running… (about a minute for a 100-page RFP)"); setMessage(undefined);
     try {
-      const r = await post<{ proposed: number; problems: string[] }>(`/api/opportunities/${id}/requirements/extract`);
-      if (r.problems.length) setMessage({ text: `${r.proposed} line items proposed, but some pages were not read:`, problems: r.problems });
-      else router.push(`/opportunities/${id}/requirements`);
+      const r = await post<{ proposed: number; problems: string[]; snapshot?: number; exceptions?: number }>(`/api/opportunities/${id}/requirements/extract`, reason ? { reason } : {});
+      const saved = r.snapshot ? ` Saved as extraction snapshot ${snapshotName(r.snapshot)}${r.exceptions !== undefined ? `; ${r.exceptions} exception${r.exceptions === 1 ? "" : "s"}` : ""}.` : "";
+      if (r.problems.length) setMessage({ text: `${r.proposed} line items proposed.${saved} Some pages were not read:`, problems: r.problems });
+      else { if (saved) toast.success(`${r.proposed} line items proposed.${saved}`); router.push(`/opportunities/${id}/requirements`); }
     } catch (e) { fail(e); } finally { setBusy(""); }
   }
   const status = data?.opportunity.status;
@@ -99,7 +102,12 @@ export default function DocumentsPage() {
           </div>)}
         </section>)}
       {data && (canRead ? (<div className="row" data-tour="rfp-extract-row">
-        <button disabled={!!busy || !!unread} onClick={extract} data-tour="rfp-extract">Run the reader agent → requirements</button>
+        {readBefore ? (
+          <form className="form" data-tour="rfp-reread-form" onSubmit={(e) => { e.preventDefault(); const reason = String(new FormData(e.currentTarget).get("reason")).trim(); if (reason) extract(reason); }}>
+            <label>Why read the RFP again? <span className="field-hint">(the earlier snapshots are kept)</span> <input name="reason" required maxLength={500} disabled={!!busy} /></label>
+            <button disabled={!!busy || !!unread} data-tour="rfp-extract">Read again</button>
+          </form>
+        ) : <button disabled={!!busy || !!unread} onClick={() => extract()} data-tour="rfp-extract">Run the reader agent → requirements</button>}
         {busy ? <Busy label={busy} /> : unread && <span className="muted" role="status">Waiting for the main RFP to be read; use Refresh status.</span>}</div>)
         : <p className="muted" data-tour="rfp-started-note">Requirement review has started, so the RFP is not re-read. Missed items can be added on the Requirements page.</p>)}
     </>

@@ -1,7 +1,8 @@
 """Changes: addenda, Q&A answers and change requests processed as a delta against the frozen baseline (P-11,
 technical-architecture.md section 8).  Owner: Piyush.
 
-A change document is stored with the role "change" and read like the RFP (same layout model, same anchoring).
+A change document is stored with its document type (addendum, qa or change) and read like the RFP (same layout
+model, same anchoring); its new versions have origin "customer_change".
 The change agent lists its statements and classifies each one against the frozen baseline; a person confirms
 every classification. Applying the confirmed set makes the next baseline (new versions, new IDs, removals),
 returns the answers of changed requirements to their units, and matches and dispatches what is new. A large
@@ -10,7 +11,9 @@ opportunity; Layer 0 never decides that.
 
 Public contract:
     DRASTIC_SHARE                                 0.25, placeholder (Needs confirmation, section 8)
-    upload(db, opp_id, filename, data, actor) -> ChangeSet   store, read and classify a change PDF. LookupError:
+    DOC_TYPES                                     the document types of a change document: addendum, qa, change
+    upload(db, opp_id, filename, data, actor, role="change") -> ChangeSet   store, read and classify a change PDF
+        of that document type (ValueError for another). LookupError:
         unknown opportunity; ValueError: no frozen baseline, a set still in review, not a PDF, the file is the
         main RFP or already applied, or no model answer (mock mode): then no change set is created
     overview(db, opp_id) -> dict                  {"baseline": {number, count} | None, "drastic_threshold",
@@ -27,6 +30,10 @@ Public contract:
         committed (returns, matching, dispatch) is reported in note, not raised. Of two applies / discards of one
         set at once only the first goes through
     discard(db, set_id, actor) -> ChangeSet       Bid Manager only; only from review
+    correct(db, opp_id, kind, body, reason, actor) -> dict   after publishing, a correction of the reading
+        (requirements.apply_correction: next baseline, origin correction), then the same follow-up as a change set:
+        answers of corrected requirements returned, new ones matched and dispatched. {baseline, added, modified,
+        removed, affected, returned, dispatched, note}; a follow-up failure is reported in note
     Anyone may upload, decide and confirm items (agents propose, a person confirms); applying is the Bid Manager's.
     view(db, change_set) -> dict / item_view(db, item) -> dict   the API shape (counts, share, drastic, pages,
         items with the target's wording in the baseline the set was compared with)
@@ -100,15 +107,20 @@ def _unavailable(filename: str) -> ValueError:
                       "connect the model service to read new documents.")
 
 
-def upload(db: Session, opp_id: str, filename: str, data: bytes, actor: str) -> ChangeSet:
+DOC_TYPES = ("addendum", "qa", "change")
+
+
+def upload(db: Session, opp_id: str, filename: str, data: bytes, actor: str, role: str = "change") -> ChangeSet:
     opportunities.require(db, opp_id)
+    if role not in DOC_TYPES:
+        raise ValueError(f"Unknown document type {role!r}; expected addendum, qa (clarification) or change (request).")
     b = requirements.baseline(db, opp_id)
     if b is None:
-        raise ValueError("Freeze the requirements first: a change document is compared with the frozen baseline.")
+        raise ValueError("Publish the register first: a change document is compared with the published baseline.")
     _no_set_in_review(db, opp_id)
     if not filename.lower().endswith(".pdf"):
         raise ValueError("Upload the change document as a PDF.")
-    doc = opportunities.add_document(db, opp_id, filename, data, "change", actor)
+    doc = opportunities.add_document(db, opp_id, filename, data, role, actor)
     if doc.role == "main":  # the same file uploaded earlier as an addendum or Q&A is fine: it keeps that role
         raise ValueError(f"This file is the main RFP of {opp_id}, not a change document.")
     done = db.scalar(select(ChangeSet).where(ChangeSet.document_id == doc.id, ChangeSet.status == "applied"))
@@ -274,25 +286,10 @@ def apply(db: Session, set_id: int, actor: str) -> ChangeSet:
                 parent = requirements.get(db, i.target).parent_id
                 what = f"now reads: {i.text[:200]}" if i.kind == "modified" else "removed"
                 notes[parent or i.target].append(f"sub-requirement {i.target} {what}" if parent else what)
-        for req_id in out["affected"]:
-            note = f"Changed by {s.filename}: {'; '.join(notes.get(req_id) or ['changed'])}"
-            result["returned"] += workpackages.return_for_change(db, opp_id, [req_id], note, actor)
-        if out["added"] or out["modified"]:
-            # only what changed: re-matching everything would change the frozen page batches of untouched requirements
-            matching.match(db, opp_id, f"matching agent ({actor})", req_ids=out["added"] + out["modified"])
-        go = decisions.latest(db, opp_id, "go_no_go")
-        if not changes:
-            result["note"] = f"Nothing changed: the baseline stays {s.baseline_from}."
-        elif not dispatched_before:
-            result["note"] = "Not dispatched: no work was dispatched before this change; dispatch from the decisions page."
-        elif not go or go.outcome != "go":
-            result["note"] = ("Not dispatched: the latest go/no-go is not 'go'. New work is created and removed work "
-                              "withdrawn at the next dispatch.")
+        if changes:
+            _follow_up(db, opp_id, out, notes, s.filename, actor, dispatched_before, result)
         else:
-            try:
-                result["dispatched"] = workpackages.dispatch(db, opp_id, actor)
-            except ValueError as exc:
-                result["note"] = f"Not dispatched: {exc}"
+            result["note"] = f"Nothing changed: the baseline stays {s.baseline_from}."
     except Exception as exc:
         db.rollback()
         result["note"] = (f"Baseline {out['baseline']} is applied, but the follow-up stopped ({type(exc).__name__}: "
@@ -301,6 +298,48 @@ def apply(db: Session, set_id: int, actor: str) -> ChangeSet:
     s.result = dict(result)
     db.commit()
     return s
+
+
+def _follow_up(db: Session, opp_id: str, out: dict, notes: dict, source: str, actor: str, dispatched_before: bool,
+               result: dict) -> None:
+    """After a new baseline is committed: answers of changed requirements go back to their units, new and changed
+    requirements are matched, and after a "go" (and if work was dispatched before) dispatch runs, which also
+    withdraws removed work. Fills result["returned"], ["dispatched"] and ["note"]."""
+    for req_id in out["affected"]:
+        note = f"Changed by {source}: {'; '.join(notes.get(req_id) or ['changed'])}"
+        result["returned"] += workpackages.return_for_change(db, opp_id, [req_id], note, actor)
+    if out["added"] or out["modified"]:
+        # only what changed: re-matching everything would change the frozen page batches of untouched requirements
+        matching.match(db, opp_id, f"matching agent ({actor})", req_ids=out["added"] + out["modified"])
+    go = decisions.latest(db, opp_id, "go_no_go")
+    if not dispatched_before:
+        result["note"] = "Not dispatched: no work was dispatched before this change; dispatch from the decisions page."
+    elif not go or go.outcome != "go":
+        result["note"] = ("Not dispatched: the latest go/no-go is not 'go'. New work is created and removed work "
+                          "withdrawn at the next dispatch.")
+    else:
+        try:
+            result["dispatched"] = workpackages.dispatch(db, opp_id, actor)
+        except ValueError as exc:
+            result["note"] = f"Not dispatched: {exc}"
+
+
+def correct(db: Session, opp_id: str, kind: str, body: dict, reason: str, actor: str) -> dict:
+    """A correction of how the RFP was read, after publishing (C-04): the next baseline without a change document."""
+    dispatched_before = bool(workpackages.by_requirement(db, opp_id))
+    out = requirements.apply_correction(db, opp_id, kind, body, actor, reason)  # commits, or raises and stores nothing
+    result = {k: out[k] for k in ("baseline", "added", "modified", "removed", "affected")} | \
+        {"returned": 0, "dispatched": 0, "note": ""}
+    try:
+        notes = {r: [f"corrected by {actor}: {reason.strip()}"] for r in out["affected"]}
+        _follow_up(db, opp_id, out, notes, "a correction", actor, dispatched_before, result)
+    except Exception as exc:
+        db.rollback()
+        result["note"] = (f"Baseline {out['baseline']} is saved, but the follow-up stopped ({type(exc).__name__}: "
+                          f"{exc}); new and changed requirements may still need matching and dispatch.")
+        audit.record(db, actor, "follow_up_failed", "baseline", str(out["baseline"]), opp_id, error=str(exc)[:500])
+        db.commit()
+    return result
 
 
 def discard(db: Session, set_id: int, actor: str) -> ChangeSet:

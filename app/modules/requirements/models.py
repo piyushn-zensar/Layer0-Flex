@@ -31,6 +31,7 @@ class Requirement(Base):
     kind: Mapped[str] = mapped_column(String(8), default="item")         # item | group (a requirement made of sub-requirements)
     parent_id: Mapped[str | None] = mapped_column(String(20), index=True)  # the group a sub-requirement belongs to
     baseline: Mapped[int | None]                                        # frozen baseline number, None = draft
+    origin: Mapped[str | None] = mapped_column(String(16))             # extraction | correction | customer_change
     created_by: Mapped[str] = mapped_column(String(80))
     created_at: Mapped[datetime] = mapped_column(default=utcnow)
 
@@ -40,6 +41,24 @@ class Requirement(Base):
             return "not found in source"
         lines = f"line {self.line_start}" if self.line_start == self.line_end else f"lines {self.line_start}-{self.line_end}"
         return f"p. {self.page}, {lines}"
+
+
+class ExtractionSnapshot(Base):
+    """What one reading of a document proposed (E1, E2, ...): every candidate as the agents left it. Never updated or
+    deleted (database triggers, as for the audit log); the working register starts from it."""
+    __tablename__ = "extraction_snapshot"
+    __table_args__ = (UniqueConstraint("opportunity_id", "number"),)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    opportunity_id: Mapped[str] = mapped_column(String(20), index=True)
+    document_id: Mapped[str] = mapped_column(String(64))
+    number: Mapped[int]                                                 # 1 = E1
+    reason: Mapped[str] = mapped_column(Text, default="")              # why it was read again ("" for E1)
+    created_by: Mapped[str] = mapped_column(String(80))
+    created_at: Mapped[datetime] = mapped_column(default=utcnow)
+    model: Mapped[str] = mapped_column(String(80))
+    pipeline_version: Mapped[str] = mapped_column(String(40))
+    coverage: Mapped[dict] = mapped_column(JSON, default=dict)
+    items: Mapped[list] = mapped_column(JSON, default=list)
 
 
 class Baseline(Base):

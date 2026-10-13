@@ -302,7 +302,9 @@ def test_review_findings_fixed():
     one = {r["req_id"] for r in client.get(f"/api/opportunities/{opp2}/requirements").json()["requirements"]} or None
     client.post(f"/api/opportunities/{opp2}/requirements/extract")
     a = {r["req_id"] for r in client.get(f"/api/opportunities/{opp2}/requirements").json()["requirements"]}
-    assert client.post(f"/api/opportunities/{opp2}/requirements/extract").status_code == 200  # nothing reviewed yet
+    assert client.post(f"/api/opportunities/{opp2}/requirements/extract").status_code == 409  # E1 exists: a reason
+    again = client.post(f"/api/opportunities/{opp2}/requirements/extract", json={"reason": "check a re-read"})
+    assert again.status_code == 200 and again.json()["snapshot"] == 2  # nothing corrected yet
     b = {r["req_id"] for r in client.get(f"/api/opportunities/{opp2}/requirements").json()["requirements"]}
     assert len(a) == len(b) and not (a & b) and one is None
 
@@ -918,3 +920,66 @@ def test_register_and_exception_queue():
     client.post(url, json={"quote": "The vendor shall paint the switchgear green.", "page": 55})
     assert client.post(f"/api/opportunities/{opp}/baselines").json()["count"] == 2
     assert client.post(dismiss.replace(other["req_id"], lost["req_id"]), json={"reason": "x"}).status_code == 409  # frozen
+
+
+def test_extraction_snapshot_and_corrections():
+    """P-23 (C-04): each reading is an append-only snapshot (a re-read needs a reason); publishing needs no decision
+    per item; after publishing, every correction is a new version (origin correction) in the next baseline."""
+    client = signed_in()
+    pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
+    opp = client.post("/api/opportunities", json={"title": "snapshot"}).json()["id"]
+    client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    read = client.post(f"/api/opportunities/{opp}/requirements/extract").json()
+    assert read["snapshot"] == 1 and read["coverage"]["candidates"] == 814 and read["coverage"]["exceptions"] == read["exceptions"]
+    (e1,) = client.get(f"/api/opportunities/{opp}/extraction").json()
+    assert (e1["number"], e1["reason"], e1["created_by"]) == (1, "", "Bid Manager") and e1["pipeline_version"]
+    items = client.get(f"/api/opportunities/{opp}/extraction/1").json()["items"]
+    assert {i["status"] for i in items} == {"approved", "exception", "duplicate"} and any(i["kind"] == "group" for i in items)
+    assert client.get(f"/api/opportunities/{opp}/extraction/9").status_code == 404
+    with engine.begin() as conn, pytest.raises(Exception, match="append-only"):  # the snapshot itself never changes
+        conn.execute(text("UPDATE extraction_snapshot SET reason = 'x' WHERE opportunity_id = :o"), {"o": opp})
+    rows = client.get(f"/api/opportunities/{opp}/requirements").json()
+    assert rows["coverage"] == read["coverage"] and {r["origin"] for r in rows["requirements"]} == {"extraction"}
+
+    # corrections need a published register; publishing needs no decision per item and ignores open exceptions
+    p55 = same_page(rows["requirements"], 4)
+    url = f"/api/opportunities/{opp}/corrections"
+    assert client.post(url, json={"kind": "exclude", "req_id": p55[0]["req_id"], "reason": "x"}).status_code == 409
+    assert client.post(f"/api/opportunities/{opp}/baselines").json()["number"] == 1
+    assert client.post(url, json={"kind": "exclude", "req_id": p55[0]["req_id"], "reason": " "}).status_code == 409
+    assert client.post(url, json={"kind": "edit", "req_id": p55[0]["req_id"], "reason": "same"}).status_code == 409  # no change
+
+    edit = client.post(url, json={"kind": "edit", "req_id": p55[0]["req_id"], "text": "Corrected text", "reason": "misread"},
+                       headers=auth("crown.pm")).json()
+    assert (edit["baseline"], edit["modified"], edit["affected"]) == (2, [p55[0]["req_id"]], [p55[0]["req_id"]])
+    added = client.post(url, json={"kind": "add", "page": 55, "line_start": 52, "line_end": 53, "category": "technical",
+                                   "reason": "missed on p. 55"}).json()
+    q = p55[1]["quote"]
+    half = q.rfind(" ", 0, len(q) // 2)
+    split = client.post(url, json={"kind": "split", "req_id": p55[1]["req_id"], "reason": "two obligations",
+                                   "parts": [{"quote": q[:half]}, {"quote": q[half + 1:]}]}).json()
+    merged = client.post(url, json={"kind": "merge", "req_ids": [p55[2]["req_id"], p55[3]["req_id"]], "text": "One",
+                                    "reason": "one obligation"}).json()
+    exception = next(r for r in rows["requirements"] if r["status"] == "exception")
+    resolved = client.post(url, json={"kind": "resolve", "req_id": exception["req_id"], "page": 55, "line_start": 52,
+                                      "line_end": 53, "reason": "found it"}).json()
+    excluded = client.post(url, json={"kind": "exclude", "req_id": added["added"][0], "reason": "not a requirement"}).json()
+    assert [r["baseline"] for r in (added, split, merged, resolved, excluded)] == [3, 4, 5, 6, 7]
+    assert len(split["added"]) == 2 and split["removed"] == [p55[1]["req_id"]] and merged["removed"] == [p55[2]["req_id"], p55[3]["req_id"]]
+
+    now = {r["req_id"]: r for r in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
+    assert now[p55[0]["req_id"]]["text"] == "Corrected text" and now[p55[0]["req_id"]]["origin"] == "correction"
+    assert now[p55[1]["req_id"]]["status"] == "split" and now[added["added"][0]]["status"] == "rejected"
+    assert all(now[i]["origin"] == "correction" and now[i]["status"] == "approved" for i in split["added"] + merged["added"])
+    assert (now[exception["req_id"]]["status"], now[exception["req_id"]]["provenance"]) == ("approved", "EXTRACTED")
+    assert client.get(f"/api/opportunities/{opp}/requirements").json()["baseline"]["number"] == 7
+    # the history tells the reading from its correction; baseline 1 still holds the original wording
+    h = client.get(f"/api/requirements/{p55[0]['req_id']}/history").json()["versions"]
+    assert [(v["label"], v["origin"]) for v in h] == [("original", "extraction"), ("corrected", "correction")]
+    assert h[1]["by"] == "Crown Product Manager" and h[1]["reason"] == "misread"
+    # after publishing an exception can still be dismissed; nothing else changes the register in place
+    other = next(r for r in rows["requirements"] if r["status"] == "exception" and r["req_id"] != exception["req_id"])
+    assert client.post(f"/api/requirements/{other['req_id']}/dismiss", json={"reason": "not in scope"}).status_code == 200
+    assert client.post(f"/api/requirements/{p55[0]['req_id']}/review", json={"action": "edit", "text": "x"}).status_code == 409
+    assert client.post(f"/api/opportunities/{opp}/requirements/extract", json={"reason": "again"}).status_code == 409
+    assert client.get(f"/api/opportunities/{opp}/extraction/1").json()["items"] == items  # E1 unchanged

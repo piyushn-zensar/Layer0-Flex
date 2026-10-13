@@ -1,6 +1,6 @@
 "use client";
 // Requirement register and exception queue: exclude (with a reason), restore, edit, split, merge, ungroup, add missed (select lines or paste a quote); exceptions
-// (source not verified) are linked to lines or dismissed; then freeze the baseline.  Owner: Piyush.
+// (source not verified) are linked to lines or dismissed; then publish the register as baseline 1; after publish every change is a correction with a reason.  Owner: Piyush.
 // Requirements are shown in document order; a group lists its sub-requirements when expanded.
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -9,7 +9,7 @@ import PageHead from "@/components/shell/PageHead";
 import LinePicker from "@/components/requirements/LinePicker"; // P-15
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useConfirm, useToast } from "@/components/ui";
 import { errorMessage, post, useApi } from "@/lib/api";
-import { sourceLabel, statusLabel, type Baseline, type Requirement, type RequirementException, type RequirementHistory } from "@/lib/types";
+import { coverageLabel, originLabel, snapshotName, sourceLabel, statusLabel, type Baseline, type Coverage, type CorrectionResult, type Requirement, type RequirementException, type RequirementHistory, type Snapshot, type SnapshotDetail } from "@/lib/types";
 
 const CATEGORIES = ["technical", "compliance", "commercial", "schedule", "submission", "legal", "staffing"];
 const FILTERS = {
@@ -26,7 +26,8 @@ type FilterKey = keyof typeof FILTERS;
 
 export default function RequirementsPage() {
   const { id } = useParams<{ id: string }>();
-  const { data, error, reload } = useApi<{ requirements: Requirement[]; baseline: Baseline | null; exceptions: number }>(`/api/opportunities/${id}/requirements`);
+  const { data, error, reload } = useApi<{ requirements: Requirement[]; baseline: Baseline | null; exceptions: number; coverage?: Coverage | null }>(`/api/opportunities/${id}/requirements`);
+  const { data: snapshots } = useApi<Snapshot[]>(`/api/opportunities/${id}/extraction`);
   const { data: exc, error: excError, reload: reloadExc } = useApi<RequirementException[]>(`/api/opportunities/${id}/requirements/exceptions`);
   const [tab, setTab] = useState<"register" | "exceptions">("register");
   const toast = useToast();
@@ -61,36 +62,43 @@ export default function RequirementsPage() {
   const activeCount = all.filter(FILTERS.register.test).length;
   const done = (msg?: string) => { setSelected(new Set()); setEditing(undefined); setMerging(false); if (msg) toast.success(msg); return Promise.all([reload(), reloadExc()]).then(() => undefined); };
   // One action at a time. A failure inside a form stays in that form (at = its key) with the API's message; elsewhere it is a toast.
-  const act = (p: Promise<unknown>, msg?: string, at?: string) => {
+  const act = (p: Promise<unknown>, msg?: string | ((result: never) => string), at?: string) => {
     setBusy(true); setFormError(undefined);
-    return p.then(() => done(msg), (e) => { const text = errorMessage(e); if (at) setFormError({ at, text }); else toast.error(text); })
+    return p.then((res) => done(typeof msg === "function" ? (msg as (x: unknown) => string)(res) : msg), (e) => { const text = errorMessage(e); if (at) setFormError({ at, text }); else toast.error(text); })
       .finally(() => setBusy(false));
   };
   const review = (reqId: string, body: object, msg?: string, at?: string) => act(post(`/api/requirements/${reqId}/review`, body), msg, at);
-  const merge = (text: string) => act(post(`/api/opportunities/${id}/requirements/merge`, { req_ids: [...selected], text }), `${selected.size} line items merged into one.`, "merge");
+  // After publish every change is a correction: POST /corrections with a required reason; each makes the next baseline (P-23).
+  const saved = (res: CorrectionResult) => `Correction saved: baseline ${res.baseline}${res.returned ? `; ${res.returned} answer${res.returned === 1 ? "" : "s"} returned to their units` : ""}.${res.note ? ` ${res.note}` : ""}`;
+  const correct = (body: object, at?: string) => act(post<CorrectionResult>(`/api/opportunities/${id}/corrections`, body), saved, at);
+  const merge = (text: string, reason: string) => frozen ? correct({ kind: "merge", reason, req_ids: [...selected], text }, "merge")
+    : act(post(`/api/opportunities/${id}/requirements/merge`, { req_ids: [...selected], text }), `${selected.size} line items merged into one.`, "merge");
   // QA-10: check the part count here so the message is ours, not the validator's
-  const split = (r: Requirement, raw: string) => {
+  const split = (r: Requirement, raw: string, reason: string) => {
     const parts = raw.split("\n").map((q) => ({ quote: q.trim() })).filter((p) => p.quote);
     if (parts.length < 2) { setFormError({ at: r.req_id, text: "A split needs at least two parts: one quote per line." }); return; }
+    if (frozen) return correct({ kind: "split", reason, req_id: r.req_id, parts }, r.req_id);
     return act(post(`/api/requirements/${r.req_id}/split`, { parts }), `${r.req_id} split into ${parts.length} line items.`, r.req_id);
   };
   const freeze = async () => {
-    const ok = await ask({ title: "Freeze the baseline?", confirmLabel: "Freeze baseline",
-      message: `The ${activeCount} requirements in the register become the baseline the units work from. Later changes to the RFP run as a delta against it.` });
+    const ok = await ask({ title: "Publish the register?", confirmLabel: "Publish",
+      message: `The ${activeCount} requirements in the register are published as baseline 1 for assessment. Open exceptions stay listed as open questions. After this, changes are corrections with a reason.` });
     if (!ok) return;
-    await act(post(`/api/opportunities/${id}/baselines`), "Baseline frozen.");
+    await act(post(`/api/opportunities/${id}/baselines`), "Register published as baseline 1.");
     window.dispatchEvent(new Event("opp-status-changed")); // the stepper and status badge update at once
   };
   const flip = (set: Set<string>, reqId: string) => { const n = new Set(set); if (n.has(reqId)) n.delete(reqId); else n.add(reqId); return n; };
   const toggle = (reqId: string) => setSelected((s) => flip(s, reqId));
   const openForm = (next?: { id: string; mode: "edit" | "split" | "exclude" }) => { setFormError(undefined); setEditing(next); };
   const errorAt = (at: string) => formError?.at === at && <p className="warn form-error" role="alert">{formError.text}</p>;
-  const cols = frozen ? 4 : 6;
+  const cols = 6;
+  const reasonField = frozen && <label>Reason for the correction <input name="reason" data-tour="req-reason" required maxLength={500} /></label>;
+  const latest = snapshots?.[0];
   const exceptions = data.exceptions ?? exc?.length ?? 0;
   // P-15: the line picker opens on the page of a selected requirement, else of the first one in view
   const startPage = (all.find((r) => selected.has(r.req_id) && r.page) ?? rows.find((r) => r.page))?.page ?? 1;
   // Select every selectable row in the current view (the filter and search) at once; the bulk bar then acts on them.
-  const selectable = rows.filter((r) => !INACTIVE.has(r.status) && r.baseline === null).map((r) => r.req_id);
+  const selectable = rows.filter((r) => !INACTIVE.has(r.status)).map((r) => r.req_id);
   const allSelected = selectable.length > 0 && selectable.every((rid) => selected.has(rid));
   // Walkthrough targets (data-tour): the first row in view carries the row-level ids, and the first row of each kind
   // (group, unanchored, duplicate, sub-requirement, splittable item) carries its own, so a step can spotlight one.
@@ -98,7 +106,7 @@ export default function RequirementsPage() {
   const first = (tourId: string) => (marked.has(tourId) ? undefined : (marked.add(tourId), tourId));
 
   const line = (r: Requirement, child = false) => {
-    const active = !INACTIVE.has(r.status) && r.baseline === null;
+    const active = !INACTIVE.has(r.status);
     const isEditing = editing?.id === r.req_id;
     const kids = kidsOf.get(r.req_id) ?? [];
     const group = r.kind === "group";
@@ -108,8 +116,9 @@ export default function RequirementsPage() {
       <Fragment key={r.req_id}>
         <tr data-tour={lead ? "req-row-first" : child ? first("req-row-child") : undefined}
           className={`${INACTIVE.has(r.status) ? "inactive" : ""} ${child ? "child" : ""} ${group ? "group" : ""}`}>
-          {!frozen && <td>{active && !child && <input type="checkbox" data-tour={at("req-row-check")} aria-label={`Select ${r.req_id}`} checked={selected.has(r.req_id)} onChange={() => toggle(r.req_id)} />}</td>}
-          <td><div className="mono" data-tour={at("req-row-id")}>{r.req_id}</div><span className="tag" data-tour={at("req-row-category")}>{r.category}</span></td>
+          <td>{active && !child && <input type="checkbox" data-tour={at("req-row-check")} aria-label={`Select ${r.req_id}`} checked={selected.has(r.req_id)} onChange={() => toggle(r.req_id)} />}</td>
+          <td><div className="mono" data-tour={at("req-row-id")}>{r.req_id}</div><span className="tag" data-tour={at("req-row-category")}>{r.category}</span>
+            {(r.origin === "correction" || r.origin === "customer_change") && <span className="tag origin" data-tour={first("req-origin")} title="How this version came in">{originLabel(r.origin)}</span>}</td>
           {/* UX-14: an unanchored item (shown as "source not verified") says so once, as a badge, instead of a source line plus a warning */}
           <td data-tour={at("req-row-source")}>{r.provenance === "UNANCHORED"
             ? <span data-tour={first("req-badge-unanchored")}><StatusBadge status="medium" kind="severity" label={sourceLabel(r.provenance).toLowerCase()} title="Quote not located on the page; check the source manually" /></span>
@@ -117,22 +126,26 @@ export default function RequirementsPage() {
           <td>
             {isEditing && editing.mode === "edit" ? (
               <form className="form compact" data-tour="req-edit-form" aria-label={`Edit ${r.req_id}`}
-                action={(f) => review(r.req_id, { action: "edit", text: f.get("text"), category: f.get("category") }, `${r.req_id} saved.`, r.req_id)}>
+                action={(f) => frozen ? correct({ kind: "edit", reason: String(f.get("reason")).trim(), req_id: r.req_id, text: f.get("text"), category: f.get("category") }, r.req_id)
+                  : review(r.req_id, { action: "edit", text: f.get("text"), category: f.get("category") }, `${r.req_id} saved.`, r.req_id)}>
                 <input name="text" data-tour="req-edit-text" defaultValue={r.text} aria-label="Requirement text" required maxLength={MAX_TEXT} autoFocus />
                 <select name="category" data-tour="req-edit-category" defaultValue={r.category} aria-label="Category">{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select>
+                {reasonField}
                 {errorAt(r.req_id)}
                 <span className="inline"><button data-tour="req-edit-save" disabled={busy}>{busy ? "Saving…" : "Save"}</button><button type="button" className="secondary" onClick={() => openForm()}>Cancel</button></span>
               </form>
             ) : isEditing && editing.mode === "split" ? (
-              <form className="form compact" data-tour="req-split-form" aria-label={`Split ${r.req_id}`} action={(f) => split(r, String(f.get("parts")))}>
+              <form className="form compact" data-tour="req-split-form" aria-label={`Split ${r.req_id}`} action={(f) => split(r, String(f.get("parts")), String(f.get("reason") ?? "").trim())}>
                 <label>Put each part of the quote on its own line
                   <textarea name="parts" data-tour="req-split-parts" rows={4} defaultValue={r.quote} autoFocus /></label>
+                {reasonField}
                 {errorAt(r.req_id)}
                 <span className="inline"><button disabled={busy}>{busy ? "Splitting…" : "Split"}</button><button type="button" className="secondary" onClick={() => openForm()}>Cancel</button></span>
               </form>
             ) : isEditing && editing.mode === "exclude" ? (
               <ReasonForm label={`Why is ${r.req_id} not a requirement?`} submit="Exclude" busy={busy} error={errorAt(r.req_id)} tour="req-exclude-form"
-                onSubmit={(reason) => review(r.req_id, { action: "reject", reason }, `${r.req_id} excluded.`, r.req_id)} onCancel={() => openForm()} />
+                onSubmit={(reason) => frozen ? correct({ kind: "exclude", reason, req_id: r.req_id }, r.req_id)
+                  : review(r.req_id, { action: "reject", reason }, `${r.req_id} excluded.`, r.req_id)} onCancel={() => openForm()} />
             ) : (<>
               <div className={group ? "group-title" : ""} data-tour={at("req-row-text")}>{r.text}</div>
               {group ? (
@@ -147,15 +160,15 @@ export default function RequirementsPage() {
             <button type="button" className="link" data-tour={at("req-action-history")} aria-expanded={historyOf === r.req_id}
               onClick={() => setHistoryOf(historyOf === r.req_id ? undefined : r.req_id)}>History</button></td>
           {/* an excluded item or a duplicate keeps Restore: it goes back in the register (service contract) */}
-          {!frozen && <td>{(active || r.status === "duplicate" || r.status === "rejected") && !isEditing && (
+          <td>{(active || (!frozen && (r.status === "duplicate" || r.status === "rejected"))) && !isEditing && (
             <div className="row-actions" data-tour={at("req-row-actions")}>
-              {(r.status === "duplicate" || r.status === "rejected") && <button data-tour={at("req-action-restore")} disabled={busy} onClick={() => review(r.req_id, { action: "approve" }, `${r.req_id} restored to the register.`)}>Restore</button>}
+              {!frozen && (r.status === "duplicate" || r.status === "rejected") && <button data-tour={at("req-action-restore")} disabled={busy} onClick={() => review(r.req_id, { action: "approve" }, `${r.req_id} restored to the register.`)}>Restore</button>}
               {active && <button className="secondary" data-tour={at("req-action-exclude")} disabled={busy} onClick={() => openForm({ id: r.req_id, mode: "exclude" })}>Exclude: not a requirement</button>}
               {active && <button className="secondary" data-tour={at("req-action-edit")} disabled={busy} onClick={() => openForm({ id: r.req_id, mode: "edit" })}>Edit</button>}
               {active && !group && !child && <button className="secondary" data-tour={first("req-action-split")} disabled={busy} onClick={() => openForm({ id: r.req_id, mode: "split" })}>Split</button>}
-              {active && group && <button className="secondary" data-tour={first("req-action-ungroup")} disabled={busy}
+              {!frozen && active && group && <button className="secondary" data-tour={first("req-action-ungroup")} disabled={busy}
                 onClick={() => act(post(`/api/requirements/${r.req_id}/ungroup`), `${r.req_id} ungrouped: its ${kids.length} sub-requirements stand on their own.`)}>Ungroup</button>}
-            </div>)}</td>}
+            </div>)}</td>
         </tr>
         {historyOf === r.req_id && <tr className="history-row"><td colSpan={cols}><History reqId={r.req_id} /></td></tr>}
         {group && open.has(r.req_id) && kids.map((k) => line(k, true))}
@@ -167,17 +180,21 @@ export default function RequirementsPage() {
     <>
       {confirmDialog}
       <PageHead level={2} title="Requirements"
-        help={frozen ? <span data-tour="req-baseline">Baseline {data.baseline!.number} frozen by {data.baseline!.frozen_by} ({data.baseline!.count} items).
-            Later changes run as a delta on the <Link href={`/opportunities/${id}/changes`}>Changes</Link> step.</span>
-          : <span data-tour="req-help">{activeCount} requirements in the register; related line items are grouped (expand a group to see its sub-requirements). Each was verified against its source; exclude anything that is not a requirement, then freeze the baseline.</span>}>
+        help={frozen ? <span data-tour="req-baseline">Baseline {data.baseline!.number} published by {data.baseline!.frozen_by} ({data.baseline!.count} items).
+            Edits, splits, merges, exclusions and missed requirements are saved as corrections with a reason; customer documents run on the <Link href={`/opportunities/${id}/changes`}>Changes</Link> step.</span>
+          : <span data-tour="req-help">{activeCount} requirements in the register; related line items are grouped (expand a group to see its sub-requirements). Each was verified against its source; exclude anything that is not a requirement, then publish the register.</span>}>
         {busy && <Busy label="Saving…" />}
-        {!frozen && <button data-tour="req-freeze" disabled={busy || activeCount === 0} onClick={freeze}>Freeze baseline</button>}
+        {!frozen && <button data-tour="req-freeze" disabled={busy || activeCount === 0} onClick={freeze}>Publish</button>}
       </PageHead>
 
       <div className="filters" role="tablist" aria-label="Requirements view" data-tour="req-tabs">
         <button role="tab" data-tour="req-tab-register" aria-selected={tab === "register"} className={`chip ${tab === "register" ? "on" : ""}`} onClick={() => setTab("register")}>Register <span>{activeCount}</span></button>
         <button role="tab" data-tour="req-tab-exceptions" aria-selected={tab === "exceptions"} className={`chip ${tab === "exceptions" ? "on" : ""}`} onClick={() => setTab("exceptions")}>Exceptions <span>{exceptions}</span></button>
       </div>
+
+      {data.coverage && Object.keys(data.coverage).length > 0 && (
+        <p className="muted" data-tour="req-coverage">{latest ? `${snapshotName(latest.number)}: ` : "Latest read: "}
+          {Object.entries(data.coverage).filter(([k, v]) => !(k === "problems" && !v)).map(([k, v]) => `${v} ${coverageLabel(k)}`).join(", ")}</p>)}
 
       {tab === "exceptions" ? (
         <Exceptions bidId={id} rows={exc} error={excError} frozen={frozen} busy={busy} act={act} done={done} requirements={data.requirements} />
@@ -195,15 +212,16 @@ export default function RequirementsPage() {
           <input type="search" data-tour="req-search" placeholder="Search ID or text" value={query} onChange={(e) => setQuery(e.target.value)} aria-label="Search line items" />
         </div>
 
-        {!frozen && selected.size > 0 && (
+        {selected.size > 0 && (
           <div className="bulkbar" role="region" aria-label="Selected line items" data-tour="req-bulkbar">
             <strong>{selected.size} selected</strong>
             <button className="secondary" data-tour="req-bulk-merge" disabled={busy || selected.size < 2 || merging} onClick={() => { setFormError(undefined); setMerging(true); }}>Merge into one</button>
             <button className="secondary" data-tour="req-bulk-clear" disabled={busy} onClick={() => { setSelected(new Set()); setMerging(false); }}>Clear</button>
             {merging && selected.size >= 2 && (
-              <form className="form bulk-merge" data-tour="req-merge-form" aria-label="Merge the selected line items" action={(f) => merge(String(f.get("text")))}>
+              <form className="form bulk-merge" data-tour="req-merge-form" aria-label="Merge the selected line items" action={(f) => merge(String(f.get("text")), String(f.get("reason") ?? "").trim())}>
                 <label className="grow">One-line text for the merged requirement ({selected.size} items)
                   <input name="text" data-tour="req-merge-text" required maxLength={MAX_TEXT} autoFocus /></label>
+                {reasonField}
                 <span className="inline"><button disabled={busy}>{busy ? "Merging…" : "Merge"}</button>
                   <button type="button" className="secondary" onClick={() => { setMerging(false); setFormError(undefined); }}>Cancel</button></span>
                 {errorAt("merge")}
@@ -214,11 +232,11 @@ export default function RequirementsPage() {
 
         <table className="req-table" data-tour="req-table">
           <thead><tr>
-            {!frozen && <th className="col-check" data-tour="req-col-check">
+            <th className="col-check" data-tour="req-col-check">
               <input type="checkbox" data-tour="req-select-all" aria-label="Select all line items in view" disabled={selectable.length === 0}
-                checked={allSelected} onChange={() => setSelected(allSelected ? new Set() : new Set(selectable))} /></th>}
+                checked={allSelected} onChange={() => setSelected(allSelected ? new Set() : new Set(selectable))} /></th>
             <th className="col-id" data-tour="req-col-id">ID</th><th className="col-src" data-tour="req-col-source">Source</th><th data-tour="req-col-text">Requirement</th>
-            <th className="col-status" data-tour="req-col-status">Status</th>{!frozen && <th className="col-actions" data-tour="req-col-actions">Actions</th>}
+            <th className="col-status" data-tour="req-col-status">Status</th><th className="col-actions" data-tour="req-col-actions">Actions</th>
           </tr></thead>
           <tbody>
             {rows.map((r) => line(r))}
@@ -229,12 +247,13 @@ export default function RequirementsPage() {
         </table>
       </>)}
 
-      {!frozen && tab === "register" && (
+      {tab === "register" && (
         <details className="card" data-tour="req-add" onToggle={(e) => setAdding(e.currentTarget.open)}>
-          <summary data-tour="req-add-summary"><strong>Add a requirement the agent missed</strong> <span className="muted">select its lines on the RFP page, or paste the quote</span></summary>
+          <summary data-tour="req-add-summary"><strong>Add a requirement the agent missed</strong> <span className="muted">{frozen ? "select its lines on the RFP page; saved as a correction" : "select its lines on the RFP page, or paste the quote"}</span></summary>
           <h3 className="lp-heading">Select its lines on the RFP page</h3>
-          {adding && <LinePicker oppId={id} startPage={startPage} categories={CATEGORIES} onAdded={reload}
+          {adding && <LinePicker oppId={id} startPage={startPage} categories={CATEGORIES} onAdded={reload} published={frozen}
             requirements={(data.requirements ?? []).filter((r) => !INACTIVE.has(r.status))} />}
+          {!frozen && <>
           <h3 className="lp-heading">Or paste the quote</h3>
           <form className="form" data-tour="req-paste-form" aria-label="Add a requirement from a pasted quote" action={(f) => act(post(`/api/opportunities/${id}/requirements`, {
             quote: f.get("quote"), text: f.get("text"), category: f.get("category"), page: Number(f.get("page")) || null }),
@@ -246,8 +265,11 @@ export default function RequirementsPage() {
             <button data-tour="req-paste-add" disabled={busy}>{busy ? "Adding…" : "Add"}</button>
           </form>
           {errorAt("add")}
+          </>}
         </details>
       )}
+
+      {snapshots && snapshots.length > 0 && <Snapshots bidId={id} snapshots={snapshots} />}
     </>
   );
 }
@@ -265,7 +287,7 @@ function History({ reqId }: { reqId: string }) {
         <ol className="versions">
           {data.versions.map((v) => (
             <li key={v.n}>
-              <div className="muted">v{v.n} · {v.label} by <strong>{v.by}</strong> · {when(v.at)}{v.reason ? ` · reason: ${v.reason}` : ""}</div>
+              <div className="muted">v{v.n} · {v.label}{v.origin ? ` (${originLabel(v.origin)})` : ""} by <strong>{v.by}</strong> · {when(v.at)}{v.reason ? ` · reason: ${v.reason}` : ""}</div>
               <div>{v.text} <span className="tag">{v.category}</span></div>
             </li>
           ))}
@@ -318,14 +340,14 @@ function Exceptions({ bidId, rows, error, frozen, busy, act, done, requirements 
           <div>{r.text}</div>
           <div className="quote">“{r.quote}”</div>
           <div className="muted">{r.suggested_page ? `Suggested page ${r.suggested_page}` : "No page suggested"} · {r.reason}</div>
-          {!frozen && mode?.id !== r.req_id && (
+          {mode?.id !== r.req_id && (
             <div className="row-actions">
               <button data-tour="req-exception-link" disabled={busy} onClick={() => setMode({ id: r.req_id, kind: "link" })}>Link to lines</button>
               <button className="secondary" data-tour="req-exception-dismiss" disabled={busy} onClick={() => setMode({ id: r.req_id, kind: "dismiss" })}>Dismiss</button>
             </div>)}
           {mode?.id === r.req_id && mode.kind === "link" && (<>
             <LinePicker oppId={bidId} startPage={r.suggested_page ?? 1} categories={CATEGORIES} requirements={active}
-              resolve={{ reqId: r.req_id, text: r.text, category: r.category }} onAdded={() => { setMode(undefined); return done(); }} />
+              resolve={{ reqId: r.req_id, text: r.text, category: r.category }} published={frozen} onAdded={() => { setMode(undefined); return done(); }} />
             <button type="button" className="secondary" onClick={() => setMode(undefined)}>Close</button>
           </>)}
           {mode?.id === r.req_id && mode.kind === "dismiss" && (
@@ -334,5 +356,54 @@ function Exceptions({ bidId, rows, error, frozen, busy, act, done, requirements 
         </li>
       ))}
     </ul>
+  );
+}
+
+/** Every extraction snapshot (E1, E2...): who read the RFP, when, why, and what the read found. A snapshot never changes; "View items" shows it as it was. */
+function Snapshots({ bidId, snapshots }: { bidId: string; snapshots: Snapshot[] }) {
+  const [viewing, setViewing] = useState<number>();
+  const when = (t: string) => new Date(t.endsWith("Z") || t.includes("+") ? t : `${t}Z`).toLocaleString();
+  return (
+    <details className="card snapshots" data-tour="req-snapshots">
+      <summary><strong>Extraction snapshots</strong> <span className="muted">{snapshots.length} read{snapshots.length === 1 ? "" : "s"} of the RFP; each is kept as it was produced</span></summary>
+      <ul className="snapshot-list">
+        {snapshots.map((s) => (
+          <li key={s.number}>
+            <div><strong className="mono">{snapshotName(s.number)}</strong> · {s.created_by} · {when(s.created_at)}{s.reason ? ` · reason: ${s.reason}` : ""}</div>
+            <div className="muted">{[s.model, s.pipeline_version].filter(Boolean).join(" · ")}
+              {s.coverage && ` · ${Object.entries(s.coverage).filter(([k, v]) => !(k === "problems" && !v)).map(([k, v]) => `${v} ${coverageLabel(k)}`).join(", ")}`}</div>
+            <button type="button" className="link" aria-expanded={viewing === s.number} onClick={() => setViewing(viewing === s.number ? undefined : s.number)}>
+              {viewing === s.number ? "Hide items" : "View items"}</button>
+            {viewing === s.number && <SnapshotItems bidId={bidId} number={s.number} />}
+          </li>
+        ))}
+      </ul>
+    </details>
+  );
+}
+
+function SnapshotItems({ bidId, number }: { bidId: string; number: number }) {
+  const { data, error } = useApi<SnapshotDetail>(`/api/opportunities/${bidId}/extraction/${number}`);
+  if (error) return <Alert kind="error">{error}</Alert>;
+  if (!data) return <Skeleton lines={3} />;
+  return (
+    <>
+      <p className="muted">{snapshotName(number)} never changes: this is what the read produced, whatever happened to the register afterwards.</p>
+      <table className="req-table">
+        <thead><tr><th>ID</th><th>Page / lines</th><th>Text</th><th>Status</th><th>Group / duplicate of</th></tr></thead>
+        <tbody>
+          {data.items.map((i) => (
+            <tr key={i.req_id}>
+              <td className="mono">{i.req_id}</td>
+              <td>{i.page ? `p. ${i.page}${i.line_start ? `, lines ${i.line_start}-${i.line_end ?? i.line_start}` : ""}` : ""}</td>
+              <td>{i.text}</td>
+              <td>{statusLabel(i.status)}</td>
+              <td className="mono">{i.duplicate_of ? `duplicate of ${i.duplicate_of}` : i.group ?? ""}</td>
+            </tr>
+          ))}
+          {data.items.length === 0 && <tr><td colSpan={5} className="muted">No items.</td></tr>}
+        </tbody>
+      </table>
+    </>
   );
 }
