@@ -11,6 +11,7 @@ os.environ["LLM_PROVIDER"] = "mock"
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
+from conftest import signed_in  # noqa: E402
 
 from app.main import app  # noqa: E402
 from app.modules.opportunities import service as opportunities  # noqa: E402
@@ -19,7 +20,7 @@ from scripts import seed_demo  # noqa: E402
 
 @pytest.fixture(scope="module")
 def client() -> TestClient:
-    return TestClient(app)
+    return signed_in()
 
 
 def test_samples_are_listed_without_paths(client):

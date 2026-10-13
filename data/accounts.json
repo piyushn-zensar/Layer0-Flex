@@ -1,0 +1,20 @@
+[
+ {"username": "bid.manager", "name": "Bid Manager", "role": "bid_manager", "bu": null},
+ {"username": "ep2.pm", "name": "EP² Product Manager", "role": "product_manager", "bu": "EP2"},
+ {"username": "ep2.de", "name": "EP² Design Engineer", "role": "design_engineer", "bu": "EP2"},
+ {"username": "crown.pm", "name": "Crown Product Manager", "role": "product_manager", "bu": "CROWN"},
+ {"username": "crown.de", "name": "Crown Design Engineer", "role": "design_engineer", "bu": "CROWN"},
+ {"username": "anord.pm", "name": "Anord Mardix Product Manager", "role": "product_manager", "bu": "ANORD"},
+ {"username": "anord.de", "name": "Anord Mardix Design Engineer", "role": "design_engineer", "bu": "ANORD"},
+ {"username": "fpm.pm", "name": "Flex Power Modules Product Manager", "role": "product_manager", "bu": "FPM"},
+ {"username": "fpm.de", "name": "Flex Power Modules Design Engineer", "role": "design_engineer", "bu": "FPM"},
+ {"username": "jetcool.pm", "name": "JetCool Product Manager", "role": "product_manager", "bu": "JETCOOL"},
+ {"username": "jetcool.de", "name": "JetCool Design Engineer", "role": "design_engineer", "bu": "JETCOOL"},
+ {"username": "cloud.pm", "name": "Cloud Product Manager", "role": "product_manager", "bu": "CLOUD"},
+ {"username": "cloud.de", "name": "Cloud Design Engineer", "role": "design_engineer", "bu": "CLOUD"},
+ {"username": "ems.pm", "name": "Flex Manufacturing Services Product Manager", "role": "product_manager", "bu": "EMS"},
+ {"username": "ems.de", "name": "Flex Manufacturing Services Design Engineer", "role": "design_engineer", "bu": "EMS"},
+ {"username": "afs.pm", "name": "Flex Aftermarket Services Product Manager", "role": "product_manager", "bu": "AFS"},
+ {"username": "afs.de", "name": "Flex Aftermarket Services Design Engineer", "role": "design_engineer", "bu": "AFS"},
+ {"username": "admin", "name": "Administrator", "role": "admin", "bu": null}
+]

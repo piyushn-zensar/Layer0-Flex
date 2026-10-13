@@ -13,6 +13,7 @@ os.environ["LLM_PROVIDER"] = "mock"
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
+from conftest import auth, signed_in  # noqa: E402
 from sqlalchemy import text  # noqa: E402
 
 from app.core.db import engine  # noqa: E402
@@ -39,7 +40,7 @@ def same_page(rows: list[dict], n: int) -> list[dict]:
 
 def test_demo_flow_and_api():
     seed_demo.main()
-    client = TestClient(app)
+    client = signed_in()
     for url in ["/api/portfolio", "/api/people", "/api/opportunities/OPP-0001",
                 "/api/opportunities/OPP-0001/requirements", "/api/opportunities/OPP-0001/trace",
                 "/api/opportunities/OPP-0001/decisions", "/api/opportunities/OPP-0001/consolidation",
@@ -64,7 +65,7 @@ def test_demo_flow_and_api():
     # actor header is URL-encoded by the web app (EP² is not ASCII)
     a = next(i for i in client.get("/api/inbox/EP2").json()["items"] if not i["responded_by"])
     r = client.post(f"/api/assignments/{a['id']}/respond", json={"compliance": "met", "response": "ok"},
-                    headers={"X-Actor": "EP%C2%B2%20Design%20Engineer"})
+                    headers=auth("ep2.de"))
     assert r.status_code == 200
     after = {i["id"]: i for i in client.get("/api/inbox/EP2").json()["items"]}
     assert after[a["id"]]["responded_by"] == "EP² Design Engineer"
@@ -86,7 +87,7 @@ def test_people_decide_and_dispatch_needs_go():
     """Rule R4: re-running matching keeps people's decisions; dispatch needs a go; bad input is refused.
     Appended by Atharv (append-only on this shared file)."""
     seed_demo.main()  # its own opportunity, so this test does not depend on test order
-    client = TestClient(app)
+    client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]  # newest first
     rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
     rejected, accepted = rows[0]["match"], rows[1]["match"]
@@ -112,7 +113,7 @@ def test_people_decide_and_dispatch_needs_go():
 
 def test_requirement_review_actions():
     """P-06: edit, split, merge, add missed; freeze needs every line item decided; replaced items leave the flow."""
-    client = TestClient(app)
+    client = signed_in()
     opp = client.post("/api/opportunities", json={"title": "review actions"}).json()["id"]
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
     client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
@@ -172,7 +173,7 @@ def test_one_requirement_several_units(monkeypatch):
     monkeypatch.setattr(agent, "propose_page", two_units)  # P-18: one matcher call per page
     seed_demo.main()  # its own opportunity (matched retrieval-only, then dispatched)
     with SessionLocal() as db:
-        opp = TestClient(app).get("/api/portfolio").json()[0]["opp"]["id"]
+        opp = signed_in().get("/api/portfolio").json()[0]["opp"]["id"]
         matching.match(db, opp, "test")  # proposals are refreshed with the stub's two units
         multi = {r: m for r, m in matching.for_opportunity(db, opp).items() if len({u["bu"] for u in m.units}) == 2}
         assert multi, "stub should give some requirement two units"
@@ -191,13 +192,13 @@ def test_person_changes_match():
     """A-05: a person accepts, rejects or changes a match (several units); re-dispatch adds the new unit only.
     Appended by Atharv (append-only on this shared file)."""
     seed_demo.main()  # its own opportunity, dispatched
-    client = TestClient(app)
+    client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
     req_id = next(r["req"]["req_id"] for r in rows if r["match"] and r["match"]["bu"] == "CROWN")
     url = f"/api/opportunities/{opp}/requirements/{req_id}/match"
     body = {"units": [{"product_id": "CROWN-ARMV", "offering_type": "ETO"}, {"product_id": "EP2-RPP", "offering_type": "ETO"}]}
-    m = client.post(url, json=body, headers={"X-Actor": "Bid%20Manager"}).json()
+    m = client.post(url, json=body, headers=auth("bid.manager")).json()
     assert (m["status"], m["method"], m["decided_by"], m["bu"]) == ("accepted", "manual", "Bid Manager", "CROWN")
     assert [u["bu"] for u in m["units"]] == ["CROWN", "EP2"]  # unit follows the product
     assert client.post(url, json={"units": [{"product_id": "NOPE", "offering_type": "ETO"}]}).status_code == 422
@@ -219,8 +220,8 @@ def test_workflow_order_and_roles():
     """Fixes from the 8 Oct system test: decide and dispatch only after freeze; only the unit answers and only
     the Bid Manager validates submitted work; re-dispatch withdraws work that no longer fits.
     Appended by Atharv (append-only on this shared file)."""
-    client = TestClient(app)
-    BM, CROWN = {"X-Actor": "Bid%20Manager"}, {"X-Actor": "Crown%20Design%20Engineer"}
+    client = signed_in()
+    BM, CROWN = auth("bid.manager"), auth("crown.de")
     fresh = client.post("/api/opportunities", json={"title": "not frozen"}).json()["id"]
     assert client.post(f"/api/opportunities/{fresh}/go-no-go", json={"outcome": "go"}).status_code == 409
     assert client.post(f"/api/opportunities/{fresh}/dispatch").status_code == 409
@@ -233,7 +234,7 @@ def test_workflow_order_and_roles():
     item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp and i["status"] == "assigned")
     url = f"/api/assignments/{item['id']}"
     assert client.post(f"{url}/validate", json={"ok": True}, headers=BM).status_code == 409        # nothing submitted
-    assert client.post(f"{url}/respond", json={"compliance": "met"}, headers={"X-Actor": "EP%C2%B2%20Design%20Engineer"}).status_code == 403
+    assert client.post(f"{url}/respond", json={"compliance": "met"}, headers=auth("ep2.de")).status_code == 403
     assert client.post(f"{url}/respond", json={"compliance": "met"}, headers=CROWN).status_code == 200
     assert client.post(f"{url}/respond", json={"compliance": "met"}, headers=CROWN).status_code == 409  # already submitted
     assert client.post(f"{url}/validate", json={"ok": True}, headers=CROWN).status_code == 403      # no self-validation
@@ -252,7 +253,7 @@ def test_review_findings_fixed():
     """Review of 9 Oct: path traversal, freeze guards, unknown opportunities, parallel create, ID reuse, input checks."""
     import concurrent.futures
 
-    client = TestClient(app)
+    client = signed_in()
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
     sha = "893403680eda487a7fcf4968231102e10345324aefd0503d2b28b97d3347a76e"
 
@@ -316,14 +317,14 @@ def test_review_findings_fixed():
         made = list(pool.map(lambda i: client.post("/api/opportunities", json={"title": f"p{i}"}), range(10)))
     assert all(r.status_code == 200 for r in made) and len({r.json()["id"] for r in made}) == 10
 
-    # acting user is cleaned and capped
-    long = client.post("/api/opportunities", json={"title": "actor"}, headers={"X-Actor": "A" * 5000 + "%0D%0A"}).json()
-    assert len(long["created_by"]) == 80
+    # the actor is the signed-in account; an X-Actor header is ignored (P-20)
+    made = client.post("/api/opportunities", json={"title": "actor"}, headers={"X-Actor": "Someone%20Else"}).json()
+    assert made["created_by"] == "Bid Manager"
 
 
 def test_trace_and_consolidation_findings_fixed():
     """Review of 9 Oct (Janvia's modules): CSV formula cells, unknown opportunity 404, no evidence blob in trace."""
-    client = TestClient(app)
+    client = signed_in()
     assert client.get("/api/opportunities/OPP-9999/trace").status_code == 404
     assert client.get("/api/opportunities/OPP-9999/consolidation").status_code == 404
     assert client.get("/api/opportunities/OPP-9999/compliance-matrix.csv").status_code == 404
@@ -342,7 +343,7 @@ def test_trace_and_consolidation_findings_fixed():
 
 def test_requirement_history():
     """P-13: every version (who, when, wording) and every event is shown; merged originals point to the merge."""
-    client = TestClient(app)
+    client = signed_in()
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
     opp = client.post("/api/opportunities", json={"title": "history"}).json()["id"]
     client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
@@ -352,7 +353,7 @@ def test_requirement_history():
     original = rows[0]["text"]
     new_cat = "legal" if rows[0]["category"] != "legal" else "staffing"
     client.post(f"/api/requirements/{a}/review", json={"action": "edit", "text": "Edited once", "reason": "clearer"},
-                headers={"X-Actor": "Crown%20Design%20Engineer"})
+                headers=auth("crown.de"))
     client.post(f"/api/requirements/{a}/review", json={"action": "edit", "category": new_cat})
     client.post(f"/api/requirements/{a}/review", json={"action": "approve"})
     h = client.get(f"/api/requirements/{a}/history").json()
@@ -368,7 +369,7 @@ def test_requirement_history():
 
 def test_grouping_and_duplicates():
     """P-16: related line items become one requirement with sub-requirements; duplicates point to the first one."""
-    client = TestClient(app)
+    client = signed_in()
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
     opp = client.post("/api/opportunities", json={"title": "grouping"}).json()["id"]
     client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
@@ -404,8 +405,8 @@ def test_returned_items_reopen_with_a_note():
     """A-07: the Bid Manager returns an answer only with a note (design 7.5); the unit sees the note and answers
     the returned item again. Appended by Atharv (append-only on this shared file)."""
     seed_demo.main()
-    client = TestClient(app)
-    BM, CROWN = {"X-Actor": "Bid%20Manager"}, {"X-Actor": "Crown%20Design%20Engineer"}
+    client = signed_in()
+    BM, CROWN = auth("bid.manager"), auth("crown.de")
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp and i["status"] == "assigned")
     url = f"/api/assignments/{item['id']}"
@@ -423,7 +424,7 @@ def test_go_no_go_summary_and_structured_criteria():
     advice that never decides, and the person's judgement per criterion stored with the decision.
     Appended by Atharv (append-only on this shared file)."""
     seed_demo.main()
-    client = TestClient(app)
+    client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     s = client.get(f"/api/opportunities/{opp}/decisions").json()["summary"]
     assert s["advice"].startswith("Advice from Layer 0") and s["advice"].endswith("A person decides.")
@@ -432,7 +433,7 @@ def test_go_no_go_summary_and_structured_criteria():
     assert status["open_questions"] == "not_met"  # Syracuse states no redundancy class (R-003 warn)
     assert {r["level"] for r in s["rows"]} <= {"fully", "partly", "not", "bid_desk"} and len(s["rows"]) == 13
     crit = [{"id": "coverage", "status": "met", "note": "checked"}, {"id": "cost_budget", "status": "unknown"}]
-    d = client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": crit}, headers={"X-Actor": "Bid%20Manager"}).json()
+    d = client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": crit}, headers=auth("bid.manager")).json()
     assert d["criteria"][0] == {"id": "coverage", "status": "met", "note": "checked"} and "summary" in d["evidence"]
     assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": [{"id": "x", "status": "met"}]}).status_code == 422
 
@@ -441,7 +442,7 @@ def test_unit_handoff_payload():
     """A-09 (M8): per-unit hand-off JSON grouped by route; every payload needs a person; nothing claims a design.
     Appended by Atharv (append-only on this shared file)."""
     seed_demo.main()
-    client = TestClient(app)
+    client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     r = client.get(f"/api/opportunities/{opp}/handoff/CROWN")
     assert r.status_code == 200 and "attachment" in r.headers["content-disposition"]
@@ -465,7 +466,7 @@ def test_compliance_matrix_new_columns_and_bom():
     import io
 
     seed_demo.main()
-    client = TestClient(app)
+    client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     r = client.get(f"/api/opportunities/{opp}/compliance-matrix.csv")
     assert r.status_code == 200 and r.content.startswith(b"\xef\xbb\xbf")
@@ -481,7 +482,7 @@ def test_compliance_matrix_new_columns_and_bom():
 
 def test_rfp_search_short_term_index():
     """The opportunity's RFP is indexed when it is loaded (short-term RAG) and searchable with exact sources."""
-    client = TestClient(app)
+    client = signed_in()
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
     opp = client.post("/api/opportunities", json={"title": "rfp search"}).json()["id"]
     assert client.get(f"/api/opportunities/{opp}/rfp-search", params={"q": "insurance"}).status_code == 404  # not read yet
@@ -500,7 +501,7 @@ def test_compliance_matrix_excel():
     from openpyxl import load_workbook
 
     seed_demo.main()  # its own opportunity: 13 line items, some answers validated
-    client = TestClient(app)
+    client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     r = client.get(f"/api/opportunities/{opp}/compliance-matrix.xlsx")
     assert r.status_code == 200 and r.headers["content-disposition"].endswith('-compliance-matrix.xlsx"')
@@ -518,7 +519,7 @@ def test_compliance_matrix_excel():
 def test_bid_and_portfolio_checks():
     """A-10: data-sheet ratings vs the standard products in play, and unit workload vs capacity, as go/no-go evidence."""
     seed_demo.main()  # its own opportunity: matched to CROWN and EP2 products, dispatched
-    client = TestClient(app)
+    client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     d = client.get(f"/api/opportunities/{opp}/decisions").json()
     dev, load = d["evidence"]["deviations"], d["evidence"]["workload"]
@@ -537,7 +538,7 @@ def test_response_outline_agent():
     """P-10 + J-07: the drafting agent writes only from validated answers (frozen drafts, no model call), every
     paragraph cites them, open requirements are listed and never drafted, and the outline downloads as Markdown."""
     seed_demo.main()  # its own opportunity: 13 line items, 4 validated answers
-    client = TestClient(app)
+    client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     o = client.get(f"/api/opportunities/{opp}/response-outline").json()
     validated = {a["req_id"] for c in o["chapters"] for a in c["material"]}
@@ -559,9 +560,9 @@ def test_knowledge_base_queue():
     from app.modules.catalog import service as catalog
 
     seed_demo.main()  # its own opportunity, some answers validated
-    client = TestClient(app)
+    client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    unit = {"X-Actor": "Crown%20Product%20Manager"}
+    unit = auth("crown.pm")
     items = [a for rows in [client.get("/api/inbox/CROWN").json()["items"]] for a in rows if a["opportunity_id"] == opp]
     done = next(a for a in items if a["status"] == "validated")
     open_ = next(a for a in items if a["status"] != "validated")
@@ -603,8 +604,8 @@ def test_change_document_against_baseline(monkeypatch, tmp_path):
     from scripts.txt_to_pdf import convert
 
     seed_demo.main()  # its own opportunity: 13 frozen line items, go, dispatched, some answers validated
-    client = TestClient(app)
-    BM, CROWN = {"X-Actor": "Bid%20Manager"}, {"X-Actor": "Crown%20Design%20Engineer"}
+    client = signed_in()
+    BM, CROWN = auth("bid.manager"), auth("crown.de")
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
     by_quote = lambda start: next(r for r in rows if r["req"]["quote"].startswith(start))
@@ -722,7 +723,7 @@ def test_illustrative_addendum_frozen_answers():
     from app.modules.requirements.anchoring import normalise
 
     seed_demo.main()  # its own opportunity: the 13-item Syracuse seed, frozen, go, dispatched
-    client = TestClient(app)
+    client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     oracle = _json.loads((ROOT / "data/seed/syracuse_addendum_1_expected.json").read_text("utf-8"))
     pdf = ROOT / oracle["document"]
@@ -756,7 +757,7 @@ def test_change_set_review_findings_fixed(monkeypatch, tmp_path):
     from scripts.txt_to_pdf import convert
 
     seed_demo.main()  # its own opportunity: 13 frozen line items, go, dispatched, some answers validated
-    client = TestClient(app)
+    client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
     breakers = next(r["req"] for r in rows if r["req"]["quote"].startswith("Metal Clad Switchgear shall have eighteen"))
@@ -840,3 +841,36 @@ def test_change_set_review_findings_fixed(monkeypatch, tmp_path):
     assert order[1:] == [s["document_id"], s3["document_id"]]
     seen = [order.index(r["req"]["document_id"]) for r in trace["rows"] if r["req"]["page"] is not None]
     assert seen == sorted(seen)  # rows follow the documents' order: main RFP, then change documents as they came in
+
+
+def test_sign_in():
+    """P-20: every /api route needs a token (cookie or Bearer); login, me, logout; expired or forged tokens are refused."""
+    import time
+
+    import jwt
+
+    from app.core import auth as core_auth, config
+    anon = TestClient(app)
+    assert anon.get("/api/portfolio").status_code == 401
+    assert anon.get("/api/portfolio", headers={"Authorization": "Bearer nonsense"}).status_code == 401
+    assert anon.post("/api/auth/login", json={"username": "bid.manager", "password": "wrong"}).status_code == 401
+    assert anon.post("/api/auth/login", json={"username": "nobody", "password": "test-password"}).status_code == 401
+
+    r = anon.post("/api/auth/login", json={"username": "Crown.DE", "password": "test-password"})
+    assert r.status_code == 200 and r.cookies.get(core_auth.COOKIE)
+    me = anon.get("/api/auth/me").json()  # the cookie alone signs the browser in
+    assert (me["sub"], me["name"], me["role"], me["bu"]) == ("crown.de", "Crown Design Engineer", "design_engineer", "CROWN")
+    assert anon.get("/api/portfolio").status_code == 200
+    anon.post("/api/auth/logout")
+    assert anon.get("/api/auth/me").status_code == 401
+
+    expired = core_auth.issue(core_auth.accounts()["bid.manager"])
+    old = jwt.encode(jwt.decode(expired, config.JWT_SECRET, algorithms=["HS256"]) | {"exp": int(time.time()) - 1},
+                     config.JWT_SECRET, algorithm="HS256")
+    assert anon.get("/api/portfolio", headers={"Authorization": f"Bearer {old}"}).status_code == 401
+    forged = jwt.encode({"sub": "admin", "name": "x", "role": "bid_manager", "exp": int(time.time()) + 60}, "another-secret-" * 4, algorithm="HS256")
+    assert anon.get("/api/portfolio", headers={"Authorization": f"Bearer {forged}"}).status_code == 401
+    # every account in data/accounts.json can sign in, and its name is a person the catalog knows (stored actors stay valid)
+    from app.modules.catalog import service as catalog
+    names = set(catalog.people()) | {"Administrator"}
+    assert all(a["name"] in names and a["role"] in core_auth.ROLES for a in core_auth.accounts().values())

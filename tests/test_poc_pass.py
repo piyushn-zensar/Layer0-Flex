@@ -13,6 +13,7 @@ os.environ["LLM_PROVIDER"] = "mock"
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
+from conftest import signed_in  # noqa: E402
 from sqlalchemy import text  # noqa: E402
 
 from app.core.db import SessionLocal, engine  # noqa: E402
@@ -30,7 +31,7 @@ QUOTE = "Switchgear shall be Arc-resistant Type 2B."
 
 @pytest.fixture(scope="module")
 def client() -> TestClient:
-    return TestClient(app)
+    return signed_in()
 
 
 @pytest.fixture(scope="module")

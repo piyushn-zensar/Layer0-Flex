@@ -11,7 +11,7 @@ from pathlib import Path
 os.environ["STORE_DIR"] = tempfile.mkdtemp()
 os.environ["LLM_PROVIDER"] = "mock"
 
-from fastapi.testclient import TestClient  # noqa: E402
+from conftest import signed_in  # noqa: E402
 
 from app.main import app  # noqa: E402
 from app.modules.requirements import anchoring  # noqa: E402
@@ -39,7 +39,7 @@ def test_selection_anchors_exactly_on_every_frozen_page():
 
 
 def test_blank_short_text_falls_back_to_the_quote():
-    client = TestClient(app)
+    client = signed_in()
     if client.get("/api/opportunities/OPP-0001").status_code == 404:
         seed_demo.main()  # test_smoke.py expects the demo to be OPP-0001
     opp = client.post("/api/opportunities", json={"title": "blank text"}).json()["id"]

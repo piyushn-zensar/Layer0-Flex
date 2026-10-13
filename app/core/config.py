@@ -1,5 +1,6 @@
 """Every setting in one place, read from the environment (.env)."""
 import os
+import secrets
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -26,6 +27,14 @@ EMBEDDING_MODEL = os.getenv("EMBEDDING_DEPLOYMENT_NAME") or "text-embedding-3-sm
 EMBEDDING_API_VERSION = os.getenv("EMBEDDING_API_VERSION") or "2024-02-01"
 EMBEDDING_DIMS = 256                                   # text-embedding-3 can shorten its vectors; plenty for retrieval
 VECTOR_CACHE = DATA / "vector_cache"                   # committed: frozen embeddings of sample RFPs and the knowledge base
+
+# Sign-in (technical-architecture 16.6). Without JWT_SECRET a random one is made once per machine and kept in the
+# store (gitignored), so tokens survive restarts; an empty DEMO_PASSWORD turns sign-in off.
+_SECRET_FILE = STORE / "jwt_secret"
+if not os.getenv("JWT_SECRET") and not _SECRET_FILE.exists():
+    _SECRET_FILE.write_text(secrets.token_urlsafe(32), encoding="utf-8")
+JWT_SECRET = os.getenv("JWT_SECRET") or _SECRET_FILE.read_text(encoding="utf-8").strip()
+DEMO_PASSWORD = os.getenv("DEMO_PASSWORD", "")
 
 TESSERACT_CMD = os.getenv(
     "TESSERACT_CMD", str(Path(os.getenv("LOCALAPPDATA", "")) / "Tesseract-OCR" / "tesseract.exe")

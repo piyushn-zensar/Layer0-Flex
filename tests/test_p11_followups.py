@@ -13,7 +13,7 @@ from pathlib import Path
 os.environ["STORE_DIR"] = tempfile.mkdtemp()
 os.environ["LLM_PROVIDER"] = "mock"
 
-from fastapi.testclient import TestClient  # noqa: E402
+from conftest import signed_in  # noqa: E402
 from openpyxl import load_workbook  # noqa: E402
 
 from app.main import app  # noqa: E402
@@ -28,7 +28,7 @@ def test_exports_name_the_addendum():
     """The illustrative Addendum No. 1 on the 13-item seed: the revised breaker line (REQ-....-0005) and the added
     requirements are anchored in the addendum, so every export says so; main-RFP sources read as before."""
     seed_demo.main()  # its own opportunity: frozen, go, dispatched, some answers validated
-    client = TestClient(app)
+    client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     s = client.post(f"/api/opportunities/{opp}/changes",
                     files={"file": (ADDENDUM.name, ADDENDUM.read_bytes(), "application/pdf")}).json()
@@ -109,7 +109,7 @@ def test_group_highlight_follows_current_sub_requirements():
             {"kind": "removed", "target": ids["autocad"], "quote": removed}], BM, "test addendum")
         assert out["modified"] == [ids["breaker"]] and out["removed"] == [ids["autocad"]] and out["affected"] == [ids["group"]]
 
-    client = TestClient(app)
+    client = signed_in()
     trace = client.get(f"/api/opportunities/{opp}/trace").json()
     rows = {r["req"]["req_id"]: r for r in trace["rows"]}
     g = rows[ids["group"]]

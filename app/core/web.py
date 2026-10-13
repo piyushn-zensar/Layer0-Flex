@@ -1,19 +1,29 @@
-"""Shared API helpers: the acting user and row serialisation.
+"""Shared API helpers: the signed-in user and row serialisation.
 
 Views live in the Next.js app (web/). Controllers return JSON under /api.
 """
-from urllib.parse import unquote
+from fastapi import HTTPException, Request
 
-from fastapi import Request
+from app.core.auth import ROLES
 
-DEFAULT_ACTOR = "Bid Manager"
+
+def user(request: Request) -> dict:
+    """The signed-in account: token claims sub (username), name, role, bu. Set by auth.authenticated on every /api route."""
+    return request.state.user
 
 
 def actor(request: Request) -> str:
-    """Who is acting. PoC: picked in the web header and sent as X-Actor (URL-encoded); real sign-in before a pilot."""
-    raw = request.headers.get("x-actor") or request.cookies.get("actor")
-    name = "".join(ch for ch in unquote(raw or "") if ch.isprintable()).strip()[:80]  # fits the 80-char columns
-    return name or DEFAULT_ACTOR
+    """Who is acting: the signed-in account's name (stored as the actor in audit events and records)."""
+    return user(request)["name"]
+
+
+def require(request: Request, *roles: str) -> dict:
+    """The signed-in account if its role is one of `roles`, else 403, e.g. require(request, "bid_manager")."""
+    u = user(request)
+    if u["role"] not in roles:
+        allowed = " or ".join(ROLES.get(r, r).lower() for r in roles)
+        raise HTTPException(403, f"Only a {allowed} can do this; you are signed in as {u['name']}.")
+    return u
 
 
 def row(obj, *extra: str) -> dict:

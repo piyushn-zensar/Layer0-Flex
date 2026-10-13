@@ -10,7 +10,7 @@ from pathlib import Path
 os.environ["STORE_DIR"] = tempfile.mkdtemp()
 os.environ["LLM_PROVIDER"] = "mock"
 
-from fastapi.testclient import TestClient  # noqa: E402
+from conftest import auth, signed_in  # noqa: E402
 
 from app.main import app  # noqa: E402
 from scripts import seed_demo  # noqa: E402
@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_add_requirement_from_selected_lines():
-    client = TestClient(app)
+    client = signed_in()
     if client.get("/api/opportunities/OPP-0001").status_code == 404:
         seed_demo.main()  # this file runs before test_smoke.py, which expects the demo to be OPP-0001
     opp = client.post("/api/opportunities", json={"title": "line select"}).json()["id"]
@@ -31,7 +31,7 @@ def test_add_requirement_from_selected_lines():
 
     # p. 55, lines 52-53: "Switchgear shall be Arc-resistant Type 2B. ... IEEE C37.20.7." (the same words appear elsewhere)
     req = client.post(url, json={"page": 55, "line_start": 52, "line_end": 53, "category": "technical"},
-                      headers={"X-Actor": "Crown%20Design%20Engineer"}).json()
+                      headers=auth("crown.de")).json()
     quote = f"{lines[52]['text']} {lines[53]['text']}"
     assert req["quote"] == quote and req["text"] == quote[:200]
     assert (req["provenance"], req["page"], req["line_start"], req["line_end"]) == ("EXTRACTED", 55, 52, 53)
