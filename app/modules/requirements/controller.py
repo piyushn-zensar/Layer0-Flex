@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
-from app.core.web import actor, row
+from app.core.web import BID_MANAGER, CORRECTORS, actor, require, row
 from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service
 
@@ -112,17 +112,20 @@ def exceptions(opp_id: str, db: Session = Depends(get_db)):
 
 @router.post("/opportunities/{opp_id}/requirements/extract")
 def extract(opp_id: str, request: Request, body: ExtractIn | None = None, db: Session = Depends(get_db)):
+    require(request, BID_MANAGER)
     return _guard(lambda: service.extract(db, opp_id, actor(request), body.reason if body else ""))
 
 
 @router.post("/opportunities/{opp_id}/requirements")
 def add_missed(opp_id: str, body: AddIn, request: Request, db: Session = Depends(get_db)):
+    require(request, *CORRECTORS)
     req = _guard(lambda: service.add_missed(db, opp_id, body.quote, body.text, body.category, actor(request), body.page))
     return row(req, "source")
 
 
 @router.post("/opportunities/{opp_id}/requirements/from-lines")
 def add_from_lines(opp_id: str, body: LinesIn, request: Request, db: Session = Depends(get_db)):
+    require(request, *CORRECTORS)
     req = _guard(lambda: service.add_from_lines(db, opp_id, body.page, body.line_start, body.line_end, body.text,
                                                 body.category, actor(request)))
     return row(req, "source")
@@ -130,29 +133,34 @@ def add_from_lines(opp_id: str, body: LinesIn, request: Request, db: Session = D
 
 @router.post("/opportunities/{opp_id}/requirements/merge")
 def merge(opp_id: str, body: MergeIn, request: Request, db: Session = Depends(get_db)):
+    require(request, *CORRECTORS)
     req = _guard(lambda: service.merge(db, opp_id, body.req_ids, body.text, actor(request), body.reason))
     return row(req, "source")
 
 
 @router.post("/requirements/{req_id}/review")
 def review(req_id: str, body: ReviewIn, request: Request, db: Session = Depends(get_db)):
+    require(request, *CORRECTORS)
     _guard(lambda: service.review(db, req_id, body.action, actor(request), body.text, body.reason, body.category))
     return row(service.get(db, req_id), "source")
 
 
 @router.post("/requirements/{req_id}/resolve")
 def resolve(req_id: str, body: ResolveIn, request: Request, db: Session = Depends(get_db)):
+    require(request, *CORRECTORS)
     return row(_guard(lambda: service.resolve(db, req_id, body.page, body.line_start, body.line_end, actor(request),
                                               body.text, body.category)), "source")
 
 
 @router.post("/requirements/{req_id}/dismiss")
 def dismiss(req_id: str, body: DismissIn, request: Request, db: Session = Depends(get_db)):
+    require(request, *CORRECTORS)
     return row(_guard(lambda: service.dismiss(db, req_id, body.reason, actor(request))), "source")
 
 
 @router.post("/requirements/{req_id}/ungroup")
 def ungroup(req_id: str, request: Request, db: Session = Depends(get_db)):
+    require(request, *CORRECTORS)
     return [row(r, "source") for r in _guard(lambda: service.ungroup(db, req_id, actor(request)))]
 
 
@@ -163,10 +171,12 @@ def history(req_id: str, db: Session = Depends(get_db)):
 
 @router.post("/requirements/{req_id}/split")
 def split(req_id: str, body: SplitIn, request: Request, db: Session = Depends(get_db)):
+    require(request, *CORRECTORS)
     parts = [p.model_dump() for p in body.parts]
     return [row(r, "source") for r in _guard(lambda: service.split(db, req_id, parts, actor(request), body.reason))]
 
 
 @router.post("/opportunities/{opp_id}/baselines")
 def freeze(opp_id: str, request: Request, db: Session = Depends(get_db)):
+    require(request, BID_MANAGER)
     return row(_guard(lambda: service.freeze(db, opp_id, actor(request))))

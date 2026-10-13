@@ -3,13 +3,12 @@
 // person's decision, the change document with highlights, then apply or discard; after apply, what it did.  Owner: Piyush.
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { errorMessage, post, useMe } from "@/lib/api";
+import { errorMessage, isBidManager, post, useMe } from "@/lib/api";
 import type { ChangeItem, ChangeKind, ChangeSet } from "@/lib/types";
 import { Alert, Busy, StatusBadge, useConfirm, useToast } from "@/components/ui";
 import ChangeDecision, { KINDS, KindBadge } from "@/components/changes/ChangeDecision";
 import ChangeDocument from "@/components/changes/ChangeDocument";
 
-const BID_MANAGER = "Bid Manager"; // only the bid manager applies or discards; the API checks too
 const STATUS_LABEL = { review: "in review", applied: "applied", discarded: "discarded" } as const;
 const when = (t: string) => new Date(t.endsWith("Z") || t.includes("+") ? t : `${t}Z`).toLocaleString();
 const pct = (x: number) => `${x > 0 && x < 0.1 ? (x * 100).toFixed(1) : Math.round(x * 100)}%`; // 0.009 -> 0.9%, not 1%
@@ -29,7 +28,7 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour =
   const docRef = useRef<HTMLDetailsElement>(null);
   const review = set.status === "review";
   const applied = set.status === "applied";
-  const bidManager = useMe()?.name === BID_MANAGER;
+  const bidManager = isBidManager(useMe()); // only the bid manager applies or discards; the API checks too
   const items = set.items.filter((i) => !filter || kindOf(i) === filter);
   const r = set.result;
 
@@ -148,7 +147,7 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour =
           <button type="button" className="danger secondary" disabled={!!busy || !bidManager} data-tour={t("chg-discard")} onClick={discard}>Discard</button>
           {busy && <Busy label={busy} />}
           <span className="muted">{set.confirmed < set.total ? `${set.total - set.confirmed} change(s) still need a person's confirmation. ` : ""}
-            Only the Bid Manager applies or discards{bidManager ? "" : "; switch with Acting as"}. Applying creates the new versions, freezes a new baseline and returns the affected answers to the units.</span>
+            Only the bid manager applies or discards. Applying creates the new versions, freezes a new baseline and returns the affected answers to the units.</span>
           <Alert kind="error" className="chg-error" onClose={() => setError(undefined)}>{error}</Alert>
         </div>)}
       {confirmDialog}

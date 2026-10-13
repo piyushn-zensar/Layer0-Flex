@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import Response
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
+from app.core.web import BID_MANAGER, require
 from app.modules.ingestion import service
 
 router = APIRouter(tags=["ingestion"])
@@ -16,7 +17,8 @@ def _found(fn, *args):
 
 
 @router.post("/documents/{doc_id}/ingest")
-def ingest(doc_id: str, db: Session = Depends(get_db)):
+def ingest(doc_id: str, request: Request, db: Session = Depends(get_db)):
+    require(request, BID_MANAGER)  # reading documents is the bid manager's (section 16.6)
     return _found(service.ingest, db, doc_id)
 
 

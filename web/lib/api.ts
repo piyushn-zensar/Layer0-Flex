@@ -66,6 +66,10 @@ export function post<T = unknown>(path: string, body?: unknown): Promise<T> {
   return api<T>(path, { method: "POST", body: body instanceof FormData ? body : JSON.stringify(body ?? {}) });
 }
 
+/** Bid-manager-only actions (technical-architecture section 16.6); the API checks too, this only greys the button. */
+export const isBidManager = (me?: Me) => me?.role === "bid_manager";
+export const BID_MANAGER_ONLY = "Only the bid manager can do this.";
+
 /** The signed-in user (undefined while loading). */
 export function useMe(): Me | undefined {
   return useApi<Me>("/api/auth/me").data;

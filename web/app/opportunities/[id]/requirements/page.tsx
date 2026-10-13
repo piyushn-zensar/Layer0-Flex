@@ -8,7 +8,7 @@ import { Fragment, useMemo, useState } from "react";
 import PageHead from "@/components/shell/PageHead";
 import LinePicker from "@/components/requirements/LinePicker"; // P-15
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useConfirm, useToast } from "@/components/ui";
-import { errorMessage, post, useApi } from "@/lib/api";
+import { BID_MANAGER_ONLY, errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
 import { coverageLabel, originLabel, snapshotName, sourceLabel, statusLabel, type Baseline, type Coverage, type CorrectionResult, type Requirement, type RequirementException, type RequirementHistory, type Snapshot, type SnapshotDetail } from "@/lib/types";
 
 const CATEGORIES = ["technical", "compliance", "commercial", "schedule", "submission", "legal", "staffing"];
@@ -28,6 +28,7 @@ export default function RequirementsPage() {
   const { id } = useParams<{ id: string }>();
   const { data, error, reload } = useApi<{ requirements: Requirement[]; baseline: Baseline | null; exceptions: number; coverage?: Coverage | null }>(`/api/opportunities/${id}/requirements`);
   const { data: snapshots } = useApi<Snapshot[]>(`/api/opportunities/${id}/extraction`);
+  const bm = isBidManager(useMe()); // publishing is the bid manager's (section 16.6)
   const { data: exc, error: excError, reload: reloadExc } = useApi<RequirementException[]>(`/api/opportunities/${id}/requirements/exceptions`);
   const [tab, setTab] = useState<"register" | "exceptions">("register");
   const toast = useToast();
@@ -184,7 +185,7 @@ export default function RequirementsPage() {
             Edits, splits, merges, exclusions and missed requirements are saved as corrections with a reason; customer documents run on the <Link href={`/opportunities/${id}/changes`}>Changes</Link> step.</span>
           : <span data-tour="req-help">{activeCount} requirements in the register; related line items are grouped (expand a group to see its sub-requirements). Each was verified against its source; exclude anything that is not a requirement, then publish the register.</span>}>
         {busy && <Busy label="Saving…" />}
-        {!frozen && <button data-tour="req-freeze" disabled={busy || activeCount === 0} onClick={freeze}>Publish</button>}
+        {!frozen && <button data-tour="req-freeze" disabled={busy || activeCount === 0 || !bm} title={bm ? "" : BID_MANAGER_ONLY} onClick={freeze}>Publish</button>}
       </PageHead>
 
       <div className="filters" role="tablist" aria-label="Requirements view" data-tour="req-tabs">

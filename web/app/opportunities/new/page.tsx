@@ -2,7 +2,7 @@
 // New bid.  Owner: Piyush.
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { errorMessage, post } from "@/lib/api";
+import { errorMessage, isBidManager, post, useMe } from "@/lib/api";
 import type { Opportunity } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy } from "@/components/ui";
@@ -13,6 +13,8 @@ export default function NewOpportunityPage() {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string>();
+  const me = useMe();
+  const bm = isBidManager(me); // creating a bid is the bid manager's (section 16.6); the API checks too
   // QA-02: a blank or whitespace-only title is caught here and a failed request shows its message instead of the route error page.
   async function create(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,9 +36,10 @@ export default function NewOpportunityPage() {
         <label data-tour="intake-customer-type">Customer type
           <select name="customer_type" disabled={busy}><option value="">—</option>{CUSTOMER_TYPES.map((t) => <option key={t}>{t}</option>)}</select>
         </label>
-        <button disabled={busy} data-tour="intake-create">Create</button>
+        <button disabled={busy || !bm} data-tour="intake-create">Create</button>
         {busy && <Busy label="Creating…" />}
       </form>
+      {me && !bm && <Alert kind="info">Only the bid manager creates bids; you are signed in as {me.name}.</Alert>}
       <Alert kind="error">{message}</Alert>
     </div>
   );

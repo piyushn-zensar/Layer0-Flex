@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { errorMessage, post, useApi } from "@/lib/api";
+import { BID_MANAGER_ONLY, errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
 import { DOC_TYPES, type Changes } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { STATUS_EVENT } from "@/components/shell/OppSteps";
@@ -16,6 +16,7 @@ const HELP = "Addenda, Q&A answers and change requests are read like the RFP and
 export default function ChangesPage() {
   const { id } = useParams<{ id: string }>();
   const { data, error, reload } = useApi<Changes>(`/api/opportunities/${id}/changes`);
+  const bm = isBidManager(useMe()); // reading change documents is the bid manager's (section 16.6)
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState<string>();
   const toast = useToast();
@@ -53,7 +54,7 @@ export default function ChangesPage() {
               <option value="" disabled>Choose a type…</option>
               {(["addendum", "qa", "change"] as const).map((v) => <option key={v} value={v}>{DOC_TYPES[v]}</option>)}
             </select>
-            <button disabled={!!busy || inReview} data-tour="chg-upload-button">Read the change document</button>
+            <button disabled={!!busy || inReview || !bm} title={bm ? "" : BID_MANAGER_ONLY} data-tour="chg-upload-button">Read the change document</button>
             {busy ? <Busy label={busy} /> : <span id="chg-file-hint" className="muted">{inReview ? "Apply or discard the change set in review first." : "Read against the current baseline."}</span>}
           </div>
           <Alert kind="error" onClose={() => setMessage(undefined)}>{message}</Alert>

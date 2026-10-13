@@ -983,3 +983,46 @@ def test_extraction_snapshot_and_corrections():
     assert client.post(f"/api/requirements/{p55[0]['req_id']}/review", json={"action": "edit", "text": "x"}).status_code == 409
     assert client.post(f"/api/opportunities/{opp}/requirements/extract", json={"reason": "again"}).status_code == 409
     assert client.get(f"/api/opportunities/{opp}/extraction/1").json()["items"] == items  # E1 unchanged
+
+
+def test_permissions_in_bids_documents_requirements_and_changes():
+    """P-25 (C-09, technical-architecture section 16.6): the server checks the role on every write; a forbidden action
+    is a 403 that says who may do it. Reading stays open to every signed-in account."""
+    client = signed_in()
+    pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
+    pm, de, admin = auth("crown.pm"), auth("crown.de"), auth("admin")
+
+    # bid manager only: create a bid, upload and read documents, run the reader, publish, change documents
+    r = client.post("/api/opportunities", json={"title": "not mine"}, headers=pm)
+    assert r.status_code == 403 and r.json()["detail"] == \
+        "Only a bid manager can do this; you are signed in as Crown Product Manager (product manager)."
+    opp = client.post("/api/opportunities", json={"title": "permissions"}).json()["id"]
+    assert client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)}, headers=de).status_code == 403
+    doc = client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)}).json()["id"]
+    assert client.post(f"/api/documents/{doc}/ingest", headers=pm).status_code == 403
+    assert client.post(f"/api/opportunities/{opp}/requirements/extract", headers=admin).status_code == 403
+    client.post(f"/api/opportunities/{opp}/requirements/extract")
+
+    # reading is open to everyone signed in
+    for who in (pm, de, admin):
+        assert client.get(f"/api/opportunities/{opp}/requirements", headers=who).status_code == 200
+
+    # corrections and exceptions: bid manager, product managers and design engineers, not the administrator
+    url = f"/api/opportunities/{opp}/requirements/from-lines"
+    lines = {"page": 55, "line_start": 52, "line_end": 53, "category": "technical"}
+    r = client.post(url, json=lines, headers=admin)
+    assert r.status_code == 403 and r.json()["detail"].startswith("Only a bid manager, product manager or design engineer")
+    added = client.post(url, json=lines, headers=pm).json()
+    assert added["created_by"] == "Crown Product Manager"
+    exclude = {"action": "reject", "reason": "duplicate of the reader's item"}
+    assert client.post(f"/api/requirements/{added['req_id']}/review", json=exclude, headers=admin).status_code == 403
+    assert client.post(f"/api/requirements/{added['req_id']}/review", json=exclude, headers=de).status_code == 200
+    exception = next(r for r in client.get(f"/api/opportunities/{opp}/requirements/exceptions").json())
+    assert client.post(f"/api/requirements/{exception['req_id']}/dismiss", json={"reason": "x"}, headers=admin).status_code == 403
+
+    assert client.post(f"/api/opportunities/{opp}/baselines", headers=pm).status_code == 403
+    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 200
+    corr = {"kind": "edit", "req_id": added["req_id"], "text": "x", "reason": "y"}
+    assert client.post(f"/api/opportunities/{opp}/corrections", json=corr, headers=admin).status_code == 403
+    assert client.post(f"/api/opportunities/{opp}/changes", data={"role": "addendum"},
+                       files={"file": ("a.pdf", pdf)}, headers=de).status_code == 403

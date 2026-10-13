@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.core.db import SessionLocal, get_db
-from app.core.web import actor, row
+from app.core.web import BID_MANAGER, actor, require, row
 from app.modules.ingestion import service as ingestion
 from app.modules.opportunities import service
 
@@ -22,6 +22,7 @@ def _doc(d) -> dict:
 
 @router.post("/opportunities")
 def create(body: OpportunityIn, request: Request, db: Session = Depends(get_db)):
+    require(request, BID_MANAGER)  # section 16.6: the bid manager creates bids and uploads their documents
     try:
         return row(service.create(db, body.title, body.customer, body.customer_type, actor(request)))
     except ValueError as exc:
@@ -44,6 +45,7 @@ def _ingest_in_background(doc_id: str):
 def _attach(db: Session, request: Request, background: BackgroundTasks, opp_id: str, filename: str, data: bytes,
             role: str) -> dict:
     """Store the file, read it in the background, answer at once (the page polls the document's status)."""
+    require(request, BID_MANAGER)
     known = {d.id for d in service.documents(db, opp_id)}
     try:
         doc = service.add_document(db, opp_id, filename, data, role, actor(request))

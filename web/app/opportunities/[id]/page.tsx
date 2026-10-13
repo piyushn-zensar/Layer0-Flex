@@ -2,7 +2,7 @@
 // Documents: upload the RFP, see ingestion status, run the reader agent.  Owner: Piyush.
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { api, errorMessage, post, useApi } from "@/lib/api";
+import { BID_MANAGER_ONLY, api, errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
 import { DOC_TYPES, docTypeLabel, snapshotName, type Doc, type Opportunity, type Snapshot } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, Skeleton, StatusBadge, useToast } from "@/components/ui";
@@ -15,6 +15,7 @@ export default function DocumentsPage() {
   const toast = useToast();
   const { data, error, reload } = useApi<{ opportunity: Opportunity; documents: Received[] }>(`/api/opportunities/${id}`);
   const { data: snapshots } = useApi<Snapshot[]>(`/api/opportunities/${id}/extraction`);
+  const bm = isBidManager(useMe()); // uploading and reading are the bid manager's (section 16.6)
   const readBefore = (snapshots?.length ?? 0) > 0; // a snapshot exists: reading again needs a reason (E2, E3...)
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState<{ text: string; problems?: string[] }>();
@@ -57,7 +58,7 @@ export default function DocumentsPage() {
     <form className={started ? "form" : "card form"} onSubmit={upload} aria-busy={!!busy} data-tour="rfp-upload-form">
       <label data-tour="rfp-file">RFP file (PDF) <input type="file" name="file" required disabled={!!busy} /></label>
       <label data-tour="rfp-role">Document type <select name="role" defaultValue={started ? "addendum" : "main"} disabled={!!busy}>{Object.entries(DOC_TYPES).map(([v, l]) => <option key={v} value={v}>{l}</option>)}</select></label>
-      <button disabled={!!busy} data-tour="rfp-upload">Upload and read</button>
+      <button disabled={!!busy || !bm} title={bm ? "" : BID_MANAGER_ONLY} data-tour="rfp-upload">Upload and read</button>
       <button type="button" className="secondary" disabled={!!busy} onClick={reload} data-tour="rfp-refresh">Refresh status</button>
       {busy && !canRead && <Busy label={busy} />} {/* else shown by the reader button */}
     </form>);
@@ -105,9 +106,10 @@ export default function DocumentsPage() {
         {readBefore ? (
           <form className="form" data-tour="rfp-reread-form" onSubmit={(e) => { e.preventDefault(); const reason = String(new FormData(e.currentTarget).get("reason")).trim(); if (reason) extract(reason); }}>
             <label>Why read the RFP again? <span className="field-hint">(the earlier snapshots are kept)</span> <input name="reason" required maxLength={500} disabled={!!busy} /></label>
-            <button disabled={!!busy || !!unread} data-tour="rfp-extract">Read again</button>
+            <button disabled={!!busy || !!unread || !bm} title={bm ? "" : BID_MANAGER_ONLY} data-tour="rfp-extract">Read again</button>
           </form>
-        ) : <button disabled={!!busy || !!unread} onClick={() => extract()} data-tour="rfp-extract">Run the reader agent → requirements</button>}
+        ) : <button disabled={!!busy || !!unread || !bm} title={bm ? "" : BID_MANAGER_ONLY} onClick={() => extract()} data-tour="rfp-extract">Run the reader agent → requirements</button>}
+        {!bm && <span className="muted">Only the bid manager uploads documents and runs the reader.</span>}
         {busy ? <Busy label={busy} /> : unread && <span className="muted" role="status">Waiting for the main RFP to be read; use Refresh status.</span>}</div>)
         : <p className="muted" data-tour="rfp-started-note">Requirement review has started, so the RFP is not re-read. Missed items can be added on the Requirements page.</p>)}
     </>

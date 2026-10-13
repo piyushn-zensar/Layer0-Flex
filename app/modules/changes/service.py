@@ -24,17 +24,18 @@ Public contract:
         classification; target (modified / removed / unchanged) must be an approved line item of the baseline;
         text replaces the new wording. Only in review. LookupError / ValueError
     confirm_all(db, set_id, actor) -> ChangeSet   every still-proposed item confirmed as proposed
-    apply(db, set_id, actor) -> ChangeSet         Bid Manager only (PermissionError); every item confirmed, no
+    apply(db, set_id, actor) -> ChangeSet         the bid manager's (checked by the route); every item confirmed, no
         requirement changed by two items, and the baseline unchanged since the upload (ValueError). result:
         {baseline, added, modified, removed, returned, dispatched, note}; a failure after the new baseline is
         committed (returns, matching, dispatch) is reported in note, not raised. Of two applies / discards of one
         set at once only the first goes through
-    discard(db, set_id, actor) -> ChangeSet       Bid Manager only; only from review
+    discard(db, set_id, actor) -> ChangeSet       the bid manager's (checked by the route); only from review
     correct(db, opp_id, kind, body, reason, actor) -> dict   after publishing, a correction of the reading
         (requirements.apply_correction: next baseline, origin correction), then the same follow-up as a change set:
         answers of corrected requirements returned, new ones matched and dispatched. {baseline, added, modified,
         removed, affected, returned, dispatched, note}; a follow-up failure is reported in note
-    Anyone may upload, decide and confirm items (agents propose, a person confirms); applying is the Bid Manager's.
+    Permissions (technical-architecture section 16.6) are checked by the routes: the bid manager uploads, applies
+    and discards; the bid manager, product managers and design engineers confirm items and make corrections.
     view(db, change_set) -> dict / item_view(db, item) -> dict   the API shape (counts, share, drastic, pages,
         items with the target's wording in the baseline the set was compared with)
 """
@@ -57,7 +58,6 @@ from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service as requirements
 from app.modules.workpackages import service as workpackages
 
-BID_MANAGER = "Bid Manager"  # ponytail: PoC actor name from the header picker; real roles come with sign-in
 DRASTIC_SHARE = 0.25  # ponytail: placeholder; the drastic-change threshold Needs confirmation (section 8)
 CANDIDATES = 5        # baseline line items shown to the agent per statement (letters A-E)
 VERB = {"modified": "changes", "removed": "removes", "unchanged": "leaves unchanged"}
@@ -240,8 +240,6 @@ def apply(db: Session, set_id: int, actor: str) -> ChangeSet:
     Then: answers of changed requirements go back to their units, new and changed requirements are matched, and
     after a "go" (and if work was dispatched before) dispatch runs, which also withdraws removed work."""
     s = get(db, set_id)
-    if actor != BID_MANAGER:
-        raise PermissionError("Only the Bid Manager applies a change set.")
     _in_review(s)
     opp_id = s.opportunity_id
     _claim(db, s, "applied")  # first, so the items and the baseline read below cannot change before this set commits
@@ -344,8 +342,6 @@ def correct(db: Session, opp_id: str, kind: str, body: dict, reason: str, actor:
 
 def discard(db: Session, set_id: int, actor: str) -> ChangeSet:
     s = get(db, set_id)
-    if actor != BID_MANAGER:
-        raise PermissionError("Only the Bid Manager discards a change set.")
     _in_review(s)
     _claim(db, s, "discarded")
     s.status = "discarded"

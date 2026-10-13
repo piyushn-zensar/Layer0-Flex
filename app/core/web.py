@@ -17,12 +17,19 @@ def actor(request: Request) -> str:
     return user(request)["name"]
 
 
+# Default permissions (technical-architecture section 16.6), checked on every write route.
+BID_MANAGER = "bid_manager"
+CORRECTORS = ("bid_manager", "product_manager", "design_engineer")  # extraction corrections, exceptions
+
+
 def require(request: Request, *roles: str) -> dict:
-    """The signed-in account if its role is one of `roles`, else 403, e.g. require(request, "bid_manager")."""
+    """The signed-in account if its role is one of `roles`, else 403, e.g. require(request, BID_MANAGER)."""
     u = user(request)
     if u["role"] not in roles:
-        allowed = " or ".join(ROLES.get(r, r).lower() for r in roles)
-        raise HTTPException(403, f"Only a {allowed} can do this; you are signed in as {u['name']}.")
+        names = [ROLES.get(r, r).lower() for r in roles]
+        allowed = names[0] if len(names) == 1 else f"{', '.join(names[:-1])} or {names[-1]}"
+        raise HTTPException(403, f"Only a {allowed} can do this; you are signed in as {u['name']} "
+                                 f"({ROLES.get(u['role'], u['role']).lower()}).")
     return u
 
 
