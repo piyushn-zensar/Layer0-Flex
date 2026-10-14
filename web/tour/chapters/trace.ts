@@ -79,7 +79,7 @@ const chapter: TourChapter = {
       id: "trace-pane-2", route: ROUTE, target: "trace-pane-2", placement: "left",
       title: "Pane 2: the requirement breakdown",
       body: [
-        "Pane 2 lists every current requirement of the opportunity in document order: 348 for the Syracuse RFP. It is the same list the Requirements page shows, after approval and freezing, but here each row is a link into the other two panes. The selected row is marked and keeps the keyboard focus (Enter or Space selects a row).",
+        "Pane 2 lists every current requirement of the opportunity in document order: 312 for the Syracuse RFP. It is the same list the Requirements page shows, after approval and freezing, but here each row is a link into the other two panes. The selected row is marked and keeps the keyboard focus (Enter or Space selects a row).",
         "Three columns: **ID** with the category underneath, **Source** (page and lines, or the unanchored badge), and the **Requirement** (the short text, then the exact quote or the sub-requirements of a group). The next steps look at each of them on the selected row.",
       ],
       fallback: "No requirements yet: nothing has been extracted from the RFP for this opportunity.",
@@ -88,7 +88,7 @@ const chapter: TourChapter = {
       id: "trace-sel-id", route: ROUTE, target: "trace-sel-id", placement: "right",
       title: "ID and category",
       body: [
-        "Each requirement keeps a stable ID of the form `REQ-<opportunity>-<number>` (for example `REQ-0001-0887`), assigned when the reader identified it. The ID is in the URL hash of this page, in the per-requirement lists of the decision page, and in the work items each unit receives, so one requirement can be followed through the whole bid.",
+        "Each requirement keeps a stable ID of the form `REQ-<opportunity>-<number>` (for example `REQ-0001-0885`), assigned when the reader identified it. The ID is in the URL hash of this page, in the per-requirement lists of the decision page, and in the work items each unit receives, so one requirement can be followed through the whole bid.",
         "The tag under the ID is the category: **technical**, **compliance**, **commercial**, **submission**, **legal**, **schedule** or **staffing**. It matters for matching: only technical and compliance requirements are product items that go to the matcher; every other category is routed to the bid desk by rule.",
       ],
       fallback: "Select a requirement in pane 2 to see its ID and category.",
@@ -106,8 +106,8 @@ const chapter: TourChapter = {
       id: "trace-unanchored", route: ROUTE, target: "trace-unanchored", placement: "right", onEnter: openDetails("trace-unanchored"),
       title: "The unanchored badge",
       body: [
-        "An **unanchored** badge replaces the source when the quote could not be located on the page (the text was rephrased by a person, or came from a scanned page). The requirement is still valid and still matched; it just has no highlight in pane 1, so check its source manually. The Syracuse read has 32 of them out of 348.",
-        "Unanchored requirements count against the **Open questions** criterion of the go/no-go summary, so it is worth resolving the important ones (edit the quote on the Requirements page so it anchors again, or accept them as they are).",
+        "An **unanchored** badge replaces the source when the quote could not be located on the page (the text was rephrased by a person, or came from a scanned page). The requirement is still valid and still matched; it just has no highlight in pane 1, so check its source manually. The register admits only verified sources, so the Syracuse register has none: the 12 quotes the reader could not match word for word wait in the exception queue on the Requirements page instead.",
+        "Unanchored requirements count against the **Open questions** criterion of the go/no-go summary, so it is worth resolving the important ones (**Link to lines** on the Exceptions tab opens at the page and lines where the reader says the text is, or dismiss them with a reason).",
       ],
       fallback: "No requirement of this opportunity is unanchored: every quote was located on its page.",
     },
@@ -159,7 +159,7 @@ const chapter: TourChapter = {
       id: "trace-unit-responses", route: ROUTE, target: "trace-unit-responses", placement: "bottom",
       title: "Unit responses at a glance",
       body: [
-        "The toolbar sums up the units' work on this opportunity: one badge per unit with *validated / total*, for example **CROWN 1/98 validated**; hover to see how many answers were submitted. The badge is green when everything is validated, blue while answers are coming in, amber while items are still only assigned. BID is the bid desk.",
+        "The toolbar sums up the units' work on this opportunity: one badge per unit with *validated / total*, for example **CROWN 1/93 validated**; hover to see how many answers were submitted. The badge is green when everything is validated, blue while answers are coming in, amber while items are still only assigned. BID is the bid desk.",
         "Before dispatch it reads *not sent to units yet*. The same numbers appear on the portfolio page and feed the consolidation step.",
       ],
     },
@@ -169,7 +169,7 @@ const chapter: TourChapter = {
       body: [
         "**Match products** runs the matching agent over every approved requirement that nobody has decided yet. It proposes, for each one, the business unit(s), the product and the offering type, with a rationale; accepted, manually set and rejected matches are a person's decision and are kept as they are (the toast reports them as *kept*).",
         "How it works: requirements outside the product categories (anything but technical and compliance) go to the bid desk **by rule**, without a model call. The rest are sent **one page at a time** (at most 15 per call) with the page's header block and the whole product catalog and past responses in the prompt; the answer may only name catalog products, the unit is taken from the product, and at most three units are kept per requirement. An empty answer means *not a product item*.",
-        "When no model answer exists, the fallback is **retrieval only**: the closest catalog entry by text similarity, labelled as such in the row (\"closest catalog entry (no agent answer)\"), or the bid desk when nothing is close enough. For the Syracuse RFP the frozen answers give 348 matches in 61 page calls: 212 by the agent, 136 by rule; Crown 91, EP2 1, bid desk 256.",
+        "When no model answer exists, the fallback is **retrieval only**: the closest catalog entry by text similarity, labelled as such in the row (\"closest catalog entry (no agent answer)\"), or the bid desk when nothing is close enough. For the Syracuse RFP the frozen answers give 312 matches in 64 page calls: 214 by the agent, 98 by rule; Crown 93, EP2 6, bid desk 213.",
       ],
     },
     {
@@ -189,7 +189,7 @@ const chapter: TourChapter = {
       title: "What appeared in pane 3",
       body: [
         "Every row now has a match. Product items show their unit, product and offering badge; the other rows read *Bid manager (not a product item)* with the rationale \"A schedule requirement, not a product item: the bid manager answers it\" (or legal, commercial, submission, staffing). Each match also shows its status badge (**proposed**) and how it came about: *proposed by the matching agent* or *routed to the bid desk by rule*.",
-        "For the Syracuse RFP: 103 product matches (Crown Technical Systems 98, EP² 5), of which 97 ETO, 5 CTO and 1 Semi-custom; 245 go to the bid desk. The walkthrough selected the first matched product row so the next steps can read it.",
+        "For the Syracuse RFP: 99 product matches (Crown Technical Systems 93, EP² 6), of which 85 ETO, 11 CTO and 3 Semi-custom; 213 go to the bid desk. The walkthrough selected the first matched product row so the next steps can read it.",
         "Limitations to keep in mind: the agent only sees the page's text and the catalog, so a product it does not know cannot be proposed; and *proposed* means exactly that: nothing is sent to a unit until a person decides and dispatches.",
       ],
     },
@@ -206,7 +206,7 @@ const chapter: TourChapter = {
       id: "trace-sel-rationale", route: ROUTE, target: "trace-sel-rationale", placement: "left", onEnter: selectRow(hasUnit),
       title: "The rationale",
       body: [
-        "The rationale is the agent's one- or two-sentence explanation citing the catalog entries it used, for example for `REQ-0001-0887`: \"The requirement specifies a metal-clad switchgear lineup with 15kV vacuum circuit breakers, protective relays, and other components. The CROWN-ARMV product is a metal-clad medium-voltage switchgear lineup…\". Read it as a reviewer would: does the cited product really cover the quoted text?",
+        "The rationale is the agent's one- or two-sentence explanation citing the catalog entries it used, for example for `REQ-0001-0885`: \"The requirement specifies a 15kV Metal Clad Switchgear lineup with arc-resistant Type 2B construction, meeting IEEE C37.20.7 standards. The catalog entry for CROWN-ARMV matches this description…\". Read it as a reviewer would: does the cited product really cover the quoted text?",
         "The agent also returns a confidence (0.95 for that example) which is stored with the match and its retrieval evidence; the trace keeps the payload small and shows the rationale, the status and the method line below it.",
       ],
       fallback: "The selected requirement has no product match, so there is no rationale to show.",
@@ -284,7 +284,7 @@ const chapter: TourChapter = {
       title: "Assignments and their statuses",
       body: [
         "The Response column lists the work items created at dispatch for the selected requirement: one per participating unit that is matched to it, else the bid desk (**BID**). Each shows the unit, a status badge and, once answered, a compliance badge and the unit's text.",
-        "Statuses: **assigned** (sent, no answer yet), **submitted** (the unit answered), **returned** (the bid manager sent it back with a note; the unit answers again), **validated** (the bid manager accepted the answer). Withdrawn items (after a change of match or participation) are hidden. Compliance: **met**, **partial**, **not met**, **exception**. In the demo opportunity, `REQ-0001-0887` has a validated Crown answer: \"Two-section 15 kV arc-resistant metal-clad lineup offered.\"",
+        "Statuses: **assigned** (sent, no answer yet), **submitted** (the unit answered), **returned** (the bid manager sent it back with a note; the unit answers again), **validated** (the bid manager accepted the answer). Withdrawn items (after a change of match or participation) are hidden. Compliance: **met**, **partial**, **not met**, **exception**. In the demo opportunity, `REQ-0001-0885` has a validated Crown answer: \"Two-section 15 kV arc-resistant metal-clad lineup offered.\"",
         "A validated answer carries its own *Send to knowledge base* link. Before dispatch the column reads *not dispatched*; dispatch happens on the Bid decision page, next.",
       ],
       fallback: "Select a requirement to see its assignments; before dispatch every row reads not dispatched.",

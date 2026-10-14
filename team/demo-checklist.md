@@ -7,13 +7,13 @@ Written on 10 Oct 2026 from the running app and `Documents/walkthrough.md`; numb
 
 | Fact | Value |
 |---|---|
-| Opportunities | **OPP-0001** Syracuse switchgear (101-page RFP) and **OPP-0002** AI training campus (10 requirements; ANORD, CLOUD, FPM, JETCOOL and the bid desk) |
+| Opportunities | **OPP-0001** Syracuse switchgear (101-page RFP), the only seeded bid: electrical domain only (C-11) |
 | OPP-0001 | 818 line items grouped into **312 requirements** (161 groups, 628 sub-requirements, 27 duplicates, 12 exceptions) |
-| Units | BID 245, CROWN 98, EP2 5 |
-| Answers | **1 of 348 validated**, 1 submitted and waiting for validation |
+| Units | BID 213, CROWN 93, EP2 6 |
+| Answers | **1 of 312 validated**, 1 submitted and waiting for validation |
 | Open flags | 32 unanchored, 103 product matches nobody has accepted, rule R-003 warning, one data-sheet rating above the standard product (continuous current, p. 74) |
 | Bid decision | Evidence, engineering checks, bid and portfolio checks, "Advice from Layer 0: 6 of 9 assessable criteria met; 3 cannot be assessed yet (data not available). A person decides." |
-| Changes | Baseline 1 (348 requirements). The sample addendum `data/RFP/samples/rfp_syracuse_addendum_1.pdf` is **illustrative** (written for the demo, not issued by the customer). It reads from frozen answers in about a second and applies in under a second, with no model |
+| Changes | Baseline 1 (312 requirements). The sample addendum `data/RFP/samples/rfp_syracuse_addendum_1.pdf` is **illustrative** (written for the demo, not issued by the customer). It reads from frozen answers in about a second and applies in under a second, with no model |
 
 Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportunity** button, the signed-in name with **Switch**. Stepper: RFP, Requirements, Traceability, Bid decision, Final response, and a **Changes** link beside it.
 
@@ -21,12 +21,12 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 
 | ID | Page | Use it for |
 |---|---|---|
-| REQ-0001-0887 | 55 | Validated Crown answer, four sub-requirements: the traceability story |
-| REQ-0001-0889 | 56 | Submitted: the bid manager validates it live |
-| REQ-0001-0359 | 57 | Crown item (IEEE 1291 partial-discharge measurement), assigned and unanswered: answer it live |
-| REQ-0001-0893 | 57 | Relays: matched to the EP² relay and protection panel (EP2-RPP, ETO) |
-| REQ-0001-0815 | 1 | Group with three sub-requirements (submission requirements) |
-| REQ-0001-0141 | none | Unanchored: shows the tool says so when it cannot find the source |
+| REQ-0001-0885 | 55 | Validated Crown answer, five sub-requirements: the traceability story |
+| REQ-0001-0887 | 56 | Submitted: the bid manager validates it live |
+| REQ-0001-0368 | 57 | Crown item (NEMA SG 4, AC high-voltage circuit breakers), assigned and unanswered: answer it live |
+| REQ-0001-0892 | 57 | Relays: matched to the EP² relay and protection panel (EP2-RPP, ETO) |
+| REQ-0001-0819 | 1 | Group with three sub-requirements (submission requirements) |
+| REQ-0001-0660 | none (probably 72) | Exception: its wording is not verbatim in the RFP, so it waits in the exception queue with "Probably p. 72, lines 53-54": the tool says so instead of inventing a source |
 | REQ-0001-0001 | 1 | Bid desk item (the deadline) |
 
 ## 2. Before the session (T minus 30 minutes)
@@ -41,37 +41,37 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 
 | # | Open | Do | The audience sees | Done |
 |---|---|---|---|---|
-| 1 | Opportunities (**cut**) | Point at both rows | 348 and 10 requirements, unit bars, status chips | ☐ |
+| 1 | Opportunities (**cut**) | Point at the row | 312 requirements, unit bars, status chips | ☐ |
 | 2 | OPP-0001, **RFP** | Show the file row | 101 pages, "ingested", fingerprint | ☐ |
-| 3 | **Requirements** | Filters (Unanchored 32, Duplicates 21); expand REQ-0001-0815; click **History** on one | Groups, sub-requirements, exact quotes, who changed what | ☐ |
-| 4 | **Traceability** (**cut**) | Select **REQ-0001-0887** | Page 55 highlighted, three panels follow | ☐ |
-| 5 | Traceability | Select **REQ-0001-0893** | EP² relay and protection panel (EP2-RPP), ETO | ☐ |
+| 3 | **Requirements** | Filters (Unanchored 32, Duplicates 21); expand REQ-0001-0819; click **History** on one | Groups, sub-requirements, exact quotes, who changed what | ☐ |
+| 4 | **Traceability** (**cut**) | Select **REQ-0001-0885** | Page 55 highlighted, three panels follow | ☐ |
+| 5 | Traceability | Select **REQ-0001-0892** | EP² relay and protection panel (EP2-RPP), ETO | ☐ |
 | 6 | Traceability (**cut**) | **Accept** the match on 0887 | Match status changes; the unaccepted count drops by one | ☐ |
 | 7 | **Bid decision** | Evidence, the bid and portfolio checks card, participation, go decision, the advice box, one criterion's judgement | Advice, flags, the continuous-current deviation (p. 74), "a person decides" | ☐ |
-| 8 | Sign in as **Crown Product Manager** (**Switch**, user `crown.pm`), then **My work** (**cut**) | Answer **REQ-0001-0359**: met, product, how it is met, **Submit** | Status changes to "submitted" | ☐ |
-| 9 | Sign in as **Bid Manager** (**Switch**, user `bid.manager`), Opportunities, unit code **CROWN** (**cut**) | **Validate** REQ-0001-0889 and REQ-0001-0359 | Status changes to "validated" | ☐ |
-| 10 | **Final response** (**cut**) | Show the count and the blocker panel, click a blocker link, then the Open filter | Count moves from 1 to 3 of 348; groups by reason; the link lands in Traceability | ☐ |
+| 8 | Sign in as **Crown Product Manager** (**Switch**, user `crown.pm`), then **My work** (**cut**) | Answer **REQ-0001-0368**: met, product, how it is met, **Submit** | Status changes to "submitted" | ☐ |
+| 9 | Sign in as **Bid Manager** (**Switch**, user `bid.manager`), Opportunities, unit code **CROWN** (**cut**) | **Validate** REQ-0001-0887 and REQ-0001-0368 | Status changes to "validated" | ☐ |
+| 10 | **Final response** (**cut**) | Show the count and the blocker panel, click a blocker link, then the Open filter | Count moves from 1 to 3 of 312; groups by reason; the link lands in Traceability | ☐ |
 | 11 | Final response | **Download compliance matrix (Excel)**; the CSV link is beside it | Customer sheet (validated answers only, Comply / Open, RFP order) and an internal Tracking sheet | ☐ |
 | 12 | CROWN work package | Open "Hand-off for this unit's systems" | JSON download: starting points, not a design | ☐ |
-| 13 | **Changes** (**cut**). Do it last: it changes the demo data | Sign in as **Bid Manager** (`bid.manager`). Upload the sample addendum, show the eight statements, **Confirm all proposals**, **Apply to requirements** (details below) | Eight classified statements (2 modified, 2 added, 1 removed, 1 unchanged, 2 not a requirement); baseline 2; REQ-0001-0887 back with Crown; two new requirements | ☐ |
+| 13 | **Changes** (**cut**). Do it last: it changes the demo data | Sign in as **Bid Manager** (`bid.manager`). Upload the sample addendum, show the eight statements, **Confirm all proposals**, **Apply to requirements** (details below) | Eight classified statements (2 modified, 2 added, 1 removed, 1 unchanged, 2 not a requirement); baseline 2; REQ-0001-0885 back with Crown; two new requirements | ☐ |
 | 14 | Product catalog | Scroll the units, families and models | Families and models from public Flex pages, to be confirmed with each unit | ☐ |
 
 **Step 13 in detail (about 3 minutes; reset afterwards).** Say first that the addendum is an illustration written for the demo, not a customer document.
 
-1. Click **Changes** beside the stepper. It shows "Current baseline 1: 348 requirements".
+1. Click **Changes** beside the stepper. It shows "Current baseline 1: 312 requirements".
 2. Choose `data/RFP/samples/rfp_syracuse_addendum_1.pdf`, then **Read the change document**. A card opens, in review, "0 / 8 confirmed", with 0.9% of the baseline modified or removed (not drastic; the threshold, 25%, is a placeholder).
 3. Point at the chips: Modified 2, Added 2, Removed 1, Unchanged 1, Not a requirement 2. Open **Change document** and click a source link: the statement is highlighted on the addendum page.
-4. Walk four rows. Row 1: the proposal due date, 09/15 to 09/29/2023, pointing at **REQ-0001-0039**. Row 2: breaker positions 18 to 20, pointing at **REQ-0001-0332**, a sub-requirement of REQ-0001-0887. Row 5: the AutoCAD drawings sentence is deleted, pointing at **REQ-0001-0130**. Row 6: the Q&A answer confirms the RFP, so it is "unchanged". Say that a person can override any row (kind, target, wording); do not do it live.
-5. **Confirm all proposals**, then **Apply to requirements** (only the Bid Manager can). The result box starts "Baseline 2 frozen with the changes": added **REQ-0001-0977** (seismic qualification, matched to Crown) and **REQ-0001-0978** (60-month warranty, bid desk); modified REQ-0001-0039 and REQ-0001-0332; removed REQ-0001-0130; "2 unit answer(s) returned for review; 2 new assignment(s) sent to the units".
-6. Open `/inbox/CROWN`. REQ-0001-0887 (validated before) is **returned**: "Changed by rfp_syracuse_addendum_1.pdf: sub-requirement REQ-0001-0332 now reads: ...". Say: "A changed sub-requirement sends its group's answer back to the unit. Nothing else moved."
-7. In the result box click **REQ-0001-0977**. Traceability opens with pane 1 on the addendum (page 1, lines highlighted), its source column naming the file, and Crown as the unit (ETO). The changed sub-requirements appear under their groups (REQ-0001-0887, REQ-0001-0824) with the addendum's page and lines but no file name and no highlight: do not select them for this point. On the Requirements page, **History** on REQ-0001-0332 shows the original and the revised wording, with the addendum as the reason.
-8. Numbers after applying (they no longer match section 1 until you reset): 349 requirements; the Final response count drops by one (REQ-0001-0887 is open again); baseline 2.
+4. Walk four rows. Row 1: the proposal due date, 09/15 to 09/29/2023, pointing at **REQ-0001-0046**. Row 2: breaker positions 18 to 20, pointing at **REQ-0001-0330**, a sub-requirement of REQ-0001-0885. Row 5: the AutoCAD drawings sentence is deleted, pointing at **REQ-0001-0125**. Row 6: the Q&A answer confirms the RFP, so it is "unchanged". Say that a person can override any row (kind, target, wording); do not do it live.
+5. **Confirm all proposals**, then **Apply to requirements** (only the Bid Manager can). The result box starts "Baseline 2 frozen with the changes": added **REQ-0001-0980** (seismic qualification, matched to Crown) and **REQ-0001-0981** (60-month warranty, bid desk); modified REQ-0001-0046 and REQ-0001-0330; removed REQ-0001-0125; "2 unit answer(s) returned for review; 2 new assignment(s) sent to the units".
+6. Open `/inbox/CROWN`. REQ-0001-0885 (validated before) is **returned**: "Changed by rfp_syracuse_addendum_1.pdf: sub-requirement REQ-0001-0330 now reads: ...". Say: "A changed sub-requirement sends its group's answer back to the unit. Nothing else moved."
+7. In the result box click **REQ-0001-0980**. Traceability opens with pane 1 on the addendum (page 1, lines highlighted), its source column naming the file, and Crown as the unit (ETO). The changed sub-requirements appear under their groups (REQ-0001-0885, REQ-0001-0829) with the addendum's page and lines but no file name and no highlight: do not select them for this point. On the Requirements page, **History** on REQ-0001-0330 shows the original and the revised wording, with the addendum as the reason.
+8. Numbers after applying (they no longer match section 1 until you reset): 314 requirements; the Final response count drops by one (REQ-0001-0885 is open again); baseline 2.
 
 **From scratch (optional).** Create a **New opportunity**, upload the same RFP and let it read from the frozen answers, then stop and say "here is one that has already been through the process". `INSTALL.md` says new line items get keyword matching, labelled as such. Time it in the dry run before committing to it.
 
 ## 4. Presenter script
 
-1. **Opportunities.** "One place for every bid. For the Syracuse RFP, 348 requirements and how far each unit has answered. The bar is validated work first, then work awaiting validation."
+1. **Opportunities.** "One place for every bid. For the Syracuse RFP, 312 requirements and how far each unit has answered. The bar is validated work first, then work awaiting validation."
 2. **RFP.** "The customer's 101-page PDF is the starting point. Everything we show traces back to this file."
 3. **Requirements.** "The reader turned 818 raw line items into 312 requirements by grouping related ones and flagging duplicates. Each has its exact quote and page, and nothing is invented. When the wording cannot be matched to the RFP it says so: 12 wait in the exception queue, each with the page and lines where it probably is, and a person decides." On History: "Every change is kept: who, when, original and changed."
 4. **Traceability.** "Pick a requirement. The RFP page jumps to it, the breakdown follows, and the proposed unit and product appear. This one goes to Crown." On 0893: "Relays go to Electrical Power Products' relay and protection panels." On Accept: "The system proposes, a person accepts."
@@ -97,7 +97,7 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 | A page shows an error or loads forever | Refresh. Check both "Layer 0" windows are open. If the API is stale, run `reset-demo.cmd` then `start.cmd` (about a minute). |
 | Traceability is slow | Open it first as a warm-up. Fall back to Final response: its IDs link to the same requirement. |
 | Switch does not open the right work package | Sign in as the unit's user (for example `crown.pm`), then open `/inbox/CROWN` directly. The unit codes on Opportunities link there. |
-| Live submit or validate fails | Use REQ-0001-0887, which is already validated, and show the Final response count. |
+| Live submit or validate fails | Use REQ-0001-0885, which is already validated, and show the Final response count. |
 | The download fails | Show the workbook saved on the desktop. |
 | A full reset is needed | Close both windows, `reset-demo.cmd`, `start.cmd`. The opportunity opens in Traceability. |
 | The Changes upload is refused | "is still in review": the Bid Manager discards the open set, then upload again. "no frozen answers": only `rfp_syracuse_addendum_1.pdf` can be read offline; check the file. "was already applied": the step was done once, so reset. If it still fails, say Changes is built and tested, and move on. |
@@ -122,7 +122,7 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 - ☐ **Run 1, Piyush driving, Janvia watching:** the full path from a reset, timed (note the Traceability load and each action).
 - ☐ **Run 2, Janvia driving:** from a reset, without help.
 - ☐ **Failure drills:** stop the API mid-demo and recover with section 6. Switch roles twice. Submit and validate.
-- ☐ **Changes step (13):** upload the sample addendum, confirm all, apply, check REQ-0001-0887 in `/inbox/CROWN` and REQ-0001-0977 in Traceability (pane 1 shows the addendum page). Then `reset-demo.cmd`. Time the upload and the apply.
+- ☐ **Changes step (13):** upload the sample addendum, confirm all, apply, check REQ-0001-0885 in `/inbox/CROWN` and REQ-0001-0980 in Traceability (pane 1 shows the addendum page). Then `reset-demo.cmd`. Time the upload and the apply.
 - ☐ **Demo laptop:** `setup.cmd` and `start.cmd` on the laptop used on Monday, or on a clean copy.
 - ☐ **Checks:** production build shows no "N" badge, 100% zoom, notifications off.
 - ☐ **Measure:** the first Traceability load; the upload-and-read time for the optional from-scratch path; the workbook in real Excel.
@@ -133,10 +133,10 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 
 1. **`Documents/walkthrough.md` is stale:** it says 13 requirements and 4 of 13 answered. Do not hand it out until the J-03 retake is done.
 2. **Wording on screen:** the RFP help text says "reader agent"; Traceability shows "retrieval score" and "(no agent answer)"; the catalog shows `SEMI_CUSTOM`. Phrase around it or ask the owners to change it.
-3. **The demo is mutable:** every live action changes the data. Reset before each rehearsal and before the real session. **Applying the addendum (step 13) changes the data for good:** baseline 2, 349 requirements, REQ-0001-0887 returned, two new assignments, and there is no undo. Do it last, then `reset-demo.cmd`. Section 1 numbers no longer hold until you reset.
+3. **The demo is mutable:** every live action changes the data. Reset before each rehearsal and before the real session. **Applying the addendum (step 13) changes the data for good:** baseline 2, 314 requirements, REQ-0001-0885 returned, two new assignments, and there is no undo. Do it last, then `reset-demo.cmd`. Section 1 numbers no longer hold until you reset.
 4. **The flags are real:** the deviation check flags continuous current against a placeholder standard; say so. Changing participation triggers a new dispatch, so talk about it and do not do it live.
 5. **Not verified yet:** the live Accept, answer and validate clicks; Traceability timing; Excel behaviour; the from-scratch upload path. They are in the dry run for that reason.
 6. **After a pull:** a stale API breaks Traceability. Restart the API and reseed (`reset-demo.cmd`) before every rehearsal.
 7. **Open tasks that touch the demo:** J-03 retake (screenshots, items 2 and 5-9), P-05 golden list review.
 8. **The addendum is illustrative:** `rfp_syracuse_addendum_1.pdf` was written for the demo and is not a customer document. Say so to the audience (its first lines say so too). Never present it as the real Syracuse addendum.
-9. **Changes limits to know:** REQ-0001-0039 and REQ-0001-0332 are sub-requirements, so Traceability lists them under their groups with the addendum's page and lines but no file name and no highlight. Show REQ-0001-0977 there instead. The compliance matrix and the response outline also give a change document's page without naming it. Only this addendum can be read offline; any other file needs a live model.
+9. **Changes limits to know:** REQ-0001-0046 and REQ-0001-0330 are sub-requirements, so Traceability lists them under their groups with the addendum's page and lines but no file name and no highlight. Show REQ-0001-0980 there instead. The compliance matrix and the response outline also give a change document's page without naming it. Only this addendum can be read offline; any other file needs a live model.

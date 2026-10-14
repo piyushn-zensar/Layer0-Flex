@@ -41,7 +41,7 @@ const chapter: TourChapter = {
       id: "decisions-evidence", route: ROUTE, target: "dec-evidence-counts", placement: "bottom",
       title: "Evidence: counts by category",
       body: [
-        "The Evidence card starts with the number of current requirements and how many fall in each category, for the Syracuse RFP: **348 requirements · technical 146, submission 87, compliance 66, legal 18, commercial 11, staffing 11, schedule 9**. Only technical and compliance items are product items; the rest will be answered by the bid desk.",
+        "The Evidence card starts with the number of current requirements and how many fall in each category, for the Syracuse RFP: **312 requirements · technical 148, compliance 66, submission 61, legal 12, schedule 9, commercial 8, staffing 8**. Only technical and compliance items are product items; the rest will be answered by the bid desk.",
         "The counts are computed from the live requirement list, so a split, a merge or a rejection on the Requirements page changes them at once; matches of items that no longer exist are not counted.",
       ],
     },
@@ -49,7 +49,7 @@ const chapter: TourChapter = {
       id: "decisions-offering-mix", route: ROUTE, target: "dec-offering-mix", placement: "bottom",
       title: "Offering mix",
       body: [
-        "One badge per offering type with the number of matches: for the demo **ETO 97, CTO 5, Semi-custom 1, NONE 245**. NONE is the bid desk (not a product item). A mix dominated by ETO, as here, means engineering effort rather than catalog quoting; the summary below counts ETO and Semi-custom as *partly* satisfied until a unit confirms.",
+        "One badge per offering type with the number of matches: for the demo **ETO 85, CTO 11, Semi-custom 3, NONE 213**. NONE is the bid desk (not a product item). A mix dominated by ETO, as here, means engineering effort rather than catalog quoting; the summary below counts ETO and Semi-custom as *partly* satisfied until a unit confirms.",
         "Before matching this line is empty: run **Match products** on the Traceability page first.",
       ],
     },
@@ -57,7 +57,7 @@ const chapter: TourChapter = {
       id: "decisions-suggested-units", route: ROUTE, target: "dec-suggested-units", placement: "bottom",
       title: "Suggested units",
       body: [
-        "Each business unit that appears in at least one match, with the number of requirements it is matched to: **CROWN (98) EP2 (5)** for the Syracuse switchgear RFP. A requirement with several units counts once for each. Rejected matches do not count.",
+        "Each business unit that appears in at least one match, with the number of requirements it is matched to: **CROWN (93) EP2 (6)** for the Syracuse switchgear RFP. A requirement with several units counts once for each. Rejected matches do not count.",
         "These suggestions pre-tick the participation checkboxes below. They are the matcher's view; the participation decision is yours.",
       ],
     },
@@ -136,7 +136,7 @@ const chapter: TourChapter = {
       title: "Low-voltage solver",
       body: [
         "For low-voltage distribution RFPs (layers 3 and 4) the solver does the power arithmetic with every step and its reference: usable UPS capacity after continuous-load derating, real power at the assumed power factor, capacity per rack, derated capacity per branch circuit, circuits per rack; it warns when branch circuits fall short of the UPS or give no A/B redundancy.",
-        "Refusing is a first-class result. For Syracuse it is **not solvable**: \"Medium-voltage equipment (`REQ-0001-0887`) needs protection coordination and an arc-flash study, not arithmetic.\" It also refuses when the inputs (UPS kVA, rack count) are not stated: it never assumes values. The hyperscale sample opportunity shows a solved case.",
+        "Refusing is a first-class result. For Syracuse it is **not solvable**: \"Medium-voltage equipment (`REQ-0001-0885`) needs protection coordination and an arc-flash study, not arithmetic.\" It also refuses when the inputs (UPS kVA, rack count) are not stated: it never assumes values.",
       ],
       fallback: "The solver appears once the requirements are frozen.",
     },
@@ -162,7 +162,7 @@ const chapter: TourChapter = {
       title: "Workload across opportunities",
       body: [
         "Per unit: open work on this opportunity (what dispatch would create, or has created), open work elsewhere with the competing opportunity IDs, the total and the placeholder capacity (Crown 150, EP² 60, Anord Mardix 100, FPM 100, JetCool 80, Cloud 80, bid desk 400). An *over* badge appears when the total exceeds capacity, and the criterion *Capacity and portfolio conflicts* is then not met.",
-        "Open work means assigned, submitted or returned items; validated and withdrawn ones are done. The demo shows BID 251/400 (also in OPP-0002), CROWN 97/150, EP2 5/60.",
+        "Open work means assigned, submitted or returned items; validated and withdrawn ones are done. The demo shows BID 213/400, CROWN 92/150, EP2 6/60.",
       ],
       fallback: "The workload table appears once the requirements are frozen.",
     },
@@ -226,7 +226,7 @@ const chapter: TourChapter = {
       title: "How the requirements are satisfied",
       body: [
         "Per category, how many requirements are **fully**, **partly** or **not** satisfied, and how many go to the **bid desk**. Where a unit has answered, its compliance wins (met = fully, partial = partly, not met or exception = not; with several units the weakest answer counts). Otherwise the level is estimated from the match: CTO = fully, Semi-custom and ETO = partly, no match = not, no units = bid desk.",
-        "For the demo: technical 7 fully, 95 partly, 44 bid desk; compliance 1 partly, 65 bid desk; every other category entirely bid desk. **Coverage** is the share of product requirements fully or partly satisfied: 100% of 92 here, against a placeholder threshold of 80%.",
+        "For the demo: technical 13 fully, 86 partly, 49 bid desk; every other category entirely bid desk. **Coverage** is the share of product requirements fully or partly satisfied: 100% of 99 here, against a placeholder threshold of 80%.",
       ],
       fallback: "The table appears once the requirements are frozen.",
     },
@@ -295,7 +295,7 @@ const chapter: TourChapter = {
       id: "decisions-dispatch", route: ROUTE, target: "dec-dispatch", placement: "top",
       title: "3. Send the work to the units",
       body: [
-        "Dispatch creates the work packages: for every frozen approved requirement, **one assignment per participating unit it is matched to** (with the unit's first product as the reference), or, when none of its units takes part or it is not a product item, one assignment for the **bid desk**. Each unit's assignments are owned by its design engineer; the bid desk's by the Bid Manager. For the demo that was 348 assignments: Crown 91, EP² 1, bid desk 256.",
+        "Dispatch creates the work packages: for every frozen approved requirement, **one assignment per participating unit it is matched to** (with the unit's first product as the reference), or, when none of its units takes part or it is not a product item, one assignment for the **bid desk**. Each unit's assignments are owned by its design engineer; the bid desk's by the Bid Manager. For the demo that was 312 assignments: Crown 93, EP² 6, bid desk 213.",
         "It is repeatable: after changing matches or participation, dispatch again. New work is sent, work that no longer fits is **withdrawn**, and withdrawn work that fits again is **reopened** with its earlier answer kept for reference. Existing assignments are never duplicated.",
         "Preconditions: frozen requirements and a latest decision of *go*. The opportunity status becomes *dispatched*.",
       ],
@@ -316,7 +316,7 @@ const chapter: TourChapter = {
       id: "decisions-dispatch-result", route: ROUTE, target: "dec-dispatch", placement: "top",
       title: "What dispatch produced",
       body: [
-        "The toast reads **\"N new assignment(s) sent to the units.\"** (348 on a fresh Syracuse opportunity) or, when nothing changed since the last dispatch, *\"Nothing new to send: every unit already has its work.\"* The status badge shows *dispatched*; on the Traceability page the Response column of every row now shows its assignments as *assigned*, and the toolbar counts them per unit (CROWN 0/91 validated, EP2 0/1, BID 0/256).",
+        "The toast reads **\"N new assignment(s) sent to the units.\"** (312 on a fresh Syracuse opportunity) or, when nothing changed since the last dispatch, *\"Nothing new to send: every unit already has its work.\"* The status badge shows *dispatched*; on the Traceability page the Response column of every row now shows its assignments as *assigned*, and the toolbar counts them per unit (CROWN 0/91 validated, EP2 0/1, BID 0/256).",
         "Next: the units' **Inbox** (chapter 8), where each unit's product manager or design engineer answers their items with a compliance level and text, and the bid manager validates or returns them. Those answers flow back into pane 3 here and into the summary's *fully / partly / not* counts.",
       ],
       fallback: "Dispatch has not run yet on this opportunity.",

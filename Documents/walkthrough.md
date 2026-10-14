@@ -42,8 +42,8 @@ The screens follow this order of work. The Screen column gives the step in the b
 *Figure 1. The Opportunities page.*
 
 - The top bar offers **Opportunities**, **My work**, **Product catalog** and **Knowledge base**, a **New opportunity** button and, on the right, the signed-in person's name with a **Switch** link.
-- Each row shows the opportunity ID, title, customer, status and number of requirements (348 in the example).
-- **Unit responses (validated / total)** shows, for each unit and the bid desk, how many responses are validated out of those assigned: Crown Technical Systems 1 of 96, Electrical Power Products 0 of 7 and the bid desk 0 of 245 (shown on screen as CROWN 1/96, EP2 0/7 and BID 0/245). A bar beside each count shows validated work (green) and work awaiting validation (blue). Each unit code opens that unit's work package under **My work**.
+- Each row shows the opportunity ID, title, customer, status and number of requirements (312 in the example).
+- **Unit responses (validated / total)** shows, for each unit and the bid desk, how many responses are validated out of those assigned: Crown Technical Systems 1 of 93, Electrical Power Products 0 of 6 and the bid desk 0 of 213 (shown on screen as CROWN 1/93, EP2 0/6 and BID 0/213). A bar beside each count shows validated work (green) and work awaiting validation (blue). Each unit code opens that unit's work package under **My work**.
 - **Open** enters the opportunity at its Traceability step.
 
 ## 5. New Opportunity
@@ -78,7 +78,7 @@ The form asks for a **title**, the **customer** and the **customer type**. The p
 
 *Figure 4. The Requirements step, listing the requirements with source and exact quotation.*
 
-- A note states that Baseline 1 was frozen by the Bid Manager with 348 items. Later changes are handled as a difference from this baseline.
+- A note states that Baseline 1 was frozen by the Bid Manager with 312 items. Later changes are handled as a difference from this baseline.
 - Filters show the requirements by review state (To review, Unanchored, Approved, Rejected, Duplicates, Ungrouped / split / merged, All), each with a count, and a search box finds an ID or text.
 - Each requirement has an **ID** (for example REQ-0001-0001), a **category** (one of seven: technical, compliance, commercial, schedule, submission, legal or staffing), a **source** (page and lines of the RFP) and a **status**. All 348 requirements in the example are "approved".
 - The requirement is stated in plain language, with the **exact quotation** from the RFP beneath it.
@@ -106,7 +106,7 @@ This capability is presented through the Traceability step, which brings togethe
 **How it works**
 - Selecting a requirement in any panel selects it in all three panels. The RFP opens on the page of the requirement, with its text highlighted more strongly than the others.
 - Each panel scrolls on its own.
-- The line above the panels shows each unit's validated responses (for example, 1 of 96 for Crown Technical Systems).
+- The line above the panels shows each unit's validated responses (for example, 1 of 93 for Crown Technical Systems).
 - **Match products** proposes a business unit and product for each requirement.
 - A proposed match can be accepted, rejected or changed.
 - **Change** lets a person pick the unit and product themselves. A requirement can be assigned to more than one business unit when the work needs it: **Add unit** adds a further unit, and **Remove** takes one away. The first unit is the main unit, and each unit receives its part of the work when the work packages are dispatched (section 9).
@@ -131,7 +131,7 @@ This capability is presented through the Traceability step, which brings togethe
 
 *Figure 6. The Bid decision step.*
 
-1. **Evidence.** The number of requirements by category (348 in total), the offering mix (ETO 96, CTO 5, Semi-custom 2, NONE 245, where NONE means requirements that are not product items) and the suggested units, each with a count (Crown Technical Systems 96, Electrical Power Products 7). The page states that the requirements must be frozen on the Requirements page before go or no-go is decided.
+1. **Evidence.** The number of requirements by category (312 in total), the offering mix (ETO 85, CTO 11, Semi-custom 3, NONE 213, where NONE means requirements that are not product items) and the suggested units, each with a count (Crown Technical Systems 93, Electrical Power Products 6). The page states that the requirements must be frozen on the Requirements page before go or no-go is decided.
 2. **Engineering checks.** Shown once the requirements are frozen. They are evidence for the bid manager, never a decision. The rules are illustrative, ported from an earlier version of Layer 0, and **need confirmation** with SpinCo engineering. They are applied to the frozen requirements and cover four things:
    - **Scope:** which of six layers the RFP covers (Grid Interface; Utility / Facility Electrical; Power Distribution; Rack and Board Power; Thermal Management; Compute and Integration). Each layer is shown as in scope or not in scope, with its number of hits against a threshold of 3 and the requirements cited. In the example, two layers are in scope: Utility / Facility Electrical and Power Distribution.
    - **Rules R-001 to R-004:** each shown as pass, warn or not applicable. They cover 800 VDC compatibility, liquid cooling at high rack density, the redundancy class and any dependency on EPC Power, whose acquisition has not closed. In the example, R-003 warns because the redundancy class is not stated.
@@ -170,7 +170,7 @@ Every person signs in on the login page with a username and password. The demons
 *Figure 9. The Final response step.*
 
 - The page explains that every requirement must be answered by its business unit and validated before the response is complete.
-- A progress line shows the requirements answered out of the total (1 / 348 in the example) and how many still need an answer (347).
+- A progress line shows the requirements answered out of the total (1 / 312 in the example) and how many still need an answer (311).
 - Each requirement shows its ID and source, the responding unit, its answer, the product reference and the response status. The ID links to the requirement in Traceability.
 - Each requirement has an overall state. In the example, requirements with a validated response are "answered", and those whose responses are assigned or submitted are "pending".
 - **Download compliance matrix (Excel)** exports a workbook with two sheets: **Compliance matrix**, for the customer, with one row per requirement in RFP order (sub-requirements listed under their group, each with its RFP reference), the compliance in customer terms and only validated answers; and **Tracking**, for internal use, with one row per unit answer. **CSV** exports the tracking table as a CSV file. A requirement taken from a change document gives that document's name with its page and lines.

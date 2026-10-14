@@ -35,7 +35,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       fallback: "The summary line reads 'answered / total requirements answered' and, in red, how many still need an answer. It is not shown until the baseline is frozen.",
       body: [
-        "**answered / total**: the total is the number of requirements in the frozen baseline (348 for the Syracuse RFP); answered counts the rows whose assignments are all validated. In the seeded demo that is **1 / 348**, with **347 still need an answer** in red. When nothing is left, the line turns green: *Every requirement is answered.*",
+        "**answered / total**: the total is the number of requirements in the frozen baseline (312 for the Syracuse RFP); answered counts the rows whose assignments are all validated. In the seeded demo that is **1 / 312**, with **311 still need an answer** in red. When nothing is left, the line turns green: *Every requirement is answered.*",
         "The same numbers feed the opportunity header, the portfolio and the Response outline, so they always agree. The count changes only through the Inbox (a unit submits, the Bid Manager validates) or through Changes (an addendum returns answers for review).",
       ],
     },
@@ -169,7 +169,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       fallback: "The summary line shows the Draft badge and 'answered / total requirements answered and validated'.",
       body: [
-        "The **Draft** badge and the line *answered / total requirements answered and validated (N validated answers)* set the scope: the agent sees only validated answers (one in the seeded demo, on REQ-0001-0887), nothing from answers still in review, and nothing it invents.",
+        "The **Draft** badge and the line *answered / total requirements answered and validated (N validated answers)* set the scope: the agent sees only validated answers (one in the seeded demo, on REQ-0001-0885), nothing from answers still in review, and nothing it invents.",
         "How it works: one model call per chapter that has validated answers, plus one for the executive summary. The prompt holds the numbered answers with the RFP's own wording and two past responses per unit for tone only. The answer must cite the numbers each paragraph rests on; a paragraph without a valid citation is **dropped** by a guard, never shown. No requirement ID is in the prompt, so the frozen answer stays valid when IDs change.",
         "What to do here: read each chapter, follow the citations into Traceability, use *To add or confirm* as the to-do list, then download the Markdown and edit it in the proposal template. Nothing on this page writes to the server.",
       ],
@@ -195,7 +195,7 @@ const chapter: TourChapter = {
       skipIf: missing("outline-drafted"),
       fallback: "A drafted chapter shows its paragraphs followed by the requirement IDs they cite.",
       body: [
-        "Each paragraph ends with its sources in brackets, e.g. **[REQ-0001-0887]**: the requirements whose validated answers the paragraph rests on, as links into Traceability. In the demo the technical chapter says the proposer offers a two-section 15 kV arc-resistant metal-clad lineup, because that is what Crown Technical Systems answered and the Bid Manager validated.",
+        "Each paragraph ends with its sources in brackets, e.g. **[REQ-0001-0885]**: the requirements whose validated answers the paragraph rests on, as links into Traceability. In the demo the technical chapter says the proposer offers a two-section 15 kV arc-resistant metal-clad lineup, because that is what Crown Technical Systems answered and the Bid Manager validated.",
         "Citations are the guard: the agent answers with answer numbers, the service maps them back to requirement IDs, and a paragraph whose numbers are missing or out of range is dropped (the count of dropped paragraphs appears in the note under the chapter). A citation you cannot verify in Traceability is a reason to rewrite the paragraph, not to trust it.",
       ],
     },
@@ -260,7 +260,7 @@ const chapter: TourChapter = {
       onEnter: openDetails("outline-answers"),
       fallback: "'Validated answers (N)' expands to the table of answers the chapter was drafted from.",
       body: [
-        "The material behind the draft: one row per validated answer with the **Requirement** ID and its source, the **Unit** and the product it named, the **Compliance** badge and the **Answer** text as the unit wrote it. In the demo: REQ-0001-0887 (p. 55, lines 7-65), Crown Technical Systems, Comply, *Two-section 15 kV arc-resistant metal-clad lineup offered.*",
+        "The material behind the draft: one row per validated answer with the **Requirement** ID and its source, the **Unit** and the product it named, the **Compliance** badge and the **Answer** text as the unit wrote it. In the demo: REQ-0001-0885 (p. 55, lines 16-62), Crown Technical Systems, Comply, *Two-section 15 kV arc-resistant metal-clad lineup offered.*",
         "The last column, **Knowledge base**, sends a good answer to the house knowledge base so later bids can reuse it; the Knowledge chapter shows that flow.",
       ],
     },

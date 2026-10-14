@@ -38,14 +38,8 @@ SAMPLES = {
         "path": "RFP-2023-20-Switchgear-Procurement-Final.pdf", "filename": "RFP-2023-20-Switchgear-Procurement-Final.pdf",
         "kind": "rfp", "pages": 101,
         "description": "Syracuse Regional Airport Authority, RFP 2023-20 Switchgear Procurement: the public RFP behind "
-                       "the demo bid. Read offline from frozen answers: about 810 line items grouped into "
-                       "about 350 requirements, each anchored to its page and lines."},
-    "hyperscale_rfp": {
-        "path": "samples/rfp_hyperscale_campus.pdf", "filename": "rfp_hyperscale_campus.pdf",
-        "kind": "rfp", "pages": 1,
-        "description": "Fictional one-page RFP for a 48 MW hyperscale AI training campus (800 VDC distribution, "
-                       "liquid cooling): the multi-unit case. It has no frozen reader answers, so reading it needs "
-                       "the model connection."},
+                       "the demo bid. Read offline from frozen answers: about 820 line items grouped into "
+                       "about 310 requirements, each anchored to its page and lines."},
     "syracuse_addendum_1": {
         "path": "samples/rfp_syracuse_addendum_1.pdf", "filename": "rfp_syracuse_addendum_1.pdf",
         "kind": "change", "pages": 1,

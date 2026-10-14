@@ -54,7 +54,7 @@ const chapter: TourChapter = {
       route: "/portfolio",
       target: `portfolio-reqs-${DEMO_OPP}`,
       placement: "left",
-      fallback: "The Requirements column shows 348 for the Syracuse demo and 10 for the hyperscale sample.",
+      fallback: "The Requirements column shows 312 for the Syracuse demo.",
       body: [
         "This number is the count of **current** requirements: groups and stand-alone items the workflow works on. Sub-requirements inside a group, rejected items, duplicates and anything replaced by a split or a merge are not counted.",
         "For the Syracuse RFP it reads **312**: the reader agent proposed 818 line items from 101 pages, 27 were marked as duplicates, 12 wait in the exception queue and the grouping agent folded related items into 161 groups, leaving 312 requirements in the register. Before the reader agent has run the column shows 0.",
@@ -70,8 +70,8 @@ const chapter: TourChapter = {
       fallback: "The column shows one line per business unit with a two-segment progress bar; \"not dispatched\" when the opportunity has no work packages yet.",
       body: [
         "After dispatch every approved requirement is assigned to the business unit(s) the matching step chose, or to the **BID** bid desk when no unit matched (commercial, legal and submission items the bid manager answers). Each line here is one unit: its code links to that unit's inbox, then **validated / total**, then a bar.",
-        "The bar has two segments: green for answers the bid manager has **validated**, blue for answers **awaiting validation** (submitted but not yet checked). The rest of the bar is work not answered yet. Hover a line for the exact numbers, e.g. \"1 validated, 1 awaiting validation, 94 not answered\" for Crown on the Syracuse demo.",
-        "Reading the demo: Syracuse went to **BID** (245 items), **CROWN** (98) and **EP2** (5). A unit that shows *not dispatched* has no assignments yet, either because the opportunity has not reached dispatch or because the unit did not take part in this bid.",
+        "The bar has two segments: green for answers the bid manager has **validated**, blue for answers **awaiting validation** (submitted but not yet checked). The rest of the bar is work not answered yet. Hover a line for the exact numbers, e.g. \"1 validated, 1 awaiting validation, 91 not answered\" for Crown on the Syracuse demo.",
+        "Reading the demo: Syracuse went to **BID** (213 items), **CROWN** (93) and **EP2** (6). A unit that shows *not dispatched* has no assignments yet, either because the opportunity has not reached dispatch or because the unit did not take part in this bid.",
         "Returned answers (the bid manager sent them back with a note) count as not answered until the unit submits again, so the bar is an honest view of what is still open.",
       ],
     },
@@ -84,21 +84,8 @@ const chapter: TourChapter = {
       fallback: "OPP-0001 is the Syracuse Regional Airport Authority RFP 2023-20, Switchgear Procurement.",
       body: [
         "The first seeded opportunity is a real public RFP: **Syracuse Regional Airport Authority, RFP 2023-20 Switchgear Procurement**, 101 pages, customer type *public sector*. It asks for a 15 kV two-section arc-resistant metal-clad switchgear lineup with relays, controls and accessories.",
-        "The seed ran the same services a person would use: the RFP was read, 348 requirements were approved and frozen, matching proposed Crown Technical Systems (switchgear, relays and controls) and EP² (auxiliary power), the bid decision is **go**, and the work was dispatched. Two sample answers were attached to Crown's rows, one of them validated, so you can see every state at once.",
+        "The seed ran the same services a person would use: the RFP was read, 312 requirements entered the register and were frozen, matching proposed Crown Technical Systems (switchgear, relays and controls) and EP² (auxiliary power), the bid decision is **go**, and the work was dispatched. Two sample answers were attached to Crown's rows, one of them validated, so you can see every state at once.",
         "Everything the agents produced for this RFP comes from **frozen answers**: the model's replies were recorded once and are replayed, so the demo is repeatable offline and identical on every machine. The walkthrough will create a copy of this opportunity in chapter 4 so you can go through the steps yourself.",
-      ],
-    },
-    {
-      id: "portfolio-hyperscale",
-      title: "OPP-0002: the multi-unit sample",
-      route: "/portfolio",
-      target: "portfolio-row-OPP-0002",
-      placement: "bottom",
-      fallback: "OPP-0002 is a fictional one-page RFP for an AI training campus; it shows the multi-unit case.",
-      body: [
-        "The second row, **AI training campus, Phase 1**, is a fictional one-page RFP for a 48 MW hyperscale site (800 VDC distribution, liquid cooling). Its customer is marked *(fictional)* and its type is *hyperscaler*.",
-        "It exists to show the multi-unit case: ten requirements were matched across **Anord Mardix** (power distribution), **JetCool** (liquid cooling), **Flex Power Modules** (rack power) and the bid desk, so one requirement can carry several work-package rows and the hand-off per unit differs.",
-        "Unlike Syracuse it has no frozen reader answers, so uploading it to a new opportunity and reading it would need the model connection. In the walkthrough we only look at it.",
       ],
     },
     {

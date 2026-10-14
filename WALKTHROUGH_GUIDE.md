@@ -12,12 +12,12 @@ An in-app, step-by-step tour of every screen of Layer 0. It dims the page, highl
 
 ## 2. Chapters
 
-219 steps in 12 chapters (the catalogue is `CHAPTERS` / `STEPS` in `web/tour/index.ts`). The step id prefix is the chapter id, except where noted.
+218 steps in 12 chapters (the catalogue is `CHAPTERS` / `STEPS` in `web/tour/index.ts`). The step id prefix is the chapter id, except where noted.
 
 | # | Chapter id | Title | Steps | Starts on |
 |---|---|---|---|---|
 | 1 | welcome | Welcome and overview | 5 | centred, any page |
-| 2 | portfolio | The Opportunities screen | 9 | /portfolio |
+| 2 | portfolio | The Opportunities screen | 8 | /portfolio |
 | 3 | navigation | Navigation, roles and the workflow stepper | 12 | /portfolio, then the opportunity |
 | 4 | intake | New opportunity and the RFP | 16 | /opportunities/new |
 | 5 | requirements | Requirements review and freezing | 34 | /opportunities/{opp}/requirements |
@@ -29,7 +29,7 @@ An in-app, step-by-step tour of every screen of Layer 0. It dims the page, highl
 | 11 | changes | Addenda and change handling | 22 | /opportunities/OPP-0001/changes |
 | 12 | recap | Recap and completion | 6 | /opportunities/{opp} |
 
-Total: 5+9+12+16+34+29+32+16+23+15+22+6 = 219.
+Total: 5+8+12+16+34+29+32+16+23+15+22+6 = 218.
 
 ## 3. Screens covered
 
@@ -106,7 +106,7 @@ Exact conditions are in the chapter files; the table summarises them. Reject on 
 | `GET /api/samples` | Lists syracuse_rfp (101 pages), hyperscale_rfp (1 page) and syracuse_addendum_1 (1 page) without paths | three entries with name, filename, kind, pages, description |
 | `POST /api/opportunities/{id}/documents/from-sample {"name":"syracuse_rfp"}` | Attaches the Syracuse RFP as the main document through the same helper as an upload; reading runs in the background | 101 pages, ingested in a few seconds from the cached layout; 409 on unknown sample, wrong kind or a second main RFP |
 | `POST .../requirements/extract` (button Run the reader agent) | Reader and grouping agents in mock mode replay frozen answers | 818 line items, 27 duplicates, 12 exceptions, 161 groups, 312 requirements, status review |
-| `POST /api/opportunities/OPP-0001/changes/from-sample {"name":"syracuse_addendum_1"}` | Reads the addendum against the frozen baseline like a file upload | change set in review: modified, added and removed items; after apply: Baseline 2, added REQ-0001-0977 and -0978, modified REQ-0001-0039 and -0332, removed REQ-0001-0130 |
+| `POST /api/opportunities/OPP-0001/changes/from-sample {"name":"syracuse_addendum_1"}` | Reads the addendum against the frozen baseline like a file upload | change set in review: modified, added and removed items; after apply: Baseline 2, added REQ-0001-0980 and -0981, modified REQ-0001-0046 and -0330, removed REQ-0001-0125 |
 | Intake example | Fills title, customer, customer type | "Walkthrough: Syracuse switchgear" |
 | Requirements examples | Edit text; add page 55 lines 52-53; paste form (page 55 line 37) | green "REQ-... added (p. 55, lines 52-53)"; the pasted example must be rejected again if added |
 | Decisions examples | Participation and go/no-go rationale and judgements | fields filled; Record enabled |
@@ -171,10 +171,9 @@ Opportunity choice: Create your own in chapter 4, or choose "Use the demo opport
 | /portfolio | Table | What an opportunity is; read-only overview | Read | Spotlight on table | portfolio-intro |
 | /portfolio | ID, Title, Customer columns | Id allocation and links | Read | Spotlight on ID column | portfolio-columns |
 | /portfolio | Status chip | Forward-only lifecycle, tones | Read | Spotlight on the dispatched chip | portfolio-status |
-| /portfolio | Requirements column | Count of current requirements (348) | Read | Spotlight on the count | portfolio-requirements |
+| /portfolio | Requirements column | Count of current requirements (312) | Read | Spotlight on the count | portfolio-requirements |
 | /portfolio | Unit progress bars and links | validated/total, BID desk, inbox links | Read | Spotlight on bars | portfolio-units |
 | /portfolio | Row OPP-0001 | The Syracuse demo | Read | Spotlight on row | portfolio-syracuse |
-| /portfolio | Row OPP-0002 | Fictional hyperscale sample | Read | Spotlight on row | portfolio-hyperscale |
 | /portfolio | Open button | Where Open and the ID lead | Read | Spotlight on Open | portfolio-open |
 | /portfolio | New opportunity button | Hand-over to intake | Read | Spotlight on button | portfolio-new |
 | Top bar | Brand link | Bar on every page, shown once signed in | Read | Spotlight on mark | navigation-brand |
@@ -255,7 +254,7 @@ Opportunity choice: Create your own in chapter 4, or choose "Use the demo opport
 | Traceability | Offering type legend | CTO, Semi-custom, ETO | Read | Spotlight on legend | trace-legend |
 | Traceability | Toolbar unit responses | validated/total badges | Read | Spotlight on toolbar | trace-unit-responses |
 | Traceability | Match products (explain) | One call per page, bid-desk rule | Read | Spotlight on button | trace-match-explain |
-| Traceability | Match products (run) | Run the matcher | Press button | Toast "348 requirement(s) matched" | trace-match-run |
+| Traceability | Match products (run) | Run the matcher | Press button | Toast "312 requirement(s) matched" | trace-match-run |
 | Traceability | Match result | Statuses, methods, counts | Read | Spotlight on pane 3 | trace-match-result |
 | Traceability | Unit, product, offering badge | Unit from product | Read | Spotlight on unit | trace-sel-unit |
 | Traceability | Rationale and method | Agent citation | Read | Spotlight on rationale | trace-sel-rationale |
@@ -317,7 +316,7 @@ Opportunity choice: Create your own in chapter 4, or choose "Use the demo opport
 | /inbox/CROWN | Validated result | Effects and audit | Read | Spotlight on links | inbox-validated |
 | /inbox/CROWN | Hand-off JSON | Routes A, B, C | Read | Spotlight on links | inbox-handoff |
 | Final response | Introduction | Coverage check, answered rule | Read | Centred bubble | consolidation-intro |
-| Final response | Answered count | answered / total (1 / 348 in the demo) | Read | Spotlight on summary | consolidation-count |
+| Final response | Answered count | answered / total (1 / 312 in the demo) | Read | Spotlight on summary | consolidation-count |
 | Final response | Needs an answer panel | Blockers by reason | Read | Groups with links | consolidation-blockers |
 | Final response | All / Open filter | Filter chips with counts | Press Open | Only open rows | consolidation-filter |
 | Final response | Coverage table | One row per requirement | Read | Spotlight on table | consolidation-table |

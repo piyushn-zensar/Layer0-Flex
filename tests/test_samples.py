@@ -13,6 +13,7 @@ import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
 from conftest import signed_in  # noqa: E402
 
+from app.core import config  # noqa: E402
 from app.main import app  # noqa: E402
 from app.modules.opportunities import service as opportunities  # noqa: E402
 from scripts import seed_demo  # noqa: E402
@@ -26,7 +27,7 @@ def client() -> TestClient:
 def test_samples_are_listed_without_paths(client):
     listed = client.get("/api/samples").json()["samples"]
     by_name = {s["name"]: s for s in listed}
-    assert set(by_name) == {"syracuse_rfp", "hyperscale_rfp", "syracuse_addendum_1"} == set(opportunities.SAMPLES)
+    assert set(by_name) == {"syracuse_rfp", "syracuse_addendum_1"} == set(opportunities.SAMPLES)  # C-11: no off-domain sample
     assert by_name["syracuse_rfp"]["pages"] == 101 and by_name["syracuse_rfp"]["kind"] == "rfp"
     assert by_name["syracuse_addendum_1"]["kind"] == "change"
     for s in listed:
@@ -50,7 +51,8 @@ def test_sample_rfp_is_read_and_extracted_from_frozen_answers(client):
     again = client.post(f"/api/opportunities/{opp}/documents/from-sample", json={"name": "syracuse_rfp"}).json()
     assert again["id"] == doc["id"] and again["existing"] is True
     # a second main RFP is refused like an upload would be
-    r = client.post(f"/api/opportunities/{opp}/documents/from-sample", json={"name": "hyperscale_rfp"})
+    other = (config.DATA / "RFP/samples/rfp_syracuse_addendum_1.pdf").read_bytes()
+    r = client.post(f"/api/opportunities/{opp}/documents", files={"file": ("second.pdf", other)}, data={"role": "main"})
     assert r.status_code == 409 and "already has a main RFP" in r.json()["detail"]
 
     read = client.post(f"/api/opportunities/{opp}/requirements/extract")

@@ -22,10 +22,10 @@ from app.modules.changes import service as changes  # noqa: E402
 from app.modules.decisions import service as decisions  # noqa: E402
 from app.modules.requirements import service as requirements  # noqa: E402
 from scripts import seed_demo  # noqa: E402
+from scripts.txt_to_pdf import convert  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 RFP = ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf"
-OTHER_PDF = ROOT / "data/RFP/samples/rfp_hyperscale_campus.pdf"  # no frozen answer from the change agent
 QUOTE = "Switchgear shall be Arc-resistant Type 2B."
 
 
@@ -131,12 +131,14 @@ def test_capacity_criterion_without_unit_work():
     assert ok and detail == "Open work vs capacity: no unit work yet. Capacity is a placeholder."
 
 
-def test_offline_wording_for_missing_frozen_answers(client, seeded):
+def test_offline_wording_for_missing_frozen_answers(client, seeded, tmp_path):
     """QA-01 / QA-15: when the frozen answers do not cover a call, the page says so in the audience's words."""
     # a change document with no frozen answer is refused, and no change set is created
+    (tmp_path / "unfrozen.txt").write_text("ADDENDUM TWO\nReplace the copper bus with aluminium.", "utf-8")
+    other = convert(tmp_path / "unfrozen.txt")
     r = client.post(f"/api/opportunities/{seeded}/changes",
-                    files={"file": (OTHER_PDF.name, OTHER_PDF.read_bytes(), "application/pdf")})
-    assert r.status_code == 409 and r.json()["detail"] == str(changes._unavailable(OTHER_PDF.name))
+                    files={"file": (other.name, other.read_bytes(), "application/pdf")})
+    assert r.status_code == 409 and r.json()["detail"] == str(changes._unavailable(other.name))
     assert "offline demo" in r.json()["detail"] and "LLM_PROVIDER" not in r.json()["detail"]
     assert client.get(f"/api/opportunities/{seeded}/changes").json()["sets"] == []
     # validating one more answer changes the chapter's prompt: the outline keeps the raw answers with a plain note

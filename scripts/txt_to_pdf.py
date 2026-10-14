@@ -1,6 +1,6 @@
 """Turn a plain-text sample RFP into a PDF with a real text layer, so it runs through the normal reader flow (task A-08).
 
-    .venv\\Scripts\\python -m scripts.txt_to_pdf data/RFP/samples/rfp_hyperscale_campus.txt
+    .venv\\Scripts\\python -m scripts.txt_to_pdf data/RFP/samples/rfp_syracuse_addendum_1.txt
 
 Writes the PDF next to the text file. Deterministic: the same text gives the same bytes (no dates, fixed file ID),
 so the document hash, line numbers and highlights stay the same on every machine.

@@ -101,7 +101,7 @@ const chapter: TourChapter = {
         "The line under the title counts the **active requirements** (not rejected, not replaced by a split or merge, duplicates left out) and "
         + "reminds you that related line items are grouped. On the right, **\"N still to decide\"** counts the items still *proposed*: the "
         + "**Freeze baseline** button stays disabled until that number is zero, and its tooltip says why.",
-        "Once frozen, this line changes to *\"Baseline 1 frozen by Bid Manager (348 items)\"* with a link to the Changes step, and every "
+        "Once frozen, this line changes to *\"Baseline 1 frozen by Bid Manager (312 items)\"* with a link to the Changes step, and every "
         + "editing control on the page disappears: the checkboxes, the Actions column and the \"Add a requirement\" section.",
       ],
       fallback: "On a frozen opportunity the header shows the baseline line instead (\"Baseline 1 frozen by … (N items)\").",
@@ -665,7 +665,7 @@ const chapter: TourChapter = {
       target: "req-freeze",
       placement: "bottom",
       body: [
-        "With nothing left to decide the **Freeze baseline** button is enabled. It opens a confirmation: *\"The 348 approved requirements become the baseline "
+        "With nothing left to decide the **Freeze baseline** button is enabled. It opens a confirmation: *\"The 312 approved requirements become the baseline "
         + "the units work from. Later changes to the RFP run as a delta against it.\"*, with **Cancel** and **Freeze baseline**. Freezing needs a read main RFP, "
         + "every item decided and at least one approved item; otherwise the API refuses with the reason.",
         "On confirm, every approved requirement (and the approved sub-requirements of approved groups) is stamped **baseline 1**, a `frozen` event is written, "
@@ -683,7 +683,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       onEnter: showList("all"), // the "To review" chip chosen for the approvals would show an empty table now
       body: [
-        "The header now reads **\"Baseline 1 frozen by Bid Manager (348 items)\"**: the baseline number, who froze it, and the number of top-level requirements "
+        "The header now reads **\"Baseline 1 frozen by Bid Manager (312 items)\"**: the baseline number, who froze it, and the number of top-level requirements "
         + "in it (sub-requirements count with their group). The link goes to the Changes step, where an addendum is compared with this baseline.",
         "What changed on the page: the default filter is **All**; the checkbox and Actions columns are gone, and so is the \"Add a requirement\" section. "
         + "Filters, search and History still work; the Source links still open Traceability. Every write to a requirement is now refused with "

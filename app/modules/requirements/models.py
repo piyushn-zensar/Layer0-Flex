@@ -47,6 +47,12 @@ class Requirement(Base):
             return "not found in source"
         spans = self.spans if len(self.spans or []) > 1 else [{"page": self.page, "line_start": self.line_start,
                                                                 "line_end": self.line_end}]
+        if self.kind == "group":  # a group reads as one range per page, not every member's lines
+            pages = {}
+            for s in spans:
+                lo, hi = pages.get(s["page"], (s["line_start"], s["line_end"]))
+                pages[s["page"]] = (min(lo, s["line_start"]), max(hi, s["line_end"]))
+            spans = [{"page": p, "line_start": lo, "line_end": hi} for p, (lo, hi) in pages.items()]
         return "; ".join(f"p. {s['page']}, " + (f"line {s['line_start']}" if s["line_start"] == s["line_end"]
                                                  else f"lines {s['line_start']}-{s['line_end']}") for s in spans)
 

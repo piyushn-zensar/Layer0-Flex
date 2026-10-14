@@ -53,7 +53,7 @@ const chapter: TourChapter = {
       fallback: "The bid desk inbox lists the requirements no unit matched; it is empty until an opportunity has been dispatched.",
       body: [
         "**My work** in the top bar opens `/inbox`, which looks the acting person up in `/api/people` and redirects to their unit's work package: a Crown engineer lands on `/inbox/CROWN`, the **Bid Manager** on `/inbox/BID`, the **bid desk**.",
-        "A work package is one business unit's assignments across *every* opportunity: after dispatch each approved requirement was assigned to the unit(s) the matching step chose, and to **BID** when no unit matched (commercial, submission and legal items). On the Syracuse demo the bid desk holds 245 of the 348 requirements; the Bid Manager answers those personally.",
+        "A work package is one business unit's assignments across *every* opportunity: after dispatch each approved requirement was assigned to the unit(s) the matching step chose, and to **BID** when no unit matched (commercial, submission and legal items). On the Syracuse demo the bid desk holds 213 of the 312 requirements; the Bid Manager answers those personally.",
         "This chapter uses Crown's package. Rows from several opportunities sit together, ordered by opportunity then requirement; the walkthrough highlights the first open row of **your** opportunity (the one you created, or OPP-0001 if you chose the demo), so what you answer and validate here shows up on its Final response.",
       ],
     },
@@ -63,7 +63,7 @@ const chapter: TourChapter = {
       route: "/inbox/CROWN",
       target: "inbox-table",
       placement: "top",
-      fallback: "The Crown table lists the 98 Syracuse rows assigned to Crown Technical Systems.",
+      fallback: "The Crown table lists the 93 Syracuse rows assigned to Crown Technical Systems.",
       body: [
         "You are still acting as the Bid Manager. On a unit's package the bid manager cannot type answers (only the unit's own **product manager** or **design engineer** can, the API answers 403 otherwise) but sees everything, and gets **Validate / Return** buttons on submitted rows plus a line \"n submitted answer(s) waiting for validation\".",
         "A third person, say EP²'s product manager, would see the blue banner \"You are acting as …: you can read this work package but not answer it.\" Reading is open to everyone in the PoC; writing is tied to the role.",
@@ -117,9 +117,9 @@ const chapter: TourChapter = {
       route: "/inbox/CROWN",
       target: "inbox-open-count",
       placement: "bottom",
-      fallback: "As an answering person the page says how many rows are open, e.g. \"94 open row(s)\" for Crown on the demo.",
+      fallback: "As an answering person the page says how many rows are open, e.g. \"91 open row(s)\" for Crown on the demo.",
       body: [
-        "Now the page is yours to answer: the header gains **Submit all answered rows** and the line \"n open row(s)\" counts what is *assigned* or *returned*. On the Syracuse demo Crown has 98 rows: 89 open, one already submitted and one validated by the seed.",
+        "Now the page is yours to answer: the header gains **Submit all answered rows** and the line \"n open row(s)\" counts what is *assigned* or *returned*. On the Syracuse demo Crown has 93 rows: 91 open, one already submitted and one validated by the seed.",
         "Rows keep their place in the table whatever their status, so a unit works top to bottom and the bid manager sees the same order.",
       ],
     },
@@ -134,7 +134,7 @@ const chapter: TourChapter = {
       body: [
         "**Compliance** is one of four values: **met** (the offer satisfies the line as written), **partial** (part of it, say which), **not_met** (it cannot be offered), **exception** (offered differently, to be negotiated: a deviation the response must declare). It is the field the final response is built from, so choose it honestly rather than optimistically.",
         "**Product / configuration** is pre-filled with the product the match proposed (here `CROWN-ARMV`, the arc-resistant metal-clad lineup); change it if another product or a configuration reference meets the line. **How it is met** is free text in the unit's words; it is what the bid manager validates and what the response outline quotes.",
-        "The highlighted row is the first open Crown row of your opportunity (on the demo data: `REQ-0001-0324`, \"Provide one 15kV two-section Metal Clad Switchgear lineup.\"). **Use example** fills a plausible answer for that row; edit it as you like before submitting.",
+        "The highlighted row is the first open Crown row of your opportunity (on the demo data: `REQ-0001-0368`, \"Follow NEMA SG 4 for AC high voltage circuit breakers.\"). **Use example** fills a plausible answer for that row; edit it as you like before submitting.",
       ],
       example: {
         label: "Fill an example answer",
@@ -231,7 +231,7 @@ const chapter: TourChapter = {
       body: [
         "**Validate** marks the answer as the unit's position for this bid: status **validated**, \"by Bid Manager\" under the badge. From now on it counts in the green segment of the portfolio bar, it can be sent to the knowledge base (chapter 10), the response outline quotes it, and the hand-off file carries it with `status: validated`.",
         "Validation checks substance, not form: is the compliance claim defensible against the quote, is the product right, would the customer understand the sentence. A doubtful answer is **returned** instead.",
-        "The highlighted row is the one you just sent (the first submitted Crown row of your opportunity). On the demo opportunity the seed's `REQ-0001-0889` (\"Standard catalog termination kit.\") is submitted as well; validating it too is fine.",
+        "The highlighted row is the one you just sent (the first submitted Crown row of your opportunity). On the demo opportunity the seed's `REQ-0001-0887` (\"Standard catalog termination kit.\") is submitted as well; validating it too is fine.",
       ],
       done: async (ctx) => {
         const s = await rowStatus(ctx);
