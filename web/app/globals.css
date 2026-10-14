@@ -61,11 +61,10 @@ hr { border: 0; border-top: 1px solid var(--line); margin: var(--s4) 0; }
 .topnav a:focus-visible { outline-color: #fff; }
 .topbar-right { display: flex; gap: var(--s3); align-items: center; }
 .topbar .button { min-height: 32px; padding: 5px 12px; }
-.actor { display: flex; align-items: center; gap: var(--s2); font-size: var(--fs-sm); color: var(--nav-ink); white-space: nowrap; }
-.actor select { max-width: 260px; min-height: 32px; padding: 4px var(--s2); font-size: var(--fs-md); background: rgba(255, 255, 255, .1);
-  border-color: rgba(255, 255, 255, .25); color: #fff; }
-.actor select option { color: var(--ink); }
-.actor a { color: #fff; }
+.actor { display: flex; align-items: center; gap: var(--s3); font-size: var(--fs-sm); color: var(--nav-ink); white-space: nowrap; }
+.actor-id { display: flex; flex-direction: column; line-height: 1.25; text-align: right; }
+.actor-id strong { color: #fff; font-weight: 600; }
+.actor .button, .actor button { min-height: 28px; }
 
 /* ---------- Opportunity header: breadcrumb + title + workflow stepper ---------- */
 .opp-head { background: var(--card); border-bottom: 1px solid var(--line); padding: var(--s4) var(--page-x) 0; }
@@ -293,7 +292,7 @@ button.link:disabled { background: none; color: var(--muted-2); }
   .pane { max-height: 70vh; }
   .topbar { height: auto; flex-wrap: wrap; padding-block: var(--s2); gap: var(--s2) var(--s4); }
   .topbar-right { flex: 1 1 100%; justify-content: space-between; min-width: 0; } /* UX-01 */
-  .actor { min-width: 0; flex: 1 1 auto; } .actor select { max-width: 100%; min-width: 0; flex: 1; }
+  .actor { min-width: 0; flex: 1 1 auto; justify-content: flex-end; } .actor-id { text-align: left; margin-right: auto; }
   .topnav { overflow-x: auto; flex-wrap: nowrap; } .topnav a { white-space: nowrap; padding-inline: var(--s2); }
   .opp-head > nav { flex-direction: column; align-items: flex-start; }
   .stepper { flex-wrap: wrap; }
