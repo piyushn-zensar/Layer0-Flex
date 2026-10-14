@@ -51,7 +51,6 @@ from app.core import audit
 from app.core.db import utcnow
 from app.modules.changes import agent
 from app.modules.changes.models import KINDS, NEEDS_TARGET, ChangeItem, ChangeSet
-from app.modules.decisions import service as decisions
 from app.modules.ingestion import service as ingestion
 from app.modules.matching import service as matching
 from app.modules.opportunities import service as opportunities
@@ -301,20 +300,17 @@ def apply(db: Session, set_id: int, actor: str) -> ChangeSet:
 def _follow_up(db: Session, opp_id: str, out: dict, notes: dict, source: str, actor: str, dispatched_before: bool,
                result: dict) -> None:
     """After a new baseline is committed: answers of changed requirements go back to their units, new and changed
-    requirements are matched, and after a "go" (and if work was dispatched before) dispatch runs, which also
-    withdraws removed work. Fills result["returned"], ["dispatched"] and ["note"]."""
+    requirements are matched, and if work was dispatched before, dispatch runs, which also withdraws removed work.
+    Dispatch itself refuses a no-go and a missing participation (A-14, C-06: no go decision needed); its reason goes
+    into the note. Fills result["returned"], ["dispatched"] and ["note"]."""
     for req_id in out["affected"]:
         note = f"Changed by {source}: {'; '.join(notes.get(req_id) or ['changed'])}"
         result["returned"] += workpackages.return_for_change(db, opp_id, [req_id], note, actor)
     if out["added"] or out["modified"]:
         # only what changed: re-matching everything would change the frozen page batches of untouched requirements
         matching.match(db, opp_id, f"matching agent ({actor})", req_ids=out["added"] + out["modified"])
-    go = decisions.latest(db, opp_id, "go_no_go")
     if not dispatched_before:
         result["note"] = "Not dispatched: no work was dispatched before this change; dispatch from the decisions page."
-    elif not go or go.outcome != "go":
-        result["note"] = ("Not dispatched: the latest go/no-go is not 'go'. New work is created and removed work "
-                          "withdrawn at the next dispatch.")
     else:
         try:
             result["dispatched"] = workpackages.dispatch(db, opp_id, actor)

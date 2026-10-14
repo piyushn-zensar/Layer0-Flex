@@ -1103,6 +1103,10 @@ def test_dispatch_without_go_and_no_go_withdraws():
     client.post(f"/api/opportunities/{fresh}/participation", json={"units": units})
     assert client.post(f"/api/opportunities/{fresh}/dispatch").json()["created"] >= 1
     assert client.get(f"/api/opportunities/{fresh}/decisions").json()["go_no_go"] is None
+    # a change applied before any go decision still dispatches its new work (the changes follow-up after A-14)
+    r = client.post(f"/api/opportunities/{fresh}/corrections", json={
+        "kind": "add", "page": 56, "line_start": 5, "line_end": 7, "category": "technical", "reason": "missed"}).json()
+    assert r["added"] and r["dispatched"] >= 1 and r["note"] == "", r
 
     seed_demo.main()  # its own bid: dispatched, some answers submitted or validated
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
