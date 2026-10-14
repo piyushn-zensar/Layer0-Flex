@@ -1,8 +1,8 @@
-// App shell: top bar, acting-user picker and the toast region.  Owner: Janvia.
+// App shell: top bar, signed-in user (name, role, unit, Sign out) and the toast region.  Owner: Janvia.
 import type { Metadata } from "next";
 import Link from "next/link";
-import ActorPicker from "@/components/shell/ActorPicker";
 import TopNav from "@/components/shell/TopNav";
+import UserMenu from "@/components/shell/UserMenu";
 import { ToastProvider } from "@/components/ui/Toast";
 import { TourLauncher, TourOverlay, TourProvider, WalkthroughButton } from "@/components/tour";
 import "./globals.css";
@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <TopNav />
               <div className="topbar-right">
                 <Link className="button" href="/opportunities/new" data-tour="shell-new-opportunity">New bid</Link>
-                <ActorPicker />
+                <UserMenu />
                 <WalkthroughButton />
               </div>
             </header>

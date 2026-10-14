@@ -123,7 +123,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       kind: "action",
       skipIf: (ctx) => ctx.actor === BM,
-      instruction: "Sign in as Bid Manager (the curator; Switch, user bid.manager), or press Use example.",
+      instruction: "Sign in as Bid Manager (the curator; Sign out, then user bid.manager), or press Use example.",
       fallback: "When the acting person is not the curator a blue note says so; the review form is only shown to the curator.",
       body: [
         "In the PoC the curator is the **Bid Manager**; a named knowledge-curator role arrives with sign-in. Anyone can read the queue, but `POST /api/knowledge/<id>/review` is refused for everyone else (\"Only the knowledge curator (in the PoC, the Bid Manager) approves knowledge.\").",
