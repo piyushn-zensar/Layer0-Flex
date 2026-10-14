@@ -5,11 +5,14 @@
 
 The app is imported inside the helpers: each test module sets STORE_DIR before its own import of the app.
 """
+import functools
 import os
 
 os.environ["DEMO_PASSWORD"] = "test-password"  # tests never depend on the local .env
+os.environ["MYSQL_HOST"] = ""                    # accounts go in the test store's SQLite, never the local MySQL
 
 
+@functools.cache   # one sign-in per account: checking a password takes about 0.4 s by design
 def auth(username: str = "bid.manager") -> dict:
     """Headers that sign the request in as `username`, through the real login route."""
     from fastapi.testclient import TestClient

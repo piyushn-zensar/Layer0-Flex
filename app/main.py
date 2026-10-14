@@ -19,3 +19,4 @@ for name in MODULES:
     app.include_router(importlib.import_module(f"app.modules.{name}.controller").router, prefix="/api",
                        dependencies=[Depends(auth.authenticated)])
 db.init_db()
+auth.init()
