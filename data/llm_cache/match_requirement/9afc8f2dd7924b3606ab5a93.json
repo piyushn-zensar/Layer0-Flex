@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to the terms and conditions of the RFP process and does not specify a product or service. It is a commercial or legal requirement, and the bid manager should address it.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

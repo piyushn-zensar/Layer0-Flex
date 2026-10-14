@@ -1,0 +1,31 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          8
+        ],
+        "title": "Submission requirements for proposal content and interviews"
+      },
+      {
+        "category": "legal",
+        "members": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "title": "Legal rights and conditions of the Authority"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

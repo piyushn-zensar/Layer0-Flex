@@ -27,21 +27,27 @@ export interface Requirement {
   derived_from: string[]; created_by: string; kind: "item" | "group"; parent_id: string | null;
   document_id: string; // the RFP, or the change document a new version comes from (P-11)
   origin?: Origin | null; // where this version came from (P-23); null = data from before origin was recorded
+  spans?: Span[]; // every source span (P-24): a quote across a page break, or a lead-in and its item; [] = older data
 }
+export interface Span { document_id: string; page: number; line_start: number; line_end: number; bboxes: number[][] }
+/** An exception's likely place (P-24): the reader's page when it holds most of the quote's words. Where to look, never a source. */
+export interface LocationHint { page: number; line_start: number | null; line_end: number | null; share: number }
 export type Origin = "extraction" | "correction" | "customer_change";
 export const ORIGIN_LABELS: Record<string, string> = { extraction: "Extraction", correction: "Correction", customer_change: "Customer change" };
 export const originLabel = (o: string | null | undefined) => (o ? ORIGIN_LABELS[o] ?? o.replace(/_/g, " ") : "");
 
 // Extraction snapshots (P-23): E1 is the first read, never changed; E2... are later reads asked for with a reason.
-export type Coverage = Record<string, number>; // pages, candidates, admitted, exceptions, duplicates, groups, problems (more keys may follow)
-export const COVERAGE_LABELS: Record<string, string> = { pages: "pages", candidates: "candidates", admitted: "in the register", exceptions: "exceptions",
-  duplicates: "duplicates", groups: "groups", problems: "problems" };
+// pages = pages_read + pages_failed + pages_skipped + pages_unreadable; candidates = admitted + exceptions + duplicates (P-24)
+export type Coverage = Record<string, number>;
+export const COVERAGE_LABELS: Record<string, string> = { pages: "pages", pages_read: "pages read", pages_failed: "pages the reader failed on",
+  pages_skipped: "pages skipped (contents, blank)", pages_unreadable: "pages not readable", chunks: "reader calls", chunks_failed: "reader calls failed",
+  candidates: "candidates", admitted: "in the register", exceptions: "exceptions", duplicates: "duplicates", groups: "groups", problems: "problems" };
 export const coverageLabel = (k: string) => COVERAGE_LABELS[k] ?? k.replace(/_/g, " ");
 export const snapshotName = (n: number) => `E${n}`;
 export interface Snapshot { number: number; document_id: string; created_by: string; created_at: string; reason: string; model: string; pipeline_version: string; coverage: Coverage | null }
 export interface SnapshotItem {
   req_id: string; text: string; quote: string; category: string; section: string; page: number | null; line_start: number | null; line_end: number | null;
-  status: string; group: string | null; duplicate_of: string | null;
+  status: string; group: string | null; duplicate_of: string | null; spans?: Span[];
 }
 export interface SnapshotDetail extends Snapshot { items: SnapshotItem[] }
 export interface CorrectionResult { baseline: number; added: string[]; modified: string[]; removed: string[]; affected: string[]; returned: number; dispatched: number; note: string }
@@ -50,7 +56,7 @@ export const STATUS_LABELS: Record<string, string> = { approved: "In register", 
   dismissed: "Dismissed", duplicate: "Duplicate", proposed: "Proposed", split: "Split", merged: "Merged", removed: "Removed" };
 export const statusLabel = (s: string) => STATUS_LABELS[s] ?? s.replace(/_/g, " ");
 // An exception-queue row: the proposed text whose source could not be verified, with the reader's page hint and the reason.
-export interface RequirementException extends Requirement { suggested_page: number | null; reason: string }
+export interface RequirementException extends Requirement { suggested_page: number | null; location_hint: LocationHint | null; reason: string }
 export interface Baseline { number: number; count: number; frozen_by: string }
 export interface Match {
   id: number; req_id: string; bu: string | null; product_id: string | null; offering_type: OfferingType;

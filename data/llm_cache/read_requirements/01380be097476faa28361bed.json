@@ -1,0 +1,288 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 3,
+            "last": 3,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "comply with requirements of this Specification.",
+        "section": "General",
+        "text": "The bidder must comply with all requirements of the specification."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 5,
+            "last": 5,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "Factory Tests conducted.",
+        "section": "Testing",
+        "text": "Factory tests must be conducted."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 7,
+            "last": 7,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "Bolts, nuts, and washers including mechanical properties and chemical analysis.",
+        "section": "Materials",
+        "text": "Bolts, nuts, and washers must meet specified mechanical and chemical properties."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 9,
+            "last": 9,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "Tension-control, high-strength, bolt-nut-washer assemblies.",
+        "section": "Materials",
+        "text": "Tension-control, high-strength bolt-nut-washer assemblies are required."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 11,
+            "last": 11,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "Shop primers.",
+        "section": "Materials",
+        "text": "Shop primers must be used."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "Quality Control assurance will be conducted in accordance with the requirements stated in the PURCHASER documents.",
+        "section": "Quality Assurance",
+        "text": "Quality control must follow the purchaser's requirements."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "Comply with the applicable codes and standards referenced in this Specification.",
+        "section": "Quality Assurance",
+        "text": "The bidder must comply with all referenced codes and standards."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 20,
+            "last": 22,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "The PURCHASER reserves the right to inspect materials and workmanship at all stages of manufacture and to witness any or all tests including complete assembly as described in the respective sections.",
+        "section": "Quality Assurance",
+        "text": "The purchaser may inspect materials and workmanship and witness tests."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 26,
+            "last": 27,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "Metal Clad Switchgear section shall be shipped as part of the Prefabricated Equipment Enclosure.",
+        "section": "Delivery, Storage, and Handling",
+        "text": "Metal Clad Switchgear must be shipped as part of the enclosure."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 29,
+            "last": 29,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "Withdrawable circuit breaker shall be shipped separately from housing.",
+        "section": "Delivery, Storage, and Handling",
+        "text": "Withdrawable circuit breakers must be shipped separately."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 31,
+            "last": 33,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "Preparation for shipment shall protect the Metal Clad Switchgear auxiliary devices accessories, etc. against corrosion, dampness, breakage or vibration injury during transportation and handling.",
+        "section": "Delivery, Storage, and Handling",
+        "text": "Shipment preparation must protect equipment from damage."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 35,
+            "last": 36,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "A copy of the operating instructions, along with packing slip, shall be forwarded with the equipment.",
+        "section": "Delivery, Storage, and Handling",
+        "text": "Operating instructions and packing slip must accompany the equipment."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 38,
+            "last": 40,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "Boxing, crating, or otherwise protection of all shipped unassembled equipment shall be suitable for outdoor storage. Each item shall be tagged with the project number, MANUFACTURER number, bill of material number, and item number.",
+        "section": "Delivery, Storage, and Handling",
+        "text": "Unassembled equipment must be protected for outdoor storage and tagged appropriately."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 42,
+            "last": 42,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "Labor and support for off-loading and assembly at the site location will be provided by others.",
+        "section": "Delivery, Storage, and Handling",
+        "text": "Off-loading and assembly labor will be provided by others."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 44,
+            "last": 46,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "The PURCHASER shall be notified the day shipment is made, indicating carriers, routing, actual shipping height and weight of Prefabricated Equipment Enclosure listed on the freight bill. Refer to the Purchase Order for delivery date and exact destination.",
+        "section": "Delivery, Storage, and Handling",
+        "text": "The purchaser must be notified on the day of shipment with details."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 48,
+            "last": 49,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "The PURCHASER reserves the right to inspect the Metal Clad Switchgear at the MANUFACTURERs facility prior to shipping to prove compliance with this Specification.",
+        "section": "Delivery, Storage, and Handling",
+        "text": "The purchaser may inspect the switchgear at the manufacturer's facility before shipping."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 51,
+            "last": 51,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "No welding shall be required for field assembly.",
+        "section": "Delivery, Storage, and Handling",
+        "text": "Field assembly must not require welding."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 53,
+            "last": 54,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "The VENDOR shall provide the necessary storage and protection literature for the Metal Clad Switchgear.",
+        "section": "Delivery, Storage, and Handling",
+        "text": "The vendor must provide storage and protection literature."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 56,
+            "last": 57,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "Prior to packing, the equipment shall be cleaned to remove all dirt and waste material left from fabrication.",
+        "section": "Delivery, Storage, and Handling",
+        "text": "Equipment must be cleaned before packing."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 59,
+            "last": 60,
+            "page": 60
+          }
+        ],
+        "page": 60,
+        "quote": "The shipping container shall be provided with supports, lifting eyes etc. to maintain alignment of parts during shipping, handling, hoisting, and installation.",
+        "section": "Delivery, Storage, and Handling",
+        "text": "Shipping containers must have supports and lifting eyes to maintain alignment."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

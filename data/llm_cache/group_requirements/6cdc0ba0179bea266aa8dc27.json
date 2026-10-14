@@ -1,0 +1,63 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Switchgear environmental suitability"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "title": "Drawing specifications and CAD requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        "title": "Required diagrams and documentation"
+      },
+      {
+        "category": "technical",
+        "members": [
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "title": "Switchgear physical and operational specifications"
+      },
+      {
+        "category": "technical",
+        "members": [
+          23,
+          24,
+          25,
+          26,
+          27
+        ],
+        "title": "Current transformer specifications"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

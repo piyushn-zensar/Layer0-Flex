@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 5,
+            "last": 7,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Each proposer shall, in accordance with the regulations, make good faith efforts and, in a manner that can be established in documentary form, solicit active participation by certified M/WBE’s and SDVOB’s in connection with any contract resulting from this RFP.",
+        "section": "2.8 Conditions, Terms and Limitations",
+        "text": "Proposers must solicit active participation by certified M/WBE’s and SDVOB’s."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 8,
+            "last": 9,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "These regulations, and any contract to be entered into between the Authority and the successful proposer, will impose reporting obligations on the awarded contractor to periodically report various M/WBE and SDVOB information to the Authority.",
+        "section": "2.8 Conditions, Terms and Limitations",
+        "text": "Awarded contractors must periodically report M/WBE and SDVOB information."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 11,
+            "last": 12,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Annexed hereto at Exhibits C and D respectively are various M/WBE-SDVOB forms and information which the Authority requires all proposers to complete and submit with each proposal.",
+        "section": "2.8 Conditions, Terms and Limitations",
+        "text": "Proposers must complete and submit M/WBE-SDVOB forms with their proposal."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 13,
+            "last": 13,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Failure to do so will result in a finding of non-responsiveness and rejection of that proposal.",
+        "section": "2.8 Conditions, Terms and Limitations",
+        "text": "Failure to submit required forms will result in proposal rejection."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 15,
+            "last": 18,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "For purposes of this solicitation, the Authority has established a goal of (19.64%) for Minority Owned Business Enterprises (M/WBE) participation, (11.45%) for Minority Owned Business Enterprises (M/WBE) participation and (6%) for Service-Disabled Veteran Owned Business (SDVOB) participation.",
+        "section": "2.8 Conditions, Terms and Limitations",
+        "text": "The Authority has set participation goals for M/WBE and SDVOB."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 21,
+            "last": 24,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "The services to be performed shall conform to and be subject to the provisions of the New York Public Authorities Law, Generally Accepted Auditing Standards, Generally Accepted Accounting Principles, and Standards promulgated by the NYS Comptroller and Authorities Budget Office and all other applicable laws and regulations of all Federal and State agencies having jurisdiction.",
+        "section": "2.8 Conditions, Terms and Limitations",
+        "text": "Services must conform to applicable laws, standards, and regulations."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 26,
+            "last": 27,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Valid licenses and registrations as required by the Authority and any State, and Federal agencies shall be obtained by the successful proposer prior to commencing work.",
+        "section": "2.8 Conditions, Terms and Limitations",
+        "text": "Successful proposers must obtain required licenses and registrations before starting work."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 29,
+            "last": 30,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Final designation of a proposer will depend on satisfaction of all additional RFP documentation and review requirements of the Authority and will be subject to subsequent approval by the Authority.",
+        "section": "2.8 Conditions, Terms and Limitations",
+        "text": "Final designation depends on satisfying RFP documentation and review requirements."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

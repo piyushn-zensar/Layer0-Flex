@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "Requirement 1 is a compliance-related clause regarding adherence to contract terms and does not specify any product or service from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 2,
+        "rationale": "Requirement 2 pertains to compliance with MWBE participation goals and does not involve any specific product or service from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 3,
+        "rationale": "Requirement 3 discusses compliance with New York State Executive Law and enforcement provisions, which are not related to any specific product or service from the catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

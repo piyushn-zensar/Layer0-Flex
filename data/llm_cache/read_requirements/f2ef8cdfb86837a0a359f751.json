@@ -1,0 +1,358 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 4,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Short-circuit current at rated max kV: (18,000).",
+        "section": "c",
+        "text": "The short-circuit current at rated maximum kV must be 18,000."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 8,
+            "last": 8,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Three-phase rated MVA or nominal MVA class: (500).",
+        "section": "3.a",
+        "text": "The three-phase rated MVA or nominal MVA class must be 500."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 10,
+            "last": 10,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Maximum symmetrical interrupting, amperes: (18,000).",
+        "section": "3.b",
+        "text": "The maximum symmetrical interrupting current must be 18,000 amperes."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 12,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Close and latch, peak amperes: (62,000).",
+        "section": "3.c",
+        "text": "The close and latch peak current must be 62,000 amperes."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 14,
+            "last": 14,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Frequency, hertz: 60.",
+        "section": "4",
+        "text": "The frequency must be 60 Hz."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 16,
+            "last": 16,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Rated interrupting time, cycles: 5.",
+        "section": "5",
+        "text": "The rated interrupting time must be 5 cycles."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "The breaker shall be provided with two (2) independent trip coils.",
+        "section": "6",
+        "text": "The breaker must have two independent trip coils."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 22,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Low-frequency test voltage (60-hertz, dry 1-minute), kV: 36.",
+        "section": "7.a",
+        "text": "The low-frequency test voltage must be 36 kV."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 24,
+            "last": 24,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Basic impulse level (1-1/2x40 microseconds), kV crest: 95.",
+        "section": "7.b",
+        "text": "The basic impulse level must be 95 kV crest."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 28,
+            "last": 28,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Nominal voltage supplies: 125 volts DC for close and trip; 240 volts AC for spring charging motor.",
+        "section": "8.a",
+        "text": "The nominal voltage supplies must be 125V DC for close and trip, and 240V AC for the spring charging motor."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 31,
+            "last": 31,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Voltage range, closing, volts: 100-140 volts DC.",
+        "section": "8.b",
+        "text": "The closing voltage range must be 100-140 volts DC."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 33,
+            "last": 33,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Voltage range, tripping, volts: 70-140 volts DC.",
+        "section": "8.c",
+        "text": "The tripping voltage range must be 70-140 volts DC."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 35,
+            "last": 35,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Charging motor voltage range, volts: 208-254 volts AC.",
+        "section": "8.d",
+        "text": "The charging motor voltage range must be 208-254 volts AC."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 39,
+            "last": 39,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "125 volts DC electric stored-energy-operated, mechanically and electrically trip free.",
+        "section": "F.1",
+        "text": "The system must be 125V DC electric stored-energy-operated and trip free."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 41,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Completely interchangeable with all other breakers furnished of the same rating.",
+        "section": "F.2",
+        "text": "The breakers must be interchangeable with others of the same rating."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Self-aligning primary and secondary contacts.",
+        "section": "F.3",
+        "text": "The system must have self-aligning primary and secondary contacts."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 45,
+            "last": 46,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Suitable interlocks to positively prevent breaker withdrawal out of or insertion into operating position with breaker closed.",
+        "section": "F.4",
+        "text": "The system must have interlocks to prevent breaker withdrawal or insertion when closed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 48,
+            "last": 52,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Auxiliary contacts mounted in the breaker cell and operated by the breaker in both \"operate\" and \"test\" positions of the breaker. Furnish contacts in sufficient number for all interlocking functions as required for the control scheme designed for each breaker, and to provide a minimum of two spare \"normally open\" and two spare \"normally closed\" contacts for each breaker.",
+        "section": "F.5",
+        "text": "The breaker cell must have auxiliary contacts for operation and testing, with spares for interlocking functions."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 54,
+            "last": 58,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Auxiliary contacts mounted on the removable breaker in sufficient number for all control, indicating, and alarm functions as required provide a minimum of two spare \"normally open\" and two spare \"normally closed\" contacts for each breaker. Secondary contacts shall be made in test position to eliminate need of jumper cable, where such option is permitted by MANUFACTURER's standard design.",
+        "section": "F.6",
+        "text": "The removable breaker must have auxiliary contacts for control and alarms, with spares, and secondary contacts for testing."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 60,
+            "last": 60,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Means to prevent removing a charged breaker from the cubicle.",
+        "section": "F.7",
+        "text": "The system must prevent removing a charged breaker from the cubicle."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 62,
+            "last": 63,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Provide for manual stored energy closing, tripping, and spring recharge on loss of control power.",
+        "section": "F.8",
+        "text": "The system must allow manual operation for closing, tripping, and spring recharge if control power is lost."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 67,
+            "last": 67,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Nominal system voltage (kV): 13.2.",
+        "section": "G.1",
+        "text": "The nominal system voltage must be 13.2 kV."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 69,
+            "last": 70,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Provide intermediate class arresters consisting of MCOV 8.4kV, initially connect to provide the MCOV rating as shown on Contract Documents.",
+        "section": "G.2",
+        "text": "Intermediate class arresters with MCOV 8.4kV must be provided and connected as per contract documents."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 72,
+            "last": 74,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "For vacuum switchgear, furnish one metal oxide surge arrester for each phase terminal of load feeder circuit. Furnish arresters coordinated with insulation levels to provide complete protection of connected loads from surges created by vacuum interrupters.",
+        "section": "G.3",
+        "text": "Metal oxide surge arresters must be provided for each phase terminal of vacuum switchgear load feeder circuits."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 78,
+            "last": 80,
+            "page": 64
+          }
+        ],
+        "page": 64,
+        "quote": "Each set of voltage transformers and their primary fuses shall be mounted in separate steel compartments. Primary connections to the transformers shall be insulated and enter the compartment through porcelain or cycloaliphatic epoxy bushings. Each set of voltage transformers and fuses shall be mounted on the tilt out steel carriage which will be",
+        "section": "H.1",
+        "text": "Voltage transformers and fuses must be in separate steel compartments with insulated connections and mounted on tilt-out carriages."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

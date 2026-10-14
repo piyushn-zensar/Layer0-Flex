@@ -1,0 +1,27 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          2,
+          3,
+          5,
+          6,
+          7
+        ],
+        "title": "Liquidated damages and compliance with MWBE requirements"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          4
+        ],
+        "title": "Submission of compliance reports and utilization plan"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

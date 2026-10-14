@@ -1,0 +1,23 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          3
+        ],
+        "title": "Submit EEO staffing plan and completed form"
+      },
+      {
+        "category": "staffing",
+        "members": [
+          2
+        ],
+        "title": "Provide EEO-Job Category employee numbers"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

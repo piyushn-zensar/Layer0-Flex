@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance and legal obligations related to the use of service-disabled veteran-owned businesses (SDVOBs) in state contracts. It does not specify a product or service requirement, so no product from the catalog is applicable.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

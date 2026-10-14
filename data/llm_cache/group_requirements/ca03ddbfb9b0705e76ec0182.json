@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Requirements for the installation of conduits and duct banks"
+      },
+      {
+        "category": "technical",
+        "members": [
+          4
+        ],
+        "title": "Requirements for data connection conduits"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

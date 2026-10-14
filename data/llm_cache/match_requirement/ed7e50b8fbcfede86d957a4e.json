@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "Requirement 1 pertains to compliance and documentation of efforts to include minority- and women-owned business enterprises in the contract. This is not a product requirement, so no units are applicable.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "Requirement 2 involves the submission of a utilization plan for compliance with participation goals for minority- and women-owned business enterprises. This is a compliance requirement, not a product requirement, so no units are applicable.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

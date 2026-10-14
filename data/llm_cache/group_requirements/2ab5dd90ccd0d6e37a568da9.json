@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Submission requirements for MWBE contractor"
+      },
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Submission requirements for bidder"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

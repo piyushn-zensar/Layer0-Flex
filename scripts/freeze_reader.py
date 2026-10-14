@@ -20,10 +20,12 @@ for arg in sys.argv[1:]:
     sha = hashlib.sha256(Path(arg).read_bytes()).hexdigest()
     layout = json.loads((LAYOUT_CACHE / f"{sha}.json").read_text("utf-8"))  # run scripts.freeze_layout first
     print(f"{arg}: provider={config.LLM_PROVIDER} model={config.LLM_MODEL}", flush=True)
-    found, problems = agent.read(layout)
-    hits = [anchoring.find(r["quote"], layout["pages"], r["page"]) for r in found]
+    found, problems, coverage = agent.read(layout)
+    hits = [anchoring.find(r["quote"], layout["pages"], r["page"], r.get("lines")) for r in found]
     print(f"requirements proposed: {len(found)}")
-    print(f"anchored on the page: {sum(bool(h) for h in hits)}   unanchored: {sum(not h for h in hits)}")
+    print(f"anchored: {sum(bool(h) for h in hits)} (several spans: {sum(bool(h) and len(h['spans']) > 1 for h in hits)})"
+          f"   unanchored: {sum(not h for h in hits)}")
+    print("coverage:", coverage)
     print("by category:", dict(Counter(r["category"] for r in found)))
     print("by page (top 10):", Counter(r["page"] for r in found).most_common(10))
     for r, h in zip(found, hits):

@@ -1,0 +1,30 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          2,
+          6,
+          7,
+          8,
+          12
+        ],
+        "title": "Submission of MWBE-related forms"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          3,
+          4,
+          9,
+          10,
+          11
+        ],
+        "title": "Compliance with MWBE goals and procedures"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

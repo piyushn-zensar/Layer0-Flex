@@ -507,7 +507,7 @@ Each stage leaves the application running end to end. The demonstration RFP is t
 - Tables are in the layout, but the reader agent still reads their lines as text. Showing it the row structure ("Description | Requirement | Units") would help data sheets, but it changes the reader's input on those pages, so their answers would be regenerated. Tables without ruling lines are not detected.
 - Matching runs retrieval-only until matcher answers are generated and cached; retrieval is keyword-based.
 - The catalog, BOM lines and seeded unit responses are illustrative.
-- One acting user is picked from a list; no sign-in.
+- One acting user is picked from a list; no sign-in (superseded: sign-in with assigned roles, section 16.6).
 - SQLite allows one writer at a time; enough for a PoC.
 
 **Known limits of change handling (first version, 10 Oct 2026):**
@@ -599,10 +599,15 @@ New and changed endpoints (owner: requirements):
 
 ### 16.4 Source anchoring and coverage (owner: requirements, ingestion)
 
-- The reader's answer schema adds `lines`: the line labels it read each requirement from (for example `["L12", "L13"]`, with the page). The quote is verified against those lines first, then against the page, then the whole document.
-- `requirement.spans` (JSON): one or more `{document_id, page, line_start, line_end, bboxes}`; the existing `page`, `line_start`, `line_end`, `bboxes` hold the first span for the other modules.
-- Normalisation joins words hyphenated across a line break; among several occurrences the one nearest to the reader's lines wins; a quote may continue across a page break as two spans.
-- The reader's frozen answers are regenerated with the live model (the answer format changes). The golden list measures recall before and after.
+Built 14 Oct 2026 (P-24).
+
+- The reader's answer schema adds `lines`: the line ranges it copied each quote from, one per page (for example `{"page": 55, "first": 12, "last": 14}`).
+- The document is searched as one stream of words from its body lines (page headers and footers left out, as the reader never sees them). Words must be exact and in order; case, typographic quotes and dashes, whitespace and punctuation between words are ignored, so a table read as "System nominal voltage: 13.2 kV" is still verbatim. Hyphens inside a word are ignored, so a word hyphenated across a line break matches the joined word. When the wording occurs more than once, the occurrence nearest to the reader's lines wins (else the page the reader named, else the first).
+- A quote may continue across a page break: each page it touches is one span. A quote the reader stitched from its cited lines (a list's lead-in and one item, without the "1." between) is verified as up to four in-order pieces of those lines; only whole lines and a list marker may be left out between pieces, never words inside a sentence.
+- `requirement.spans` (JSON): one or more `{document_id, page, line_start, line_end, bboxes}`; the existing `page`, `line_start`, `line_end`, `bboxes` hold the first span for the other modules. The source reads, for example, "p. 20, lines 12-13; p. 21, line 1". Merges and groups keep their members' spans.
+- `requirement.location_hint` (JSON, exceptions only): where the reader says an unverified quote is (`{page, line_start, line_end, share}`), kept only when at least 80% of the quote's words are on that page. It is never a source: the row stays in the exception queue, which shows "Probably p. 74, lines 46-47 (wording not matched exactly)" and opens "Link to lines" with those lines selected.
+- **Coverage** (extract result, extraction snapshot, RFP step): `pages` = `pages_read` + `pages_failed` + `pages_skipped` (contents, blank) + `pages_unreadable`; `chunks`, `chunks_failed`; `candidates` = `admitted` + `exceptions` + `duplicates`; `groups`, `problems`.
+- The reader's frozen answers were regenerated with the live model, and the grouping and matching answers that depend on them. Measured against the Syracuse golden list (`scripts.score_reader`): unanchored 33 → 17 (12 in the exception queue after duplicates), recall 0.919 → 0.982 (missed 23 → 5), precision 0.554 → 0.547. The quotes that remain unverified are not verbatim in the RFP: typos the model corrected, drawing title blocks interleaved with the text, form columns read across.
 
 ### 16.5 Routing, assessment and decision (owner: decisions, workpackages, matching)
 
@@ -624,7 +629,7 @@ New and changed endpoints (owner: requirements):
 
 ### 16.6 Identity and permissions (owner: core; enforcement in every module)
 
-- **Accounts.** `data/accounts.json`: `username`, `name` (shown and stored as the actor), `role` (`bid_manager`, `product_manager`, `design_engineer`, `admin`), `bu` (for unit roles). Demonstration accounts mirror today's people list. The proof-of-concept password comes from `.env` (`DEMO_PASSWORD`).
+- **Accounts.** Table `user_account` (`username`, `name` (shown and stored as the actor), `role` (`bid_manager`, `product_manager`, `design_engineer`, `admin`), `bu` (for unit roles), `password_hash`) in a MySQL database (`layer0` by default; `.env` settings `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DB`; driver PyMySQL). The API creates the database and table on first start. Without `MYSQL_HOST` the accounts are kept in the local SQLite store (the tests always use it). `data/accounts.json` remains the roster (18 accounts: today's people list plus `admin`): on every start the API adds any account the table does not have yet, with `DEMO_PASSWORD` from `.env` as its starting password; name, role and unit follow the file, and an existing password is never overwritten. Passwords are stored only as salted PBKDF2-SHA256 hashes (600,000 iterations, Python standard library). To change one password: `.venv\Scripts\python -m scripts.set_password <username>`. A demonstration reset (`seed_demo --reset`) does not touch accounts. An account without a password is answered by login with 503 and setup instructions.
 - **Session: simple JWT** (project-team decision, 13 Oct 2026). `POST /api/auth/login {username, password}` returns a JSON Web Token signed with HS256 (`JWT_SECRET` in `.env`; library PyJWT) with the claims `sub` (username), `name`, `role`, `bu` and `exp` (8 hours), and also sets it in an HttpOnly cookie `layer0_token` so the browser sends it through the `/api` proxy. The API accepts the token from the cookie or from an `Authorization: Bearer` header (scripts and tests). `POST /api/auth/logout` clears the cookie; `GET /api/auth/me` returns the claims. No refresh tokens, no token store: an expired token means signing in again. Every other `/api` route needs a valid token (401 otherwise). The `X-Actor` header and the "Bid Manager" default are removed.
 - **Helpers** (`app/core/web.py`): `user(request)` returns the signed-in account; `actor(request)` keeps returning its name, so existing service calls keep working; `require(request, *roles)` raises 403 with a clear message.
 - **Default permissions** (configuration: `workflow.json` for unit work, code for the rest):

@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to the construction of a conduit duct bank, which is a civil and electrical installation task. It does not directly specify a product from the catalog, so it is not mapped to any business unit or product.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "This requirement involves the installation of conduits for data connections, which is a construction and installation task. It does not specify a product from the catalog, so it is not mapped to any business unit or product.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

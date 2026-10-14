@@ -1,0 +1,274 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Thermal Rating\n1.5 or higher",
+        "section": "Thermal Rating",
+        "text": "The thermal rating must be 1.5 or higher."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 17,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Doors (Per Section)\nOne For Rear Door and Two For\nFront panels.",
+        "section": "Doors",
+        "text": "Each section must have one rear door and two front panels."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 27,
+            "last": 28,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Panel Material\nSteel, 1/8 or 11 Gauge",
+        "section": "Panel Material",
+        "text": "Panels must be made of steel, 1/8 inch or 11 gauge."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 30,
+            "last": 32,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Minimum Distance from Floor to\nLowest Device\nYes",
+        "section": "Device Placement",
+        "text": "There must be a minimum distance from the floor to the lowest device."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 33,
+            "last": 34,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Floor Sill Framing and Anchoring\nChannel Required",
+        "section": "Floor Sill Framing",
+        "text": "Channel framing is required for floor sill anchoring."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 37,
+            "last": 38,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "External Control Cable Entrance\nTop",
+        "section": "Cable Entrance",
+        "text": "External control cable entrance must be at the top."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 39,
+            "last": 40,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Laminated Phenolic Screw‐on\nNameplate",
+        "section": "Nameplate",
+        "text": "Nameplates must be laminated phenolic and screw-on."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 45,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Interior Lighting Controlled by\nDoor Switch (Per Section)\nYes",
+        "section": "Lighting Control",
+        "text": "Interior lighting must be controlled by a door switch for each section."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 46,
+            "last": 47,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Each Section and Compartment\nPhysically Separable",
+        "section": "Section Separation",
+        "text": "Each section and compartment must be physically separable."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 48,
+            "last": 55,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Available Power Supply\nVolts 125\nVDC\nVolts 120/240\nVAC\nPhases Single\nWire 3\nFrequency 60\nHz",
+        "section": "Power Supply",
+        "text": "Power supply must be 125 VDC or 120/240 VAC, single phase, 3-wire, 60 Hz."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 57,
+            "last": 60,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Wire Size\nVoltage rating\n600\nVolts",
+        "section": "Wire Size",
+        "text": "Wire size must support a voltage rating of 600 volts."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 61,
+            "last": 63,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Power Circuits\n8\nAWG",
+        "section": "Power Circuits",
+        "text": "Power circuits must use 8 AWG wire."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 64,
+            "last": 65,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Control Circuits\n12 and 14\nAWG",
+        "section": "Control Circuits",
+        "text": "Control circuits must use 12 and 14 AWG wire."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 67,
+            "last": 68,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Trip and Close\n12\nAWG",
+        "section": "Trip and Close Circuits",
+        "text": "Trip and close circuits must use 12 AWG wire."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 70,
+            "last": 70,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "CT Circuit 10\nAWG",
+        "section": "CT Circuit",
+        "text": "CT circuits must use 10 AWG wire."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 72,
+            "last": 72,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Instrument Circuit\n16 Shielded twisted pair",
+        "section": "Instrument Circuit",
+        "text": "Instrument circuits must use 16 AWG shielded twisted pair wire."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 75,
+            "last": 77,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Outdoor Ambient Temp Range\n‐30 to +120\nDegrees Fahrenheit",
+        "section": "Outdoor Temperature",
+        "text": "Outdoor ambient temperature range must be -30 to +120°F."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 78,
+            "last": 79,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Indoor Ambient Temp Range\n60‐80\nDegrees Fahrenheit",
+        "section": "Indoor Temperature",
+        "text": "Indoor ambient temperature range must be 60-80°F."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 81,
+            "last": 82,
+            "page": 73
+          }
+        ],
+        "page": 73,
+        "quote": "Altitude 420\nFT",
+        "section": "Altitude",
+        "text": "The altitude must be 420 feet."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

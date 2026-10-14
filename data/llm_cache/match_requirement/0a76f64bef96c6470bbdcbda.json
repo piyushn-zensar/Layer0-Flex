@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "Requirement 1 pertains to compliance with legal and ethical standards regarding investment activities in Iran. This is not a product requirement, and thus no specific product or business unit is applicable. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "Requirement 2 discusses the Owner's rights under General Municipal Law Section 103-g. This is a legal and procedural matter, not a product requirement. The bid manager should address this.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

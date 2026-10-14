@@ -8,14 +8,14 @@ Written on 10 Oct 2026 from the running app and `Documents/walkthrough.md`; numb
 | Fact | Value |
 |---|---|
 | Opportunities | **OPP-0001** Syracuse switchgear (101-page RFP) and **OPP-0002** AI training campus (10 requirements; ANORD, CLOUD, FPM, JETCOOL and the bid desk) |
-| OPP-0001 | 814 line items grouped into **348 requirements** (162 groups, 607 sub-requirements, 21 duplicates) |
+| OPP-0001 | 818 line items grouped into **312 requirements** (161 groups, 628 sub-requirements, 27 duplicates, 12 exceptions) |
 | Units | BID 245, CROWN 98, EP2 5 |
 | Answers | **1 of 348 validated**, 1 submitted and waiting for validation |
 | Open flags | 32 unanchored, 103 product matches nobody has accepted, rule R-003 warning, one data-sheet rating above the standard product (continuous current, p. 74) |
 | Bid decision | Evidence, engineering checks, bid and portfolio checks, "Advice from Layer 0: 6 of 9 assessable criteria met; 3 cannot be assessed yet (data not available). A person decides." |
 | Changes | Baseline 1 (348 requirements). The sample addendum `data/RFP/samples/rfp_syracuse_addendum_1.pdf` is **illustrative** (written for the demo, not issued by the customer). It reads from frozen answers in about a second and applies in under a second, with no model |
 
-Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportunity** button, **Set as**. Stepper: RFP, Requirements, Traceability, Bid decision, Final response, and a **Changes** link beside it.
+Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportunity** button, the signed-in name with **Switch**. Stepper: RFP, Requirements, Traceability, Bid decision, Final response, and a **Changes** link beside it.
 
 **Hero requirements** (checked in the live data):
 
@@ -32,7 +32,7 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 ## 2. Before the session (T minus 30 minutes)
 
 1. Close both "Layer 0" windows. Double-click `reset-demo.cmd`, then `start.cmd` (production build: no development badge).
-2. The browser opens on Traceability. Zoom 100%, notifications off, **Set as: Bid Manager**.
+2. The browser opens on Traceability. Zoom 100%, notifications off, signed in as **Bid Manager** (user `bid.manager`).
 3. Warm up: open Traceability, Bid decision, Final response and `/inbox/CROWN` once (first loads are slow).
 4. Have the compliance matrix from the dry run saved on the desktop.
 5. After the warm-up, reset again if you answered or accepted anything.
@@ -48,12 +48,12 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 | 5 | Traceability | Select **REQ-0001-0893** | EP² relay and protection panel (EP2-RPP), ETO | ☐ |
 | 6 | Traceability (**cut**) | **Accept** the match on 0887 | Match status changes; the unaccepted count drops by one | ☐ |
 | 7 | **Bid decision** | Evidence, the bid and portfolio checks card, participation, go decision, the advice box, one criterion's judgement | Advice, flags, the continuous-current deviation (p. 74), "a person decides" | ☐ |
-| 8 | Set as **Crown Product Manager**, then **My work** (**cut**) | Answer **REQ-0001-0359**: met, product, how it is met, **Submit** | Status changes to "submitted" | ☐ |
-| 9 | Set as **Bid Manager**, Opportunities, unit code **CROWN** (**cut**) | **Validate** REQ-0001-0889 and REQ-0001-0359 | Status changes to "validated" | ☐ |
+| 8 | Sign in as **Crown Product Manager** (**Switch**, user `crown.pm`), then **My work** (**cut**) | Answer **REQ-0001-0359**: met, product, how it is met, **Submit** | Status changes to "submitted" | ☐ |
+| 9 | Sign in as **Bid Manager** (**Switch**, user `bid.manager`), Opportunities, unit code **CROWN** (**cut**) | **Validate** REQ-0001-0889 and REQ-0001-0359 | Status changes to "validated" | ☐ |
 | 10 | **Final response** (**cut**) | Show the count and the blocker panel, click a blocker link, then the Open filter | Count moves from 1 to 3 of 348; groups by reason; the link lands in Traceability | ☐ |
 | 11 | Final response | **Download compliance matrix (Excel)**; the CSV link is beside it | Customer sheet (validated answers only, Comply / Open, RFP order) and an internal Tracking sheet | ☐ |
 | 12 | CROWN work package | Open "Hand-off for this unit's systems" | JSON download: starting points, not a design | ☐ |
-| 13 | **Changes** (**cut**). Do it last: it changes the demo data | Set as **Bid Manager**. Upload the sample addendum, show the eight statements, **Confirm all proposals**, **Apply to requirements** (details below) | Eight classified statements (2 modified, 2 added, 1 removed, 1 unchanged, 2 not a requirement); baseline 2; REQ-0001-0887 back with Crown; two new requirements | ☐ |
+| 13 | **Changes** (**cut**). Do it last: it changes the demo data | Sign in as **Bid Manager** (`bid.manager`). Upload the sample addendum, show the eight statements, **Confirm all proposals**, **Apply to requirements** (details below) | Eight classified statements (2 modified, 2 added, 1 removed, 1 unchanged, 2 not a requirement); baseline 2; REQ-0001-0887 back with Crown; two new requirements | ☐ |
 | 14 | Product catalog | Scroll the units, families and models | Families and models from public Flex pages, to be confirmed with each unit | ☐ |
 
 **Step 13 in detail (about 3 minutes; reset afterwards).** Say first that the addendum is an illustration written for the demo, not a customer document.
@@ -73,7 +73,7 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 
 1. **Opportunities.** "One place for every bid. For the Syracuse RFP, 348 requirements and how far each unit has answered. The bar is validated work first, then work awaiting validation."
 2. **RFP.** "The customer's 101-page PDF is the starting point. Everything we show traces back to this file."
-3. **Requirements.** "The reader turned 814 raw line items into 348 requirements by grouping related ones and flagging duplicates. Each has its exact quote and page, and nothing is invented. When the source cannot be found it says so: 32 are unanchored, and a person decides." On History: "Every change is kept: who, when, original and changed."
+3. **Requirements.** "The reader turned 818 raw line items into 312 requirements by grouping related ones and flagging duplicates. Each has its exact quote and page, and nothing is invented. When the wording cannot be matched to the RFP it says so: 12 wait in the exception queue, each with the page and lines where it probably is, and a person decides." On History: "Every change is kept: who, when, original and changed."
 4. **Traceability.** "Pick a requirement. The RFP page jumps to it, the breakdown follows, and the proposed unit and product appear. This one goes to Crown." On 0893: "Relays go to Electrical Power Products' relay and protection panels." On Accept: "The system proposes, a person accepts."
 5. **Bid decision.** "Evidence first: categories, the mix of offering types, the suggested units. The engineering checks flag open points. The bid and portfolio checks compare the RFP's data sheet with our standard products: here the continuous current asked is above the standard rating. Those standards are placeholders for now. The advice says how many criteria are met, and the bid manager records their own judgement. A person decides."
 6. **My work.** "Each unit sees only its own lines. The Crown product manager answers: met, with which product and how." As bid manager: "The bid manager validates, or returns it with a note."
@@ -96,7 +96,7 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 |---|---|
 | A page shows an error or loads forever | Refresh. Check both "Layer 0" windows are open. If the API is stale, run `reset-demo.cmd` then `start.cmd` (about a minute). |
 | Traceability is slow | Open it first as a warm-up. Fall back to Final response: its IDs link to the same requirement. |
-| Set as does not switch | Open `/inbox/CROWN` directly. The unit codes on Opportunities link there. |
+| Switch does not open the right work package | Sign in as the unit's user (for example `crown.pm`), then open `/inbox/CROWN` directly. The unit codes on Opportunities link there. |
 | Live submit or validate fails | Use REQ-0001-0887, which is already validated, and show the Final response count. |
 | The download fails | Show the workbook saved on the desktop. |
 | A full reset is needed | Close both windows, `reset-demo.cmd`, `start.cmd`. The opportunity opens in Traceability. |

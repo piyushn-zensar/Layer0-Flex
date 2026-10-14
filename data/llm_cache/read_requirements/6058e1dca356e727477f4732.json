@@ -1,0 +1,414 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 5,
+            "last": 6,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "One test cabinet complete with secondary contacts, test jumper, control relays, and push buttons-mounted on interior wall.",
+        "section": "Accessories",
+        "text": "Provide a test cabinet with specified components."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 8,
+            "last": 9,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "One set of special wrenches, removable hand cranks, and manual spring recharge and maintenance slow closing devices.",
+        "section": "Accessories",
+        "text": "Supply a set of tools and devices for maintenance."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 11,
+            "last": 12,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Provide list of other accessories normally furnished by MANUFACTURER for PURCHASER review and approval.",
+        "section": "Accessories",
+        "text": "Submit a list of standard accessories for approval."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 14,
+            "last": 14,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Furnish one set of spare fuses for all fuses installed.",
+        "section": "Accessories",
+        "text": "Provide spare fuses for all installed fuses."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 16,
+            "last": 16,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Two quarts of touch-up paint of each finish color.",
+        "section": "Accessories",
+        "text": "Supply touch-up paint for each finish color."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "One trip coil.",
+        "section": "Accessories",
+        "text": "Provide one trip coil."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 20,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "One close coil.",
+        "section": "Accessories",
+        "text": "Provide one close coil."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 21,
+            "last": 21,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "One 52X auxiliary relay complete.",
+        "section": "Accessories",
+        "text": "Supply a complete 52X auxiliary relay."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 22,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "One 52Y auxiliary relay complete.",
+        "section": "Accessories",
+        "text": "Supply a complete 52Y auxiliary relay."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 23,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "One breaker spring charge motor.",
+        "section": "Accessories",
+        "text": "Provide a breaker spring charge motor."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 24,
+            "last": 24,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Two spare LED bulbs of each type installed.",
+        "section": "Accessories",
+        "text": "Provide spare LED bulbs for each type installed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 25,
+            "last": 25,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Two spare indicating light assemblies.",
+        "section": "Accessories",
+        "text": "Supply spare indicating light assemblies."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 26,
+            "last": 26,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "One set of test plugs.",
+        "section": "Accessories",
+        "text": "Provide a set of test plugs."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 30,
+            "last": 33,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Apply a protective epoxy powder finish to all steel surfaces of equipment. Uncoated surfaces are not permitted or acceptable. All coated surfaces shall be completely cured in a oven prior to installation or assembly. The epoxy powder is to be applied electrostatically to ensure all surfaces receive a uniform coating.",
+        "section": "Finish",
+        "text": "Apply a protective epoxy powder finish to all steel surfaces."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 35,
+            "last": 35,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Clean and treat surfaces with phosphatizing process or equal and apply all necessary filler before application of finish.",
+        "section": "Finish",
+        "text": "Prepare surfaces with phosphatizing or equivalent process before finishing."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 38,
+            "last": 38,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "The exterior of the prefabricated equipment enclosure shall be provided with at least two exterior finish coats of high gloss PURCHASER selected color.",
+        "section": "Finish",
+        "text": "Apply two high-gloss finish coats to the enclosure exterior."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 41,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "The interior walls and ceiling shall high be coated high visibility white.",
+        "section": "Finish",
+        "text": "Coat the interior walls and ceiling with high-visibility white."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "The interior of the switchgear shall be coated high visibility white.",
+        "section": "Finish",
+        "text": "Coat the switchgear interior with high-visibility white."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 45,
+            "last": 45,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "The switchgear front doors shall be ANSY 61 grey.",
+        "section": "Finish",
+        "text": "Paint the switchgear front doors ANSI 61 grey."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 49,
+            "last": 50,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Provide nameplates on all internal and front panel mounted devices. Front panel nameplates shall be attached with stainless self-tapping screws.",
+        "section": "Identification Devices",
+        "text": "Install nameplates on all devices with stainless screws."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 52,
+            "last": 52,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Nameplate shall be engraved laminated black face with white core.",
+        "section": "Identification Devices",
+        "text": "Use engraved laminated nameplates with black face and white core."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 54,
+            "last": 54,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Provide 2” x 6” with 3/8” lettering panel nameplates for Relay and Control Compartments.",
+        "section": "Identification Devices",
+        "text": "Supply 2” x 6” nameplates with 3/8” lettering for specific compartments."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 56,
+            "last": 56,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "All other nameplates shall be ¾” x 3” with 1/8” lettering.",
+        "section": "Identification Devices",
+        "text": "Use ¾” x 3” nameplates with 1/8” lettering for other devices."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 58,
+            "last": 58,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "All nameplates to be submitted for PURCHASER review and approval.",
+        "section": "Identification Devices",
+        "text": "Submit all nameplates for approval."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 64,
+            "last": 65,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Details of Inspection and Testing requirements will normally be detailed on a supplier standard Form. In addition it should detail requirements with respect to:",
+        "section": "Source Quality Control",
+        "text": "Provide inspection and testing details on a standard form."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 66,
+            "last": 66,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Workmanship",
+        "section": "Source Quality Control",
+        "text": "Ensure high-quality workmanship."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 68,
+            "last": 68,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Compliance with Contract Documents",
+        "section": "Source Quality Control",
+        "text": "Ensure compliance with contract documents."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 70,
+            "last": 70,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Quality Control Manual",
+        "section": "Source Quality Control",
+        "text": "Provide a quality control manual."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 72,
+            "last": 72,
+            "page": 68
+          }
+        ],
+        "page": 68,
+        "quote": "Manufacturing Record Book",
+        "section": "Source Quality Control",
+        "text": "Provide a manufacturing record book."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

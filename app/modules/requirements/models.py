@@ -25,6 +25,12 @@ class Requirement(Base):
     line_start: Mapped[int | None]
     line_end: Mapped[int | None]
     bboxes: Mapped[list] = mapped_column(JSON, default=list)           # highlight boxes on the page, PDF points
+    # every source span [{document_id, page, line_start, line_end, bboxes}] (C-03): a quote across a page break, or
+    # stitched from a lead-in and its item; page, line_start, line_end and bboxes above repeat the first span
+    spans: Mapped[list] = mapped_column(JSON, default=list)
+    # an exception only: where the reader says the quote is, when that page holds most of its words
+    # {page, line_start, line_end, share}; where to look, never a source (anchoring.hint)
+    location_hint: Mapped[dict | None] = mapped_column(JSON)
     provenance: Mapped[str] = mapped_column(String(12), default="EXTRACTED")  # EXTRACTED | UNANCHORED
     status: Mapped[str] = mapped_column(String(12), default="proposed")  # proposed | approved | rejected | split | merged | duplicate | removed
     derived_from: Mapped[list] = mapped_column(JSON, default=list)       # req_ids this one was split / merged from, or duplicates
@@ -39,8 +45,10 @@ class Requirement(Base):
     def source(self) -> str:
         if self.page is None:
             return "not found in source"
-        lines = f"line {self.line_start}" if self.line_start == self.line_end else f"lines {self.line_start}-{self.line_end}"
-        return f"p. {self.page}, {lines}"
+        spans = self.spans if len(self.spans or []) > 1 else [{"page": self.page, "line_start": self.line_start,
+                                                                "line_end": self.line_end}]
+        return "; ".join(f"p. {s['page']}, " + (f"line {s['line_start']}" if s["line_start"] == s["line_end"]
+                                                 else f"lines {s['line_start']}-{s['line_end']}") for s in spans)
 
 
 class ExtractionSnapshot(Base):

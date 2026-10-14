@@ -1,0 +1,162 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 2,
+            "last": 3,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "General Instructions for Form SRAA - 5001: All Offerors and each subcontractor identified in the bid or proposal must complete an EEO Staffing Plan (04-10) and submit it as part of the bid or proposal package.",
+        "section": "SRAA – 5001 Instructions",
+        "text": "Offerors and subcontractors must complete and submit an EEO Staffing Plan (04-10) with the proposal."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 3,
+            "last": 4,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "Where the work force to be utilized in the performance of the State contract can be separated out from the contractor’s or subcontractor’s total work force, the Offeror shall complete this form only for the anticipated work force to be utilized on the State contract.",
+        "section": "SRAA – 5001 Instructions",
+        "text": "Complete the form for the anticipated work force if separable from the total work force."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 5,
+            "last": 6,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "Where the work force to be utilized in the performance of the State contract cannot be separated out from the contractor’s or subcontractor’s total work force, the Offeror shall complete this form for the contractor’s or subcontractor’s total work force.",
+        "section": "SRAA – 5001 Instructions",
+        "text": "Complete the form for the total work force if it cannot be separated."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 8,
+            "last": 8,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "1. Enter the Solicitation number or RFP number that this report applies to along with the name and address of the Offeror.",
+        "section": "Instructions for completing",
+        "text": "Provide the solicitation or RFP number and the Offeror's name and address."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 9,
+            "last": 9,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "2. Check off the appropriate box to indicate if the Offeror completing the report is the contractor or a subcontractor.",
+        "section": "Instructions for completing",
+        "text": "Indicate whether the Offeror is the contractor or a subcontractor."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 10,
+            "last": 10,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "3. Check off the appropriate box to indicate if the work force being reported is just for the contract or the Offerors’ total work force.",
+        "section": "Instructions for completing",
+        "text": "Specify if the work force reported is for the contract or the total work force."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 11,
+            "last": 11,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "4. Enter the total work force by EEO job category.",
+        "section": "Instructions for completing",
+        "text": "Provide the total work force categorized by EEO job category."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 12,
+            "last": 12,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "5. Break down the total work force by gender and enter under the heading ‘Work force by Gender’.",
+        "section": "Instructions for completing",
+        "text": "Break down the work force by gender."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 13,
+            "last": 13,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "6. Break down the total work force by race/ethnic background and enter under the heading ‘Work force by Race/Ethnic Identification’.",
+        "section": "Instructions for completing",
+        "text": "Break down the work force by race/ethnic background."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "7. Enter information on disabled or veterans included in the work force under the appropriate headings.",
+        "section": "Instructions for completing",
+        "text": "Provide details on disabled individuals or veterans in the work force."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 16,
+            "last": 16,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "8. Enter the name, title, phone number and email address for the person completing the form. Sign and date the form in the designated boxes.",
+        "section": "Instructions for completing",
+        "text": "Provide contact details of the form's preparer and sign and date the form."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

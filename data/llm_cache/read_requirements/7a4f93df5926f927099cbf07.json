@@ -1,0 +1,414 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 6,
+            "last": 7,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C37.09 - Test Procedure for AC High-Voltage Circuit Breakers Rated on a Symmetrical Current Basis.",
+        "section": "Symmetrical Current Basis",
+        "text": "Comply with IEEE C37.09 for testing AC high-voltage circuit breakers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 9,
+            "last": 10,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C37.12 – Guide for Specifications of High-Voltage Circuit Breakers (Over 1000 Volts).",
+        "section": "Symmetrical Current Basis",
+        "text": "Follow IEEE C37.12 for specifying high-voltage circuit breakers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 13,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C37.010 - Applications Guide for AC High-Voltage Circuit Breakers Rated on a Symmetrical Current Basis.",
+        "section": "Symmetrical Current Basis",
+        "text": "Adhere to IEEE C37.010 for applications of AC high-voltage circuit breakers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C37.20.2 - Metal-Clad Switchgear.",
+        "section": "Symmetrical Current Basis",
+        "text": "Comply with IEEE C37.20.2 for metal-clad switchgear."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 17,
+            "last": 17,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C37.20.7 - Testing Switchgear Rated Up to 52 kV for Internal Arcing Faults",
+        "section": "Symmetrical Current Basis",
+        "text": "Follow IEEE C37.20.7 for testing switchgear for internal arcing faults."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 19,
+            "last": 21,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C37.40 Service Conditions and Definitions for High-Voltage Fuses, Distribution Enclosed Single-Pole Air Switches, Fuse Disconnecting Switches, and Accessories.",
+        "section": "Symmetrical Current Basis",
+        "text": "Adhere to IEEE C37.40 for service conditions and definitions for high-voltage fuses and related equipment."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 25,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C37.41 - Design Tests for High-Voltage (>1000V) Fuses, Distribution Enclosed Single-Pole Air Switches, Fuse Disconnecting Switches, and Accessories.",
+        "section": "Symmetrical Current Basis",
+        "text": "Comply with IEEE C37.41 for design tests for high-voltage fuses and related equipment."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 27,
+            "last": 27,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C37.90 – Standard for Relays and Relay Systems Associated with Electric Power Apparatus.",
+        "section": "Symmetrical Current Basis",
+        "text": "Follow IEEE C37.90 for relays and relay systems."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 30,
+            "last": 32,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C37.90.1 – IEEE Standard for Surge Withstand Capability (SWC) Tests for Relays and Relay Systems Associated with Electric Power Apparatus.",
+        "section": "Symmetrical Current Basis",
+        "text": "Adhere to IEEE C37.90.1 for surge withstand capability tests for relays."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 34,
+            "last": 34,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C37.100 - Definitions for Power Switchgear.",
+        "section": "Symmetrical Current Basis",
+        "text": "Comply with IEEE C37.100 for definitions related to power switchgear."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 36,
+            "last": 36,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C57.12.00 - General Requirements for Liquid-Immersed Distribution, Power, and Regulating Transformers.",
+        "section": "Symmetrical Current Basis",
+        "text": "Follow IEEE C57.12.00 for general requirements for liquid-immersed transformers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 39,
+            "last": 39,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C57.12.28 – Pad-Mounted Equipment-Enclosure Integrity",
+        "section": "Symmetrical Current Basis",
+        "text": "Adhere to IEEE C57.12.28 for pad-mounted equipment enclosure integrity."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 41,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C57.12.90 - Test Code for Liquid-Immersed Distribution, Power, and Regulating Transformers.",
+        "section": "Symmetrical Current Basis",
+        "text": "Comply with IEEE C57.12.90 for test codes for liquid-immersed transformers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 44,
+            "last": 44,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C57.13 - Requirements for Instrument Transformers.",
+        "section": "Symmetrical Current Basis",
+        "text": "Follow IEEE C57.13 for requirements for instrument transformers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 46,
+            "last": 46,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C62.11 - Metal-Oxide Surge Arresters for AC Power Circuits (>1kV)",
+        "section": "Symmetrical Current Basis",
+        "text": "Adhere to IEEE C62.11 for metal-oxide surge arresters."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 48,
+            "last": 48,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE C62.22 - Application of Metal-Oxide Surge Arresters for Alternating-Current Systems.",
+        "section": "Symmetrical Current Basis",
+        "text": "Comply with IEEE C62.22 for applications of metal-oxide surge arresters."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 51,
+            "last": 51,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE 1291 – Guide for Partial Discharge Measurement in Power Switchgear",
+        "section": "Symmetrical Current Basis",
+        "text": "Follow IEEE 1291 for partial discharge measurement in power switchgear."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 53,
+            "last": 53,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE 386 – Separable Insulated Connector Systems for Power Distribution Systems Above 600V.",
+        "section": "Symmetrical Current Basis",
+        "text": "Adhere to IEEE 386 for separable insulated connector systems."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 56,
+            "last": 56,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE 4 – Techniques for High-Voltage Testing",
+        "section": "Symmetrical Current Basis",
+        "text": "Comply with IEEE 4 for high-voltage testing techniques."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 58,
+            "last": 58,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE 450 – Maintenance, Testing, and Replacement of Large Lead Storage Batteries for Generating Stations and Substations.",
+        "section": "Symmetrical Current Basis",
+        "text": "Follow IEEE 450 for maintenance and testing of large lead storage batteries."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 61,
+            "last": 61,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE 484 – Recommend Practice for Installation Design and Installation of Large Lead Storage Batteries for Generating Stations and Substations.",
+        "section": "Symmetrical Current Basis",
+        "text": "Adhere to IEEE 484 for installation design of large lead storage batteries."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 64,
+            "last": 64,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "IEEE 485 – Recommend Practice for Sizing Large Lead Storage Batteries for Generating Stations and Substations.",
+        "section": "Symmetrical Current Basis",
+        "text": "Comply with IEEE 485 for sizing large lead storage batteries."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 67,
+            "last": 67,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "NEMA ICS 1 - Industrial Control and Systems.",
+        "section": "Symmetrical Current Basis",
+        "text": "Follow NEMA ICS 1 for industrial control and systems."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 69,
+            "last": 69,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "NEMA ICS 2 - Industrial Control and Systems Controllers, Contactors and Overload Relays Rated 600 Volts.",
+        "section": "Symmetrical Current Basis",
+        "text": "Adhere to NEMA ICS 2 for controllers and contactors rated 600 volts."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 72,
+            "last": 72,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "NEMA LA 1 - Surge Arresters.",
+        "section": "Symmetrical Current Basis",
+        "text": "Comply with NEMA LA 1 for surge arresters."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 74,
+            "last": 74,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "NEMA SG 4 - Alternating-Current High Voltage Circuit Breaker.",
+        "section": "Symmetrical Current Basis",
+        "text": "Follow NEMA SG 4 for AC high voltage circuit breakers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 76,
+            "last": 76,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "NEMA SG 5 - Power Switchgear Assemblies.",
+        "section": "Symmetrical Current Basis",
+        "text": "Adhere to NEMA SG 5 for power switchgear assemblies."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 78,
+            "last": 78,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "NEMA SG 6 - Power Switching Equipment.",
+        "section": "Symmetrical Current Basis",
+        "text": "Comply with NEMA SG 6 for power switching equipment."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 80,
+            "last": 80,
+            "page": 57
+          }
+        ],
+        "page": 57,
+        "quote": "NEMA SG 7 - Manufactured Labels for Switchgear Assemblies.",
+        "section": "Symmetrical Current Basis",
+        "text": "Follow NEMA SG 7 for labels for switchgear assemblies."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

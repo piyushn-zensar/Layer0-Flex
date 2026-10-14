@@ -1,0 +1,19 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "title": "MWBE and EEO compliance requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

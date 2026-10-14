@@ -1,0 +1,17 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "commercial",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Provide pricing details for the project"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

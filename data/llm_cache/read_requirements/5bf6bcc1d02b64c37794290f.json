@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 31,
+            "last": 33,
+            "page": 46
+          }
+        ],
+        "page": 46,
+        "quote": "Bidders/proposers for this contract for commodities, services or technology are strongly encouraged and expected to consider SDVOBs in the fulfillment of the requirements of the contract.",
+        "section": "II. Guidelines",
+        "text": "Bidders are encouraged to involve SDVOBs in fulfilling contract requirements."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 33,
+            "last": 33,
+            "page": 46
+          }
+        ],
+        "page": 46,
+        "quote": "Such partnering may be a subcontractors, suppliers, protégés or other supporting roles.",
+        "section": "II. Guidelines",
+        "text": "Partnerships with SDVOBs can include roles like subcontractors, suppliers, or protégés."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 34,
+            "last": 35,
+            "page": 46
+          }
+        ],
+        "page": 46,
+        "quote": "SDVOBs can be readily identified on the directory of certified businesses at: http://ogs.ny.gov/Core/docs/CertifiedNYS_SDVOB.pdf.",
+        "section": "II. Guidelines",
+        "text": "SDVOBs can be identified using the provided directory link."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

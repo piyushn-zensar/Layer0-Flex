@@ -1,0 +1,17 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "MWBE outreach and documentation requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

@@ -1,0 +1,176 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 2,
+            "last": 3,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "The work force utilization/compliance report is to be submitted on a quarterly basis during the life of the contract to report the actual work force utilized in the performance of the contract broken down by the specified categories.",
+        "section": "General Instructions",
+        "text": "Submit quarterly workforce utilization/compliance reports during the contract."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 6,
+            "last": 7,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Utilization reports are to be completed each quarter and submitted to SRAA within 15 days of the end of each quarter.",
+        "section": "General Instructions",
+        "text": "Submit utilization reports within 15 days after each quarter ends."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 7,
+            "last": 9,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "If there are no changes to the work force utilized on the contract during the reporting period, the contractor can submit a written statement of no change or submit a copy of the previously submitted report with the date and reporting period updated.",
+        "section": "General Instructions",
+        "text": "Submit a statement of no change or an updated report if no workforce changes occurred."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 11,
+            "last": 11,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "1. Enter the number of the contract that this report applies to along with the name and address of the contractor preparing the report.",
+        "section": "Instructions for completing",
+        "text": "Provide contract number, contractor name, and address in the report."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 12,
+            "last": 12,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "2. Check off the appropriate box to indicate if the entity completing the report is the contractor or a subcontractor.",
+        "section": "Instructions for completing",
+        "text": "Indicate if the report is completed by the contractor or subcontractor."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 13,
+            "last": 13,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "3. Check off the box that corresponds to the reporting period for this report.",
+        "section": "Instructions for completing",
+        "text": "Specify the reporting period in the report."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 14,
+            "last": 14,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "4. Check off the appropriate box to indicate if the work force being reported is just for the contract or the Contractor’s total work force.",
+        "section": "Instructions for completing",
+        "text": "Indicate if the workforce reported is specific to the contract or the total workforce."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "5. Enter the total work force by EEO job category.",
+        "section": "Instructions for completing",
+        "text": "Provide total workforce data by EEO job category."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 16,
+            "last": 16,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "6. Break down the total work force by gender and enter under the heading “Work force by Gender’.",
+        "section": "Instructions for completing",
+        "text": "Break down workforce data by gender."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 17,
+            "last": 17,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "7. Break down the total work force by race/ethnic background and enter under the heading ‘Work force by Race/Ethnic Identification’.",
+        "section": "Instructions for completing",
+        "text": "Break down workforce data by race/ethnic background."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "8. Enter information on any disabled or veteran employees included in the work force under the appropriate heading.",
+        "section": "Instructions for completing",
+        "text": "Provide data on disabled or veteran employees in the workforce."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 19,
+            "last": 19,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "9. Enter the name, title, phone number and email address for the person completing the form. Sign and date the form in the designated boxes.",
+        "section": "Instructions for completing",
+        "text": "Provide contact details of the form preparer and sign and date the form."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

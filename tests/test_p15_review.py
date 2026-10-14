@@ -34,8 +34,9 @@ def test_selection_anchors_exactly_on_every_frozen_page():
                                                     and not l.get("furniture") and l["text"].strip()]  # = preview
                 if chosen:
                     hit = anchoring.find(" ".join(l["text"] for l in chosen), [{"page": page["page"], "lines": chosen}])
-                    assert hit == {"page": page["page"], "line_start": chosen[0]["n"], "line_end": chosen[-1]["n"],
-                                   "bboxes": [l["bbox"] for l in chosen]}, (f.name, page["page"], a)
+                    span = {"page": page["page"], "line_start": chosen[0]["n"], "line_end": chosen[-1]["n"],
+                            "bboxes": [l["bbox"] for l in chosen]}
+                    assert hit == span | {"spans": [span]}, (f.name, page["page"], a)
 
 
 def test_blank_short_text_falls_back_to_the_quote():

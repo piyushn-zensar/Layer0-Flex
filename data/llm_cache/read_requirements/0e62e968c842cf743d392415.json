@@ -1,0 +1,204 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 2,
+            "last": 2,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "When completing the Request for Waiver Form (SRAA – 5010) please check all boxes that apply.",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "Complete the Request for Waiver Form (SRAA – 5010) and check all applicable boxes."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 2,
+            "last": 3,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "To be considered, the Request for Waiver Form must be accompanied by documentation for items 1 – 11, as listed below.",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "Submit the Request for Waiver Form with documentation for items 1-11."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 5,
+            "last": 5,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "1. A statement setting forth your basis for requesting a partial or total waiver.",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "Provide a statement explaining the basis for requesting a waiver."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 6,
+            "last": 6,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "2. The names of general circulation, trade association, and M/WBE-oriented publications in which you solicited certified M/WBEs for the purposes of complying with your participation goals.",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "List the publications used to solicit certified M/WBEs."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 8,
+            "last": 8,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "3. A list identifying the date(s) that all solicitations for certified M/WBE participation were published in any of the above publications.",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "Provide dates of solicitations for certified M/WBE participation."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 9,
+            "last": 9,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "4. A list of all certified M/WBEs appearing in the NYS Directory of Certified Firms that were solicited for purposes of complying with your certified M/WBE participation levels.",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "List all certified M/WBEs solicited from the NYS Directory of Certified Firms."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 11,
+            "last": 11,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "5. Copies of notices, dates of contact, letters, and other correspondence as proof that solicitations were made in writing and copies of such solicitations, or a sample copy of the solicitation if an identical solicitation was made to all certified M/WBEs.",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "Provide proof of written solicitations to certified M/WBEs."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 13,
+            "last": 13,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "6. Provide copies of responses made by certified M/WBEs to your solicitations.",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "Submit copies of responses from certified M/WBEs to solicitations."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 14,
+            "last": 14,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "7. Provide a description of any contract documents, plans, or specifications made available to certified M/WBEs for purposes of soliciting their bids and the date and manner in which these documents were made available.",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "Describe contract documents provided to certified M/WBEs for bid solicitation."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 16,
+            "last": 16,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "8. Provide documentation of any negotiations between you, the Offeror/Contractor, and the M/WBEs undertaken for purposes of complying with the certified M/WBE participation goals.",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "Submit documentation of negotiations with M/WBEs for participation goals."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "9. Provide any other information you deem relevant which may help us in evaluating your request for a waiver.",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "Include any additional relevant information for waiver evaluation."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 19,
+            "last": 19,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "10. Provide the name, title, address, telephone number, and email address of offeror/contractor’s representative authorized to discuss and negotiate this waiver request.",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "Provide contact details of the representative authorized to discuss the waiver."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 21,
+            "last": 21,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "11. Copy of notice of application receipt issued by Empire State Development (ESD).",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "Submit a copy of the application receipt notice from ESD."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 23,
+            "last": 24,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "Unless a Total Waiver has been granted, Offeror/Contractor will be required to submit all reports and documents pursuant to the provisions set forth in the Contract, as deemed appropriate by the contracting entity, to determine M/WBE compliance.",
+        "section": "REQUIREMENTS AND DOCUMENT SUBMISSION INSTRUCTIONS",
+        "text": "Submit all required reports and documents unless a Total Waiver is granted."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

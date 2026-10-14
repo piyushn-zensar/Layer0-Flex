@@ -1,0 +1,116 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement specifies standards for high-voltage circuit breakers, which are not directly related to the products in the catalog. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement specifies standards for metal-clad switchgear, including arc-resistant testing. CROWN-ARMV is the appropriate product as it is arc-resistant metal-clad switchgear built to IEEE C37.20.2 and C37.20.7.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "This requirement specifies standards for high-voltage fuses and related accessories, which are not directly related to the products in the catalog. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 4,
+        "rationale": "The requirement specifies standards for relays and relay systems. EP2-RPP is the appropriate product as it includes protective relays and relay panels built to IEEE C37.90.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "This requirement specifies definitions for power switchgear, which are not directly related to the products in the catalog. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "This requirement specifies standards for liquid-immersed transformers, which are not directly related to the products in the catalog. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "This requirement specifies standards for instrument transformers, which are not directly related to the products in the catalog. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 8,
+        "rationale": "This requirement specifies standards for surge arresters, which are not directly related to the products in the catalog. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 9,
+        "rationale": "This requirement specifies standards for the application of surge arresters, which are not directly related to the products in the catalog. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 10,
+        "rationale": "This requirement specifies standards for partial discharge measurement in power switchgear, which are not directly related to the products in the catalog. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 11,
+        "rationale": "This requirement specifies standards for separable insulated connector systems, which are not directly related to the products in the catalog. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 12,
+        "rationale": "This requirement specifies standards for high-voltage testing techniques, which are not directly related to the products in the catalog. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 13,
+        "rationale": "The requirement specifies standards for large lead storage batteries for substations. EP2-AUX is the appropriate product as it includes auxiliary power systems with battery systems for substations.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "EP2-AUX"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 14,
+        "rationale": "This requirement specifies standards for industrial control systems, which are not directly related to the products in the catalog. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 15,
+        "rationale": "This requirement specifies standards for surge arresters, which are not directly related to the products in the catalog. The bid manager should address this.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

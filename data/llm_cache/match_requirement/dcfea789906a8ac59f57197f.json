@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies external power cable entrance and exit details for a metal-clad switchgear system. The CROWN-ACC product provides accessories for MV switchgear, including cable termination compartments, which align with the described cable entrance and exit specifications.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement specifies the electrical ratings and characteristics of a metal-clad switchgear system, including voltage, current, BIL, and frequency. The CROWN-ARMV product is arc-resistant metal-clad MV switchgear designed for such applications, meeting IEEE standards and the specified ratings.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

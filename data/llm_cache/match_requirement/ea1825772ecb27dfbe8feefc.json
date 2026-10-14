@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This is a compliance requirement, not a product-specific technical specification. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "Factory tests are a standard part of the offering for the CROWN-ARMV product, as it is an engineered-to-order metal-clad switchgear product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The specification of bolts, nuts, and washers, including their mechanical properties and chemical analysis, is part of the engineering and manufacturing process for the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "Shop primers are part of the finishing process for metal-clad switchgear, which is included in the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "This is a compliance and quality control requirement, not a product-specific technical specification. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 6,
+        "rationale": "The requirement for no welding during field assembly aligns with the pre-assembled and tested nature of the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

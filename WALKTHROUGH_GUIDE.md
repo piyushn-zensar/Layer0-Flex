@@ -79,21 +79,21 @@ Action steps (kind `action`) and wait steps (kind `wait`) are finished by `done(
 | decisions-part-record | Record participation (example rationale) | participation record present | already decided |
 | decisions-go | Record go (example rationale) | go record present | decided or not frozen |
 | decisions-dispatch-run | Press Dispatch | status is dispatched | no-go, dispatched or later |
-| inbox-switch-crown | Switch Acting as to the Crown product manager (example does it) | actor is Crown Product Manager | none |
+| inbox-switch-crown | Sign in as the Crown product manager (Switch; the example signs in as `crown.pm`) | signed in as Crown Product Manager | none |
 | inbox-submit | Submit the example answer | the remembered assignment is no longer assigned/returned | none |
-| inbox-switch-bm | Switch back to Bid Manager | actor is Bid Manager | none |
+| inbox-switch-bm | Sign in again as Bid Manager (Switch; the example signs in as `bid.manager`) | signed in as Bid Manager | none |
 | inbox-validate | Validate the answer | the remembered assignment is validated | none |
 | consolidation-filter | Click Open | Open chip pressed | filter absent |
 | consolidation-to-outline | Open the Response outline | pathname is the outline | none |
 | knowledge-send | Queue a validated answer (example posts to /api/knowledge) | a queue item exists | queue already has items |
-| knowledge-curator | Act as Bid Manager | actor is Bid Manager | already Bid Manager |
+| knowledge-curator | Sign in as Bid Manager (example: `bid.manager`) | signed in as Bid Manager | already Bid Manager |
 | knowledge-approve | Approve with a tidied response (example) | an approved item exists | none |
 | knowledge-reject | Reject with a note (example queues and fills) | a rejected item exists | none |
 | catalog-search | Search the knowledge base (example query) | results table present | none |
 | changes-read-example | Read Addendum No. 1 (example) | a change set exists | a set already exists |
 | changes-override | Override one wording and confirm (example) | a confirmed row is shown | set not in review, or no decision form |
 | changes-confirm-all | Confirm all proposals | the Confirm all button is disabled or gone | set not in review, or all confirmed |
-| changes-apply | Apply to requirements as Bid Manager (example sets the actor) | the change-set result is shown | set not in review |
+| changes-apply | Apply to requirements as Bid Manager (example signs in as `bid.manager`) | the change-set result is shown | set not in review |
 
 Exact conditions are in the chapter files; the table summarises them. Reject on a match, split, merge, ungroup and no-go are explained but never performed by an action step.
 
@@ -105,12 +105,12 @@ Exact conditions are in the chapter files; the table summarises them. Reject on 
 |---|---|---|
 | `GET /api/samples` | Lists syracuse_rfp (101 pages), hyperscale_rfp (1 page) and syracuse_addendum_1 (1 page) without paths | three entries with name, filename, kind, pages, description |
 | `POST /api/opportunities/{id}/documents/from-sample {"name":"syracuse_rfp"}` | Attaches the Syracuse RFP as the main document through the same helper as an upload; reading runs in the background | 101 pages, ingested in a few seconds from the cached layout; 409 on unknown sample, wrong kind or a second main RFP |
-| `POST .../requirements/extract` (button Run the reader agent) | Reader and grouping agents in mock mode replay frozen answers | 814 line items, 21 duplicates, 162 groups, 348 requirements, status review |
+| `POST .../requirements/extract` (button Run the reader agent) | Reader and grouping agents in mock mode replay frozen answers | 818 line items, 27 duplicates, 12 exceptions, 161 groups, 312 requirements, status review |
 | `POST /api/opportunities/OPP-0001/changes/from-sample {"name":"syracuse_addendum_1"}` | Reads the addendum against the frozen baseline like a file upload | change set in review: modified, added and removed items; after apply: Baseline 2, added REQ-0001-0977 and -0978, modified REQ-0001-0039 and -0332, removed REQ-0001-0130 |
 | Intake example | Fills title, customer, customer type | "Walkthrough: Syracuse switchgear" |
 | Requirements examples | Edit text; add page 55 lines 52-53; paste form (page 55 line 37) | green "REQ-... added (p. 55, lines 52-53)"; the pasted example must be rejected again if added |
 | Decisions examples | Participation and go/no-go rationale and judgements | fields filled; Record enabled |
-| Inbox examples | Switch actor; fill compliance, product, response | row submitted, then validated by the Bid Manager |
+| Inbox examples | Sign in as another user; fill compliance, product, response | row submitted, then validated by the Bid Manager |
 | Knowledge example | Queues a validated Crown answer via `POST /api/knowledge`; tidies the response; pre-fills a rejection note | item appears under Waiting, then Approved or Rejected |
 | Catalog example | Query in the search box | ranked results with score, kind, unit |
 
@@ -124,14 +124,14 @@ Opportunity choice: Create your own in chapter 4, or choose "Use the demo opport
 - Progress is stored in localStorage key `layer0.tour`: `{session, status, chapter, step, ctx: {oppId, data}}`. Status is one of `offered`, `running`, `skipped`, `done` (plus `loading` before the first read).
 - On each page load the launcher fetches the session id and compares it with the stored one. Different id: stored progress is reset and the welcome dialog opens. Same id: `skipped` or `done` stay closed; `running` resumes at the saved step.
 - A browser refresh keeps the position; a hot reload keeps React state (and the same stored data). Exit (Esc) keeps the position; the button then offers Resume. Storage failures (private window) are caught, and the app still works.
-- `ctx.setActor(name)` writes the actor cookie, saves progress and reloads the page, then the walkthrough resumes.
+- `ctx.signInAs(username)` signs in as that demo account (a username from `data/accounts.json`, for example `crown.pm`), saves progress and reloads the page, then the walkthrough resumes. `ctx.actor` is the signed-in name from `GET /api/auth/me`.
 
 ## 7. Engine behaviour
 
 - **State machine** (`TourProvider`): current step, chapter and counters over `STEPS`; navigates to the step route (client-side), then polls for the target up to 10 s. Not found: the bubble shows the step's `fallback` text without a spotlight. `onEnter` runs after the target appears.
 - **Overlay** (`TourOverlay`): four-rectangle dimmed backdrop with a hole around the target (clickable on action steps, blocked otherwise), repositioned by requestAnimationFrame and ResizeObserver; automatic placement; light markup (`**bold**`, `` `code` ``); aria-live announcements and focus management.
 - **Launcher** (`TourLauncher`): welcome dialog and top-bar button, raised above the backdrop while running.
-- **ctx** helpers: `api`, `post`, `el`, `set`, `get`, `go`, `setActor`, and a persisting `oppId` setter.
+- **ctx** helpers: `api`, `post`, `el`, `set`, `get`, `go`, `signInAs`, and a persisting `oppId` setter.
 
 ## 8. Adding or changing a step
 
@@ -156,7 +156,7 @@ Opportunity choice: Create your own in chapter 4, or choose "Use the demo opport
 - Portfolio empty state ("No opportunities yet") is not targeted. Opportunity status `reading` is in the vocabulary but is never set by the current code, so the status step lists only statuses that occur.
 - The document-switch chips in Traceability exist only after an addendum is applied; the step targets the "Showing" line.
 - Mobile: the bubble docks under 700 px and was verified at 390 px for the engine chapters only; the other chapters were checked on desktop.
-- `ctx.setActor` was exercised through the inbox and knowledge chapters' flows in Playwright runs, but not every action-step path was driven end to end in a browser.
+- `ctx.signInAs` was exercised through the inbox and knowledge chapters' flows in Playwright runs, but not every action-step path was driven end to end in a browser.
 - Coverage statement: every page under `web/app` has walkthrough steps (section 3), and every UI row below is a step in the chapter files. This is not a claim that every individual control on every page is explained; filters, buttons and fields not listed in the map have no step.
 
 ## 10. Final coverage map
@@ -177,10 +177,10 @@ Opportunity choice: Create your own in chapter 4, or choose "Use the demo opport
 | /portfolio | Row OPP-0002 | Fictional hyperscale sample | Read | Spotlight on row | portfolio-hyperscale |
 | /portfolio | Open button | Where Open and the ID lead | Read | Spotlight on Open | portfolio-open |
 | /portfolio | New opportunity button | Hand-over to intake | Read | Spotlight on button | portfolio-new |
-| Top bar | Brand link | Bar on every page; no sign-in | Read | Spotlight on mark | navigation-brand |
+| Top bar | Brand link | Bar on every page, shown once signed in | Read | Spotlight on mark | navigation-brand |
 | Top bar | Main navigation | Four destinations | Read | Spotlight on nav | navigation-nav |
 | Top bar | New opportunity button | Form, id allocation, status new | Read | Spotlight on button | navigation-new |
-| Top bar | Acting as picker | Actor cookie, X-Actor, role rules | Read | Spotlight on picker | navigation-actor |
+| Top bar | Signed-in name and Switch | Sign-in token, role rules | Read | Spotlight on picker | navigation-actor |
 | Top bar | Walkthrough button | Resume, Restart, chapters | Read | Spotlight on button | navigation-help |
 | /opportunities/{opp} | Header | Breadcrumb, title, status, stepper | Read (engine navigates) | Spotlight on header | navigation-opp-head |
 | /opportunities/{opp} | Status badge | Nine statuses, forward-only | Read | Spotlight, fallback if not loaded | navigation-status |
@@ -204,7 +204,7 @@ Opportunity choice: Create your own in chapter 4, or choose "Use the demo opport
 | /opportunities/{opp} | Main document row | 101 pages, ingested, fingerprint | Read | Spotlight on row | intake-doc-ingested |
 | /opportunities/{opp} | Search this RFP | Short-term index, page and lines | Read, Use example | Results on p. 63 and 64 | intake-search |
 | /opportunities/{opp} | Run the reader agent | Reader and grouping, status review | Press button | Status review or later | intake-extract |
-| RFP documents to Requirements | Result summary | 814 items, 21 duplicates, 162 groups, 348 requirements | Read | Centred bubble | intake-result |
+| RFP documents to Requirements | Result summary | 818 items, 27 duplicates, 12 exceptions, 161 groups, 312 requirements | Read | Centred bubble | intake-result |
 | Requirements | Screen introduction | Numbers' origin; what to finish | Read | Centred bubble | requirements-intro |
 | Requirements | Header, Freeze button | Active count, still to decide | Read | Spotlight on help line | requirements-head |
 | Requirements | Filter chips and search | Chip meanings, search scope | Read | Spotlight on filters | requirements-filters |
@@ -304,14 +304,14 @@ Opportunity choice: Create your own in chapter 4, or choose "Use the demo opport
 | /inbox/CROWN | Bid manager view | Permissions, read-only banner | Read | Spotlight on table | inbox-bm-view |
 | /inbox/CROWN | Open the RFP, hand-off links | Trace links, hand-off | Read | Spotlight on links | inbox-links |
 | /inbox/CROWN | Table columns | Opportunity, requirement, response, status | Read | Spotlight on table | inbox-columns |
-| /inbox/CROWN | Acting as | Cookie and X-Actor | Switch, Use example | Actor Crown Product Manager | inbox-switch-crown |
+| /inbox/CROWN | Signed in as | Sign-in token, role rules | Switch, Use example | Signed in as Crown Product Manager | inbox-switch-crown |
 | /inbox/CROWN | Open rows line | Open count | Read | Spotlight on count | inbox-open-count |
 | /inbox/CROWN | Row form | Compliance, product, response | Read, Use example | Fields filled | inbox-row-form |
 | /inbox/CROWN | Submit | POST /respond | Press Submit | Assignment submitted | inbox-submit |
 | /inbox/CROWN | Submitted row | Effects downstream | Read | Spotlight on row | inbox-submitted |
 | /inbox/CROWN | Submit all | Bulk semantics | Read | Spotlight on button | inbox-submit-all |
 | /inbox/CROWN | Source link, unanchored | Highlighted source | Read | Link or fallback | inbox-source-link |
-| /inbox/CROWN | Acting as (back) | Validation is the Bid Manager's | Switch, Use example | Actor Bid Manager | inbox-switch-bm |
+| /inbox/CROWN | Signed in as (back) | Validation is the Bid Manager's | Switch, Use example | Signed in as Bid Manager | inbox-switch-bm |
 | /inbox/CROWN | Validate | What validated enables | Press Validate | Assignment validated | inbox-validate |
 | /inbox/CROWN | Return with note | Required note | Read | Form or fallback | inbox-return |
 | /inbox/CROWN | Validated result | Effects and audit | Read | Spotlight on links | inbox-validated |
@@ -344,7 +344,7 @@ Opportunity choice: Create your own in chapter 4, or choose "Use the demo opport
 | Knowledge base | Waiting, Approved, Rejected tabs | Statuses, resend rules | Read | Spotlight on tabs | knowledge-tabs |
 | Knowledge base | Where items come from | Three kinds, validated-only | Use example | Queue has an item | knowledge-send |
 | Knowledge base | Item card | Card anatomy | Read | Spotlight on first card | knowledge-item |
-| Knowledge base | Curator note, Acting as | Who curates | Switch actor | Actor Bid Manager | knowledge-curator |
+| Knowledge base | Curator note, signed in as | Who curates | Switch, Use example | Signed in as Bid Manager | knowledge-curator |
 | Knowledge base | Review form | Response, note, buttons | Read | Spotlight on form | knowledge-review-form |
 | Knowledge base | Approve | Writes to the index, not the matcher prompt | Press Approve | Approved item exists | knowledge-approve |
 | Knowledge base | Approved tab | Result | Read | Spotlight on tab | knowledge-approved |
@@ -380,5 +380,5 @@ Opportunity choice: Create your own in chapter 4, or choose "Use the demo opport
 | Any (centred) | Change handling | Baselines, stable ids | Read | Centred bubble | recap-changes |
 | Any (centred) | Audit trail | audit.record, History | Read | Centred bubble | recap-audit |
 | Any (centred) | Placeholder data | Illustrative content | Read | Centred bubble | recap-placeholders |
-| Any (centred) | Explore on your own | Second opportunity, actor switching | Read | Centred bubble | recap-explore |
+| Any (centred) | Explore on your own | Second opportunity, signing in as another user | Read | Centred bubble | recap-explore |
 | Any (centred) | Finish | Close, status done | Press Finish | Overlay closes, no auto-open | recap-finish |

@@ -1,0 +1,86 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance with building codes and regulations, which is not specific to any product in the catalog. It is a general construction requirement.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 2,
+        "rationale": "This requirement involves field verification and coordination, which are responsibilities of the contractor and not related to specific products in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 3,
+        "rationale": "This requirement is about providing support during construction, which is a general construction activity and not tied to any specific product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 4,
+        "rationale": "This requirement involves coordination of work and finishes, which is a general construction and project management activity, not specific to any product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 5,
+        "rationale": "This requirement involves providing blocking, furring, and shimming, which are general construction tasks and not related to specific products in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 6,
+        "rationale": "This requirement specifies the quality of construction work (plumb, level, square), which is a general construction standard and not tied to any specific product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 7,
+        "rationale": "This requirement assigns responsibility for changes and compliance to the contractor, which is a general project management and construction responsibility, not related to specific products in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 8,
+        "rationale": "This requirement describes the scope and intent of the drawings, which is a general architectural and construction guideline, not related to specific products in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 9,
+        "rationale": "This requirement involves obtaining and paying for permits, which is a compliance and administrative task, not related to specific products in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 10,
+        "rationale": "This requirement involves surface preparation for painting, which is a general construction task and not tied to any specific product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 11,
+        "rationale": "This requirement specifies the quality of floor surfaces, which is a general construction standard and not tied to any specific product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 12,
+        "rationale": "This requirement involves providing structural support for fixtures, which is a general construction task and not related to specific products in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 13,
+        "rationale": "This requirement specifies standards for tile installation, which is a general construction guideline and not tied to any specific product in the catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

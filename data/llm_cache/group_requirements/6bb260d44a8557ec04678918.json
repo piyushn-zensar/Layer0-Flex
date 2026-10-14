@@ -1,0 +1,39 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1
+        ],
+        "title": "Compliance with relevant standards"
+      },
+      {
+        "category": "technical",
+        "members": [
+          2,
+          8,
+          9,
+          11,
+          12
+        ],
+        "title": "Switchgear specifications and features"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          6,
+          7,
+          10,
+          13,
+          14,
+          15
+        ],
+        "title": "Switchgear accessories and components"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

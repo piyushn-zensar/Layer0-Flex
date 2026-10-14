@@ -1,0 +1,400 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 4,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Switchgear: ANSI/IEEE C37.20.2",
+        "section": "b",
+        "text": "Switchgear must comply with ANSI/IEEE C37.20.2."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 6,
+            "last": 6,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Arc Faults:  ANSI/IEEE C37.20.7",
+        "section": "c",
+        "text": "Arc faults must comply with ANSI/IEEE C37.20.7."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 8,
+            "last": 9,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Conduct on all system components and subassemblies to assure that all devices and systems are in proper working order before delivery to jobsite.",
+        "section": "3",
+        "text": "Test all components and subassemblies to ensure proper operation before delivery."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 11,
+            "last": 11,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Simulate actual system operation.",
+        "section": "4",
+        "text": "Simulate the actual operation of the system."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 13,
+            "last": 13,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Submit test reports as specified.",
+        "section": "5",
+        "text": "Provide test reports as specified."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 17,
+            "last": 17,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Technical submittals shall be as specified in the Attachments to these Specifications.",
+        "section": "A",
+        "text": "Provide technical submittals as specified in the attachments."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 21,
+            "last": 22,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Furnish drawings necessary for design, erection, installation, and operation of all equipment and materials furnished including, but not limited to, the following:",
+        "section": "B.1",
+        "text": "Provide all necessary drawings for design, installation, and operation."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 24,
+            "last": 26,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Complete arrangement and outline drawings to an exact scale with complete dimensions, bill of material item numbers, phase and equipment number tag locations, and enlarged details for complete description of installation.",
+        "section": "B.1.a",
+        "text": "Provide detailed arrangement and outline drawings."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 28,
+            "last": 29,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Side view drawings of the prefabricated equipment enclosure showing all wall mounted equipment.",
+        "section": "B.1.b",
+        "text": "Provide side view drawings of the equipment enclosure."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 31,
+            "last": 31,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Installation drawings.",
+        "section": "B.1.c",
+        "text": "Provide installation drawings."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 33,
+            "last": 33,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Connection diagrams.",
+        "section": "B.1.d",
+        "text": "Provide connection diagrams."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 35,
+            "last": 35,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Complete bill of material including item numbers and MANUFACTURER’s catalog numbers.",
+        "section": "B.1.e",
+        "text": "Provide a complete bill of materials with item and catalog numbers."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 38,
+            "last": 40,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Complete drawings and descriptive bulletins for installation, adjustment, testing, maintenance, and operation of all equipment including bus weldments, connectors, insulators, etc.",
+        "section": "B.1.f",
+        "text": "Provide detailed drawings and bulletins for equipment handling."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 42,
+            "last": 42,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "General nameplate, and internal wiring diagrams and drawings of all equipment.",
+        "section": "B.1.g",
+        "text": "Provide nameplate and internal wiring diagrams."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 44,
+            "last": 45,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Three-line and Schematic diagrams showing all external electrical connection terminal numbers.",
+        "section": "B.1.h",
+        "text": "Provide three-line and schematic diagrams."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 47,
+            "last": 47,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Catalog cut sheets.",
+        "section": "B.1.i",
+        "text": "Provide catalog cut sheets."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 49,
+            "last": 49,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Instrument transformer performance curves and data.",
+        "section": "B.1.j",
+        "text": "Provide performance curves and data for instrument transformers."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 51,
+            "last": 51,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Insulator outline drawings.",
+        "section": "B.1.k",
+        "text": "Provide insulator outline drawings."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 53,
+            "last": 53,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Drawings showing additional detail, required for installation and maintenance.",
+        "section": "B.1.l",
+        "text": "Provide detailed drawings for installation and maintenance."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 55,
+            "last": 55,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "List of identification tags, including dimensions and text for each tag.",
+        "section": "B.1.m",
+        "text": "Provide a list of identification tags with details."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 57,
+            "last": 57,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Instruction, Operating, installation and maintenance manuals.",
+        "section": "B.1.n",
+        "text": "Provide instruction, operating, installation, and maintenance manuals."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 59,
+            "last": 60,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Furnish catalog information and Material Safety Data Sheets (MSDS) for all materials where applicable.",
+        "section": "B.1.o",
+        "text": "Provide catalog information and MSDS for applicable materials."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 62,
+            "last": 63,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Separate schematic and wiring diagrams shall be submitted for each breaker furnished. “Typical” drawings covering several breakers will not be acceptable.",
+        "section": "B.2",
+        "text": "Submit individual schematic and wiring diagrams for each breaker."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 65,
+            "last": 67,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Standard drawings of equipment which do not indicated clearly the exact size, model number, and optional items to be furnished will be returned to the VENDOR for this information before review by the PURCHASER.",
+        "section": "B.3",
+        "text": "Ensure standard drawings include exact specifications."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 69,
+            "last": 70,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Table showing on each anchor bolt, forces due to Dead load, Live load, Operation loads, Seismic loads (direction x-x), Seismic loads (direction y-y).",
+        "section": "B.4",
+        "text": "Provide a table of forces for each anchor bolt."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 72,
+            "last": 73,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "The center of gravity, location of the anchor bolts, base plates dimensions and information about the holes-diameter, edge distance from each side.",
+        "section": "B.5",
+        "text": "Provide details on center of gravity, anchor bolts, and base plates."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 75,
+            "last": 76,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "Shipping drawings showing weight, lifting positions, bracing requirements and shipping instructions.",
+        "section": "B.6",
+        "text": "Provide shipping drawings with relevant details."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 78,
+            "last": 79,
+            "page": 59
+          }
+        ],
+        "page": 59,
+        "quote": "In addition to other Submittal requirements, final drawings shall be submitted as in AutoCAD and PDF format.",
+        "section": "B.7",
+        "text": "Submit final drawings in AutoCAD and PDF formats."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

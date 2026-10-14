@@ -1,0 +1,45 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          4,
+          5
+        ],
+        "title": "Switchgear electrical ratings and construction requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          6,
+          9,
+          13,
+          14
+        ],
+        "title": "Switchgear operational and safety features"
+      },
+      {
+        "category": "technical",
+        "members": [
+          11,
+          16,
+          18
+        ],
+        "title": "Switchgear accessibility and connection features"
+      },
+      {
+        "category": "technical",
+        "members": [
+          8,
+          15
+        ],
+        "title": "Switchgear labeling and identification"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

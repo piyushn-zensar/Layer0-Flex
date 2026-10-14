@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies NEMA SG 4, which pertains to high voltage circuit breakers. The CROWN-ARMV product is arc-resistant metal-clad MV switchgear with vacuum breakers, which aligns with the requirement for high voltage circuit breakers.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement mentions NEMA SG 5, SG 6, and SG 7, which are standards related to power switchgear assemblies, power switching equipment, and manufactured labels for switchgear. The CROWN-ARMV product, being a metal-clad MV switchgear lineup, meets these standards and is suitable for this requirement.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

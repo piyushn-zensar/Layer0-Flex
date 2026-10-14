@@ -1,0 +1,35 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "title": "Solicitation and engagement of M/WBEs"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          6,
+          7
+        ],
+        "title": "Contractual and payment provisions for M/WBEs"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          8,
+          9
+        ],
+        "title": "Non-discrimination and affirmative action in employment"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

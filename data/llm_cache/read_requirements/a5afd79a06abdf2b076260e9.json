@@ -1,0 +1,190 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 4,
+            "page": 71
+          }
+        ],
+        "page": 71,
+        "quote": "Check operation of switchgear alarm contacts.",
+        "section": "7",
+        "text": "Verify the functionality of switchgear alarm contacts."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 6,
+            "last": 7,
+            "page": 71
+          }
+        ],
+        "page": 71,
+        "quote": "Initial check of proper breaker tripping by manual or electrical operation of protective relay contacts.",
+        "section": "8",
+        "text": "Perform initial testing of breaker tripping using manual or electrical relay operations."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 9,
+            "last": 9,
+            "page": 71
+          }
+        ],
+        "page": 71,
+        "quote": "Check all circuit breaker cell interlocks for conformance with these Specifications.",
+        "section": "9",
+        "text": "Ensure circuit breaker cell interlocks meet the specifications."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 10,
+            "last": 10,
+            "page": 71
+          }
+        ],
+        "page": 71,
+        "quote": "Check all internal electrical interlocks and automatic transfer sequences for specified operation.",
+        "section": "10",
+        "text": "Test internal electrical interlocks and automatic transfer sequences for proper operation."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 71
+          }
+        ],
+        "page": 71,
+        "quote": "Field high-potential test of switchgear.",
+        "section": "11.a",
+        "text": "Conduct a high-potential test on the switchgear in the field."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 16,
+            "page": 71
+          }
+        ],
+        "page": 71,
+        "quote": "Check and measure equipment grounds.",
+        "section": "11.b",
+        "text": "Verify and measure the grounding of equipment."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 17,
+            "last": 18,
+            "page": 71
+          }
+        ],
+        "page": 71,
+        "quote": "Check operation of heaters in switchgear.",
+        "section": "11.c",
+        "text": "Test the functionality of heaters within the switchgear."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 19,
+            "last": 20,
+            "page": 71
+          }
+        ],
+        "page": 71,
+        "quote": "Conduct polarity tests on current and potential transformers.",
+        "section": "11.d",
+        "text": "Perform polarity tests on current and potential transformers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 21,
+            "last": 22,
+            "page": 71
+          }
+        ],
+        "page": 71,
+        "quote": "Bench testing of all protective relays and setting of values specified by the PURCHASER.",
+        "section": "11.e",
+        "text": "Bench test protective relays and set values as specified."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 25,
+            "page": 71
+          }
+        ],
+        "page": 71,
+        "quote": "Protective relay trip testing of breakers by high current tests or other electrical means, and energized checks on relaying circuits as required by the PURCHASER.",
+        "section": "11.f",
+        "text": "Test protective relay tripping of breakers and perform energized checks on relaying circuits."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 26,
+            "last": 27,
+            "page": 71
+          }
+        ],
+        "page": 71,
+        "quote": "Verify the HVAC is operating properly.",
+        "section": "11.g",
+        "text": "Ensure the HVAC system is functioning correctly."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 28,
+            "last": 29,
+            "page": 71
+          }
+        ],
+        "page": 71,
+        "quote": "Check operation of Smoke Alarm.",
+        "section": "11.h",
+        "text": "Test the functionality of the smoke alarm."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 30,
+            "last": 31,
+            "page": 71
+          }
+        ],
+        "page": 71,
+        "quote": "Check operation of Door Alarm.",
+        "section": "11.i",
+        "text": "Verify the operation of the door alarm."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

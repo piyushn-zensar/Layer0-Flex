@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 9,
+            "last": 12,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "The prices in this proposal have been arrived at independently without collusion, consultation, communication, or agreement, for the purpose of restricting competition, as to any matter relating to such prices with any other Respondent, or with any competitor;",
+        "section": "Exhibit B",
+        "text": "The bidder must certify that proposal prices were determined independently without collusion."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 14,
+            "last": 17,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Unless otherwise required by law, the prices which have been quoted in this proposal have not been knowingly disclosed by the Respondent and will not knowingly be disclosed by the Respondent prior to opening, directly or indirectly, to any other respondent or to any competitor; and",
+        "section": "Exhibit B",
+        "text": "The bidder must certify that proposal prices have not been disclosed to competitors."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 19,
+            "last": 21,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "No attempt has been made or will be made by the Respondent to induce any other person, partnership or corporation to submit or not to submit a proposal for purpose of restricting competition.",
+        "section": "Exhibit B",
+        "text": "The bidder must certify no attempts were made to influence others to restrict competition."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

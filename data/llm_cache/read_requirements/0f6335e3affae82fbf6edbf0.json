@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 3,
+            "last": 3,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "This form must be submitted with any bid, proposal, or proposed negotiated contract or within a reasonable time thereafter, but prior to contract award.",
+        "section": "M/WBE Subcontractor Utilization Plan",
+        "text": "Submit the M/WBE Subcontractor Utilization Plan with the bid or proposal before contract award."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 4,
+            "last": 4,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "This Utilization Plan must contain a detailed description of the supplies and/or services to be provided by each certified Minority and Women-owned Business Enterprise (M/WBE) subcontractor under the contract.",
+        "section": "M/WBE Subcontractor Utilization Plan",
+        "text": "Include a detailed description of services or supplies provided by each M/WBE subcontractor."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 51,
+            "last": 57,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "Submission of this form constitutes the Offeror's acknowledgement and agreement to comply with the M/WBE requirements set forth under NYS Executive Law, Article 15-A, 5 NYCRR Part 143, and the above-referenced solicitation.",
+        "section": "M/WBE Subcontractor Utilization Plan",
+        "text": "Acknowledge and agree to comply with M/WBE requirements under NYS Executive Law and related regulations."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

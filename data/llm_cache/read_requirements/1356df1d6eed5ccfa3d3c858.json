@@ -1,0 +1,400 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 11,
+            "last": 12,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Indoor (Switchgear house by others)",
+        "section": "Application",
+        "text": "The switchgear must be suitable for indoor use."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Controlled Environment Yes",
+        "section": "Application",
+        "text": "The switchgear must operate in a controlled environment."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 17,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Drawing Size 24 X 36 Inch",
+        "section": "Drawing Specifications",
+        "text": "The drawing size must be 24 x 36 inches."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 18,
+            "last": 20,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Usable Drawing Area 23‐1/2 X 35‐1/2 Inch",
+        "section": "Drawing Specifications",
+        "text": "The usable drawing area must be 23-1/2 x 35-1/2 inches."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 21,
+            "last": 22,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "CAD Drawing Required Yes",
+        "section": "Drawing Specifications",
+        "text": "CAD drawings are required."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 25,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "CAD System required from SubPurchaser VENDOR",
+        "section": "Drawing Specifications",
+        "text": "The vendor must provide the CAD system."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 26,
+            "last": 27,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "CAD System Used by Purchaser AutoCAD",
+        "section": "Drawing Specifications",
+        "text": "The purchaser uses AutoCAD as the CAD system."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 28,
+            "last": 30,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Border Title Block File Provided by VENDOR",
+        "section": "Drawing Specifications",
+        "text": "The vendor must provide the border title block file."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 31,
+            "last": 32,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "One Line Diagram Provided by PURCHASER",
+        "section": "Drawing Specifications",
+        "text": "The purchaser will provide the one-line diagram."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 33,
+            "last": 35,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Tripping Block Diagram Provided by VENDOR",
+        "section": "Drawing Specifications",
+        "text": "The vendor must provide the tripping block diagram."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 36,
+            "last": 37,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Three Line Diagram Provided by VENDOR",
+        "section": "Drawing Specifications",
+        "text": "The vendor must provide the three-line diagram."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 38,
+            "last": 39,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Schematic Diagram Provided by VENDOR",
+        "section": "Drawing Specifications",
+        "text": "The vendor must provide the schematic diagram."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 40,
+            "last": 41,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Bill of Materials VENDOR",
+        "section": "Drawing Specifications",
+        "text": "The vendor must provide the bill of materials."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 45,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Metal Clad Switchgear Arrangement Drawing Provided by VENDOR",
+        "section": "Drawing Specifications",
+        "text": "The vendor must provide the arrangement drawing for the metal clad switchgear."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 47,
+            "last": 48,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Metal Clad Switchgear Fabrication Details Provided by VENDOR",
+        "section": "Drawing Specifications",
+        "text": "The vendor must provide the fabrication details for the metal clad switchgear."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 49,
+            "last": 51,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Metal Clad Switchgear Engraved Nameplate List Provided by VENDOR",
+        "section": "Drawing Specifications",
+        "text": "The vendor must provide the engraved nameplate list for the metal clad switchgear."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 53,
+            "last": 54,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Metal Clad Switchgear Connection Diagram Provided by VENDOR",
+        "section": "Drawing Specifications",
+        "text": "The vendor must provide the connection diagram for the metal clad switchgear."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 54,
+            "last": 55,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Number of Sections 2",
+        "section": "Specifications",
+        "text": "The switchgear must have 2 sections."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 57,
+            "last": 61,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Number of Shipped Assemblies VENDOR Unit 2 EA.",
+        "section": "Specifications",
+        "text": "The vendor must ship 2 assemblies."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 62,
+            "last": 63,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Total Number of Compartments VENDOR Unit",
+        "section": "Specifications",
+        "text": "The vendor must specify the total number of compartments."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 65,
+            "last": 66,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Finish Color Gray Exterior and White Interior",
+        "section": "Specifications",
+        "text": "The switchgear must have a gray exterior and white interior finish."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 68,
+            "last": 69,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Breaker Type Drawout type VCB",
+        "section": "Specifications",
+        "text": "The breaker type must be drawout type VCB."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 70,
+            "last": 71,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Number of Independent Trip Coils",
+        "section": "Specifications",
+        "text": "The number of independent trip coils must be specified."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 72,
+            "last": 74,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Current Transformers Quantity per pole 2",
+        "section": "Specifications",
+        "text": "Each pole must have 2 current transformers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 75,
+            "last": 77,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Relaying Ratio 2000/5MR; 1200/5MR Multi ratio Yes",
+        "section": "Specifications",
+        "text": "The relaying ratio must be 2000/5MR or 1200/5MR, and it must be multi-ratio."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 78,
+            "last": 79,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Relaying Accuracy C400",
+        "section": "Specifications",
+        "text": "The relaying accuracy must be C400."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 80,
+            "last": 81,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Thermal Rating 1.5 or higher",
+        "section": "Specifications",
+        "text": "The thermal rating must be 1.5 or higher."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 82,
+            "last": 83,
+            "page": 72
+          }
+        ],
+        "page": 72,
+        "quote": "Metering Current Transformer Quantity 2",
+        "section": "Specifications",
+        "text": "There must be 2 metering current transformers."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

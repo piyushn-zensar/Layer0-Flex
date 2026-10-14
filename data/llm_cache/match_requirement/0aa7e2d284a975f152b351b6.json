@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "Requirement 1 is a compliance and general specification requirement, not directly tied to a specific product. It outlines standards and general expectations for the Metal Clad Switchgear lineup. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement specifies a 15kV Metal Clad Switchgear lineup with arc-resistant Type 2B construction, meeting IEEE C37.20.7 standards. The catalog entry for CROWN-ARMV matches this description, as it provides arc-resistant metal-clad switchgear with vacuum breakers and the required standards compliance.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 3,
+        "rationale": "The requirement specifies accessories such as cable termination compartments, ground balls, and ground bails. These are covered under the CROWN-ACC product, which includes catalog accessories for MV switchgear such as those listed.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

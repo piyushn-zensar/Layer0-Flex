@@ -1,0 +1,104 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies features for metal-clad switchgear, including hinged, latched rear doors and drawout carriages with grounding devices. The CROWN-ARMV product is described as arc-resistant metal-clad MV switchgear, which aligns with the requirement for metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement specifies Kirk Key Interlock for incoming feeder cubicles, a feature typically associated with metal-clad switchgear. The CROWN-ARMV product is suitable as it is designed for such applications.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement specifies a copper main bus with specific ratings and standards compliance, which is a feature of the CROWN-ARMV metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement specifies insulated medium voltage bus with epoxy and removable access covers, which are features of the CROWN-ARMV metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "The requirement specifies that the voltage ratings of the main bus shall equal the breaker ratings, a standard feature of the CROWN-ARMV metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 6,
+        "rationale": "The requirement specifies four-hole NEMA pads for high-voltage power cables, which are accessories available in the CROWN-ACC product catalog.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "The requirement specifies a comprehensive grounding system for the switchgear, which is a feature of the CROWN-ARMV metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 8,
+        "rationale": "The requirement specifies phase sequence identification, BIL rating, and voltage/current ratings, all of which are features of the CROWN-ARMV metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

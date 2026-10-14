@@ -1,7 +1,7 @@
 """Reader agent: proposes requirement line items from the page layout model.
 
-No regex for identifying requirements. The model reads numbered lines and returns exact quotes; anchoring.py then
-proves each quote exists on the page (or marks it UNANCHORED). Answers are cached and
+No regex for identifying requirements. The model reads numbered lines and returns exact quotes with the line ranges
+it copied them from; anchoring.py then proves each quote is in the RFP, nearest to those lines (or marks it UNANCHORED). Answers are cached and
 frozen by the model gateway, so a re-run gives the same list.
 """
 import re
@@ -24,8 +24,10 @@ cooling equipment, and list every requirement the bidder must meet or answer.
 Rules:
 - List EVERY requirement on the page: one item per distinct obligation (technical, compliance, commercial,
   schedule, submission, legal, staffing). Dense specification pages often have 15 to 30.
-- "quote" must be copied character for character from ONE page's lines, without the "L12:" line labels.
-  Never paraphrase the quote.
+- "quote" must be copied character for character from the lines, without the "L12:" line labels.
+  Never paraphrase the quote. A requirement that continues onto the next page is quoted across the page break.
+- "lines" gives where the quote was copied from: one range per page, for example lines L12 to L14 of page 55
+  is {"page": 55, "first": 12, "last": 14}.
 - "text" is a short plain-English restatement (max 25 words).
 - Skip the table of contents, page headers and footers, blank forms, signature blocks and pure definitions.
 - If a page has no requirements, return nothing for it. Do not invent requirements."""
@@ -43,8 +45,18 @@ SCHEMA = {
                     "text": {"type": "string"},
                     "category": {"type": "string", "enum": CATEGORIES},
                     "section": {"type": "string"},
+                    "lines": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {"page": {"type": "integer"}, "first": {"type": "integer"},
+                                           "last": {"type": "integer"}},
+                            "required": ["page", "first", "last"],
+                            "additionalProperties": False,
+                        },
+                    },
                 },
-                "required": ["page", "quote", "text", "category", "section"],
+                "required": ["page", "quote", "text", "category", "section", "lines"],
                 "additionalProperties": False,
             },
         }
@@ -54,15 +66,21 @@ SCHEMA = {
 }
 
 
-def read(layout: dict) -> tuple[list[dict], list[str]]:
-    """Returns (proposed requirements, problems). A chunk without a cached answer is a problem, not a guess."""
+def read(layout: dict) -> tuple[list[dict], list[str], dict]:
+    """Returns (proposed requirements, problems, coverage). A chunk without a cached answer is a problem, not a guess.
+    coverage: pages = pages_read + pages_failed + pages_skipped + pages_unreadable; chunks, chunks_failed."""
     # Contents pages and page furniture never reach the model (they used to become "requirements").
     pages = [p | {"lines": [l for l in p["lines"] if not l.get("furniture")]} for p in layout["pages"] if not p.get("toc")]
     pages = [p for p in pages if p["lines"]]
     chunks = pack(pages)
     with ThreadPoolExecutor(PARALLEL_CALLS) as pool:
         answers = list(pool.map(_read_chunk, chunks))  # map keeps page order
-    return [r for items, _ in answers for r in items], [problem for _, problem in answers if problem]
+    failed = sum(len(c) for c, (_, problem) in zip(chunks, answers) if problem)
+    unreadable = sum(1 for p in layout["pages"] if p.get("unreviewed"))  # OCR found no text (ingestion)
+    coverage = {"pages": len(layout["pages"]), "pages_read": len(pages) - failed, "pages_failed": failed,
+                "pages_skipped": len(layout["pages"]) - len(pages) - unreadable, "pages_unreadable": unreadable,
+                "chunks": len(chunks), "chunks_failed": sum(1 for _, problem in answers if problem)}
+    return [r for items, _ in answers for r in items], [problem for _, problem in answers if problem], coverage
 
 
 def _read_chunk(chunk: list[dict]) -> tuple[list[dict], str | None]:

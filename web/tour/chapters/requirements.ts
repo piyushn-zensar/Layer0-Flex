@@ -79,8 +79,8 @@ const chapter: TourChapter = {
       title: "The Requirements screen",
       body: [
         "This is where a person turns the reader agent's **proposals** into the opportunity's **requirements**. On the RFP step the agent "
-        + "read the main document page by page and proposed one line item per obligation it found (for the Syracuse RFP: 814 line items, "
-        + "21 of them marked as duplicates, 162 groups of related items, 348 requirements to decide). Nothing here was written by a person yet.",
+        + "read the main document page by page and proposed one line item per obligation it found (for the Syracuse RFP: 818 line items, "
+        + "27 of them marked as duplicates, 12 exceptions, 161 groups of related items, 312 requirements in the register). Nothing here was written by a person yet.",
         "Every line item carries the **exact words of the RFP** (the quote) and where they stand (page and lines). The agent never invents a "
         + "location: a quote it could not find on a page is shown as *unanchored* and the person checks it by hand. The reader runs offline from "
         + "frozen answers in this PoC, so a re-read gives the same proposals.",

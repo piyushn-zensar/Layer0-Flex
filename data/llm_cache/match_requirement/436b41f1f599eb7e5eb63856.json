@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "Requirement 1 pertains to compliance and reporting obligations related to M/WBE and SDVOB participation goals. This is not a product requirement, so no units are applicable.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 2,
+        "rationale": "Requirement 2 specifies compliance with legal and auditing standards. It is not a product requirement, so no units are applicable.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 3,
+        "rationale": "Requirement 3 involves obtaining valid licenses and registrations, which is a compliance matter. It is not a product requirement, so no units are applicable.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance with the Syracuse Regional Airport Authority's Code of Ethics and does not specify a product or service. It is a commercial or legal requirement, and thus no product from the catalog is applicable.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

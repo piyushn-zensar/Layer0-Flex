@@ -1,0 +1,86 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies the manufacture of metal-clad switchgear for continuous service, which aligns with the CROWN-ARMV product description for arc-resistant metal-clad MV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "This requirement pertains to construction and installation activities, which are typically the responsibility of the contractor or installer, not the product supplier.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "Internal connections are part of the assembly and testing of the switchgear, which is included in the scope of the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 4,
+        "rationale": "Checking and torquing internal connections is part of the quality assurance and testing process for the CROWN-ARMV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.7,
+        "n": 5,
+        "rationale": "This requirement specifies a construction constraint (no roof penetrations), which is not directly related to the product but rather to the installation process.",
+        "units": []
+      },
+      {
+        "confidence": 0.7,
+        "n": 6,
+        "rationale": "This requirement addresses damage caused by the purchaser's operations, which is not a product specification but a contractual or warranty issue.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "The detailed testing and inspection of breakers and interlocks are part of the functional testing of the CROWN-ARMV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 8,
+        "rationale": "The inspection and testing of power buses and associated components are standard procedures for ensuring the quality and functionality of the CROWN-ARMV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

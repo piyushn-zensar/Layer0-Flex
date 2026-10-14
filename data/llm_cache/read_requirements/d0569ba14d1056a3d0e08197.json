@@ -1,0 +1,372 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 6,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "At terminal blocks, the incoming and outgoing wires must both be labeled. The labels must be permanent and in accordance with wire identification shown on approved wiring and interconnection drawings.",
+        "section": "d",
+        "text": "Label all terminal block wires permanently as per approved drawings."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 8,
+            "last": 9,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "All wires originating from the same electrical node or point shall carry the same wire number.",
+        "section": "e",
+        "text": "Assign the same wire number to wires from the same node."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 11,
+            "last": 12,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Wire numbers shall be typewritten, or machine stamped on the plastic sleeve markers. Handwritten wire numbers are not acceptable.",
+        "section": "f",
+        "text": "Use typewritten or machine-stamped wire numbers; handwritten numbers are not allowed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 13,
+            "last": 13,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Mount all terminal blocks in the same units requiring the connections.",
+        "section": "14",
+        "text": "Install terminal blocks in the same units requiring connections."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 14,
+            "last": 14,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Arrange terminal block wiring to receive field cable with one wire per terminal.",
+        "section": "15",
+        "text": "Ensure terminal block wiring accommodates one wire per terminal."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 18,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "All devices within each switchgear enclosure including test switches and terminal blocks shall be shown in their approximate physical location and shall be represented on a single connection diagram. Wiring devices and methods shall be in accordance with details contained within this Specification and Contract Documents.",
+        "section": "16",
+        "text": "Represent all switchgear devices on a single connection diagram as per specifications."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 19,
+            "last": 20,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Control and Lockout switches shall be Electroswitch or approved equal. Shallco shall not be used.",
+        "section": "17",
+        "text": "Use Electroswitch or approved equal for control and lockout switches; Shallco is not allowed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 21,
+            "last": 23,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Furnish protective relays to provide the general plan of relaying as indicated and specified in Contract Documents and fully coordinate to provide the highest degree of system protection and security in conformance with this plan:",
+        "section": "M",
+        "text": "Provide protective relays as per the relaying plan in the contract documents."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 25,
+            "last": 25,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Include relays as specified and indicated in Contract Documents and the one line diagram.",
+        "section": "M.1",
+        "text": "Include relays as specified in the contract documents and one-line diagram."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 28,
+            "last": 28,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Furnish relays of the MANUFACTURER as required by the Contract Documents.",
+        "section": "M.2",
+        "text": "Provide relays from the specified manufacturer."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 30,
+            "last": 31,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Protective relays and lockout relay shall be provided with test switches that isolate all used inputs and outputs.",
+        "section": "M.3",
+        "text": "Provide test switches for protective and lockout relays to isolate inputs and outputs."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 33,
+            "last": 34,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Instruments, relays and control devices mounted on the switchgear front doors shall be semi-flush panel mounted.",
+        "section": "M.4",
+        "text": "Mount instruments, relays, and control devices semi-flush on switchgear front doors."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 36,
+            "last": 37,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "The main contacts of all switching devices shall be silver plated. The contact surfaces of secondary disconnecting devices and relays shall be silver plated.",
+        "section": "M.5",
+        "text": "Ensure main contacts and relay contact surfaces are silver plated."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 39,
+            "last": 40,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Furnish auxiliary relays in the number and types as required to perform the tripping and interlocking features required of the relaying scheme.",
+        "section": "M.6",
+        "text": "Provide auxiliary relays for tripping and interlocking as per the relaying scheme."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 42,
+            "last": 42,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Furnish relays in semi flush rack mount type cases, rear-connected.",
+        "section": "M.7",
+        "text": "Provide relays in semi-flush rack mount type cases, rear-connected."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 44,
+            "last": 47,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Provide relay programming to achieve operational switchgear. Trip settings to be adjusted during installation and commissioning. Settings files to be loaded into the relays for shipment and provided in advance for review and approval. Manufacturer to coordinate with Purchaser on protection schemes to be used.",
+        "section": "M.8",
+        "text": "Program relays for operational switchgear and coordinate protection schemes with the purchaser."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 49,
+            "last": 52,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "The manufacturer shall submit a complete equipment parts list that shall cross-reference all the Manufacturer or Sub-Manufacturer assigned part numbers back to the original manufacturer’s part number. The Manufacturer shall make a notation of quantities of these items recommended or required for continuous operation during one normal overhaul cycle.",
+        "section": "N",
+        "text": "Submit a complete parts list with cross-references and recommended quantities for one overhaul cycle."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 53,
+            "last": 54,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "This Recommended Spare Parts List (RSPL) shall include items requiring replacement under the following conditions (which condition to be noted)",
+        "section": "N",
+        "text": "Include items requiring replacement under specified conditions in the RSPL."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 56,
+            "last": 56,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Wear, corrosion, or erosion during normal operation.",
+        "section": "N.1",
+        "text": "List items subject to wear, corrosion, or erosion during normal operation."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 58,
+            "last": 58,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Failures that cause a shutdown of equipment.",
+        "section": "N.2",
+        "text": "List items that fail and cause equipment shutdown."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 60,
+            "last": 60,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Damage or breakage during routine maintenance or inspections of equipment.",
+        "section": "N.3",
+        "text": "List items prone to damage during maintenance or inspections."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 62,
+            "last": 62,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Long lead time or operational insurance items.",
+        "section": "N.4",
+        "text": "List items with long lead times or needed for operational insurance."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 64,
+            "last": 64,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Time-compliance limits on time-in-service due to age-related deterioration.",
+        "section": "N.5",
+        "text": "List items with time-compliance limits due to aging."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 66,
+            "last": 66,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "The following switchgear accessories and spare parts shall be supplied and stored inside the Equipment Enclosure:",
+        "section": "O",
+        "text": "Provide and store specified switchgear accessories and spare parts in the enclosure."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 69,
+            "last": 69,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "Tube of contact lubricant",
+        "section": "O.1",
+        "text": "Include a tube of contact lubricant."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 71,
+            "last": 71,
+            "page": 67
+          }
+        ],
+        "page": 67,
+        "quote": "A remote racking device shall be provided including push-button station, motor operator,",
+        "section": "O.2",
+        "text": "Provide a remote racking device with push-button station and motor operator."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

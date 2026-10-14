@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies medium voltage switchgear rated for 15 kV with metal-clad enclosures, which matches the description of the CROWN-ARMV product in the catalog. This product is engineered-to-order and meets the IEEE C37.20.2 standard for metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "The requirement involves utility-provided transformers and meters, as well as interlock switches for breakers. Since the transformers and meters are provided by the utility and the interlock switch is likely part of the installation or contractor's scope, no specific product from the catalog applies.",
+        "units": []
+      },
+      {
+        "confidence": 0.85,
+        "n": 3,
+        "rationale": "The tie breaker sequence of operation described in the requirement is a control and operational feature of medium voltage switchgear. The CROWN-ARMV product, being engineered-to-order metal-clad switchgear, can be configured to include the necessary control logic and interlocks to meet this requirement.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,17 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          3,
+          4
+        ],
+        "title": "M/WBE participation requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

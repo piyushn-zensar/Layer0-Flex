@@ -1,0 +1,204 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 3,
+            "last": 5,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "wiring between the door and compartment shall cross the hinge at a point above the height of the circuit breaker to eliminate the possibility of interference with the breaker element.",
+        "section": "4",
+        "text": "Wiring must cross the hinge above the circuit breaker to avoid interference."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 7,
+            "last": 10,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "All wiring shall be firmly bundled and secured to ensure it will remain in its intended location and not interfere with the operation of any device. Wire bundles shall be secured with cable ties attached to welded studs. Adhesive type hold-down clamps are not acceptable.",
+        "section": "5",
+        "text": "Wiring must be bundled and secured with cable ties on welded studs; adhesive clamps are not allowed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 14,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "Make all connections at equipment studs or heavy-duty terminal blocks. Terminate all Bushing Current Transformer (BCT) leads on 4-point shorting-type terminal blocks similar to GE EB27 model or ENGINEER approved equal.",
+        "section": "6",
+        "text": "Connections must be made at equipment studs or heavy-duty terminal blocks, with BCT leads on specified terminal blocks."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 16,
+            "last": 22,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "Terminate all points requiring external wiring connections at points on terminal blocks conveniently grouped to receive external cables with color-code order as approved by the ENGINEER. All terminal blocks, except the short-circuiting type, to be twelve-point straight-strap terminal blocks with white marking strip or ENGINEER approved equal. Points on terminal blocks shall bear alphanumeric designations which indicate unit number, block letter, and terminal number (such as 2B1, 3C2, 4D3, etc.). Letters I, O, and S shall not be used as terminal block designations.",
+        "section": "7",
+        "text": "External wiring must terminate on approved terminal blocks with specific designations and color codes."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 24,
+            "last": 28,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "Furnish terminal blocks for external wiring connections in sufficient numbers to provide at least 15 percent spare terminals (terminals having no connections or designated field future connections), arranged with no less than two spare terminals on each 12-point block. Furnish all spare terminal blocks with proper nuts and/or screws with flat washers in each cabinet.",
+        "section": "8",
+        "text": "Provide terminal blocks with at least 15% spare terminals and proper hardware."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 30,
+            "last": 33,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "Use No. 14-gauge or larger stranded, tinned copper wire insulated for 600 volts, equal to General Electric Type SIS Specification SI-47275, or ENGINEER approved equal. Any wiring subject to movement, e.g., wiring mounted to swing panels, shall be of extra-flexible conductor.",
+        "section": "9",
+        "text": "Use specified wire type and ensure flexible conductors for movable wiring."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 35,
+            "last": 37,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "Control power buses for AC or DC shall extend through each switchgear assembly. The buses shall be adequately sized for the control power load but shall not be less than No. 6 AWG.",
+        "section": "10",
+        "text": "Control power buses must extend through switchgear and meet size requirements."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 38,
+            "last": 42,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "Use pre-insulated compression-type connectors with ring tongue for all control connections. No more than two wires shall be terminated at any one connection point. Make all circuits continuous between termination points. No butt splices shall be allowed. All control connectors shall be applied using a ratcheting type lugging tool that cannot be released until the lug is properly crimped.",
+        "section": "11",
+        "text": "Use specified connectors, limit wire terminations, and avoid butt splices."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "Connect to agree with schematic and connection drawings that have been approved by the PURCHASER.",
+        "section": "12",
+        "text": "Connections must match approved schematic and connection drawings."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 45,
+            "last": 46,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "Factory check and functionally test for proper operation of all relays, meters, instruments, switches, lights, and interlocks.",
+        "section": "13",
+        "text": "Perform factory checks and functional tests on all components."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 47,
+            "last": 47,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "Label all cables at equipment studs and terminal blocks with wire numbers conforming to wire numbers shown on the MANUFACTURER's drawings.",
+        "section": "14",
+        "text": "Label cables with wire numbers as per manufacturer's drawings."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 50,
+            "last": 53,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "The identification shall be by the application of heat-shrinkable or plastic sleeve markers approved by the PURCHASER in writing. The wire tags shall be heated only to extent required to conform to the wire size. It is recommended that the heat-shrinkable tag be loose enough to turn for proper orientation but tight enough not to turn accidentally.",
+        "section": "14a",
+        "text": "Use approved heat-shrinkable or plastic sleeve markers for wire identification."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 56,
+            "last": 56,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "The number shall be properly oriented so that it is visible.",
+        "section": "14b",
+        "text": "Ensure wire numbers are visible and properly oriented."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 58,
+            "last": 62,
+            "page": 66
+          }
+        ],
+        "page": 66,
+        "quote": "Individual wire identification for each wire shall be included in schematic diagrams to be submitted. All wires shall be labeled at both ends and at any intermediate point where the wires may terminate. The label on each end of each internal wire shall be the destination identification of the other end of the wire. The label on each end of each wire in an external cable shall be the individual wire identification as indicated on the schematic diagram.",
+        "section": "14c",
+        "text": "Include wire identification in schematics and label wires at all ends and terminations."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

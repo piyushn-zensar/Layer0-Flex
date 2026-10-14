@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 28,
+            "last": 30,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "SRAA is required to implement the provisions of New York State Executive Law Article 15-A and 5 NYCRR Parts 142-144 (MWBE Regulations) for all State contracts as defined therein, with a value: (1) in excess of $25,000 for labor, services, equipment, materials, or any combination of the foregoing or; (2) in excess of $100,000 for real property renovations and construction.",
+        "section": "I.B",
+        "text": "SRAA must apply MWBE regulations for contracts exceeding $25,000 for services or $100,000 for construction."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 31,
+            "last": 31,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Where deemed appropriate, SRAA will implement the provisions of New York State Executive Law Article 15-A and the MWBE Regulations for all other SRAA contracts.",
+        "section": "I.B",
+        "text": "SRAA may apply MWBE regulations to other contracts as appropriate."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 33,
+            "last": 34,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "These requirements include equal employment opportunities for minority group members and women (EEO) and contracting opportunities for certified minority and women-owned business enterprises (MWBEs).",
+        "section": "I.B",
+        "text": "Requirements include EEO and MWBE contracting opportunities."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 35,
+            "last": 35,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Contractor’s demonstration of “good faith efforts” pursuant to 5 NYCRR § 142.8 shall be a part of these requirements.",
+        "section": "I.B",
+        "text": "Contractors must demonstrate good faith efforts as per 5 NYCRR § 142.8."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 36,
+            "last": 37,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "These provisions shall be deemed supplementary to, and not in lieu of, the nondiscrimination provisions required by New York State Executive Law Article 15 (the “Human Rights Law”) or other applicable federal, state or local laws.",
+        "section": "I.B",
+        "text": "Provisions supplement nondiscrimination requirements of NY Executive Law Article 15."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

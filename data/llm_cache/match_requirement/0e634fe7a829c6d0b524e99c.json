@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance and contractual obligations related to MWBE Utilization Plans and does not specify a product or service deliverable. Therefore, it is not a product requirement and does not map to any product in the catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

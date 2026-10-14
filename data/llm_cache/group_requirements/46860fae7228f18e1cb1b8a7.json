@@ -1,0 +1,60 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "title": "Electrical ratings and performance specifications"
+      },
+      {
+        "category": "technical",
+        "members": [
+          10,
+          11,
+          12,
+          13
+        ],
+        "title": "Voltage and current requirements for operation"
+      },
+      {
+        "category": "technical",
+        "members": [
+          7,
+          14,
+          15,
+          16,
+          17,
+          20,
+          21
+        ],
+        "title": "Breaker design and operational features"
+      },
+      {
+        "category": "technical",
+        "members": [
+          18,
+          19
+        ],
+        "title": "Auxiliary and secondary contacts for breakers"
+      },
+      {
+        "category": "technical",
+        "members": [
+          23,
+          24,
+          25
+        ],
+        "title": "Surge protection and voltage transformer requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

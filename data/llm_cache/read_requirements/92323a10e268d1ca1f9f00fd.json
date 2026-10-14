@@ -1,0 +1,316 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 3,
+            "last": 4,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "The shipping container shall have its weight and center of gravity clearly marked on the container.",
+        "section": "1.5",
+        "text": "Shipping containers must have weight and center of gravity marked."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 5,
+            "last": 6,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Equipment and material shall be loaded and transported in such a manner that delivery will be made without damage.",
+        "section": "1.5",
+        "text": "Equipment must be transported without damage."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 10,
+            "last": 12,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Field service representative shall provide technical support during installation and initial startup of the equipment and appropriate training for operating and maintenance personnel, if required. These services shall be quoted as an option in the proposal.",
+        "section": "1.6",
+        "text": "Optional field technical service must include installation support and training."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 19,
+            "last": 20,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Switchgear shall consist of breaker and auxiliary units, as indicated in Contract Documents, bolted together to form a rigid, self-supporting, metal-enclosed structure.",
+        "section": "2.1",
+        "text": "Switchgear must be a rigid, self-supporting, metal-enclosed structure."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 22,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Switchgear units shall be arranged as shown in Contract Documents.",
+        "section": "2.1",
+        "text": "Switchgear arrangement must follow contract documents."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 24,
+            "last": 25,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "For rigidity during fault conditions all connections to roll-out potential transformer trays shall be by rigid bus bars insulated to full voltage rating of switchgear assembly.",
+        "section": "2.1",
+        "text": "Connections to transformer trays must use rigid, insulated bus bars."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 27,
+            "last": 30,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Circuit breaker compartment shall be designed to house 15kV removable-element circuit breaker. Stationary primary disconnect contacts shall be silver-plated copper. Grounded metal safety shutters shall isolate all primary connections in compartment when breaker is withdrawn from connected position.",
+        "section": "2.1",
+        "text": "Breaker compartments must house 15kV breakers with safety shutters."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 32,
+            "last": 33,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Breaker unit shall contain three-pole, single-throw, horizontal draw out, trip-free, vacuum circuit breaker.",
+        "section": "2.1",
+        "text": "Breaker units must be three-pole, single-throw, vacuum type."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 37,
+            "last": 37,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Breakers shall be equipped with 2 CT’s per pole.",
+        "section": "2.1",
+        "text": "Breakers must have 2 CTs per pole."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 39,
+            "last": 39,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Breaker shall be suitable for remote closing and tripping with local testing.",
+        "section": "2.1",
+        "text": "Breakers must support remote operation and local testing."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 41,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Equipment shall be metal clad, draw out switchgear.",
+        "section": "2.1",
+        "text": "Equipment must be metal-clad, draw-out switchgear."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 42,
+            "last": 43,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Equipment shall be suitable for operation on a solidly grounded system rated 13200 volts line-to-line, 3-phase, 4-wire, 60 hertz.",
+        "section": "2.1",
+        "text": "Equipment must operate on a 13.2kV, 3-phase, 4-wire, 60Hz system."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 44,
+            "last": 44,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "The 13.2kV breakers shall be equipped with a SEL-751 (with touchscreen) overcurrent relay trip device.",
+        "section": "2.1",
+        "text": "13.2kV breakers must have SEL-751 overcurrent relay."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 46,
+            "last": 46,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "The incoming feeders shall be provided with a gang operated Isolation Switch.",
+        "section": "2.1",
+        "text": "Incoming feeders must have a gang-operated isolation switch."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 47,
+            "last": 47,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "The Billing metering position requires a 1 inch diameter ground ball ahead of and also after the CT/VT connections per phase.",
+        "section": "2.1",
+        "text": "Billing metering requires specific ground ball placement."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 53,
+            "last": 54,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Switchgear vendor to provide a minimum of one bus piece as shipping brace where utility CT’s will connect. Should utility CT ever fail, bus piece can be used until replacement CT is available.",
+        "section": "2.1",
+        "text": "Vendor must provide a bus piece for utility CT connection."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 56,
+            "last": 56,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Metering/Billing CT’s shall be ABB KIR-11 or GE JKM-5 CT’s.",
+        "section": "2.1",
+        "text": "Billing CTs must be ABB KIR-11 or GE JKM-5."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 57,
+            "last": 57,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Metering/Billing VT’s shall be GE JVM-5 or ABB VIZ-11 VT’s.",
+        "section": "2.1",
+        "text": "Billing VTs must be GE JVM-5 or ABB VIZ-11."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 59,
+            "last": 59,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "The switchgear shall be designed per the latest revision of IEEE standard for Metal Clad Switchgear with the following electrical characteristics:",
+        "section": "2.1",
+        "text": "Switchgear must meet the latest IEEE standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 62,
+            "last": 63,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Rated Maximum Voltage, 15 kV rms",
+        "section": "2.1",
+        "text": "Switchgear must have a maximum voltage of 15kV RMS."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 65,
+            "last": 66,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Normal Frequency Withstand 36 kV rms",
+        "section": "2.1",
+        "text": "Switchgear must withstand 36kV RMS frequency."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 68,
+            "last": 69,
+            "page": 61
+          }
+        ],
+        "page": 61,
+        "quote": "Impulse Withstand Rating (BIL) 95 kV peak",
+        "section": "2.1",
+        "text": "Switchgear must have a 95kV peak impulse withstand rating."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

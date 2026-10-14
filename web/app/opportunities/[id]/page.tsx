@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { BID_MANAGER_ONLY, api, errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
-import { DOC_TYPES, docTypeLabel, snapshotName, type Doc, type Opportunity, type Snapshot } from "@/lib/types";
+import { DOC_TYPES, coverageLabel, docTypeLabel, snapshotName, type Coverage, type Doc, type Opportunity, type Snapshot } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, Skeleton, StatusBadge, useToast } from "@/components/ui";
 
@@ -102,6 +102,7 @@ export default function DocumentsPage() {
               {found.passages.length === 0 && <li className="muted">Nothing found.</li>}</ol>
           </div>)}
         </section>)}
+      {snapshots?.[0]?.coverage && <ReadCoverage name={snapshotName(snapshots[0].number)} c={snapshots[0].coverage} />}
       {data && (canRead ? (<div className="row" data-tour="rfp-extract-row">
         {readBefore ? (
           <form className="form" data-tour="rfp-reread-form" onSubmit={(e) => { e.preventDefault(); const reason = String(new FormData(e.currentTarget).get("reason")).trim(); if (reason) extract(reason); }}>
@@ -114,4 +115,18 @@ export default function DocumentsPage() {
         : <p className="muted" data-tour="rfp-started-note">Requirement review has started, so the RFP is not re-read. Missed items can be added on the Requirements page.</p>)}
     </>
   );
+}
+
+// What the last read covered (C-03): the pages and the candidates each add up, so nothing is silently left out.
+function ReadCoverage({ name, c }: { name: string; c: Coverage }) {
+  const sum = (total: string, parts: string[]) => `${c[total]} ${coverageLabel(total)} = ` + parts.map((k) => `${c[k] ?? 0} ${coverageLabel(k)}`).join(" + ");
+  const pages = ["pages_read", "pages_failed", "pages_skipped", "pages_unreadable"];
+  return (
+    <section className="card" data-tour="rfp-coverage">
+      <div className="card-head"><h2>What the reader covered</h2><span className="muted">Extraction snapshot {name}</span></div>
+      {"pages_read" in c
+        ? <p>{sum("pages", pages)}{c.chunks_failed ? ` (${c.chunks_failed} of ${c.chunks} ${coverageLabel("chunks")} failed)` : ""}</p>
+        : <p className="muted">{c.pages} pages (read before page coverage was recorded)</p>}
+      <p>{sum("candidates", ["admitted", "exceptions", "duplicates"])}{c.groups ? `; ${c.groups} ${coverageLabel("groups")}` : ""}</p>
+    </section>);
 }

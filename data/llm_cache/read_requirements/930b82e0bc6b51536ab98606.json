@@ -1,0 +1,274 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 5,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Rated Continuous Current\n2000/1200 A,rms",
+        "section": "4",
+        "text": "The switchgear must support a rated continuous current of 2000/1200 A, rms."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 7,
+            "last": 8,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Momentary rating\n25 kA, rms",
+        "section": "5",
+        "text": "The switchgear must have a momentary rating of 25 kA, rms."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 13,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "The general arrangement of switchgear breaker and auxiliary units shall as indicated in Contract Documents.",
+        "section": "C.1",
+        "text": "The arrangement of switchgear and auxiliary units must follow the Contract Documents."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 18,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "The switchgear enclosure shall be of welded construction and utilize 11-gauge steel minimum throughout. The breaker compartment shall be totally welded construction. Each switchgear compartment shall form its own solid box, such that there are two thicknesses of 11-gauge steel between vertical sections.",
+        "section": "C.2",
+        "text": "Switchgear enclosures must be welded and use 11-gauge steel, with compartments forming solid boxes."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 20,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Provide equipment of dead-front construction and design for heavy duty utility service.",
+        "section": "C.3",
+        "text": "Equipment must be of dead-front construction and suitable for heavy-duty utility service."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 25,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Provide front-hinged doors on which are mounted meters, relays, control switches, etc., and which open to permit removal of circuit breaker. Doors shall be capable of being completely closed with the breaker in the racked-out test and racked-in positions. Front panels shall be hinged on the left side.",
+        "section": "C.4",
+        "text": "Switchgear must have front-hinged doors for meters and controls, allowing breaker removal and closing in all positions."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 27,
+            "last": 29,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Connections to the voltage transformers shall utilize 15kV rated cable that is sized and supported to withstand the maximum fault and momentary current ratings of the switchgear.",
+        "section": "C.5",
+        "text": "Voltage transformer connections must use 15kV rated cables sized for fault and momentary current ratings."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 31,
+            "last": 34,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "The circuit breaker compartment shall be designed to house a 15kV removable element vacuum circuit breakers. Stationary primary disconnect contacts shall be silver plated copper. Grounded metal safety shutters shall isolate all primary connections in compartment when breaker is withdrawn from connected position.",
+        "section": "C.6",
+        "text": "Circuit breaker compartments must house 15kV vacuum breakers, with silver-plated contacts and safety shutters."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 36,
+            "last": 41,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Furnish nameplates for each device as indicated in Contract Documents. Nameplates shall be white letters on black background. Nameplates shall be fastened with screws. There shall be a master nameplate that indicates equipment ratings, MANUFACTURER’s name, shop order number and general information. Interior devices labeled with lamacoid nameplates shall be provided with silicon adhesive or ENGINEER approved equal.",
+        "section": "C.7",
+        "text": "Provide nameplates for devices as per Contract Documents, with specific design and attachment requirements."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 44,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Energized bare parts mounted on doors shall be guarded where the door must be opened for maintenance of equipment or removal of draw out equipment.",
+        "section": "C.8",
+        "text": "Guard energized bare parts on doors requiring opening for maintenance or equipment removal."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 46,
+            "last": 47,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Factory install all components of equipment except items specified as being furnished by the PURCHASER.",
+        "section": "C.9",
+        "text": "All equipment components must be factory-installed unless specified otherwise."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 48,
+            "last": 48,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "All metering, relaying, and control equipment shall be accessible from the front of the switchgear.",
+        "section": "C.10",
+        "text": "Metering, relaying, and control equipment must be front-accessible."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 50,
+            "last": 53,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Switchgear power cable compartment doors shall be 11-gauge steel. Each door shall be provided with a stainless-steel lockable vault handle and internal three point latching mechanism and bolts. The internal latches shall utilize nylon rollers. The doors shall be provided with an automotive type weatherproof gasket, drip shield at the top and bolted at top and bottom.",
+        "section": "C.11",
+        "text": "Power cable compartment doors must meet specific material, locking, and sealing requirements."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 55,
+            "last": 55,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Provide red-painted, nonmetallic safety shutters covering the breaker bus connections.",
+        "section": "C.12",
+        "text": "Breaker bus connections must have red-painted, nonmetallic safety shutters."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 56,
+            "last": 56,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Provide internal LED light fixture and grounded convenience receptacle and switch on the draw out side of each unit.",
+        "section": "C.13",
+        "text": "Each unit must have an internal LED light, grounded receptacle, and switch."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 58,
+            "last": 64,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Provide a 2-inch x 6-inch engraved (3/8-inch lettering) laminated, black with white core, phenolic nameplate for each cubicle door, front and rear, 125-volt DC emergency lighting control switch and panelboards. Provide a 3/4-inch x 3-inch engraved (1/8-inch lettering) nameplate of the same construction as above for each individual meter, instrument, relay, or control switch. Nameplates shall be provided for equipment both inside and outside switchgear as well as all field-mounted equipment. Engraving shall be as required by Contract Documents. Nameplates shall be secured with screws.",
+        "section": "C.14",
+        "text": "Provide engraved phenolic nameplates for cubicle doors, switches, and equipment as specified."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 65,
+            "last": 65,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Provide bolted removable access panels to permit access to power connections and bus.",
+        "section": "C.15",
+        "text": "Access panels for power connections and bus must be bolted and removable."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 66,
+            "last": 66,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Provide drawout carriages with grounding device for mounting transformers.",
+        "section": "C.16",
+        "text": "Drawout carriages with grounding devices must be provided for transformers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 67,
+            "last": 67,
+            "page": 62
+          }
+        ],
+        "page": 62,
+        "quote": "Provide entry for power cable conduit in the bottom of each switchgear unit.",
+        "section": "C.17",
+        "text": "Each switchgear unit must allow power cable conduit entry at the bottom."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

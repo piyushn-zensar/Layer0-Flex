@@ -1,0 +1,128 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement describes a mechanism for disconnecting transformer fuses and grounding them, which is a feature of metal-clad switchgear. The CROWN-ARMV product is suitable as it is arc-resistant metal-clad switchgear designed to IEEE C37.20.2 standards, which aligns with the described functionality.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement specifies insulation and contact material for primary contacts, which are standard features of metal-clad switchgear. The CROWN-ARMV product meets these specifications as it adheres to IEEE C37.20.2 standards for metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement specifies VT compliance with ANSI C57.13, which is a standard for instrument transformers. The CROWN-ARMV product includes provisions for VTs and complies with relevant ANSI standards, making it suitable.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement describes CT specifications and testing, which are integral to metal-clad switchgear. The CROWN-ARMV product supports CTs and adheres to ANSI C37.20.2 and C57.13 standards, fulfilling the requirement.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 5,
+        "rationale": "The requirement specifies KWH meter sockets, which are typically included in metal-clad switchgear for metering purposes. The CROWN-ARMV product can be configured to include such features.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 6,
+        "rationale": "The requirement specifies a test switch assembly, which is a standard accessory for metal-clad switchgear. The CROWN-ARMV product can include such assemblies as part of its configuration.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 7,
+        "rationale": "The requirement specifies interlock contacts and auxiliary relays, which are standard components in metal-clad switchgear. The CROWN-ARMV product supports these features as part of its control scheme.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 8,
+        "rationale": "The requirement specifies control power circuit fuses and a control scheme, which are standard in metal-clad switchgear. The CROWN-ARMV product includes these features, adhering to ANSI C37.11 standards.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 9,
+        "rationale": "The requirement specifies cell switches and spare contacts, which are standard in metal-clad switchgear. The CROWN-ARMV product supports these features as part of its design.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 10,
+        "rationale": "The requirement specifies detailed wiring and control design, which are integral to metal-clad switchgear. The CROWN-ARMV product includes factory-installed internal control wiring and adheres to the specified standards.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

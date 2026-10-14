@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 6,
+            "last": 6,
+            "page": 48
+          }
+        ],
+        "page": 48,
+        "quote": "\"This Utilization Plan must contain a detailed description of the supplies and/or services to be provided by each NYS Certified Service-Disabled Veteran-Owned Business (SDVOB) under the contract.\"",
+        "section": "SDVOB Utilization Plan",
+        "text": "Provide detailed description of supplies/services by each SDVOB."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 7,
+            "last": 7,
+            "page": 48
+          }
+        ],
+        "page": 48,
+        "quote": "\"By submission of this Plan, the Bidder/Contractor commits to making good faith efforts in the utilization of SDVOB subcontractors and suppliers as required by the SDVOB goals contained in the Solicitation/Contract.\"",
+        "section": "SDVOB Utilization Plan",
+        "text": "Commit to good faith efforts in utilizing SDVOB subcontractors and suppliers."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 8,
+            "last": 9,
+            "page": 48
+          }
+        ],
+        "page": 48,
+        "quote": "\"Making false representations or providing information that shows a lack of good faith as part of, or in conjunction with, the submission of a Utilization Plan is prohibited by law and may result in penalties including, but not limited to, termination of a contract for cause, loss of eligibility to submit future bids, and/or withholding of payments.\"",
+        "section": "SDVOB Utilization Plan",
+        "text": "Avoid false representations or lack of good faith in the Utilization Plan."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 10,
+            "last": 10,
+            "page": 48
+          }
+        ],
+        "page": 48,
+        "quote": "\"Firms that do not perform commercially useful functions may not be counted toward SDVOB utilization.\"",
+        "section": "SDVOB Utilization Plan",
+        "text": "Only count firms performing commercially useful functions toward SDVOB utilization."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 27,
+            "last": 27,
+            "page": 48
+          }
+        ],
+        "page": 48,
+        "quote": "\"If unable to meet the SDVOB goals set forth in the solicitation/contract, bidder/contractor must submit a request for waiver on the SDVOB Waiver Form.\"",
+        "section": "SDVOB Utilization Plan",
+        "text": "Submit a waiver request if unable to meet SDVOB goals."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 35,
+            "last": 35,
+            "page": 48
+          }
+        ],
+        "page": 48,
+        "quote": "\"Detailed description of work to be provided by subcontractor/supplier:\"",
+        "section": "SDVOB Utilization Plan",
+        "text": "Provide detailed description of subcontractor/supplier work."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 36,
+            "last": 38,
+            "page": 48
+          }
+        ],
+        "page": 48,
+        "quote": "\"Dollar Value of subcontracts/supplies/services (When $ value cannot be estimated, provide the estimated % of contract work the SDVOB will perform): $ or %\"",
+        "section": "SDVOB Utilization Plan",
+        "text": "Provide dollar value or percentage of contract work by SDVOB."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 64,
+            "last": 64,
+            "page": 48
+          }
+        ],
+        "page": 48,
+        "quote": "\"All listed Subcontractors/Suppliers will be contacted and verified by [Agency].\"",
+        "section": "SDVOB Utilization Plan",
+        "text": "Agency will verify all listed subcontractors/suppliers."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

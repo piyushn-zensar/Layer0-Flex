@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 13,
+            "last": 16,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "In an effort to promote and assist in the participation of certified M/WBEs as subcontractors and suppliers on this project for the provision of services and materials, the bidder is required to comply with SRAA’s participation goals through one of the three methods below. Please indicate which one of the following is included with the M/WBE Documents Submission.",
+        "section": "M/WBE Requirements",
+        "text": "Bidder must comply with SRAA’s M/WBE participation goals by selecting one of three methods."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 17,
+            "last": 17,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": " Full Participation – No Request for Waiver (PREFERRED)",
+        "section": "M/WBE Requirements",
+        "text": "Bidder can choose full participation with no waiver request."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": " Partial Participation – Partial Request for Waiver",
+        "section": "M/WBE Requirements",
+        "text": "Bidder can choose partial participation with a partial waiver request."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 19,
+            "last": 19,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": " No Participation – Request for Complete Waiver",
+        "section": "M/WBE Requirements",
+        "text": "Bidder can choose no participation with a complete waiver request."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 12,
+            "last": 12,
+            "page": 35
+          }
+        ],
+        "page": 35,
+        "quote": "We are currently soliciting bid quotations or proposals from NY State certified M/WBE firms for any tasks of the work contained in this contract.",
+        "section": "Contractor Bid Solicitation",
+        "text": "Bidder must solicit proposals from NY State certified M/WBE firms for contract tasks."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 35
+          }
+        ],
+        "page": 35,
+        "quote": "The Workplan and specifications are currently available at our office for your review.",
+        "section": "Contractor Bid Solicitation",
+        "text": "Workplan and specifications must be made available for review."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 19,
+            "last": 21,
+            "page": 35
+          }
+        ],
+        "page": 35,
+        "quote": "If you are interested in participation on this project, please complete and submit a copy of the MBE/WBE Contractor Participation Bid/Proposal (SRAA - 5008) no later than thirty (30) days from the (due date).",
+        "section": "Contractor Bid Solicitation",
+        "text": "Interested M/WBE firms must submit the participation bid/proposal within 30 days of the due date."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 25,
+            "last": 25,
+            "page": 35
+          }
+        ],
+        "page": 35,
+        "quote": "In the event that you cannot bid on this contract please complete the attached Minority/Women's Contractor Unavailability Certification Form (SRAA - 5009).",
+        "section": "Contractor Bid Solicitation",
+        "text": "Non-participating M/WBE firms must complete the unavailability certification form."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

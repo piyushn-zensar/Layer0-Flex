@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "M/WBE compliance and certification requirements"
+      },
+      {
+        "category": "submission",
+        "members": [
+          4
+        ],
+        "title": "Submission requirements for M/WBE compliance form"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

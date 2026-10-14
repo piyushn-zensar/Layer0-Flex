@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          16
+        ],
+        "title": "Compliance with building codes and regulations"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          5,
+          10,
+          11
+        ],
+        "title": "Verification and notification of site conditions"
+      },
+      {
+        "category": "technical",
+        "members": [
+          7,
+          13,
+          21
+        ],
+        "title": "Coordination and preparation of construction elements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          20,
+          21
+        ],
+        "title": "Tile installation requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

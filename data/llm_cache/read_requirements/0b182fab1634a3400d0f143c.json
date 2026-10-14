@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 11,
+            "last": 11,
+            "page": 38
+          }
+        ],
+        "page": 38,
+        "quote": "Form SRAA - 5007 Completed",
+        "section": "M/WBE CONTRACTOR PARTICIPATION BID/PROPOSAL",
+        "text": "The bidder must complete Form SRAA - 5007."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 14,
+            "last": 14,
+            "page": 38
+          }
+        ],
+        "page": 38,
+        "quote": "(Specify in detail the particular work items to be performed thereof and associated dollar amounts)",
+        "section": "M/WBE CONTRACTOR PARTICIPATION BID/PROPOSAL",
+        "text": "The bidder must specify work items and associated dollar amounts."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 38
+          }
+        ],
+        "page": 38,
+        "quote": "Signature of MWBE Contractor",
+        "section": "M/WBE CONTRACTOR PARTICIPATION BID/PROPOSAL",
+        "text": "The MWBE contractor must provide their signature."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 19,
+            "last": 19,
+            "page": 38
+          }
+        ],
+        "page": 38,
+        "quote": "Date",
+        "section": "M/WBE CONTRACTOR PARTICIPATION BID/PROPOSAL",
+        "text": "The MWBE contractor must provide the date of submission."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 11,
+            "last": 13,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "I certify that on (Date) I contacted the following New York State Certified Minority/Women Business Enterprises by registered mail to obtain bids for work to be performed on the above-mentioned contract.",
+        "section": "M/WBE CONTRACTOR UNAVAILABILITY CERTIFICATION",
+        "text": "The bidder must certify contacting NYS Certified MWBEs by registered mail for bids."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "List the names of M/WBEs and type of work that bids were requested",
+        "section": "M/WBE CONTRACTOR UNAVAILABILITY CERTIFICATION",
+        "text": "The bidder must list names of MWBEs and types of work requested."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 19,
+            "last": 21,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "To the best of my knowledge and belief, said New York State Certified Minority/Women Business Enterprise contractor(s) was unavailable for work on this project, or unable to prepare a bid for the following reasons: Please check appropriate reasons given by each MBE/WBE firm contacted above.",
+        "section": "M/WBE CONTRACTOR UNAVAILABILITY CERTIFICATION",
+        "text": "The bidder must provide reasons for MWBE unavailability or inability to bid."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 28,
+            "last": 28,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "Signature of Prime Consultant/Contractor",
+        "section": "M/WBE CONTRACTOR UNAVAILABILITY CERTIFICATION",
+        "text": "The prime consultant/contractor must provide their signature."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

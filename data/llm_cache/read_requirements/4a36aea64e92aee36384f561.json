@@ -1,0 +1,218 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 1,
+            "last": 2,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Failure to timely submit a Subcontractor Quarterly Compliance Report and/or other reports or information as requested by SRAA may result in payments under the contract being delayed until such reports or other information have been received by SRAA.",
+        "section": "C",
+        "text": "Submit Subcontractor Quarterly Compliance Reports and other requested information on time."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 7,
+            "last": 9,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Where SRAA determines that Contractor is not in compliance with the requirements of the Contract and Contractor refuses to comply with such requirements, or if Contractor is found to have willfully and intentionally failed to comply with the MWBE participation goals, Contractor shall be obligated to pay to the SRAA liquidated damages.",
+        "section": "VII.A",
+        "text": "Pay liquidated damages for non-compliance with MWBE participation goals."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 11,
+            "last": 13,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Such liquidated damages shall be calculated as an amount equaling the difference between: (a) all sums identified for payment to MWBEs had the Contractor achieved the contractual MWBE goals; and (b) all sums actually paid to MWBEs for work performed or materials supplied under the Contract.",
+        "section": "VII.B",
+        "text": "Liquidated damages are calculated based on the difference between planned and actual MWBE payments."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 14,
+            "last": 15,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Determination of compliance or non-compliance with the Contract’s MWBE participation requirements shall be based upon the Contractor’s Utilization Plan, MWBE Sub-Contractor Quarterly Reports, and any relevant documentation related thereto.",
+        "section": "VII.C",
+        "text": "Compliance with MWBE requirements is determined using the Utilization Plan and related reports."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 19,
+            "last": 20,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Upon a determination that a willful and intentional failure to comply with the MWBE participation requirements has occurred, the SRAA shall withhold the amount established in paragraph B from any future payments otherwise required by this Contract.",
+        "section": "VII.D",
+        "text": "SRAA will withhold payments for willful non-compliance with MWBE requirements."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 21,
+            "last": 23,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "All funds being withheld pursuant to this provision shall be offset as liquidated damages upon the expiration or termination of the contract, unless the Contractor comes into compliance with the MWBE requirements at any time during the term of the Contract but prior to the submission of a request for final payment on the contract.",
+        "section": "VII.D",
+        "text": "Withheld funds are offset as liquidated damages unless compliance is achieved before final payment request."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 26,
+            "last": 31,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "In the event a determination has been made which requires the payment of liquidated damages and such identified sums have not been withheld by the SRAA, Contractor shall pay such liquidated damages to the SRAA within sixty (60) days after they are assessed by the SRAA unless prior to the expiration of such sixtieth day, the Contractor has filed a complaint with the Director of the Division of Minority and Woman Business Development pursuant to Subdivision 8 of Section 313 of the Executive Law in which event the liquidated damages shall be payable if Director renders a decision in favor of the SRAA.",
+        "section": "VII.E",
+        "text": "Pay liquidated damages within 60 days unless a complaint is filed and resolved in favor of the contractor."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 2,
+            "last": 2,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "SRAA reserves the right to impose sanctions following a determination of non-compliance by a Contractor.",
+        "section": "VIII",
+        "text": "SRAA may impose sanctions for contractor non-compliance."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 3,
+            "last": 3,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "Sanctions may be imposed upon the Contractor whenever EEO and/or MWBE program requirements have not been met in a timely and effective manner.",
+        "section": "VIII",
+        "text": "Sanctions apply for failure to meet EEO or MWBE requirements."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 6,
+            "last": 6,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "Disallowance of costs associated with such noncompliance;",
+        "section": "VIII",
+        "text": "Costs associated with non-compliance may be disallowed."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 8,
+            "last": 8,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "Initiation of procedures to suspend or terminate the grant or contract;",
+        "section": "VIII",
+        "text": "Procedures to suspend or terminate the contract may be initiated."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 10,
+            "last": 11,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "Withholding of progress payments until such time as corrective actions have been undertaken by the Contractor to the satisfaction of SRAA;",
+        "section": "VIII",
+        "text": "Progress payments may be withheld until corrective actions are taken."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 13,
+            "last": 13,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "Deleting Contractor’s name from bid lists for a specified period of time to be determined in the sole discretion of SRAA;",
+        "section": "VIII",
+        "text": "Contractor may be removed from bid lists for a specified period."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 16,
+            "last": 16,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "Report Contractor as non-responsible to NYS OSC Vendor Responsibility System;",
+        "section": "VIII",
+        "text": "Contractor may be reported as non-responsible to the NYS OSC Vendor Responsibility System."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "Other sanctions of which a Contractor has notice in writing prior to or during the performance of a contract.",
+        "section": "VIII",
+        "text": "Other sanctions may be imposed if notified in writing."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

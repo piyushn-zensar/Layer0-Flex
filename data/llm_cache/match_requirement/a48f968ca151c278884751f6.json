@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance with legal and regulatory provisions regarding non-discrimination and MWBE participation. It does not specify a product or service deliverable, so it is not mapped to any product in the catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

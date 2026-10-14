@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          9,
+          10,
+          11,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "title": "Breaker testing and inspection requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "title": "Bus and switchgear inspection and testing"
+      },
+      {
+        "category": "technical",
+        "members": [
+          2,
+          5,
+          7,
+          12
+        ],
+        "title": "Equipment installation and setup"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

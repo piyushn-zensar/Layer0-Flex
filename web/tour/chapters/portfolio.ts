@@ -57,7 +57,7 @@ const chapter: TourChapter = {
       fallback: "The Requirements column shows 348 for the Syracuse demo and 10 for the hyperscale sample.",
       body: [
         "This number is the count of **current** requirements: groups and stand-alone items the workflow works on. Sub-requirements inside a group, rejected items, duplicates and anything replaced by a split or a merge are not counted.",
-        "For the Syracuse RFP it reads **348**: the reader agent proposed 814 line items from 101 pages, 21 were marked as duplicates and the grouping agent folded related items into 162 groups, leaving 348 requirements for people to review. Before the reader agent has run the column shows 0.",
+        "For the Syracuse RFP it reads **312**: the reader agent proposed 818 line items from 101 pages, 27 were marked as duplicates, 12 wait in the exception queue and the grouping agent folded related items into 161 groups, leaving 312 requirements in the register. Before the reader agent has run the column shows 0.",
         "If the number looks wrong, the Requirements page (chapter 5) is where it changes: approve, reject, edit, split, merge or add a missed item, then freeze.",
       ],
     },

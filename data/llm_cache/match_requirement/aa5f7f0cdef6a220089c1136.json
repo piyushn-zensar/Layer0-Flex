@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "Requirement 1 pertains to compliance and negotiation practices with certified minority- and women-owned business enterprises. It does not specify a product or service from the catalog, so no business unit or product is applicable.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 2,
+        "rationale": "Requirement 2 pertains to compliance and payment practices with certified minority- and women-owned business enterprises. It does not specify a product or service from the catalog, so no business unit or product is applicable.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

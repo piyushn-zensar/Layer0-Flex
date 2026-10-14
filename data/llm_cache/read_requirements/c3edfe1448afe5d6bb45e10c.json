@@ -1,0 +1,176 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 12,
+            "last": 13,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "Actively and affirmatively solicit bids for contracts and subcontracts from qualified State certified MBEs or WBEs, including solicitations to M/WBE contractor associations.",
+        "section": "M/WBE",
+        "text": "Solicit bids from State-certified M/WBEs and their associations."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 14,
+            "last": 14,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "Request a list of State-certified M/WBEs from SRAA and solicit bids from them directly.",
+        "section": "M/WBE",
+        "text": "Obtain and use a list of State-certified M/WBEs for bid solicitation."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 15,
+            "last": 16,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "Ensure that plans, specifications, request for proposals and other documents used to secure bids will be made available in sufficient time for review by prospective M/WBEs.",
+        "section": "M/WBE",
+        "text": "Provide bid documents to M/WBEs in a timely manner."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 17,
+            "last": 18,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "Where feasible, divide the work into smaller portions to increase participation by M/WBEs and encourage the formation of joint ventures and other partnerships among M/WBE contractors to encourage their participation.",
+        "section": "M/WBE",
+        "text": "Divide work to increase M/WBE participation and encourage partnerships."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 19,
+            "last": 21,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "Document and maintain records of bid solicitation, including those to M/WBEs and the results thereof. The Contractor will also maintain, or, where appropriate, require its subcontractors to maintain and submit, as required by SRAA, records of actions that its subcontractors have taken toward meeting M/WBE contract participation goals.",
+        "section": "M/WBE",
+        "text": "Keep records of M/WBE bid solicitations and results."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 22,
+            "last": 23,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "Ensure that project payments to M/WBEs are made on a timely basis so that undue financial hardship is avoided, and that bonding and/or other credit requirements may, in the sole discretions of SRAA, be waived and/or appropriate alternatives are developed to encourage M/WBE participation.",
+        "section": "M/WBE",
+        "text": "Make timely payments to M/WBEs and consider waiving bonding requirements."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 25,
+            "last": 26,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "This organization will include the provisions of sections (1) through (6) of this agreement in every subcontract in such a manner that the requirements of the subdivisions will be binding upon each subcontractor as to work in connection with the State contract.",
+        "section": "M/WBE",
+        "text": "Include M/WBE provisions in all subcontracts."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 28,
+            "last": 31,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "This organization will not discriminate against any employee or applicant for employment because of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status predisposing genetic characteristics, victim of domestic violence status, or marital status, will undertake or continue existing programs of affirmative action to ensure that minority group members are afforded equal employment opportunities without discrimination, and shall make and document its conscientious and active efforts to employ and utilize minority group members and women in its work force on State contracts.",
+        "section": "EEO",
+        "text": "Ensure non-discrimination and affirmative action in employment."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 33,
+            "last": 35,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "This organization shall state in all solicitation or advertisements for employees that in the performance of the State contract all qualified applicants will be afforded equal employment opportunities without discrimination because of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status, predisposing genetic characteristics, victim of domestic violence status or marital status.",
+        "section": "EEO",
+        "text": "Include non-discrimination statements in job advertisements."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 37,
+            "last": 39,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "At the request of the contracting agency, this organization shall request that each employment agency, labor union, or authorized representative will not discriminate on the basis of race, religion/creed, color, national origin, sex, age, disability, sexual orientation, military status, predisposing genetic characteristics, victim of domestic violence status or marital status, and that such union or representative will affirmatively cooperate in the implementation of this organization’s obligations herein.",
+        "section": "EEO",
+        "text": "Ensure employment agencies and unions comply with non-discrimination policies."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 41,
+            "last": 42,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "This organization will include the provisions of sections (a) through (c) of this agreement in every subcontract in such a manner that the requirements of the subdivisions will be binding upon each subcontractor as to work in connection with the State contract.",
+        "section": "EEO",
+        "text": "Include EEO provisions in all subcontracts."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 2,
+            "last": 5,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "Minority/Women Business Enterprise Liaison is designated as the Minority/Women Business Enterprise Liaison (Name of Designated Liaison) responsible for administering the Minority and Women-Owned Business Enterprises-Equal Employment Opportunity (M/WBE-EEO) program.",
+        "section": "M/WBE-EEO",
+        "text": "Designate a liaison for the M/WBE-EEO program."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

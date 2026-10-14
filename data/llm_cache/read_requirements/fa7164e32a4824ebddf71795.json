@@ -1,0 +1,190 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 1,
+            "last": 2,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "The Contractor represents and warrants that Contractor has submitted the following SRAA forms either prior to, or at the time of, the execution of the contract:",
+        "section": "A",
+        "text": "Contractor must submit specified SRAA forms before or at contract execution."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 3,
+            "last": 3,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "1. M/WBE Subcontractor Utilization Plan (SRAA Form 5003)",
+        "section": "A",
+        "text": "Submit the M/WBE Subcontractor Utilization Plan (SRAA Form 5003)."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 4,
+            "last": 5,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "a. Contractor agrees to use such MWBE Utilization Plan for the performance of MWBEs on the Contract pursuant to the prescribed MWBE goals set forth in Section II-A of this Appendix.",
+        "section": "A",
+        "text": "Use the MWBE Utilization Plan to meet prescribed MWBE goals."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 6,
+            "last": 7,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "b. If a Contractor seeks modification to its previously approved MWBE Subcontractor Utilization Plan, the Contractor shall first notify SRAA in writing of such change and obtain approval from SRAA.",
+        "section": "A",
+        "text": "Notify and obtain approval from SRAA for changes to the MWBE Utilization Plan."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 8,
+            "last": 8,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "c. Contractor further agrees that a failure to submit and/or use such MWBE Utilization Plan shall constitute a material breach of the terms of the Contract.",
+        "section": "A",
+        "text": "Failure to submit or use the MWBE Utilization Plan is a material breach."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 12,
+            "last": 13,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "2. M/WBE Goal Requirements – Certification of Good Faith Efforts (SRAA Form 5004) to achieve the overall prescribed MWBE participation percentage (30%) goals set forth in the procurement.",
+        "section": "A",
+        "text": "Submit Certification of Good Faith Efforts (SRAA Form 5004) to meet MWBE participation goals."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 14,
+            "last": 16,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "3. MWBE Subcontractors’ and/ or Suppliers’ Letter of Intent to Participate (SRAA Form 5007), which should document the names and signatures of certified MBEs and/or WBEs which have agreed to participate as subcontractors on the Contract.",
+        "section": "A",
+        "text": "Submit MWBE Subcontractors’ Letter of Intent to Participate (SRAA Form 5007)."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "A. For Waiver Requests, Contractor should use SRAA Form 5010 MWBE Subcontractor Request for Waiver Form.",
+        "section": "V",
+        "text": "Use SRAA Form 5010 for MWBE Subcontractor Waiver Requests."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 20,
+            "last": 21,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "B. If the Contractor, after making good faith efforts, is unable to comply with MWBE goals, the Contractor may submit a request for waiver form documenting good faith efforts by the Contractor to meet such goals.",
+        "section": "V",
+        "text": "Submit a waiver request if unable to meet MWBE goals despite good faith efforts."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 24,
+            "last": 26,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "C. If the SRAA, upon review of the MWBE Utilization Plan and updated Quarterly MWBE Contractor Compliance Reports, determines that Contractor is failing or refusing to comply with Contract goals and no waiver has been issued in regards to such non-compliance, the SRAA may issue a Notice of Deficiency to the Contractor.",
+        "section": "V",
+        "text": "SRAA may issue a Notice of Deficiency for non-compliance with MWBE goals."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 27,
+            "last": 27,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "The Contractor must respond to the Notice of Deficiency within seven (7) business days of receipt.",
+        "section": "V",
+        "text": "Respond to a Notice of Deficiency within seven business days."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 30,
+            "last": 31,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "A. Contractor is required to submit the Subcontractor Quarterly Compliance Report (SRAA Form 5011) to the SRAA by the 10th day following each end of quarter over the term of the Contract documenting the progress made towards achievement of the MWBE goals of the Contract.",
+        "section": "VI",
+        "text": "Submit Subcontractor Quarterly Compliance Report (SRAA Form 5011) by the 10th day after each quarter."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 33,
+            "last": 34,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "B. All reports will be submitted to the SRAA program manager for this contract and forwarded to Tori Hunt at huntt@syrairport.org.",
+        "section": "VI",
+        "text": "Submit all reports to the SRAA program manager and forward to Tori Hunt."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

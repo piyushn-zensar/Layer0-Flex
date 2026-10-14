@@ -1,0 +1,190 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 5,
+            "last": 5,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "Submission Deadline: September 15, 2023 by 4pm",
+        "section": "General",
+        "text": "Proposals must be submitted by September 15, 2023, 4pm."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 8,
+            "last": 10,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "Proposers are prohibited from contact related to this procurement with any Syracuse Regional Airport Authority member, officer, staff or employee other than the designated contact person (if any) and/or the designated email address for contact.",
+        "section": "General",
+        "text": "Proposers must only contact the designated person or email regarding the procurement."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 12,
+            "last": 12,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "All contacts/inquiries shall be made by email only to the following address: bids@syrairport.org",
+        "section": "General",
+        "text": "All inquiries must be sent via email to bids@syrairport.org."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 14,
+            "last": 14,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "ALL PROPOSALS MUST BE RECEIVED VIA EMAIL PRIOR TO 4PM ON FRIDAY, SEPTEMBER 15.",
+        "section": "General",
+        "text": "Proposals must be submitted electronically via email before 4pm on September 15."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 16,
+            "last": 17,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "PROPOSALS ARE ONLY ACCEPTED ELECTRONICALLY AND MUST BE ADDRESSED TO: bids@syrairport.org",
+        "section": "General",
+        "text": "Proposals must be submitted electronically to bids@syrairport.org."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 19,
+            "last": 20,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "PLEASE PRINT THE WORDS “RFP REFERENCE # 2023-20” ON THE FRONT OF THE PROPOSAL.",
+        "section": "General",
+        "text": "Proposals must include the text 'RFP REFERENCE # 2023-20' on the front."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 22,
+            "last": 22,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Monday, 08/23/2023 - Issuance of Request for Proposals",
+        "section": "Key Dates",
+        "text": "RFP issued on August 23, 2023."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 23,
+            "last": 23,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Monday 09/06/2023 – Question/Clarification Submission Deadline",
+        "section": "Key Dates",
+        "text": "Deadline for submitting questions or clarifications is September 6, 2023."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 24,
+            "last": 24,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Monday, 09/15/2023 by 4:00 PM - Proposal Submission Deadline",
+        "section": "Key Dates",
+        "text": "Proposal submission deadline is September 15, 2023, by 4:00 PM."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 25,
+            "last": 25,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "09/18/2023 to 09/22/2023 - Proposal Evaluation Period",
+        "section": "Key Dates",
+        "text": "Proposal evaluation period is from September 18 to September 22, 2023."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 26,
+            "last": 26,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Execution of Contract1 with successful proposer anticipated in late September",
+        "section": "Key Dates",
+        "text": "Contract execution with the selected proposer is expected in late September."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 27,
+            "last": 27,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "The Authority reserves the right to change any of the dates stated in this RFP.",
+        "section": "Key Dates",
+        "text": "The Authority may change any dates in the RFP."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 28,
+            "last": 30,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "If such change occurs, the Authority will notify all entities who received the RFP directly from the Authority and post the change(s) on the Syracuse Regional Airport Authority’s website, which is part of the Syracuse Hancock International Airport website (http://www.syrsraa.com/bids-rfp-rfq/).",
+        "section": "Key Dates",
+        "text": "Changes to the RFP schedule will be notified to recipients and posted on the Authority's website."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

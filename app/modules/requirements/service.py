@@ -25,7 +25,8 @@ Public contract:
                                                  their sub-requirements (inactive = rejected, duplicate, exception,
                                                  dismissed, or replaced by a split / merge)
     exceptions(db, opp_id) -> list[dict]         the exception queue: rows (as stored, plus "source") with
-                                                 suggested_page (the page the reader named) and reason
+                                                 suggested_page (the page the reader named), location_hint
+                                                 and reason
     resolve(db, req_id, page, line_start, line_end, actor, text="", category=None) -> Requirement
                                                  link an exception to its lines (add_from_lines rules): it enters the
                                                  register with those lines as its quote
@@ -118,14 +119,17 @@ def _writable(db: Session, opp_id: str) -> None:
 
 def add(db: Session, opp_id: str, document_id: str, quote: str, text: str, category: str, actor: str,
         section: str = "", hint_page: int | None = None, derived_from: list[str] | None = None,
-        commit: bool = True, pages: list[dict] | None = None, origin: str = "extraction") -> Requirement:
+        commit: bool = True, pages: list[dict] | None = None, origin: str = "extraction",
+        lines: list[dict] | None = None) -> Requirement:
     if not quote.strip():
         raise ValueError("A requirement needs a quote copied from the RFP.")
-    hit = anchoring.find(quote, pages if pages is not None else ingestion.layout(document_id)["pages"], hint_page)
+    pages = pages if pages is not None else ingestion.layout(document_id)["pages"]
+    hit = _anchor(anchoring.find(quote, pages, hint_page, lines), document_id)
     req = Requirement(req_id=_next_req_id(db, opp_id), opportunity_id=opp_id, document_id=document_id,
                       text=text, quote=quote, category=category, section=section, created_by=actor,
                       derived_from=derived_from or [], provenance="EXTRACTED" if hit else "UNANCHORED",
-                      status="approved" if hit else "exception", origin=origin, **(hit or {}))
+                      status="approved" if hit else "exception", origin=origin,
+                      location_hint=None if hit else anchoring.hint(quote, pages, hint_page, lines), **(hit or {}))
     db.add(req)
     db.flush()  # the next _next_req_id sees this one
     audit.record(db, actor, "proposed", "requirement", req.req_id, opp_id, provenance=req.provenance, status=req.status,
@@ -134,6 +138,12 @@ def add(db: Session, opp_id: str, document_id: str, quote: str, text: str, categ
     if commit:
         db.commit()
     return req
+
+
+def _anchor(hit: dict | None, document_id: str) -> dict | None:
+    """An anchoring hit as Requirement fields: the first span in page, line_start, line_end, bboxes; every span (with
+    its document) in spans."""
+    return hit and hit | {"spans": [s | {"document_id": document_id} for s in hit["spans"]]}
 
 
 def _draft(db: Session, req_id: str) -> Requirement:
@@ -185,7 +195,7 @@ def merge(db: Session, opp_id: str, req_ids: list[str], text: str, actor: str, r
         quote=" … ".join(r.quote for r in reqs), category=first.category, section=first.section, created_by=actor,
         derived_from=[r.req_id for r in reqs], page=first.page,
         line_start=first.line_start, line_end=max(r.line_end or 0 for r in reqs),
-        bboxes=[b for r in reqs for b in r.bboxes], origin="correction",
+        bboxes=[b for r in reqs for b in r.bboxes], spans=[s for r in reqs for s in r.spans], origin="correction",
         provenance="EXTRACTED" if all(r.provenance == "EXTRACTED" for r in reqs) else "UNANCHORED")
     merged.status = "approved" if merged.provenance == "EXTRACTED" else "exception"
     db.add(merged)
@@ -273,7 +283,7 @@ def extract(db: Session, opp_id: str, actor: str, reason: str = "") -> dict:
         raise ValueError(f"Corrections were made ({reviewed}); reading again would lose them. "
                          "Add what is missing with 'Add a requirement' instead.")
     layout = ingestion.layout(doc.id)
-    proposed, problems = agent.read(layout)
+    proposed, problems, read = agent.read(layout)
     for old in db.scalars(select(Requirement).where(Requirement.opportunity_id == opp_id,
                                                     Requirement.status.in_(["proposed", "approved", "exception",
                                                                             "duplicate"]))):
@@ -282,7 +292,8 @@ def extract(db: Session, opp_id: str, actor: str, reason: str = "") -> dict:
             db.delete(old)
     db.commit()
     items = [add(db, opp_id, doc.id, item["quote"], item["text"], item["category"], f"reader agent ({actor})",
-                 item["section"], item["page"], commit=False, pages=layout["pages"]) for item in proposed]
+                 item["section"], item["page"], commit=False, pages=layout["pages"], lines=item.get("lines"))
+             for item in proposed]
     dups = grouping.duplicates([{"quote": r.quote} for r in items])
     # of each repeated text, the first copy with a verified source is kept (the first copy when none has one)
     kept = {}
@@ -303,9 +314,11 @@ def extract(db: Session, opp_id: str, actor: str, reason: str = "") -> dict:
         members = [unique[i] for i in g["members"] if unique[i].status == "approved"]
         if len(members) >= 2:
             made.append(_create_group(db, opp_id, members, g["title"], g["category"], f"grouping agent ({actor})"))
-    coverage = {"pages": len(layout["pages"]), "candidates": len(proposed),
-                "admitted": sum(r.status == "approved" for r in items), "exceptions": sum(r.status == "exception" for r in items),
-                "duplicates": len(dups), "groups": len(made), "problems": len(problems + group_problems)}
+    # candidates = admitted + exceptions + duplicates; pages = read + failed + skipped + unreadable (C-03)
+    coverage = read | {"candidates": len(proposed), "admitted": sum(r.status == "approved" for r in items),
+                       "exceptions": sum(r.status == "exception" for r in items),
+                       "duplicates": sum(r.status == "duplicate" for r in items), "groups": len(made),
+                       "problems": len(problems + group_problems)}
     snap = ExtractionSnapshot(opportunity_id=opp_id, document_id=doc.id, number=len(earlier) + 1, reason=reason.strip(),
                               created_by=actor, model=config.LLM_MODEL, pipeline_version=PIPELINE_VERSION,
                               coverage=coverage, items=[_snapshot_item(r) for r in items + made])
@@ -323,7 +336,7 @@ def extract(db: Session, opp_id: str, actor: str, reason: str = "") -> dict:
 def _snapshot_item(r: Requirement) -> dict:
     return {"req_id": r.req_id, "kind": r.kind, "text": r.text, "quote": r.quote, "category": r.category,
             "section": r.section, "page": r.page, "line_start": r.line_start, "line_end": r.line_end,
-            "status": r.status, "group": r.parent_id,
+            "spans": r.spans, "status": r.status, "group": r.parent_id,
             "duplicate_of": r.derived_from[0] if r.status == "duplicate" and r.derived_from else None}
 
 
@@ -351,7 +364,8 @@ def _create_group(db: Session, opp_id: str, members: list[Requirement], title: s
                     quote=" … ".join(r.quote for r in members), page=first.page,
                     line_start=min((r.line_start for r in anchored), default=None),
                     line_end=max((r.line_end for r in anchored), default=None),
-                    bboxes=[b for r in anchored for b in r.bboxes], origin="extraction",
+                    bboxes=[b for r in anchored for b in r.bboxes], spans=[s for r in anchored for s in r.spans],
+                    origin="extraction",
                     provenance="EXTRACTED" if len(anchored) == len(members) else "UNANCHORED")
     g.status = "approved" if g.provenance == "EXTRACTED" else "exception"
     db.add(g)
@@ -396,9 +410,13 @@ def exceptions(db: Session, opp_id: str) -> list[dict]:
     for r in sorted(rows, key=lambda r: r.req_id):
         page = proposed.get(r.req_id, {}).get("hint_page")
         where = f"on page {page} or anywhere else in the document" if page else "anywhere in the document"
+        reason = f"The quoted text was not found {where}, so its source cannot be verified."
+        if h := r.location_hint:
+            lines = f", lines {h['line_start']}-{h['line_end']}" if h["line_start"] else ""
+            reason = (f"The quoted wording was not found word for word, so its source cannot be verified; "
+                      f"{round(h['share'] * 100)}% of its words are on page {h['page']}{lines}, where the reader says it is.")
         out.append({c.key: getattr(r, c.key) for c in Requirement.__table__.columns} | {
-            "source": r.source, "suggested_page": page,
-            "reason": f"The quoted text was not found {where}, so its source cannot be verified."})
+            "source": r.source, "suggested_page": page, "reason": reason})
     return out
 
 
@@ -421,12 +439,14 @@ def resolve(db: Session, req_id: str, page: int, line_start: int, line_end: int,
         raise ValueError(f"Unknown category {category!r}.")
     doc, chosen = _selected_lines(db, req.opportunity_id, page, line_start, line_end)
     quote = " ".join(line["text"] for line in chosen)
-    hit = anchoring.find(quote, [{"page": page, "lines": chosen}], page)
+    hit = _anchor(anchoring.find(quote, [{"page": page, "lines": chosen}], page), doc.id)
     if not hit:
         raise ValueError("The selected lines have no text to link; select the requirement's own lines.")
     before = {"quote": req.quote, "document_id": req.document_id}
     req.document_id, req.quote, req.provenance, req.status, req.origin = doc.id, quote, "EXTRACTED", "approved", "correction"
-    req.page, req.line_start, req.line_end, req.bboxes = hit["page"], hit["line_start"], hit["line_end"], hit["bboxes"]
+    req.page, req.line_start, req.line_end, req.bboxes, req.spans = (hit["page"], hit["line_start"], hit["line_end"],
+                                                                     hit["bboxes"], hit["spans"])
+    req.location_hint = None  # a verified source now
     req.text, req.category = (text.strip() or req.text), (category or req.category)
     audit.record(db, actor, "resolved", "requirement", req_id, req.opportunity_id, before=before,
                  after={"quote": req.quote, "source": req.source, "text": req.text, "category": req.category})
@@ -533,7 +553,8 @@ def _version(db: Session, old: Requirement, number: int, actor: str, **changes) 
     """The next version of a requirement: a copy of its latest version with `changes`, in baseline `number`."""
     fields = {c.key: getattr(old, c.key) for c in Requirement.__table__.columns if c.key not in ("id", "created_at")}
     new = Requirement(**fields | {"version": old.version + 1, "baseline": number, "created_by": actor,
-                                  "bboxes": list(old.bboxes), "derived_from": list(old.derived_from)} | changes)
+                                  "bboxes": list(old.bboxes), "spans": list(old.spans),
+                                  "derived_from": list(old.derived_from)} | changes)
     db.add(new)
     return new
 
@@ -572,7 +593,7 @@ def apply_change(db: Session, opp_id: str, change_doc_id: str, items: list[dict]
             if old is None or old.status != "approved" or old.baseline is None:
                 raise ValueError(f"{item.get('target')} is not an approved requirement of baseline {b.number}.")
             if kind == "modified":
-                hit = anchoring.find(item["quote"], pages, item.get("page"))
+                hit = _anchor(anchoring.find(item["quote"], pages, item.get("page")), change_doc_id)
                 if not hit:
                     raise ValueError(f"The new wording of {old.req_id} is not in the change document, so it cannot "
                                      "enter the register; correct the item's quote or mark it unchanged.")
@@ -678,11 +699,11 @@ def apply_correction(db: Session, opp_id: str, kind: str, body: dict, actor: str
             if req is None or req.opportunity_id != opp_id or req.status != "exception":
                 raise ValueError(f"{body.get('req_id')} is not in the exception queue.")
             doc, quote, pages = lines()
-            hit = anchoring.find(quote, pages, body["page"])
+            hit = _anchor(anchoring.find(quote, pages, body["page"]), doc.id)
             if not hit:
                 raise ValueError("The selected lines have no text to link; select the requirement's own lines.")
             new = _version(db, req, number, actor, document_id=doc.id, quote=quote, provenance="EXTRACTED",
-                           status="approved", origin="correction", text=(body.get("text") or "").strip() or req.text,
+                           status="approved", origin="correction", location_hint=None, text=(body.get("text") or "").strip() or req.text,
                            category=category or req.category, **hit)
             db.flush()
             event("resolved", req.req_id, version=new.version, before={"quote": req.quote},
@@ -745,6 +766,7 @@ def apply_correction(db: Session, opp_id: str, kind: str, body: dict, actor: str
                 quote=" … ".join(r.quote for r in olds), category=category or first.category, section=first.section,
                 created_by=actor, derived_from=[r.req_id for r in olds], page=first.page, line_start=first.line_start,
                 line_end=max(r.line_end or 0 for r in olds), bboxes=[x for r in olds for x in r.bboxes],
+                spans=[x for r in olds for x in r.spans],
                 provenance="EXTRACTED", status="approved", origin="correction", baseline=number)
             db.add(merged)
             db.flush()

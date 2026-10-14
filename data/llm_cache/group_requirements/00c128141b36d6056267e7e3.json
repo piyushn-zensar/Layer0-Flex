@@ -1,0 +1,17 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Requirements for involving SDVOBs in contract fulfillment"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

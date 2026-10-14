@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies a test cabinet with secondary contacts and control relays, which aligns with the features of the CROWN-ARMV product, as it is designed for metal-clad switchgear applications.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement for special wrenches and manual devices corresponds to accessories for switchgear, which are provided by the CROWN-ACC product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The spare parts and touch-up paint are typical accessories for switchgear maintenance, which are covered by the CROWN-ACC product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "Test plugs are accessories for switchgear testing, which are included in the CROWN-ACC product catalog.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "The requirement for protective finishes and coatings is part of the construction and finish of metal-clad switchgear, which is provided by the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "Nameplates are part of the front panel and internal device specifications for metal-clad switchgear, which aligns with the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "Workmanship is a general requirement and does not specify a product. It is addressed by the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 8,
+        "rationale": "Compliance with contract documents is a commercial requirement and does not specify a product. It is addressed by the bid manager.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

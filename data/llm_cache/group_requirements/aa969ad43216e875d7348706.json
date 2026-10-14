@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Equipment compliance with safety and legal standards"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Factory tests notification and compliance"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

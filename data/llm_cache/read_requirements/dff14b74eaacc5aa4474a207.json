@@ -1,0 +1,204 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 14,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "External Power Cable Entrance Bottom Rear Section B2 From XFMR",
+        "section": "Requirements",
+        "text": "The external power cable must enter at the bottom rear section B2 from the transformer."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 17,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "External Power Cable Exit Bottom Rear Section A2 Feed to DAF",
+        "section": "Requirements",
+        "text": "The external power cable must exit at the bottom rear section A2 to feed the DAF."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 21,
+            "last": 23,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "System nominal voltage 13.2 kV",
+        "section": "Ratings",
+        "text": "The system nominal voltage must be 13.2 kV."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 24,
+            "last": 26,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "Rated Maximum Voltage 15 kV rms",
+        "section": "Ratings",
+        "text": "The rated maximum voltage must be 15 kV rms."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 27,
+            "last": 29,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "Rated Continuous Current 2000/1200 A, rms",
+        "section": "Ratings",
+        "text": "The rated continuous current must be 2000/1200 A, rms."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 30,
+            "last": 32,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "Basic Impulse Level (BIL) 95 kV peak",
+        "section": "Ratings",
+        "text": "The basic impulse level (BIL) must be 95 kV peak."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 33,
+            "last": 35,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "Normal Frequency Withstand 36 kV, rms",
+        "section": "Ratings",
+        "text": "The normal frequency withstand must be 36 kV, rms."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 36,
+            "last": 38,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "Frequency 60 Hz",
+        "section": "Ratings",
+        "text": "The frequency must be 60 Hz."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 39,
+            "last": 41,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "Momentary Rating 25 kA, rms",
+        "section": "Ratings",
+        "text": "The momentary rating must be 25 kA, rms."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 43,
+            "last": 45,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "Shipping Label Project Title Syracuse Airport Terminal Switchgear Relocation",
+        "section": "Shipping Label",
+        "text": "The shipping label must include the project title: Syracuse Airport Terminal Switchgear Relocation."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 46,
+            "last": 47,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "Shipping Label Specification No. 22186.00‐SPC‐E01",
+        "section": "Shipping Label",
+        "text": "The shipping label must include the specification number: 22186.00‐SPC‐E01."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 48,
+            "last": 49,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "Shipping Label Equipment Type Metal Clad Switchgear",
+        "section": "Shipping Label",
+        "text": "The shipping label must include the equipment type: Metal Clad Switchgear."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 50,
+            "last": 51,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "Shipping Label P. O. Item No. See Purchase Order",
+        "section": "Shipping Label",
+        "text": "The shipping label must include the P. O. item number as specified in the purchase order."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 52,
+            "last": 53,
+            "page": 74
+          }
+        ],
+        "page": 74,
+        "quote": "Shipping Label Device Location Syracuse, NY",
+        "section": "Shipping Label",
+        "text": "The shipping label must include the device location: Syracuse, NY."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 21,
+            "last": 23,
+            "page": 36
+          }
+        ],
+        "page": 36,
+        "quote": "Are you a New York State Certified M/WBE?",
+        "section": "M/WBE SUBCONTRACTOR/SUPPLIER INFORMATION",
+        "text": "Indicate if the M/WBE is certified in New York State."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 31,
+            "last": 39,
+            "page": 36
+          }
+        ],
+        "page": 36,
+        "quote": "WORK/SERVICES to be PROVIDED BY M/WBE SUBCONTRACTOR/SUPPLIER",
+        "section": "WORK/SERVICES to be PROVIDED BY M/WBE SUBCONTRACTOR/SUPPLIER",
+        "text": "Specify the work or services to be provided by the M/WBE subcontractor or supplier."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 2,
+            "last": 2,
+            "page": 37
+          }
+        ],
+        "page": 37,
+        "quote": "The above work will not be further subcontracted without the express written permission of the contractor and notification of the Office.",
+        "section": "M/WBE SUBCONTRACTORS AND SUPPLIERS' LETTER",
+        "text": "Do not subcontract the work further without written permission and notification."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 9,
+            "last": 10,
+            "page": 37
+          }
+        ],
+        "page": 37,
+        "quote": "This form is to be submitted with bid attached to the Subcontractor's Information Form in a sealed envelope for each certified Minority or Women-Owned Business enterprise the Bidder/Awardee/Contractor proposes to utilize as subcontractors, service providers or suppliers.",
+        "section": "INSTRUCTIONS FOR M/WBE SUBCONTRACTORS AND SUPPLIERS' LETTER",
+        "text": "Submit the form with the bid in a sealed envelope for each certified M/WBE proposed."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

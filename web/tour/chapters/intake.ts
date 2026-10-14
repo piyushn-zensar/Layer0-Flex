@@ -288,9 +288,9 @@ const chapter: TourChapter = {
     },
     {
       id: "intake-result",
-      title: "Result: 814 line items, 348 requirements",
+      title: "Result: 818 line items, 312 requirements",
       body: [
-        "For the Syracuse RFP the reader agent proposed **814 line items** from 101 pages with no unread pages. **21** were exact duplicates of an earlier line (marked, kept as evidence, not reviewed again) and the grouping agent formed **162 groups**, so the Requirements page starts with **348 requirements** to review: groups and stand-alone items, every one pointing to its page and lines.",
+        "For the Syracuse RFP the reader agent proposed **818 line items** from 101 pages (100 read, 1 contents page skipped, none unreadable). **27** were exact duplicates of an earlier line (marked, kept as evidence, not reviewed again) and the grouping agent formed **161 groups**, so the register starts with **312 requirements**: groups and stand-alone items, every one pointing to its page and lines. The **12** whose wording could not be matched to the RFP wait in the exception queue, each with the page and lines where it probably is.",
         "A requirement ID like `REQ-00xx-0324` carries the opportunity number and a sequence that is never reused, even for discarded drafts, so a unit's answer can never land on a different requirement. Categories come from the catalog's list (technical, commercial, …) and can be changed during review.",
         "Next, chapter 5: review the proposals (approve, reject, edit the short text, split, merge, add a missed line from the page), then **freeze** them as baseline 1. Nothing after this point changes a requirement except a change document.",
       ],

@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "By submitting this form and the required information, the offeror/contractor certifies that every Good Faith Effort has been taken to promote M/WBE participation pursuant to the M/WBE requirements set forth under the contract.",
+        "section": "MWBE Subcontractor Request for Waiver Form",
+        "text": "Offeror must certify that Good Faith Efforts were made to promote M/WBE participation."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 15,
+            "last": 19,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "Contractor is requesting a: 1. MBE Waiver – A waiver of the MBE Goal for this procurement is requested. Total Partial",
+        "section": "MWBE Subcontractor Request for Waiver Form",
+        "text": "Contractor may request a total or partial MBE Goal waiver."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 20,
+            "last": 23,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "Contractor is requesting a: 2. WBE Waiver – A waiver of the WBE Goal for this procurement is requested. Total Partial",
+        "section": "MWBE Subcontractor Request for Waiver Form",
+        "text": "Contractor may request a total or partial WBE Goal waiver."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 24,
+            "last": 27,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "Contractor is requesting a: 3. Waiver Pending ESD Certification – (Check here if subcontractors or suppliers of Contractor are not certified M/WBE, but an application for certification has been filed with Empire State Development.) Date of such filing with Empire State Development: Date:",
+        "section": "MWBE Subcontractor Request for Waiver Form",
+        "text": "Contractor may request a waiver pending ESD certification for subcontractors or suppliers."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 29,
+            "last": 39,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "SUBMISSION OF THIS FORM CONSTITUTES THE OFFEROR/CONTRACTOR’S ACKNOWLEDGEMENT AND AGREEMENT TO COMPLY WITH THE M/WBE REQUIREMENTS SET FORTH UNDER NYS EXECUTIVE LAW, ARTICLE 15-A AND 5 NYCRR PART 143. FAILURE TO SUBMIT COMPLETE AND ACCURATE INFORMATION MAY RESULT IN A FINDING OF NONCOMPLIANCE AND/OR TERMINATION OF THE CONTRACT.",
+        "section": "MWBE Subcontractor Request for Waiver Form",
+        "text": "Submission of the form acknowledges agreement to comply with M/WBE requirements under NYS Executive Law."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 44,
+            "last": 45,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "Submit with the bid or proposal or if submitting after award, submit to the MWBE program Unit:",
+        "section": "MWBE Subcontractor Request for Waiver Form",
+        "text": "Form must be submitted with the bid or proposal or to the MWBE program unit after award."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

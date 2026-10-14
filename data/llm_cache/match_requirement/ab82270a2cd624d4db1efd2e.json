@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "Requirement 1 pertains to compliance with legal procedures and does not specify a product or service from the catalog. It is a commercial or legal requirement.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 2,
+        "rationale": "Requirement 2 involves disclosure of findings of non-responsibility and does not specify a product or service from the catalog. It is a compliance-related inquiry.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 3,
+        "rationale": "Requirement 3 involves disclosure of contract terminations due to false or incomplete information and does not specify a product or service from the catalog. It is a compliance-related inquiry.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 4,
+        "rationale": "Requirement 4 pertains to certification of the accuracy and completeness of information provided and does not specify a product or service from the catalog. It is a compliance-related inquiry.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

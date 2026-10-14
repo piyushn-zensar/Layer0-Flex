@@ -1,0 +1,33 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Switchgear equipment specifications"
+      },
+      {
+        "category": "technical",
+        "members": [
+          4,
+          6
+        ],
+        "title": "Utility metering and interlock requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          5,
+          7
+        ],
+        "title": "Tie breaker operation and cable termination"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

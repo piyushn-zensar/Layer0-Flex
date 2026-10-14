@@ -3,7 +3,8 @@
     .venv\\Scripts\\python -m scripts.score_reader data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf
 
 Uses the frozen answers in data/llm_cache (no API call) and data/golden/<pdf name>.json.
-A reader item matches a golden item when both are on the same page and their line ranges overlap.
+A reader item matches a golden item when one of its source spans is on the golden item's page and the line ranges
+overlap.
 Recall = golden items found; precision = reader items that are real requirements.
 Uncertain golden items count for precision (finding them is not wrong) but not against recall.
 """
@@ -21,15 +22,16 @@ config.LLM_PROVIDER = "mock"  # score the frozen answers; never call the model h
 
 
 def overlaps(a: dict, b: dict) -> bool:
-    return a["page"] == b["page"] and a["line_start"] <= b["line_end"] and b["line_start"] <= a["line_end"]
+    return any(s["page"] == g["page"] and s["line_start"] <= g["line_end"] and g["line_start"] <= s["line_end"]
+               for s in a.get("spans", [a]) for g in b.get("spans", [b]))
 
 
 def score(pdf: str) -> dict:
     sha = hashlib.sha256(Path(pdf).read_bytes()).hexdigest()
     layout = json.loads((LAYOUT_CACHE / f"{sha}.json").read_text("utf-8"))
     golden = json.loads((config.DATA / "golden" / f"{Path(pdf).stem}.json").read_text("utf-8"))["requirements"]
-    found, problems = agent.read(layout)
-    reader = [h | r for r in found if (h := anchoring.find(r["quote"], layout["pages"], r["page"]))]
+    found, problems, coverage = agent.read(layout)
+    reader = [r | h for r in found if (h := anchoring.find(r["quote"], layout["pages"], r["page"], r.get("lines")))]
     unanchored = len(found) - len(reader)
 
     sure = [g for g in golden if not g.get("uncertain")]
@@ -40,6 +42,7 @@ def score(pdf: str) -> dict:
     return {
         "golden": len(golden), "golden_certain": len(sure), "reader_proposed": len(found),
         "reader_anchored": len(reader), "reader_unanchored": unanchored,
+        "multi_span": sum(len(r["spans"]) > 1 for r in reader), "coverage": coverage,
         "recall": round(len(hit_golden) / max(len(sure), 1), 3),
         "precision": round(len(real) / max(len(reader), 1), 3),
         "recall_by_category": by_cat, "problems": problems,

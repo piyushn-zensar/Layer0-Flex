@@ -1,0 +1,17 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Certifications regarding proposal pricing and competition"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

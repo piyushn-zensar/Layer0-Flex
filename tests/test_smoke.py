@@ -370,7 +370,7 @@ def test_grouping_and_duplicates():
     opp = client.post("/api/opportunities", json={"title": "grouping"}).json()["id"]
     client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
     r = client.post(f"/api/opportunities/{opp}/requirements/extract").json()  # frozen reader + grouping answers
-    assert r["proposed"] == 814 and r["duplicates"] == 21 and r["groups"] > 100 and r["requirements"] < 400, r
+    assert r["proposed"] == 818 and r["duplicates"] == 27 and r["groups"] > 100 and r["requirements"] < 400, r
     rows = client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]
     by_id = {x["req_id"]: x for x in rows}
     group = next(x for x in rows if x["kind"] == "group")
@@ -891,6 +891,12 @@ def test_register_and_exception_queue():
     queue = client.get(f"{url}/exceptions").json()
     assert [q["req_id"] for q in queue] == [lost["req_id"], other["req_id"]]
     assert queue[0]["suggested_page"] == 55 and "page 55" in queue[0]["reason"]
+    assert queue[0]["location_hint"] is None  # P-24: made-up wording earns no location hint
+    near = client.post(url, json={"quote": "Each phase shall have one inch diameter ground ball.", "page": 55}).json()
+    assert (near["status"], near["page"]) == ("exception", None)  # "one" is not the RFP's "1": not verified
+    hint = next(q for q in client.get(f"{url}/exceptions").json() if q["req_id"] == near["req_id"])
+    assert hint["location_hint"]["page"] == 55 and hint["location_hint"]["share"] >= 0.8 and "Probably" not in hint["reason"]
+    client.post(f"/api/requirements/{near['req_id']}/dismiss", json={"reason": "test row"})
     assert client.get(f"/api/opportunities/{opp}/trace").json()["rows"][0]["req"]["req_id"] == found["req_id"]
     assert len(client.get(f"/api/opportunities/{opp}/trace").json()["rows"]) == 1  # exceptions are not in the flow
 
@@ -930,7 +936,17 @@ def test_extraction_snapshot_and_corrections():
     opp = client.post("/api/opportunities", json={"title": "snapshot"}).json()["id"]
     client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
     read = client.post(f"/api/opportunities/{opp}/requirements/extract").json()
-    assert read["snapshot"] == 1 and read["coverage"]["candidates"] == 814 and read["coverage"]["exceptions"] == read["exceptions"]
+    assert read["snapshot"] == 1 and read["coverage"]["candidates"] == 818 and read["coverage"]["exceptions"] == read["exceptions"]
+    # P-24 (C-03): the coverage adds up; anchored to the reader's lines, fewer exceptions than the 33 before
+    c = read["coverage"]
+    assert c["pages"] == c["pages_read"] + c["pages_failed"] + c["pages_skipped"] + c["pages_unreadable"] == 101, c
+    assert c["candidates"] == c["admitted"] + c["exceptions"] + c["duplicates"] and c["exceptions"] < 33, c
+    rows = client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]
+    items_ = [r for r in rows if r["kind"] == "item" and r["page"] is not None]  # exceptions have no source
+    assert all(r["spans"][0] | {"document_id": None} == {"document_id": None, "page": r["page"], "line_start": r["line_start"],
+               "line_end": r["line_end"], "bboxes": r["bboxes"]} for r in items_)  # the first span is the row's source
+    several = [r for r in items_ if len(r["spans"]) > 1]
+    assert several and all(r["source"].count("p. ") == len(r["spans"]) for r in several)  # "p. 20, lines 12-13; p. ..."
     (e1,) = client.get(f"/api/opportunities/{opp}/extraction").json()
     assert (e1["number"], e1["reason"], e1["created_by"]) == (1, "", "Bid Manager") and e1["pipeline_version"]
     items = client.get(f"/api/opportunities/{opp}/extraction/1").json()["items"]

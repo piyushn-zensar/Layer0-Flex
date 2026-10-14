@@ -1,0 +1,86 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to shipping and handling, which is not a product-specific requirement. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement specifies 15 kV metal-clad switchgear with specific electrical characteristics. The CROWN-ARMV product is the appropriate choice as it is designed for metal-clad MV switchgear with vacuum breakers and meets IEEE C37.20.2 standards.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement specifies rigid bus bars and shipping braces for utility CT connections, which are features of the CROWN-ARMV product, as it is designed for robust and reliable metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 4,
+        "rationale": "The requirement specifies features of the circuit breaker compartment and breakers, which align with the capabilities of the CROWN-ARMV product, designed for 15 kV metal-clad switchgear with vacuum breakers.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "The requirement specifies operation on a solidly grounded 13.2 kV system, which is within the capabilities of the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.85,
+        "n": 6,
+        "rationale": "The requirement specifies a gang-operated isolation switch for incoming feeders. This is a standard accessory for MV switchgear, which aligns with the CROWN-ACC product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.85,
+        "n": 7,
+        "rationale": "The requirement specifies metering CTs and VTs with specific configurations, which are accessories for MV switchgear. The CROWN-ACC product includes such accessories.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,39 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          8
+        ],
+        "title": "Wiring installation and termination requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "title": "Wire identification and labeling requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          9,
+          10
+        ],
+        "title": "Testing and verification of components"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

@@ -1,0 +1,260 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 21,
+            "last": 25,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "1. THESE CONTRACT DOCUMENTS ARE SCHEMATIC IN NATURE AND REPRESENT A COMPLETED PROJECT. MINOR MODIFICATIONS OF WORK SHALL BE PROVIDED BY THE CONTRACTOR TO COMPLY WITH PROJECT REQUIREMENTS AND TO INSTALL A WORKING SYSTEM. LOCATIONS OF DEVICES AND EQUIPMENT SHOW A GENERAL ARRANGEMENT AND/OR INTENDED FUNCTION. ALL COMPONENTS TO BE INSTALLED ARE NOT SHOWN ON ALL DRAWINGS OR DETAILS, BUT SHALL BE INCLUDED AS NECESSARY. EXACT LOCATIONS OF CERTAIN EQUIPMENT THAT REQUIRE ELECTRICAL CONNECTIONS MAY BE SHOWN ON THE DRAWINGS SHOWING THAT EQUIPMENT. IT IS THE CONTRACTORS RESPONSIBILITY TO VERIFY THE EXACT LOCATION FOR THAT EQUIPMENT.",
+        "section": "General Notes",
+        "text": "Contractor must provide minor modifications to comply with project requirements and verify exact equipment locations."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 30,
+            "last": 30,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "2. THE CONTRACT SPECIFICATIONS FOR THIS PROJECT ARE AN INTEGRAL PART OF THESE CONTRACT DOCUMENTS AND SHALL BE CONSIDERED PART OF AND COMPLIMENTARY TO THE INFORMATION IN THESE CONTRACT DRAWINGS.",
+        "section": "General Notes",
+        "text": "Contract specifications are integral and complementary to the contract drawings."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 34,
+            "last": 34,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "3. ALL REFERENCES TO THE CONTRACTOR REFERS TO THE CONTRACTOR OR CONTRACTORS RESPONSIBLE FOR ANY AND ALL WORK SHOWN ON THESE ELECTRICAL CONTRACT DOCUMENTS.",
+        "section": "General Notes",
+        "text": "Contractor is responsible for all work shown on the electrical contract documents."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "4. ALL MATERIAL AND EQUIPMENT SHALL BE LISTED AS APPROPRIATE FOR THE APPLICATION.",
+        "section": "General Notes",
+        "text": "All materials and equipment must be listed as appropriate for their application."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 86,
+            "last": 90,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "5. ELECTRICAL CONTRACTOR SHALL FIELD VERIFY ALL EXISTING CONDITIONS AND DIMENSIONS PRIOR TO COMMENCEMENT OF ANY WORK OR SHOP FABRICATION. REQUIRED CHANGES TO THE WORK AS SHOWN ON THESE CONTRACT DOCUMENTS SHALL BE APPROVED AND ACKNOWLEDGED BY THE ENGINEER, OTHER TRADES, AND OWNER, IN WRITING, PRIOR TO ANY CONSTRUCTION. BEFORE INSTALLATION OF WORK, THE CONTRACTOR SHALL CHECK FOR ALL REQUIRED CLEARANCES, INCLUDING DOOR SWINGS AND ELEVATIONS, TO AVOID INTERFERENCE WITH OTHER TRADES. THE CONTRACTOR IS RESPONSIBLE FOR OBTAINING AND COORDINATING WITH ALL CONTRACT DOCUMENTS, SHOP DRAWINGS, CONTRACTOR SUBMITTALS AND EQUIPMENT CONTRACT DOCUMENTS.",
+        "section": "General Notes",
+        "text": "Electrical contractor must verify conditions, obtain approvals for changes, and coordinate with all documents before work."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 103,
+            "last": 105,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "6. COORDINATE THE WORK ON THESE DRAWINGS WITH THE WORK OF ALL OTHER DRAWINGS AND CONTRACTS IN THE AFFECTED AND/OR ADJACENT AREAS. COORDINATE SHUTDOWN OF EXISTING SYSTEMS WITH OWNER AND OTHER TRADES. THE CONTRACTOR IS RESPONSIBLE FOR DISABLING EXISTING SYSTEMS AS REQUIRED, AND IS RESPONSIBLE FOR PERFORMING ALL WORK AS REQUIRED BY CODES, REGULATIONS AND LAWS OF THE LOCAL, STATE AND FEDERAL GOVERNMENTS AND OTHER AUTHORITIES AND AGENCIES WITH LAWFUL JURISDICTION.",
+        "section": "General Notes",
+        "text": "Contractor must coordinate work with other drawings, shutdowns, and comply with all regulations."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 122,
+            "last": 125,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "7. PROVIDE GROUNDING & BONDING IN ACCORDANCE WITH THE NATIONAL ELECTRICAL CODE AND THE CONTRACT DOCUMENTS. ALL CONDUCTORS SHALL BE COPPER UNLESS INDICATED OTHERWISE. ALL FEEDERS, BRANCH CIRCUITS, AND OTHER WIRING SYSTEMS SHALL HAVE A SEPARATE DEDICATED INSULATED GROUND WIRE EXCEPT AS SPECIFICALLY NOTED. ELECTRICALLYCONDUCTIVE MATERIALS ASSOCIATED WITH THE PROJECT SHALL BE CONNECTED TOGETHER IN A MANNER THAT CREATES A PERMANENT, LOW IMPEDANCE PATH FOR GROUND FAULT CURRENT. ALL BRANCH CIRCUITS REQUIRING A NEUTRAL SHALL HAVE SEPARATE DEDICATED FULL SIZE NEUTRAL CONDUCTORS OR AS INDICATED OTHERWISE.",
+        "section": "General Notes",
+        "text": "Provide grounding and bonding per NEC and ensure all conductors are copper unless noted otherwise."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 136,
+            "last": 138,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "8. PROVIDE ELECTRICAL CONNECTION FOR EVERY FIXTURE, ITEM OR ANY EQUIPMENT REQUIRING ANY ELECTRICAL CONNECTION WHICH IS SHOWN ON ANY CONTRACT DRAWING OR NOTED IN ANY TECHNICAL SPECIFICATION. INSTALL ALL EQUIPMENT IN ACCORDANCE WITH THE MANUFACTURER'S RECOMMENDATIONS AND CONDITIONS FOR WARRANTY AND GUARANTEE. PROVIDE ALL ACCESSORIES REQUIRED FOR A COMPLETE AND SATISFACTORY INSTALLATION READY FOR CONTINUOUS USE.",
+        "section": "General Notes",
+        "text": "Provide electrical connections for all fixtures and equipment, and install per manufacturer recommendations."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 155,
+            "last": 158,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "9. EXISTING CIRCUITS, AND DEVICES, WHICH ARE PRESENT OR PASS THROUGH AFFECTED AREAS, SHALL BE MAINTAINED OPERATIONAL, AS REQUIRED, AND AS DIRECTED. THE CONTRACTOR SHALL BE RESPONSIBLE FOR LOCATING AND AVOIDING, IF POSSIBLE, THESE CIRCUITS AND DEVICES. IF DISTURBED, UNLESS OTHERWISE APPROVED CIRCUITS AND DEVICES, SHALL BE REPAIRED, OR REPLACED, AND MADE OPERATIONAL AS SOON AS POSSIBLE AND AT THE CONTRACTORS EXPENSE. ALL INTERRUPTIONS TO LIFE SAFETY SYSTEMS INCLUDING MONITORING AND ALARM SYSTEMS SHALL BE KEPT TO A MINIMUM AND SHALL BE RESTORED AS SOON AS POSSIBLE.",
+        "section": "General Notes",
+        "text": "Maintain operational status of existing circuits and devices, and minimize interruptions to life safety systems."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 170,
+            "last": 172,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "10. THE CONTRACTOR IS RESPONSIBLE FOR ANY EQUIPMENT OR WORK THAT MAY BE REQUIRED TO BE TEMPORARILY DISCONNECTED, REMOVED AND/OR RELOCATED AS PART OF THE CONTRACTORS WORK OR THE WORK OF OTHER TRADES. THE EQUIPMENT SHALL BE PROTECTED FROM DAMAGE. THE CONTRACTOR IS RESPONSIBLE TO RECONNECT AND MAKE ELECTRICALLY OPERATIONAL ALL EQUIPMENT THAT IS DISCONNECTED AND/OR RELOCATED AS PART OF THE WORK.",
+        "section": "General Notes",
+        "text": "Contractor must handle temporary disconnections and relocations, ensuring equipment is protected and reconnected."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 183,
+            "last": 183,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "11. ALL EQUIPMENT SHALL BE INSTALLED IN A NEAT AND WORKMAN LIKE MANNER, RECTILINEAR TO BUILDING STRUCTURE. ALL WIRING SHALL BE RUN CONCEALED OR IN RACEWAY UNLESS SPECIFIED OTHERWISE.",
+        "section": "General Notes",
+        "text": "Install equipment neatly and align with building structure; conceal wiring unless specified otherwise."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 194,
+            "last": 195,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "12. ALL RACEWAYS THROUGH BUILDING EXPANSION JOINTS SHALL BE EQUIPPED WITH EXPANSION FITTINGS. CUT AND PATCH BUILDING STRUCTURE AS REQUIRED. PROVIDE UL LISTED FIRE STOP METHODS FOR PENETRATIONS OF FIRE-RATED BUILDING COMPONENTS OR BARRIERS PER CONTRACT SPECIFICATIONS. WATERPROOF ALL EXTERIOR OUTDOOR PENETRATIONS.",
+        "section": "General Notes",
+        "text": "Equip raceways through expansion joints with fittings, and provide fire stop and waterproofing for penetrations."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 215,
+            "last": 217,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "13. ALL CUTTING AND PATCHING OF BUILDING COMPONENTS REQUIRED TO ACCOMMODATE THE WORK OF THIS CONTRACT SHALL BE THE RESPONSIBILITY OF THE CONTRACTOR. ALL PATCHING SHALL MATCH THE EXISTING COMPONENTS AND FINISHES. CUTTING AND PATCHING WORK SHALL BE PERFORMED BY PERSONNEL TRAINED AND REGULARLY EMPLOYED FOR SUCH SERVICES. COORDINATE ALL WORK ON EXISTING BUILDING COMPONENTS WITH OWNER AND OTHER TRADES.",
+        "section": "General Notes",
+        "text": "Contractor is responsible for cutting and patching, ensuring work matches existing finishes and is coordinated."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 235,
+            "last": 237,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "14. ELECTRICAL CONTRACTOR SHALL PROVIDE NECESSARY SUPPORT FRAMING, STIFFENERS, BRACING, AND HANGERS TO ENSURE A COMPLETE AND DURABLE SYSTEM. SUPPORTS MAY VARY FROM THOSE SHOWN IN DETAILS AND AS REQUIRED FOR EQUIPMENT TO BE FURNISHED OR FOR EXISTING FIELD CONDITIONS. DEVIATIONS FROM THE CONTRACT DOCUMENTS MUST BE APPROVED BY THE ENGINEER.",
+        "section": "General Notes",
+        "text": "Provide necessary supports for a durable system, and get approval for deviations from contract documents."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 249,
+            "last": 251,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "15. 120/277V, 20A CIRCUITS SHALL BE FED WITH #12AWG CONDUCTORS AND A #12AWG GROUND MINIMUM, UNLESS STATED OTHERWISE. CIRCUITS PROTECTED AT GREATER THEN 20A, UP TO AND INCLUDING 30A, SHALL BE FED WITH #10AWG CONDUCTORS AND A #10AWG GROUND, UNLESS STATED OTHERWISE. CIRCUITS PROTECTED AT GREATER THAN 30A, SHALL BE FED AS SHOWN ON THE DRAWINGS OR AS REQUIRED BY CODE AND REGULATIONS, IF NOT INDICATED.",
+        "section": "General Notes",
+        "text": "Follow specified conductor and ground sizes for circuits based on amperage ratings."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 258,
+            "last": 258,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "16. NOT ALL SYMBOLS AND NOT ALL NOTES ARE USED ON THESE CONTRACT DRAWINGS.",
+        "section": "General Notes",
+        "text": "Not all symbols and notes are used in the drawings."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 276,
+            "last": 278,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "17. THE CONTRACTOR SHALL MAINTAIN RECORD DRAWINGS ON SITE SHOWING CHANGES MADE DUE TO FIELD CONDITIONS OR ENGINEER APPROVED CHANGES. THE RECORD SET MUST BE COMPLETE AND CURRENT AND AVAILABLE FOR INSPECTION WHEN REQUISITIONS FOR PAYMENT ARE SUBMITTED. ELECTRONIC VERSIONS, AS APPROVED BY THE ENGINEER, ARE ACCEPTABLE.",
+        "section": "General Notes",
+        "text": "Maintain complete and current record drawings on site for inspection and payment requisitions."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 296,
+            "last": 322,
+            "page": 82
+          }
+        ],
+        "page": 82,
+        "quote": "18. REMOVAL NOTES: A. REMOVE ALL EXISTING ELECTRICAL ITEMS SHOWN ON THE REMOVAL DRAWINGS UNLESS NOTED OTHERWISE. B. COORDINATE ALL REMOVALS WITH OWNER AND OTHER TRADES. REFER TO AND COORDINATE WITH ABATEMENT AND ARCHITECTURE DRAWINGS FOR DETAILS. C. ELECTRICAL CIRCUITS AND CIRCUITS CONNECTED TO ANY EQUIPMENT THAT IS SHOWN TO BE DEMOLISHED AND/OR REMOVED SHALL BE REMOVED BACK TO THE SOURCE INCLUDING ALL RACEWAYS, UNLESS NOTED OTHERWISE. RACEWAYS CONTAINED AND CONCEALED IN FLOORS, CEILINGS OR WALLS THAT ARE NOT TO BE AFFECTED BY ANY CONTRACT OR BY ANY TRADE WILL BE LEFT/ABANDONED IN PLACE AND CAPPED AT EACH END. D. THE CONTRACTOR SHALL BE RESPONSIBLE FOR CONDUCTING ALL WORK IN ACCORDANCE WITH APPLICABLE FEDERAL, STATE, AND LOCAL REQUIREMENTS, INCLUDING OSHA 29 CFR 1926.62 (LEAD IN CONSTRUCTION STANDARD), AND FOR TAKING PRECAUTIONS TO ENSURE THAT WORKERS ARE NOT EXPOSED TO LEAD IN EXCESS OF THE PERMISSIBLE EXPOSURE LIMIT. E. DEMOLITION WORK MAY INVOLVE ASBESTOS ABATEMENT. REFER TO ARCHITECTURAL PLANS FOR DETAILS AND EXACT LOCATIONS. ANY REMOVAL WORK OR ANY OTHER WORK SHALL COMMENCE ONLY AFTER HAZARDOUS MATERIAL REMOVAL WORK IS COMPLETE AND NECESSARY AND REQUISITE CLEARANCES HAVE BEEN OBTAINED FROM THE ENVIRONMENTAL/ABATEMENT CONSULTANT/MONITOR.",
+        "section": "General Notes",
+        "text": "Follow removal notes, coordinate with owner and trades, and comply with safety and environmental regulations."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

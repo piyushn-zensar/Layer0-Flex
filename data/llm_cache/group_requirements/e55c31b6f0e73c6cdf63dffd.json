@@ -1,0 +1,19 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "title": "Quarterly workforce utilization/compliance reporting requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

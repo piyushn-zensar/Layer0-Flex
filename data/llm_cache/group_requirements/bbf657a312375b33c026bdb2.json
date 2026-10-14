@@ -1,0 +1,36 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Rear doors and drawout carriages features"
+      },
+      {
+        "category": "technical",
+        "members": [
+          8,
+          9,
+          10,
+          11
+        ],
+        "title": "Ground bus and grounding provisions"
+      },
+      {
+        "category": "technical",
+        "members": [
+          12,
+          13,
+          14,
+          15
+        ],
+        "title": "Switchgear bus and assembly specifications"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

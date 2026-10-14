@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 4,
+            "last": 4,
+            "page": 100
+          }
+        ],
+        "page": 100,
+        "quote": "All information provided herein is true and correct to the best of their knowledge.",
+        "section": "BID/PROPOSAL SIGN-OFF SHEET",
+        "text": "The bidder must certify that all provided information is accurate."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 6,
+            "last": 7,
+            "page": 100
+          }
+        ],
+        "page": 100,
+        "quote": "The respondent has read and understands the specifications in their entirety and that the response is made in accordance therewith, and;",
+        "section": "BID/PROPOSAL SIGN-OFF SHEET",
+        "text": "The bidder must confirm understanding and compliance with all specifications."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 9,
+            "last": 10,
+            "page": 100
+          }
+        ],
+        "page": 100,
+        "quote": "The respondent possesses the capabilities, resources, and personnel necessary to provide efficient and successful service to the Authority, and;",
+        "section": "BID/PROPOSAL SIGN-OFF SHEET",
+        "text": "The bidder must confirm they have the necessary resources and personnel."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 11,
+            "last": 11,
+            "page": 100
+          }
+        ],
+        "page": 100,
+        "quote": "The respondent agrees to all terms and conditions as provided within the specifications.",
+        "section": "BID/PROPOSAL SIGN-OFF SHEET",
+        "text": "The bidder must agree to all terms and conditions."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 5,
+            "last": 5,
+            "page": 101
+          }
+        ],
+        "page": 101,
+        "quote": "LS Price for metal clad switchgear:",
+        "section": "Exhibit I",
+        "text": "The bidder must provide a lump sum price for metal clad switchgear."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 10,
+            "last": 10,
+            "page": 101
+          }
+        ],
+        "page": 101,
+        "quote": "Optional Field Service:",
+        "section": "Exhibit I",
+        "text": "The bidder must provide pricing for optional field service."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 101
+          }
+        ],
+        "page": 101,
+        "quote": "Recommended Spare Parts:",
+        "section": "Exhibit I",
+        "text": "The bidder must provide pricing for recommended spare parts."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

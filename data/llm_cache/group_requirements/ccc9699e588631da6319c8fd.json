@@ -1,0 +1,18 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "title": "Provide expenditure details for M/WBEs using the specified format"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

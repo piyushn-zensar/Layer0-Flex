@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 3,
+            "last": 3,
+            "page": 43
+          }
+        ],
+        "page": 43,
+        "quote": "List all M/WBEs used during the quarter, providing all requested information in appropriate columns. In the event that an M/WBE is used more than one time during a quarter, list the M/WBE only once for each expenditure category.",
+        "section": "INSTRUCTIONS",
+        "text": "List all M/WBEs used during the quarter, providing requested information."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 4,
+            "last": 4,
+            "page": 43
+          }
+        ],
+        "page": 43,
+        "quote": "Use the Expenditure Code defined at the top of the form to indicate the category of expenditures for which the M/WBE was used.",
+        "section": "INSTRUCTIONS",
+        "text": "Use the Expenditure Code to indicate expenditure categories."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 7,
+            "last": 7,
+            "page": 43
+          }
+        ],
+        "page": 43,
+        "quote": "Column A Total Amount of Actual Expenditures in Report Period: Enter the amount ($) for each Expenditure Code made during report period under this contract.",
+        "section": "TOTALS FOR REPORT PERIOD",
+        "text": "Enter total expenditures for each Expenditure Code in Column A."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 8,
+            "last": 8,
+            "page": 43
+          }
+        ],
+        "page": 43,
+        "quote": "Column B MBE Subcontracting Expenditures: Enter the amount for each Expenditure Code with registered Minority Owned Business Enterprises made during the report period under this contract.",
+        "section": "TOTALS FOR REPORT PERIOD",
+        "text": "Enter MBE expenditures for each Expenditure Code in Column B."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 10,
+            "last": 10,
+            "page": 43
+          }
+        ],
+        "page": 43,
+        "quote": "Column C WBE Subcontracting Expenditures: Enter the amount of expenditures for each Expenditure Code with registered Women Owned Business Enterprises made during the report period under this contract.",
+        "section": "TOTALS FOR REPORT PERIOD",
+        "text": "Enter WBE expenditures for each Expenditure Code in Column C."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 12,
+            "last": 12,
+            "page": 43
+          }
+        ],
+        "page": 43,
+        "quote": "Column D MWBE Dual Subcontracting Expenditures: Enter the amount of expenditures for each Expenditure Code with registered Minority and Women Owned Business Enterprises made during the report period under this contract.",
+        "section": "TOTALS FOR REPORT PERIOD",
+        "text": "Enter MWBE expenditures for each Expenditure Code in Column D."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

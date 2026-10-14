@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance with equal employment opportunity (EEO) policies and is not related to a specific product or service from the catalog. It is a legal and contractual obligation for the contractor and subcontractors.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

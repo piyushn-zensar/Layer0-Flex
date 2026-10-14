@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          5
+        ],
+        "title": "M/WBE and SDVOB participation and reporting requirements"
+      },
+      {
+        "category": "submission",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Submission of M/WBE-SDVOB forms and related requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

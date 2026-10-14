@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "title": "Sanctions for contractor non-compliance"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

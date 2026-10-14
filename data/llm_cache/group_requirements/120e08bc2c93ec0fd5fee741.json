@@ -1,0 +1,48 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          5,
+          6,
+          13,
+          18
+        ],
+        "title": "Coordination and compliance with project requirements and documents"
+      },
+      {
+        "category": "technical",
+        "members": [
+          4,
+          7,
+          8,
+          11,
+          12,
+          15
+        ],
+        "title": "Electrical installation and material standards"
+      },
+      {
+        "category": "technical",
+        "members": [
+          9,
+          10
+        ],
+        "title": "Handling existing systems and temporary modifications"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          2,
+          3,
+          16
+        ],
+        "title": "Responsibility for contract documents and specifications"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

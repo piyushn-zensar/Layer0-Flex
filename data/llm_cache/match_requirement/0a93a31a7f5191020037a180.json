@@ -1,0 +1,116 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies metal-clad switchgear with detailed construction and ratings. CROWN-ARMV is the appropriate product as it is arc-resistant metal-clad MV switchgear designed for heavy-duty utility service, meeting IEEE standards and customizable to the specified ratings.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "The general arrangement of switchgear breaker and auxiliary units is part of the design and configuration of the metal-clad switchgear. CROWN-ARMV is suitable as it is engineered to order and can be arranged per contract documents.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement specifies features of the switchgear doors and safety mechanisms. CROWN-ARMV includes customizable features such as hinged doors, safety shutters, and internal lighting, aligning with the specification.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "Connections to voltage transformers and cable specifications are part of the switchgear design. CROWN-ARMV supports 15 kV rated cable connections and can be engineered to meet fault and momentary current ratings.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "Nameplates and labeling are part of the switchgear specification. CROWN-ARMV can include detailed nameplates and labeling as per customer requirements.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "Factory installation of components is standard for engineered switchgear. CROWN-ARMV is delivered with all components installed except those specified as furnished by the purchaser.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "Accessibility and cable entry features are part of the switchgear design. CROWN-ARMV includes front-accessible metering, relaying, and control equipment, as well as bolted removable panels and bottom cable entry.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 8,
+        "rationale": "The specification for power cable compartment doors aligns with the construction features of CROWN-ARMV, which includes robust door designs with locking mechanisms and weatherproofing.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 9,
+        "rationale": "Drawout carriages with grounding devices for mounting transformers are part of the switchgear design. CROWN-ARMV supports such features and can be engineered to meet this requirement.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

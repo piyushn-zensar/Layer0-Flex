@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "change": "modified",
+        "confidence": 0.95,
+        "n": 1,
+        "new_text": "Proposals must be submitted by 09/29/2023 at 4:00PM.",
+        "rationale": "The change document specifies a new submission due date, replacing the original date in candidate A.",
+        "target": "A"
+      },
+      {
+        "change": "modified",
+        "confidence": 0.95,
+        "n": 2,
+        "new_text": "Switchgear must have 20 15kV vacuum circuit breaker positions and other specified features.",
+        "rationale": "The change document updates the number of circuit breaker positions from 18 to 20, modifying candidate A.",
+        "target": "A"
+      },
+      {
+        "change": "added",
+        "confidence": 0.9,
+        "n": 3,
+        "new_text": "The switchgear lineup must be seismically qualified for the site, with the seismic qualification report provided with the submittals.",
+        "rationale": "The requirement is new and not covered by any candidate.",
+        "target": ""
+      },
+      {
+        "change": "added",
+        "confidence": 0.9,
+        "n": 4,
+        "new_text": "The MANUFACTURER shall warrant the switchgear lineup against defects in materials and workmanship for sixty (60) months from the date of energization.",
+        "rationale": "The warranty requirement is new and not covered by any candidate.",
+        "target": ""
+      },
+      {
+        "change": "removed",
+        "confidence": 0.95,
+        "n": 5,
+        "new_text": "Submit final drawings in AutoCAD format.",
+        "rationale": "The change document explicitly states the removal of the requirement in candidate A.",
+        "target": "A"
+      },
+      {
+        "change": "unchanged",
+        "confidence": 0.95,
+        "n": 6,
+        "new_text": "Switchgear must be Arc-resistant Type 2B and meet IEEE C37.20.7.",
+        "rationale": "The change document confirms the requirement in candidate A without altering it.",
+        "target": "A"
+      }
+    ]
+  },
+  "task": "classify_change"
+}

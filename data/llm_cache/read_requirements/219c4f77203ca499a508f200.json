@@ -1,0 +1,204 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 2,
+            "last": 3,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "8. The recommendations and opinions of each Proposer’s previous customers or clients.",
+        "section": "2.9.4",
+        "text": "Provide recommendations and opinions from previous customers or clients."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 4,
+            "last": 5,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "9. Information provided in response to specific questions and requirements contained in the RFP and all attachments/exhibits.",
+        "section": "2.9.4",
+        "text": "Respond to all specific questions and requirements in the RFP and its attachments."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 6,
+            "last": 6,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "10. The proposer’s past experience at the Syracuse Hancock International Airport.",
+        "section": "2.9.4",
+        "text": "Detail past experience at the Syracuse Hancock International Airport."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 7,
+            "last": 7,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "11. Information provided at interview (if required).",
+        "section": "2.9.4",
+        "text": "Provide information during the interview if required."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 9,
+            "last": 10,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "The Proposer must certify in the proposal that its fee covers all services proposed and meets the requirements of this RFP.",
+        "section": "2.9.4",
+        "text": "Certify that the proposed fee covers all services and meets RFP requirements."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 19,
+            "last": 19,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "Proposals failing to meet the requirements of this RFP may be eliminated from consideration.",
+        "section": "2.9.4",
+        "text": "Ensure the proposal meets all RFP requirements to avoid elimination."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 20,
+            "last": 20,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "Qualified staff/individuals will evaluate all submitted proposals.",
+        "section": "2.9.4",
+        "text": "Understand that qualified staff will evaluate all proposals."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 21,
+            "last": 21,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "The Authority may request clarification of a proposal.",
+        "section": "2.9.4",
+        "text": "Be prepared to provide clarifications on the proposal if requested."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 24,
+            "last": 24,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "(i) withdraw or cancel the RFP at any time and at its sole discretion;",
+        "section": "2.9.4",
+        "text": "The Authority may withdraw or cancel the RFP at any time."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 25,
+            "last": 25,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "(ii) reject any or all proposals received in response to this RFP;",
+        "section": "2.9.4",
+        "text": "The Authority may reject any or all proposals."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 26,
+            "last": 28,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "(iii) accept a proposal and any subsequent proposal for the contract from someone other than the lowest cost Proposer consistent with the criteria for the evaluation of proposals;",
+        "section": "2.9.4",
+        "text": "The Authority may accept a proposal not necessarily from the lowest cost proposer."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 29,
+            "last": 29,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "(iv) make an award under the RFP in whole or in part;",
+        "section": "2.9.4",
+        "text": "The Authority may make an award in whole or in part."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 30,
+            "last": 30,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "(v) disqualify any proposer whose conduct and/or proposal fails to conform to the requirements of the RFP;",
+        "section": "2.9.4",
+        "text": "The Authority may disqualify proposers not conforming to RFP requirements."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 31,
+            "last": 31,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "(vi) seek clarifications and revisions of proposals;",
+        "section": "2.9.4",
+        "text": "The Authority may seek clarifications and revisions of proposals."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -340,14 +340,15 @@ function Exceptions({ bidId, rows, error, frozen, busy, act, done, requirements 
           <div><span className="mono">{r.req_id}</span> <span className="tag">{r.category}</span> <StatusBadge status="medium" kind="severity" label="Source not verified" /></div>
           <div>{r.text}</div>
           <div className="quote">“{r.quote}”</div>
-          <div className="muted">{r.suggested_page ? `Suggested page ${r.suggested_page}` : "No page suggested"} · {r.reason}</div>
+          <div className="muted" data-tour="req-exception-where">{where(r)} · {r.reason}</div>
           {mode?.id !== r.req_id && (
             <div className="row-actions">
               <button data-tour="req-exception-link" disabled={busy} onClick={() => setMode({ id: r.req_id, kind: "link" })}>Link to lines</button>
               <button className="secondary" data-tour="req-exception-dismiss" disabled={busy} onClick={() => setMode({ id: r.req_id, kind: "dismiss" })}>Dismiss</button>
             </div>)}
           {mode?.id === r.req_id && mode.kind === "link" && (<>
-            <LinePicker oppId={bidId} startPage={r.suggested_page ?? 1} categories={CATEGORIES} requirements={active}
+            <LinePicker oppId={bidId} startPage={r.location_hint?.page ?? r.suggested_page ?? 1} categories={CATEGORIES} requirements={active}
+              startLines={r.location_hint?.line_start && r.location_hint.line_end ? [r.location_hint.line_start, r.location_hint.line_end] : undefined}
               resolve={{ reqId: r.req_id, text: r.text, category: r.category }} published={frozen} onAdded={() => { setMode(undefined); return done(); }} />
             <button type="button" className="secondary" onClick={() => setMode(undefined)}>Close</button>
           </>)}
@@ -358,6 +359,13 @@ function Exceptions({ bidId, rows, error, frozen, busy, act, done, requirements 
       ))}
     </ul>
   );
+}
+
+/** Where an exception probably is: the checked hint (page, lines) first, else the page the reader named. */
+function where(r: RequirementException) {
+  const h = r.location_hint;
+  if (h) return `Probably p. ${h.page}${h.line_start ? `, lines ${h.line_start}-${h.line_end}` : ""} (wording not matched exactly)`;
+  return r.suggested_page ? `Suggested page ${r.suggested_page}` : "No page suggested";
 }
 
 /** Every extraction snapshot (E1, E2...): who read the RFP, when, why, and what the read found. A snapshot never changes; "View items" shows it as it was. */

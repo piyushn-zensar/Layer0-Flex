@@ -1,0 +1,53 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          4,
+          5,
+          7,
+          8
+        ],
+        "title": "Excavation and underground piping requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          9,
+          12,
+          15
+        ],
+        "title": "Coordination of piping and mechanical systems"
+      },
+      {
+        "category": "technical",
+        "members": [
+          14,
+          16,
+          18,
+          19
+        ],
+        "title": "Mechanical system installation and testing"
+      },
+      {
+        "category": "schedule",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Shutdown planning and approvals"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          3,
+          13
+        ],
+        "title": "Compliance with codes and permits"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

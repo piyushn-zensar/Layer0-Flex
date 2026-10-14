@@ -1,0 +1,27 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "schedule",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "title": "Proposal schedule and timeline"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          6,
+          7
+        ],
+        "title": "Compliance with schedule changes"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

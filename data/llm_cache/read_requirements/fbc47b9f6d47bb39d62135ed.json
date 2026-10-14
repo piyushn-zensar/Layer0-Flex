@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 8,
+            "last": 9,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Any Proposer responding to this RFP must complete the Non-Collusive Proposal Certification attached hereto at Exhibit B and submit it to the Authority with its proposal.",
+        "section": "2.3",
+        "text": "Proposers must complete and submit the Non-Collusive Proposal Certification."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Any and all exceptions to this RFP must be clearly and completely indicated in proposals submitted.",
+        "section": "2.4",
+        "text": "Proposers must clearly indicate any exceptions to the RFP in their proposals."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 19,
+            "last": 19,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "The proposers’ costs for the proposers entire submittal effort shall be borne by the proposer.",
+        "section": "2.5",
+        "text": "Proposers must bear all costs associated with their proposal submission."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 23,
+            "last": 24,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "The selected Proposer will be required to comply with and perform its services under the contract in accordance with any and all Whistleblower Policy and Procedures adopted by the Authority.",
+        "section": "2.6",
+        "text": "Selected proposers must comply with the Authority's Whistleblower Policy and Procedures."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 31,
+            "last": 33,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Proposers’ utilization of M/WBE’s and SDVOB’s is a factor in awarding projects and imposes obligations on a selected proposer to utilize M/WBE’s and SDVOB’s in performance of contracts with the Authority.",
+        "section": "2.7",
+        "text": "Proposers must utilize M/WBE and SDVOB entities in contract performance."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

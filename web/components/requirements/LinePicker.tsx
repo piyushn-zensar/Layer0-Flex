@@ -12,8 +12,9 @@ const MAX_LINES = 40; // as the API (requirements.service.MAX_SELECTED_LINES)
 interface Line { n: number; text: string; bbox: number[]; furniture?: boolean }
 interface LayoutPage { page: number; width: number; height: number; unreviewed: boolean; lines: Line[] }
 
-export default function LinePicker({ oppId, startPage, categories, requirements, onAdded, resolve, published = false }: {
+export default function LinePicker({ oppId, startPage, startLines, categories, requirements, onAdded, resolve, published = false }: {
   oppId: string; startPage: number; categories: string[];
+  startLines?: [number, number]; // lines selected when the picker opens (an exception's location hint, P-24)
   requirements: Requirement[]; // active ones: their lines are shown as already captured
   onAdded: () => unknown;
   published?: boolean; // after publish (P-23): the lines go to POST /corrections (kind add / resolve) and a reason is required
@@ -26,8 +27,8 @@ export default function LinePicker({ oppId, startPage, categories, requirements,
   const [wanted, setPageNo] = useState(startPage);
   const pageNo = Math.min(Math.max(1, wanted), pageCount);
   const [loaded, setLoaded] = useState<{ key: string; page?: LayoutPage; error?: string }>();
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  const [from, setFrom] = useState(startLines ? String(startLines[0]) : "");
+  const [to, setTo] = useState(startLines ? String(startLines[1]) : "");
   const [pivot, setPivot] = useState<number>(); // the line a shift-click extends from
   const [text, setText] = useState(resolve?.text ?? "");
   const [category, setCategory] = useState(resolve && categories.includes(resolve.category) ? resolve.category : categories[0]);

@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies detailed wiring and terminal block standards for metal-clad switchgear. CROWN-ARMV is the appropriate product as it is arc-resistant metal-clad MV switchgear built to IEEE C37.20.2, which aligns with the detailed specifications provided.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement for control power buses within the switchgear assembly aligns with the functionality of CROWN-ARMV, which is designed for metal-clad MV switchgear applications and includes provisions for control power distribution.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement for factory testing and functional verification of relays, meters, and other components is a standard part of the offering for CROWN-ARMV, which includes comprehensive testing as part of its engineered-to-order process.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement for wire labeling and identification is consistent with the detailed engineering and manufacturing processes of CROWN-ARMV, which adheres to high standards for wiring and labeling in metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

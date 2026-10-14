@@ -1,0 +1,104 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.95,
+        "n": 1,
+        "rationale": "The requirement specifies technical parameters for metal-clad switchgear, including short-circuit current, interrupting capacity, and other ratings. The CROWN-ARMV product is a metal-clad MV switchgear that meets IEEE C37.20.2 and arc-resistant standards, making it suitable for this requirement.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement describes features of breakers within the switchgear, such as independent trip coils and interlocks. These features align with the CROWN-ARMV product, which includes vacuum breakers and is designed for such applications.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The low-frequency test voltage requirement is a technical specification for the switchgear. The CROWN-ARMV product is designed to meet such electrical standards.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The basic impulse level requirement is a technical specification for the switchgear. The CROWN-ARMV product is designed to meet such electrical standards.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "The nominal voltage supplies and ranges for closing, tripping, and charging motors are part of the switchgear's technical specifications. The CROWN-ARMV product is suitable for these requirements.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "The auxiliary contacts and their specifications are part of the switchgear's design. The CROWN-ARMV product includes features for control and interlocking, making it suitable for this requirement.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "The nominal system voltage of 13.2 kV is within the range of the CROWN-ARMV product, which supports 4.16-38 kV.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 8,
+        "rationale": "The requirement for intermediate class arresters and associated features aligns with the capabilities of the CROWN-ARMV product, which includes provisions for surge protection and voltage transformers.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

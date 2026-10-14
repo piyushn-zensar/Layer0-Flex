@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies features typical of metal-clad switchgear construction, including door arrangements, material specifications, and compartmentalization. CROWN-ARMV is the appropriate product as it is designed for metal-clad switchgear with customizable configurations.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The minimum distance from the floor to the lowest device is a design consideration for metal-clad switchgear. CROWN-ARMV meets this requirement as it is engineered to IEEE standards and can be customized to meet specific installation requirements.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "Floor sill framing and anchoring channel requirements are part of the installation design for metal-clad switchgear. CROWN-ARMV includes provisions for such installation features.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "External control cable entrance from the top is a typical feature of metal-clad switchgear. CROWN-ARMV can be configured to include this feature.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "Laminated phenolic screw-on nameplates are standard for metal-clad switchgear identification and labeling. CROWN-ARMV supports this feature as part of its design.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "The power supply requirements, including voltage and wiring specifications, align with auxiliary power systems for switchgear. EP2-AUX provides station AC and DC distribution systems suitable for these specifications.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "EP2-AUX"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "The ambient temperature and altitude specifications are environmental considerations for outdoor and indoor switchgear. CROWN-ARMV is designed to operate within these environmental ranges.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

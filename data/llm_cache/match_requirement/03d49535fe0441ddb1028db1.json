@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "Requirement 1 pertains to quality conformance inspections, testing, and access to vendor procedures. This is a commercial and procedural requirement, not directly tied to a specific product offering.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "Requirement 2 specifies testing and verification of the electrical system and its components, including factory tests with the breaker assembled. This aligns with the CROWN-ARMV product, which is arc-resistant metal-clad switchgear, as it includes factory testing and compliance with IEEE standards.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "Requirement 3 requests the use of the vendor's standard design consistent with the specification intent. CROWN-ARMV is the standard offering for metal-clad switchgear, meeting the specification intent.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "Requirement 4 specifies the use of new, unused equipment and materials. CROWN-ARMV products are manufactured new for each project, ensuring compliance with this requirement.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

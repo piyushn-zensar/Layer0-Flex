@@ -1,0 +1,66 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Compliance with ANSI/IEEE standards for switchgear and arc faults"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Testing and simulation of system operation"
+      },
+      {
+        "category": "submission",
+        "members": [
+          5,
+          6
+        ],
+        "title": "Submission of test reports and technical submittals"
+      },
+      {
+        "category": "submission",
+        "members": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          13,
+          14,
+          15,
+          18,
+          19,
+          23,
+          24,
+          27
+        ],
+        "title": "Provision of various drawings for design, installation, and operation"
+      },
+      {
+        "category": "submission",
+        "members": [
+          12,
+          16,
+          17,
+          20,
+          21,
+          22,
+          25,
+          26,
+          28
+        ],
+        "title": "Submission of materials and equipment documentation"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

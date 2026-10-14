@@ -8,7 +8,7 @@ This walkthrough follows one example bid through the screens in the order of the
 
 ## 2. Demonstration Scenario
 
-The example is **OPP-0001, Switchgear procurement (RFP 2023-20)** for **Syracuse Regional Airport Authority** (public sector). The RFP is a 101-page PDF. It is read into 814 line items. 21 of them repeat an earlier line item and are marked as duplicates, and related line items are grouped into 162 requirements with sub-requirements. The result is **348 requirements**, all approved and frozen as Baseline 1. The opportunity has the status "dispatched".
+The example is **OPP-0001, Switchgear procurement (RFP 2023-20)** for **Syracuse Regional Airport Authority** (public sector). The RFP is a 101-page PDF. It is read into 818 line items. 27 of them repeat an earlier line item and are marked as duplicates, 12 whose wording could not be matched to the RFP wait in the exception queue, and related line items are grouped into 161 requirements with sub-requirements. The result is **312 requirements**, all approved and frozen as Baseline 1. The opportunity has the status "dispatched".
 
 Three parties respond in the example. The screens show them by code:
 - **CROWN** is Crown Technical Systems.
@@ -41,7 +41,7 @@ The screens follow this order of work. The Screen column gives the step in the b
 
 *Figure 1. The Opportunities page.*
 
-- The top bar offers **Opportunities**, **My work**, **Product catalog** and **Knowledge base**, a **New opportunity** button and the **Set as** role selector.
+- The top bar offers **Opportunities**, **My work**, **Product catalog** and **Knowledge base**, a **New opportunity** button and, on the right, the signed-in person's name with a **Switch** link.
 - Each row shows the opportunity ID, title, customer, status and number of requirements (348 in the example).
 - **Unit responses (validated / total)** shows, for each unit and the bid desk, how many responses are validated out of those assigned: Crown Technical Systems 1 of 96, Electrical Power Products 0 of 7 and the bid desk 0 of 245 (shown on screen as CROWN 1/96, EP2 0/7 and BID 0/245). A bar beside each count shows validated work (green) and work awaiting validation (blue). Each unit code opens that unit's work package under **My work**.
 - **Open** enters the opportunity at its Traceability step.
@@ -146,11 +146,11 @@ This capability is presented through the Traceability step, which brings togethe
 
 **Purpose.** Gives each unit, and the bid desk, its own list of requirements to answer.
 
-The demonstration allows selection of different participant roles using the **Set as** selector. The list contains the Bid Manager and, for each business unit, a Product Manager and a Design Engineer. **My work** opens the work package of the selected role's unit.
+Every person signs in on the login page with a username and password. The demonstration accounts are the Bid Manager and, for each business unit, a Product Manager and a Design Engineer, plus an Administrator. The top bar shows the signed-in name; **Switch** opens the login page to continue as someone else. **My work** opens the work package of the signed-in person's unit.
 
-![Set as](images/07-acting-as.png)
+![Signed-in person and Switch](images/07-acting-as.png)
 
-*Figure 7. The Set as selector.*
+*Figure 7. The signed-in person and the Switch link in the top bar.*
 
 ![My work](images/08-my-work.png)
 
