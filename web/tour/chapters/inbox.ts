@@ -102,10 +102,10 @@ const chapter: TourChapter = {
       target: "inbox-table",
       placement: "top",
       kind: "action",
-      instruction: "Switch \"Acting as\" to Crown Product Manager (top bar), or press Use example.",
+      instruction: "Switch \"Set as\" to Crown Product Manager (top bar), or press Use example.",
       skipIf: (ctx) => ctx.actor === CROWN_PM,
       body: [
-        "The PoC has no sign-in. **Acting as** in the top bar writes an `actor` cookie; every API call sends it as the `X-Actor` header, the backend records that name on each event (who proposed, approved, answered, validated) and enforces the few role rules: only a unit's product manager or design engineer answers its rows, only the Bid Manager validates, dispatches, freezes and curates.",
+        "The PoC has no sign-in. **Set as** in the top bar writes an `actor` cookie; every API call sends it as the `X-Actor` header, the backend records that name on each event (who proposed, approved, answered, validated) and enforces the few role rules: only a unit's product manager or design engineer answers its rows, only the Bid Manager validates, dispatches, freezes and curates.",
         "The people in the list come from the catalog: the Bid Manager plus each active unit's product manager and design engineer. A real identity provider and named roles replace the picker later; the audit trail and the rules stay as they are.",
       ],
       example: { label: "Act as Crown Product Manager", apply: (ctx) => ctx.signInAs("crown.pm") },
@@ -211,7 +211,7 @@ const chapter: TourChapter = {
       target: "inbox-table",
       placement: "top",
       kind: "action",
-      instruction: "Switch \"Acting as\" back to Bid Manager, or press Use example.",
+      instruction: "Switch \"Set as\" back to Bid Manager, or press Use example.",
       skipIf: (ctx) => ctx.actor === BM,
       body: [
         "Validation is the bid manager's step: `POST /api/assignments/<id>/validate` is refused for anyone else (\"Only the Bid Manager validates or returns answers.\"). Switch back and the same page shows **Validate** and **Return** on every submitted row.",

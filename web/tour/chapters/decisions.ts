@@ -170,7 +170,7 @@ const chapter: TourChapter = {
       id: "decisions-participation", route: ROUTE, target: "dec-participation", placement: "top",
       title: "1. Which business units take part?",
       body: [
-        "The first decision: which units will be asked to answer. It is recorded with the evidence pack, your name (the *Acting as* person) and a rationale, and the latest record wins. Once recorded, the card header shows *Recorded by <person>: CROWN, EP2* and the rationale with its own *Send to knowledge base* link.",
+        "The first decision: which units will be asked to answer. It is recorded with the evidence pack, your name (the *Set as* person) and a rationale, and the latest record wins. Once recorded, the card header shows *Recorded by <person>: CROWN, EP2* and the rationale with its own *Send to knowledge base* link.",
         "Participation decides who receives work at dispatch: a requirement matched to a unit that does not take part falls to the bid desk instead. It can be recorded again later; the next dispatch applies the change.",
       ],
     },

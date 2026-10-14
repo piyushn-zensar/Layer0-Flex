@@ -15,7 +15,7 @@ Written on 10 Oct 2026 from the running app and `Documents/walkthrough.md`; numb
 | Bid decision | Evidence, engineering checks, bid and portfolio checks, "Advice from Layer 0: 6 of 9 assessable criteria met; 3 cannot be assessed yet (data not available). A person decides." |
 | Changes | Baseline 1 (348 requirements). The sample addendum `data/RFP/samples/rfp_syracuse_addendum_1.pdf` is **illustrative** (written for the demo, not issued by the customer). It reads from frozen answers in about a second and applies in under a second, with no model |
 
-Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportunity** button, **Acting as**. Stepper: RFP, Requirements, Traceability, Bid decision, Final response, and a **Changes** link beside it.
+Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportunity** button, **Set as**. Stepper: RFP, Requirements, Traceability, Bid decision, Final response, and a **Changes** link beside it.
 
 **Hero requirements** (checked in the live data):
 
@@ -32,7 +32,7 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 ## 2. Before the session (T minus 30 minutes)
 
 1. Close both "Layer 0" windows. Double-click `reset-demo.cmd`, then `start.cmd` (production build: no development badge).
-2. The browser opens on Traceability. Zoom 100%, notifications off, **Acting as: Bid Manager**.
+2. The browser opens on Traceability. Zoom 100%, notifications off, **Set as: Bid Manager**.
 3. Warm up: open Traceability, Bid decision, Final response and `/inbox/CROWN` once (first loads are slow).
 4. Have the compliance matrix from the dry run saved on the desktop.
 5. After the warm-up, reset again if you answered or accepted anything.
@@ -48,12 +48,12 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 | 5 | Traceability | Select **REQ-0001-0893** | EP² relay and protection panel (EP2-RPP), ETO | ☐ |
 | 6 | Traceability (**cut**) | **Accept** the match on 0887 | Match status changes; the unaccepted count drops by one | ☐ |
 | 7 | **Bid decision** | Evidence, the bid and portfolio checks card, participation, go decision, the advice box, one criterion's judgement | Advice, flags, the continuous-current deviation (p. 74), "a person decides" | ☐ |
-| 8 | Acting as **Crown Product Manager**, then **My work** (**cut**) | Answer **REQ-0001-0359**: met, product, how it is met, **Submit** | Status changes to "submitted" | ☐ |
-| 9 | Acting as **Bid Manager**, Opportunities, unit code **CROWN** (**cut**) | **Validate** REQ-0001-0889 and REQ-0001-0359 | Status changes to "validated" | ☐ |
+| 8 | Set as **Crown Product Manager**, then **My work** (**cut**) | Answer **REQ-0001-0359**: met, product, how it is met, **Submit** | Status changes to "submitted" | ☐ |
+| 9 | Set as **Bid Manager**, Opportunities, unit code **CROWN** (**cut**) | **Validate** REQ-0001-0889 and REQ-0001-0359 | Status changes to "validated" | ☐ |
 | 10 | **Final response** (**cut**) | Show the count and the blocker panel, click a blocker link, then the Open filter | Count moves from 1 to 3 of 348; groups by reason; the link lands in Traceability | ☐ |
 | 11 | Final response | **Download compliance matrix (Excel)**; the CSV link is beside it | Customer sheet (validated answers only, Comply / Open, RFP order) and an internal Tracking sheet | ☐ |
 | 12 | CROWN work package | Open "Hand-off for this unit's systems" | JSON download: starting points, not a design | ☐ |
-| 13 | **Changes** (**cut**). Do it last: it changes the demo data | Acting as **Bid Manager**. Upload the sample addendum, show the eight statements, **Confirm all proposals**, **Apply to requirements** (details below) | Eight classified statements (2 modified, 2 added, 1 removed, 1 unchanged, 2 not a requirement); baseline 2; REQ-0001-0887 back with Crown; two new requirements | ☐ |
+| 13 | **Changes** (**cut**). Do it last: it changes the demo data | Set as **Bid Manager**. Upload the sample addendum, show the eight statements, **Confirm all proposals**, **Apply to requirements** (details below) | Eight classified statements (2 modified, 2 added, 1 removed, 1 unchanged, 2 not a requirement); baseline 2; REQ-0001-0887 back with Crown; two new requirements | ☐ |
 | 14 | Product catalog | Scroll the units, families and models | Families and models from public Flex pages, to be confirmed with each unit | ☐ |
 
 **Step 13 in detail (about 3 minutes; reset afterwards).** Say first that the addendum is an illustration written for the demo, not a customer document.
@@ -96,7 +96,7 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 |---|---|
 | A page shows an error or loads forever | Refresh. Check both "Layer 0" windows are open. If the API is stale, run `reset-demo.cmd` then `start.cmd` (about a minute). |
 | Traceability is slow | Open it first as a warm-up. Fall back to Final response: its IDs link to the same requirement. |
-| Acting as does not switch | Open `/inbox/CROWN` directly. The unit codes on Opportunities link there. |
+| Set as does not switch | Open `/inbox/CROWN` directly. The unit codes on Opportunities link there. |
 | Live submit or validate fails | Use REQ-0001-0887, which is already validated, and show the Final response count. |
 | The download fails | Show the workbook saved on the desktop. |
 | A full reset is needed | Close both windows, `reset-demo.cmd`, `start.cmd`. The opportunity opens in Traceability. |
