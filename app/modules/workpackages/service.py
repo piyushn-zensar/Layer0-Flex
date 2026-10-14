@@ -2,11 +2,15 @@
 
 Public contract:
     dispatch(db, opp_id, actor) -> int                    one assignment per matched participating unit, else the
-                                                          bid desk, for every frozen approved requirement; returns
+                                                          bid desk, for every published approved requirement; returns
                                                           how many were created (repeatable). Work that no longer
                                                           fits the matches or participation is withdrawn, and
-                                                          withdrawn work that fits again is reopened.
-                                                          ValueError unless frozen and the latest go/no-go is "go"
+                                                          withdrawn work that fits again is reopened. Needs no go
+                                                          decision (C-06): ValueError without a published register
+                                                          or a participation, or when the latest go/no-go is "no_go"
+    withdraw_open(db, opp_id, actor) -> int               a no-go: the units' open work (assigned or returned) is
+                                                          withdrawn, submitted and validated answers stay; returns
+                                                          how many. A later go and dispatch reopen it
     by_requirement(db, opp_id) -> dict[str, list[Assignment]]   active (not withdrawn) assignments
     inbox(db, bu) -> list[Assignment]                     a unit's active work across all opportunities
     get(db, assignment_id) -> Assignment | None           one assignment
@@ -47,9 +51,11 @@ def dispatch(db: Session, opp_id: str, actor: str) -> int:
     if not requirements.baseline(db, opp_id):
         raise ValueError("Publish the requirement register before dispatch (Requirements step).")
     go = decisions.latest(db, opp_id, "go_no_go")
-    if not go or go.outcome != "go":
-        raise ValueError("Dispatch needs a 'go' decision first (Bid decision step).")
+    if go and go.outcome == "no_go":
+        raise ValueError("The bid is marked no-go: nothing is dispatched until a go decision resumes it.")
     units = set(decisions.participating_units(db, opp_id))
+    if not units:
+        raise ValueError("Record which business units take part before dispatch.")
     matches = matching.for_opportunity(db, opp_id)
     existing = {(a.req_id, a.bu): a for a in db.scalars(select(Assignment).where(Assignment.opportunity_id == opp_id))}
     wanted = {}
@@ -86,6 +92,16 @@ def dispatch(db: Session, opp_id: str, actor: str) -> int:
         raise ValueError("Dispatch is already running for this bid; refresh and try again.")
     opportunities.set_status(db, opp_id, "dispatched", actor)
     return created
+
+
+def withdraw_open(db: Session, opp_id: str, actor: str) -> int:
+    rows = list(db.scalars(select(Assignment).where(Assignment.opportunity_id == opp_id,
+                                                    Assignment.status.in_(("assigned", "returned")))))
+    for a in rows:
+        audit.record(db, actor, "withdrawn", "assignment", a.req_id, opp_id, bu=a.bu, was=a.status, reason="no-go")
+        a.status = "withdrawn"
+    db.commit()
+    return len(rows)
 
 
 def by_requirement(db: Session, opp_id: str) -> dict[str, list[Assignment]]:

@@ -1069,3 +1069,56 @@ def test_bid_activity_log():
     assert [e["id"] for e in page1["events"] + page2["events"]] == [e["id"] for e in events[:10]]
     assert client.get("/api/opportunities/OPP-9999/activity").status_code == 404
     assert client.post(url).status_code == 405  # read-only
+
+
+def test_dispatch_without_go_and_no_go_withdraws():
+    """A-14 (C-06): dispatch needs a published register and a participation, not a go decision; a no-go stops
+    dispatch and withdraws the units' open work (submitted and validated answers stay); go and dispatch reopen it.
+    Appended by Atharv (append-only on this shared file)."""
+    import json
+
+    from sqlalchemy import select
+
+    from app.core.db import SessionLocal
+    from app.modules.ingestion import service as ingestion
+    from app.modules.matching import service as matching
+    from app.modules.opportunities import service as opportunities
+    from app.modules.requirements import service as requirements
+    from app.modules.workpackages.models import Assignment
+
+    client, bm = signed_in(), "Bid Manager"
+    seed = json.loads((ROOT / "data/seed/demo_syracuse.json").read_text("utf-8"))
+    with SessionLocal() as db:  # a published register, matched, and no decision at all
+        fresh = opportunities.create(db, "dispatch without go", "", "", bm).id
+        pdf = ROOT / seed["document"]
+        doc = opportunities.add_document(db, fresh, pdf.name, pdf.read_bytes(), "main", bm)
+        ingestion.ingest(db, doc.id)
+        for i in seed["requirements"][:4]:
+            requirements.add(db, fresh, doc.id, i["quote"], i["text"], i["category"], "test", i["section"], i["page"])
+        requirements.freeze(db, fresh, bm)
+        matching.match(db, fresh, "test")
+        units = list(matching.suggested_units(db, fresh))
+    assert units
+    assert client.post(f"/api/opportunities/{fresh}/dispatch").status_code == 409  # no participation yet
+    client.post(f"/api/opportunities/{fresh}/participation", json={"units": units})
+    assert client.post(f"/api/opportunities/{fresh}/dispatch").json()["created"] >= 1
+    assert client.get(f"/api/opportunities/{fresh}/decisions").json()["go_no_go"] is None
+
+    seed_demo.main()  # its own bid: dispatched, some answers submitted or validated
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+
+    def states() -> dict[int, str]:
+        with SessionLocal() as db:
+            return {a.id: a.status for a in db.scalars(select(Assignment).where(Assignment.opportunity_id == opp))}
+
+    before = states()
+    open_ids = {i for i, s in before.items() if s in ("assigned", "returned")}
+    kept = {i: s for i, s in before.items() if s in ("submitted", "validated")}
+    assert open_ids and kept
+    assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "no_go"}).json()["withdrawn"] == len(open_ids)
+    after = states()
+    assert all(after[i] == "withdrawn" for i in open_ids) and all(after[i] == s for i, s in kept.items())
+    assert client.post(f"/api/opportunities/{opp}/dispatch").status_code == 409  # a no-go stops dispatch
+    assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go"}).json()["withdrawn"] == 0
+    assert client.post(f"/api/opportunities/{opp}/dispatch").status_code == 200
+    assert all(states()[i] == "assigned" for i in open_ids)  # the go resumes the withdrawn work

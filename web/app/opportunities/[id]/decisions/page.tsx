@@ -143,9 +143,9 @@ export default function DecisionsPage() {
     const f = new FormData(form);
     const criteria = (data.summary?.criteria ?? []).map((c) => ({ id: c.id, status: f.get(`crit-${c.id}`), note: f.get(`note-${c.id}`) ?? "" }));
     if (outcome === "no_go" && !await ask({ title: "Record no-go?", confirmLabel: "Record no-go", danger: true,
-      message: "The bid is marked no-go. Nothing is sent to the units; a later go decision can still overrule it." })) return;
-    run("decision", post(`/api/opportunities/${id}/go-no-go`, { outcome, rationale: f.get("rationale"), criteria }),
-      () => { toast.success(outcome === "go" ? "Decision recorded: go." : "Decision recorded: no-go."); statusChanged(); });
+      message: "The bid is marked no-go: dispatch stops and the units' open work is withdrawn (submitted and validated answers stay). A later go decision can still overrule it." })) return;
+    run("decision", post<{ withdrawn: number }>(`/api/opportunities/${id}/go-no-go`, { outcome, rationale: f.get("rationale"), criteria }),
+      (r) => { toast.success(outcome === "go" ? "Decision recorded: go." : `Decision recorded: no-go. ${r.withdrawn} open item(s) withdrawn from the units.`); statusChanged(); });
   };
   const dispatch = () => run("dispatch", post<{ created: number }>(`/api/opportunities/${id}/dispatch`), (r) => {
     toast.success(r.created ? `${r.created} new assignment(s) sent to the units.` : "Nothing new to send: every unit already has its work.");
