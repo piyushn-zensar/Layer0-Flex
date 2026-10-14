@@ -1,6 +1,6 @@
 """Load the demo opportunities through the real module services.
 
-    .venv\\Scripts\\python -m scripts.seed_demo          # Syracuse from the REAL extraction (P-08), then the hyperscale sample
+    .venv\\Scripts\\python -m scripts.seed_demo          # Syracuse from the REAL extraction (P-08)
     .venv\\Scripts\\python -m scripts.seed_demo --reset  # deletes the local DB first
 main() alone (as the tests call it) seeds only Syracuse, with its 13 hand-picked line items (quick and stable).
 
@@ -92,4 +92,3 @@ def _read_and_review(db, opp_id: str, doc_id: str, seed: dict) -> dict:
 
 if __name__ == "__main__":
     main(real=True)  # P-08: the demo runs on the real extraction
-    main("demo_hyperscale.json")  # A-08: multi-unit sample, added by Atharv ([contract] Piyush)

@@ -174,7 +174,6 @@ Opportunity choice: Create your own in chapter 4, or choose "Use the demo opport
 | /portfolio | Requirements column | Count of current requirements (348) | Read | Spotlight on the count | portfolio-requirements |
 | /portfolio | Unit progress bars and links | validated/total, BID desk, inbox links | Read | Spotlight on bars | portfolio-units |
 | /portfolio | Row OPP-0001 | The Syracuse demo | Read | Spotlight on row | portfolio-syracuse |
-| /portfolio | Row OPP-0002 | Fictional hyperscale sample | Read | Spotlight on row | portfolio-hyperscale |
 | /portfolio | Open button | Where Open and the ID lead | Read | Spotlight on Open | portfolio-open |
 | /portfolio | New opportunity button | Hand-over to intake | Read | Spotlight on button | portfolio-new |
 | Top bar | Brand link | Bar on every page, shown once signed in | Read | Spotlight on mark | navigation-brand |

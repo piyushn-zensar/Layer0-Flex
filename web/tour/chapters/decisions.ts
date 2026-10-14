@@ -136,7 +136,7 @@ const chapter: TourChapter = {
       title: "Low-voltage solver",
       body: [
         "For low-voltage distribution RFPs (layers 3 and 4) the solver does the power arithmetic with every step and its reference: usable UPS capacity after continuous-load derating, real power at the assumed power factor, capacity per rack, derated capacity per branch circuit, circuits per rack; it warns when branch circuits fall short of the UPS or give no A/B redundancy.",
-        "Refusing is a first-class result. For Syracuse it is **not solvable**: \"Medium-voltage equipment (`REQ-0001-0887`) needs protection coordination and an arc-flash study, not arithmetic.\" It also refuses when the inputs (UPS kVA, rack count) are not stated: it never assumes values. The hyperscale sample opportunity shows a solved case.",
+        "Refusing is a first-class result. For Syracuse it is **not solvable**: \"Medium-voltage equipment (`REQ-0001-0887`) needs protection coordination and an arc-flash study, not arithmetic.\" It also refuses when the inputs (UPS kVA, rack count) are not stated: it never assumes values.",
       ],
       fallback: "The solver appears once the requirements are frozen.",
     },
@@ -162,7 +162,7 @@ const chapter: TourChapter = {
       title: "Workload across opportunities",
       body: [
         "Per unit: open work on this opportunity (what dispatch would create, or has created), open work elsewhere with the competing opportunity IDs, the total and the placeholder capacity (Crown 150, EP² 60, Anord Mardix 100, FPM 100, JetCool 80, Cloud 80, bid desk 400). An *over* badge appears when the total exceeds capacity, and the criterion *Capacity and portfolio conflicts* is then not met.",
-        "Open work means assigned, submitted or returned items; validated and withdrawn ones are done. The demo shows BID 251/400 (also in OPP-0002), CROWN 97/150, EP2 5/60.",
+        "Open work means assigned, submitted or returned items; validated and withdrawn ones are done. The demo shows BID 245/400, CROWN 97/150, EP2 5/60.",
       ],
       fallback: "The workload table appears once the requirements are frozen.",
     },

@@ -1,7 +1,7 @@
 """Model-change guard (P-09, ported from M16): the demo replays from frozen answers, and a new model must match them
 before the switch.
 
-    .venv\\Scripts\\python -m scripts.model_guard                  # replay: quick Syracuse, hyperscale, outline, addendum
+    .venv\\Scripts\\python -m scripts.model_guard                  # replay: quick Syracuse, outline, addendum
     .venv\\Scripts\\python -m scripts.model_guard replay --real    # also the full 348-requirement demo (~3 min)
     .venv\\Scripts\\python -m scripts.model_guard replay --json    # the report as JSON on stdout (tests)
     (LLM_PROVIDER=azure) .venv\\Scripts\\python -m scripts.model_guard compare --model <new deployment> [--real] [--out DIR]
@@ -70,7 +70,6 @@ def run_demo(real: bool = False) -> None:
             return next(o.id for o in opportunities.list_all(db) if o.id not in before)
 
     runs = [newest()] + ([newest(real=True)] if real else [])
-    newest("demo_hyperscale.json")
     for opp in runs:
         with SessionLocal() as db:
             consolidation.response_outline(db, opp)

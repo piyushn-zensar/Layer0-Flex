@@ -7,7 +7,7 @@ Written on 10 Oct 2026 from the running app and `Documents/walkthrough.md`; numb
 
 | Fact | Value |
 |---|---|
-| Opportunities | **OPP-0001** Syracuse switchgear (101-page RFP) and **OPP-0002** AI training campus (10 requirements; ANORD, CLOUD, FPM, JETCOOL and the bid desk) |
+| Opportunities | **OPP-0001** Syracuse switchgear (101-page RFP) |
 | OPP-0001 | 818 line items grouped into **312 requirements** (161 groups, 628 sub-requirements, 27 duplicates, 12 exceptions) |
 | Units | BID 245, CROWN 98, EP2 5 |
 | Answers | **1 of 348 validated**, 1 submitted and waiting for validation |

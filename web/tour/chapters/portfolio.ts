@@ -41,7 +41,7 @@ const chapter: TourChapter = {
       route: "/portfolio",
       target: `portfolio-status-${DEMO_OPP}`,
       placement: "right",
-      fallback: "Each row has a status chip; the demo opportunities read \"dispatched\".",
+      fallback: "Each row has a status chip; the demo opportunity reads \"dispatched\".",
       body: [
         "The chip is the opportunity's lifecycle status, which only moves forward: **new** (created) → **review** (the reader agent has proposed requirements) → **frozen** (the approved requirements became baseline 1) → **go** or **no-go** (the bid decision) → **dispatched** (work packages sent to the units) → **consolidating** (the final response is being assembled) → **submitted**.",
         "Because it only moves forward, repeating a step later (re-deciding \"go\" after dispatch, say) never sends an opportunity back. The exceptions are deliberate: **no-go** can stop a bid at any point before submission, and a later **go** resumes exactly where the bid stopped.",
@@ -54,7 +54,7 @@ const chapter: TourChapter = {
       route: "/portfolio",
       target: `portfolio-reqs-${DEMO_OPP}`,
       placement: "left",
-      fallback: "The Requirements column shows 348 for the Syracuse demo and 10 for the hyperscale sample.",
+      fallback: "The Requirements column shows 348 for the Syracuse demo.",
       body: [
         "This number is the count of **current** requirements: groups and stand-alone items the workflow works on. Sub-requirements inside a group, rejected items, duplicates and anything replaced by a split or a merge are not counted.",
         "For the Syracuse RFP it reads **312**: the reader agent proposed 818 line items from 101 pages, 27 were marked as duplicates, 12 wait in the exception queue and the grouping agent folded related items into 161 groups, leaving 312 requirements in the register. Before the reader agent has run the column shows 0.",
@@ -86,19 +86,6 @@ const chapter: TourChapter = {
         "The first seeded opportunity is a real public RFP: **Syracuse Regional Airport Authority, RFP 2023-20 Switchgear Procurement**, 101 pages, customer type *public sector*. It asks for a 15 kV two-section arc-resistant metal-clad switchgear lineup with relays, controls and accessories.",
         "The seed ran the same services a person would use: the RFP was read, 348 requirements were approved and frozen, matching proposed Crown Technical Systems (switchgear, relays and controls) and EP² (auxiliary power), the bid decision is **go**, and the work was dispatched. Two sample answers were attached to Crown's rows, one of them validated, so you can see every state at once.",
         "Everything the agents produced for this RFP comes from **frozen answers**: the model's replies were recorded once and are replayed, so the demo is repeatable offline and identical on every machine. The walkthrough will create a copy of this opportunity in chapter 4 so you can go through the steps yourself.",
-      ],
-    },
-    {
-      id: "portfolio-hyperscale",
-      title: "OPP-0002: the multi-unit sample",
-      route: "/portfolio",
-      target: "portfolio-row-OPP-0002",
-      placement: "bottom",
-      fallback: "OPP-0002 is a fictional one-page RFP for an AI training campus; it shows the multi-unit case.",
-      body: [
-        "The second row, **AI training campus, Phase 1**, is a fictional one-page RFP for a 48 MW hyperscale site (800 VDC distribution, liquid cooling). Its customer is marked *(fictional)* and its type is *hyperscaler*.",
-        "It exists to show the multi-unit case: ten requirements were matched across **Anord Mardix** (power distribution), **JetCool** (liquid cooling), **Flex Power Modules** (rack power) and the bid desk, so one requirement can carry several work-package rows and the hand-off per unit differs.",
-        "Unlike Syracuse it has no frozen reader answers, so uploading it to a new opportunity and reading it would need the model connection. In the walkthrough we only look at it.",
       ],
     },
     {
