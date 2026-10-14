@@ -43,14 +43,14 @@ const chapter: TourChapter = {
       title: "What is illustrative in this demo",
       body: [
         "The **business units** (EP², Crown Technical Systems, Anord Mardix, Flex Power Modules, JetCool, Cloud; EPC Power pending and not offered) are a working list marked “Needs confirmation”, and the people are role placeholders such as `EP² Product Manager`. The **product catalog**, engineering rules and past responses are small hand-written knowledge-base files, enough to make the matcher meaningful on the sample RFPs, not the real catalogue.",
-        "The agents' answers are **frozen** for the sample RFPs (`LLM_PROVIDER=mock`), so the demo is repeatable and offline; a live model would be used for new RFPs. There is no sign-in (the Set as picker stands in), no pricing, no CPQ or CRM connection, and the final response is an outline with validated answers, not a formatted proposal. The seeded `OPP-0002` is a synthetic hyperscale campus RFP used to show a multi-unit bid.",
+        "The agents' answers are **frozen** for the sample RFPs (`LLM_PROVIDER=mock`), so the demo is repeatable and offline; a live model would be used for new RFPs. Sign-in is simple (one token, no single sign-on), no pricing, no CPQ or CRM connection, and the final response is an outline with validated answers, not a formatted proposal. The seeded `OPP-0002` is a synthetic hyperscale campus RFP used to show a multi-unit bid.",
       ],
     },
     {
       id: "recap-explore",
       title: "Exploring on your own",
       body: [
-        "Create another opportunity with **New opportunity** and load the other built-in sample (the hyperscale campus RFP) from the RFP page's *Use example* path, or upload any PDF to see how the reader reports pages it has no frozen answer for instead of guessing. Switch **Set as** to a unit's design engineer to see the inbox from their side and what the server refuses to that role. Open **Traceability** on `OPP-0001` and click through the colour legend to see where the engineered-to-order work concentrates.",
+        "Create another opportunity with **New opportunity** and load the other built-in sample (the hyperscale campus RFP) from the RFP page's *Use example* path, or upload any PDF to see how the reader reports pages it has no frozen answer for instead of guessing. Sign in as a unit's design engineer to see the inbox from their side and what the server refuses to that role. Open **Traceability** on `OPP-0001` and click through the colour legend to see where the engineered-to-order work concentrates.",
         "To put the demo data back to its starting state, close the app and run `reset-demo.cmd` (it reseeds `OPP-0001` and `OPP-0002` from the frozen answers). Your walkthrough opportunity is removed with it. The **Walkthrough** button lets you reopen any chapter later.",
       ],
     },

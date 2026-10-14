@@ -9,7 +9,7 @@ export type RequirementStatus = "proposed" | "approved" | "rejected" | "merged" 
 export type MatchStatus = "proposed" | "accepted" | "rejected";
 export type AssignmentStatus = "assigned" | "submitted" | "validated" | "returned" | "withdrawn";
 export type Severity = "high" | "medium" | "low";
-export interface Person { name: string; bu: string | null } // /api/people: who "Acting as" can be
+export interface Person { name: string; bu: string | null } // /api/people: the people with sign-in accounts
 
 // Visible labels for stored values (technical-architecture §16.2). The API keeps the stored values; screens show these.
 export const DOC_TYPES: Record<string, string> = { main: "Main RFP", addendum: "Addendum", qa: "Clarification / Q&A", change: "Change request", other: "Other" };

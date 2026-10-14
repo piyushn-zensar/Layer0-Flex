@@ -16,8 +16,8 @@ const chapter: TourChapter = {
       target: "shell-brand",
       placement: "bottom",
       body: [
-        "The dark bar stays at the top of every page. From left to right: the **Layer 0** mark (a link back to the Opportunities list), the four main destinations, and on the right **New opportunity**, the **Set as** picker and the **Walkthrough** button you are using now.",
-        "There is no sign-in in this proof of concept: the person acting is chosen in the bar and sent with every request, which is why the picker sits where a user menu would be.",
+        "The dark bar stays at the top of every page. From left to right: the **Layer 0** mark (a link back to the Opportunities list), the four main destinations, and on the right **New opportunity**, the signed-in person with **Switch** and the **Walkthrough** button you are using now.",
+        "Everyone signs in; the right of the bar shows who is signed in, and every request carries that person's sign-in token.",
       ],
       fallback: "The top bar is above the page content; this step describes its left end.",
     },
@@ -46,15 +46,15 @@ const chapter: TourChapter = {
     },
     {
       id: "navigation-actor",
-      title: "Set as: the three roles",
+      title: "Signed in as: the three roles",
       target: "shell-actor",
       placement: "bottom",
       body: [
-        "This picker says **who is acting**. The name is kept in a cookie, sent as the `X-Actor` header with every request and recorded on everything that person does. Changing it reloads the page so every screen re-fetches as that person. The list is the **Bid Manager** plus, for each business unit, its **Product Manager** and **Design Engineer** (for example `EP² Product Manager`, `Crown Design Engineer`); the names are role placeholders until real people are named.",
+        "This shows **who is signed in**. The sign-in token (8 hours, in the `layer0_token` cookie) goes with every request, and the name is recorded on everything that person does. **Switch** opens the sign-in page to continue as someone else. The accounts are the **Bid Manager** plus, for each business unit, its **Product Manager** and **Design Engineer** (for example `EP² Product Manager`, `Crown Design Engineer`); the names are role placeholders until real people are named.",
         "What each role may do is enforced by the server: only a unit's product manager or design engineer answers **that unit's** work-package items; only the Bid Manager **validates or returns** answers, **applies or discards** a change set and **approves knowledge** (the curator role, in the PoC the Bid Manager). Uploading documents, approving and freezing requirements, recording the bid decision, dispatching work, deciding and confirming change items are open to anyone in this PoC, with the actor's name on the audit record.",
-        "Stay as **Bid Manager** for most of the walkthrough; the inbox chapter asks you to switch to a unit's product manager to answer a work package, and back again to validate.",
+        "Stay as **Bid Manager** for most of the walkthrough; the inbox chapter asks you to sign in as a unit's product manager to answer a work package, and back again to validate.",
       ],
-      fallback: "The Set as picker is in the right half of the top bar.",
+      fallback: "The signed-in name and Switch are in the right half of the top bar.",
     },
     {
       id: "navigation-help",

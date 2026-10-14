@@ -1,6 +1,6 @@
 "use client";
 // Signed-in person (GET /api/auth/me) and a link to sign in as someone else.  Owner: Janvia.
-// P-21 stand-in for the old "Acting as" picker; J-10 adds role, unit and Sign out.
+// P-21 replaced the old picker; J-10 adds role, unit and Sign out.
 import Link from "next/link";
 import { useMe } from "@/lib/api";
 

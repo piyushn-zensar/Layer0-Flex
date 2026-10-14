@@ -52,7 +52,7 @@ const chapter: TourChapter = {
       placement: "right",
       body: [
         "An opportunity is the container for everything about one RFP: its documents, the requirements read out of them, the matches to business units, the bid decision, the units' answers, the final response and later changes. It is kept for the life of the project.",
-        "Creating one is a single form: `POST /api/opportunities` with a title, an optional customer and a customer type. The server allocates the next free ID (`OPP-0003` if two exist), records who created it (the \"Set as\" person, sent as the `X-Actor` header) and starts it in status **new**.",
+        "Creating one is a single form: `POST /api/opportunities` with a title, an optional customer and a customer type. The server allocates the next free ID (`OPP-0003` if two exist), records who created it (the signed-in person, read from the sign-in token) and starts it in status **new**.",
         "On success you land on the opportunity's RFP documents page; nothing is read until a main RFP is attached there.",
       ],
     },

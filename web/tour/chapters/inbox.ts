@@ -102,10 +102,10 @@ const chapter: TourChapter = {
       target: "inbox-table",
       placement: "top",
       kind: "action",
-      instruction: "Switch \"Set as\" to Crown Product Manager (top bar), or press Use example.",
+      instruction: "Sign in as Crown Product Manager (Switch in the top bar, user crown.pm), or press Use example.",
       skipIf: (ctx) => ctx.actor === CROWN_PM,
       body: [
-        "The PoC has no sign-in. **Set as** in the top bar writes an `actor` cookie; every API call sends it as the `X-Actor` header, the backend records that name on each event (who proposed, approved, answered, validated) and enforces the few role rules: only a unit's product manager or design engineer answers its rows, only the Bid Manager validates, dispatches, freezes and curates.",
+        "Each person signs in (**Switch** in the top bar opens the sign-in page). The sign-in token travels in the `layer0_token` cookie with every API call; the backend records the signed-in name on each event (who proposed, approved, answered, validated) and enforces the few role rules: only a unit's product manager or design engineer answers its rows, only the Bid Manager validates, dispatches, freezes and curates.",
         "The people in the list come from the catalog: the Bid Manager plus each active unit's product manager and design engineer. A real identity provider and named roles replace the picker later; the audit trail and the rules stay as they are.",
       ],
       example: { label: "Act as Crown Product Manager", apply: (ctx) => ctx.signInAs("crown.pm") },
@@ -211,7 +211,7 @@ const chapter: TourChapter = {
       target: "inbox-table",
       placement: "top",
       kind: "action",
-      instruction: "Switch \"Set as\" back to Bid Manager, or press Use example.",
+      instruction: "Sign in again as Bid Manager (Switch, user bid.manager), or press Use example.",
       skipIf: (ctx) => ctx.actor === BM,
       body: [
         "Validation is the bid manager's step: `POST /api/assignments/<id>/validate` is refused for anyone else (\"Only the Bid Manager validates or returns answers.\"). Switch back and the same page shows **Validate** and **Return** on every submitted row.",
