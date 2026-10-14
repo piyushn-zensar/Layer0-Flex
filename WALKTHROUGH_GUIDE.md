@@ -12,12 +12,12 @@ An in-app, step-by-step tour of every screen of Layer 0. It dims the page, highl
 
 ## 2. Chapters
 
-218 steps in 12 chapters (the catalogue is `CHAPTERS` / `STEPS` in `web/tour/index.ts`). The step id prefix is the chapter id, except where noted.
+219 steps in 12 chapters (the catalogue is `CHAPTERS` / `STEPS` in `web/tour/index.ts`). The step id prefix is the chapter id, except where noted.
 
 | # | Chapter id | Title | Steps | Starts on |
 |---|---|---|---|---|
 | 1 | welcome | Welcome and overview | 5 | centred, any page |
-| 2 | portfolio | The Opportunities screen | 8 | /portfolio |
+| 2 | portfolio | The Opportunities screen | 9 | /portfolio |
 | 3 | navigation | Navigation, roles and the workflow stepper | 12 | /portfolio, then the opportunity |
 | 4 | intake | New opportunity and the RFP | 16 | /opportunities/new |
 | 5 | requirements | Requirements review and freezing | 34 | /opportunities/{opp}/requirements |
@@ -29,7 +29,7 @@ An in-app, step-by-step tour of every screen of Layer 0. It dims the page, highl
 | 11 | changes | Addenda and change handling | 22 | /opportunities/OPP-0001/changes |
 | 12 | recap | Recap and completion | 6 | /opportunities/{opp} |
 
-Total: 5+8+12+16+34+29+32+16+23+15+22+6 = 218.
+Total: 5+9+12+16+34+29+32+16+23+15+22+6 = 219.
 
 ## 3. Screens covered
 
@@ -174,6 +174,7 @@ Opportunity choice: Create your own in chapter 4, or choose "Use the demo opport
 | /portfolio | Requirements column | Count of current requirements (312) | Read | Spotlight on the count | portfolio-requirements |
 | /portfolio | Unit progress bars and links | validated/total, BID desk, inbox links | Read | Spotlight on bars | portfolio-units |
 | /portfolio | Row OPP-0001 | The Syracuse demo | Read | Spotlight on row | portfolio-syracuse |
+| /portfolio | Row OPP-0002 | The independent validation RFP (Logan City) | Read | Spotlight on row | portfolio-independent |
 | /portfolio | Open button | Where Open and the ID lead | Read | Spotlight on Open | portfolio-open |
 | /portfolio | New opportunity button | Hand-over to intake | Read | Spotlight on button | portfolio-new |
 | Top bar | Brand link | Bar on every page, shown once signed in | Read | Spotlight on mark | navigation-brand |

@@ -1,0 +1,218 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 2,
+            "last": 3,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Nameplate drawing with model or style, electrical ratings and weights in tabular format.",
+        "section": "3",
+        "text": "Provide nameplate drawings with model/style, electrical ratings, and weights in tabular format."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 5,
+            "last": 7,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "One-line, schematics and wiring diagrams for all control, power, and current transformer circuits. Wiring diagrams shall reflect the physical location of components.",
+        "section": "4",
+        "text": "Submit one-line schematics and wiring diagrams for control, power, and transformer circuits, showing physical component locations."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 9,
+            "last": 11,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Current transformer connection tables (for multi-ratio CT’s), excitation curves with lead and turn resistance data, and ratio correction curves with ANSI relay or meter accuracy class(es), if applicable.",
+        "section": "5",
+        "text": "Provide CT connection tables, excitation curves, resistance data, and ratio correction curves with ANSI accuracy classes."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 13,
+            "last": 13,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Ratio correction and accuracy curves for all potential transformers.",
+        "section": "6",
+        "text": "Submit ratio correction and accuracy curves for all potential transformers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 16,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Manufacturer’s descriptive data for equipment and devices proposed as substitutions under the “or-equal” clause.",
+        "section": "7",
+        "text": "Provide descriptive data for equipment/devices proposed as substitutions under the 'or-equal' clause."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "AutoCAD™ 2014 .dwg format for all project drawings. Provide files on CD-ROM.",
+        "section": "8",
+        "text": "Submit project drawings in AutoCAD 2014 .dwg format on CD-ROM."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 22,
+            "last": 24,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Check shop drawings for errors, correctness of details and conformance with the specifications prior to submittal. Notify Owner of any inconsistencies or questions regarding approval revisions or comments shown on the drawings.",
+        "section": "C",
+        "text": "Verify shop drawings for errors and specification conformance before submission; notify Owner of inconsistencies or questions."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 25,
+            "last": 25,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Submit all shop drawings to the Owner in the manner specified below.",
+        "section": "C",
+        "text": "Submit shop drawings to the Owner as specified."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 27,
+            "last": 28,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Initial Submittal: Two (2) copies of each shop drawing and any other supplementary data to the Owner at the address given in Section H.2.",
+        "section": "C.1",
+        "text": "Provide two copies of shop drawings and supplementary data to the Owner at the specified address."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 29,
+            "last": 30,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "One copy of the shop drawings indicating the Owner’s action will be returned to Manufacturer within two (2) weeks from date of receipt.",
+        "section": "C.1",
+        "text": "Owner will return one copy of shop drawings with action indicated within two weeks of receipt."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 31,
+            "last": 31,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "The Owner will review all approval drawings for conformity with specifications.",
+        "section": "C.1",
+        "text": "Owner will review approval drawings for specification conformity."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 32,
+            "last": 33,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Data and drawings will be marked with one of the following responses to indicate result of Owner’s review.",
+        "section": "C.1",
+        "text": "Owner will mark data and drawings with review results."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 35,
+            "last": 38,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Reviewed: Indicates that the information or drawing appears to be in general conformity with the specification requirements. Drawings marked “Reviewed” by the Owner may be released for fabrication and/or installation by the Manufacturer.",
+        "section": "C.2",
+        "text": "'Reviewed' indicates drawings conform to specifications and can proceed to fabrication/installation."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 40,
+            "last": 42,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Revised: Owner’s comments shall be reviewed and any necessary design changes incorporated into the shop drawings or design before proceeding with fabrication or drawing distribution.",
+        "section": "C.3",
+        "text": "'Revised' requires incorporating Owner's comments into shop drawings before fabrication/distribution."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 44,
+            "last": 49,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Revise and Resubmit: Indicates that the data, drawings, or supplementary information does not appear to be in general conformance with the specifications. Owner’s comments will be provided on marked drawings and/or transmitted letter. Manufacturer shall make all necessary revisions and resubmit for Owner’s review three (3) copies of all drawings bearing this review note.",
+        "section": "C.4",
+        "text": "'Revise and Resubmit' requires addressing Owner's comments and resubmitting three copies for review."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

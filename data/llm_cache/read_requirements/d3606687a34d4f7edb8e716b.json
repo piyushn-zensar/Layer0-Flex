@@ -1,0 +1,162 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 4,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "Nominal control voltage will be 48 volts DC",
+        "section": "Q",
+        "text": "Control voltage must be 48 volts DC."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 6,
+            "last": 9,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "Protective relays, draw-out case devices, recording instruments, meter, test switches, and all front panel mounted devices shall be panel mounted and rear connected unless otherwise specified. Extended panel mounts are acceptable if necessary to accommodate breaker racking operations.",
+        "section": "R",
+        "text": "Devices must be panel mounted and rear connected; extended mounts allowed for breaker racking."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 11,
+            "last": 13,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "Input and output surge ratings of protective relays and communications equipment shall be in accordance with ANSI/IEEE Standard C37.90.1 – (latest revision). Dedicated case grounds shall be installed.",
+        "section": "S",
+        "text": "Surge ratings must comply with ANSI/IEEE C37.90.1; install dedicated case grounds."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "Control and instrument switches shall be rated 600 volt, 20A, Electroswitch Series 24 with contacts and handle as specified, or equal.",
+        "section": "T",
+        "text": "Switches must be 600V, 20A, Electroswitch Series 24 or equivalent."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "Indicating lamps shall be LED and rated 48 VDC.",
+        "section": "U",
+        "text": "Indicating lamps must be LED and 48 VDC rated."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 26,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "In the event that certain items are indicated on the drawings but not tabulated on the itemized list, or vice versa, Manufacturer shall use the total quantity of equipment to satisfy the requirements of both the drawings and the list. All miscellaneous items and accessories required in conjunction with any of the items listed or shown on the drawings shall be furnished by the Manufacturer.",
+        "section": "2.9.A",
+        "text": "Manufacturer must reconcile drawings and lists, providing all required items and accessories."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 28,
+            "last": 30,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "The line-up shall of switchgear assembled to be field connected through underground cables as described in this specification. Each unit shall have a 120 V receptacle with a switched light.",
+        "section": "2.9.B",
+        "text": "Switchgear must be field connected via underground cables; each unit needs a 120V receptacle and light."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 32,
+            "last": 34,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "The following items shall be pre-wired and/or provisions made to facilitate the implementation of SCADA. All control wiring shall be #14 AWG with indication wiring #18 AWG.",
+        "section": "2.9.C",
+        "text": "Pre-wire items for SCADA; use #14 AWG for control and #18 AWG for indication wiring."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 38,
+            "last": 39,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "Provisions for breaker remote racking systems shall be included in the bid, but priced separately as optional equipment.",
+        "section": "2.9.D.1",
+        "text": "Include provisions for remote racking systems in bid; price separately as optional."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 41,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "Two (2) – Spare fuses of each and all types used",
+        "section": "2.9.D.2",
+        "text": "Provide two spare fuses for each type used."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "One (1) – Breaker transfer truck and inspection rack",
+        "section": "2.9.D.3",
+        "text": "Provide one breaker transfer truck and inspection rack."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

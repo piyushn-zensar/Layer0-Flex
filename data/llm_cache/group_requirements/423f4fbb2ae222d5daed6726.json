@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          2,
+          3,
+          4
+        ],
+        "title": "Details of the charging spring motor"
+      },
+      {
+        "category": "technical",
+        "members": [
+          5,
+          6
+        ],
+        "title": "Details of the coil currents"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

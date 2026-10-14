@@ -1,0 +1,17 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "schedule",
+        "members": [
+          2,
+          3,
+          4
+        ],
+        "title": "Completion schedule and associated penalties"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

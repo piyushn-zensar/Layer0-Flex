@@ -1,0 +1,162 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 2,
+            "last": 2,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Provide exterior rated photo eye LED outdoor lights over each door.",
+        "section": "C",
+        "text": "Install exterior-rated LED lights with photo eye sensors over each door."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 6,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Provide a minimum of six (6) utility duplex receptacles equally spaced for convenient use inside the building. Outside the building, provide two (2) 120 V receptacles near each access door.",
+        "section": "D",
+        "text": "Install six interior duplex receptacles and two exterior 120V receptacles near each access door."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 8,
+            "last": 12,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "All current transformers, including auxiliary CT’s shall be connected to shorting type terminal blocks GE-Type EB27 or equal. Interface with customer’s external wiring for control and CT circuits shall be made on terminal blocks. At least 10 percent spare terminals on terminal blocks shall be provided for customer’s future use. All CT leads shall be terminated for multi-ratio CT’s.",
+        "section": "E",
+        "text": "Connect CTs to shorting terminal blocks, provide spare terminals, and terminate CT leads for multi-ratio CTs."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 14,
+            "last": 17,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Each main bus shall have three (3) voltage transformers, 7,200 – 120 volt with trunnion-mounted high interrupting capacity current limiting fuses wye connected to the 12.47 kV bus for metering. ANSI accuracy class 0.3 for W-Z burdens.",
+        "section": "F",
+        "text": "Equip each main bus with three voltage transformers and high interrupting capacity fuses for metering."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 19,
+            "last": 21,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Each Feeder Breaker Cubicle: One (1) set – Current transformer, 1200/5 ampere multi-ratio, single secondary, 15 kV, ANSI relaying accuracy class, C200 for 12.47 kV feeder relay located on the bus side of the circuit breaker.",
+        "section": "G",
+        "text": "Provide CTs for feeder breaker cubicles with specified ratings and accuracy class."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 25,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Each Main Breaker Cubicle: One (1) set – Current transformer, 2000/5 ampere fixed-ratio, single secondary, 15 kV, ANSI relaying accuracy class, C200 for transformer differential relay located on the bus side of the circuit breaker",
+        "section": "H",
+        "text": "Provide CTs for main breaker cubicles with specified ratings and accuracy class."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 27,
+            "last": 29,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Each Breakered Cubicle: One (1) set – Current transformer, 2000/5 ampere fixed-ratio, single secondary, 15 kV, ANSI relaying accuracy class, C200 for 12.47 kV bus differential relay located on the load or transformer side of the circuit breaker",
+        "section": "I",
+        "text": "Provide CTs for breakered cubicles with specified ratings and accuracy class."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 33,
+            "last": 35,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Provide thermostatically controlled strip heater with perforated shields in each circuit breaker cubicle for anti-condensation. Size as required ambient temperature ranges specified.",
+        "section": "K",
+        "text": "Install thermostatically controlled strip heaters in circuit breaker cubicles for anti-condensation."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 37,
+            "last": 38,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Provide a switchable LED lamp and duplex outlet in all control cubicles. Locate light switch near receptacle.",
+        "section": "L",
+        "text": "Install switchable LED lamps and duplex outlets in control cubicles."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 40,
+            "last": 41,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "AC and DC voltage for the switchgear, transformer, and gas circuit breaker will be supplied from the switchgear structure, at 120/240 volts AC and 48 volts DC.",
+        "section": "M",
+        "text": "Supply AC and DC voltage for equipment from the switchgear structure."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 45,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "AC Distribution Panelboard shall be one (1) indoor NEMA 12 AC panelboard, Square D-type NQOD, 42 circuit, 120/240 V, 60 hertz, single phase-three wire, 225A, thermal magnetic main breaker, and Square D Type QO branch breakers.",
+        "section": "N",
+        "text": "Provide an indoor NEMA 12 AC panelboard with specified features and components."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

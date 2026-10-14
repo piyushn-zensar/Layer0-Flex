@@ -1,0 +1,27 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "legal",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "title": "Maintain required insurance and bonds for the contract"
+      },
+      {
+        "category": "legal",
+        "members": [
+          6,
+          7
+        ],
+        "title": "Manage insurance deductibles and disclose incidents"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          5,
+          6,
+          7
+        ],
+        "title": "Submission of shop drawings and related technical documentation"
+      },
+      {
+        "category": "schedule",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Manufacturer's schedule and progress reporting obligations"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

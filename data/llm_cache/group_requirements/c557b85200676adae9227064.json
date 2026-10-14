@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Substitution requirements and evaluation"
+      },
+      {
+        "category": "commercial",
+        "members": [
+          5,
+          6
+        ],
+        "title": "Pricing requirements"
+      },
+      {
+        "category": "submission",
+        "members": [
+          8,
+          10
+        ],
+        "title": "Submission requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

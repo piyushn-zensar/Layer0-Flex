@@ -1,0 +1,176 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 5,
+            "last": 7,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "One (1) – Breaker test panel, secondary disconnect cable, and on/off switch to electrically test breaker operation while performing breaker maintenance.",
+        "section": "2.10",
+        "text": "Provide one breaker test panel with specified components for maintenance."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 1,
+            "last": 3,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "SEL-587Z 0587Z0X225312XX One (1)",
+        "section": "2.10",
+        "text": "Supply one SEL-587Z relay with the specified part number."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 16,
+            "last": 18,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "SEL-351S 0351S5X3D3E52X1 Five (5)",
+        "section": "2.10",
+        "text": "Provide five SEL-351S relays with the specified part number."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 21,
+            "last": 23,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "SEL-3610 3610X3B1XXX0 One (1)",
+        "section": "2.10",
+        "text": "Provide one SEL-3610 relay with the specified part number."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 26,
+            "last": 28,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "General Electric 0116B6708G2-B Two (1)",
+        "section": "2.10",
+        "text": "Provide two General Electric switches with the specified part number."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 29,
+            "last": 31,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "Cutout Switch ElectroSwitch 24203B One (1)",
+        "section": "2.10",
+        "text": "Provide one ElectroSwitch cutout switch with the specified part number."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 32,
+            "last": 34,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "Lockout Relay ElectroSwitch 7808C One (1)",
+        "section": "2.10",
+        "text": "Provide one ElectroSwitch lockout relay with the specified part number."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 36,
+            "last": 40,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "LED Indicating Light (B) FT1 ABB P,P,P,C-C,C-C,C-C,P C129A514G01 Six (6)",
+        "section": "2.10",
+        "text": "Provide six ABB LED indicating lights with the specified part number."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 42,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "Test Switch One (1)",
+        "section": "2.10",
+        "text": "Provide one test switch."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 46,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "Test Switch FT1 ABB T,T,T,T,T,T,T,T,T,T C129A539G01 Six (6)",
+        "section": "2.10",
+        "text": "Provide six ABB FT1 test switches with the specified part number."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 47,
+            "last": 50,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "Temperature Monitor ARGA ARGA 26-963-48V-J3.0DC",
+        "section": "2.10",
+        "text": "Provide an ARGA temperature monitor with the specified part number."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 51,
+            "last": 55,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "Voltage/Temperature Transducer Comm. Cable SEL-273A Length as needed Six(6)",
+        "section": "2.10",
+        "text": "Provide six SEL-273A voltage/temperature transducer communication cables of required length."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

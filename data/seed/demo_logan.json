@@ -1,0 +1,6 @@
+{
+  "_note": "Independent validation RFP (C-11, P-26): a public bid document from a different issuer, chosen in team/independent-rfp-candidates.md (J-14). Read from its own frozen layout, reader and grouping answers up to the register; matching and dispatch follow once its matcher answers are frozen (A-23). Source: https://cms9files.revize.com/loganut/departments/purchasing/Substation%206%20Switchgear%20Building.pdf (retrieved 14 Oct 2026).",
+  "opportunity": {"title": "15 kV switchgear for Substation 6", "customer": "Logan City Light & Power (Utah)",
+                  "customer_type": "utility"},
+  "document": "data/RFP/Logan-City-Substation-6-15kV-Switchgear.pdf"
+}

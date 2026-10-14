@@ -1,0 +1,232 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 7,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "A continuous silver plated copper ground bus measuring ¼” X 2” shall be provided for the full length of the switchgear assembly.  The ground bus shall be capable of carrying the rated short circuit current of the installed circuit breakers for a minimum of 2 seconds.",
+        "section": "Ground Bus",
+        "text": "Provide a silver plated copper ground bus capable of carrying rated short circuit current for 2 seconds."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 9,
+            "last": 10,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Power bus orientation shall be A-B-C top to bottom, front to back, and left to right when viewed from the front of the switchgear.",
+        "section": "Power Bus Orientation",
+        "text": "Ensure power bus orientation follows specified A-B-C layout."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 14,
+            "last": 16,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "The circuit breaker units shall be electrically operated, three-pole, draw out type, rated 15 kV (minimum), 110 kV BIL, 60 Hz, with primary and secondary disconnecting devices.  Interlocks shall be provided where specified.",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Provide electrically operated, three-pole, draw-out type circuit breakers with specified ratings and interlocks."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "A device shall automatically open the primary disconnecting devices when the circuit breaker reaches the “disconnect” position.",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Include automatic opening of primary disconnecting devices in disconnect position."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 21,
+            "last": 24,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Primary and secondary disconnecting devices shall have silver contacts designed for cool operation with minimum maintenance.  Guides shall be provided to insure proper alignment of primary and secondary disconnecting devices before engagement.",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Provide silver contacts for disconnecting devices with guides for alignment."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 26,
+            "last": 29,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "All unused “a” and ‘b” auxiliary switch contacts available on each breaker shall be wire to a terminal block where they will be readily available for use by the Owner.  Manufacturer  is to provide a minimum of six (6) unused “a” and six (6) unused “b” auxiliary switch contacts for each breaker.",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Wire unused auxiliary switch contacts to terminal blocks; provide minimum six unused contacts each type per breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 31,
+            "last": 32,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Auxiliary Truck Operated Cell switches (TOC) shall be provided to indicate circuit breaker element position.",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Provide TOC switches to indicate circuit breaker position."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 34,
+            "last": 35,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Provisions for padlocking circuit breakers in the disconnected position shall be provided to accommodate standard lockout tagout procedures.",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Include padlocking provisions for circuit breakers in disconnected position."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 37,
+            "last": 37,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Each circuit breaker shall have the following minimum ratings:",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Ensure circuit breakers meet specified minimum ratings."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 39,
+            "last": 39,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Normal voltage:   12.47 kV",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Circuit breakers must have a normal voltage rating of 12.47 kV."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 41,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Rated Maximum Voltage (rms):    15 kV",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Circuit breakers must have a rated maximum voltage of 15 kV."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Rated Voltage Range Factor (K):   1.30",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Circuit breakers must have a rated voltage range factor of 1.30."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 45,
+            "last": 45,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Insulation level (Nominal Freq.):   36 kV rms",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Circuit breakers must have an insulation level of 36 kV rms at nominal frequency."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 47,
+            "last": 47,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Insulation Level (1.2 X 50 µsec):   110 kV crest",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Circuit breakers must have an insulation level of 110 kV crest for 1.2 x 50 µsec."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 49,
+            "last": 49,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Rated Continuous Current:",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Specify rated continuous current for circuit breakers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 51,
+            "last": 51,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Mains:   2000A",
+        "section": "Vacuum Circuit Breakers",
+        "text": "Circuit breakers must have a rated continuous current of 2000A for mains."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

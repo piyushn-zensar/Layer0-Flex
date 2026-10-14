@@ -1,0 +1,33 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Requirements for DC panelboard design and labeling"
+      },
+      {
+        "category": "technical",
+        "members": [
+          5,
+          7
+        ],
+        "title": "Prewiring requirements for components and communication"
+      },
+      {
+        "category": "technical",
+        "members": [
+          8,
+          9,
+          10
+        ],
+        "title": "HVAC unit specifications and installation requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

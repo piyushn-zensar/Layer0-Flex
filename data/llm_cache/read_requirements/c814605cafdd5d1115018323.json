@@ -1,0 +1,218 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 2,
+            "last": 2,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Feeders:   1200A",
+        "section": "b",
+        "text": "Feeders must be rated at 1200A."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 4,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Rated Short Circuit Current:   18 kA rms",
+        "section": "7",
+        "text": "Rated short circuit current must be 18 kA rms."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 6,
+            "last": 6,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Maximum Symmetrical Interrupting Capability:   23 kA rms",
+        "section": "8",
+        "text": "Maximum symmetrical interrupting capability must be 23 kA rms."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 8,
+            "last": 8,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Closing and latching Capability:   37 kA rms (asymmetrical)",
+        "section": "9",
+        "text": "Closing and latching capability must be 37 kA rms (asymmetrical)."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 10,
+            "last": 10,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Clearing Time:  5 cycles",
+        "section": "10",
+        "text": "Clearing time must be 5 cycles."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 13,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "The circuit breaker units shall be mechanically trip free, stored-energy type, with 48 volt DC trip and close mechanism.",
+        "section": "H",
+        "text": "Circuit breaker units must be mechanically trip free, stored-energy type, with 48V DC trip and close mechanism."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 17,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "The breaker shall be complete with necessary auxiliary switches, latch checking switch, control relay and operation counter, and mechanical interlocks to prevent removal of breaker unless it is in open position.",
+        "section": "I",
+        "text": "Breaker must include auxiliary switches, latch checking switch, control relay, operation counter, and mechanical interlocks."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 19,
+            "last": 21,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "The breaker shall have a minimum of four mechanically operated switch contacts (MOC) (two (2) normally open when breaker is open, two (2) normally closed when breaker is open) wired to terminal blocks for customer connections.",
+        "section": "J",
+        "text": "Breaker must have four mechanically operated switch contacts wired to terminal blocks."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 24,
+            "last": 25,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "The breaker stationary unit shall have a set of primary disconnecting devices with automatic shutters and a set of secondary disconnecting devices.",
+        "section": "K",
+        "text": "Breaker stationary unit must have primary disconnecting devices with automatic shutters and secondary disconnecting devices."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 29,
+            "last": 32,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Panelboard wire shall be extra flexible, 41 strand tinned copper conductor, rated 600 volt, Type SIS #14 AWG, U.L. listed, except CT circuits where #10 AWG Type SIS, 65 strand shall be used.  All indication wiring for SCADA shall use #18 AWG.",
+        "section": "2.8.A",
+        "text": "Panelboard wire specifications include Type SIS #14 AWG, #10 AWG for CT circuits, and #18 AWG for SCADA."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 34,
+            "last": 35,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Wire terminals shall be insulated barrel, color coded, tin plated copper, ring type with appropriate ring size for mating stud, and barrel size, for conductor.",
+        "section": "2.8.B",
+        "text": "Wire terminals must be insulated barrel, color coded, tin plated copper, ring type."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 37,
+            "last": 37,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "All device stud connections shall be made with lock washers.",
+        "section": "2.8.C",
+        "text": "Device stud connections must use lock washers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 39,
+            "last": 42,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Any one (1) terminal board point shall be terminated with no more than one (1) control cable conductor.  Any one (1) screw connection shall be terminated with no more than two (2) wires and any one (1) stud or bolted connection terminated with no more than three (3) wires.",
+        "section": "2.8.D",
+        "text": "Terminal board points, screw connections, and stud connections have specific wire termination limits."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 44,
+            "last": 45,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Each terminal block, conductor, device, fuse block, and terminal shall be permanently labeled to coincide with the identification shown on the drawings.",
+        "section": "2.8.E",
+        "text": "Terminal blocks, conductors, devices, fuse blocks, and terminals must be permanently labeled as per drawings."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 47,
+            "last": 48,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "All conductors shall be identified using heat shrink destination wiring labels. Terminal and conductor identification shall be by a permanent method",
+        "section": "2.8.F",
+        "text": "Conductors must be identified using heat shrink destination wiring labels and permanent methods."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

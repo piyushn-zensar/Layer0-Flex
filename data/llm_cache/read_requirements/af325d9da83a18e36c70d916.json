@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 1,
+            "last": 2,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "Manufacturer shall not be entitled to additional compensation for Work items paid under subparagraphs 10.04 A. 1., 2. and 3. above.",
+        "section": "10.04",
+        "text": "Manufacturer cannot claim extra compensation for specified work items."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 4,
+            "last": 5,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "Manufacturer shall not be paid on account of loss of anticipated profits or revenue or other economic loss arising out of or resulting from such termination.",
+        "section": "10.04",
+        "text": "Manufacturer cannot claim payment for lost profits or revenue due to termination."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 6,
+            "last": 8,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "Termination under this Subparagraph 10.04 shall not entitle Manufacturer to compensation on a cost-plus basis except for items paid under Subparagraph 10.04 A. 2. above.",
+        "section": "10.04",
+        "text": "Termination does not allow cost-plus compensation except for specified items."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 10,
+            "last": 12,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "This Article 10.04 shall amend the General Conditions, Document 007200 referenced in Article 9.01 A. 6. by replacing the “Termination for Owner’s Convenience” clause contain in 15.2 F. therein.",
+        "section": "10.04",
+        "text": "Article 10.04 modifies the General Conditions regarding termination for convenience."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 15,
+            "last": 20,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "Any provision or part of the Contract Documents held to be void or unenforceable under any Law or Regulation shall be deemed stricken, and all remaining provisions shall continue to be valid and binding upon OWNER and MANUFACTURER, who agree that the Contract Documents shall be reformed to replace such stricken provision of part thereof with a valid and enforceable provision that comes as close as possible to expressing the intention of the stricken provision.",
+        "section": "10.05",
+        "text": "Invalid contract provisions will be replaced with enforceable ones maintaining original intent."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 27,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "The MANUFACTURER agrees to indemnify and save harmless the OWNER from any and all defects appearing or developing in the workmanship or materials performed or furnished under the Contract for a period of one (1) year after the date of the written notice from the Engineer recommending final acceptance of the entire project by the OWNER.",
+        "section": "10.06",
+        "text": "Manufacturer must indemnify owner for defects for one year post-final acceptance."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 30,
+            "last": 31,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "This agreement may be executed in counterparts, each of which shall be deemed an original but all of which shall constitute one and the same instrument.",
+        "section": "10.07",
+        "text": "Agreement can be signed in counterparts, all considered originals."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

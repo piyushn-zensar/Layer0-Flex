@@ -1,0 +1,162 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 2,
+            "last": 2,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Exterior walls:  11 gauge",
+        "section": "b",
+        "text": "Exterior walls must be 11 gauge."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 4,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Interior walls:  14 gauge",
+        "section": "c",
+        "text": "Interior walls must be 14 gauge."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 6,
+            "last": 6,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Ceiling and roof:  as required for design",
+        "section": "d",
+        "text": "Ceiling and roof specifications depend on design requirements."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 8,
+            "last": 12,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "The completed switchgear assembly shall be carried on a rigid structural steel framework for bolting to the foundation or piers and to prevent distortion during shipment.  Manufacturer  shall supply all necessary hardware and clamps for fastening building to foundation if required by design.  If design requires embedded anchor bolts only, Owner will supply anchor bolts.",
+        "section": "M",
+        "text": "Switchgear assembly must be on a rigid steel framework, with hardware provided by the manufacturer."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 14,
+            "last": 20,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Stationary structure shall be insulated to the following minimum values: Walls:  R-19 Roof:  R-30 Floor:  R-30",
+        "section": "N",
+        "text": "Stationary structure insulation must meet specified R-values for walls, roof, and floor."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 22,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Foam insulation is preferred.",
+        "section": "O",
+        "text": "Foam insulation is preferred for the structure."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 24,
+            "last": 27,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Separate compartments, isolated from each other by sheet steel barriers, shall be provided for the circuit breakers, buses, cable terminals, and instrument transformers.  Adequate barriers shall be provided between adjacent housings to prevent interchange of fire or ionized gas between compartments.",
+        "section": "P",
+        "text": "Provide isolated compartments with steel barriers for various components."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 29,
+            "last": 33,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Switchgear shall be oriented such that the high voltage power cable exit and the entrance to the switchgear are shown in the preliminary site plan drawing, included with these specifications.  Alternate configurations shall be proposed at time of bidding.  Manufacturer  shall include plan view drawings of alternate configurations with bid.",
+        "section": "Q",
+        "text": "Switchgear orientation must match the site plan, with alternate configurations proposed in the bid."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 35,
+            "last": 41,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "If motor operated mechanisms are used in the circuit breaker compartments for moving the circuit breaker unit from the “disconnected” to the “connected” position and vice-versa, provisions shall be made for manually moving the circuit breaker in the event of a motor failure or the complete loss of power supply to the motors.  Mechanical interlocks shall be provided which will positively prevent moving the circuit breaker from one position to another while the breaker is closed.",
+        "section": "R",
+        "text": "Provide manual operation and interlocks for motorized circuit breaker mechanisms."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Provide 11-gauge aluminum cable entry plate for feeder cable penetrations to be finalized during installation.",
+        "section": "S",
+        "text": "Provide 11-gauge aluminum cable entry plates for feeder cables."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 46,
+            "last": 46,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Provide adjustable cable supports for incoming cable.",
+        "section": "T",
+        "text": "Provide adjustable supports for incoming cables."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

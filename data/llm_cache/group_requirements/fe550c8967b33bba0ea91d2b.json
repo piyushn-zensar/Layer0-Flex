@@ -1,0 +1,29 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "commercial",
+        "members": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "title": "Provide cancellation charges for various timeframes"
+      },
+      {
+        "category": "staffing",
+        "members": [
+          13,
+          14
+        ],
+        "title": "Provide proposal and rate for field assembly supervision"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

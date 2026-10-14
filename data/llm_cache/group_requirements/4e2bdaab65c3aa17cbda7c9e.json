@@ -1,0 +1,31 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "title": "Switchgear testing requirements"
+      },
+      {
+        "category": "staffing",
+        "members": [
+          12,
+          13
+        ],
+        "title": "Field Service Engineer responsibilities"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

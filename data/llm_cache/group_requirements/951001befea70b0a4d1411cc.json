@@ -1,0 +1,30 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "title": "Environmental and operational conditions for the equipment"
+      },
+      {
+        "category": "technical",
+        "members": [
+          10,
+          11,
+          12
+        ],
+        "title": "Design and assembly requirements for the structure and equipment"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

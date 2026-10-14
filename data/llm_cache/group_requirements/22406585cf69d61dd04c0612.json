@@ -1,0 +1,34 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "title": "Specifications for electrical components"
+      },
+      {
+        "category": "technical",
+        "members": [
+          6,
+          7
+        ],
+        "title": "Switchgear installation and wiring requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          9,
+          10
+        ],
+        "title": "Spare parts and equipment provision"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

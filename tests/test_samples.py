@@ -27,7 +27,7 @@ def client() -> TestClient:
 def test_samples_are_listed_without_paths(client):
     listed = client.get("/api/samples").json()["samples"]
     by_name = {s["name"]: s for s in listed}
-    assert set(by_name) == {"syracuse_rfp", "syracuse_addendum_1"} == set(opportunities.SAMPLES)  # C-11: no off-domain sample
+    assert set(by_name) == {"syracuse_rfp", "logan_rfp", "syracuse_addendum_1"} == set(opportunities.SAMPLES)  # C-11
     assert by_name["syracuse_rfp"]["pages"] == 101 and by_name["syracuse_rfp"]["kind"] == "rfp"
     assert by_name["syracuse_addendum_1"]["kind"] == "change"
     for s in listed:
@@ -86,3 +86,14 @@ def test_sample_errors(client):
     r = client.post(f"/api/opportunities/{opp}/changes/from-sample", json={"name": "syracuse_addendum_1"})
     assert r.status_code == 409 and "Publish the register first" in r.json()["detail"]
     assert client.get(f"/api/opportunities/{opp}").json()["documents"] == []  # nothing was stored
+
+
+def test_independent_rfp_is_read_offline(client):
+    """P-26 (C-11): the independent Logan City RFP reads from its own frozen answers; the coverage adds up."""
+    opp = client.post("/api/opportunities", json={"title": "Independent RFP"}).json()["id"]
+    assert client.post(f"/api/opportunities/{opp}/documents/from-sample", json={"name": "logan_rfp"}).status_code == 200
+    read = client.post(f"/api/opportunities/{opp}/requirements/extract").json()
+    c = read["coverage"]
+    assert not read["problems"] and c["pages"] == 46 == c["pages_read"] + c["pages_skipped"], c
+    assert c["candidates"] == c["admitted"] + c["exceptions"] + c["duplicates"] and c["exceptions"] <= 0.02 * c["candidates"]
+    assert all(q["location_hint"] for q in client.get(f"/api/opportunities/{opp}/requirements/exceptions").json())

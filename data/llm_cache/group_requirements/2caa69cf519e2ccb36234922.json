@@ -1,0 +1,37 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "title": "Panel design and mounting requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          5,
+          6
+        ],
+        "title": "Breaker and compartment design requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "title": "Painting and coating specifications"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

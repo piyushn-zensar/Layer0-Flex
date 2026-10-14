@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 2,
+            "last": 4,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "Rate for one round trip to the jobsite, including all expenses: $",
+        "section": "B",
+        "text": "Provide the rate for one round trip to the jobsite, including all expenses."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 6,
+            "last": 8,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "Total estimated number of working days required for Service Engineer days",
+        "section": "C",
+        "text": "Provide the total estimated number of working days required for the Service Engineer."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 10,
+            "last": 11,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "Do prices quoted in include Field Service Engineer? (yes, no)",
+        "section": "D",
+        "text": "Indicate if the quoted prices include a Field Service Engineer."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "If so, how many days: days",
+        "section": "D",
+        "text": "Specify the number of days included for the Field Service Engineer if applicable."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 17,
+            "last": 19,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "Three Year (from delivery) $",
+        "section": "3.3.A",
+        "text": "Provide the cost for a three-year extended warranty from delivery."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 21,
+            "last": 22,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "Five Year (from delivery) $",
+        "section": "3.3.B",
+        "text": "Provide the cost for a five-year extended warranty from delivery."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 26,
+            "last": 31,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "Approval Drawings Outline Drawings Guaranteed Date (Month)/(Day)/(Year)",
+        "section": "3.4.A.1",
+        "text": "Provide the guaranteed date for outline approval drawings."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 33,
+            "last": 36,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "All drawings except outline drawings Guaranteed Date (Month)/(Day)/(Year)",
+        "section": "3.4.A.2",
+        "text": "Provide the guaranteed date for all drawings except outline drawings."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 38,
+            "last": 41,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "Certified Construction Drawings If no, Guaranteed Date (Month)/(Day)/(Year)",
+        "section": "3.4.B",
+        "text": "Provide the guaranteed date for certified construction drawings if applicable."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 46,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "Instruction Manuals Guaranteed Date (Month)/(Day)/(Year)",
+        "section": "3.4.C",
+        "text": "Provide the guaranteed date for instruction manuals."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

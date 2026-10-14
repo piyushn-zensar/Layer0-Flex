@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2
+        ],
+        "title": "HVAC unit design and performance requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "title": "Electrical bus design and specifications"
+      },
+      {
+        "category": "technical",
+        "members": [
+          12,
+          13
+        ],
+        "title": "Grounding requirements for switchgear"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

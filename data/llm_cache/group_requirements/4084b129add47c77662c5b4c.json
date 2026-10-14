@@ -1,0 +1,39 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          2,
+          3,
+          4
+        ],
+        "title": "Dimensions and physical characteristics of the equipment"
+      },
+      {
+        "category": "technical",
+        "members": [
+          6,
+          7,
+          8
+        ],
+        "title": "Bus material and dimensions"
+      },
+      {
+        "category": "technical",
+        "members": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "title": "Specifications for the 2000 AMP main breaker"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

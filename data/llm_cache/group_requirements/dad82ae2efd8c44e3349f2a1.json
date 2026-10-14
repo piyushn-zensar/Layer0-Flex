@@ -1,0 +1,33 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "commercial",
+        "members": [
+          4,
+          5,
+          7
+        ],
+        "title": "Field service costs and responsibilities"
+      },
+      {
+        "category": "technical",
+        "members": [
+          6,
+          8
+        ],
+        "title": "Switchgear testing and discrepancy resolution"
+      },
+      {
+        "category": "submission",
+        "members": [
+          9,
+          10
+        ],
+        "title": "Bid evaluation and selection process"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

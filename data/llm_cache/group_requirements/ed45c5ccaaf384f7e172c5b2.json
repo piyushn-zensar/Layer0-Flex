@@ -1,0 +1,40 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Wiring and conductor installation requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Switchboard and terminal board specifications"
+      },
+      {
+        "category": "technical",
+        "members": [
+          5,
+          6
+        ],
+        "title": "Panelboard and field termination cabinet requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          7,
+          8
+        ],
+        "title": "Fuse and fuse holder specifications"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

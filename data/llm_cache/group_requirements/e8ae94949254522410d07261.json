@@ -1,0 +1,39 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          6
+        ],
+        "title": "Submit technical drawings and data"
+      },
+      {
+        "category": "submission",
+        "members": [
+          7,
+          8,
+          9
+        ],
+        "title": "Provide shop drawings and supplementary data"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "title": "Owner's review and marking of drawings"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

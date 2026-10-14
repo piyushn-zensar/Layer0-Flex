@@ -659,7 +659,7 @@ Built 14 Oct 2026 (P-24).
 
 ### 16.8 Demonstration data (owner: seed)
 
-The seeded demonstration contains only electrical-domain bids: the Syracuse switchgear RFP and, once frozen, an independent public switchgear or substation RFP from another issuer. The hyperscale sample stays in `data/RFP/samples` for tests but is no longer seeded.
+The seeded demonstration contains only electrical-domain bids (built 14 Oct 2026, P-26): the Syracuse switchgear RFP and, as the independent validation case, a public RFP from another issuer: Logan City Light & Power (Utah), 15kV Switchgear for Substation 6 (2017, 46 pages; candidates compared in `team/independent-rfp-candidates.md`). It is read from its own frozen layout, reader and grouping answers into the register: 408 candidates = 392 admitted + 4 exceptions + 12 duplicates, 88 groups, 167 requirements; 46 pages = 44 read + 2 contents pages skipped. Its matcher answers follow (A-23), so the seeded bid stays in review until then. It is also a one-click sample (`logan_rfp`). The hyperscale sample is removed.
 
 ### 16.9 Interface summary for parallel work
 

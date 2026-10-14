@@ -1,0 +1,190 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 21,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Manufacturer and Model/Type",
+        "section": "3.7.A",
+        "text": "Specify the manufacturer and model/type of the 1200 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 23,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Maximum Rated Voltage",
+        "section": "3.7.B",
+        "text": "Provide the maximum rated voltage of the 1200 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 25,
+            "last": 26,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Basic Impulse Insulation Level (BIL)",
+        "section": "3.7.C",
+        "text": "State the BIL rating in kV for the 1200 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 29,
+            "last": 30,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Maximum temperature rise over a 40°C Ambient",
+        "section": "3.7.D",
+        "text": "Specify the maximum temperature rise over a 40°C ambient for the 1200 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 32,
+            "last": 33,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Continuous Current Rating",
+        "section": "3.7.E",
+        "text": "Provide the continuous current rating in amps for the 1200 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 35,
+            "last": 36,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Short Time Symmetrical Rating",
+        "section": "3.7.F",
+        "text": "State the short time symmetrical rating in amps for the 1200 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 38,
+            "last": 39,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Recommended Maintenance Interval (Number of Rated Fault Interruptions)",
+        "section": "3.7.G",
+        "text": "Provide the recommended maintenance interval based on the number of rated fault interruptions for the 1200 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 42,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Rated Breaker Interrupting Time",
+        "section": "3.7.H",
+        "text": "Specify the rated breaker interrupting time in cycles for the 1200 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 44,
+            "last": 46,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Voltage Rating",
+        "section": "3.7.I.1",
+        "text": "Provide the voltage rating for the charging spring motor."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 48,
+            "last": 49,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Inrush",
+        "section": "3.7.I.2",
+        "text": "Specify the inrush current in amps for the charging spring motor."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 52,
+            "last": 53,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Running",
+        "section": "3.7.I.3",
+        "text": "State the running current in amps for the charging spring motor."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 55,
+            "last": 56,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Peak Tripping Coil Current",
+        "section": "3.7.J",
+        "text": "Provide the peak tripping coil current in amps."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 58,
+            "last": 59,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Peak Closing Coil Current",
+        "section": "3.7.K",
+        "text": "Specify the peak closing coil current in amps."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

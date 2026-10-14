@@ -1,0 +1,176 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 10,
+            "last": 11,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "Outdoor, continuous duty",
+        "section": "2.3 ENVIRONMENTAL AND SERVICE CONDITIONS",
+        "text": "The equipment must be suitable for outdoor, continuous duty operation."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 14,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "Approximate altitude above sea level: 4800 Feet",
+        "section": "2.3 ENVIRONMENTAL AND SERVICE CONDITIONS",
+        "text": "The equipment must operate at an altitude of approximately 4800 feet above sea level."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 17,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "Seismic zone: 3",
+        "section": "2.3 ENVIRONMENTAL AND SERVICE CONDITIONS",
+        "text": "The equipment must be designed for Seismic Zone 3."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 22,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "Maximum temperature 42° Celsius",
+        "section": "2.3 ENVIRONMENTAL AND SERVICE CONDITIONS",
+        "text": "The equipment must withstand a maximum temperature of 42°C."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 26,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "Maximum average temperature of cooling air for any 24-hour period: 24° Celsius",
+        "section": "2.3 ENVIRONMENTAL AND SERVICE CONDITIONS",
+        "text": "The equipment must handle a maximum average cooling air temperature of 24°C over 24 hours."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 27,
+            "last": 29,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "Minimum temperature: -34° Celsius",
+        "section": "2.3 ENVIRONMENTAL AND SERVICE CONDITIONS",
+        "text": "The equipment must withstand a minimum temperature of -34°C."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 30,
+            "last": 32,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "Maximum wind speed: 110 MPH",
+        "section": "2.3 ENVIRONMENTAL AND SERVICE CONDITIONS",
+        "text": "The equipment must withstand a maximum wind speed of 110 MPH."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 33,
+            "last": 35,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "Auxiliary DC power available 48Volts DC",
+        "section": "2.3 ENVIRONMENTAL AND SERVICE CONDITIONS",
+        "text": "The equipment must operate with an auxiliary DC power supply of 48V DC."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 39,
+            "last": 44,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "The general arrangement of the stationary structure shall be as shown on the switchgear plan-view drawing included with these specifications. Alternate configurations shall be proposed at time of bidding, and MAY be considered or rejected at the Owner’s discretion. Manufacturer shall include plan view drawings of alternate configurations with bid.",
+        "section": "2.4 STATIONARY STRUCTURE",
+        "text": "The structure must follow the provided plan-view drawing, with alternate configurations proposed during bidding and included in the bid."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 45,
+            "last": 49,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "The structure shall have a single front aisle designed with the maximum reasonable interior space to permit withdrawal of the circuit breakers for inspection, test, or maintenance, and at a minimum to allow passage of two breakers side by side.",
+        "section": "2.4 STATIONARY STRUCTURE",
+        "text": "The structure must have a single front aisle with sufficient space for circuit breaker operations and passage of two breakers side by side."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 51,
+            "last": 53,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "Switchgear and aisle portions of the enclosure shall be completely assembled and tested at the factory before shipment. Aisle and switchgear portions shall be ready for easy attachment and final assembly in the field.",
+        "section": "2.4 STATIONARY STRUCTURE",
+        "text": "The switchgear and aisle portions must be factory-assembled and tested, and ready for field assembly."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 55,
+            "last": 56,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "Approximate location of auxiliary equipment (primary relay panel, DC batteries, battery charger, and RTU) is shown on the layout drawing.",
+        "section": "2.4 STATIONARY STRUCTURE",
+        "text": "The auxiliary equipment locations must follow the provided layout drawing."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

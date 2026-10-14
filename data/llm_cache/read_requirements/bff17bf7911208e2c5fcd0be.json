@@ -1,0 +1,176 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 1,
+            "last": 2,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Engineer shall provide all necessary tools and special test equipment necessary to perform standard check out procedures for switchgear and accessories.",
+        "section": "1.10",
+        "text": "Provide tools and test equipment for switchgear checkout."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 4,
+            "last": 6,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Field Service Engineer shall also supervise and provide advice on the assembly of switchgear. Field Service Engineer shall have full authority to direct field operations as necessary to assure that switchgear has been assembled and service in accordance with Manufacturer ’s requirements.",
+        "section": "1.10",
+        "text": "Supervise and advise on switchgear assembly and ensure compliance with manufacturer requirements."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 7,
+            "last": 9,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "After completion of assembly, check electrical operation of accessories and instruct Owner’s personnel on the operation and maintenance of equipment.",
+        "section": "1.10",
+        "text": "Check accessory operation and train owner's personnel."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 11,
+            "last": 12,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Cost for field service shall be as provided in the “Proposal Data Sheets”. Field service shall be scheduled only at the request of the Owner.",
+        "section": "1.10",
+        "text": "Field service costs must align with proposal data sheets and be scheduled by the owner."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "If field service trips are necessary for the correction of defects or problems at no fault of the Owner, such trips shall be at Manufacturer ’s expense.",
+        "section": "1.10",
+        "text": "Manufacturer covers field service trips for non-owner faults."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The Manufacturer is advised that the Owner may choose to accomplish field tests to confirm any of the shop test results as an independent verification of switchgear’s condition.",
+        "section": "1.11",
+        "text": "Owner may perform field tests to verify shop test results."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 20,
+            "last": 21,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Should the Owner choose to perform such tests, it will be conducted solely at the Owner’s expense.",
+        "section": "1.11",
+        "text": "Owner bears costs for their field tests."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 25,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Should field tests show discrepancies between Manufacturer ’s shop test results and Owner’s field tests, or detect any irregularities in the ratings of equipment, Manufacturer shall assist the Owner in interpretation of results and any corrective action necessary to achieve performance guarantees.",
+        "section": "1.11",
+        "text": "Manufacturer assists in resolving discrepancies between shop and field test results."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 30,
+            "last": 31,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The Owner will evaluate bids, considering conformance with the specifications, price, delivery, Manufacturer ’s reputation, optional services offered (such as field assembly) and other items in the evaluation of proposals.",
+        "section": "1.12",
+        "text": "Bids evaluated on specifications, price, delivery, reputation, and optional services."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 33,
+            "last": 34,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The Owner reserves the right to waive or not waive any irregularities in the bid, to reject any or all bids, and to determine which bid is the lowest and best bid for the installation.",
+        "section": "1.12",
+        "text": "Owner may waive irregularities, reject bids, and select the best bid."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 39,
+            "last": 40,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Since delivery of switchgear specified herein is critical to the scheduling of the Owner’s project, the Manufacturer shall make every reasonable effort to meet his guaranteed delivery date specified in the Summary of Proposal.",
+        "section": "1.13",
+        "text": "Manufacturer must meet guaranteed delivery date for switchgear."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 43,
+            "last": 44,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The Owner agrees to indemnify the Manufacturer for circumstances beyond the control of the Manufacturer.",
+        "section": "1.13",
+        "text": "Owner indemnifies manufacturer for uncontrollable circumstances."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

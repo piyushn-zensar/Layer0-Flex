@@ -1,0 +1,302 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 1,
+            "last": 2,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "configurations shall be proposed at time of bidding.  Manufacturer  shall include plan view drawings of alternate configurations with bid.",
+        "section": "E",
+        "text": "Propose configurations and include plan view drawings with the bid."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 4,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Switchgear shall have single doors placed at locations shown on the plan-view.",
+        "section": "E",
+        "text": "Switchgear must have single doors as per the plan-view."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 6,
+            "last": 8,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Keyed door handles with ASSA cores approved by Owner.  Owner shall provide the keys.",
+        "section": "E",
+        "text": "Doors must have keyed handles with ASSA cores approved by the owner."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 10,
+            "last": 10,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Circuit breaker shall be able to pass through the door.",
+        "section": "E",
+        "text": "Doors must allow circuit breakers to pass through."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 13,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Sufficiently braced and reinforced steel to provide a solid contact/seal when closed and avoid warping when opening and closing.",
+        "section": "E",
+        "text": "Doors must be braced and reinforced to ensure proper sealing and avoid warping."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Equipped with “full-open” door closers with a latch to hold door open.",
+        "section": "E",
+        "text": "Doors must have full-open closers with a latch to hold them open."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 17,
+            "last": 17,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Panic hardware.",
+        "section": "E",
+        "text": "Doors must include panic hardware."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 19,
+            "last": 21,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Provide hinged, gasketed, full length, weatherproof, rear doors, complete with three-point latch and provisions for padlocking.  Hinge shall be on the right side (back view).  Each door shall have a sign stating the electrical hazards.",
+        "section": "F",
+        "text": "Rear doors must be hinged, gasketed, weatherproof, with a three-point latch, padlocking provisions, and hazard signs."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 23,
+            "last": 23,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "All hazard signs shall be in accordance with ANSI Z535.2-2007.",
+        "section": "G",
+        "text": "Hazard signs must comply with ANSI Z535.2-2007."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 25,
+            "last": 26,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "The stationary structure for walk-through switchgear shall consist of indoor-class switchgear compartments located in a weatherproof steel housing.",
+        "section": "H",
+        "text": "Walk-through switchgear must have indoor-class compartments in weatherproof steel housing."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 28,
+            "last": 30,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "The switchgear assembly shall consist of individual vertical sections housing various combinations of circuit breakers and auxiliaries, assembled to form a rigid metal-clad switchgear assembly.",
+        "section": "I",
+        "text": "Switchgear assembly must have vertical sections for circuit breakers and auxiliaries, forming a rigid metal-clad assembly."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 32,
+            "last": 32,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "All sections housing circuit breakers shall be welded.",
+        "section": "J",
+        "text": "Sections for circuit breakers must be welded."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 34,
+            "last": 35,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Metal side sheets shall provide grounded barriers between adjacent structures and solid removable metal barriers shall isolate the major primary sections of each circuit.",
+        "section": "K",
+        "text": "Metal side sheets must provide grounded barriers, and removable barriers must isolate primary circuit sections."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 38,
+            "last": 38,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "The structure shall be fabricated from steel sheets and reinforced with structural steel members where necessary:",
+        "section": "L",
+        "text": "Structure must be made of steel sheets and reinforced as needed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 41,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "16” on center interlocking panel construction:",
+        "section": "L",
+        "text": "Panels must have 16-inch center interlocking construction."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Floor:   ¼” steel",
+        "section": "L",
+        "text": "Floor panels must be ¼-inch steel."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 45,
+            "last": 45,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Exterior walls:  12 gauge",
+        "section": "L",
+        "text": "Exterior walls must be 12-gauge steel."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 47,
+            "last": 47,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Interior walls:  16 gauge",
+        "section": "L",
+        "text": "Interior walls must be 16-gauge steel."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 49,
+            "last": 49,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Ceiling and roof:  as required for design",
+        "section": "L",
+        "text": "Ceiling and roof must meet design requirements."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 51,
+            "last": 51,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "36” on center welded or bolted panel construction:",
+        "section": "L",
+        "text": "Panels must have 36-inch center welded or bolted construction."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 53,
+            "last": 53,
+            "page": 16
+          }
+        ],
+        "page": 16,
+        "quote": "Floor:  ¼” steel",
+        "section": "L",
+        "text": "Floor panels must be ¼-inch steel."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

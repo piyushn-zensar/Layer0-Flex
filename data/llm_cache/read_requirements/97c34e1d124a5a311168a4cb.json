@@ -1,0 +1,162 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 2,
+            "last": 4,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "Main and branch breakers shall be rated 10 kAIC minimum. Enclosure shall be surface mounted at location shown on 15 kV Metal-clad Switchgear Arrangement Drawing.",
+        "section": "1",
+        "text": "Breakers must be rated 10 kAIC minimum and surface-mounted as per drawing."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 6,
+            "last": 7,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "Panelboard shall be labeled “AC LOADCENTER”; nameplate shall be black on white with 3/8” lettering.",
+        "section": "2",
+        "text": "AC panelboard must be labeled with specified nameplate design."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 9,
+            "last": 11,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "DC Distribution Panelboard shall be one (1) indoor NEMA 12 panelboard, bottom feed with 225A main, 100A Thermal Magnetic main Breaker and branch breakers. Panel and Breakers MUST be fully rated at 48 VDC:",
+        "section": "O",
+        "text": "DC panelboard must meet specified design and rating requirements."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 23,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "Main and branch breakers shall be rated 5 kAIC minimum. Enclosure shall be surface mounted at location shown on 15kV Metalclad Switchgear Plan View Drawing.",
+        "section": "4",
+        "text": "Breakers must be rated 5 kAIC minimum and surface-mounted as per drawing."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 26,
+            "last": 27,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "Panelboard shall be labeled “DC LOADCENTER”; nameplate shall be white on black with 3/8” lettering.",
+        "section": "5",
+        "text": "DC panelboard must be labeled with specified nameplate design."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 29,
+            "last": 32,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "Manufacturer shall pre-wire all AC lights, heaters, and circuit breaker power and control circuits. Wiring to be routed in permanent conduit and tray separating low voltage SCADA circuits from high voltage circuits (120 V and above) for a neat installation.",
+        "section": "P",
+        "text": "Manufacturer must pre-wire AC components and ensure neat installation."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 34,
+            "last": 36,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "Provide wireway and conduit as required for Owner’s installation of external cables (spare AC and DC circuit breakers). Wireway shall be installed along interior walls, near the ceiling to facilitate field wiring of additional equipment by Owner.",
+        "section": "Q",
+        "text": "Provide wireway and conduit for external cable installation."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 39,
+            "last": 40,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "Manufacturer shall prewire for communication between IEDs, CTs, etc. and Protective Relays.",
+        "section": "R",
+        "text": "Manufacturer must prewire communication between specified devices."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 45,
+            "last": 48,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "Manufacturer shall provide one (1) exterior wall mounted self-contained heating and air-conditioning units, complete with supply and return grills, barometric fresh air damper and disposable air flitter to be controlled by a programmable thermostat. BARD units are preferred.",
+        "section": "S",
+        "text": "Provide specified HVAC unit with preferred features."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 50,
+            "last": 51,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "HVAC unit shall be independently wired through externally mounted lockable disconnect switches.",
+        "section": "S",
+        "text": "HVAC unit must have independent wiring and lockable disconnect switches."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 53,
+            "last": 53,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "HVAC unit shall be on a dedicated circuit from the AC panel.",
+        "section": "S",
+        "text": "HVAC unit must be on a dedicated AC panel circuit."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

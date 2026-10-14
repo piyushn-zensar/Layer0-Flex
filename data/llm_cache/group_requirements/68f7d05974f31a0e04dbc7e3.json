@@ -1,0 +1,27 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "title": "Submission of required documents"
+      },
+      {
+        "category": "legal",
+        "members": [
+          5,
+          6,
+          7
+        ],
+        "title": "Warranty and operational guarantees"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

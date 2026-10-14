@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 1,
+            "last": 3,
+            "page": 35
+          }
+        ],
+        "page": 35,
+        "quote": "MANUFACTURER shall pay OWNER $1,000.00 for each calendar day that expires after the specified time in paragraph 4.02 for substantial completion until the Work is substantially complete.",
+        "section": "4.02",
+        "text": "Manufacturer must pay $1,000 per day for delays in substantial completion."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 6,
+            "last": 8,
+            "page": 35
+          }
+        ],
+        "page": 35,
+        "quote": "MANUFACTURER shall pay OWNER $1,000.00 for each calendar day that expires after the time specified in paragraph 4.02 for completion and readiness for the final payment until the Work is completed and ready for final payment.",
+        "section": "4.02",
+        "text": "Manufacturer must pay $1,000 per day for delays in final completion."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 12,
+            "last": 14,
+            "page": 35
+          }
+        ],
+        "page": 35,
+        "quote": "MANUFACTURER agrees that OWNER may deduct the amount thereof from any money due or that may become due to MANUFACTURER by progress payments or otherwise under the Agreement.",
+        "section": "4.02",
+        "text": "Owner may deduct liquidated damages from payments due to Manufacturer."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 18,
+            "last": 20,
+            "page": 35
+          }
+        ],
+        "page": 35,
+        "quote": "OWNER shall pay MANUFACTURER FOR COMPLETION OF THE Work in accordance with the Contract Documents an amount in current funds equal to the sum of the amounts determined pursuant to paragraph 5.01.A below:",
+        "section": "5.01",
+        "text": "Owner will pay Manufacturer for work completion as per contract documents."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 28,
+            "last": 29,
+            "page": 35
+          }
+        ],
+        "page": 35,
+        "quote": "MANUFACTURER shall submit Applications of Payment in accordance with the General Conditions. Applications for Payment will be processed by ENGINEER as provided in the General Conditions.",
+        "section": "6.01",
+        "text": "Manufacturer must submit payment applications as per General Conditions."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 33,
+            "last": 35,
+            "page": 35
+          }
+        ],
+        "page": 35,
+        "quote": "OWNER shall make progress payments on account of the Contract Price on the basis of MANUFACTURER ’s Applications for Payment once each month during performance of the Work as provided in paragraphs 6.02.A.1 and 6.02.A.2 below.",
+        "section": "6.02",
+        "text": "Owner will make monthly progress payments based on Manufacturer's applications."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

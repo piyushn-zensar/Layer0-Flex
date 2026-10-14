@@ -1,0 +1,34 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          3,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        "title": "Specifications for the circuit breakers"
+      },
+      {
+        "category": "technical",
+        "members": [
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "title": "Features and accessories for the circuit breakers"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

@@ -1,6 +1,7 @@
 """Load the demo opportunities through the real module services.
 
-    .venv\\Scripts\\python -m scripts.seed_demo          # Syracuse from the REAL extraction (P-08)
+    .venv\\Scripts\\python -m scripts.seed_demo          # Syracuse from the REAL extraction (P-08), then the
+                                                         # independent Logan City RFP read up to the register (P-26)
     .venv\\Scripts\\python -m scripts.seed_demo --reset  # deletes the local DB first
 main() alone (as the tests call it) seeds only Syracuse, with its 13 hand-picked line items (quick and stable).
 
@@ -69,6 +70,22 @@ def main(seed_file: str = "demo_syracuse.json", real: bool = False) -> None:
         print(f"done: open http://localhost:3000/opportunities/{opp.id}/trace (web) - API on :8000")
 
 
+def independent(seed_file: str = "demo_logan.json") -> None:
+    """C-11: the independent validation RFP (another issuer, public), read from its own frozen answers into the
+    register and the exception queue; the bid stays in review. Matching and dispatch follow once its matcher answers
+    are frozen (A-23)."""
+    seed = json.loads((config.SEED / seed_file).read_text("utf-8"))
+    with SessionLocal() as db:
+        o = seed["opportunity"]
+        opp = opportunities.create(db, o["title"], o["customer"], o["customer_type"], BM)
+        pdf = config.ROOT / seed["document"]
+        doc = opportunities.add_document(db, opp.id, pdf.name, pdf.read_bytes(), "main", BM)
+        print("ingested:", ingestion.ingest(db, doc.id))
+        result = requirements.extract(db, opp.id, BM)
+        print("read:", {k: v for k, v in result.items() if k != "problems"}, "problems:", len(result["problems"]))
+        print(f"done: open http://localhost:3000/opportunities/{opp.id}/requirements (web) - API on :8000")
+
+
 def _read_and_review(db, opp_id: str, doc_id: str, seed: dict) -> dict:
     """Reader + grouping from frozen answers into the register. Returns {req_id: sample response}."""
     result = requirements.extract(db, opp_id, BM)
@@ -92,3 +109,4 @@ def _read_and_review(db, opp_id: str, doc_id: str, seed: dict) -> dict:
 
 if __name__ == "__main__":
     main(real=True)  # P-08: the demo runs on the real extraction; only electrical-domain bids are seeded (C-11)
+    independent()  # P-26: the independent validation RFP

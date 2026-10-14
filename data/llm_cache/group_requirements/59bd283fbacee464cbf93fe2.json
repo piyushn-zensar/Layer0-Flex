@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          4
+        ],
+        "title": "Site conditions and contract document correlation"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          7
+        ],
+        "title": "Acknowledgment of related work and sufficiency of documents"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

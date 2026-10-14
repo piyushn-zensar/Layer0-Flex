@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 6,
+            "last": 9,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Submit to the Owner for distribution six (6) sets of construction drawing prints for switchgear purchased under these specifications. Each set shall be stamped and certified “For Construction”. All sets shall be submitted in accordance with date guaranteed by Manufacturer in Proposal Data Sheets.",
+        "section": "D. Construction Drawings",
+        "text": "Provide six certified construction drawing sets by the guaranteed date."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 12,
+            "last": 13,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Submit to the Owner for distribution, the following as-built documents and bound instruction manuals for switchgear purchased under these specifications:",
+        "section": "E. As-Built Documents and Instruction Manuals",
+        "text": "Provide as-built documents and instruction manuals for the switchgear."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 15,
+            "last": 16,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "AutoCAD™ 2014 .dwg format for all project drawings. Provide files on CD-ROM.",
+        "section": "E. As-Built Documents and Instruction Manuals",
+        "text": "Submit project drawings in AutoCAD 2014 format on CD-ROM."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 18,
+            "last": 24,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "One Electric copy and one printed copy of equipment instruction manuals. Each copy shall thoroughly address equipment installation, operation, and maintenance. Each copy shall also include final test reports, equipment drawings, and renewal parts lists for all replaceable parts and assemblies. Manuals shall be bound by a durable means, properly indexed to identify contents and clearly labeled to indicate Owner, project, and equipment covered.",
+        "section": "E. As-Built Documents and Instruction Manuals",
+        "text": "Provide one electronic and one printed copy of detailed equipment instruction manuals."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 25,
+            "last": 25,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "All copies / sets shall be submitted in accordance with date guaranteed by Manufacturer in Proposal Data Sheets.",
+        "section": "E. As-Built Documents and Instruction Manuals",
+        "text": "Submit all documents by the guaranteed date."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 30,
+            "last": 32,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Warranty provided by the Manufacturer shall be understood to cover all defects and problems related to the operation and maintenance of switchgear for a minimum period of one (1) year from the date of commercial operation.",
+        "section": "1.8 WARRANTY",
+        "text": "Provide a one-year warranty covering defects and operational issues."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 33,
+            "last": 34,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Manufacturer guarantees that switchgear is capable of satisfactory and continuous operation in accordance with Manufacturer’s specifications and ratings.",
+        "section": "1.8 WARRANTY",
+        "text": "Guarantee the switchgear's satisfactory and continuous operation."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 37,
+            "last": 41,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Should the Owner detect any defects in design, or any problems with the satisfactory operation of switchgear furnished under these specifications, Owner will notify the Manufacturer of the details related to the defect or problem. The Manufacturer agrees to proceed with diligence in correction of any problems as quickly as possible, particularly where the defect prevents continuous operation of the switchgear.",
+        "section": "1.8 WARRANTY",
+        "text": "Address defects or operational issues promptly upon notification."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

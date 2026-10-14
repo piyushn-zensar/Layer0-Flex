@@ -1,0 +1,162 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 2,
+            "last": 5,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Any exceptions taken by the Bidder to the Specifications, Proposed Data Sheets, and/or Terms and Conditions at time of bid, shall be clearly and simply stated or summarized, using an itemized format, in a specially prepared letter of transmittal attached to and made a part of the Proposed Data Sheets.",
+        "section": "1",
+        "text": "Bidder must state exceptions in an itemized format in a transmittal letter."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 6,
+            "last": 7,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Manufacturer ’s “Standard Conditions of Sale” catalog pages are not acceptable for purposes of stating exceptions to the specifications.",
+        "section": "1",
+        "text": "Standard Conditions of Sale catalog pages are not acceptable for stating exceptions."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 11,
+            "last": 12,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Manufacturer ’s supplemental descriptive data on equipment proposed.",
+        "section": "B.1",
+        "text": "Provide supplemental descriptive data on proposed equipment."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Itemized list of special tools which Bidder proposed to furnish.",
+        "section": "B.2",
+        "text": "Provide an itemized list of special tools to be furnished."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 16,
+            "last": 18,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Proposed arrangement drawings of the switchgear showing plan and elevation views with dimensions and weights for each Bid item. (Base and Alternates)",
+        "section": "B.3",
+        "text": "Provide arrangement drawings of switchgear with dimensions and weights."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 23,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Standard and specified accessories, instruments, and spare parts to be furnished separately shall be listed in detail. List shall clearly define those items to be shipped separately. It is understood that all items not so listed shall be shipped, mounted and connected. Use proposed Data Sheets for listing.",
+        "section": "B.4",
+        "text": "List accessories, instruments, and spare parts, specifying items shipped separately."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 26,
+            "last": 28,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Complete warranty, which the Manufacturer will offer, including option for extended guarantee through three (3) years’ or five (5) years’ total guarantee period, is requested.",
+        "section": "B.5",
+        "text": "Provide warranty details including options for extended guarantees."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 30,
+            "last": 32,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Listing of known failures for switchgear of similar design and rating to those proposed, with time of failure (during test, field) and cause of failure, if known.",
+        "section": "B.6",
+        "text": "Provide a list of known failures for similar switchgear designs."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 36,
+            "last": 39,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Bids shall include delivery F.O.B., freight prepaid, to Logan City project job site, Switchgear Pad, located at 1000 North 300 East (Substation 6), Logan Utah. The project site is located within the City limits of Logan, Utah. Delivery date shall be on or before that specified by the Manufacturer in the Proposal Data Sheets.",
+        "section": "1.6.A",
+        "text": "Include delivery F.O.B., freight prepaid, to Logan City project site."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 40,
+            "last": 41,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Switchgear and all required components shall be delivered by means of a single shipment. The Manufacturer shall assume all responsibility for the safe delivery of equipment shipped F.O.B. SWITCHGEAR PAD.",
+        "section": "1.6.A",
+        "text": "Deliver switchgear and components in a single shipment, ensuring safe delivery."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 46,
+            "last": 48,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Switchgear shall be shipped by motor freight as completely assembled as possible insofar as is consistent with good shipping practice. The equipment shall be carefully blocked and secured for shipment.",
+        "section": "1.6.B",
+        "text": "Ship switchgear as assembled as possible, ensuring secure shipment."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

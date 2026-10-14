@@ -89,6 +89,19 @@ const chapter: TourChapter = {
       ],
     },
     {
+      id: "portfolio-independent",
+      title: "OPP-0002: the independent validation RFP",
+      route: "/portfolio",
+      target: "portfolio-row-OPP-0002",
+      placement: "bottom",
+      fallback: "OPP-0002 is Logan City Light & Power's RFP for 15 kV switchgear at Substation 6, read from its own frozen answers.",
+      body: [
+        "The second row is a public RFP from another issuer: **Logan City Light & Power (Utah), 15kV Switchgear for Substation 6**, 46 pages, customer type *utility*. It is there so the reading is checked on a document the pipeline was not tuned on, not on another version of the Syracuse RFP.",
+        "It was read the same way: 408 line items from 44 pages (2 contents pages skipped), 12 duplicates and 88 groups, so the register holds **167 requirements**. Only **4** quotes could not be matched word for word; they wait in the exception queue, each with the page and lines where it probably is.",
+        "It stops at the requirements for now: its matching answers are not frozen yet, so it has no unit bars. The walkthrough only looks at it.",
+      ],
+    },
+    {
       id: "portfolio-open",
       title: "Opening an opportunity",
       route: "/portfolio",

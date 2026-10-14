@@ -1,0 +1,40 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Wall specifications for the structure"
+      },
+      {
+        "category": "technical",
+        "members": [
+          4,
+          5
+        ],
+        "title": "Insulation requirements for the structure"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          7
+        ],
+        "title": "Switchgear assembly and orientation requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          9,
+          10
+        ],
+        "title": "Cable entry and support specifications"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

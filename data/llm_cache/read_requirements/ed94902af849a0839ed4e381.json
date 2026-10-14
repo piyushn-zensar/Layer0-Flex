@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 2,
+            "last": 7,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "When the words “or equal” are used in connection with the name of any item of equipment or material, or trade name they shall be construed to mean that the item named will be used as a basis of comparison and that all makes of similar items will be considered, providing they have equal or better qualifications. It is intended that products of equal quality and performance by other Manufacturer’s may be substituted.",
+        "section": "1",
+        "text": "Products of equal quality and performance may be substituted."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 9,
+            "last": 14,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "Furnish drawings or other data as required to indicate all modifications resulting from use of such substitute items. Furnish general arrangement drawings, full descriptive data, and other information required to demonstrate to Engineer that material or equipment proposed is, in fact, equal to that specified. Burden of proof of equality shall in all cases remain with Manufacturer.",
+        "section": "2",
+        "text": "Provide drawings and data to prove substitute items are equal."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 16,
+            "last": 17,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "Abide by owner’s decision when proposed substitutions of material or equipment are deemed to be unacceptable.",
+        "section": "3",
+        "text": "Accept owner's decision on substitution acceptability."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 19,
+            "last": 21,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "Owner may consider such factors as over-all project arrangement, over-all project cost, and similar factors in determining acceptability of “equal” to that specified.",
+        "section": "4",
+        "text": "Owner may evaluate substitutions based on project arrangement and cost."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 25,
+            "last": 26,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "Lump sum for all items as listed in the material Specification and Proposed Data Sheets.",
+        "section": "B.1",
+        "text": "Provide lump sum pricing for all specified items."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 28,
+            "last": 29,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "Bid price shall cover complete work described in specifications, including costs incidental thereto, unless specifically indicated otherwise.",
+        "section": "B.2",
+        "text": "Bid price must include all work and incidental costs."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 31,
+            "last": 32,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "List separately the price of services of Service Engineer, as determined in the Proposed Data Sheets.",
+        "section": "B.3",
+        "text": "Provide separate pricing for Service Engineer services."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 34,
+            "last": 39,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "Bid submittals shall be in a sealed format to: Logan City Attn: Lori Mathys 290 North 100 West Logan, UT 84321-7806 and are due not later than 11:00 a.m., September 29, 2017.",
+        "section": "C",
+        "text": "Submit sealed bids to Logan City by September 29, 2017, 11:00 a.m."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 40,
+            "last": 41,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "The desired switchgear delivery date is as soon as possible. Delivery times may be a factor in selecting a bid.",
+        "section": "C",
+        "text": "Delivery time may influence bid selection."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 45,
+            "last": 46,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "The complete bid document shall be properly filled out in every detail and submitted to the Owner, along with all other material as listed below:",
+        "section": "1.5.A",
+        "text": "Submit a complete and detailed bid document."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

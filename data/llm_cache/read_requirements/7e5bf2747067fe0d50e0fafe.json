@@ -1,0 +1,134 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 1,
+            "last": 2,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "Please provide a detailed description of the assembly required for the 15kV walk-through switchgear:",
+        "section": "3.9",
+        "text": "Provide a detailed description of the assembly for the 15kV walk-through switchgear."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 4,
+            "last": 5,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "Please list any exceptions to the requirements in this specification:",
+        "section": "3.9",
+        "text": "List any exceptions to the requirements in the specification."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 3,
+            "last": 6,
+            "page": 32
+          }
+        ],
+        "page": 32,
+        "quote": "The Contracting party shall procure and maintain for the duration of the contract insurance and bonds against claims or liability which arises out of or in connection with the performance of the work hereunder by the Contracting party, his agents, representatives, employees or subcontractors. The cost of such insurance and bonds shall be included in the Contracting party's bid or proposal.",
+        "section": "PART 4",
+        "text": "Maintain insurance and bonds for the contract duration, covering claims or liabilities related to the work."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 9,
+            "last": 13,
+            "page": 32
+          }
+        ],
+        "page": 32,
+        "quote": "Contracting party shall maintain limits not less than: 1. GENERAL LIABILITY: $4,000,000 combined single limit per occurrence, personal injury and property damage, $5,000,000 aggregate. Broad Form Commercial General Liability is required. (ISO 1993 or better) to include Products - Comp/OP aggregate of $4,000,000. Limits to apply to this project individually.",
+        "section": "PART 4",
+        "text": "Maintain general liability insurance with specified limits and coverage."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 32
+          }
+        ],
+        "page": 32,
+        "quote": "3. AUTOMOBILE LIABILITY: $2,000,000 per occurrence. \"Any Auto\" coverage is required.",
+        "section": "PART 4",
+        "text": "Maintain automobile liability insurance with specified limits."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 17,
+            "last": 19,
+            "page": 32
+          }
+        ],
+        "page": 32,
+        "quote": "4. WORKERS' COMPENSATION and EMPLOYERS LIABILITY: Workers' Compensation statutory limits as required by the Workers Compensation Act of the State of Utah and Employers Liability limits at a minimum of $100,000 per occurrence.",
+        "section": "PART 4",
+        "text": "Maintain workers' compensation and employers liability insurance with specified limits."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 20,
+            "last": 21,
+            "page": 32
+          }
+        ],
+        "page": 32,
+        "quote": "5. PAYMENT and PERFORMANCE BONDS: Contracting party shall provide payment and performance bonds in a form acceptable to the City and in the full amount of the contract.",
+        "section": "PART 4",
+        "text": "Provide payment and performance bonds acceptable to the City for the full contract amount."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 24,
+            "last": 29,
+            "page": 32
+          }
+        ],
+        "page": 32,
+        "quote": "Any deductibles or self-insured retention exceeding 5% of the policy limits must be declared to and approved by Logan City. At the option of Logan City, either (1) the insurer may be required to reduce or eliminate such deductibles or self-insured retention as respects Logan City, its officers, officials and employees; or (2) the Contracting party may be required to procure a bond guaranteeing payment of losses and related investigations, claim distribution and defense expenses.",
+        "section": "PART 4",
+        "text": "Declare and obtain approval for deductibles or self-insured retention exceeding 5% of policy limits."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 32,
+            "last": 33,
+            "page": 32
+          }
+        ],
+        "page": 32,
+        "quote": "Contracting party shall agree to promptly disclose to Logan City, all incidents or occurrences of accident, injury, and/or property damage covered by the insurance policy or policies.",
+        "section": "PART 4",
+        "text": "Promptly disclose all incidents of accident, injury, or property damage covered by insurance."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

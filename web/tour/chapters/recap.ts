@@ -51,7 +51,7 @@ const chapter: TourChapter = {
       title: "Exploring on your own",
       body: [
         "Create another opportunity with **New opportunity** and attach the Syracuse RFP from the RFP page's *Use example* path, or upload any PDF to see how the reader reports pages it has no frozen answer for instead of guessing. Sign in as a unit's design engineer to see the inbox from their side and what the server refuses to that role. Open **Traceability** on `OPP-0001` and click through the colour legend to see where the engineered-to-order work concentrates.",
-        "To put the demo data back to its starting state, close the app and run `reset-demo.cmd` (it reseeds `OPP-0001` from the frozen answers). Your walkthrough opportunity is removed with it. The **Walkthrough** button lets you reopen any chapter later.",
+        "To put the demo data back to its starting state, close the app and run `reset-demo.cmd` (it reseeds `OPP-0001` and the independent `OPP-0002` from the frozen answers). Your walkthrough opportunity is removed with it. The **Walkthrough** button lets you reopen any chapter later.",
       ],
     },
     {

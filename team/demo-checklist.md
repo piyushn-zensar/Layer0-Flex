@@ -7,7 +7,7 @@ Written on 10 Oct 2026 from the running app and `Documents/walkthrough.md`; numb
 
 | Fact | Value |
 |---|---|
-| Opportunities | **OPP-0001** Syracuse switchgear (101-page RFP), the only seeded bid: electrical domain only (C-11) |
+| Opportunities | **OPP-0001** Syracuse switchgear (101-page RFP) and **OPP-0002** Logan City 15 kV switchgear (46-page RFP from another issuer, the independent validation case: read up to the register, 167 requirements, 4 exceptions; not matched yet). Electrical domain only (C-11) |
 | OPP-0001 | 818 line items grouped into **312 requirements** (161 groups, 628 sub-requirements, 27 duplicates, 12 exceptions) |
 | Units | BID 213, CROWN 93, EP2 6 |
 | Answers | **1 of 312 validated**, 1 submitted and waiting for validation |
@@ -41,7 +41,7 @@ Navigation: top bar **Opportunities, My work, Product catalog**, a **New opportu
 
 | # | Open | Do | The audience sees | Done |
 |---|---|---|---|---|
-| 1 | Opportunities (**cut**) | Point at the row | 312 requirements, unit bars, status chips | ☐ |
+| 1 | Opportunities (**cut**) | Point at both rows | 312 and 167 requirements, unit bars on Syracuse, status chips | ☐ |
 | 2 | OPP-0001, **RFP** | Show the file row | 101 pages, "ingested", fingerprint | ☐ |
 | 3 | **Requirements** | Filters (Unanchored 32, Duplicates 21); expand REQ-0001-0819; click **History** on one | Groups, sub-requirements, exact quotes, who changed what | ☐ |
 | 4 | **Traceability** (**cut**) | Select **REQ-0001-0885** | Page 55 highlighted, three panels follow | ☐ |

@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 2,
+            "last": 11,
+            "page": 37
+          }
+        ],
+        "page": 37,
+        "quote": "MANUFACTURER has obtained and carefully studied (or assumes responsibility for having done so) all additional or supplementary examinations, investigations, explorations, tests, studies, and data concerning conditions (surface, subsurface, and Underground Facilities) at or contiguous to the Site which may affect cost, progress, or performance of the Work or which relate to any aspect of the means, methods, techniques, sequences, and procedures of construction to be employed by MANUFACTURER, including applying the specific means methods, techniques, sequences, and procedures of construction, if any, expressly required by the Contract Documents to be employed by MANUFACTURER, and safety precautions and programs incident thereto.",
+        "section": "E",
+        "text": "The manufacturer must study all relevant site conditions and data affecting the work."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 13,
+            "last": 16,
+            "page": 37
+          }
+        ],
+        "page": 37,
+        "quote": "MANUFACTURER does not consider that any further examinations, investigations, explorations, tests, studies or data are necessary for the performance of the Work at the Contract Price, within the Contract Times, and in accordance with the other terms and conditions of the Contract Documents.",
+        "section": "F",
+        "text": "The manufacturer must confirm no further studies are needed for the work."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 18,
+            "last": 20,
+            "page": 37
+          }
+        ],
+        "page": 37,
+        "quote": "MANUFACTURER is aware of the general nature of work to be performed by OWNER and others at the Site that relates to the Work as indicated in the Contract Documents.",
+        "section": "G",
+        "text": "The manufacturer must acknowledge awareness of related work by others."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 25,
+            "page": 37
+          }
+        ],
+        "page": 37,
+        "quote": "MANUFACTURER has correlated the information known to MANUFACTURER, information and observations obtained from visits to the Site, reports and drawings identified in the Contract Documents, and all additional examinations, investigations, explorations, tests, studies, and data with the Contract Documents.",
+        "section": "H",
+        "text": "The manufacturer must correlate all known information with the contract documents."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 27,
+            "last": 30,
+            "page": 37
+          }
+        ],
+        "page": 37,
+        "quote": "MANUFACTURER has given ENGINEER written notice of all conflicts, errors, ambiguities, or discrepancies that MANUFACTURER has discovered in the Contract Documents, and the written resolution thereof by ENGINEER is acceptable to MANUFACTURER.",
+        "section": "I",
+        "text": "The manufacturer must notify the engineer of any discovered issues in the contract documents."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 32,
+            "last": 38,
+            "page": 37
+          }
+        ],
+        "page": 37,
+        "quote": "MANUFACTURER agrees to register and participate in the Status Verification System to verify the work eligibility status of the MANUFACTURER ’s new employees that are employed in the state as set forth in Utah Code Section 63G-12-302. Each Manufacturer or sub Manufacturer who works under or for another Manufacturer shall certify to the main Manufacturer by affidavit that the Manufacturer or sub Manufacturer has verified through the Status Verification system the employment status of each new employee of the respective Manufacturer or sub Manufacturer.",
+        "section": "J",
+        "text": "The manufacturer must verify the work eligibility of new employees via the Status Verification System."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 40,
+            "last": 42,
+            "page": 37
+          }
+        ],
+        "page": 37,
+        "quote": "The Contract Documents are generally sufficient to indicate and convey understanding of all terms and conditions of performance and furnishing of the work.",
+        "section": "K",
+        "text": "The manufacturer must acknowledge the sufficiency of the contract documents."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

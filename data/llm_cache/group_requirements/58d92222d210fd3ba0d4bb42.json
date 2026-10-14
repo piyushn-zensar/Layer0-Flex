@@ -1,0 +1,23 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          2,
+          3
+        ],
+        "title": "Submission requirements for the bid package"
+      },
+      {
+        "category": "submission",
+        "members": [
+          4
+        ],
+        "title": "Deadline for questions submission"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

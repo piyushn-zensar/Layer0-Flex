@@ -1,0 +1,36 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2
+        ],
+        "title": "State exceptions in the transmittal letter"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          4,
+          5,
+          6,
+          8
+        ],
+        "title": "Provide technical documentation and details for proposed equipment"
+      },
+      {
+        "category": "schedule",
+        "members": [
+          9,
+          10,
+          11
+        ],
+        "title": "Specify delivery and shipping requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

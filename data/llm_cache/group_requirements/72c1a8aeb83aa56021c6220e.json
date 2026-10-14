@@ -1,0 +1,19 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "schedule",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "title": "Address manufacturing schedule delays"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

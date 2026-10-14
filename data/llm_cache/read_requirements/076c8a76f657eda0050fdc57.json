@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 3,
+            "last": 6,
+            "page": 36
+          }
+        ],
+        "page": 36,
+        "quote": "The OWNER will pay the MANUFACTURER a progress payment on the basis of the approved partial payment estimate submitted by the MANUFACTURER and verified by the ENGINEER, including any approved Change Orders, but will not hold retainage.",
+        "section": "6.02",
+        "text": "The OWNER will make progress payments based on approved estimates without retainage."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 7,
+            "last": 8,
+            "page": 36
+          }
+        ],
+        "page": 36,
+        "quote": "Upon Substantial Completion of the project, the OWNER will pay to 95 percent of the revised contract amount including any approved Change Orders.",
+        "section": "6.02",
+        "text": "Upon substantial completion, the OWNER will pay 95% of the revised contract amount."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 10,
+            "last": 14,
+            "page": 36
+          }
+        ],
+        "page": 36,
+        "quote": "When all items on any generated ‘Punch’ or Completion List have been completed, the OWNER will pay the remaining 5 percent of the revised contract amount within 30 days of notification to the OWNER in writing by the MANUFACTURER that all items have been completed. The OWNER shall verify that all items have been completed before final payment is made.",
+        "section": "6.03",
+        "text": "Final payment of 5% will be made within 30 days after completion of all punch list items and verification."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 17,
+            "last": 18,
+            "page": 36
+          }
+        ],
+        "page": 36,
+        "quote": "All moneys not paid when due as provided in the General Conditions shall bear interest at the same rate that OWNER’s funds accrue interest in the State’s treasury account.",
+        "section": "7.01",
+        "text": "Late payments will accrue interest at the rate of the OWNER's treasury account."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 24,
+            "last": 25,
+            "page": 36
+          }
+        ],
+        "page": 36,
+        "quote": "MANUFACTURER has examined and carefully studied the Contract Documents and the other related data identified in the Bidding Documents.",
+        "section": "8.01",
+        "text": "The MANUFACTURER must have studied the contract and bidding documents."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 27,
+            "last": 28,
+            "page": 36
+          }
+        ],
+        "page": 36,
+        "quote": "MANUFACTURER has visited the Site and become familiar with and is satisfied as to the general, local, and Site conditions that may affect the cost, progress, and performance of the Work.",
+        "section": "8.01",
+        "text": "The MANUFACTURER must have visited the site and assessed conditions affecting the work."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 31,
+            "last": 32,
+            "page": 36
+          }
+        ],
+        "page": 36,
+        "quote": "MANUFACTURER is familiar with and is satisfied as to all federal, state, and local Laws and Regulations that may affect cost, progress, and performance of the Work.",
+        "section": "8.01",
+        "text": "The MANUFACTURER must be familiar with all applicable laws and regulations."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 34,
+            "last": 39,
+            "page": 36
+          }
+        ],
+        "page": 36,
+        "quote": "MANUFACTURER has carefully studied all: (1) reports of explorations and tests of subsurface conditions at or contiguous to the Site and all drawings of physical conditions in or relating to existing surface or subsurface structures at or contiguous to the Site (except Underground Facilities) which have been identified in the Supplementary Conditions as provided in the General Conditions and (2) reports and drawings of a Hazardous Environmental Condition, if any, at the Site which is identified in the Supplementary Conditions as provided in the General Conditions.",
+        "section": "8.01",
+        "text": "The MANUFACTURER must have studied all relevant reports and drawings of site conditions and hazards."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

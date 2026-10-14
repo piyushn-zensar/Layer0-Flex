@@ -31,8 +31,8 @@ FILES = config.STORE / "files"
 
 # Sample documents the walkthrough (and anyone without a file at hand) can attach instead of uploading one. A
 # whitelist: the API serves these names only, never a path. kind "rfp" goes in as the main RFP, kind "change" as a
-# change document. Only the Syracuse RFP has frozen reader answers, so it is the one new opportunity that can be
-# read offline; the addendum's frozen change-agent answers match the demo opportunity's requirement set only.
+# change document. The Syracuse and Logan City RFPs have frozen reader answers, so new opportunities can read them
+# offline; the addendum's frozen change-agent answers match the demo opportunity's requirement set only.
 SAMPLES = {
     "syracuse_rfp": {
         "path": "RFP-2023-20-Switchgear-Procurement-Final.pdf", "filename": "RFP-2023-20-Switchgear-Procurement-Final.pdf",
@@ -40,6 +40,12 @@ SAMPLES = {
         "description": "Syracuse Regional Airport Authority, RFP 2023-20 Switchgear Procurement: the public RFP behind "
                        "the demo bid. Read offline from frozen answers: about 820 line items grouped into "
                        "about 310 requirements, each anchored to its page and lines."},
+    "logan_rfp": {
+        "path": "Logan-City-Substation-6-15kV-Switchgear.pdf", "filename": "Logan-City-Substation-6-15kV-Switchgear.pdf",
+        "kind": "rfp", "pages": 46,
+        "description": "Logan City Light & Power (Utah), 15kV Switchgear for Substation 6 (2017): a public bid document "
+                       "from another issuer, the independent validation case (C-11). Read offline from frozen answers "
+                       "into the register; its matching answers come later (A-23)."},
     "syracuse_addendum_1": {
         "path": "samples/rfp_syracuse_addendum_1.pdf", "filename": "rfp_syracuse_addendum_1.pdf",
         "kind": "change", "pages": 1,

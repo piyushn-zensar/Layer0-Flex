@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 9,
+            "last": 9,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "Sealed bids will be accepted until 11:00 a.m., September 29, 2017.",
+        "section": "Submission Deadline",
+        "text": "Bids must be submitted by 11:00 a.m., September 29, 2017."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 10,
+            "last": 12,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "The Purchasing Agent shall have possession of the bids at the designated time.  Any bid en- route, either in the mail or at other locations in the city, will not be considered timely and will be returned unopened.",
+        "section": "Submission Requirements",
+        "text": "Bids must be in the possession of the Purchasing Agent by the deadline; late bids will be returned unopened."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 13,
+            "last": 13,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "Bid package should be identified as “Sub 6 Switchgear” on the exterior envelope.",
+        "section": "Submission Requirements",
+        "text": "The bid package must be labeled as “Sub 6 Switchgear” on the envelope."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 14,
+            "last": 16,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "Questions regarding bid specifications should be directed to Mark Montgomery, Director, Logan Light & Power Department, at mark.montgomery@loganutah.org.  All questions and clarifications must be received by 5:00 p.m., September 22, 2017.",
+        "section": "Questions and Clarifications",
+        "text": "Questions must be sent to Mark Montgomery by 5:00 p.m., September 22, 2017."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 17,
+            "last": 17,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "The right is reserved by city to reject any or all bids.",
+        "section": "Reservation of Rights",
+        "text": "The city reserves the right to reject any or all bids."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,218 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 5,
+            "last": 7,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "Switchgear covered by these specifications will be installed on Logan City’s municipal power system to provide electrical service to residential, commercial and light industrial loads via the City’s distribution system.",
+        "section": "2.1 GENERAL",
+        "text": "Switchgear must serve Logan City's residential, commercial, and light industrial loads."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 9,
+            "last": 12,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "Switchgear will be connected to one substation type transformer by overhead external rigid bus (by Owner). Switchgear shall include exterior roof top bushings and bus support insulators for external buswork to be connected to and supported above the switchgear building.",
+        "section": "2.1 GENERAL",
+        "text": "Switchgear must connect to a substation transformer and include rooftop bushings and bus support insulators."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 14,
+            "last": 15,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "The switchgear described in this specification shall be designed for operation on a three-phase, four-wire, 60-hertz system.",
+        "section": "2.1 GENERAL",
+        "text": "Switchgear must operate on a three-phase, four-wire, 60 Hz system."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 17,
+            "last": 19,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "The general configuration and certain ratings and requirements for switchgear are depicted on the attached layout drawings, which form a part of this specification.",
+        "section": "2.1 GENERAL",
+        "text": "Switchgear configuration and ratings are detailed in attached layout drawings."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 21,
+            "last": 22,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "The following technical specification describes minimum requirements and ratings.",
+        "section": "2.1 GENERAL",
+        "text": "Technical specifications outline minimum requirements and ratings."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 27,
+            "last": 29,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "The following Standards and Codes in effect as of the date of this specification, and any subsections thereof as applicable, shall govern design and selection of equipment and material supplied:",
+        "section": "2.2 REFERENCE SPECIFICATIONS, CODES AND STANDARDS",
+        "text": "Design and selection must comply with listed standards and codes."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 30,
+            "last": 31,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "NEMA  (National Electrical Manufacturers Association)",
+        "section": "2.2 REFERENCE SPECIFICATIONS, CODES AND STANDARDS",
+        "text": "Comply with NEMA standards."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 32,
+            "last": 33,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "IEEE (Institute of Electrical & Electronics Engineers)",
+        "section": "2.2 REFERENCE SPECIFICATIONS, CODES AND STANDARDS",
+        "text": "Comply with IEEE standards."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 34,
+            "last": 35,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "IEEE C37.20.2 – Standard for Metal-Clad Switchgear",
+        "section": "2.2 REFERENCE SPECIFICATIONS, CODES AND STANDARDS",
+        "text": "Comply with IEEE C37.20.2 standard for metal-clad switchgear."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 36,
+            "last": 38,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "IEEE C37.100.1 – Standard of Common Requirements for High-Voltage Power Switchgear Rated Above 1000 V",
+        "section": "2.2 REFERENCE SPECIFICATIONS, CODES AND STANDARDS",
+        "text": "Comply with IEEE C37.100.1 standard for high-voltage power switchgear."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 39,
+            "last": 40,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "ANSI (American National Standards Institute)",
+        "section": "2.2 REFERENCE SPECIFICATIONS, CODES AND STANDARDS",
+        "text": "Comply with ANSI standards."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 41,
+            "last": 43,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "ANSI Z535.4 – American National Standard for Product Safety Signs and Labels",
+        "section": "2.2 REFERENCE SPECIFICATIONS, CODES AND STANDARDS",
+        "text": "Comply with ANSI Z535.4 standard for product safety signs and labels."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 44,
+            "last": 45,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "NEC (National Electric Code)",
+        "section": "2.2 REFERENCE SPECIFICATIONS, CODES AND STANDARDS",
+        "text": "Comply with NEC standards."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 46,
+            "last": 47,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "UL (Underwriters’ Laboratories)",
+        "section": "2.2 REFERENCE SPECIFICATIONS, CODES AND STANDARDS",
+        "text": "Comply with UL standards."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 48,
+            "last": 49,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "ASTM (American Society for Testing and Materials)",
+        "section": "2.2 REFERENCE SPECIFICATIONS, CODES AND STANDARDS",
+        "text": "Comply with ASTM standards."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

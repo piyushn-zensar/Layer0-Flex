@@ -1,0 +1,260 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 3,
+            "last": 3,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Location of Factory",
+        "section": "B",
+        "text": "Specify the location of the factory."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 5,
+            "last": 5,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Physical dimensions of each circuit breaker cubicle",
+        "section": "C",
+        "text": "Provide the physical dimensions of each circuit breaker cubicle."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 7,
+            "last": 7,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Estimated width x length of longest piece for shipment",
+        "section": "D",
+        "text": "Provide the estimated dimensions of the longest piece for shipment."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 10,
+            "last": 10,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Overall switchgear dimensions",
+        "section": "E",
+        "text": "Provide the overall dimensions of the switchgear."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 14,
+            "last": 14,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Proposed CT relaying accuracy class.",
+        "section": "F",
+        "text": "Specify the proposed CT relaying accuracy class."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 20,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Bus Material",
+        "section": "G",
+        "text": "Specify the material of the bus."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 22,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Main Bus Cross Section Dimensions",
+        "section": "H",
+        "text": "Provide the cross-section dimensions of the main bus."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 25,
+            "last": 25,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Ground Bus Cross Section Dimensions",
+        "section": "I",
+        "text": "Provide the cross-section dimensions of the ground bus."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 28,
+            "last": 28,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "RMS Symmetrical Rating (ie. Bus Bracing)",
+        "section": "J",
+        "text": "Specify the RMS symmetrical rating for bus bracing."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 31,
+            "last": 31,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Maximum temperature rise of a 40°C ambient",
+        "section": "K",
+        "text": "Provide the maximum temperature rise over a 40°C ambient."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 35,
+            "last": 35,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Manufacturer and Model/Type",
+        "section": "A",
+        "text": "Specify the manufacturer and model/type of the 2000 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 38,
+            "last": 38,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Maximum Rated Voltage",
+        "section": "B",
+        "text": "Provide the maximum rated voltage of the 2000 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 41,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Basic Impulse Insulation Level (BIL)",
+        "section": "C",
+        "text": "Specify the BIL of the 2000 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 44,
+            "last": 44,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Maximum temperature rise over a 40°C Ambient",
+        "section": "D",
+        "text": "Provide the maximum temperature rise over a 40°C ambient for the 2000 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 47,
+            "last": 47,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Continuous Current Rating",
+        "section": "E",
+        "text": "Specify the continuous current rating of the 2000 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 50,
+            "last": 50,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Short Time Symmetrical Rating",
+        "section": "F",
+        "text": "Provide the short time symmetrical rating of the 2000 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 53,
+            "last": 53,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Recommended Maintenance Interval",
+        "section": "G",
+        "text": "Specify the recommended maintenance interval for the 2000 AMP main breaker."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 56,
+            "last": 56,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "Rated Breaker Interrupting Time",
+        "section": "H",
+        "text": "Provide the rated breaker interrupting time for the 2000 AMP main breaker."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

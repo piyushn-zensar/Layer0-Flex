@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 1,
+            "last": 2,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "disassembled for shipment, they shall be tagged or stenciled with proper identification. A complete packing list shall also accompany each shipment.",
+        "section": "1.6",
+        "text": "Items disassembled for shipment must be tagged and include a packing list."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 4,
+            "last": 7,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Prior to shipment, the Manufacturer shall inform the Owner of the estimated time in shipment, routing, shipping company name and PRO number, if shipped by common carrier. Actual delivery time to be confirmed by telephone to Owner at least one (1) working day in advance.",
+        "section": "1.6",
+        "text": "Manufacturer must inform the Owner of shipment details and confirm delivery time one day in advance."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 13,
+            "last": 21,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Within 30 days of order, the Manufacturer shall furnish to the Owner a manufacturing schedule for switchgear to be furnished under this specification. Manufacturer ’s schedule shall include projected time allotment for engineering, approval drawing delivery, Owner’s drawing review period, fabrication drawing delivery, major materials delivery, all major divisions of fabrication and assembly, testing, and shipment. This schedule shall allow for work completed on each item to be shown in conjunction with projected schedule in a manner which allows updating for furnishing progress reports.",
+        "section": "1.7.A.1",
+        "text": "Manufacturer must provide a detailed manufacturing schedule within 30 days of order."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 23,
+            "last": 26,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Progress reports shall be furnished to the Owner monthly, with each report showing progress from the previous month. However, the Owner may request progress reports on a more frequent basis should the Manufacturer ’s progress seriously fall behind his projected schedule.",
+        "section": "1.7.A.2",
+        "text": "Monthly progress reports must be provided, with more frequent reports if progress falls behind."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 29,
+            "last": 34,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "“Shop Drawings” refers to all the detailed installation drawings prepared by the Manufacturer and/or his suppliers required to construct or install the switchgear. A general drawing format of ANSI Size B (11” X 17”) is preferred. The size of all drawings submitted as part of this project shall be a multiple of 8.5” X 11”. “Shop Drawings” shall include custom and non-universal drawings and data as follows:",
+        "section": "1.7.B",
+        "text": "Shop drawings must be detailed, in ANSI Size B or multiples of 8.5” X 11”, and include specific data."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 36,
+            "last": 40,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Bill of materials with manufacturer, model/type, description, and catalog number for standard components and accessories. This list shall include circuit breakers, switches, insulators, components for operator mechanisms, relays, indicators, control equipment, and all other significant items.",
+        "section": "1.7.B.1",
+        "text": "Provide a bill of materials with detailed information for all components and accessories."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 42,
+            "last": 45,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Detailed outline drawings of switchgear showing physical dimensions, weights, and physical location of components and accessories. Also, Manufacturer ’s outline drawing shall provide a material identification number and list of such major components.",
+        "section": "1.7.B.2",
+        "text": "Provide detailed outline drawings of switchgear with dimensions, weights, and component locations."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

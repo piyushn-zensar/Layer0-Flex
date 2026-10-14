@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 5,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "All wiring shall be installed in a workmanship-like manner. As required to provide a neat appearance, wires shall be bundled by use of nylon cable ties.",
+        "section": "G",
+        "text": "Wiring must be installed neatly and bundled with nylon cable ties."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 7,
+            "last": 9,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "Support in routing of conductors via wire duct shall be Panduit, Panduct, or equal. Screw applied tie mounts are an acceptable alternative. Self-adhesive or epoxy tie mounts are unacceptable.",
+        "section": "H",
+        "text": "Conductor routing must use specified ducts or alternatives; adhesive mounts are not allowed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 11,
+            "last": 14,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "All connections between devices on a switchboard and any devices external to the switchboard shall be made via terminal boards. All termination shall be made with ratcheted compression tools so as to assure physically and electrically secure terminations.",
+        "section": "I",
+        "text": "Switchboard connections must use terminal boards and ratcheted compression tools."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 16,
+            "last": 20,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "Terminal boards shall be rated 20A, 150° C, 600 volt and shall be one (1) piece molded phenolic with barriers and strap screw connections. Twelve (12) point terminal boards shall be GE type EB-25, or equivalent, with white marking strips. Shorting strip terminal boards used for termination of current circuits shall be six point GE type EB-27, or equivalent.",
+        "section": "J",
+        "text": "Terminal boards must meet specified ratings and types."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 23,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "Spare terminals shall be provided on each panelboard to the extent of 10% used or a minimum of one spare twelve (12) point terminal board, whichever is greater.",
+        "section": "K",
+        "text": "Panelboards must include spare terminals as specified."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 26,
+            "last": 30,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "A field termination cabinet shall be provided as indicated on the drawings. All control, power, and indication wiring to and from field equipment shall be terminated in the field termination cabinet. All field CT leads shall terminate on CT shorting blocks. A minimum 20% spare terminals for both twelve (12) point terminal boards and CT terminal boards.",
+        "section": "L",
+        "text": "Provide a field termination cabinet with specified wiring and spare terminals."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 32,
+            "last": 33,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "Fuse holders shall be 250 volt, rating and number of poles as specified and shall be of porcelain construction with side barriers.",
+        "section": "M",
+        "text": "Fuse holders must meet specified voltage, rating, and construction."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 35,
+            "last": 36,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "One (1) time fuses shall be 250 volt, Class H, 10,000A RMS symmetrical interrupting rating and shall be UL listed. Supply Bussman Type NON, or equal.",
+        "section": "N",
+        "text": "Fuses must meet specified voltage, class, rating, and be UL listed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 38,
+            "last": 41,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "Nameplates shall be provided for each device as listed on the nameplate list (to be provided by Engineer at a later date). Nameplates shall be of white plastic construction with black lettering. Size and lettering of engraving shall be as specified. Nameplates shall be attached to panels with stainless steel screws.",
+        "section": "O",
+        "text": "Provide nameplates for devices as specified, with defined construction and attachment."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 44,
+            "page": 24
+          }
+        ],
+        "page": 24,
+        "quote": "All devices including those not requiring nameplates, such as terminal boards and fuses, shall be labeled on the rear of the panel. Labels shall be self-",
+        "section": "P",
+        "text": "Label all devices on the rear of the panel, including those without nameplates."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

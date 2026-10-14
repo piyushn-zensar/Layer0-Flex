@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "commercial",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Compensation and claims restrictions upon termination"
+      },
+      {
+        "category": "legal",
+        "members": [
+          4,
+          5,
+          7
+        ],
+        "title": "Legal provisions related to contract terms and execution"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

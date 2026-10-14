@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 6,
+            "last": 8,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "Upon any actual or projected departure from the manufacturing schedule (see Section 1.7A.1) which, in the opinion of the Manufacturer , may result in delay in shipment, the Manufacturer shall immediately notify Owner of the following:",
+        "section": "C",
+        "text": "Notify the Owner immediately of any actual or projected manufacturing schedule delays."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 9,
+            "last": 10,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "Explanation of delay or potential delay.",
+        "section": "C",
+        "text": "Provide an explanation of the delay or potential delay."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 11,
+            "last": 12,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "Means by which delay could be minimized.",
+        "section": "C",
+        "text": "Describe how the delay could be minimized."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "Projected new shipment date.",
+        "section": "C",
+        "text": "Provide the projected new shipment date."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 15,
+            "last": 16,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "Additional details as requested by the Owner.",
+        "section": "C",
+        "text": "Provide additional details as requested by the Owner."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 18,
+            "last": 25,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "Should the Manufacturer fail to make a reasonable effort to meet the guaranteed delivery date where this failure is evidenced by: failure to inform the Owner of changes in the manufacturing schedule, failure to allow sufficient time for delivery of materials and equipment necessary for manufacturing, or lack of cooperation in effective measure by which delays could be minimized, the Owner may penalize the Manufacturer an amount not in excess of $1,000.00 per calendar day for each day that the factory shipping date falls beyond the guaranteed delivery date specified in the Summary of Proposal.",
+        "section": "D",
+        "text": "Manufacturer may be penalized $1,000 per day for failing to meet the guaranteed delivery date."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 27,
+            "last": 28,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "The Owner reserves the right to inspect the progress of work at the Manufacturer ’s facilities at any time subsequent to notice of such intent.",
+        "section": "E",
+        "text": "Owner can inspect the Manufacturer's facilities at any time after notice."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 32,
+            "last": 39,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "It is the Owner’s intent to use the switchgear building for housing all control and instrumentation equipment for the complete unit substation. The unit substation includes the Switchgear specified herein, external Transformers, and Primary Circuit Breakers. The successful switchgear Manufacturer shall coordinate with the applicable parties to assure proper implementation of all aspects of the complete unit substation. Some of these aspects are (but not limited to): SCADA, relay and CT wiring, overhead bus connection, and AC/DC control and indication requirements.",
+        "section": "1.14.A",
+        "text": "Manufacturer must coordinate with parties to implement the complete unit substation."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

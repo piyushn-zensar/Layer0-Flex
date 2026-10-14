@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 1,
+            "last": 6,
+            "page": 33
+          }
+        ],
+        "page": 33,
+        "quote": "Logan City, its officers, officials, employees and volunteers are to be covered as additional insureds as respects: liability arising out of activities performed by or on behalf of the contracting party; products and completed operations of the Contracting party; premises owned, leased, hired or borrowed by the Contracting party. The coverage shall contain no special limitations on the scope of protection afforded to Logan City, its officers, officials, employees or volunteers.",
+        "section": "A",
+        "text": "Logan City and its representatives must be covered as additional insureds without limitations."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 7,
+            "last": 10,
+            "page": 33
+          }
+        ],
+        "page": 33,
+        "quote": "The Contracting party's insurance coverage shall be a primary insurance as respects to Logan City, its officers, officials, employees and volunteers. Any insurance or self-insurance maintained by Logan City, its officers, officials, employees or volunteers shall be in excess of the Contracting party's insurance and shall not contribute with it.",
+        "section": "B",
+        "text": "The contracting party's insurance must be primary, with Logan City's insurance being excess."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 11,
+            "last": 12,
+            "page": 33
+          }
+        ],
+        "page": 33,
+        "quote": "Any failure to comply with reporting provisions of the policies shall not affect coverage provided to Logan City, its officers, officials, employees or volunteers.",
+        "section": "C",
+        "text": "Coverage for Logan City must not be affected by reporting failures."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 33
+          }
+        ],
+        "page": 33,
+        "quote": "The Contracting party's insurance shall apply separately to each insured against whom claim is made or suit is brought, except with respects to the limits of the insurer's liability.",
+        "section": "D",
+        "text": "Insurance must apply separately to each insured, except for liability limits."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 18,
+            "last": 21,
+            "page": 33
+          }
+        ],
+        "page": 33,
+        "quote": "Insurance and bonds are to be placed with insurers admitted in the State of Utah with an A. M. Best rating of not less than A-: IX, and in the limits as listed in this document, unless approved by the City’s Risk Manager, or his designee, a minimum of five (5) business days prior to bid or proposal deadline.",
+        "section": "E",
+        "text": "Insurance must be with Utah-admitted insurers rated A-: IX or better, unless approved otherwise."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 24,
+            "last": 29,
+            "page": 33
+          }
+        ],
+        "page": 33,
+        "quote": "Contracting party shall furnish Logan City with certificates of insurance and with original endorsements effecting coverage required by this clause. The certificates and endorsements are to be signed by a person authorized by that insurer to bind coverage on its behalf. The certificates and endorsements are to be on forms acceptable to Logan City before work commences. Logan City reserves the right to require complete, certified copies of all required insurance policies, with all endorsements, at any time.",
+        "section": "F",
+        "text": "Provide certificates and endorsements of insurance, signed by an authorized person, before work starts."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 31,
+            "last": 34,
+            "page": 33
+          }
+        ],
+        "page": 33,
+        "quote": "Contracting party shall include all subcontractors as insureds under its policies or shall furnish separate certificates and endorsements for each subcontractor. All coverages for subcontractors shall be subject to all of the requirements stated herein.",
+        "section": "G",
+        "text": "Subcontractors must be insured or have separate certificates and endorsements."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

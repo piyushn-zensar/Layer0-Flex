@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 13,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "MANUFACTURER shall complete all Work as specified or indicated in the Contract Documents for completion of the project.",
+        "section": "ARTICLE 2 – WORK",
+        "text": "The manufacturer must complete all work as specified in the contract documents."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 21,
+            "last": 22,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "All time limits for Milestones, if any, Substantial Completion, and completion and readiness for final payment as stated in the Contract Documents are of the essence of the Contract.",
+        "section": "ARTICLE 4 – CONTRACT TIMES",
+        "text": "Time limits for milestones and completion are critical."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 25,
+            "last": 26,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "The Work will be substantially completed on or before and completed and ready for final payment in accordance with the General Conditions.",
+        "section": "ARTICLE 4 – CONTRACT TIMES",
+        "text": "The work must be substantially completed and ready for final payment by the specified date."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 31,
+            "last": 33,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "MANUFACTURER and OWNER recognize that time is of the essence of this Agreement and the OWNER will suffer financial loss if the Work is not completed within the times specified in paragraph 4.02, plus any extensions thereof allowed in accordance with the General Conditions.",
+        "section": "ARTICLE 4 – CONTRACT TIMES",
+        "text": "The manufacturer acknowledges financial penalties for delays beyond the specified completion times."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "legal",
+        "members": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "title": "Insurance requirements for Logan City coverage"
+      },
+      {
+        "category": "submission",
+        "members": [
+          6,
+          7
+        ],
+        "title": "Insurance documentation submission"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

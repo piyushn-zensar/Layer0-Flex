@@ -1,0 +1,204 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 5,
+            "last": 8,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "Total firm price to furnish and deliver F.O.B., jobsite, Logan, Utah, one (1) 15’ X 28’ walk-through, 15kV outdoor metal-clad overhead bus connected switchgear line-up as described by these specifications.",
+        "section": "3.1",
+        "text": "Provide total firm price for specified switchgear delivery."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 11,
+            "last": 12,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "Alternate Bid 1:  Building Dimensions _____ X _____ (Attach proposed layout drawing)",
+        "section": "3.1",
+        "text": "Provide alternate bid with building dimensions and layout drawing."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "Shipping and Offloading",
+        "section": "3.1",
+        "text": "Provide cost for shipping and offloading."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 21,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "Provisions and equipment required to rack circuit breakers from a remote location.",
+        "section": "3.1",
+        "text": "Include provisions for remote racking system for circuit breakers."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 26,
+            "last": 28,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "Manufacturer shall enter the earliest guaranteed delivery date of equipment to its final destination. (Month)/(Day)/(Year)",
+        "section": "3.1",
+        "text": "Specify earliest guaranteed delivery date."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 31,
+            "last": 32,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "Bidders quoted cancelation charge at 90 days will be considered in the bid evaluation.  (Maximum cancellation charges from date of award % of bid price)",
+        "section": "3.1",
+        "text": "Provide cancellation charges for up to 90 days."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 34,
+            "last": 35,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "30 Days %",
+        "section": "3.1",
+        "text": "Specify cancellation charge for 30 days."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 37,
+            "last": 38,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "60 Days %",
+        "section": "3.1",
+        "text": "Specify cancellation charge for 60 days."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 40,
+            "last": 41,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "90 Days %",
+        "section": "3.1",
+        "text": "Specify cancellation charge for 90 days."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 43,
+            "last": 44,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "120 Days %",
+        "section": "3.1",
+        "text": "Specify cancellation charge for 120 days."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 46,
+            "last": 47,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "150 Days %",
+        "section": "3.1",
+        "text": "Specify cancellation charge for 150 days."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 49,
+            "last": 50,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "180 Days %",
+        "section": "3.1",
+        "text": "Specify cancellation charge for 180 days."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 53,
+            "last": 54,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "The Manufacturer  proposes the following to supervise equipment field assembly and installation:",
+        "section": "3.2",
+        "text": "Provide proposal for supervising equipment field assembly and installation."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 56,
+            "last": 57,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "Daily Rate (including all expenses): $",
+        "section": "3.2",
+        "text": "Specify daily rate for field assembly supervision."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

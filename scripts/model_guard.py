@@ -70,6 +70,7 @@ def run_demo(real: bool = False) -> None:
             return next(o.id for o in opportunities.list_all(db) if o.id not in before)
 
     runs = [newest()] + ([newest(real=True)] if real else [])
+    seed_demo.independent()  # P-26: the independent RFP's reader and grouping answers
     for opp in runs:
         with SessionLocal() as db:
             consolidation.response_outline(db, opp)

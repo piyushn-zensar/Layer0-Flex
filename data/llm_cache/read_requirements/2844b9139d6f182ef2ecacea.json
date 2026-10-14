@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 3,
+            "last": 9,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "No assignment by a party hereto of any rights under or interests in the Contract will be binding on another party hereto without the consent of the party sought to be bound; and specifically but without limitation, moneys that may become due and moneys that are due may not be assigned without such consent (except to the extent that the effect of this restriction may be limited by law), and unless specifically stated to the contrary in any written consent to an assignment, no assignment will release or discharge the assignor from any duty or responsibility under the Contract Documents.",
+        "section": "10.02",
+        "text": "Assignments of contract rights or interests require consent and do not release the assignor from responsibilities."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 12,
+            "last": 15,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "OWNER and MANUFACTURER each binds itself, its partners, successors, assigns, and legal representatives to the other party thereto, its partners, successors assign and legal representatives in respect to all covenants, agreements, and obligations contained in the Contract Documents.",
+        "section": "10.03",
+        "text": "Both parties bind themselves and their successors to the contract's obligations."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "Upon ten (10) days’ written notice to Manufacturer, Owner may, without cause and without prejudice to any other right or remedy of Owner, terminate the Contract.",
+        "section": "10.04",
+        "text": "Owner can terminate the contract with 10 days' written notice."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 20,
+            "last": 25,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "Manufacturer shall be paid for (without duplication of any payment amounts or work items): 1. completed and acceptable Work executed prior to the effective date of termination, in accordance with the payment provisions of the Contract Documents; provided, however, that no completed work items shall be paid on a cost-plus basis;",
+        "section": "10.04",
+        "text": "Manufacturer is paid for completed and acceptable work before termination, excluding cost-plus payments."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 26,
+            "last": 34,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "2. reasonable expenses sustained prior to the effective date of termination in performing services and furnishing labor, materials, or equipment as required by the Contract Documents in connection with uncompleted Work or unacceptable Work (but only those portions of the unacceptable Work that are acceptable and Manufacturer shall not be entitled to any compensation for any portions of the Work which are unacceptable), plus fair and reasonable sums for overhead and profit on such expenses; provided, however, that Manufacturer shall not be entitled to additional compensation for Work items paid under subparagraph 10.04 A.1. above;",
+        "section": "10.04",
+        "text": "Manufacturer is paid for reasonable expenses for uncompleted or acceptable parts of unacceptable work, excluding duplicate payments."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 35,
+            "last": 37,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "3. costs incurred in settlement of terminated contracts with Sub Manufacturer s, Suppliers, and others; provided, however, that Manufacturer shall not be entitled to additional compensation for Work items paid under subparagraphs 10.04 A.1. and 2. above;",
+        "section": "10.04",
+        "text": "Manufacturer is reimbursed for costs of settling terminated subcontracts, excluding duplicate payments."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 38,
+            "last": 39,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "4. reasonable expenses directly attributable to termination; provided, however,",
+        "section": "10.04",
+        "text": "Manufacturer is reimbursed for reasonable expenses directly due to termination."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

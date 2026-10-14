@@ -1,0 +1,232 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 2,
+            "last": 4,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Hinged half-length steel panels shall be provided for mounting relays, instruments, meters, and controls. Special attention shall be given to the adequate isolation of low voltage control circuits from the high voltage circuits.",
+        "section": "U",
+        "text": "Provide hinged steel panels for mounting equipment and ensure isolation of low and high voltage circuits."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 6,
+            "last": 7,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "The horizontal centerline from the top row of relays shall not be placed more than 72 inches off the floor.",
+        "section": "V",
+        "text": "Ensure relay top row centerline is no higher than 72 inches from the floor."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 9,
+            "last": 9,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Control switches shall not be placed more than 72 inches off of the floor.",
+        "section": "W",
+        "text": "Ensure control switches are no higher than 72 inches from the floor."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 11,
+            "last": 11,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "When available as an option, all panel-mounted devices shall be draw out type.",
+        "section": "X",
+        "text": "Use draw-out type panel-mounted devices if available."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "All breakers shall be designed to roll directly from cubicle to switchgear floor without requiring lifts, ramps or jacks.",
+        "section": "Y",
+        "text": "Design breakers to roll from cubicle to floor without additional equipment."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 16,
+            "last": 17,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "All compartments shall have enough space to allow racking the breakers to the “disconnect” position with the door closed.",
+        "section": "Z",
+        "text": "Ensure compartments allow breaker racking to disconnect position with door closed."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 19,
+            "last": 21,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Provisions for breaker remote racking systems shall be included in the bid, but priced separately as optional equipment. It is likely that remote racking will be included so please include this in your bid.",
+        "section": "AA",
+        "text": "Include provisions for remote racking systems, priced separately as optional equipment."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 25,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "All steel shall be thoroughly chemically cleaned and treated. After cleaning, all metal surfaces shall be inspected for rust and scale, and if necessary, further cleaned to remove all rust and scale.",
+        "section": "BB",
+        "text": "Chemically clean and inspect steel for rust and scale, re-clean if necessary."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 27,
+            "last": 27,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Exterior color shall be ANSI #70 light gray, 5 mil minimum.",
+        "section": "BB",
+        "text": "Use ANSI #70 light gray for exterior color, minimum 5 mil thickness."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 29,
+            "last": 29,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Structure interior walls: white.",
+        "section": "BB",
+        "text": "Paint structure interior walls white."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 31,
+            "last": 31,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Structure interior floor: gray with long-wearing non-skid surface.",
+        "section": "BB",
+        "text": "Paint structure interior floor gray with non-skid surface."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 35,
+            "last": 35,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Switchgear: Fronts: ANSI #70",
+        "section": "BB",
+        "text": "Paint switchgear fronts ANSI #70."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 37,
+            "last": 38,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Interior of cubicles: white (including any and all back panels/pans used for mounting equipment and accessories",
+        "section": "BB",
+        "text": "Paint cubicle interiors white, including mounting panels."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 40,
+            "last": 40,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Base: corrosion resistant undercoating.",
+        "section": "BB",
+        "text": "Apply corrosion-resistant undercoating to base."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 44,
+            "last": 47,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "External control cables for lighting and power circuits, control circuits, current transformer circuits, and alarm circuits will enter from below. Provide a field termination cabinet within the building with all necessary terminal blocks and a minimum of 20% spare 12 pole terminal blocks for field cable connections.",
+        "section": "AUXILIARY EQUIPMENT",
+        "text": "Provide field termination cabinet with terminal blocks and 20% spare capacity for external control cables."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 49,
+            "last": 50,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Provide adequate lighting in the interior, with switches located near all access doors.",
+        "section": "AUXILIARY EQUIPMENT",
+        "text": "Install adequate interior lighting with switches near access doors."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}
