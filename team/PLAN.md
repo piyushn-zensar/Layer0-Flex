@@ -179,7 +179,7 @@ There are no dates or checkpoints. Tasks are done one at a time, in the order of
 1. **Contracts first (technical-architecture §16.9).** Build against the contract, not against a teammate's unfinished code. Until a contract lands, use the stated fallback (for example `requirements.exceptions()` returns `[]`, missing response fields show as empty cells, `actor()` keeps returning a name).
 2. **Stored values and API paths stay** (`/api/opportunities/...`, `approved`, `met` / `partial` / `not_met`). Change **labels**, not data, unless your task says otherwise. This keeps frozen answers, tests and the other modules green.
 3. **New columns are nullable; there are no migrations.** After pulling a model change, run `reset-demo.cmd` (or `python -m scripts.seed_demo --reset`).
-4. **Tests use a login helper once P-20 lands** (`tests/conftest.py`, Piyush). Until then tests keep sending `X-Actor`.
+4. **Tests use a login helper** (`tests/conftest.py`, Piyush, P-20); `X-Actor` is gone.
 5. Same rules as section 2: own files only, `[contract]` commits for unavoidable cross-module additions, `pytest -q` before every push, tracker updated with the commit.
 
 ### 9.3 New paths and owners (also in `.claude/rules/ownership.md`)
@@ -242,4 +242,4 @@ One task at a time, top to bottom.
 
 ### 9.5 Demo accounts (contract for P-20, J-10, J-15, A-17)
 
-`data/accounts.json` holds one account per person in today's people list (`bid.manager`; `ep2.pm`, `ep2.de`, `crown.pm`, `crown.de`, `anord.pm`, `anord.de`, `fpm.pm`, `fpm.de`, `jetcool.pm`, `jetcool.de`, `cloud.pm`, `cloud.de`, `ems.pm`, `ems.de`, `afs.pm`, `afs.de`) with `name` equal to today's display name, so stored actor names and frozen data stay valid, plus `admin`. The password for all of them comes from `DEMO_PASSWORD` in `.env`.
+`data/accounts.json` holds one account per person in today's people list (`bid.manager`; `ep2.pm`, `ep2.de`, `crown.pm`, `crown.de`, `anord.pm`, `anord.de`, `fpm.pm`, `fpm.de`, `jetcool.pm`, `jetcool.de`, `cloud.pm`, `cloud.de`, `ems.pm`, `ems.de`, `afs.pm`, `afs.de`) with `name` equal to today's display name, so stored actor names and frozen data stay valid, plus `admin`. The file is the roster: the accounts live in the table `user_account` (username, name, role, bu, password_hash) of a MySQL database (`MYSQL_*` in `.env`; the local SQLite store without `MYSQL_HOST`, as in the tests). On every start the API adds any account the table does not have yet, with `DEMO_PASSWORD` from `.env` as its starting password; an existing password is never overwritten. Passwords are stored as salted PBKDF2-SHA256 hashes; `.venv\Scripts\python -m scripts.set_password <username>` changes one.

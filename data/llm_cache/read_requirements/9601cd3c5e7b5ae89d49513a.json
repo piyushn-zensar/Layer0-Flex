@@ -1,7 +1,0 @@
-{
-  "model": "gpt-4o",
-  "output": {
-    "requirements": []
-  },
-  "task": "read_requirements"
-}

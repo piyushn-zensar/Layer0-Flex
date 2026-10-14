@@ -23,7 +23,9 @@ It ends with "Setup complete".
 2. To stop Layer 0, close the two "Layer 0" windows.
 3. To start the demonstration again from a clean state, close the two windows, double-click **`reset-demo.cmd`**, then double-click **`start.cmd`**.
 
-The address is http://localhost:3000. Use the **Acting as** drop-down at the top right to switch between the bid manager and each business unit's product manager or design engineer.
+The address is http://localhost:3000. Sign in on the login page with a username and password (for example `bid.manager`, `crown.pm`, `crown.de` or `admin`; the starting password is `DEMO_PASSWORD` in `.env`). The top bar shows the signed-in name; use **Switch** at the top right to sign in as someone else, such as the bid manager or a business unit's product manager or design engineer.
+
+Accounts are kept in the table `user_account` of a MySQL database (`layer0` by default; set `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD` and `MYSQL_DB` in `.env`; the API creates the database and table on first start). Without `MYSQL_HOST` the accounts are kept in the local SQLite store. On every start the API adds any account from `data/accounts.json` that the table does not have yet, with `DEMO_PASSWORD` as its starting password; an existing password is never overwritten. To change one password, run `.venv\Scripts\python -m scripts.set_password <username>`. `reset-demo.cmd` does not touch accounts.
 
 ## What works offline, and what doesn't
 
