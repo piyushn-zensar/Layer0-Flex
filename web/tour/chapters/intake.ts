@@ -112,7 +112,7 @@ const chapter: TourChapter = {
       placement: "right",
       skipIf: demo,
       body: [
-        "**Customer type** is one of six segments: *utility*, *hyperscaler*, *neocloud*, *colocation*, *silicon provider*, *public sector*, or left as \"—\". The Syracuse airport authority is *public sector*; the hyperscale sample is *hyperscaler*.",
+        "**Customer type** is one of six segments: *utility*, *hyperscaler*, *neocloud*, *colocation*, *silicon provider*, *public sector*, or left as \"—\". The Syracuse airport authority is *public sector*.",
         "Like the customer it is recorded and displayed (opportunity header, Opportunities table) but does not change what the agents do. It is there so the portfolio can be read by segment and so a later version can use it, for example to pick default participating units.",
       ],
     },
