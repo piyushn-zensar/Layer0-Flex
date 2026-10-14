@@ -10,7 +10,7 @@
   {
    "id": "all_matched",
    "name": "Every requirement routed",
-   "question": "Does every frozen requirement have a match (a unit, or the bid desk)?"
+   "question": "Does every requirement in the published register have a match (a unit, or the bid desk (commercial and submission items))?"
   },
   {
    "id": "coverage",
@@ -25,7 +25,7 @@
   {
    "id": "open_questions",
    "name": "Open questions",
-   "question": "Are there no open questions (rule warnings, unanchored requirements)?"
+   "question": "Are there no open questions (rule warnings, requirements with source not verified)?"
   },
   {
    "id": "matches_reviewed",
@@ -45,7 +45,7 @@
   {
    "id": "capacity",
    "name": "Capacity and portfolio conflicts",
-   "question": "Do the units have capacity for this work, given their open work on other opportunities (task A-10)?"
+   "question": "Do the units have capacity for this work, given their open work on other bids (task A-10)?"
   },
   {
    "id": "cost_budget",

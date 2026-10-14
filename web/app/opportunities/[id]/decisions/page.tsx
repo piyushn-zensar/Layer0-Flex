@@ -18,6 +18,9 @@ type Summary = {
   coverage: number; criteria: Criterion[]; advice: string;
 };
 const JUDGEMENT: Record<Judgement, string> = { met: "met", not_met: "not met", unknown: "not known" };
+const BID_DESK = "Bid desk (commercial and submission items)";
+// How a requirement is satisfied (decisions.summary levels), in the compliance words of technical-architecture 16.2
+const LEVEL: Record<string, string> = { fully: "Fully compliant", partly: "Partially compliant", not: "Non-compliant", bid_desk: BID_DESK };
 
 // Go/no-go summary (task A-12): how each requirement is satisfied, the criteria, and advice; the person judges each criterion.
 function GoNoGoSummary({ s, oppId }: { s: Summary; oppId: string }) {
@@ -26,13 +29,13 @@ function GoNoGoSummary({ s, oppId }: { s: Summary; oppId: string }) {
       <div data-tour="dec-advice"><Alert kind="info"><strong>{s.advice}</strong></Alert></div>
       <h3>How the requirements are satisfied</h3>
       <table className="dense" data-tour="dec-by-category">
-        <thead><tr><th>Category</th><th className="num">Fully</th><th className="num">Partly</th><th className="num">Not</th><th className="num">Bid desk</th></tr></thead>
+        <thead><tr><th>Category</th><th className="num">Fully compliant</th><th className="num">Partially compliant</th><th className="num">Non-compliant</th><th className="num">{BID_DESK}</th></tr></thead>
         <tbody>{Object.entries(s.by_category).map(([cat, n]) => (
           <tr key={cat}><td>{cat}</td><td className="num">{n.fully}</td><td className="num">{n.partly}</td><td className="num">{n.not}</td><td className="num">{n.bid_desk}</td></tr>))}</tbody>
       </table>
       <details data-tour="dec-per-req"><summary>Per requirement ({s.rows.length}): from the unit&apos;s answer where there is one, otherwise estimated from the match</summary>
         <ul className="per-req">{s.rows.map((r) => <li key={r.req_id}><a className="mono" href={`/opportunities/${oppId}/trace#${r.req_id}`}>{r.req_id}</a>{" "}
-          <strong>{r.level.replace("_", " ")}</strong> <span className="muted">({r.basis}{r.units.length ? `: ${r.units.join(", ")}` : ""})</span> {r.text}</li>)}</ul>
+          <strong>{LEVEL[r.level] ?? r.level}</strong> <span className="muted">({r.basis}{r.units.length ? `: ${r.units.join(", ")}` : ""})</span> {r.text}</li>)}</ul>
       </details>
     </>
   );
@@ -68,8 +71,8 @@ function PortfolioChecks({ ev }: { ev: Evidence }) {
               <td><StatusBadge status={r.severity} kind="severity" /></td><td>{r.source}</td></tr>))}
           </tbody></table>)}
       <p className="muted">{d.note}</p>
-      <h3>Workload across opportunities</h3>
-      <table className="dense" data-tour="dec-workload"><thead><tr><th>Unit</th><th className="num">This opportunity</th><th>Other opportunities</th><th className="num">Total open</th><th>Capacity</th></tr></thead>
+      <h3>Workload across bids</h3>
+      <table className="dense" data-tour="dec-workload"><thead><tr><th>Unit</th><th className="num">This bid</th><th>Other bids</th><th className="num">Total open</th><th>Capacity</th></tr></thead>
         <tbody>{w.rows.map((r) => (
           <tr key={r.bu}><td>{r.bu}</td><td className="num">{r.open_here}</td>
             <td>{r.open_elsewhere}{r.other_opportunities.length > 0 && <span className="muted"> ({r.other_opportunities.join(", ")})</span>}</td>
@@ -87,7 +90,7 @@ function EngineeringChecks({ c, oppId }: { c: Checks; oppId: string }) {
   return (
     <section className="card" data-tour="dec-eng-checks">
       <div className="card-head"><h2>Engineering checks</h2>
-        <span className="muted">Over {c.requirements_checked} frozen requirements. Illustrative rules ported from the earlier code line; to be confirmed with SpinCo engineering.</span></div>
+        <span className="muted">Over {c.requirements_checked} requirements in the published register. Illustrative rules ported from the earlier code line; to be confirmed with SpinCo engineering.</span></div>
       <h3>Scope: layers this RFP covers</h3>
       <ul className="dec-layers" data-tour="dec-eng-scope">{c.scope.layers.map((l) => (
         <li key={l.n}><StatusBadge status={l.in_scope ? "pass" : "n/a"} label={l.in_scope ? "in scope" : "not in scope"} />
@@ -140,9 +143,9 @@ export default function DecisionsPage() {
     const f = new FormData(form);
     const criteria = (data.summary?.criteria ?? []).map((c) => ({ id: c.id, status: f.get(`crit-${c.id}`), note: f.get(`note-${c.id}`) ?? "" }));
     if (outcome === "no_go" && !await ask({ title: "Record no-go?", confirmLabel: "Record no-go", danger: true,
-      message: "The opportunity is marked no-go. Nothing is sent to the units; a later go decision can still overrule it." })) return;
-    run("decision", post(`/api/opportunities/${id}/go-no-go`, { outcome, rationale: f.get("rationale"), criteria }),
-      () => { toast.success(outcome === "go" ? "Decision recorded: go." : "Decision recorded: no-go."); statusChanged(); });
+      message: "The bid is marked no-go: dispatch stops and the units' open work is withdrawn (submitted and validated answers stay). A later go decision can still overrule it." })) return;
+    run("decision", post<{ withdrawn: number }>(`/api/opportunities/${id}/go-no-go`, { outcome, rationale: f.get("rationale"), criteria }),
+      (r) => { toast.success(outcome === "go" ? "Decision recorded: go." : `Decision recorded: no-go. ${r.withdrawn} open item(s) withdrawn from the units.`); statusChanged(); });
   };
   const dispatch = () => run("dispatch", post<{ created: number }>(`/api/opportunities/${id}/dispatch`), (r) => {
     toast.success(r.created ? `${r.created} new assignment(s) sent to the units.` : "Nothing new to send: every unit already has its work.");
@@ -158,11 +161,11 @@ export default function DecisionsPage() {
         <p data-tour="dec-offering-mix">Offering mix: {Object.entries(ev.offering_mix).map(([k, v]) => <StatusBadge key={k} status={k} kind="offering" label={`${offeringLabel(k)} ${v}`} />)}</p>
         <p data-tour="dec-suggested-units">Suggested units: {Object.entries(ev.suggested_units).map(([k, v]) => <strong key={k}>{k} ({v}) </strong>)}
           {Object.keys(ev.suggested_units).length === 0 && "none yet: run matching"}</p>
-        {ev.unanchored.length > 0 && <details className="dec-unanchored" data-tour="dec-unanchored"><summary className="warn">Unanchored: {ev.unanchored.length} requirement(s) without a place in the RFP</summary>
+        {ev.unanchored.length > 0 && <details className="dec-unanchored" data-tour="dec-unanchored"><summary className="warn">Source not verified: {ev.unanchored.length} requirement(s) without a place in the RFP</summary>
           <p className="muted mono">{ev.unanchored.join(", ")}</p></details>}
         {ev.unmatched.length > 0 && <p className="muted" data-tour="dec-unmatched">Not yet matched: {ev.unmatched.length}</p>}
         {ev.not_reviewed > 0 && <p className="muted" data-tour="dec-not-reviewed">Product matches nobody has accepted or changed yet: {ev.not_reviewed} (Traceability, pane 3)</p>}
-        {!ev.frozen && <div data-tour="dec-not-frozen"><Alert kind="warn">Requirements are not frozen yet: freeze them on the Requirements page before deciding go or no-go.</Alert></div>}
+        {!ev.frozen && <div data-tour="dec-not-frozen"><Alert kind="warn">The requirement register is not published yet: publish it on the Requirements step before deciding go or no-go.</Alert></div>}
       </section>
 
       {ev.frozen && <EngineeringChecks c={ev.checks} oppId={id} />}
@@ -215,7 +218,7 @@ export default function DecisionsPage() {
             <button type="button" disabled={!ev.frozen || !!busy} onClick={(e) => decide("go", e.currentTarget.form!)} data-tour="dec-go">Go</button>
             <button type="button" disabled={!ev.frozen || !!busy} className="danger secondary" onClick={(e) => decide("no_go", e.currentTarget.form!)} data-tour="dec-no-go">No-go</button>
             {busy === "decision" && <Busy label="Recording…" />}
-            {!ev.frozen && <span className="muted">Freeze the requirements first.</span>}
+            {!ev.frozen && <span className="muted">Publish the requirement register first.</span>}
           </div>
         </form>
       </section>

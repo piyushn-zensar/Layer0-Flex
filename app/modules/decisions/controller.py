@@ -9,6 +9,7 @@ from app.core.web import actor, row
 from app.modules.catalog import service as catalog
 from app.modules.decisions import service
 from app.modules.opportunities import service as opportunities
+from app.modules.workpackages import service as workpackages
 
 router = APIRouter(tags=["decisions"])
 
@@ -62,6 +63,8 @@ def go_no_go(opp_id: str, body: GoNoGoIn, request: Request, db: Session = Depend
     known = {c["id"] for c in catalog.go_no_go()["criteria"]}
     if unknown := [c.id for c in body.criteria if c.id not in known]:
         raise HTTPException(422, f"Unknown criteria: {unknown}.")
-    units = service.participating_units(db, opp_id)
-    return _record(db, opp_id, "go_no_go", body.outcome, units, body.rationale, actor(request), 409,
-                   [c.model_dump() for c in body.criteria])
+    units, who = service.participating_units(db, opp_id), actor(request)
+    out = _record(db, opp_id, "go_no_go", body.outcome, units, body.rationale, who, 409, [c.model_dump() for c in body.criteria])
+    # a no-go stops dispatch (workpackages.dispatch refuses) and withdraws the units' open work (C-06)
+    out["withdrawn"] = workpackages.withdraw_open(db, opp_id, who) if body.outcome == "no_go" else 0
+    return out

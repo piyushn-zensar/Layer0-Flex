@@ -41,7 +41,7 @@ export default function CatalogPage() {
             </table>)}
         </section>
       )}
-      {data?.units.length === 0 && <EmptyState title="No business units" hint="The catalog seed has not been loaded." />}
+      {data?.units.length === 0 && <EmptyState title="No business units" hint="No business units are loaded yet." />}
       {data?.units.map((u) => {
         const products = data.products.filter((p) => p.bu === u.code);
         return (
