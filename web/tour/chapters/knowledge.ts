@@ -123,7 +123,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       kind: "action",
       skipIf: (ctx) => ctx.actor === BM,
-      instruction: "Switch \"Acting as\" to Bid Manager (the curator), or press Use example.",
+      instruction: "Switch \"Set as\" to Bid Manager (the curator), or press Use example.",
       fallback: "When the acting person is not the curator a blue note says so; the review form is only shown to the curator.",
       body: [
         "In the PoC the curator is the **Bid Manager**; a named knowledge-curator role arrives with sign-in. Anyone can read the queue, but `POST /api/knowledge/<id>/review` is refused for everyone else (\"Only the knowledge curator (in the PoC, the Bid Manager) approves knowledge.\").",
@@ -223,7 +223,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       body: [
         "The **Product catalog** is the knowledge the matcher and the units work from: the business units, their product families with offering types and their published models, and the illustrative past responses, all read from `data/knowledge_base/*.json` (rules as data). The line at the top says it plainly: families and models come from **public Flex web pages (retrieved 12 Oct 2026), to be confirmed with each unit**.",
-        "At the top, a search box over the long-term index; below, one card per unit. Nothing on this page writes; it is the reference the other screens link to (product names in Traceability, BOM lines in the hand-off, people in \"Acting as\").",
+        "At the top, a search box over the long-term index; below, one card per unit. Nothing on this page writes; it is the reference the other screens link to (product names in Traceability, BOM lines in the hand-off, people in \"Set as\").",
       ],
     },
     {
@@ -235,7 +235,7 @@ const chapter: TourChapter = {
       fallback: "Each card names a unit with its code, pillar and status, its focus, and its product manager and design engineer.",
       body: [
         "Each card: the unit's name and **code** (`CROWN` is what requirement rows, inboxes and hand-off files use), its **pillar** (Critical Power, Embedded Power, Thermal Management, Cloud) and a **status** badge. *Active* units take part in matching, dispatch and the people picker; a *pending* unit such as EPC Power is listed for completeness but excluded until confirmed.",
-        "Then the unit's **focus** in one sentence, and its **product manager** and **design engineer**: these two names are the people allowed to answer the unit's work package, and the names you see in \"Acting as\". The seven units are EP², Crown Technical Systems, Anord Mardix, Flex Power Modules, JetCool, Cloud (in-house) and EPC Power (pending).",
+        "Then the unit's **focus** in one sentence, and its **product manager** and **design engineer**: these two names are the people allowed to answer the unit's work package, and the names you see in \"Set as\". The seven units are EP², Crown Technical Systems, Anord Mardix, Flex Power Modules, JetCool, Cloud (in-house) and EPC Power (pending).",
       ],
     },
     {

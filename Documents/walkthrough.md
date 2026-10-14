@@ -41,7 +41,7 @@ The screens follow this order of work. The Screen column gives the step in the b
 
 *Figure 1. The Opportunities page.*
 
-- The top bar offers **Opportunities**, **My work**, **Product catalog** and **Knowledge base**, a **New opportunity** button and the **Acting as** role selector.
+- The top bar offers **Opportunities**, **My work**, **Product catalog** and **Knowledge base**, a **New opportunity** button and the **Set as** role selector.
 - Each row shows the opportunity ID, title, customer, status and number of requirements (348 in the example).
 - **Unit responses (validated / total)** shows, for each unit and the bid desk, how many responses are validated out of those assigned: Crown Technical Systems 1 of 96, Electrical Power Products 0 of 7 and the bid desk 0 of 245 (shown on screen as CROWN 1/96, EP2 0/7 and BID 0/245). A bar beside each count shows validated work (green) and work awaiting validation (blue). Each unit code opens that unit's work package under **My work**.
 - **Open** enters the opportunity at its Traceability step.
@@ -146,11 +146,11 @@ This capability is presented through the Traceability step, which brings togethe
 
 **Purpose.** Gives each unit, and the bid desk, its own list of requirements to answer.
 
-The demonstration allows selection of different participant roles using the **Acting as** selector. The list contains the Bid Manager and, for each business unit, a Product Manager and a Design Engineer. **My work** opens the work package of the selected role's unit.
+The demonstration allows selection of different participant roles using the **Set as** selector. The list contains the Bid Manager and, for each business unit, a Product Manager and a Design Engineer. **My work** opens the work package of the selected role's unit.
 
-![Acting as](images/07-acting-as.png)
+![Set as](images/07-acting-as.png)
 
-*Figure 7. The Acting as selector.*
+*Figure 7. The Set as selector.*
 
 ![My work](images/08-my-work.png)
 

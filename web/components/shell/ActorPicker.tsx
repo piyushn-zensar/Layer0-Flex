@@ -10,8 +10,8 @@ export default function ActorPicker() {
   useEffect(() => setLocal(currentActor()), []);
   return (
     <div className="actor" data-tour="shell-actor">
-      <label htmlFor="actor-select">Acting as</label>
-      <select id="actor-select" value={actor} title="Switch the person acting in this PoC"
+      <label htmlFor="actor-select">Set as</label>
+      <select id="actor-select" value={actor} title="Set the person using this PoC"
         onChange={(e) => { setActor(e.target.value); location.reload(); }}>
         {(people ?? [{ name: actor, bu: null }]).map((p) => <option key={p.name}>{p.name}</option>)}
       </select>

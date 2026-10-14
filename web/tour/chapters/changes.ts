@@ -320,7 +320,7 @@ const chapter: TourChapter = {
       placement: "top",
       kind: "action",
       skipIf: notInReview,
-      instruction: "Acting as Bid Manager, click 'Apply to requirements' and wait for the green result block.",
+      instruction: "Set as Bid Manager, click 'Apply to requirements' and wait for the green result block.",
       example: {
         label: "Act as Bid Manager",
         apply: (ctx) => { if (ctx.actor !== BID_MANAGER) ctx.setActor(BID_MANAGER); },
@@ -328,7 +328,7 @@ const chapter: TourChapter = {
       done: present("chg-set-result"),
       fallback: "'Apply to requirements' is in the action row of a set in review; it is enabled for the Bid Manager once every row is confirmed.",
       body: [
-        "Only the **Bid Manager** applies or discards (the button is disabled for anyone else and the API checks the acting person too; switch with *Acting as* in the header). Apply refuses if any row is unconfirmed, if two rows change the same requirement, or if the baseline moved since the upload.",
+        "Only the **Bid Manager** applies or discards (the button is disabled for anyone else and the API checks the acting person too; switch with *Set as* in the header). Apply refuses if any row is unconfirmed, if two rows change the same requirement, or if the baseline moved since the upload.",
         "What it does, in one transaction: each **added** statement becomes a new, approved requirement with a new ID anchored in the addendum; each **modified** one becomes **version 2** of its target with the new wording and the addendum's quote and lines; each **removed** one gets a version with status *removed* (removing a group removes its sub-requirements); then **baseline 2** is frozen with the new count. Then the follow-up: the unit answers of changed requirements are **returned** for review with a note (*Changed by rfp_syracuse_addendum_1.pdf: now reads: …*), only the added and modified requirements are **re-matched** (re-matching everything would change the frozen page batches of untouched ones), and if work was dispatched before and the latest go/no-go is *go*, **dispatch** runs: new assignments go out and removed work is withdrawn.",
         "A failure after the baseline is committed (for example the model service) is reported in the result's note, not raised: the baseline stands, and matching or dispatch can be run from their own pages.",
       ],

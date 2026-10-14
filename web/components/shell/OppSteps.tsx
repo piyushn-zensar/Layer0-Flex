@@ -10,17 +10,16 @@ import { useApi } from "@/lib/api";
 import type { Opportunity } from "@/lib/types";
 import StatusBadge from "@/components/ui/StatusBadge";
 
-// Workflow order (technical-architecture 16.2): RFP, Requirements, Traceability, Assessment, Compliance matrix, Bid decision.
+// Workflow order: RFP, Requirements, Traceability, Bid decision, Compliance matrix (Changes is a separate link).
 // A step is ticked once the bid status has moved past it. `tour` is the walkthrough's data-tour id.
-// Until the Assessment page lands (A-16, route /assessment), Assessment and Bid decision share the /decisions page: the first
-// step that matches the path is the current one. Then point Assessment at "/assessment" and keep Bid decision on "/decisions".
+// The /decisions page holds the evidence, participation, go/no-go and dispatch, so it is the one "Bid decision" step. When the
+// separate Assessment page lands (A-16, route /assessment), add an "Assessment" step before it (technical-architecture 16.2).
 const STEPS = [
   { suffix: "", label: "RFP", doneFrom: "reading", tour: "step-rfp" },
   { suffix: "/requirements", label: "Requirements", doneFrom: "frozen", tour: "step-requirements" },
   { suffix: "/trace", label: "Traceability", doneFrom: "go", tour: "step-trace" },
-  { suffix: "/decisions", label: "Assessment", doneFrom: "dispatched", tour: "step-decisions" },
+  { suffix: "/decisions", label: "Bid decision", doneFrom: "go", tour: "step-decisions" },
   { suffix: "/consolidation", label: "Compliance matrix", doneFrom: "submitted", tour: "step-consolidation" },
-  { suffix: "/decisions", label: "Bid decision", doneFrom: "go", tour: "step-bid-decision" },
 ];
 const ORDER = ["new", "reading", "review", "frozen", "go", "no_go", "dispatched", "consolidating", "submitted"];
 const rank = (s: string) => (s === "no_go" ? ORDER.indexOf("go") : ORDER.indexOf(s));
@@ -52,8 +51,7 @@ export default function OppSteps() {
       <nav aria-label="Workflow steps">
         <ol className="stepper" data-tour="stepper">
           {STEPS.map((s, i) => {
-            const onPage = path === base + s.suffix || (s.suffix !== "" && path.startsWith(base + s.suffix + "/")); // sub-pages too
-            const current = onPage && STEPS.findIndex((o) => o.suffix === s.suffix) === i; // a shared page highlights its first step only
+            const current = path === base + s.suffix || (s.suffix !== "" && path.startsWith(base + s.suffix + "/")); // sub-pages too
             const done = rank(status) >= rank(s.doneFrom);
             return (
               <li key={s.label} className={`${current ? "current" : ""} ${done ? "done" : ""}`} data-tour={s.tour}>

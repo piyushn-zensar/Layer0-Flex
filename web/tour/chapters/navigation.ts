@@ -16,7 +16,7 @@ const chapter: TourChapter = {
       target: "shell-brand",
       placement: "bottom",
       body: [
-        "The dark bar stays at the top of every page. From left to right: the **Layer 0** mark (a link back to the Opportunities list), the four main destinations, and on the right **New opportunity**, the **Acting as** picker and the **Walkthrough** button you are using now.",
+        "The dark bar stays at the top of every page. From left to right: the **Layer 0** mark (a link back to the Opportunities list), the four main destinations, and on the right **New opportunity**, the **Set as** picker and the **Walkthrough** button you are using now.",
         "There is no sign-in in this proof of concept: the person acting is chosen in the bar and sent with every request, which is why the picker sits where a user menu would be.",
       ],
       fallback: "The top bar is above the page content; this step describes its left end.",
@@ -46,7 +46,7 @@ const chapter: TourChapter = {
     },
     {
       id: "navigation-actor",
-      title: "Acting as: the three roles",
+      title: "Set as: the three roles",
       target: "shell-actor",
       placement: "bottom",
       body: [
@@ -54,7 +54,7 @@ const chapter: TourChapter = {
         "What each role may do is enforced by the server: only a unit's product manager or design engineer answers **that unit's** work-package items; only the Bid Manager **validates or returns** answers, **applies or discards** a change set and **approves knowledge** (the curator role, in the PoC the Bid Manager). Uploading documents, approving and freezing requirements, recording the bid decision, dispatching work, deciding and confirming change items are open to anyone in this PoC, with the actor's name on the audit record.",
         "Stay as **Bid Manager** for most of the walkthrough; the inbox chapter asks you to switch to a unit's product manager to answer a work package, and back again to validate.",
       ],
-      fallback: "The Acting as picker is in the right half of the top bar.",
+      fallback: "The Set as picker is in the right half of the top bar.",
     },
     {
       id: "navigation-help",
