@@ -150,7 +150,7 @@ This turns a PDF into a **page layout model**: a structured record of every page
 
 - The file is stored under its SHA-256 hash and never modified. Each opportunity gets its own document record (`<opportunity>-<first 12 hash characters>`), so the same file sent for two opportunities stays two separate documents (rule R6); the hash is kept on the record, and every anchor points to the record.
 - A document record links the file to its opportunity, with its role (main RFP, addendum, Q&A, change, other).
-- Files other than PDF are stored and reported as **unsupported**. Coverage is never claimed for a file that was not read (rule R5).
+- Word (`.docx`) and Excel (`.xlsx`) files are read through a plain PDF rendered from them (built 14 Oct 2026 as a spike, P-28): paragraphs and table rows become lines, each Word heading 1 and each Excel sheet starts a page, so anchoring and traceability work unchanged. Sources cite the rendered page and line, not the sheet and row; limits and next steps are in `team/investigations.md`. Other files (CAD, legacy `.doc` / `.xls`) are stored and reported as **unsupported**. Coverage is never claimed for a file that was not read (rule R5).
 - Damaged or encrypted PDFs are reported as failed, not skipped.
 
 ### 5.2 Page reading (built)

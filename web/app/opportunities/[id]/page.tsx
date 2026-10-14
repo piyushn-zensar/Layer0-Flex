@@ -56,7 +56,7 @@ export default function DocumentsPage() {
 
   const form = (
     <form className={started ? "form" : "card form"} onSubmit={upload} aria-busy={!!busy} data-tour="rfp-upload-form">
-      <label data-tour="rfp-file">RFP file (PDF) <input type="file" name="file" required disabled={!!busy} /></label>
+      <label data-tour="rfp-file">RFP file (PDF, Word or Excel) <input type="file" name="file" required disabled={!!busy} /></label>
       <label data-tour="rfp-role">Document type <select name="role" defaultValue={started ? "addendum" : "main"} disabled={!!busy}>{Object.entries(DOC_TYPES).map(([v, l]) => <option key={v} value={v}>{l}</option>)}</select></label>
       <button disabled={!!busy || !bm} title={bm ? "" : BID_MANAGER_ONLY} data-tour="rfp-upload">Upload and read</button>
       <button type="button" className="secondary" disabled={!!busy} onClick={reload} data-tour="rfp-refresh">Refresh status</button>

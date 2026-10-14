@@ -39,6 +39,7 @@ from sqlalchemy.orm import Session
 
 from app.core import config
 from app.core.vectors import Index
+from app.modules.ingestion import office
 from app.modules.opportunities import service as opportunities
 
 LAYOUT_CACHE = config.DATA / "layout_cache"   # committed: frozen parses of sample RFPs
@@ -85,6 +86,18 @@ def parse(path: str, doc_id: str) -> dict:
     return {"document": doc_id, "pipeline_version": pipeline_version(), "page_count": len(pages), "pages": pages}
 
 
+def _pdf(doc) -> str:
+    """The PDF the parser and the page images read: the file itself, or for Word and Excel its rendering, made once
+    next to the stored file (office.py, P-28)."""
+    path = Path(doc.path)
+    if path.suffix not in office.SUFFIXES:
+        return doc.path
+    pdf = path.with_suffix(".pdf")
+    if not pdf.exists():
+        pdf.write_bytes(office.to_pdf(path))
+    return str(pdf)
+
+
 def ingest(db: Session, doc_id: str, refresh: bool = False) -> dict:
     """refresh=True ignores the committed layout cache (use it on the parsing machine when the parser changes)."""
     doc = opportunities.get_document(db, doc_id)
@@ -95,8 +108,8 @@ def ingest(db: Session, doc_id: str, refresh: bool = False) -> dict:
     opportunities.set_document_status(db, doc_id, "ingesting")
     frozen = LAYOUT_CACHE / f"{doc.sha256}.json"
     try:
-        model = json.loads(frozen.read_text("utf-8")) if frozen.exists() and not refresh else parse(doc.path, doc.sha256)
-    except Exception as exc:  # damaged or encrypted PDF: report, don't skip (rule R5)
+        model = json.loads(frozen.read_text("utf-8")) if frozen.exists() and not refresh else parse(_pdf(doc), doc.sha256)
+    except Exception as exc:  # damaged or encrypted PDF, unreadable Word or Excel: report, don't skip (rule R5)
         opportunities.set_document_status(db, doc_id, "failed")
         return {"document": doc_id, "error": str(exc)}
     pages = model["pages"]
@@ -302,7 +315,7 @@ def page_png(db: Session, doc_id: str, page_no: int) -> bytes:
     path = PAGES / doc.sha256 / f"{page_no}.png"  # same file, same images
     if not path.exists():
         path.parent.mkdir(parents=True, exist_ok=True)
-        with pymupdf.open(doc.path) as pdf:
+        with pymupdf.open(_pdf(doc)) as pdf:
             pdf[page_no - 1].get_pixmap(dpi=110).save(path)
     return path.read_bytes()
 

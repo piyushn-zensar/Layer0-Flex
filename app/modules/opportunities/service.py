@@ -18,6 +18,7 @@ Public contract (other modules call only these):
     sample_file(name, kind) -> (filename, bytes)  ValueError for an unknown name or a sample of another kind
 """
 import hashlib
+from pathlib import Path
 
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
@@ -28,6 +29,7 @@ from app.core.audit import AuditEvent
 from app.modules.opportunities.models import STATUSES, Document, Opportunity
 
 FILES = config.STORE / "files"
+READABLE = (".pdf", ".docx", ".xlsx")  # Word and Excel are read through a rendered PDF (ingestion/office.py, P-28)
 
 # Sample documents the walkthrough (and anyone without a file at hand) can attach instead of uploading one. A
 # whitelist: the API serves these names only, never a path. kind "rfp" goes in as the main RFP, kind "change" as a
@@ -142,10 +144,11 @@ def add_document(db: Session, opp_id: str, filename: str, data: bytes, role: str
     if role == "main" and main_document(db, opp_id):
         raise ValueError("This bid already has a main RFP; upload this file as an addendum, clarification / Q&A, change request or other document.")
     FILES.mkdir(parents=True, exist_ok=True)
-    path = FILES / f"{sha}{'.pdf' if filename.lower().endswith('.pdf') else ''}"
+    suffix = Path(filename).suffix.lower()
+    path = FILES / f"{sha}{suffix if suffix in READABLE else ''}"
     path.write_bytes(data)
     doc = Document(id=f"{opp_id}-{sha[:12]}", sha256=sha, opportunity_id=opp_id, filename=filename, role=role, path=str(path),
-                   status="uploaded" if path.suffix == ".pdf" else "unsupported")
+                   status="uploaded" if path.suffix in READABLE else "unsupported")
     db.add(doc)
     audit.record(db, actor, "uploaded", "document", doc.id, opp_id, sha256=sha, filename=filename, role=role)
     db.commit()

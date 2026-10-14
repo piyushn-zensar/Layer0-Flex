@@ -170,7 +170,7 @@ const chapter: TourChapter = {
       onEnter: openDetails("rfp-upload-form"),
       fallback: "The upload form sits under the table; once review has started it folds into \"Add another document\".",
       body: [
-        "**RFP file (PDF)** takes one file; **Role** defaults to *main* for a fresh opportunity and to *addendum* once requirement review has started. **Upload and read** posts the file as `multipart/form-data` to `/api/opportunities/{opp}/documents`: the server stores it and answers at once, then reads it in the background.",
+        "**RFP file (PDF, Word or Excel)** takes one file (Word and Excel are read through a rendered PDF; other types are recorded but not read); **Role** defaults to *main* for a fresh opportunity and to *addendum* once requirement review has started. **Upload and read** posts the file as `multipart/form-data` to `/api/opportunities/{opp}/documents`: the server stores it and answers at once, then reads it in the background.",
         "The page does not poll: press **Refresh status** to see *ingesting* turn into *ingested* (the walkthrough does this for you in the next steps). While an uploaded main RFP is still being read the reader-agent button is disabled with \"Waiting for the main RFP to be read\"; with no document at all, pressing it only returns the API's message \"Upload the main RFP and wait until it has been read.\"",
         "You can upload the Syracuse RFP manually from `data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf`, or let the next step attach the bundled copy through the sample route: same storage, same reading, same JSON.",
       ],
