@@ -30,6 +30,12 @@ def coverage(opp_id: str, db: Session = Depends(get_db)):
     return cov | {"rows": rows}
 
 
+@router.get("/opportunities/{opp_id}/compliance-matrix")
+def compliance_matrix_rows(opp_id: str, db: Session = Depends(get_db)):
+    _coverage(db, opp_id)  # 404 for an unknown opportunity
+    return service.compliance_matrix(db, opp_id)
+
+
 @router.get("/opportunities/{opp_id}/compliance-matrix.csv")
 def compliance_matrix(opp_id: str, db: Session = Depends(get_db)):
     _coverage(db, opp_id)  # 404 for an unknown opportunity

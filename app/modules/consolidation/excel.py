@@ -4,6 +4,8 @@ Sheet "Compliance matrix" is what goes to the customer: one row per requirement 
 sub-requirements follow it, each with its own RFP reference), the compliance in customer words, and only answers
 the bid manager has validated. Sheet "Tracking" is internal: the same columns as the CSV, one row per unit answer.
 Every cell is written as plain text, so nothing in it can run as a formula.
+The compliance in both exports reads Fully / Partially / Non-compliant (J-11); the four extended response columns
+(Reason, Conditions, Workaround, Next Steps) are appended last and stay blank until the units' answers hold them (A-18).
 """
 import io
 from datetime import date
@@ -13,20 +15,24 @@ from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 
 NAVY, WHITE = "0F172A", "FFFFFF"
+# COMPLIANCE_WORDS is the wording the response-outline agent is prompted with (its frozen answers are keyed by that
+# prompt text): leave it. EXPORT_WORDS is what the CSV and both Excel sheets show.
 COMPLIANCE_WORDS = {"met": "Comply", "partial": "Partially comply", "not_met": "Does not comply", "exception": "Exception"}
-FILLS = {"Comply": "DCFCE7", "Partially comply": "FEF3C7", "Does not comply": "FEE2E2", "Exception": "FEE2E2",
-         "Open": "EEF2F6"}
-WORST_FIRST = ["Does not comply", "Exception", "Partially comply", "Comply"]
+EXPORT_WORDS = {"met": "Fully", "partial": "Partially", "not_met": "Non-compliant", "exception": "Exception"}
+FILLS = {"Fully": "DCFCE7", "Partially": "FEF3C7", "Non-compliant": "FEE2E2", "Exception": "FEE2E2", "Open": "EEF2F6"}
+WORST_FIRST = ["Non-compliant", "Exception", "Partially", "Fully"]
+EXTENDED = [("reason", "Reason"), ("conditions", "Conditions"), ("workaround", "Workaround"), ("next_steps", "Next Steps")]
 THIN = Side(style="thin", color="CBD5E1")
 CUSTOMER_COLUMNS = [("Requirement ID", 16), ("RFP reference", 16), ("Requirement", 48), ("RFP wording", 60),
-                    ("Compliance", 18), ("Response", 60), ("Offered by", 30)]
+                    ("Compliance", 18), ("Response", 60), ("Offered by", 30)] + [(name, 40) for _, name in EXTENDED]
+TRACKING_WIDTHS = [16, 16, 12, 40, 50, 14, 18, 12, 12, 50, 18, 14, 16, 24] + [40] * len(EXTENDED)
 
 
 def customer_compliance(assignments: list) -> str:
     """One word for the customer: the worst validated answer; "Open" until every unit's answer is validated."""
     if not assignments or any(a.status != "validated" for a in assignments):
         return "Open"
-    words = {COMPLIANCE_WORDS.get(a.compliance, "Open") for a in assignments}
+    words = {EXPORT_WORDS.get(a.compliance, "Open") for a in assignments}
     return next((w for w in WORST_FIRST if w in words), "Open")
 
 
@@ -51,20 +57,27 @@ def build(title: str, customer: str, rows: list[dict], kids: dict, unit_name, tr
         answer = "\n".join(f"{unit_name(a.bu)}: {a.response}" for a in validated if a.response) if word != "Open" else ""
         offered = ", ".join(dict.fromkeys(
             f"{unit_name(a.bu)} ({a.product_ref})" if a.product_ref else unit_name(a.bu) for a in validated if a.bu != "BID"))
-        _append(ws, [req.req_id, source(req), req.text, req.quote if req.kind != "group" else "", word, answer, offered],
+        extended = [_by_unit(validated, field, unit_name) if word != "Open" else "" for field, _ in EXTENDED]
+        _append(ws, [req.req_id, source(req), req.text, req.quote if req.kind != "group" else "", word, answer, offered, *extended],
                 fill=FILLS.get(word), bold=req.kind == "group")
         for kid in kids.get(req.req_id, []):  # sub-requirements: own RFP reference, the group's answer applies
-            _append(ws, [kid.req_id, source(kid), "    " + kid.text, kid.quote, word, "", ""], fill=FILLS.get(word), muted=True)
+            _append(ws, [kid.req_id, source(kid), "    " + kid.text, kid.quote, word, "", "", *[""] * len(EXTENDED)],
+                    fill=FILLS.get(word), muted=True)
     _finish(ws, header_row, [w for _, w in CUSTOMER_COLUMNS])
 
     tr = wb.create_sheet("Tracking")
     _header(tr, 1, tracking_columns)
     for values in tracking_rows:
         _append(tr, [v[1:] if v.startswith("'") else v for v in values])  # the CSV's formula guard is not needed here
-    _finish(tr, 1, [16, 16, 12, 40, 50, 14, 18, 12, 12, 50, 18, 14, 16, 24])
+    _finish(tr, 1, TRACKING_WIDTHS)
     out = io.BytesIO()
     wb.save(out)
     return out.getvalue()
+
+
+def _by_unit(validated: list, field: str, unit_name) -> str:
+    """What the validated answers say in one extended field, one line per unit; blank when none of them has it (A-18)."""
+    return "\n".join(f"{unit_name(a.bu)}: {v}" for a in validated if (v := getattr(a, field, None)) and str(v).strip())
 
 
 def _header(ws, row: int, names: list[str]) -> None:

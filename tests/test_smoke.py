@@ -470,7 +470,7 @@ def test_compliance_matrix_new_columns_and_bom():
     head = rows[0]
     assert head[:12] == ["Requirement ID", "Source", "Category", "Requirement", "Quote", "Business unit", "Product",
                          "Offering type", "Compliance", "Response", "Validated by", "State"]
-    assert head[12:] == ["Assignment status", "Responded by"] and all(len(row) == len(head) for row in rows)
+    assert head[12:] == ["Assignment status", "Responded by", "Reason", "Conditions", "Workaround", "Next Steps"] and all(len(row) == len(head) for row in rows)
     status, by = head.index("Assignment status"), head.index("Responded by")
     assert {row[status] for row in rows[1:]} >= {"validated", "assigned"}
     assert all(row[by] for row in rows[1:] if row[status] in ("submitted", "validated"))  # an answer always has a person
@@ -506,7 +506,7 @@ def test_compliance_matrix_excel():
     ws = wb["Compliance matrix"]
     assert [c.value for c in ws[4]][:5] == ["Requirement ID", "RFP reference", "Requirement", "RFP wording", "Compliance"]
     words = {row[4] for row in ws.iter_rows(min_row=5, values_only=True)}
-    assert "Comply" in words and words <= {"Comply", "Partially comply", "Does not comply", "Exception", "Open"}
+    assert "Fully" in words and words <= {"Fully", "Partially", "Non-compliant", "Exception", "Open"}  # J-11 wording
     assert all(cell.data_type != "f" for sheet in wb for row in sheet.iter_rows() for cell in row)  # never a formula
     assert wb["Tracking"].max_row - 1 == len(client.get(f"/api/opportunities/{opp}/compliance-matrix.csv").text.strip().splitlines()) - 1
     assert client.get("/api/opportunities/OPP-9999/compliance-matrix.xlsx").status_code == 404

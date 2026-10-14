@@ -2,7 +2,17 @@
 
 /* ---------- Final response ---------- */
 .cons-summary { font-size: var(--fs-lg); }
-.cons-table .col-id { width: 130px; } .cons-table .col-units { width: 30%; } .cons-table .col-state { width: 150px; }
+.cons-table .col-id { width: 130px; } .cons-table .col-cat { width: 110px; } .cons-table .col-units { width: 16%; }
+.cons-table .col-state { width: 20%; } .cons-table .col-comp { width: 150px; } .cons-table .col-src { width: 120px; }
+.cons-response { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: var(--s1); }
+.matrix-filters { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: end; margin: var(--s4) 0 var(--s2); }
+.matrix-filters label { display: flex; flex-direction: column; gap: var(--s1); font-size: var(--fs-sm); font-weight: 600; color: var(--muted); }
+.matrix-filters select { min-width: 150px; max-width: 240px; }
+.matrix-filters .mf-search { flex: 1 1 260px; } .matrix-filters .mf-search input { width: 100%; }
+.mf-actions { display: flex; gap: var(--s2); align-items: center; }
+.matrix-count { margin: var(--s1) 0 var(--s2); }
+.matrix-empty { padding: var(--s5) var(--s3); text-align: center; color: var(--muted); }
+.matrix-more { text-align: center; margin: var(--s3) 0; }
 .cons-unit { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s2); align-items: center; } /* unit, compliance, product, status on one line */
 .cons-unit + .cons-unit { margin-top: var(--s1); padding-top: var(--s1); border-top: 1px dashed var(--line); }
 .cons-unit .badge { margin-right: 0; }
@@ -30,5 +40,36 @@
 .chg-actions .alert { flex: 1 1 100%; margin: var(--s1) 0 0; }
 @media (max-width: 640px) {
   .cons-group-label { flex-basis: 100%; }
+  .matrix-filters label, .matrix-filters select { flex: 1 1 100%; max-width: none; } .mf-actions { flex: 1 1 100%; }
   .chg-upload .form > * { flex: 1 1 100%; } .chg-upload .form input[type="file"] { width: 100%; }
+}
+
+/* ---------- Compliance matrix: row selection, detail panel, source preview, reason tooltip (J-11) ---------- */
+.matrix-layout.has-detail { display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 440px); gap: var(--s4); align-items: start; }
+.matrix-main { min-width: 0; }
+.cons-table tbody tr { cursor: pointer; }
+.cons-table tbody tr:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.cons-table tbody tr.selected td { background: var(--sel); }
+.cons-table tbody tr.selected td:first-child { box-shadow: inset 5px 0 0 var(--accent); }
+.matrix-detail { position: sticky; top: var(--s3); max-height: calc(100vh - 2 * var(--s3)); overflow: auto; min-width: 0; overflow-wrap: anywhere;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 0 var(--s4) var(--s4); }
+.detail-head { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: flex-start; gap: var(--s3);
+  background: var(--card); padding: var(--s3) 0 var(--s2); border-bottom: 1px solid var(--line); }
+.detail-head h3 { margin: 0; font-size: var(--fs-lg); color: var(--ink); } .detail-head p { margin: var(--s1) 0 0; }
+.detail-head h3:focus { outline: none; } .detail-head h3:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.detail-list { margin: var(--s3) 0 0; display: grid; gap: var(--s3); }
+.detail-field dt { font-size: var(--fs-sm); font-weight: 600; color: var(--muted); margin-bottom: 2px; }
+.detail-field dd { margin: 0; } .detail-text { white-space: pre-wrap; }
+.detail-actions { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: center; margin-top: var(--s2); }
+.preview { margin-top: var(--s4); padding-top: var(--s3); border-top: 1px solid var(--line); }
+.preview-ref { margin: 0 0 var(--s2); } .preview-pages { display: flex; flex-wrap: wrap; gap: var(--s2); margin: 0 0 var(--s2); }
+.preview .hl { cursor: default; } .preview-empty { color: var(--muted); margin: var(--s3) 0 0; }
+.reason-tip { display: inline-block; cursor: help; border-radius: var(--radius-pill); } .reason-tip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.reason-pop { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.reason-pop.on { position: fixed; z-index: 60; width: auto; height: auto; max-width: 300px; overflow: visible; clip: auto; white-space: normal;
+  background: var(--ink); color: #fff; padding: var(--s2) var(--s3); border-radius: var(--radius-sm); font-size: var(--fs-sm); font-weight: 400; line-height: 1.4;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, .3); }
+@media (max-width: 1100px) {
+  .matrix-layout.has-detail { grid-template-columns: 1fr; } /* stacked: the panel comes first and takes focus, so it is the first thing seen */
+  .matrix-detail { order: -1; position: static; max-height: none; }
 }

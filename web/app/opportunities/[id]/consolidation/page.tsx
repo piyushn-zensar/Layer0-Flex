@@ -1,16 +1,20 @@
 "use client";
-// Coverage check and compliance matrix.  Owner: Janvia.
+// Compliance matrix: what still needs an answer, and one row per requirement and unit answer, with filters.  Owner: Janvia.
+// Rows come from GET /api/opportunities/{id}/compliance-matrix (J-11). Filtering is in the browser (a few hundred rows);
+// only the first PAGE rows are drawn, "Show more" adds the next ones.
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { memo, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { useApi } from "@/lib/api";
-import { complianceLabel } from "@/lib/types";
-import type { Assignment, Requirement } from "@/lib/types";
+import { complianceLabel, docTypeLabel } from "@/lib/types";
+import type { Doc } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, EmptyState, Skeleton, StatusBadge } from "@/components/ui";
+import ComplianceBadge from "./_components/ComplianceBadge";
+import DetailPanel from "./_components/DetailPanel";
+import { rowKey, type MatrixRow } from "./_components/types";
 
-type Row = { requirement: Requirement; assignments: Assignment[]; state: string };
-type Coverage = { rows: Row[]; total: number; answered: number; blocking: string[] };
+type Matrix = { rows: MatrixRow[]; total: number; answered: number; blocking: string[] };
 
 // Why a requirement is not answered yet, in the order the groups are shown.
 const REASONS = [
@@ -21,33 +25,107 @@ const REASONS = [
 ] as const;
 type Reason = (typeof REASONS)[number]["key"];
 
-// Derived from the row, so the backend contract is unchanged. A returned response outranks an unanswered one, which outranks a submitted one.
-function reasonOf({ state, assignments }: Row): Reason | null {
+// Derived from a requirement's rows. A returned response outranks an unanswered one, which outranks a submitted one.
+function reasonOf(rows: MatrixRow[]): Reason | null {
+  const { state, assignments } = rows[0];
   if (state === "answered") return null;
-  if (assignments.length === 0) return "unassigned";
-  const status = assignments.map((a) => a.status);
+  if (assignments === 0) return "unassigned";
+  const status = rows.map((r) => r.status);
   if (status.includes("returned")) return "returned";
   if (status.includes("assigned")) return "unit";
   return "validation";
 }
 
-const SHOWN = 10; // links shown per group before "more"
+const SHOWN = 10;  // links shown per blocker group before "more"
+const PAGE = 100;  // table rows drawn at first, and added by each "Show more"
+const NONE = "__none";
+const STATES = [{ value: "answered", label: "Answered" }, { value: "pending", label: "Pending" }, { value: "not_assigned", label: "Not assigned" }];
 const HELP = "Every requirement must be answered by its business unit and validated before the response is complete.";
+const NO_FILTER = { q: "", unit: "", compliance: "", state: "", category: "", onlyOpen: false };
+type Filters = typeof NO_FILTER;
+
+// A row is a button for the keyboard: Enter or Space on the row itself selects it (links, badges and buttons inside keep their own keys).
+const Row = memo(function Row({ row, href, selected, onSelect }: { row: MatrixRow; href: string; selected: boolean; onSelect: (key: string) => void }) {
+  const key = rowKey(row);
+  return (
+    <tr data-key={key} tabIndex={0} aria-current={selected ? "true" : undefined}
+      className={`${row.state !== "answered" ? "blocking" : ""}${selected ? " selected" : ""}`.trim()}
+      onClick={(e) => { if (!(e.target as HTMLElement).closest("a")) onSelect(key); }}
+      onKeyDown={(e) => { if (e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onSelect(key); } }}>
+      <td className="mono"><Link href={href} title="Open in Traceability">{row.req_id}</Link></td>
+      <td>{row.requirement}</td>
+      <td><span className="tag">{row.category}</span></td>
+      <td>{row.unit
+        ? <><strong>{row.unit}</strong><div className="muted">{row.unit_name}</div>{row.product && <div className="muted">{row.product}</div>}</>
+        : <span className="muted">not assigned</span>}</td>
+      <td>{row.status ? <StatusBadge status={row.status} /> : <StatusBadge status={row.state} />}
+        {row.response && <div className="muted cons-response" title={row.response}>{row.response}</div>}</td>
+      <td>{row.compliance ? <ComplianceBadge row={row} /> : <span className="muted">{row.unit ? "No compliance yet" : ""}</span>}</td>
+      <td className="muted">{row.source}</td>
+    </tr>
+  );
+});
 
 export default function ConsolidationPage() {
   const { id } = useParams<{ id: string }>();
-  const { data: cov, error } = useApi<Coverage>(`/api/opportunities/${id}/consolidation`);
-  const [onlyOpen, setOnlyOpen] = useState(false);
+  const { data: matrix, error } = useApi<Matrix>(`/api/opportunities/${id}/compliance-matrix`);
+  const [f, setFilters] = useState<Filters>(NO_FILTER);
+  const [limit, setLimit] = useState(PAGE);
+  const q = useDeferredValue(f.q).trim().toLowerCase();
+  const rows = matrix?.rows;
+  const { data: opp } = useApi<{ documents: Doc[] }>(`/api/opportunities/${id}`); // file names for the detail's source line
+  const [selectedKey, setSelectedKey] = useState<string>();
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const select = useCallback((key: string) => setSelectedKey(key), []);
+  const selected = useMemo(() => rows?.find((r) => rowKey(r) === selectedKey), [rows, selectedKey]);
+  const close = useCallback(() => {
+    const key = selectedKey;
+    setSelectedKey(undefined);
+    // back to the row that was open (the table may have changed meanwhile: then focus simply stays where it is)
+    requestAnimationFrame(() => document.querySelector<HTMLElement>(`tr[data-key="${key}"]`)?.focus());
+  }, [selectedKey]);
+  useEffect(() => { if (selectedKey) headingRef.current?.focus({ preventScroll: false }); }, [selectedKey]); // the panel announces itself
+  useEffect(() => {
+    if (!selectedKey) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape" && !e.defaultPrevented) close(); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [selectedKey, close]);
+
+  // Per requirement: its rows, and why it is open. Search text is lower-cased once per row, not on every keystroke.
+  const byReq = useMemo(() => {
+    const m = new Map<string, MatrixRow[]>();
+    for (const r of rows ?? []) m.set(r.req_id, [...(m.get(r.req_id) ?? []), r]);
+    return m;
+  }, [rows]);
+  const reasons = useMemo(() => new Map([...byReq].map(([k, v]) => [k, reasonOf(v)] as const)), [byReq]);
+  const haystack = useMemo(() => (rows ?? []).map((r) => [r.req_id, r.requirement, r.quote, r.source, r.unit, r.unit_name, r.product, r.response, r.category]
+    .filter(Boolean).join(" ").toLowerCase()), [rows]);
+  const options = useMemo(() => {
+    const units = new Map<string, string>();
+    for (const r of rows ?? []) if (r.unit) units.set(r.unit, r.unit_name);
+    const compliance = ["met", "partial", "not_met", "exception"].filter((c) => rows?.some((r) => r.compliance === c));
+    return { units: [...units].sort(([a], [b]) => a.localeCompare(b)), compliance, categories: [...new Set((rows ?? []).map((r) => r.category))].sort(),
+      unassigned: !!rows?.some((r) => !r.unit), unanswered: !!rows?.some((r) => r.unit && !r.compliance) };
+  }, [rows]);
+
   const head = <PageHead level={2} title="Compliance matrix" help={HELP} />;
   if (error) return <>{head}<Alert kind="error">{error}</Alert></>;
-  if (!cov) return <>{head}<Skeleton lines={4} /></>;
+  if (!matrix || !rows) return <>{head}<Skeleton lines={4} /></>;
 
-  const open = cov.rows.filter((r) => reasonOf(r));
-  const groups = REASONS.map((g) => ({ ...g, ids: open.filter((r) => reasonOf(r) === g.key).map((r) => r.requirement.req_id) })).filter((g) => g.ids.length);
-  const reasonLabel = (r: Row) => REASONS.find((g) => g.key === reasonOf(r))?.label;
+  const set = (patch: Partial<Filters>) => { setFilters((p) => ({ ...p, ...patch })); setLimit(PAGE); };
+  const filtered = rows.filter((r, i) =>
+    (!f.onlyOpen || reasons.get(r.req_id)) && (!q || haystack[i].includes(q)) && (!f.category || r.category === f.category) &&
+    (!f.state || r.state === f.state) &&
+    (!f.unit || (f.unit === NONE ? !r.unit : r.unit === f.unit)) &&
+    (!f.compliance || (f.compliance === NONE ? !r.compliance : r.compliance === f.compliance)));
+  const filtering = JSON.stringify(f) !== JSON.stringify(NO_FILTER);
+  const drawn = filtered.slice(0, limit);
+
+  const openIds = [...reasons].filter(([, why]) => why);
+  const groups = REASONS.map((g) => ({ ...g, ids: openIds.filter(([, why]) => why === g.key).map(([k]) => k) })).filter((g) => g.ids.length);
   const traceHref = (reqId: string) => `/opportunities/${id}/trace#${reqId}`;
   const link = (reqId: string) => <Link key={reqId} className="mono" href={traceHref(reqId)} title="Open in Traceability">{reqId}</Link>;
-  const shown = cov.rows.filter((r) => !onlyOpen || reasonOf(r));
 
   return (
     <>
@@ -57,8 +135,8 @@ export default function ConsolidationPage() {
         <a className="button secondary" href={`/api/opportunities/${id}/compliance-matrix.csv`} data-tour="cons-csv">CSV</a>
         <a className="button" href={`/api/opportunities/${id}/compliance-matrix.xlsx`} data-tour="cons-xlsx">Download compliance matrix (Excel)</a>
       </PageHead>
-      <p className="cons-summary" data-tour="cons-summary"><strong>{cov.answered} / {cov.total}</strong> requirements answered.{" "}
-        {cov.blocking.length ? <span className="warn">{cov.blocking.length} still need an answer.</span> : <span className="ok">Every requirement is answered.</span>}</p>
+      <p className="cons-summary" data-tour="cons-summary"><strong>{matrix.answered} / {matrix.total}</strong> requirements answered.{" "}
+        {matrix.blocking.length ? <span className="warn">{matrix.blocking.length} still need an answer.</span> : <span className="ok">Every requirement is answered.</span>}</p>
 
       {groups.length > 0 && (
         <section className="cons-blockers" aria-label="Requirements that still need an answer" data-tour="cons-blockers">
@@ -75,7 +153,7 @@ export default function ConsolidationPage() {
         </section>
       )}
 
-      {cov.rows.length === 0 ? (
+      {rows.length === 0 ? (
         <div data-tour="cons-empty">
           <EmptyState title="No requirements in the baseline yet" hint="Approve and freeze the requirements first; the coverage check runs against the frozen baseline.">
             <Link className="button secondary" href={`/opportunities/${id}/requirements`}>Requirements</Link>
@@ -83,34 +161,78 @@ export default function ConsolidationPage() {
         </div>
       ) : (
         <>
-          <div className="filters" role="group" aria-label="Show" data-tour="cons-filter">
-            <button type="button" className="chip" aria-pressed={!onlyOpen} onClick={() => setOnlyOpen(false)}>All <span>{cov.total}</span></button>
-            <button type="button" className="chip" aria-pressed={onlyOpen} onClick={() => setOnlyOpen(true)}>Open <span>{open.length}</span></button>
+          <div className="matrix-filters" role="search" aria-label="Filter the compliance matrix" data-tour="cons-filter">
+            <label className="mf-search">Search
+              <input type="search" value={f.q} placeholder="Requirement, ID, unit, product, response…" onChange={(e) => set({ q: e.target.value })} />
+            </label>
+            <label>Unit
+              <select value={f.unit} onChange={(e) => set({ unit: e.target.value })}>
+                <option value="">All units</option>
+                {options.units.map(([code, name]) => <option key={code} value={code}>{code} · {name}</option>)}
+                {options.unassigned && <option value={NONE}>Not assigned</option>}
+              </select>
+            </label>
+            <label>Compliance
+              <select value={f.compliance} onChange={(e) => set({ compliance: e.target.value })}>
+                <option value="">All</option>
+                {options.compliance.map((c) => <option key={c} value={c}>{complianceLabel(c)}</option>)}
+                {(options.unanswered || options.unassigned) && <option value={NONE}>No compliance yet</option>}
+              </select>
+            </label>
+            <label>State
+              <select value={f.state} onChange={(e) => set({ state: e.target.value })}>
+                <option value="">All</option>
+                {STATES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
+              </select>
+            </label>
+            <label>Category
+              <select value={f.category} onChange={(e) => set({ category: e.target.value })}>
+                <option value="">All</option>
+                {options.categories.map((c) => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </label>
+            <div className="mf-actions">
+              <button type="button" className="chip" aria-pressed={f.onlyOpen} onClick={() => set({ onlyOpen: !f.onlyOpen })}>Open only <span>{openIds.length}</span></button>
+              <button type="button" className="secondary sm" disabled={!filtering} onClick={() => { setFilters(NO_FILTER); setLimit(PAGE); }}>Clear filters</button>
+            </div>
           </div>
+          <p className="muted matrix-count" role="status" aria-live="polite">
+            {filtering ? `${filtered.length} of ${rows.length} rows match` : `${rows.length} rows`}
+            {drawn.length < filtered.length && `, showing the first ${drawn.length}`}
+          </p>
 
-          <table className="cons-table" data-tour="cons-table">
-            <thead><tr><th className="col-id">ID</th><th>Requirement</th><th className="col-units" data-tour="cons-col-units">Units and responses</th><th className="col-state" data-tour="cons-col-state">State</th></tr></thead>
-            <tbody>
-              {shown.map((row) => {
-                const { requirement: r, assignments, state } = row;
-                return (
-                  <tr key={r.req_id} className={reasonOf(row) ? "blocking" : ""}>
-                    <td className="mono"><Link href={traceHref(r.req_id)} title="Open in Traceability">{r.req_id}</Link><div className="muted">{r.source}</div></td>
-                    <td>{r.text}</td>
-                    <td>{assignments.map((a) => (
-                      <div key={a.id} className="cons-unit"><strong>{a.bu}</strong>
-                        {a.compliance ? <StatusBadge status={a.compliance} kind="compliance" label={complianceLabel(a.compliance)} /> : <span className="muted">no compliance yet</span>}
-                        {a.product_ref && <span className="muted">{a.product_ref}</span>}
-                        <StatusBadge status={a.status} /></div>))}
-                      {assignments.length === 0 && <span className="muted">not assigned</span>}</td>
-                    <td><StatusBadge status={state} />
-                      {reasonLabel(row) && <div className="muted">{reasonLabel(row)}</div>}</td>
-                  </tr>
-                );
-              })}
-              {shown.length === 0 && <tr><td colSpan={4} className="muted">Every requirement is answered.</td></tr>}
-            </tbody>
-          </table>
+          <div className={`matrix-layout${selected ? " has-detail" : ""}`}>
+          <div className="matrix-main">
+          <div className="table-scroll">
+            <table className="cons-table" data-tour="cons-table">
+              <thead><tr>
+                <th className="col-id">ID</th><th>Requirement</th><th className="col-cat">Category</th>
+                <th className="col-units" data-tour="cons-col-units">Unit</th>
+                <th className="col-state" data-tour="cons-col-state">Response</th>
+                <th className="col-comp">Compliance</th><th className="col-src">Source</th>
+              </tr></thead>
+              <tbody>
+                {drawn.map((r) => <Row key={rowKey(r)} row={r} href={traceHref(r.req_id)} selected={rowKey(r) === selectedKey} onSelect={select} />)}
+                {filtered.length === 0 && (
+                  <tr><td colSpan={7} className="matrix-empty">
+                    {filtering ? <>No rows match these filters. <button type="button" className="link" onClick={() => { setFilters(NO_FILTER); setLimit(PAGE); }}>Clear filters</button></>
+                      : "Every requirement is answered."}
+                  </td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+          {drawn.length < filtered.length && (
+            <p className="matrix-more"><button type="button" className="secondary" onClick={() => setLimit(limit + PAGE)}>
+              Show {Math.min(PAGE, filtered.length - drawn.length)} more ({filtered.length - drawn.length} not shown)</button></p>
+          )}
+          </div>
+          {selected && (() => {
+            const doc = opp?.documents.find((d) => d.id === selected.document_id);
+            return <DetailPanel ref={headingRef} row={selected} traceHref={traceHref(selected.req_id)} onClose={close}
+              docName={doc ? `${doc.filename}${doc.role !== "main" ? ` (${docTypeLabel(doc.role)})` : ""}` : "RFP document"} />;
+          })()}
+          </div>
         </>
       )}
     </>

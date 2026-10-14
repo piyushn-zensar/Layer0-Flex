@@ -4,7 +4,12 @@ A requirement is ANSWERED when every assignment for it is validated. Anything el
 
 Public contract:
     coverage(db, opp_id) -> dict      {"rows": [...], "total", "answered", "blocking": [req_id]}; LookupError if unknown
-    compliance_matrix_csv(db, opp_id) -> str   one row per assignment, columns as in COLUMNS; starts with a UTF-8 byte
+    compliance_matrix(db, opp_id) -> dict      {"rows": [...], "total", "answered", "blocking": [req_id]} for the Compliance
+                                               matrix screen (J-11): one row per requirement and assignment (a requirement
+                                               nobody holds has one row with unit None); see its docstring for the row fields
+    compliance_matrix_csv(db, opp_id) -> str   one row per assignment, columns as in COLUMNS (compliance reads Fully /
+                                               Partially / Non-compliant; Reason, Conditions, Workaround and Next Steps come
+                                               last and are blank until A-18); starts with a UTF-8 byte
                                                order mark and its cells are safe to open in Excel (no formulas)
     compliance_matrix_xlsx(db, opp_id) -> bytes  Excel workbook: "Compliance matrix" for the customer (validated answers,
                                                RFP order, sub-requirements listed) and "Tracking" (the CSV's columns)
@@ -42,6 +47,55 @@ def coverage(db: Session, opp_id: str) -> dict:
     return {"rows": rows, "total": len(rows), "answered": len(rows) - len(blocking), "blocking": blocking}
 
 
+# What the screen shows for a compliance value (the same words as web/lib/types.ts complianceLabel).
+COMPLIANCE_LABELS = {"met": "Fully compliant", "partial": "Partially compliant", "not_met": "Non-compliant",
+                     "exception": "Exception (earlier value)"}
+# Extended response fields (A-18 adds them to the assignment): read safely, so the screen works before and after.
+EXTENDED = ("reason", "conditions", "workaround", "next_steps")
+
+
+def _spans(req) -> list[dict]:
+    """Every source span of a requirement for the page preview; an older requirement without `spans` gets its one."""
+    spans = [{k: s.get(k) for k in ("document_id", "page", "line_start", "line_end", "bboxes")} for s in req.spans or []]
+    if not spans and req.page is not None:
+        spans = [{"document_id": req.document_id, "page": req.page, "line_start": req.line_start,
+                  "line_end": req.line_end, "bboxes": req.bboxes or []}]
+    return spans
+
+
+def _response_fields(a) -> dict:
+    """The unit's answer for one matrix row; None when there is no assignment or the field does not exist yet."""
+    return {"assignment_id": getattr(a, "id", None), "status": getattr(a, "status", None),
+            "compliance": getattr(a, "compliance", None),
+            "compliance_label": COMPLIANCE_LABELS.get(getattr(a, "compliance", None), ""),
+            "response": getattr(a, "response", "") or "", "responded_by": getattr(a, "responded_by", None),
+            "validated_by": getattr(a, "validated_by", None), "validation_note": getattr(a, "validation_note", "") or "",
+            **{f: (getattr(a, f, None) or None) for f in EXTENDED}}
+
+
+def compliance_matrix(db: Session, opp_id: str) -> dict:
+    """Rows for the Compliance matrix screen: one per requirement and assignment, in RFP order, as plain JSON values.
+    Row: req_id, requirement, quote, category, state (answered | pending | not_assigned), source (label), document_id,
+    page, line_start, line_end, spans [{document_id, page, line_start, line_end, bboxes}] (the highlight boxes), unit, unit_name,
+    assignments (how many units hold it), product, offering_type, and the unit's answer: assignment_id, status,
+    compliance, compliance_label, response, responded_by, validated_by, validation_note, reason, conditions,
+    workaround, next_steps. The last four are None until A-18 stores them. The history count waits for A-21."""
+    cov = coverage(db, opp_id)
+    source = _sources(db, opp_id)
+    rows = []
+    for r in cov["rows"]:
+        req, m = r["req"], r["match"]
+        base = {"req_id": req.req_id, "requirement": req.text, "quote": req.quote, "category": req.category,
+                "state": r["state"], "source": source(req), "document_id": req.document_id, "page": req.page,
+                "line_start": req.line_start, "line_end": req.line_end, "spans": _spans(req),
+                "assignments": len(r["assignments"])}
+        for a in r["assignments"] or [None]:
+            rows.append(base | {"unit": a.bu if a else None, "unit_name": _unit_name(a.bu) if a else "",
+                                "product": (a.product_ref if a else None) or (m.product_id if m else None) or None,
+                                "offering_type": _offering(m, a.bu if a else None) or None} | _response_fields(a))
+    return {"rows": rows, "total": cov["total"], "answered": cov["answered"], "blocking": cov["blocking"]}
+
+
 def _cell(value) -> str:
     """Text that starts like a formula (= + - @, tab, CR) would run when the file is opened in Excel; quote it."""
     text = "" if value is None else str(value)
@@ -58,7 +112,8 @@ def _offering(m, bu: str | None) -> str:
 
 # The last two columns were added on 9 Oct 2026 (traceability): they are appended so no earlier column moves.
 COLUMNS = ["Requirement ID", "Source", "Category", "Requirement", "Quote", "Business unit", "Product",
-           "Offering type", "Compliance", "Response", "Validated by", "State", "Assignment status", "Responded by"]
+           "Offering type", "Compliance", "Response", "Validated by", "State", "Assignment status", "Responded by",
+           *(name for _, name in excel.EXTENDED)]  # J-11: appended; blank until A-18 stores them
 BOM = "\ufeff"  # Excel opens a UTF-8 CSV as UTF-8 only when it starts with a byte order mark (else it assumes ANSI)
 
 
@@ -75,8 +130,9 @@ def _row(req, m, a, state: str, source: str | None = None) -> list[str]:
     return [_cell(v) for v in (
         req.req_id, source or req.source, req.category, req.text, req.quote,
         a.bu if a else "", (a.product_ref if a else None) or (m.product_id if m else ""),
-        _offering(m, a.bu if a else None), a.compliance if a else "", a.response if a else "",
-        a.validated_by if a else "", state, a.status if a else "", a.responded_by if a else "")]
+        _offering(m, a.bu if a else None), excel.EXPORT_WORDS.get(a.compliance, a.compliance) if a else "", a.response if a else "",
+        a.validated_by if a else "", state, a.status if a else "", a.responded_by if a else "",
+        *(getattr(a, field, None) for field, _ in excel.EXTENDED))]
 
 
 def compliance_matrix_csv(db: Session, opp_id: str) -> str:
