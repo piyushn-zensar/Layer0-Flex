@@ -416,21 +416,37 @@ def test_returned_items_reopen_with_a_note():
 
 
 def test_go_no_go_summary_and_structured_criteria():
-    """A-12: summary of how requirements are satisfied, criteria with 'data not yet available' placeholders,
-    advice that never decides, and the person's judgement per criterion stored with the decision.
-    Appended by Atharv (append-only on this shared file)."""
+    """A-12: summary of how requirements are satisfied, criteria, advice that never decides, and the person's
+    judgement per criterion stored with the decision. A-15 (C-10): no cost or competitor criteria; completeness,
+    compliance and schedule from validated answers; only the bid manager decides.
+    Appended by Atharv (append-only on this shared file; updated by Atharv in A-15)."""
+    from types import SimpleNamespace
+
+    from app.modules.decisions import service as decisions
     seed_demo.main()
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     s = client.get(f"/api/opportunities/{opp}/decisions").json()["summary"]
-    assert s["advice"].startswith("Advice from Layer 0") and s["advice"].endswith("A person decides.")
+    assert s["advice"].startswith("Advice from Layer 0") and s["advice"].endswith("The bid manager decides.")
     status = {c["id"]: c["status"] for c in s["criteria"]}
-    assert all(status[k] == "unknown" for k in ("cost_budget", "delivery", "competitors"))  # deviations, capacity: A-10
+    assert not {"cost_budget", "competitors", "delivery", "coverage", "matches_reviewed"} & set(status)
+    assert not any(re.search(r"\bA-\d", c["question"]) for c in s["criteria"])  # no internal references
+    assert 0 < s["assessment"]["validated"] < s["assessment"]["items"] and status["completeness"] == "not_met"
+    assert status["compliance"] == "met" and status["schedule"] == "met"  # the seed's validated answers
     assert status["open_questions"] == "not_met"  # Syracuse states no redundancy class (R-003 warn)
     assert {r["level"] for r in s["rows"]} <= {"fully", "partly", "not", "bid_desk"} and len(s["rows"]) == 13
-    crit = [{"id": "coverage", "status": "met", "note": "checked"}, {"id": "cost_budget", "status": "unknown"}]
+    crit = [{"id": "compliance", "status": "met", "note": "checked"}, {"id": "schedule", "status": "unknown"}]
+    assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": crit}, headers=auth("crown.pm")).status_code == 403
     d = client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": crit}, headers=auth("bid.manager")).json()
-    assert d["criteria"][0] == {"id": "coverage", "status": "met", "note": "checked"} and "summary" in d["evidence"]
+    assert d["criteria"][0] == {"id": "compliance", "status": "met", "note": "checked"} and "summary" in d["evidence"]
+    assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": [{"id": "cost_budget", "status": "unknown"}]}).status_code == 422
+
+    # schedule: met only when every schedule requirement is validated and none is non-compliant
+    ans = lambda c: [SimpleNamespace(compliance=c)]  # noqa: E731
+    assert decisions._schedule_criterion([], {})[0] == "unknown"
+    assert decisions._schedule_criterion(["R1", "R2"], {"R1": ans("met"), "R2": []})[0] == "unknown"
+    assert decisions._schedule_criterion(["R1", "R2"], {"R1": ans("met"), "R2": ans("not_met")})[0] == "not_met"
+    assert decisions._schedule_criterion(["R1", "R2"], {"R1": ans("met"), "R2": ans("partial")})[0] == "met"
     assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": [{"id": "x", "status": "met"}]}).status_code == 422
 
 

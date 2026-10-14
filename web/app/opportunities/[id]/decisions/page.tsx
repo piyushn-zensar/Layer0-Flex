@@ -2,7 +2,7 @@
 // Evidence pack, participation, go/no-go and one-step dispatch.  Owner: Atharv.
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { errorMessage, post, useApi } from "@/lib/api";
+import { errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
 import type { Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { STATUS_EVENT } from "@/components/shell/OppSteps"; // the header listens for it after go/no-go and dispatch
@@ -15,7 +15,7 @@ type Criterion = { id: string; name: string; question: string; status: Judgement
 type Summary = {
   rows: { req_id: string; category: string; text: string; level: string; basis: string; units: string[] }[];
   by_category: Record<string, Record<"fully" | "partly" | "not" | "bid_desk", number>>;
-  coverage: number; criteria: Criterion[]; advice: string;
+  assessment: { items: number; validated: number }; criteria: Criterion[]; advice: string;
 };
 const JUDGEMENT: Record<Judgement, string> = { met: "met", not_met: "not met", unknown: "not known" };
 const BID_DESK = "Bid desk (commercial and submission items)";
@@ -126,6 +126,7 @@ export default function DecisionsPage() {
   const { data, error, reload } = useApi<Data>(`/api/opportunities/${id}/decisions`);
   const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/opportunities/${id}/knowledge`); // A-11
   const [busy, setBusy] = useState<string>(); // what is running: one action at a time
+  const bm = isBidManager(useMe()); // the bid manager makes the final go/no-go call (technical-architecture 16.5)
   if (error) return <Alert kind="error" title="Could not load the bid decision.">{error}</Alert>;
   if (!data) return <Skeleton lines={5} />;
   const { evidence: ev, participation: part, go_no_go: go } = data;
@@ -154,7 +155,7 @@ export default function DecisionsPage() {
 
   return (
     <div className="decisions">
-      <PageHead level={2} title="Bid decision" help="Review the evidence, choose the participating business units, decide go or no-go, then send each unit its work." />
+      <PageHead level={2} title="Bid decision" help="Review the evidence, choose the participating business units and send each unit its work. Once the units have assessed it, the bid manager decides go or no-go." />
       <section className="card" data-tour="dec-evidence">
         <div className="card-head"><h2>Evidence</h2>
           <span className="muted" data-tour="dec-evidence-counts">{ev.requirements} requirements · {Object.entries(ev.by_category).map(([k, v]) => `${k} ${v}`).join(", ")}</span></div>
@@ -191,13 +192,28 @@ export default function DecisionsPage() {
         </form>
       </section>
 
+      {ev.frozen && <section className="card" data-tour="dec-dispatch">
+        <div className="card-head"><h2>2. Send the work to the units</h2>
+          <span className="muted">The units assess before the go/no-go. Repeat after changing matches or participation: new work is sent, work that no longer fits is withdrawn.</span></div>
+        <div className="row">
+          <button disabled={!!busy || !part || go?.outcome === "no_go"} onClick={dispatch} data-tour="dec-dispatch-button">Dispatch work packages to units</button>
+          {busy === "dispatch" && <Busy label="Dispatching…" />}
+          {!part && <span className="muted">Record which business units take part first.</span>}
+          {go?.outcome === "no_go" && <span className="muted">The bid is marked no-go: nothing is sent until a go decision resumes it.</span>}
+        </div>
+      </section>}
+
       <section className="card" data-tour="dec-gonogo">
-        <div className="card-head"><h2>2. Go / no-go</h2>
+        <div className="card-head"><h2>3. Go / no-go</h2>
           {go && <span className="muted" data-tour="dec-gng-recorded">Decision <StatusBadge status={go.outcome} kind="opp" label={go.outcome.replace("_", "-")} /> by <strong>{go.decided_by}</strong></span>}</div>
         {go && <p>{go.rationale}
           {go.criteria && go.criteria.length > 0 && <span className="muted"> Criteria judged: {(["met", "not_met", "unknown"] as Judgement[])
             .map((j) => `${go.criteria!.filter((c) => c.status === j).length} ${JUDGEMENT[j]}`).join(", ")}.</span>}
           {go.rationale && <> <SendToKnowledge kind="decision" refId={go.id} status={sent?.[`decision:${go.id}`]} onSent={reloadSent} /></>}</p>}
+        {data.summary && data.summary.assessment.validated < data.summary.assessment.items && <div data-tour="dec-assessment-warning">
+          <Alert kind="warn">Assessment incomplete: {data.summary.assessment.validated} of {data.summary.assessment.items} item(s) sent to the units have a validated answer. You can still record go or no-go.</Alert></div>}
+        {data.summary && data.summary.assessment.items === 0 && <div data-tour="dec-assessment-warning">
+          <Alert kind="warn">Nothing has been sent to the units yet: a decision now is made without their assessment.</Alert></div>}
         {data.summary && <GoNoGoSummary s={data.summary} oppId={id} />}
         <form className="form compact" onSubmit={(e) => e.preventDefault()}>
           {data.summary && <div className="table-scroll" data-tour="dec-criteria"><table className="dec-criteria">
@@ -215,22 +231,15 @@ export default function DecisionsPage() {
           </table></div>}
           <label data-tour="dec-gng-rationale">Rationale <input name="rationale" /></label>
           <div className="row">
-            <button type="button" disabled={!ev.frozen || !!busy} onClick={(e) => decide("go", e.currentTarget.form!)} data-tour="dec-go">Go</button>
-            <button type="button" disabled={!ev.frozen || !!busy} className="danger secondary" onClick={(e) => decide("no_go", e.currentTarget.form!)} data-tour="dec-no-go">No-go</button>
+            <button type="button" disabled={!ev.frozen || !!busy || !bm} onClick={(e) => decide("go", e.currentTarget.form!)} data-tour="dec-go">Go</button>
+            <button type="button" disabled={!ev.frozen || !!busy || !bm} className="danger secondary" onClick={(e) => decide("no_go", e.currentTarget.form!)} data-tour="dec-no-go">No-go</button>
             {busy === "decision" && <Busy label="Recording…" />}
             {!ev.frozen && <span className="muted">Publish the requirement register first.</span>}
+            {ev.frozen && !bm && <span className="muted">Only the bid manager records go or no-go.</span>}
           </div>
         </form>
       </section>
 
-      {go?.outcome === "go" && <section className="card" data-tour="dec-dispatch">
-        <div className="card-head"><h2>3. Send the work to the units</h2>
-          <span className="muted">Repeat after changing matches or participation: new work is sent, work that no longer fits is withdrawn.</span></div>
-        <div className="row">
-          <button disabled={!!busy} onClick={dispatch} data-tour="dec-dispatch-button">Dispatch work packages to units</button>
-          {busy === "dispatch" && <Busy label="Dispatching…" />}
-        </div>
-      </section>}
       {confirmDialog}
     </div>
   );

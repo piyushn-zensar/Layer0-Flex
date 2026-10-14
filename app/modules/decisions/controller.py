@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
-from app.core.web import actor, row
+from app.core.web import BID_MANAGER, actor, require, row
 from app.modules.catalog import service as catalog
 from app.modules.decisions import service
 from app.modules.opportunities import service as opportunities
@@ -60,6 +60,7 @@ def participation(opp_id: str, body: ParticipationIn, request: Request, db: Sess
 
 @router.post("/opportunities/{opp_id}/go-no-go")
 def go_no_go(opp_id: str, body: GoNoGoIn, request: Request, db: Session = Depends(get_db)):
+    require(request, BID_MANAGER)  # the bid manager makes the final call; no separate approver (team decision, 13 Oct 2026)
     known = {c["id"] for c in catalog.go_no_go()["criteria"]}
     if unknown := [c.id for c in body.criteria if c.id not in known]:
         raise HTTPException(422, f"Unknown criteria: {unknown}.")
