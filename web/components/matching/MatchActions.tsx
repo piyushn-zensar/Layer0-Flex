@@ -17,7 +17,7 @@ const OFFERINGS: Offering[] = ["CTO", "SEMI_CUSTOM", "ETO"];
 // QA-04: how the match came about (matching.service stores the method; "rule" is a non-product category routed to the bid desk)
 const METHOD: Record<string, string> = {
   manual: "set by a person", agent: "proposed by the matching agent",
-  rule: "routed to the bid desk by rule (not a product category)", retrieval_only: "closest catalog entry (no agent answer)",
+  rule: "routed by rule to the bid desk (commercial and submission items), not a product category", retrieval_only: "closest catalog entry (no agent answer)",
 };
 const stop = (e: React.SyntheticEvent) => e.stopPropagation();
 
@@ -95,7 +95,7 @@ export default function MatchActions({ oppId, reqId, match: m, dispatched, onDon
             </div>
           ))}
           {catalog && draft.length === 0 && <span className="muted">No unit: the bid manager answers it (not a product item).</span>}
-          {dispatched && <span className="warn" data-tour={t("match-dispatched-warning")}>Already sent to units: dispatch again on the Decisions page to apply this change.
+          {dispatched && <span className="warn" data-tour={t("match-dispatched-warning")}>Already sent to units: dispatch again on the Bid decision step to apply this change.
             Added units get the work (if they take part); removed units have theirs withdrawn.</span>}
           <div className="row-actions">
             <button className="secondary" disabled={!catalog || busy} onClick={addRow} data-tour={t("match-add-unit")}>Add unit</button>

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { errorMessage, post, useApi, useMe } from "@/lib/api";
-import type { Assignment, Requirement, Unit } from "@/lib/types";
+import { complianceLabel, type Assignment, type Requirement, type Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
 
@@ -15,7 +15,10 @@ type Data = { bu: string; unit: Unit | null; compliance: string[]; items: Item[]
 type Portfolio = { progress: Record<string, { total: number; submitted: number; validated: number }> }[];
 
 const BID_MANAGER = "Bid Manager";
+const BID_DESK = "Bid desk (commercial and submission items)";
 const open = (a: Item) => a.status === "assigned" || a.status === "returned";
+// Stored values stay; screens show Fully / Partially / Non-compliant (technical-architecture 16.2). "exception" is retired.
+const answerLabel = (c: string) => (c === "exception" ? "Exception (earlier value)" : complianceLabel(c));
 
 export default function InboxPage() {
   const { bu } = useParams<{ bu: string }>();
@@ -69,8 +72,8 @@ export default function InboxPage() {
 
   return (
     <div className="content">
-      <PageHead title={`My work: ${data.unit?.name ?? "Bid desk (bid manager)"}`}
-        help="Each line is a requirement assigned to this unit. Mark it met, partly met, not met or an exception, say what meets it, then submit. The bid manager validates or returns it with a note.">
+      <PageHead title={`My work: ${data.unit?.name ?? BID_DESK}`}
+        help="Each line is a requirement assigned to this unit. Mark it fully, partially or non-compliant, say how it is met, then submit. The bid manager validates or returns it with a note.">
         {canAnswer && openCount > 0 && <button disabled={busy !== undefined} onClick={submitAll} data-tour="inbox-submit-all">Submit all answered rows</button>}
         {busy === "all" && <Busy label="Sending…" />}
       </PageHead>
@@ -78,7 +81,7 @@ export default function InboxPage() {
         <span>Work package:</span>
         {Object.keys(waiting).sort((a, b) => (a === "BID" ? -1 : b === "BID" ? 1 : a.localeCompare(b))).map((u) => (
           <Link key={u} href={`/inbox/${u}`} className={`chip${u === bu ? " on" : ""}`} aria-current={u === bu ? "page" : undefined}>
-            {u === "BID" ? "Bid desk" : u}{canValidate && waiting[u] > 0 && <span>{waiting[u]} to validate</span>}
+            {u === "BID" ? BID_DESK : u}{canValidate && waiting[u] > 0 && <span>{waiting[u]} to validate</span>}
           </Link>))}
       </nav>
       {opportunities.length > 0 && (
@@ -95,9 +98,9 @@ export default function InboxPage() {
       {!canAnswer && !canValidate && <div data-tour="inbox-readonly"><Alert kind="info">You are signed in as {me}: you can read this work package but not answer it. Sign in as one of this unit's people to answer.</Alert></div>}
       {canAnswer && openCount > 0 && <p className="muted" data-tour="inbox-open-count">{openCount} open row(s). “Submit all answered rows” sends every open row where “How it is met” is filled in.</p>}
       {canValidate && toValidate > 0 && <p className="muted" data-tour="inbox-to-validate">{toValidate} submitted answer(s) waiting for validation.</p>}
-      {data.items.length === 0 ? <EmptyState title="Nothing assigned" hint="Requirements appear here once the bid manager dispatches an opportunity to this unit." /> : (
+      {data.items.length === 0 ? <EmptyState title="Nothing assigned" hint="Requirements appear here once the bid manager dispatches a bid to this unit." /> : (
       <table className="inbox" data-tour="inbox-table">
-        <thead><tr><th>Opportunity</th><th>Requirement</th><th>Response</th><th>Status</th></tr></thead>
+        <thead><tr><th>Bid</th><th>Requirement</th><th>Response</th><th>Status</th></tr></thead>
         <tbody>
           {data.items.map((a) => {
             const t = (id: string) => (a.id === firstOpen ? id : undefined);        // first open row's targets
@@ -107,16 +110,16 @@ export default function InboxPage() {
               <td className="mono"><Link href={`/opportunities/${a.opportunity_id}/trace#${a.req_id}`}>{a.opportunity_id}<br />{a.req_id}</Link></td>
               <td data-tour={t("inbox-req-cell")}>{a.requirement ? <>{a.requirement.text}<div className="quote">“{a.requirement.quote}”</div>
                 {a.requirement.provenance === "UNANCHORED" // UX-14: the same badge as the Requirements page, no "not found in source" link
-                  ? <StatusBadge status="medium" kind="severity" label="unanchored" title="Quote not located on the page; check the source manually" />
+                  ? <StatusBadge status="medium" kind="severity" label="Source not verified" title="Quote not located on the page; check the source manually" />
                   : <Link className="muted" href={`/opportunities/${a.opportunity_id}/trace#${a.req_id}`} data-tour={t("inbox-source-link")}>{a.requirement.source}: show highlighted source</Link>}</>
-                : <span className="warn">This requirement no longer exists in the opportunity.</span>}</td>
+                : <span className="warn">This requirement no longer exists in the bid.</span>}</td>
               <td>
                 {canAnswer && open(a) ? (
                   <form className="form compact" data-assignment={a.id} aria-busy={busy === a.id} data-tour={t("inbox-form")}
                     onSubmit={(e) => { e.preventDefault(); const f = new FormData(e.currentTarget); run(a.id, () => answer(a, f), `${a.req_id} submitted for validation.`); }}>
                     {a.status === "returned" && <div data-tour={a.id === firstReturned ? "inbox-returned-note" : undefined}><Alert kind="warn" title="Returned">by {a.validated_by}: {a.validation_note}</Alert></div>}
                     <label data-tour={t("inbox-compliance")}><span className="sr-only">Compliance</span>
-                      <select name="compliance" defaultValue={a.compliance ?? "met"}>{data.compliance.map((c) => <option key={c}>{c}</option>)}</select></label>
+                      <select name="compliance" defaultValue={a.compliance ?? "met"}>{data.compliance.map((c) => <option key={c} value={c}>{answerLabel(c)}</option>)}</select></label>
                     <label data-tour={t("inbox-product")}><span className="sr-only">Product or configuration</span>
                       <input name="product_ref" defaultValue={a.product_ref ?? ""} placeholder="Product / configuration" /></label>
                     <label data-tour={t("inbox-response")}><span className="sr-only">How it is met</span>
@@ -128,7 +131,7 @@ export default function InboxPage() {
                   </form>
                 ) : (
                   // UX-04: compliance, product and status are separate blocks, never adjacent text
-                  <div data-tour={v("inbox-answer-submitted")}>{a.compliance && <strong>{a.compliance}</strong>}{a.product_ref && <> <span className="mono">{a.product_ref}</span></>}
+                  <div data-tour={v("inbox-answer-submitted")}>{a.compliance && <strong>{answerLabel(a.compliance)}</strong>}{a.product_ref && <> <span className="mono">{a.product_ref}</span></>}
                     {a.response && <div className="muted">{a.response}</div>}
                     {!a.compliance && <div className="muted">not answered yet</div>}</div>
                 )}

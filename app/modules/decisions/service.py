@@ -92,7 +92,7 @@ def summary(db: Session, opp_id: str, ev: dict | None = None) -> dict:
                               "Failing: " + ", ".join(i for i, r in rules.items() if r["status"] == "fail") if any(r["status"] == "fail" for r in rules.values())
                               else "No engineering rule fails."),
         "open_questions": (not warns and not ev["unanchored"],
-                           f"Rule warnings: {', '.join(warns) or 'none'}; unanchored requirements: {len(ev['unanchored'])}."),
+                           f"Rule warnings: {', '.join(warns) or 'none'}; requirements with source not verified: {len(ev['unanchored'])}."),
         "matches_reviewed": (ev["not_reviewed"] == 0, f"{ev['not_reviewed']} product match(es) not yet accepted or changed by a person."),
         "pending_acquisition": (rules.get("R-004", {}).get("status") != "warn", rules.get("R-004", {}).get("note", "")),
         "deviations": _deviations_criterion(ev["deviations"]),
@@ -141,9 +141,9 @@ def _capacity_criterion(load: dict) -> tuple[bool, str]:
 def record(db: Session, opp_id: str, kind: str, outcome: str, units: list[str], rationale: str, actor: str,
            criteria: list[dict] | None = None) -> Decision:
     if not opportunities.get(db, opp_id):
-        raise LookupError(f"{opp_id} not found.")
+        raise LookupError(f"Bid {opp_id} not found.")
     if kind == "go_no_go" and not requirements.baseline(db, opp_id):
-        raise ValueError("Freeze the requirements before deciding go or no-go (review page).")
+        raise ValueError("Publish the requirement register before deciding go or no-go (Requirements step).")
     if kind == "participation":
         active = {u["code"] for u in catalog.units()}
         if not units or set(units) - active:
