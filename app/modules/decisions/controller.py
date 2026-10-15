@@ -55,6 +55,7 @@ def _record(db: Session, opp_id: str, kind: str, outcome: str, units: list[str],
 
 @router.post("/opportunities/{opp_id}/participation")
 def participation(opp_id: str, body: ParticipationIn, request: Request, db: Session = Depends(get_db)):
+    require(request, BID_MANAGER)  # participation and routing are the bid manager's (technical-architecture 16.6)
     return _record(db, opp_id, "participation", "units", body.units, body.rationale, actor(request), 422)
 
 

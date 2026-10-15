@@ -1317,3 +1317,34 @@ def test_assessment_step():
     assert after["published"] and after["baseline"] == 1 and after["sent"] and after["participation"]["decided_by"] == bm
     assert sum(p["total"] for p in after["progress"].values()) == sum(len(r["units"]) for r in after["routing"] if r["route"] != "needs_owner")
     assert client.get("/api/opportunities/OPP-9999/assessment").status_code == 404
+
+
+def test_permissions_in_atharvs_modules():
+    """A-20 (C-09, technical-architecture 16.6): the server checks the role on every write in matching, decisions and
+    workpackages; the administrator reads only. Appended by Atharv (append-only on this shared file)."""
+    seed_demo.main()
+    client, pm, de, admin = signed_in(), auth("crown.pm"), auth("crown.de"), auth("admin")
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    row = next(r for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"] if r["match"] and r["assignments"])
+    req_id, match_id = row["req"]["req_id"], row["match"]["id"]
+    bid_manager_only = [
+        (f"/api/opportunities/{opp}/match", None),
+        (f"/api/matches/{match_id}/decide", {"action": "accept"}),
+        (f"/api/opportunities/{opp}/requirements/{req_id}/match", {"units": []}),
+        (f"/api/opportunities/{opp}/participation", {"units": ["CROWN"]}),
+        (f"/api/opportunities/{opp}/dispatch", None),
+        (f"/api/opportunities/{opp}/go-no-go", {"outcome": "go"}),
+        (f"/api/opportunities/{opp}/requirements/{req_id}/capability-gap", {"reason": "x"}),
+    ]
+    for url, body in bid_manager_only:
+        for who in (pm, de, admin):
+            assert client.post(url, json=body, headers=who).status_code == 403, url
+    item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp and i["status"] == "submitted")
+    assert client.post(f"/api/assignments/{item['id']}/validate", json={"ok": True}, headers=pm).status_code == 403
+    for url, body in ((f"/api/assignments/{item['id']}/respond", {"compliance": "met"}),
+                      (f"/api/opportunities/{opp}/comments", {"req_id": req_id, "text": "?", "kind": "question"})):
+        assert client.post(url, json=body, headers=admin).status_code == 403, url
+    for url in (f"/api/opportunities/{opp}/assessment", f"/api/opportunities/{opp}/decisions", "/api/inbox/CROWN",
+                f"/api/assignments/{item['id']}/history", f"/api/opportunities/{opp}/comments"):
+        assert client.get(url, headers=admin).status_code == 200, url  # everyone signed in reads
+    assert client.post(f"/api/opportunities/{opp}/participation", json={"units": ["CROWN", "EP2"]}).status_code == 200

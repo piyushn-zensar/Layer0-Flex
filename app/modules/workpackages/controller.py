@@ -7,7 +7,7 @@ from pydantic import BaseModel, model_validator
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
-from app.core.web import BID_MANAGER, actor, require, row, user
+from app.core.web import BID_MANAGER, CORRECTORS, actor, require, row, user
 from app.modules.catalog import service as catalog
 from app.modules.requirements import service as requirements
 from app.modules.workpackages import service
@@ -69,6 +69,7 @@ def _call(fn, *args):
 
 @router.post("/opportunities/{opp_id}/dispatch")
 def dispatch(opp_id: str, request: Request, db: Session = Depends(get_db)):
+    require(request, BID_MANAGER)  # sending for assessment is the bid manager's (technical-architecture 16.6)
     created = _call(service.dispatch, db, opp_id, actor(request))
     return {"created": created, "needs_owner": len(service.needs_owner(db, opp_id))}
 
@@ -113,6 +114,7 @@ def inbox(bu: str, db: Session = Depends(get_db)):
 
 @router.post("/assignments/{assignment_id}/respond")
 def respond(body: RespondIn, request: Request, assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
+    require(request, *CORRECTORS)  # no administrator; the service checks the unit's own people (bid desk: bid manager)
     _call(service.respond, db, assignment_id, body.compliance, body.product_ref, body.response, actor(request),
           body.reason, body.conditions, body.workaround, body.next_steps)
     return {"ok": True}
@@ -126,6 +128,7 @@ def comments(opp_id: str, req_id: str | None = None, status: Literal["open", "cl
 
 @router.post("/opportunities/{opp_id}/comments")
 def add_comment(opp_id: str, body: CommentIn, request: Request, db: Session = Depends(get_db)):
+    require(request, *CORRECTORS)  # the administrator reads only
     try:
         return row(service.add_comment(db, opp_id, body.req_id, body.text, body.kind, actor(request), body.assignment_id))
     except LookupError as exc:
@@ -148,5 +151,6 @@ def history(assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
 
 @router.post("/assignments/{assignment_id}/validate")
 def validate(body: ValidateIn, request: Request, assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
+    require(request, BID_MANAGER)  # ponytail: the bid manager validates until A-17 moves it to the unit's configured role
     _call(service.validate, db, assignment_id, body.ok, body.note, actor(request))
     return {"ok": True}
