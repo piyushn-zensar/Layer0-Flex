@@ -39,6 +39,13 @@ Public contract:
         (CPQ seed / basis of design / specialist queue), each with its source document (the main RFP or a change
         document), requires_human_completion; LookupError: unknown
         opportunity or no work for the unit; ValueError: the bid desk
+    comments(db, opp_id, req_id=None, status=None) -> list[Comment]   a bid's questions and comments, oldest first (C-17)
+    add_comment(db, opp_id, req_id, text, kind, actor, assignment_id=None) -> Comment   kind: question | comment.
+        LookupError: unknown bid, a requirement outside it, or an assignment of another requirement; ValueError: no
+        text or an unknown kind
+    close_comment(db, comment_id, actor, any_author=False) -> Comment   the author closes it (any_author: the bid
+        manager closes anyone's). LookupError / PermissionError / ValueError: already closed
+    open_questions(db, opp_id) -> list[Comment]           open questions: they block consolidation (C-17)
     return_for_change(db, opp_id, req_ids, note, actor) -> int   a change document changed these requirements:
         their submitted / validated answers are returned with the note (the unit answers again), assigned and
         returned work keeps its status and gets the note. Returns how many assignments were touched
@@ -56,7 +63,7 @@ from app.modules.decisions import service as decisions
 from app.modules.matching import service as matching
 from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service as requirements
-from app.modules.workpackages.models import BID_DESK, COMPLIANCE, EXTENDED, NEEDS_REASON, Assignment
+from app.modules.workpackages.models import BID_DESK, COMMENT_KINDS, COMPLIANCE, EXTENDED, NEEDS_REASON, Assignment, Comment
 
 BID_MANAGER = "Bid Manager"  # ponytail: PoC actor name from the header picker; real roles come with sign-in
 
@@ -250,6 +257,57 @@ def validate(db: Session, assignment_id: int, ok: bool, note: str, actor: str) -
     a.status, a.validated_by, a.validation_note = ("validated" if ok else "returned"), actor, note
     audit.record(db, actor, a.status, "assignment", a.req_id, a.opportunity_id, bu=a.bu, note=note)
     db.commit()
+
+
+def comments(db: Session, opp_id: str, req_id: str | None = None, status: str | None = None) -> list[Comment]:
+    opportunities.require(db, opp_id)
+    q = select(Comment).where(Comment.opportunity_id == opp_id)
+    if req_id:
+        q = q.where(Comment.req_id == req_id)
+    if status:
+        q = q.where(Comment.status == status)
+    return list(db.scalars(q.order_by(Comment.id)))
+
+
+def add_comment(db: Session, opp_id: str, req_id: str, text: str, kind: str, actor: str,
+                assignment_id: int | None = None) -> Comment:
+    opportunities.require(db, opp_id)
+    if kind not in COMMENT_KINDS:
+        raise ValueError(f"A comment is a question or a comment, not {kind!r}.")
+    if not text.strip():
+        raise ValueError("Write the question or comment first.")
+    req = requirements.get(db, req_id)
+    if not req or req.opportunity_id != opp_id:
+        raise LookupError(f"{req_id} is not a requirement of {opp_id}.")
+    if assignment_id is not None:
+        a = db.get(Assignment, assignment_id)
+        if not a or (a.opportunity_id, a.req_id) != (opp_id, req_id):
+            raise LookupError(f"Assignment {assignment_id} is not on {req_id}.")
+    c = Comment(opportunity_id=opp_id, req_id=req_id, assignment_id=assignment_id, author=actor, text=text.strip(), kind=kind)
+    db.add(c)
+    db.flush()
+    audit.record(db, actor, "asked" if kind == "question" else "commented", "comment", str(c.id), opp_id,
+                 req_id=req_id, assignment_id=assignment_id, text=c.text)
+    db.commit()
+    return c
+
+
+def close_comment(db: Session, comment_id: int, actor: str, any_author: bool = False) -> Comment:
+    c = db.get(Comment, comment_id)
+    if not c:
+        raise LookupError(f"Comment {comment_id} not found.")
+    if c.author != actor and not any_author:
+        raise PermissionError(f"Only {c.author} or the bid manager closes this {c.kind}.")
+    if c.status == "closed":
+        raise ValueError(f"This {c.kind} was closed by {c.closed_by}.")
+    c.status, c.closed_by, c.closed_at = "closed", actor, utcnow()
+    audit.record(db, actor, "closed", "comment", str(c.id), c.opportunity_id, req_id=c.req_id)
+    db.commit()
+    return c
+
+
+def open_questions(db: Session, opp_id: str) -> list[Comment]:
+    return [c for c in comments(db, opp_id, status="open") if c.kind == "question"]
 
 
 def return_for_change(db: Session, opp_id: str, req_ids: list[str], note: str, actor: str) -> int:

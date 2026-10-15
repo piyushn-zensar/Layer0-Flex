@@ -12,7 +12,7 @@ import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/comp
 
 // C-12 response fields (A-18): every assignment row carries them; null until a unit fills them in
 type Fields = { reason: string | null; conditions: string | null; workaround: string | null; next_steps: string | null };
-type Item = Assignment & Fields & { requirement: Requirement | null };
+type Item = Assignment & Fields & { requirement: Requirement | null; open_questions: number };
 const FIELDS: { name: keyof Fields; label: string }[] = [
   { name: "conditions", label: "Conditions" }, { name: "workaround", label: "Workaround" }, { name: "next_steps", label: "Next steps" }];
 type Data = { bu: string; unit: Unit | null; compliance: string[]; items: Item[] };
@@ -27,6 +27,47 @@ const ACTIONS: Record<string, string> = { assigned: "assigned it", reopened: "re
   validated: "validated it", returned: "returned it", withdrawn: "withdrew it", capability_gap: "recorded a capability gap" };
 const CHANGE_LABELS: Record<string, string> = { compliance: "Compliance", product_ref: "Product", response: "How it is met", reason: "Reason",
   conditions: "Conditions", workaround: "Workaround", next_steps: "Next steps" };
+
+// A-22 (C-17): questions and comments on a requirement; an open question blocks completion until it is closed.
+type Note = { id: number; author: string; text: string; kind: string; status: string; closed_by: string | null };
+
+function Questions({ oppId, reqId, assignmentId, open, me, bm, onChanged }:
+  { oppId: string; reqId: string; assignmentId: number; open: number; me: string; bm: boolean; onChanged: () => void }) {
+  const toast = useToast();
+  const [notes, setNotes] = useState<Note[]>();
+  const [error, setError] = useState<string>();
+  const [busy, setBusy] = useState(false);
+  const load = () => api<Note[]>(`/api/opportunities/${oppId}/comments?req_id=${encodeURIComponent(reqId)}`).then(setNotes, (e) => setError(errorMessage(e)));
+  const act = (request: Promise<unknown>, done: string) => {
+    setBusy(true);
+    request.then(() => { toast.success(done); onChanged(); return load(); }, (e) => toast.error(errorMessage(e))).finally(() => setBusy(false));
+  };
+  return (
+    <details className="inbox-questions" onToggle={(e) => { if (e.currentTarget.open && !notes) load(); }}>
+      <summary>Questions and comments{open > 0 && <> · <span className="warn">{open} open question(s)</span></>}</summary>
+      {error && <div className="warn">{error}</div>}
+      {!notes && !error && <Busy label="Loading…" />}
+      {notes?.length === 0 && <p className="muted">None yet.</p>}
+      {notes && notes.length > 0 && <ol>{notes.map((c) => (
+        <li key={c.id}><strong>{c.author}</strong>{" "}
+          <span className="muted">({c.kind}{c.status === "closed" ? `, closed by ${c.closed_by}` : c.kind === "question" ? ", open" : ""})</span>: {c.text}
+          {c.status === "open" && c.kind === "question" && (c.author === me || bm) &&
+            <> <button className="secondary sm" disabled={busy} onClick={() => act(post(`/api/comments/${c.id}/close`), "Question closed.")}>Close</button></>}
+        </li>))}</ol>}
+      <form className="form compact" onSubmit={(e) => {
+        e.preventDefault();
+        const form = e.currentTarget, f = new FormData(form);
+        act(post(`/api/opportunities/${oppId}/comments`, { req_id: reqId, assignment_id: assignmentId, kind: f.get("kind"), text: f.get("text") })
+          .then(() => form.reset()), f.get("kind") === "question" ? "Question sent." : "Comment added.");
+      }}>
+        <label><span className="sr-only">Question or comment</span>
+          <select name="kind" defaultValue="question"><option value="question">Question (open until closed)</option><option value="comment">Comment</option></select></label>
+        <label><span className="sr-only">Text</span><textarea name="text" rows={2} required placeholder="Ask a question or add a comment" /></label>
+        <button className="secondary sm" disabled={busy}>Send</button>
+      </form>
+    </details>
+  );
+}
 
 function History({ id }: { id: number }) {
   const [events, setEvents] = useState<HistoryEvent[]>();
@@ -143,7 +184,8 @@ export default function InboxPage() {
                 {a.requirement.provenance === "UNANCHORED" // UX-14: the same badge as the Requirements page, no "not found in source" link
                   ? <StatusBadge status="medium" kind="severity" label="Source not verified" title="Quote not located on the page; check the source manually" />
                   : <Link className="muted" href={`/opportunities/${a.opportunity_id}/trace#${a.req_id}`} data-tour={t("inbox-source-link")}>{a.requirement.source}: show highlighted source</Link>}</>
-                : <span className="warn">This requirement no longer exists in the bid.</span>}</td>
+                : <span className="warn">This requirement no longer exists in the bid.</span>}
+                <Questions oppId={a.opportunity_id} reqId={a.req_id} assignmentId={a.id} open={a.open_questions} me={me} bm={canValidate} onChanged={reload} /></td>
               <td>
                 {canAnswer && open(a) ? (
                   <form className="form compact" data-assignment={a.id} aria-busy={busy === a.id} data-tour={t("inbox-form")}

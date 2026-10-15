@@ -4,7 +4,8 @@ Public contract:
     evidence(db, opp_id) -> dict                           the evidence pack shown before deciding
     summary(db, opp_id) -> dict                            go/no-go summary: per requirement fully / partly / not / bid
         desk or needs an owner (from the unit's answer, else estimated from the match), counts by category,
-        needs_owner (workpackages.needs_owner: product requirements no participating unit holds), assessment {items,
+        needs_owner (workpackages.needs_owner: product requirements no participating unit holds), open_questions
+        (how many questions are open, C-17), assessment {items,
         validated} (the work sent to the units), criteria (go_no_go.json) with met / not_met / unknown, where
         completeness, compliance and schedule come from validated answers (C-10), and advice. Never a decision.
     record(db, opp_id, kind, outcome, units, rationale, actor, criteria=None) -> Decision
@@ -84,7 +85,7 @@ def summary(db: Session, opp_id: str, ev: dict | None = None) -> dict:
     by_category = {}
     for row in rows:
         by_category.setdefault(row["category"], Counter())[row["level"]] += 1
-    owners = workpackages.needs_owner(db, opp_id)
+    owners, questions = workpackages.needs_owner(db, opp_id), workpackages.open_questions(db, opp_id)
     # C-10: completeness, compliance and schedule come from the units' validated answers, not from the matches
     items = [a for r in reqs for a in work.get(r.req_id, [])]  # the work sent to the units (bid desk included)
     done = sum(a.status == "validated" for a in items)
@@ -113,8 +114,9 @@ def summary(db: Session, opp_id: str, ev: dict | None = None) -> dict:
         "engineering_rules": (all(r["status"] != "fail" for r in rules.values()),
                               "Failing: " + ", ".join(i for i, r in rules.items() if r["status"] == "fail") if any(r["status"] == "fail" for r in rules.values())
                               else "No engineering rule fails."),
-        "open_questions": (not warns and not ev["unanchored"],
-                           f"Rule warnings: {', '.join(warns) or 'none'}; requirements with source not verified: {len(ev['unanchored'])}."),
+        "open_questions": (not warns and not ev["unanchored"] and not questions,
+                           f"Rule warnings: {', '.join(warns) or 'none'}; requirements with source not verified: {len(ev['unanchored'])}; "
+                           f"open questions: {len(questions)}."),
         "pending_acquisition": (rules.get("R-004", {}).get("status") != "warn", rules.get("R-004", {}).get("note", "")),
         "deviations": _deviations_criterion(ev["deviations"]),
         "capacity": _capacity_criterion(ev["workload"]),
@@ -130,6 +132,7 @@ def summary(db: Session, opp_id: str, ev: dict | None = None) -> dict:
         "by_category": {cat: {lvl: n.get(lvl, 0) for lvl in ("fully", "partly", "not", "bid_desk")} for cat, n in by_category.items()},
         "assessment": {"items": len(items), "validated": done},
         "needs_owner": owners,
+        "open_questions": len(questions),
         "criteria": criteria,
         "advice": (f"Advice from Layer 0: {met} of {len(assessable)} assessable criteria met; "
                    f"{len(criteria) - len(assessable)} not known yet. The bid manager decides."),

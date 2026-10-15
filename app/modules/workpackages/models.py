@@ -12,6 +12,25 @@ EXTENDED = ("reason", "conditions", "workaround", "next_steps")  # the response 
 BID_DESK = "BID"  # pseudo-unit: requirements the bid manager answers (commercial, submission, legal)
 
 
+COMMENT_KINDS = ["question", "comment"]  # an open question blocks completion; a comment is information (C-17)
+
+
+class Comment(Base):
+    """A question or comment on one requirement of a bid, optionally about one unit's assignment (C-17)."""
+    __tablename__ = "comment"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    opportunity_id: Mapped[str] = mapped_column(String(20), index=True)
+    req_id: Mapped[str] = mapped_column(String(20), index=True)
+    assignment_id: Mapped[int | None]
+    author: Mapped[str] = mapped_column(String(80))
+    text: Mapped[str] = mapped_column(Text)
+    kind: Mapped[str] = mapped_column(String(10), default="comment")   # question | comment
+    status: Mapped[str] = mapped_column(String(8), default="open")     # open | closed
+    created_at: Mapped[datetime] = mapped_column(default=utcnow)
+    closed_by: Mapped[str | None] = mapped_column(String(80))
+    closed_at: Mapped[datetime | None]
+
+
 class Assignment(Base):
     """One requirement assigned to one business unit, with that unit's checklist response.
     A requirement can have several assignments (one per unit). A work package = a unit's assignments."""

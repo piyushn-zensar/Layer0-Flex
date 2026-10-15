@@ -35,7 +35,7 @@
   {
    "id": "open_questions",
    "name": "Open questions",
-   "question": "Are there no open questions (rule warnings, requirements with source not verified)?"
+   "question": "Are there no open questions (rule warnings, requirements with source not verified, questions not yet closed)?"
   },
   {
    "id": "pending_acquisition",

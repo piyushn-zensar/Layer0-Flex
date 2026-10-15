@@ -1,3 +1,4 @@
+from collections import Counter
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Request
@@ -6,7 +7,7 @@ from pydantic import BaseModel, model_validator
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
-from app.core.web import BID_MANAGER, actor, require, row
+from app.core.web import BID_MANAGER, actor, require, row, user
 from app.modules.catalog import service as catalog
 from app.modules.requirements import service as requirements
 from app.modules.workpackages import service
@@ -30,6 +31,13 @@ class RespondIn(BaseModel):
         if self.compliance in NEEDS_REASON and not self.reason.strip():
             raise ValueError("Say what is not met and why (reason) for a partially or non-compliant answer.")
         return self
+
+
+class CommentIn(BaseModel):
+    req_id: str
+    text: str
+    kind: Literal["question", "comment"] = "comment"   # = models.COMMENT_KINDS
+    assignment_id: int | None = None
 
 
 class GapIn(BaseModel):
@@ -89,9 +97,11 @@ def inbox(bu: str, db: Session = Depends(get_db)):
     if bu != BID_DESK and catalog.unit(bu) is None:
         raise HTTPException(404, f"Unit {bu} not found.")
 
+    questions = Counter(c.req_id for o in {a.opportunity_id for a in service.inbox(db, bu)} for c in service.open_questions(db, o))
+
     def item(a):
         req = requirements.get(db, a.req_id)  # None if the requirement was deleted after dispatch
-        return row(a) | {"requirement": row(req, "source") if req else None}
+        return row(a) | {"requirement": row(req, "source") if req else None, "open_questions": questions[a.req_id]}
     return {"bu": bu, "unit": catalog.unit(bu), "compliance": OFFERED, "items": [item(a) for a in service.inbox(db, bu)]}
 
 
@@ -100,6 +110,28 @@ def respond(body: RespondIn, request: Request, assignment_id: int = AssignmentId
     _call(service.respond, db, assignment_id, body.compliance, body.product_ref, body.response, actor(request),
           body.reason, body.conditions, body.workaround, body.next_steps)
     return {"ok": True}
+
+
+@router.get("/opportunities/{opp_id}/comments")
+def comments(opp_id: str, req_id: str | None = None, status: Literal["open", "closed"] | None = None, db: Session = Depends(get_db)):
+    """The bid's questions and comments (C-17), oldest first; filter by requirement and status."""
+    return [row(c) for c in _call(service.comments, db, opp_id, req_id, status)]
+
+
+@router.post("/opportunities/{opp_id}/comments")
+def add_comment(opp_id: str, body: CommentIn, request: Request, db: Session = Depends(get_db)):
+    try:
+        return row(service.add_comment(db, opp_id, body.req_id, body.text, body.kind, actor(request), body.assignment_id))
+    except LookupError as exc:
+        raise HTTPException(404, str(exc))
+    except ValueError as exc:
+        raise HTTPException(422, str(exc))
+
+
+@router.post("/comments/{comment_id}/close")
+def close_comment(request: Request, comment_id: int = Path(ge=1, le=2**31 - 1), db: Session = Depends(get_db)):
+    u = user(request)
+    return row(_call(service.close_comment, db, comment_id, u["name"], u["role"] == BID_MANAGER))
 
 
 @router.get("/assignments/{assignment_id}/history")

@@ -1236,3 +1236,40 @@ def test_assignment_history():
     assert second["before"] | {"status": None} == {"status": None, "compliance": "partial", "response": "12 positions", "reason": "20 asked"}
     assert second["after"]["compliance"] == "met" and second["after"]["reason"] is None
     assert client.get("/api/assignments/999999/history").status_code == 404
+
+
+def test_questions_and_comments():
+    """A-22 (C-17): questions and comments on a requirement; an open question counts on the summary until its
+    author or the bid manager closes it. Appended by Atharv (append-only on this shared file)."""
+    from app.core.db import SessionLocal
+    from app.modules.workpackages import service as workpackages
+
+    seed_demo.main()
+    client, bm, crown, ep2 = signed_in(), auth("bid.manager"), auth("crown.de"), auth("ep2.de")
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp)
+    url = f"/api/opportunities/{opp}/comments"
+    body = {"req_id": item["req_id"], "assignment_id": item["id"], "kind": "question", "text": "Indoor or outdoor enclosure?"}
+    q = client.post(url, json=body, headers=crown).json()
+    assert (q["author"], q["kind"], q["status"]) == ("Crown Design Engineer", "question", "open")
+    client.post(url, json=body | {"kind": "comment", "text": "Data sheet row 8 applies."}, headers=bm)
+    assert client.post(url, json=body | {"text": " "}, headers=crown).status_code == 422
+    assert client.post(url, json=body | {"kind": "note"}, headers=crown).status_code == 422
+    assert client.post(url, json=body | {"req_id": "REQ-9999-0001"}, headers=crown).status_code == 404
+    assert client.post(url, json=body | {"assignment_id": 999999}, headers=crown).status_code == 404
+
+    thread = client.get(url, params={"req_id": item["req_id"]}).json()
+    assert [c["kind"] for c in thread] == ["question", "comment"]
+    assert next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["id"] == item["id"])["open_questions"] == 1
+    summary = client.get(f"/api/opportunities/{opp}/decisions").json()["summary"]
+    assert summary["open_questions"] == 1
+    assert "open questions: 1" in next(c for c in summary["criteria"] if c["id"] == "open_questions")["detail"]
+    with SessionLocal() as db:
+        assert [c.id for c in workpackages.open_questions(db, opp)] == [q["id"]]
+
+    assert client.post(f"/api/comments/{q['id']}/close", headers=ep2).status_code == 403  # neither author nor bid manager
+    assert client.post(f"/api/comments/{q['id']}/close", headers=bm).json()["closed_by"] == "Bid Manager"
+    assert client.post(f"/api/comments/{q['id']}/close", headers=crown).status_code == 409  # already closed
+    assert client.get(url, params={"status": "open"}).json() == [c for c in thread if c["kind"] == "comment"]
+    assert client.post("/api/comments/999999/close").status_code == 404
+    assert client.get("/api/opportunities/OPP-9999/comments").status_code == 404
