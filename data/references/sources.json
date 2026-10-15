@@ -201,38 +201,75 @@
    "pdf_trailer_id": "[<7EB26B995F863649321733BEF5FD2C6B><108DC57C9F1AF444ADB2F55A6C367F25>]",
    "xmp_document_id": "uuid:2c80d086-8344-4345-b79f-2f6f8bcd5d19",
    "xmp_instance_id": "uuid:af106cd5-c33a-41ae-b6fb-03f4858432dc"
+  },
+  {
+   "file": "data/references/market/nvidia-800vdc-whitepaper-industry-alignment.pdf",
+   "url": "https://dam-cdn.nvd.orangelogic.com/AssetLink/7rj0u54stc41tk6s57dbs2p0qdte5874.pdf",
+   "title": "800 VDC Architecture: Industry Alignment & Execution (white paper V2)",
+   "publisher": "NVIDIA",
+   "revision": "V2, 2026",
+   "collection": "market_context",
+   "review_state": "draft",
+   "retrieved": "2026-10-15",
+   "sha256": "979a0d4a0d608d05bf0039c023c68667f2b1d4d477153ac624c0395a6693bf3b",
+   "bytes": 9805744,
+   "note": "Linked from nvidia.com 800-vdc-architecture page ('Read the Whitepaper'). Vendor white paper: technical detail, but vendor positioning; corroborate with the OCP documents",
+   "pages": 36,
+   "pdf_trailer_id": null,
+   "xmp_document_id": null,
+   "xmp_instance_id": null
+  },
+  {
+   "file": "data/references/market/nvidia-800vdc-whitepaper.pdf",
+   "url": "https://dam-cdn.nvd.orangelogic.com/AssetLink/12077q676nxqj8nu1bv852hobc7wmn1s.pdf",
+   "title": "800 VDC Architecture for Next-Generation AI Infrastructure (white paper)",
+   "publisher": "NVIDIA",
+   "revision": "V1, 2025-10-09",
+   "collection": "market_context",
+   "review_state": "draft",
+   "retrieved": "2026-10-15",
+   "sha256": "08571f9ece9c9ded9b742a04e9314c7cc66377db752755fdeb694e3a7356a8d8",
+   "bytes": 1249293,
+   "note": "Earlier version of the NVIDIA white paper (800 VDC and integrated energy storage). Superseded in part by V2",
+   "pages": 18,
+   "pdf_trailer_id": "[<44F7C2BEEA17C4468BBAAAE159793C6A><44F7C2BEEA17C4468BBAAAE159793C6A>]",
+   "xmp_document_id": "uuid:BEC2F744-17EA-46C4-8BBA-AAE159793C6A",
+   "xmp_instance_id": "uuid:BEC2F744-17EA-46C4-8BBA-AAE159793C6A"
+  },
+  {
+   "file": "data/references/market/flex-axiom-sec-filing-2026-09-15-extract.md",
+   "url": "https://www.sec.gov/Archives/edgar/data/0000866374/000119312526391911/d363879ddefa14a.htm",
+   "title": "Flex Axiom announcement, SEC DEFA14A (extract)",
+   "publisher": "Flex Ltd. (SEC filing)",
+   "revision": "2026-09-15",
+   "collection": "market_context",
+   "review_state": "draft",
+   "retrieved": "2026-10-15",
+   "sha256": "f4a57a2aa3630864d3056e9072860af829b1d8d65bb748cc16d96890e5153c7c",
+   "bytes": 1810,
+   "note": "Verbatim passages returned by a web-fetch tool (SEC refused direct download); not the full filing. Axiom = power, cooling and compute at system level; spin-off expected Q1 2027, Nasdaq AXM"
   }
  ],
  "not_fetched": [
   {
-   "url": "https://www.sec.gov/Archives/edgar/data/0000866374/000119312526391911/d363879ddefa14a.htm",
-   "title": "Flex Axiom announcement (SEC filing, 2026-09-15)",
-   "reason": "403: SEC requires a User-Agent naming a company and a contact email; fetch with a declared contact"
-  },
-  {
    "url": "https://eprocurement.dei.gr/media/31832/ngapd-3004-teliko.pdf",
    "title": "PPC (Greece) colocation data centre tender NGAPD-3004",
-   "reason": "403: the portal blocks automated download; download in a browser and check the portal terms"
+   "reason": "Aborted 15 Oct 2026: portal returns 403 to downloads and the web-fetch tool is blocked for the domain; download in a browser and check the portal terms"
   },
   {
    "url": "https://www.nersc.gov/assets/NERSC-10/NERSC-10-RFP-TRD-Appendix-C-Clarification.pdf",
    "title": "NERSC-10 TRD Appendix C clarification",
-   "reason": "404: moved or removed"
+   "reason": "Aborted 15 Oct 2026: 404 to download, 403 to web fetch"
   },
   {
    "url": "https://www.nersc.gov/assets/NERSC-10/DRAFT-Tech-Data-Sum-Sheet.pdf",
    "title": "NERSC-10 draft technical data summary sheet",
-   "reason": "404: moved or removed"
+   "reason": "Aborted 15 Oct 2026: 404 to download, 403 to web fetch (a bid-evaluation form, little requirement content)"
   },
   {
    "url": "https://sam.gov/workspace/contract/opp/17c12dccbdb14864bb07453611b4f4bf/view",
    "title": "NATO NCIA pre-solicitation notice",
    "reason": "SAM.gov sign-in; Book I already in the repository"
-  },
-  {
-   "url": "(NVIDIA 800 VDC white paper V2)",
-   "title": "NVIDIA 800 VDC white paper",
-   "reason": "Earlier link returned 404; not verified"
   }
  ]
 }
