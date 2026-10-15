@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to operational compliance and scheduling, which is not directly related to a specific product. It is a commercial or procedural requirement, and thus no product is applicable.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement specifies testing for switchgear, including high-potential tests, contact resistance tests, timing tests, and functional tests. The CROWN-ARMV product is the appropriate choice as it is the standard offering for arc-resistant metal-clad switchgear, which aligns with the context of the requirement. The testing requirements are part of the standard procedures for such equipment.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

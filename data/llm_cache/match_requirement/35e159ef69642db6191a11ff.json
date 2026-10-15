@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement for maintenance intervals is not directly tied to a specific product from the catalog, as it pertains to operational guidelines rather than product specifications. This is likely a commercial or operational detail to be addressed by the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "Voltage ratings and operational currents are general technical specifications that apply to multiple products but are not explicitly tied to a single catalog item. The bid manager should clarify the specific product context.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "Peak tripping and closing coil currents are technical parameters that depend on the specific equipment being used. Without further context, this requirement does not directly map to a catalog product and should be clarified by the bid manager.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

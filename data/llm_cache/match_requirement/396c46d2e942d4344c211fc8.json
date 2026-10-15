@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies technical parameters for feeders and circuit breakers, which align with the capabilities of the CROWN-ARMV product. This product is designed for medium-voltage applications and meets the specified ratings and features.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The detailed specifications for the circuit breaker units, including trip mechanisms, auxiliary switches, and interlocks, are consistent with the features of the CROWN-ARMV product, which is designed for such applications.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "The wiring and labeling requirements are typical for relay and protection panels, which are covered by the EP2-RPP product. This product includes detailed wiring and labeling as part of its scope.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

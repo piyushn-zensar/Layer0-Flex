@@ -1,0 +1,43 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement specifies environmental and operational conditions for the equipment but does not directly specify a product. It is likely a general requirement applicable to all equipment in the project.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement specifies the need for auxiliary DC power at 48V DC. The EP2-AUX product from the catalog is designed for station AC and DC distribution, including 48V DC systems, making it a suitable match.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "EP2-AUX"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 3,
+        "rationale": "The requirement describes a structure with a single front aisle and integrated switchgear and auxiliary equipment. The CROWN-ARMV product is suitable for the switchgear portion, and the EP2-PDC product is appropriate for the auxiliary equipment and control building, as it includes relay panels, DC batteries, and other auxiliary systems.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          },
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-PDC"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

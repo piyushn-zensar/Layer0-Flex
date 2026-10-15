@@ -1,0 +1,98 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies switchgear with single doors placed as per the plan-view. CROWN-ARMV is suitable as it provides metal-clad switchgear with customizable configurations, including door placements.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The detailed door specifications, including keyed handles, weatherproof rear doors, and hazard signs, align with the customizable features of CROWN-ARMV metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 1.0,
+        "n": 3,
+        "rationale": "This requirement pertains to compliance with ANSI standards for hazard signs, which is a commercial or compliance matter, not a product specification.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The stationary structure for walk-through switchgear in a weatherproof steel housing matches the description of CROWN-EHOUSE, which provides pre-built electrical houses with switchgear compartments.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-EHOUSE"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "The requirement for a rigid metal-clad switchgear assembly aligns with the features of CROWN-ARMV, which is designed for metal-clad switchgear configurations.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "The specification for welded sections housing circuit breakers is consistent with the construction standards of CROWN-ARMV metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "Grounded barriers and solid removable metal barriers for isolation are features of CROWN-ARMV, which provides robust metal-clad switchgear designs.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 8,
+        "rationale": "The structural fabrication details, including steel sheets and reinforced members, align with the construction standards of CROWN-ARMV metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

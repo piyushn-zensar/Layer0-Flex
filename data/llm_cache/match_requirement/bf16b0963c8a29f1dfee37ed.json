@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies provisions for remotely racking circuit breakers, which aligns with the features of the CROWN-ARMV product. This product includes arc-resistant metal-clad MV switchgear with vacuum breakers, which typically support remote racking capabilities for safety and operational efficiency.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

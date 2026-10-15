@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies a ground bus for a switchgear assembly, which aligns with the CROWN-ARMV product description for arc-resistant metal-clad MV switchgear, as it includes bus and construction details.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The power bus orientation requirement is a specification for switchgear, which is covered by the CROWN-ARMV product, as it includes bus and construction details for metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The detailed specifications for the circuit breaker units, including voltage and current ratings, align with the CROWN-ARMV product, which is designed for metal-clad MV switchgear with vacuum breakers.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement for automatic opening of primary disconnecting devices and auxiliary switch contacts is a feature of circuit breakers in metal-clad switchgear, which is covered by the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

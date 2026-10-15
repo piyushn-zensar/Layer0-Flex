@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "Requirement 1 pertains to shipping and identification practices, which are not specific to any product. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "Requirement 2 specifies shop drawings for switchgear, including detailed installation drawings, bill of materials, and outline drawings. The CROWN-ARMV product, which is arc-resistant metal-clad MV switchgear, matches this requirement as it involves detailed engineering and documentation for installation and operation.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

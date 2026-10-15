@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to the manufacturer's responsibility to study and understand site conditions and does not specify a product or service from the catalog. It is a general technical requirement for the manufacturer.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "This requirement is about the manufacturer's awareness of the work scope and sufficiency of contract documents. It does not specify a product or service from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "This compliance requirement involves notifying the engineer of discrepancies in the contract documents. It does not relate to any specific product or service from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "This compliance requirement involves participation in a status verification system for employment eligibility. It does not relate to any specific product or service from the catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

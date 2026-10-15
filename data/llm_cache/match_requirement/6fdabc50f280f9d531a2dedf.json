@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies detailed technical documentation related to electrical equipment, including nameplate drawings, wiring diagrams, and transformer data. EP2-RPP, Relay and protection panel, is the most suitable product as it involves protective relays and panels, which align with the technical documentation requirements.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "This requirement pertains to descriptive data for equipment substitutions under an 'or-equal' clause, which is a commercial or compliance-related matter. It does not directly specify a product requirement, so no product is mapped.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "This requirement describes the review process for approval drawings and compliance with specifications, which is a procedural or compliance-related matter. It does not specify a product requirement, so no product is mapped.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}
