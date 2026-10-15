@@ -32,7 +32,7 @@ function GoNoGoSummary({ s, oppId }: { s: Summary; oppId: string }) {
       <table className="dense" data-tour="dec-by-category">
         <thead><tr><th>Category</th><th className="num">Fully compliant</th><th className="num">Partially compliant</th><th className="num">Non-compliant</th><th className="num">{BID_DESK}</th></tr></thead>
         <tbody>{Object.entries(s.by_category).map(([cat, n]) => (
-          <tr key={cat}><td>{cat}</td><td className="num">{n.fully}</td><td className="num">{n.partly}</td><td className="num">{n.not}</td><td className="num">{n.bid_desk}</td></tr>))}</tbody>
+          <tr key={cat}><td><a href={`/opportunities/${oppId}/trace?category=${encodeURIComponent(cat)}`}>{cat}</a></td><td className="num">{n.fully}</td><td className="num">{n.partly}</td><td className="num">{n.not}</td><td className="num">{n.bid_desk}</td></tr>))}</tbody>
       </table>
       <details data-tour="dec-per-req"><summary>Per requirement ({s.rows.length}): from the unit&apos;s answer where there is one, otherwise estimated from the match</summary>
         <ul className="per-req">{s.rows.map((r) => <li key={r.req_id}><a className="mono" href={`/opportunities/${oppId}/trace#${r.req_id}`}>{r.req_id}</a>{" "}

@@ -71,8 +71,10 @@ export default function AssessmentPage() {
       <section className="card" data-tour="asm-summary">
         <div className="card-head"><h2>Bid summary</h2>
           <span className="muted">{s.requirements} requirement(s) in the register · {data.published ? `published as baseline ${data.baseline}` : "not published yet"}</span></div>
-        <p>By category: {Object.entries(s.by_category).map(([k, v]) => <strong key={k}>{k} {v} </strong>)}</p>
-        <p>By offering type: {Object.entries(s.by_offering).map(([k, v]) => <StatusBadge key={k} status={k} kind="offering" label={`${offeringLabel(k)} ${v}`} />)}</p>
+        {/* A-24 (C-20): each count opens Traceability filtered to it (?category= / ?offering=) */}
+        <p>By category: {Object.entries(s.by_category).map(([k, v]) => <Link key={k} className="chip" href={`/opportunities/${id}/trace?category=${encodeURIComponent(k)}`}>{k} {v}</Link>)}</p>
+        <p>By offering type: {Object.entries(s.by_offering).map(([k, v]) => (
+          <Link key={k} href={`/opportunities/${id}/trace?offering=${encodeURIComponent(k)}`}><StatusBadge status={k} kind="offering" label={`${offeringLabel(k)} ${v}`} /></Link>))}</p>
         {s.sections.length > 0 && <p>Major sections: {s.sections.map((x) => `${x.section} (${x.count})`).join(" · ")}</p>}
         <p>Suggested units: {Object.entries(s.suggested_units).map(([k, v]) => <strong key={k}>{k} ({v}) </strong>)}
           {Object.keys(s.suggested_units).length === 0 && "none yet: run matching in Traceability"}</p>
