@@ -30,10 +30,10 @@ const chapter: TourChapter = {
   steps: [
     {
       id: "trace-intro", route: ROUTE, target: "trace-panes", placement: "top",
-      title: "Traceability: three linked panes",
+      title: "Traceability: three panes",
       body: [
         "This is the **Traceability** screen, the third step of the workflow. It shows the same requirements as the Requirements page, but in their context: pane 1 is the original RFP page with the requirement's lines highlighted, pane 2 is the requirement breakdown (ID, source, category, text and quote), and pane 3 is the product mapping and the units' responses.",
-        "It exists because every answer in a bid must be traceable back to the customer's own words. Selecting a requirement in any pane selects it in all three and turns pane 1 to its source page, so a reviewer can check in seconds whether a line item, a product choice or a unit's answer really corresponds to what the RFP says.",
+        "It exists because every answer in a bid must be traceable back to the customer's own words. Selecting a requirement in any pane selects it in all three, and every pane that is **Linked** follows it (pane 1 turns to its source page), so a reviewer can check in seconds whether a line item, a product choice or a unit's answer really corresponds to what the RFP says.",
         "What you do here: run **Match products** once the requirements are approved, then review each proposal (accept, reject or change it) and read what the units answered after dispatch. Before leaving for the Bid decision, every product match should have been looked at by a person: the decision page counts the ones that have not.",
       ],
       fallback: "The three panes are not on the page yet (the trace is still loading, or this opportunity has no requirements).",
@@ -43,7 +43,7 @@ const chapter: TourChapter = {
       title: "Pane 1: the original RFP page",
       body: [
         "Pane 1 renders one page of the RFP as an image (`/api/documents/<doc>/pages/<n>.png`) and draws a highlight box over every requirement anchored on that page. The boxes come from the reader: each requirement stores its page and the bounding boxes of the lines it was quoted from, so the highlight sits exactly on the customer's text, not on an approximation.",
-        "The highlight of the selected requirement is drawn in the selected style; the others are faint. Click any highlight to select that requirement: panes 2 and 3 scroll to it. A group (a requirement merged from several line items) is highlighted through its sub-requirements on the same page.",
+        "The highlight of the selected requirement is drawn in the selected style; the others are faint. Click any highlight to select that requirement: the linked panes 2 and 3 scroll to it. A group (a requirement merged from several line items) is highlighted through its sub-requirements on the same page.",
         "Requirements with no highlight on any page are **unanchored**: the reader identified them but could not locate the quote on the page. They are listed with a badge in pane 2 and counted on the decision page.",
       ],
       fallback: "Pane 1 is empty: this opportunity has no readable RFP page (no main document, or it is still being read).",
@@ -143,9 +143,18 @@ const chapter: TourChapter = {
       title: "Pane 3: product mapping and responses",
       body: [
         "Pane 3 has one row per requirement, aligned with pane 2. The **Unit · product** column shows the business unit, the product and its offering type, the rationale, the bill of materials and the match actions. The **Response** column shows the work item of each unit after dispatch, with its status and the unit's answer.",
-        "Before matching, every row reads *not matched yet*; after matching, a product item shows its unit and product, and a non-product item reads *Bid manager (not a product item)*. Before dispatch the Response column reads *not dispatched*.",
+        "Before matching, every row reads *not matched yet*; after matching, a product item shows its unit and product, and a non-product item reads *Bid manager (not a product item)*. Until the bid is sent for assessment the Response column reads *Responses appear once the bid is sent for assessment*; once it is sent, a requirement without work reads *not dispatched*.",
       ],
       fallback: "Nothing to map yet: product mappings and unit responses appear once requirements exist.",
+    },
+    {
+      id: "trace-pane-controls", route: ROUTE, target: "trace-link-2", placement: "bottom",
+      title: "Linked or Unlinked, Enlarge or Restore",
+      body: [
+        "Each pane heading has two controls. **Linked** means the pane follows the selected requirement: pane 1 opens its page, panes 2 and 3 scroll to its row. Click it to make the pane **Unlinked**: it keeps its page or scroll position while you select requirements elsewhere (the selected row is still highlighted, and the address still follows the selection). Click it again and the pane catches up with the selection at once.",
+        "**Enlarge** shows one pane across the whole width and hides the other two; **Restore** (or Esc) brings the three panes back. The selection is kept, and the linked panes catch up on restore. Handy for reading the RFP page in full, or for scanning a long list of matches.",
+      ],
+      fallback: "The Linked and Enlarge buttons sit in the heading of each pane.",
     },
     {
       id: "trace-legend", route: ROUTE, target: "trace-legend", placement: "bottom",
@@ -160,7 +169,7 @@ const chapter: TourChapter = {
       title: "Unit responses at a glance",
       body: [
         "The toolbar sums up the units' work on this opportunity: one badge per unit with *validated / total*, for example **CROWN 1/93 validated**; hover to see how many answers were submitted. The badge is green when everything is validated, blue while answers are coming in, amber while items are still only assigned. BID is the bid desk.",
-        "Before dispatch it reads *not sent to units yet*. The same numbers appear on the portfolio page and feed the consolidation step.",
+        "Until the bid is sent for assessment it reads *Not sent for assessment yet* and shows no badges. The same numbers appear on the portfolio page and feed the consolidation step.",
       ],
     },
     {
@@ -273,7 +282,7 @@ const chapter: TourChapter = {
       onEnter: (ctx) => ctx.set("trace-sync-from", currentReq()),
       title: "Selection follows you across the panes",
       body: [
-        "Try the link between the panes: click a highlight in pane 1 (or any row in pane 2 or 3). The row is selected in both tables, they scroll to it, pane 1 turns to its page and the URL hash becomes its ID, so the link can be shared or opened from the decision page's per-requirement list.",
+        "Try the link between the panes: click a highlight in pane 1 (or any row in pane 2 or 3). The row is selected in both tables; the panes that are **Linked** follow it (the tables scroll to it, pane 1 turns to its page) and the URL hash becomes its ID, so the link can be shared or opened from the decision page's per-requirement list.",
       ],
       instruction: "Click a highlight on the RFP page, or a different row in pane 2.",
       done: (ctx) => currentReq() !== "" && currentReq() !== ctx.get<string>("trace-sync-from"),
@@ -285,9 +294,9 @@ const chapter: TourChapter = {
       body: [
         "The Response column lists the work items created at dispatch for the selected requirement: one per participating unit that is matched to it, else the bid desk (**BID**). Each shows the unit, a status badge and, once answered, a compliance badge and the unit's text.",
         "Statuses: **assigned** (sent, no answer yet), **submitted** (the unit answered), **returned** (the bid manager sent it back with a note; the unit answers again), **validated** (the bid manager accepted the answer). Withdrawn items (after a change of match or participation) are hidden. Compliance: **met**, **partial**, **not met**, **exception**. In the demo opportunity, `REQ-0001-0885` has a validated Crown answer: \"Two-section 15 kV arc-resistant metal-clad lineup offered.\"",
-        "A validated answer carries its own *Send to knowledge base* link. Before dispatch the column reads *not dispatched*; dispatch happens on the Bid decision page, next.",
+        "A validated answer carries its own *Send to knowledge base* link. Until the bid is sent for assessment the column holds only the note *Responses appear once the bid is sent for assessment*; sending happens with the dispatch on the Bid decision page, next.",
       ],
-      fallback: "Select a requirement to see its assignments; before dispatch every row reads not dispatched.",
+      fallback: "Select a requirement to see its assignments; until the bid is sent for assessment every row reads: Responses appear once the bid is sent for assessment.",
     },
     {
       id: "trace-done", route: ROUTE,

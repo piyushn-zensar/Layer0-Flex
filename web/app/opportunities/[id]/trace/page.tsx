@@ -1,8 +1,10 @@
 "use client";
-// Traceability: three linked panes: (1) RFP page with highlights, (2) requirement line items, (3) product mapping + responses.
-// Selecting a requirement in any pane selects it in all three and opens its source page.  Owner: Janvia.
+// Traceability: three panes: (1) RFP page with highlights, (2) requirement line items, (3) product mapping + responses.
+// Selecting a requirement selects it everywhere; every pane that is Linked also follows it (pane 1 opens its page, panes 2 and 3
+// scroll to its rows), an Unlinked pane keeps its place. A pane can be enlarged (the other two stay mounted, hidden). Unit
+// responses show only once the bid has been sent for assessment (J-12 / C-15).  Owner: Janvia.
 import { useParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { errorMessage, post, useApi } from "@/lib/api";
 import { complianceLabel, docTypeLabel, sourceLabel } from "@/lib/types";
 import type { Trace } from "@/lib/types";
@@ -11,15 +13,24 @@ import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/comp
 import MatchActions from "@/components/matching/MatchActions"; // A-05 (Atharv)
 import SendToKnowledge from "@/components/knowledge/SendToKnowledge"; // A-11 (Atharv)
 
+type Pane = 1 | 2 | 3;
+const PANES: Pane[] = [1, 2, 3];
+// `sent_for_assessment` is a trace-service flag (J-12) that web/lib/types.ts does not declare yet (Piyush's file).
+type TraceView = Trace & { sent_for_assessment?: boolean };
+
 export default function TracePage() {
   const { id } = useParams<{ id: string }>();
   const toast = useToast();
-  const { data, error, reload } = useApi<Trace>(`/api/opportunities/${id}/trace`);
+  const { data, error, reload } = useApi<TraceView>(`/api/opportunities/${id}/trace`);
   const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/opportunities/${id}/knowledge`); // A-11
   const [selected, setSelected] = useState<string>();
   const [pageNo, setPageNo] = useState(1);
   const [docId, setDocId] = useState<string>(); // P-11: the document shown in pane 1 (default the main RFP)
   const [matching, setMatching] = useState(false);
+  const [linked, setLinked] = useState<Record<Pane, boolean>>({ 1: true, 2: true, 3: true }); // J-12: which panes follow the selection
+  const [enlarged, setEnlarged] = useState<Pane | null>(null);
+  const linkedRef = useRef(linked); // select() is a stable callback, so it reads the current links from a ref
+  const selectedRef = useRef<string | undefined>(undefined);
 
   // Runs the matching agent over the requirements that nobody has decided yet (accepted, manual and rejected stay).
   const matchProducts = () => {
@@ -30,14 +41,49 @@ export default function TracePage() {
       .finally(() => setMatching(false));
   };
 
-  const select = useCallback((reqId: string) => {
-    setSelected(reqId);
-    const req = data?.rows.find((r) => r.req.req_id === reqId)?.req;
-    if (req && data?.docs?.some((d) => d.id === req.document_id)) setDocId(req.document_id); // a new version from an addendum
-    if (req?.page) setPageNo(req.page);
-    history.replaceState(null, "", `#${reqId}`);
-    document.querySelectorAll(`tr[data-req="${reqId}"]`).forEach((tr) => tr.scrollIntoView({ block: "nearest", behavior: "smooth" }));
+  // Moves one pane to a requirement: pane 1 opens its document and page, panes 2 and 3 scroll its row into view.
+  const follow = useCallback((pane: Pane, reqId: string) => {
+    if (pane === 1) {
+      const req = data?.rows.find((r) => r.req.req_id === reqId)?.req;
+      if (req && data?.docs?.some((d) => d.id === req.document_id)) setDocId(req.document_id); // a new version from an addendum
+      if (req?.page) setPageNo(req.page);
+    } else {
+      document.querySelectorAll(`[data-pane="${pane}"] tr[data-req="${reqId}"]`).forEach((tr) => tr.scrollIntoView({ block: "nearest", behavior: "smooth" }));
+    }
   }, [data]);
+
+  // `force`: the first selection on load (a deep link or the first row) moves every pane whatever its link.
+  const select = useCallback((reqId: string, force = false) => {
+    setSelected(reqId);
+    selectedRef.current = reqId;
+    history.replaceState(null, "", `#${reqId}`);
+    PANES.filter((p) => force || linkedRef.current[p]).forEach((p) => follow(p, reqId));
+  }, [follow]);
+
+  const setLink = (pane: Pane, on: boolean) => {
+    linkedRef.current = { ...linkedRef.current, [pane]: on };
+    setLinked(linkedRef.current);
+    if (on && selectedRef.current) follow(pane, selectedRef.current); // re-linking catches up with the selection at once
+  };
+
+  // Restoring (or switching) the enlarged pane: the panes that were hidden could not scroll, so the linked ones catch up now.
+  useEffect(() => {
+    if (!selectedRef.current) return;
+    const req = selectedRef.current;
+    const t = setTimeout(() => PANES.filter((p) => linkedRef.current[p] && (enlarged === null || enlarged === p)).forEach((p) => follow(p, req)), 0);
+    return () => clearTimeout(t);
+  }, [enlarged]); // on enlarge / restore only, not on every selection (follow and the selection are read from this render and the ref)
+
+  useEffect(() => { // the first Esc restores the three-pane layout and goes no further: a walkthrough that is open stays open
+    if (enlarged === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape" || e.defaultPrevented) return;
+      e.preventDefault(); e.stopPropagation(); // capture phase: the walkthrough's own Esc handler (bubble phase) never sees this one
+      setEnlarged(null);
+    };
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
+  }, [enlarged]);
 
   useEffect(() => { // first load: the requirement in the URL hash, else the first one
     if (!data || selected) return;
@@ -45,7 +91,7 @@ export default function TracePage() {
     const first = data.rows.find((r) => r.req.req_id === fromHash)
       ?? data.rows.find((r) => r.children.some((k) => k.req_id === fromHash)) // a sub-requirement (Changes links): its group
       ?? data.rows.find((r) => r.req.page);
-    if (first) select(first.req.req_id);
+    if (first) select(first.req.req_id, true);
   }, [data, selected, select]);
 
   if (error) return <Alert kind="error" title="Could not load the traceability view.">{error}</Alert>; // UX-10
@@ -56,6 +102,7 @@ export default function TracePage() {
   const shown = docs.find((d) => d.id === docId) ?? docs[0];
   const docName = (d?: { id: string; filename: string }) => (!d || d.id === mainId ? "RFP" : d.filename);
   const docOf = (of?: string) => (of && mainId && of !== mainId ? docs.find((d) => d.id === of)?.filename ?? "Change document" : null);
+  const assessed = data.sent_for_assessment ?? data.rows.some((r) => r.assignments.length > 0); // J-12: unit responses show only once sent
   const pages = shown?.pages ?? [];
   const page = pages[pageNo - 1];
   // Walkthrough targets (tour/chapters/trace.ts): "trace-sel-*" ids sit on the selected row only, so each id is unique;
@@ -72,27 +119,46 @@ export default function TracePage() {
     },
   });
 
+  // J-12: the heading row of a pane, with its Linked / Unlinked switch and its Enlarge / Restore button. The visible words are short;
+  // each button's accessible name says the action and the pane (the three panes would otherwise all have an "Enlarge"), and the
+  // Linked / Unlinked name ends with the current state, so the visible word is in the name. No aria-pressed: the name already
+  // carries the state, and a changing name plus a pressed state would announce it twice.
+  const paneHead = (pane: Pane, name: string) => (
+    <div className="pane-head">
+      <h2>{pane} · {name}</h2>
+      <div className="pane-tools">
+        <button type="button" className={`chip${linked[pane] ? " on" : ""}`} onClick={() => setLink(pane, !linked[pane])} data-tour={`trace-link-${pane}`}
+          aria-label={linked[pane] ? `Unlink pane ${pane}: ${name} (currently linked)` : `Link pane ${pane}: ${name} (currently unlinked)`}
+          title="A linked pane follows the selected requirement; an unlinked pane keeps its place until you link it again.">
+          {linked[pane] ? "Linked" : "Unlinked"}</button>
+        <button type="button" className="secondary sm" onClick={() => setEnlarged(enlarged === pane ? null : pane)} data-tour={`trace-enlarge-${pane}`}
+          aria-label={`${enlarged === pane ? "Restore" : "Enlarge"} pane ${pane}: ${name}`}
+          title={enlarged === pane ? "Back to the three panes (Esc)" : "Show only this pane"}>{enlarged === pane ? "Restore" : "Enlarge"}</button>
+      </div>
+    </div>
+  );
+  const paneProps = (pane: Pane) => ({ "data-pane": pane, hidden: enlarged !== null && enlarged !== pane });
+
   return (
     <>
       <PageHead level={2} title="Traceability"
-        help="Original RFP, requirement breakdown and product mapping side by side. Select a requirement in any pane to follow it across all three.">
+        help="Original RFP, requirement breakdown and product mapping side by side. Select a requirement in any linked pane to follow it across the panes; enlarge a pane to work in it.">
         {matching && <Busy label="Matching…" />}
         <button className="secondary" disabled={matching} onClick={matchProducts} data-tour="trace-match-button">Match products</button>
       </PageHead>
       <div className="toolbar">
-        <span className="muted" data-tour="trace-unit-responses">Unit responses: {Object.entries(data.progress).map(([bu, p]) => (
+        <span className="muted" data-tour="trace-unit-responses">Unit responses: {assessed ? Object.entries(data.progress).map(([bu, p]) => (
           <StatusBadge key={bu} status={p.validated === p.total ? "validated" : p.submitted > 0 ? "submitted" : "assigned"}
-            label={`${bu} ${p.validated}/${p.total} validated`} title={`${p.submitted} of ${p.total} answers submitted`} />))}
-          {Object.keys(data.progress).length === 0 && "not sent to units yet"}</span>
+            label={`${bu} ${p.validated}/${p.total} validated`} title={`${p.submitted} of ${p.total} answers submitted`} />)) : "Not sent for assessment yet"}</span>
       </div>
       <div className="trace-legend" aria-label="Offering type legend" data-tour="trace-legend">
         <span className="tag CTO"><strong>CTO</strong> Configure-to-order: catalog product with options (CPQ)</span>
         <span className="tag SEMI_CUSTOM"><strong>Semi-custom</strong> Configured product plus workshop work for this customer</span>
         <span className="tag ETO"><strong>ETO</strong> Engineered-to-order: designed for this requirement</span>
       </div>
-      <div className="three" data-tour="trace-panes">
-        <section className="pane" data-tour="trace-pane-1">
-          <h2>1 · Original RFP</h2>
+      <div className={`three${enlarged ? " zoom" : ""}`} data-tour="trace-panes">
+        <section className="pane" data-tour="trace-pane-1" {...paneProps(1)}>
+          {paneHead(1, "Original RFP")}
           {shown && page ? (<>
             <div className="trace-docs" data-tour="trace-docs">
               <span>Showing <strong>{docName(shown)}</strong>{shown.id !== mainId && <> <span className="tag">{docTypeLabel(shown.role)}</span></>}</span>
@@ -123,8 +189,8 @@ export default function TracePage() {
           </>) : <p className="muted trace-empty">No RFP page available.</p>}
         </section>
 
-        <section className="pane" data-tour="trace-pane-2">
-          <h2>2 · Requirement breakdown</h2>
+        <section className="pane" data-tour="trace-pane-2" {...paneProps(2)}>
+          {paneHead(2, "Requirement breakdown")}
           {data.rows.length === 0 ? <EmptyState title="No requirements yet" hint="Nothing has been extracted from the RFP for this bid." /> : (
           <table className="rows" data-tour="trace-table-2">
             <thead><tr><th className="col-id">ID</th><th className="col-src">Source</th><th>Requirement</th></tr></thead>
@@ -147,8 +213,8 @@ export default function TracePage() {
           </table>)}
         </section>
 
-        <section className="pane" data-tour="trace-pane-3">
-          <h2>3 · Product mapping and responses</h2>
+        <section className="pane" data-tour="trace-pane-3" {...paneProps(3)}>
+          {paneHead(3, "Product mapping and responses")}
           {data.rows.length === 0 ? <EmptyState title="Nothing to map yet" hint="Product mappings and unit responses appear here once requirements exist." /> : (
           <table className="rows" data-tour="trace-table-3">
             <thead><tr><th className="col-id">ID</th><th>Unit · product</th><th>Response</th></tr></thead>
@@ -168,13 +234,14 @@ export default function TracePage() {
                     <MatchActions oppId={id} reqId={req.req_id} match={m} dispatched={assignments.length > 0} onDone={reload} tour={req.req_id === selected} />
                   </td>
                   <td data-tour={sel(req.req_id, "trace-sel-response")}>
+                    {!assessed ? <span className="muted">Responses appear once the bid is sent for assessment</span> : <>
                     {assignments.map((a) => (
                       <div key={a.id} className="trace-assign"><strong>{a.bu}</strong> <StatusBadge status={a.status} className="trace-status" />
                         {a.compliance && <StatusBadge status={a.compliance} kind="compliance" label={complianceLabel(a.compliance)} className="trace-compliance" />}
                         {a.response && <div className="muted trace-response">{a.response}</div>}
                         {a.status === "validated" && <SendToKnowledge kind="response" refId={a.id} status={sent?.[`response:${a.id}`]} onSent={reloadSent} />}</div>
                     ))}
-                    {assignments.length === 0 && <span className="muted">not dispatched</span>}
+                    {assignments.length === 0 && <span className="muted">not dispatched</span>}</>}
                   </td>
                 </tr>
               ))}

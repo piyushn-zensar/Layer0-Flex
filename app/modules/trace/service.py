@@ -7,7 +7,9 @@ Public contract:
     portfolio(db) -> list[dict]
     trace(db, opp_id) -> dict         LookupError if the opportunity does not exist. "docs": the main RFP first, then
                                       the change documents that current requirements are anchored in (P-11).
-                                      Each row's "bboxes": its highlight boxes, see _highlights
+                                      Each row's "bboxes": its highlight boxes, see _highlights.
+                                      "sent_for_assessment": true once any active unit work exists (J-12): the
+                                      Traceability screen shows unit responses only then
 """
 from sqlalchemy.orm import Session
 
@@ -65,5 +67,8 @@ def trace(db: Session, opp_id: str) -> dict:
     for d in opportunities.documents(db, opp_id):
         if d.role != "main" and d.id in anchored and d.status == "ingested":
             docs.append({"id": d.id, "filename": d.filename, "role": d.role, "pages": _sizes(ingestion.layout(d.id)["pages"])})
+    # ponytail: temporary derived signal. "Sent for assessment" is not stored anywhere yet; dispatch is what creates the
+    # unit work, so active assignments stand in for it. Replace with the Assessment step's own state when A-16 lands
+    # (it ends in the same dispatch). Active work only: submitted and validated answers survive a no-go, so they still show.
     return {"opp": opp, "doc": doc, "rows": rows, "pages": _sizes(pages), "docs": docs,
-            "progress": workpackages.progress(db, opp_id)}
+            "progress": workpackages.progress(db, opp_id), "sent_for_assessment": bool(assignments)}
