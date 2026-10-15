@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { errorMessage, post, useApi, useMe } from "@/lib/api";
+import { api, errorMessage, post, useApi, useMe } from "@/lib/api";
 import { complianceLabel, type Assignment, type Requirement, type Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
@@ -20,6 +20,33 @@ type Portfolio = { progress: Record<string, { total: number; submitted: number; 
 
 const BID_MANAGER = "Bid Manager";
 const BID_DESK = "Bid desk (commercial and submission items)";
+
+// A-21 (C-16): an assignment's history, loaded when it is opened. before / after hold only what the event changed.
+type HistoryEvent = { id: number; at: string; actor: string; action: string; note: string; before: Record<string, string | null>; after: Record<string, string | null> };
+const ACTIONS: Record<string, string> = { assigned: "assigned it", reopened: "reopened it", responded: "submitted an answer",
+  validated: "validated it", returned: "returned it", withdrawn: "withdrew it", capability_gap: "recorded a capability gap" };
+const CHANGE_LABELS: Record<string, string> = { compliance: "Compliance", product_ref: "Product", response: "How it is met", reason: "Reason",
+  conditions: "Conditions", workaround: "Workaround", next_steps: "Next steps" };
+
+function History({ id }: { id: number }) {
+  const [events, setEvents] = useState<HistoryEvent[]>();
+  const [error, setError] = useState<string>();
+  const load = (open: boolean) => { if (open && !events) api<HistoryEvent[]>(`/api/assignments/${id}/history`).then(setEvents, (e) => setError(errorMessage(e))); };
+  const show = (k: string, v: string | null) => (v == null || v === "" ? "—" : k === "compliance" ? answerLabel(v) : v);
+  return (
+    <details className="inbox-history" onToggle={(e) => load(e.currentTarget.open)}>
+      <summary>History</summary>
+      {error && <div className="warn">{error}</div>}
+      {!events && !error && <Busy label="Loading…" />}
+      {events && <ol>{events.map((ev) => (
+        <li key={ev.id}><span className="muted">{new Date(ev.at).toLocaleString()}</span> <strong>{ev.actor}</strong> {ACTIONS[ev.action] ?? ev.action}
+          {ev.note && <>: {ev.note}</>}
+          {Object.keys(ev.after).filter((k) => k in CHANGE_LABELS).map((k) => (
+            <div key={k} className="muted">{CHANGE_LABELS[k]}: {show(k, ev.before[k])} → {show(k, ev.after[k])}</div>))}
+        </li>))}</ol>}
+    </details>
+  );
+}
 const open = (a: Item) => a.status === "assigned" || a.status === "returned";
 // Stored values stay; screens show Fully / Partially / Non-compliant (technical-architecture 16.2). "exception" is retired.
 const answerLabel = (c: string) => (c === "exception" ? "Exception (earlier value)" : complianceLabel(c));
@@ -149,6 +176,7 @@ export default function InboxPage() {
               </td>
               <td data-tour={v("inbox-validate-cell") ?? t("inbox-status-cell")}>
                 <StatusBadge status={a.status} />{a.validated_by && a.status === "validated" && <div className="muted">by {a.validated_by}</div>}
+                <History id={a.id} />
                 {canValidate && a.status === "submitted" && (returning === a.id ? (
                   <div className="form compact inbox-return" data-tour={v("inbox-return-form")}>
                     <label><span className="sr-only">Why is it returned?</span>

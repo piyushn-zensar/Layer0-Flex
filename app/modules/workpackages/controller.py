@@ -102,6 +102,12 @@ def respond(body: RespondIn, request: Request, assignment_id: int = AssignmentId
     return {"ok": True}
 
 
+@router.get("/assignments/{assignment_id}/history")
+def history(assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
+    """Every submission, validation, return and change of one assignment, with before and after (C-16)."""
+    return _call(service.history, db, assignment_id)
+
+
 @router.post("/assignments/{assignment_id}/validate")
 def validate(body: ValidateIn, request: Request, assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
     _call(service.validate, db, assignment_id, body.ok, body.note, actor(request))

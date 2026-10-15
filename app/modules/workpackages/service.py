@@ -23,6 +23,9 @@ Public contract:
     by_requirement(db, opp_id) -> dict[str, list[Assignment]]   active (not withdrawn) assignments
     inbox(db, bu) -> list[Assignment]                     a unit's active work across all opportunities
     get(db, assignment_id) -> Assignment | None           one assignment
+    history(db, assignment_id) -> list[dict]              every event of the assignment, oldest first (C-16):
+        {id, at, actor, action, note, before, after}; before / after hold only what the event changed (status,
+        compliance, product_ref, response, reason, conditions, workaround, next_steps). LookupError: no such assignment
     respond(db, assignment_id, compliance, product_ref, response, actor, reason="", conditions="", workaround="",
             next_steps="")
         only that unit's product manager / design engineer (bid desk: the Bid Manager), only while assigned or
@@ -197,12 +200,36 @@ def respond(db: Session, assignment_id: int, compliance: str, product_ref: str |
         setattr(a, f, (fields[f] or "").strip() or None)
     a.status, a.responded_by, a.responded_at = "submitted", actor, utcnow()
     audit.record(db, actor, "responded", "assignment", a.req_id, a.opportunity_id, bu=a.bu, compliance=compliance,
-                 **{f: getattr(a, f) for f in EXTENDED if getattr(a, f)})
+                 product_ref=a.product_ref, response=a.response, **{f: getattr(a, f) for f in EXTENDED if getattr(a, f)})
     db.commit()
 
 
 def get(db: Session, assignment_id: int) -> Assignment | None:
     return db.get(Assignment, assignment_id)
+
+
+# The status each assignment event leaves behind ("validated" and "returned" are both recorded by validate()).
+STATUS_AFTER = {"assigned": "assigned", "reopened": "assigned", "responded": "submitted", "validated": "validated",
+                "returned": "returned", "withdrawn": "withdrawn", "capability_gap": "validated"}
+
+
+def history(db: Session, assignment_id: int) -> list[dict]:
+    a = _get(db, assignment_id)
+    events = audit.activity(db, a.opportunity_id, entity="assignment", req_id=a.req_id, bu=a.bu,
+                            limit=audit.MAX_ACTIVITY)["events"][::-1]  # oldest first; one assignment = req and unit
+    state, out = {}, []
+    for e in events:
+        data = e["data"]
+        after = state | {"status": STATUS_AFTER.get(e["action"], state.get("status"))}
+        if e["action"] == "responded":  # earlier events lack product_ref and response: those stay as they were
+            after |= {f: data.get(f) for f in ("compliance", "product_ref", "response", *EXTENDED) if f in data or f in EXTENDED}
+        elif e["action"] == "capability_gap":
+            after |= {"compliance": "not_met", "reason": data.get("reason")}
+        changed = [k for k in after if after[k] != state.get(k)]
+        out.append({"id": e["id"], "at": e["at"], "actor": e["actor"], "action": e["action"], "note": data.get("note") or "",
+                    "before": {k: state.get(k) for k in changed}, "after": {k: after[k] for k in changed}})
+        state = after
+    return out
 
 
 def _get(db: Session, assignment_id: int) -> Assignment:

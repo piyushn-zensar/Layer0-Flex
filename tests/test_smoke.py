@@ -1212,3 +1212,27 @@ def test_needs_an_owner_and_capability_gap():
     assert [(a["bu"], a["status"]) for a in row["assignments"]] == [("BID", "validated")]
     matrix = [r for r in client.get(f"/api/opportunities/{opp}/compliance-matrix").json()["rows"] if r["req_id"] == req_id]
     assert [(r["compliance_label"], r["reason"]) for r in matrix] == [("Non-compliant", "No unit offers a 4000 A bus")]
+
+
+def test_assignment_history():
+    """A-21 (C-16): GET /api/assignments/{id}/history lists every submission, validation, return and change of one
+    assignment, oldest first, with what changed before and after. Appended by Atharv (append-only on this shared file)."""
+    seed_demo.main()
+    client, bm, crown = signed_in(), auth("bid.manager"), auth("crown.de")
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp and i["status"] == "assigned")
+    url = f"/api/assignments/{item['id']}"
+    client.post(f"{url}/respond", json={"compliance": "partial", "response": "12 positions", "reason": "20 asked"}, headers=crown)
+    client.post(f"{url}/validate", json={"ok": False, "note": "Can you reach 20?"}, headers=bm)
+    client.post(f"{url}/respond", json={"compliance": "met", "response": "Two lineups"}, headers=crown)
+    client.post(f"{url}/validate", json={"ok": True}, headers=bm)
+
+    events = client.get(f"{url}/history", headers=crown).json()
+    assert [e["action"] for e in events] == ["assigned", "responded", "returned", "responded", "validated"]
+    assert [e["after"]["status"] for e in events] == ["assigned", "submitted", "returned", "submitted", "validated"]
+    first, back, second = events[1], events[2], events[3]
+    assert (first["after"]["compliance"], first["after"]["reason"], first["actor"]) == ("partial", "20 asked", "Crown Design Engineer")
+    assert back["note"] == "Can you reach 20?" and back["before"] == {"status": "submitted"}
+    assert second["before"] | {"status": None} == {"status": None, "compliance": "partial", "response": "12 positions", "reason": "20 asked"}
+    assert second["after"]["compliance"] == "met" and second["after"]["reason"] is None
+    assert client.get("/api/assignments/999999/history").status_code == 404
