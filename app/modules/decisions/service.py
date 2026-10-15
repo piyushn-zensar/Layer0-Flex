@@ -3,7 +3,8 @@
 Public contract:
     evidence(db, opp_id) -> dict                           the evidence pack shown before deciding
     summary(db, opp_id) -> dict                            go/no-go summary: per requirement fully / partly / not / bid
-        desk (from the unit's answer, else estimated from the match), counts by category, assessment {items,
+        desk or needs an owner (from the unit's answer, else estimated from the match), counts by category,
+        needs_owner (workpackages.needs_owner: product requirements no participating unit holds), assessment {items,
         validated} (the work sent to the units), criteria (go_no_go.json) with met / not_met / unknown, where
         completeness, compliance and schedule come from validated answers (C-10), and advice. Never a decision.
     record(db, opp_id, kind, outcome, units, rationale, actor, criteria=None) -> Decision
@@ -76,11 +77,14 @@ def summary(db: Session, opp_id: str, ev: dict | None = None) -> dict:
             level = min((LEVEL_FROM_OFFERING[u["offering_type"]] for u in m.units), key=WORST.index)
             basis, units = "match", [u["bu"] for u in m.units]
         else:
-            level, basis, units = ("bid_desk", "match", []) if m else ("not", "no match", [])
+            # C-08: only non-product items belong to the bid desk; a product item without a unit needs an owner
+            level, basis, units = (("bid_desk", "rule", []) if r.category not in matching.PRODUCT_CATEGORIES
+                                   else ("not", "needs an owner" if m else "no match", []))
         rows.append({"req_id": r.req_id, "category": r.category, "text": r.text, "level": level, "basis": basis, "units": units})
     by_category = {}
     for row in rows:
         by_category.setdefault(row["category"], Counter())[row["level"]] += 1
+    owners = workpackages.needs_owner(db, opp_id)
     # C-10: completeness, compliance and schedule come from the units' validated answers, not from the matches
     items = [a for r in reqs for a in work.get(r.req_id, [])]  # the work sent to the units (bid desk included)
     done = sum(a.status == "validated" for a in items)
@@ -103,7 +107,9 @@ def summary(db: Session, opp_id: str, ev: dict | None = None) -> dict:
         "scope_fit": (not checks["units_outside_scope"],
                       "Units outside the RFP's scope: " + ", ".join(checks["units_outside_scope"]) if checks["units_outside_scope"]
                       else f"Suggested units fit the layers in scope {checks['scope']['in_scope']}."),
-        "all_matched": (not ev["unmatched"], f"{len(ev['unmatched'])} requirement(s) without a match." if ev["unmatched"] else "Every requirement is routed."),
+        "all_matched": (not ev["unmatched"] and not owners,
+                        f"{len(ev['unmatched'])} requirement(s) without a match; {len(owners)} product requirement(s) need an owner."
+                        if ev["unmatched"] or owners else "Every requirement is routed."),
         "engineering_rules": (all(r["status"] != "fail" for r in rules.values()),
                               "Failing: " + ", ".join(i for i, r in rules.items() if r["status"] == "fail") if any(r["status"] == "fail" for r in rules.values())
                               else "No engineering rule fails."),
@@ -123,6 +129,7 @@ def summary(db: Session, opp_id: str, ev: dict | None = None) -> dict:
         "rows": rows,
         "by_category": {cat: {lvl: n.get(lvl, 0) for lvl in ("fully", "partly", "not", "bid_desk")} for cat, n in by_category.items()},
         "assessment": {"items": len(items), "validated": done},
+        "needs_owner": owners,
         "criteria": criteria,
         "advice": (f"Advice from Layer 0: {met} of {len(assessable)} assessable criteria met; "
                    f"{len(criteria) - len(assessable)} not known yet. The bid manager decides."),

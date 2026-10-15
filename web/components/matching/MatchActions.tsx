@@ -94,7 +94,7 @@ export default function MatchActions({ oppId, reqId, match: m, dispatched, onDon
               <button className="secondary" aria-label={`Remove ${u.product_id}`} onClick={() => setDraft(draft.filter((_, j) => j !== i))}>Remove</button>
             </div>
           ))}
-          {catalog && draft.length === 0 && <span className="muted">No unit: the bid manager answers it (not a product item).</span>}
+          {catalog && draft.length === 0 && <span className="muted">No unit: a non-product item goes to the bid desk (commercial and submission items); a product item is listed as Needs an owner until a unit is assigned or a capability gap is recorded.</span>}
           {dispatched && <span className="warn" data-tour={t("match-dispatched-warning")}>Already sent to units: dispatch again on the Bid decision step to apply this change.
             Added units get the work (if they take part); removed units have theirs withdrawn.</span>}
           <div className="row-actions">

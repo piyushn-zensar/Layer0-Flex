@@ -25,7 +25,7 @@
   {
    "id": "all_matched",
    "name": "Every requirement routed",
-   "question": "Does every requirement in the published register have a match (a unit, or the bid desk (commercial and submission items))?"
+   "question": "Does every requirement in the published register have an owner (a participating unit, the bid desk (commercial and submission items) for non-product items, or a recorded capability gap)?"
   },
   {
    "id": "engineering_rules",

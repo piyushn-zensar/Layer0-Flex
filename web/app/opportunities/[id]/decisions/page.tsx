@@ -16,6 +16,7 @@ type Summary = {
   rows: { req_id: string; category: string; text: string; level: string; basis: string; units: string[] }[];
   by_category: Record<string, Record<"fully" | "partly" | "not" | "bid_desk", number>>;
   assessment: { items: number; validated: number }; criteria: Criterion[]; advice: string;
+  needs_owner: { req_id: string; text: string; category: string; suggested: string[] }[]; // C-08: not dispatched
 };
 const JUDGEMENT: Record<Judgement, string> = { met: "met", not_met: "not met", unknown: "not known" };
 const BID_DESK = "Bid desk (commercial and submission items)";
@@ -136,6 +137,9 @@ export default function DecisionsPage() {
     setBusy(label);
     request.then((r) => { done(r); return reload(); }, (e) => toast.error(errorMessage(e))).finally(() => setBusy(undefined));
   };
+  const recordGap = (reqId: string, form: FormData) =>
+    run("gap", post(`/api/opportunities/${id}/requirements/${reqId}/capability-gap`, { reason: form.get("reason") }),
+      () => toast.success(`${reqId}: capability gap recorded (non-compliant, with the reason).`));
   const statusChanged = () => window.dispatchEvent(new Event(STATUS_EVENT)); // header stepper and badge
   const recordParticipation = (form: FormData) =>
     run("participation", post(`/api/opportunities/${id}/participation`, { units: form.getAll("units"), rationale: form.get("rationale") }),
@@ -148,8 +152,9 @@ export default function DecisionsPage() {
     run("decision", post<{ withdrawn: number }>(`/api/opportunities/${id}/go-no-go`, { outcome, rationale: f.get("rationale"), criteria }),
       (r) => { toast.success(outcome === "go" ? "Decision recorded: go." : `Decision recorded: no-go. ${r.withdrawn} open item(s) withdrawn from the units.`); statusChanged(); });
   };
-  const dispatch = () => run("dispatch", post<{ created: number }>(`/api/opportunities/${id}/dispatch`), (r) => {
-    toast.success(r.created ? `${r.created} new assignment(s) sent to the units.` : "Nothing new to send: every unit already has its work.");
+  const dispatch = () => run("dispatch", post<{ created: number; needs_owner: number }>(`/api/opportunities/${id}/dispatch`), (r) => {
+    toast.success((r.created ? `${r.created} new assignment(s) sent to the units.` : "Nothing new to send: every unit already has its work.")
+      + (r.needs_owner ? ` ${r.needs_owner} product requirement(s) need an owner and were not sent.` : ""));
     statusChanged();
   });
 
@@ -201,6 +206,16 @@ export default function DecisionsPage() {
           {!part && <span className="muted">Record which business units take part first.</span>}
           {go?.outcome === "no_go" && <span className="muted">The bid is marked no-go: nothing is sent until a go decision resumes it.</span>}
         </div>
+        {data.summary && data.summary.needs_owner.length > 0 && <div data-tour="dec-needs-owner">
+          <Alert kind="warn" title={`Needs an owner: ${data.summary.needs_owner.length} product requirement(s)`}>Not sent to any unit. Assign a unit
+            in Traceability (pane 3), let the matched unit take part, or record a capability gap: why no unit can offer it.</Alert>
+          <ul className="per-req">{data.summary.needs_owner.map((o) => <li key={o.req_id}>
+            <a className="mono" href={`/opportunities/${id}/trace#${o.req_id}`}>{o.req_id}</a> {o.text}
+            {o.suggested.length > 0 && <span className="muted"> (matched to {o.suggested.join(", ")}, not taking part)</span>}
+            {bm && <form className="inline" action={(f) => recordGap(o.req_id, f)}>
+              <label><span className="sr-only">Why no unit can offer {o.req_id}</span><input name="reason" required placeholder="Capability gap: why no unit can offer it" /></label>
+              <button className="secondary sm" disabled={!!busy}>Record capability gap</button></form>}
+          </li>)}</ul></div>}
       </section>}
 
       <section className="card" data-tour="dec-gonogo">

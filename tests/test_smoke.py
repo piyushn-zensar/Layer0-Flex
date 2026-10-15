@@ -235,11 +235,13 @@ def test_workflow_order_and_roles():
     assert client.post(f"{url}/validate", json={"ok": True}, headers=CROWN).status_code == 403      # no self-validation
     assert client.post(f"{url}/validate", json={"ok": True}, headers=BM).status_code == 200
 
-    # the bid manager takes the item away from Crown: re-dispatch withdraws Crown's work and gives it to the bid desk
+    # the bid manager takes the item away from Crown: re-dispatch withdraws Crown's work; a product item does not
+    # fall back to the bid desk, it needs an owner (A-19, C-08; updated by Atharv)
     assert client.post(f"/api/opportunities/{opp}/requirements/{item['req_id']}/match", json={"units": []}, headers=BM).status_code == 200
-    client.post(f"/api/opportunities/{opp}/dispatch", headers=BM)
+    assert client.post(f"/api/opportunities/{opp}/dispatch", headers=BM).json()["needs_owner"] >= 1
     row = next(r for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"] if r["req"]["req_id"] == item["req_id"])
-    assert [a["bu"] for a in row["assignments"]] == ["BID"]
+    assert row["assignments"] == []
+    assert item["req_id"] in {o["req_id"] for o in client.get(f"/api/opportunities/{opp}/needs-owner").json()}
     assert all(i["id"] != item["id"] for i in client.get("/api/inbox/CROWN").json()["items"])     # gone from Crown's inbox
     assert client.get("/api/catalog/search?q=relay&k=-1").status_code == 422
 
@@ -1176,3 +1178,37 @@ def test_response_fields_and_reason():
     handoff = client.get(f"/api/opportunities/{opp}/handoff/CROWN").json()
     answers = [i["unit_answer"] for r in handoff["routes"].values() for i in r["items"] if i["req_id"] == item["req_id"]]
     assert answers and answers[0]["reason"] == fields["reason"]
+
+
+def test_needs_an_owner_and_capability_gap():
+    """A-19 (C-08): the bid desk holds only non-product items; a product requirement without a participating unit is
+    not dispatched but listed as needing an owner, until a unit or a capability gap (a validated non-compliant answer
+    with the reason, by the bid manager) settles it. Appended by Atharv (append-only on this shared file)."""
+    seed_demo.main()
+    client, bm = signed_in(), auth("bid.manager")
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
+    desk = [r for r in rows if any(a["bu"] == "BID" for a in r["assignments"])]
+    assert desk and all(r["req"]["category"] not in ("technical", "compliance") for r in desk)  # no silent fallback
+    held = next(r for r in rows if r["req"]["category"] == "technical" and r["assignments"])
+    req_id, url = held["req"]["req_id"], f"/api/opportunities/{opp}/requirements/{held['req']['req_id']}/capability-gap"
+    assert client.post(url, json={"reason": "No unit"}, headers=bm).status_code == 409  # a unit holds it
+
+    client.post(f"/api/opportunities/{opp}/requirements/{req_id}/match", json={"units": []}, headers=bm)
+    client.post(f"/api/opportunities/{opp}/dispatch", headers=bm)
+    assert req_id in {o["req_id"] for o in client.get(f"/api/opportunities/{opp}/needs-owner").json()}
+    summary = client.get(f"/api/opportunities/{opp}/decisions").json()["summary"]
+    assert req_id in {o["req_id"] for o in summary["needs_owner"]}
+    assert next(c for c in summary["criteria"] if c["id"] == "all_matched")["status"] == "not_met"
+
+    assert client.post(url, json={"reason": "No unit"}, headers=auth("crown.pm")).status_code == 403
+    assert client.post(url, json={"reason": "  "}, headers=bm).status_code == 409
+    assert client.post(f"/api/opportunities/{opp}/requirements/REQ-9999-0001/capability-gap", json={"reason": "x"}, headers=bm).status_code == 404
+    gap = client.post(url, json={"reason": "No unit offers a 4000 A bus"}, headers=bm).json()
+    assert (gap["bu"], gap["status"], gap["compliance"], gap["reason"]) == ("BID", "validated", "not_met", "No unit offers a 4000 A bus")
+    assert req_id not in {o["req_id"] for o in client.get(f"/api/opportunities/{opp}/needs-owner").json()}
+    client.post(f"/api/opportunities/{opp}/dispatch", headers=bm)  # the gap stays: not withdrawn, not reopened
+    row = next(r for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"] if r["req"]["req_id"] == req_id)
+    assert [(a["bu"], a["status"]) for a in row["assignments"]] == [("BID", "validated")]
+    matrix = [r for r in client.get(f"/api/opportunities/{opp}/compliance-matrix").json()["rows"] if r["req_id"] == req_id]
+    assert [(r["compliance_label"], r["reason"]) for r in matrix] == [("Non-compliant", "No unit offers a 4000 A bus")]

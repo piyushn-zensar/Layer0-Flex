@@ -9,11 +9,14 @@ Public contract:
         and .offering_type repeat the main unit (None / "NONE" when the bid manager answers it).
     decide(db, match_id, action, actor)               action: accept | reject; LookupError if no such match
     set_manual(db, opp_id, req_id, units, actor) -> Match   a person's own choice: units = [{product_id,
-        offering_type}] (empty = bid manager); unit taken from the product. LookupError: no such requirement in
+        offering_type}] (empty = no unit: a non-product item goes to the bid desk, a product item needs an owner);
+        unit taken from the product. LookupError: no such requirement in
         the opportunity; ValueError: unknown or inactive product, or bad offering type
     suggested_units(db, opp_id) -> dict[str, list[str]]   bu -> req_ids, every listed unit (input to participation)
     evidence_checks(db, opp_id) -> dict   scope (M3), tier flags (M4), rules R-001..R-004 (M5), LV solver (M13) and
         units suggested outside the scope, over the frozen approved requirements (see checks.py)
+    PRODUCT_CATEGORIES                    requirement categories a business unit answers; every other category is
+        routed to the bid desk by rule (C-08)
 """
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor

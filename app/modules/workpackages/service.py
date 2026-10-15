@@ -1,8 +1,11 @@
 """Work packages: one-step dispatch to business units, checklist responses, validation.  Owner: Atharv.
 
 Public contract:
-    dispatch(db, opp_id, actor) -> int                    one assignment per matched participating unit, else the
-                                                          bid desk, for every published approved requirement; returns
+    dispatch(db, opp_id, actor) -> int                    one assignment per matched participating unit for every
+                                                          published approved requirement; with no such unit a
+                                                          non-product item goes to the bid desk and a product item
+                                                          is not dispatched (needs an owner, C-08) unless a capability
+                                                          gap is recorded; returns
                                                           how many were created (repeatable). Work that no longer
                                                           fits the matches or participation is withdrawn, and
                                                           withdrawn work that fits again is reopened. Needs no go
@@ -11,6 +14,12 @@ Public contract:
     withdraw_open(db, opp_id, actor) -> int               a no-go: the units' open work (assigned or returned) is
                                                           withdrawn, submitted and validated answers stay; returns
                                                           how many. A later go and dispatch reopen it
+    needs_owner(db, opp_id) -> list[dict]                 published product requirements with no participating unit
+                                                          and no capability gap: {req_id, text, category, suggested
+                                                          (matched units not taking part)}; not dispatched
+    record_gap(db, opp_id, req_id, reason, actor) -> Assignment   a capability gap: no unit can offer this product
+        requirement; a validated non-compliant bid desk answer with the reason, kept in the register and the matrix.
+        LookupError: not in the published register; ValueError: no reason, or a participating unit holds it
     by_requirement(db, opp_id) -> dict[str, list[Assignment]]   active (not withdrawn) assignments
     inbox(db, bu) -> list[Assignment]                     a unit's active work across all opportunities
     get(db, assignment_id) -> Assignment | None           one assignment
@@ -58,19 +67,10 @@ def dispatch(db: Session, opp_id: str, actor: str) -> int:
     units = set(decisions.participating_units(db, opp_id))
     if not units:
         raise ValueError("Record which business units take part before dispatch.")
-    matches = matching.for_opportunity(db, opp_id)
-    existing = {(a.req_id, a.bu): a for a in db.scalars(select(Assignment).where(Assignment.opportunity_id == opp_id))}
+    existing = _existing(db, opp_id)
     wanted = {}
-    for req in requirements.current(db, opp_id):
-        if req.status != "approved" or req.baseline is None:
-            continue
-        m = matches.get(req.req_id)
-        # one assignment per matched participating unit (its first product); none of them -> the bid desk
-        targets = {}
-        for u in m.units if m else []:
-            if u["bu"] in units:
-                targets.setdefault(u["bu"], u["product_id"])
-        for bu, product_ref in (targets or {BID_DESK: None}).items():
+    for req, targets in _routing(db, opp_id, units, existing):
+        for bu, product_ref in (targets or {}).items():  # None: needs an owner, not dispatched
             wanted[(req.req_id, bu)] = product_ref
     created = 0
     for (req_id, bu), product_ref in wanted.items():
@@ -94,6 +94,60 @@ def dispatch(db: Session, opp_id: str, actor: str) -> int:
         raise ValueError("Dispatch is already running for this bid; refresh and try again.")
     opportunities.set_status(db, opp_id, "dispatched", actor)
     return created
+
+
+def _existing(db: Session, opp_id: str) -> dict:
+    return {(a.req_id, a.bu): a for a in db.scalars(select(Assignment).where(Assignment.opportunity_id == opp_id))}
+
+
+def _is_gap(a: Assignment | None) -> bool:
+    """A recorded capability gap: the bid desk's answered non-compliant item with a reason (record_gap)."""
+    return bool(a) and a.status in ("submitted", "validated") and a.compliance == "not_met" and bool(a.reason)
+
+
+def _routing(db: Session, opp_id: str, units: set[str], existing: dict):
+    """(requirement, targets) for every published approved requirement: targets = {bu: product_ref}, one per matched
+    participating unit (its first product); else the bid desk for a non-product item or a recorded capability gap;
+    else None: a product requirement that needs an owner (C-08)."""
+    matches = matching.for_opportunity(db, opp_id)
+    for req in requirements.current(db, opp_id):
+        if req.status != "approved" or req.baseline is None:
+            continue
+        m = matches.get(req.req_id)
+        targets = {}
+        for u in m.units if m else []:
+            if u["bu"] in units:
+                targets.setdefault(u["bu"], u["product_id"])
+        if not targets and (req.category not in matching.PRODUCT_CATEGORIES or _is_gap(existing.get((req.req_id, BID_DESK)))):
+            targets = {BID_DESK: None}
+        yield req, targets or None
+
+
+def needs_owner(db: Session, opp_id: str) -> list[dict]:
+    units, matches = set(decisions.participating_units(db, opp_id)), matching.for_opportunity(db, opp_id)
+    return [{"req_id": req.req_id, "text": req.text, "category": req.category,
+             "suggested": [u["bu"] for u in (matches[req.req_id].units if req.req_id in matches else [])]}
+            for req, targets in _routing(db, opp_id, units, _existing(db, opp_id)) if targets is None]
+
+
+def record_gap(db: Session, opp_id: str, req_id: str, reason: str, actor: str) -> Assignment:
+    if not reason.strip():
+        raise ValueError("Say why no unit can offer it (reason).")
+    existing = _existing(db, opp_id)
+    route = {req.req_id: targets for req, targets in _routing(db, opp_id, set(decisions.participating_units(db, opp_id)), existing)}
+    if req_id not in route:
+        raise LookupError(f"{req_id} is not in the published register of {opp_id}.")
+    if route[req_id] and BID_DESK not in route[req_id]:
+        raise ValueError(f"{req_id} is held by {', '.join(route[req_id])}: that unit answers it.")
+    a = existing.get((req_id, BID_DESK))
+    if not a:
+        a = Assignment(opportunity_id=opp_id, req_id=req_id, bu=BID_DESK, owner=BID_MANAGER)
+        db.add(a)
+    a.status, a.compliance, a.reason, a.response = "validated", "not_met", reason.strip(), a.response or ""
+    a.responded_by, a.responded_at, a.validated_by = actor, utcnow(), actor
+    audit.record(db, actor, "capability_gap", "assignment", req_id, opp_id, bu=BID_DESK, reason=a.reason)
+    db.commit()
+    return a
 
 
 def withdraw_open(db: Session, opp_id: str, actor: str) -> int:

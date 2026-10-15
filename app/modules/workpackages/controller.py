@@ -6,7 +6,7 @@ from pydantic import BaseModel, model_validator
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
-from app.core.web import actor, row
+from app.core.web import BID_MANAGER, actor, require, row
 from app.modules.catalog import service as catalog
 from app.modules.requirements import service as requirements
 from app.modules.workpackages import service
@@ -30,6 +30,10 @@ class RespondIn(BaseModel):
         if self.compliance in NEEDS_REASON and not self.reason.strip():
             raise ValueError("Say what is not met and why (reason) for a partially or non-compliant answer.")
         return self
+
+
+class GapIn(BaseModel):
+    reason: str
 
 
 class ValidateIn(BaseModel):
@@ -57,7 +61,20 @@ def _call(fn, *args):
 
 @router.post("/opportunities/{opp_id}/dispatch")
 def dispatch(opp_id: str, request: Request, db: Session = Depends(get_db)):
-    return {"created": _call(service.dispatch, db, opp_id, actor(request))}
+    created = _call(service.dispatch, db, opp_id, actor(request))
+    return {"created": created, "needs_owner": len(service.needs_owner(db, opp_id))}
+
+
+@router.get("/opportunities/{opp_id}/needs-owner")
+def needs_owner(opp_id: str, db: Session = Depends(get_db)):
+    """Product requirements no participating unit holds: not dispatched until a unit or a capability gap (C-08)."""
+    return _call(service.needs_owner, db, opp_id)
+
+
+@router.post("/opportunities/{opp_id}/requirements/{req_id}/capability-gap")
+def capability_gap(opp_id: str, req_id: str, body: GapIn, request: Request, db: Session = Depends(get_db)):
+    require(request, BID_MANAGER)  # owned by the bid manager (technical-architecture 16.5)
+    return row(_call(service.record_gap, db, opp_id, req_id, body.reason, actor(request)))
 
 
 @router.get("/opportunities/{opp_id}/handoff/{bu}")
