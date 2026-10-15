@@ -243,3 +243,104 @@ One task at a time, top to bottom.
 ### 9.5 Demo accounts (contract for P-20, J-10, J-15, A-17)
 
 `data/accounts.json` holds one account per person in today's people list (`bid.manager`; `ep2.pm`, `ep2.de`, `crown.pm`, `crown.de`, `anord.pm`, `anord.de`, `fpm.pm`, `fpm.de`, `jetcool.pm`, `jetcool.de`, `cloud.pm`, `cloud.de`, `ems.pm`, `ems.de`, `afs.pm`, `afs.de`) with `name` equal to today's display name, so stored actor names and frozen data stay valid, plus `admin`. The file is the roster: the accounts live in the table `user_account` (username, name, role, bu, password_hash) of a MySQL database (`MYSQL_*` in `.env`; the local SQLite store without `MYSQL_HOST`, as in the tests). On every start the API adds any account the table does not have yet, with `DEMO_PASSWORD` from `.env` as its starting password; an existing password is never overwritten. Passwords are stored as salted PBKDF2-SHA256 hashes; `.venv\Scripts\python -m scripts.set_password <username>` changes one.
+
+
+## 10. Iteration 3: changes requested on 15 Oct 2026
+
+Source of truth: [Documents/changes-iteration3.md](../Documents/changes-iteration3.md) (C-23 to C-34, client-facing): for each change what was asked, today's behaviour, the change, **integration feasibility**, checks and open questions. Section 6 there is the quick feasibility analysis; section 7 lists the open questions for the Zensar point of contact. Iteration-2 tasks still open on 15 Oct 2026 (A-17 blocked, A-23, A-24 in review, J-15, P-29) continue; section 10.5 says how they and the finished A-16 and A-20 fold in.
+
+**Decisions of 15 Oct 2026 (Piyush):** the unit manager is the unit's product manager; sign-up lets the person choose any role except administrator (the administrator is seeded by the server); the Document ID and Instance ID are the IDs embedded in the file (PDF trailer `/ID` or XMP `xmpMM:DocumentID` / `xmpMM:InstanceID`; Word settings document ID), SHA-256 when absent; the catalog is read from `https://flex.com/products` and the official pages it links to, with every product-name version kept.
+
+### 10.1 Order of work
+
+Same as 9.1: no dates or checkpoints, one task at a time in table order, a task starts when the tasks it depends on are done. Across the team, follow the order in 10.6. A task whose change has an open question uses the **proposed default** written in the change document unless the answer arrives first; note the default in the tracker.
+
+### 10.2 Rules that change this iteration
+
+1. **API paths change once (A-25, C-31).** A-25 goes first. Announce it in chat; everyone pushes and stops; A-25 lands as one commit (routes, web calls, tests, walkthrough); everyone pulls. From then on use `/api/bids/...`. Page addresses (`/opportunities/...`) stay unless open question 11 says otherwise.
+2. **New tables, not new columns.** A new column on an existing table stops the server (`SchemaOutOfDate`) until `reset-demo.cmd`. Put new data in new tables where possible; after pulling a model change, run `reset-demo.cmd`. Accounts are in their own table and survive a reset.
+3. **Frozen answers.** The matcher's prompt contains the product list; the catalog refresh (P-34) and evidence in prompts (P-37) change it. Pin the catalog and evidence versions per bid; only the task owner regenerates answers (section 2, rule 7).
+4. **One permission model.** Role and unit from the token (`web.user`), never display-name comparisons (`workpackages._may_answer`, `validate`, the knowledge curator). P-30 provides the helpers; every module uses them.
+5. Same as 9.2 otherwise: own files, `[contract]` commits for unavoidable cross-module additions, `pytest -q` before every push, tracker updated with the commit.
+
+### 10.3 Ownership for iteration 3 (also in `.claude/rules/ownership.md`)
+
+Several requested tasks touch another person's files. These moves hold for this iteration only.
+
+| Path | Owner in iteration 3 | Task |
+|---|---|---|
+| Route decorators in every module, `/api/opportunities` calls in `web/**`, `tests/**`, `web/tour/**` (paths only) | Atharv, one announced commit | A-25 |
+| `web/app/opportunities/[id]/requirements/**` (removed), `web/components/requirements/**`, the requirement controls in pane 2 of `web/app/opportunities/[id]/trace/**` | Atharv ([contract] Piyush, Janvia) | A-26, A-27 |
+| `app/modules/knowledge/**` (RAG tables, retrieval profiles, review) | Piyush | P-35 to P-39 |
+| `app/modules/catalog/scrape.py` and the catalog tables | Piyush ([contract] Atharv) | P-34 |
+| `web/app/signup/**`, `web/middleware.ts` | Piyush | P-31 |
+| `web/app/knowledge/**` (removed), `web/tour/chapters/knowledge.ts` | Janvia | J-17 |
+| Pane components and pane addresses under `web/app/opportunities/[id]/trace/**` | Janvia | J-18 |
+
+### 10.4 Tasks
+
+One task at a time, top to bottom. Size: S hours, M one to two days, L several days, XL more than a week (rough, for comparison only).
+
+#### Piyush (roles, auth, freeze, schedule, catalog, RAG)
+
+| ID | Task | Changes | Size | Depends on |
+|---|---|---|---|---|
+| P-30 | Unit roles in core: **Unit manager** and **Unit designer / engineer** (decided: the unit manager is the unit's product manager, so labels for the stored `product_manager` and `design_engineer`, accounts unchanged); role and unit helpers in `web.py` (`UNIT_MANAGER`, `UNIT_ENGINEER`, `same_unit(user, bu)`); labels in `web/lib/types.ts` and the user menu; the routing and validation rules themselves are A-17 | C-25 | S | open question 2 (default until answered) |
+| P-31 | Sign-up and complete auth: `POST /api/auth/signup` (username, name, password of at least 10 characters, **role chosen by the person** except `admin`, unit required for unit roles); the `admin` account is seeded by the server (roster / `.env`), never by sign-up; `auth.init()` syncs roster accounts only; limit on repeated failed sign-in and sign-up attempts; web: `/signup` (linked from `/login`, role and unit selects), `web/middleware.ts` (no cookie → `/login?next=`), actions shown by role via `useMe()`; test: every write route × every role (403 where not allowed) | C-26 | M | P-30 |
+| P-32 | Automatic freeze per document instance: Document ID and Instance ID read from the file (PDF trailer `/ID` via PyMuPDF `xref_get_key(-1, "ID")` or XMP `xmpMM:DocumentID` / `xmpMM:InstanceID`; `.docx` `word/settings.xml` document ID; SHA-256 when absent) into a new `document_identity` table (no new column on `document`); upload and from-sample look both up across bids: same pair already read → return the existing bid (web redirects to Requirement Traceability with a message); same Document ID with a new Instance ID → name the bid that holds the earlier instance and offer to add it there as a change document; a successful `extract` (read main RFP, at least one verified requirement, no failed page) calls `freeze` at once, otherwise nothing is frozen; Publish button and `POST …/baselines` route removed (the service stays); Send for assessment on the Assessment screen only dispatches ([contract] Atharv); re-read after the freeze refused (open question 7 default); test: knowledge approval, re-match and catalog refresh leave requirement rows and baselines unchanged; seed and walkthrough intake checked (a sample file now opens its seeded bid) | C-27 | M | P-31 (order); open questions 6 (other bid), 7 |
+| P-33 | Bid schedule and bid-manager approvals: new tables in `opportunities` (`bid_schedule`: due date, consolidation days; `unit_schedule`: bid, unit, estimated completion, note; `bid_approval`: bid, kind schedule / compliance, version, by, at, snapshot); unit manager sets the unit's date; `GET …/schedule` gives each unit, the latest date, the planned submission date and a warning after the due date; `POST …/approvals {kind}` bid manager only, schedule refused until every participating unit has a date, reopened by a later change; `schedule` criterion reads the dates ([contract] Atharv); cards on the Assessment screen and in My work ([contract] Atharv) | C-24 | M–L | P-30, A-17; open questions 3, 4 |
+| P-34 | Catalog refresh: `catalog/scrape.py` reads `https://flex.com/products`, `/products/power-and-cooling`, `/products/power-modules` and the product pages of Anord Mardix, Crown Technical Systems, EP² and JetCool (automotive and components left out) with `httpx` and the standard-library HTML parser, one small parser per site that fails loudly on a layout change, robots.txt checked with `urllib.robotparser` (name, category, key features, link; menu links de-duplicated); tables `catalog_source`, `catalog_product` (stable key from the link) and `catalog_product_version` (name, features, link, valid from / to: a renamed product keeps every earlier name), `catalog_refresh`, `catalog_version`; FastAPI lifespan in `app/main.py`: refresh on start without blocking and every 24 h (`CATALOG_REFRESH_HOURS`, off in tests); a failure keeps the last good catalog; the matcher reads the catalog version pinned to the bid, so frozen answers keep working; Product catalog page shows source and last refresh ([contract] Atharv) | C-28 | M–L | — |
+| P-35 | RAG R1, sources and passages: tables `kb_source` (collection, publisher, revision, scope, permissions, sha256, lifecycle, version) and `kb_passage` (source, page, lines, heading path, table, text, annotations); ingestion through the existing layout model (PDF, Word, Excel); model annotations through the gateway (frozen), stored beside the passage; document-level review by role; bid evidence filtered by bid inside the service; registration and review on a Sources tab of the Product catalog page ([contract] Atharv) | C-29 (1–4) | L | open question 9 (start with documents already in the repository) |
+| P-36 | RAG R2, reviewed examples and feedback loop: `kb_item` (kind, example type, conditions, limits, sources, illustrative flag, review state, version) replaces `knowledge_learned.json`; "Nominate as a reviewed example" from corrections and validated answers (replaces Send to knowledge base); item-level review list in My work for the reviewing roles ([contract] Atharv); seeded past responses marked illustrative and kept out of verified evidence | C-29 (3, 6), C-33 | M–L | P-35 |
+| P-37 | RAG R3–R4, retrieval and explainable assessments: retrieval profiles per task (`data/knowledge_base/retrieval.json`); semantic and keyword results combined (rank fusion) with filters (collection, bid, review state, applicability, access); per-document vectors; cited evidence into the matcher and outline prompts, uncited claims dropped ([contract] Atharv for the matcher); `assessment_record` table (bid, task, evidence versions, citations, model, prompt hash, catalog version, conclusion, unresolved questions); `POST …/reassessments {reason}` keeps earlier records and never touches requirements; frozen matcher and outline answers regenerated once (Azure); rule R2 updated in technical-architecture | C-29 (5, 7) | XL | P-36, P-34 |
+| P-38 | Executive summary with the assessment score: domain alignment, product-evidence coverage, specialist-review progress and preliminary feasibility (formula in `go_no_go.json`, labelled "not a probability"), evidence gaps, each count opening its requirements; summary records its evidence versions ([contract] Atharv in `decisions`, on the Assessment screen). If it is needed earlier, build it on today's matches and label it so | C-23 | L | P-37; open question 10 |
+| P-39 | RAG R5, evaluation: `data/golden/rag_eval.json` reviewed by someone other than its author (coverage, interpretation, retrieval relevance, citation support, numerical comparisons, unknowns, isolation between bids); `scripts/eval_rag.py` reusing the model-guard record hook and the reader golden list; report | C-29 (8) | M | P-37; open question 9 (reviewers) |
+| P-40 | Docs: mark built parts in `Documents/changes-iteration3.md` and technical-architecture (new section 17); refresh `Documents/current-system/` (together with P-29 if it is still open) | all | M | everything |
+
+#### Atharv (API rename, Requirement Traceability)
+
+| ID | Task | Changes | Size | Depends on |
+|---|---|---|---|---|
+| A-25 | API paths: `/opportunities` → `/bids` in the 38 route decorators (10 modules), the `/api/opportunities` calls in 20 web files, about 318 uses in 19 test files and 5 walkthrough chapters; page addresses unchanged; one announced commit, `pytest -q`, `npm run build` and a walkthrough run before the push | C-31 | S–M | — (goes first; announce) |
+| A-26 | Requirements into **Requirement Traceability**: Register / Exceptions, corrections with a reason (add, edit, split, merge, exclude), restore, link to lines and dismiss, line picker and history move into pane 2; step and page renamed; `/requirements` redirects to `/trace`; page removed; links updated (Changes, Bid decision, Compliance matrix pages, `OppSteps.tsx`, `TopNav.tsx`); walkthrough chapters `requirements`, `recap`, `navigation` updated with Janvia | C-30 | M | P-32 (Publish gone) |
+| A-27 | Filtering and sorting on Requirement Traceability: filters category, offering type, unit, response state and compliance, source verified or exception, origin, page range, text search; sort by RFP order (default), ID, category, unit, compliance, last change; all in the page address (`?category=`, `?offering=` etc.), so A-24's links work | C-32, C-20 | S | A-26 |
+
+#### Janvia (Knowledge base page, flexible workspace)
+
+| ID | Task | Changes | Size | Depends on |
+|---|---|---|---|---|
+| J-17 | Remove the Knowledge base page: `web/app/knowledge/**`, the top-bar link in `TopNav.tsx`, the walkthrough chapter `knowledge.ts` and its mentions in other chapters; the knowledge API and its test stay | C-33 | S | P-36 (review list in My work) |
+| J-18 | Flexible workspace: the three panes become components that can also show alone at their own address; drag to reorder and resize in the main window (native drag and drop, CSS); **Open in new window** per pane; selection and Linked state shared through `BroadcastChannel` per bid; closing a window returns its pane; layout remembered in `localStorage`; walkthrough targets stay in the main window; checked with three windows | C-34 | M | A-26 |
+
+### 10.5 How open iteration-2 tasks fold in
+
+| Task | Change from iteration 3 |
+|---|---|
+| A-16 Assessment screen (done) | Becomes the executive summary and routing: "Send for assessment" (publish, then dispatch) only dispatches after P-32; P-33 adds the schedule card and P-38 the assessment panel |
+| A-17 workflow.json (blocked) | Uses the C-25 roles: technical items answered by unit designers / engineers, non-technical items of a participating unit by its unit manager, validation by the unit manager, bid-level administrative items on the bid desk; name checks become role and unit checks. Its blocker (the seed validates every answer as the bid manager) is cleared in the same task: the seed validates as each unit's manager ([contract] Piyush for `scripts/seed_demo.py`). Depends on P-30 |
+| A-20 permissions (done) | Its role checks switch to the unit roles with P-30 and A-17 (validation moves from the bid manager to the unit manager); P-31's role test covers these routes |
+| A-24 drill-down (review) | The links exist; the Traceability side that applies `?category=` and `?offering=` is delivered by A-27 |
+| J-15 walkthrough | Also waits for iteration 3 (pages removed, roles renamed, sign-up, automatic freeze, detachable panes) |
+| P-29 docs | Can be combined with P-40 |
+
+### 10.6 Order across the team
+
+1. A-25 API rename (everyone pauses for it).
+2. P-30 roles, then A-17 on them (clears its blocker), then P-31 sign-up and authorization.
+3. P-32 automatic freeze (Send for assessment becomes dispatch only).
+4. A-26 Requirement Traceability, A-27 filters, J-18 detachable panes.
+5. P-33 schedule and approvals.
+6. P-34 catalog refresh.
+7. P-35, P-36 (then J-17), P-37, P-38, P-39.
+8. J-15 walkthrough, P-40 (with P-29) docs.
+
+### 10.7 Integration feasibility (internal summary)
+
+No change is blocked technically (details in the change document, section 6). Internal points to watch:
+
+- **Biggest rework:** RAG (P-37) reverses design rule R2 and regenerates the frozen matcher and outline answers; the catalog refresh (P-34) has the same effect unless the bid pins its catalog version.
+- **Widest change:** the API rename (A-25) touches every module, 20 web files, 19 test files and the walkthrough; doing it first avoids conflicts with everything else.
+- **Lost review window:** with the automatic freeze (P-32) every fix after extraction is a versioned correction and a new baseline; a re-read is no longer possible (open question 7).
+- **Demo impact:** the one-click samples upload the seeded bids' files, so after P-32 they open the seeded bids; the walkthrough intake chapter changes (J-15).
+- **Content, not code:** RAG needs real engineering references and verified datasheets from the business; published standards are licensed. The catalog page has names, key features and links but no datasheets.
+- **Decided 15 Oct 2026:** unit manager = product manager (P-30); sign-up chooses the role, admin seeded (P-31; a known PoC limit: anyone can sign up as bid manager); embedded Document / Instance IDs with SHA-256 fallback (P-32; some tools omit or reuse the IDs); flex.com/products plus official unit product pages with name versions (P-34). Still open: same document for another bid, re-reads after the freeze, references and reviewers, score formula.

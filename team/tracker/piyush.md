@@ -35,6 +35,27 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | P-26 | Seed: drop the hyperscale bid; seed accounts; read and freeze the independent RFP (layout and reader answers) once chosen | It2 (C-11) | done | Logan City Light & Power, 15kV Switchgear for Substation 6 (J-14 recommendation) in `data/RFP`; layout, search index, reader and grouping answers frozen (Azure); `seed_demo.independent()` seeds it as OPP-0002 up to the register (167 requirements, 4 exceptions, each with a location hint; coverage 46 pages = 44 read + 2 skipped, 408 candidates = 392 + 4 + 12); one-click sample `logan_rfp`; in the model-guard replay; walkthrough step `portfolio-independent`. Hyperscale removal done in J-14; accounts are seeded on start (auth). Matching: A-23 |
 | P-28 | Investigations (priority 3): Word / Excel into the layout model (spike); past Flex responses for extraction (note) | It2 (C-18, C-19) | done | Word and Excel spike built: `ingestion/office.py` renders `.docx` / `.xlsx` into a deterministic PDF the normal parser reads (paragraphs and rows as lines, heading 1 and sheets as pages; no new dependency); upload accepts them; `tests/test_p28_office.py`. Limits and the C-19 note (past responses: matching evidence first, extraction last; what the units must provide) in `team/investigations.md` |
 | P-29 | Docs: mark built parts in technical-architecture §16 and changes.md; refresh `Documents/current-system/` at the end | It2 (all) | todo | depends on: everything |
+| P-30 | Unit roles in core: Unit manager (= the unit's product manager, decided 15 Oct) and Unit designer / engineer, role and unit helpers in `web.py`, labels in the web app | It3 (C-25) | todo | default for open question 2 until answered |
+| P-31 | Sign-up with the role chosen by the person (not admin; admin seeded by the server, decided 15 Oct), attempt limit, `web/middleware.ts` guard, role-aware actions, per-role 403 test over every write route | It3 (C-26) | todo | depends on: P-30 |
+| P-32 | Automatic freeze per document instance: Document ID and Instance ID embedded in the file (PDF `/ID` or XMP, Word settings; SHA-256 fallback) in a new `document_identity` table; a known instance opens its bid; a successful extract freezes at once; Publish removed; Send for assessment dispatches only; re-read refused after the freeze | It3 (C-27) | todo | depends on: P-31 (order); open questions 6, 7 |
+| P-33 | Bid schedule and bid-manager approvals: unit completion dates, consolidated schedule and planned submission date, schedule and high-level compliance approvals (new tables), `schedule` criterion on dates | It3 (C-24) | todo | depends on: P-30, A-17; open questions 3, 4 |
+| P-34 | Catalog refresh from `flex.com/products` and the official pages it links to (power and cooling, power modules, Anord Mardix, Crown, EP², JetCool) on start and every 24 h; product-name versions kept; source and refresh times; last good catalog kept; catalog version pinned per bid | It3 (C-28) | todo | sources decided 15 Oct |
+| P-35 | RAG R1: sources and passages (four collections, registration, layout-model ingestion, frozen annotations, document review, bid isolation) | It3 (C-29) | todo | open question 9 |
+| P-36 | RAG R2: reviewed examples and feedback loop (nominate, item review in My work, `kb_item` replaces `knowledge_learned.json`, illustrative examples excluded) | It3 (C-29, C-33) | todo | depends on: P-35 |
+| P-37 | RAG R3-R4: task retrieval profiles, combined semantic and keyword search, cited evidence in prompts, `assessment_record`, versioned reassessment, frozen answers regenerated, rule R2 updated | It3 (C-29) | todo | depends on: P-36, P-34 |
+| P-38 | Executive summary with the assessment score (four measures, evidence gaps, evidence versions recorded) on the Assessment screen | It3 (C-23) | todo | depends on: P-37; open question 10 |
+| P-39 | RAG R5: independently reviewed evaluation set and `scripts/eval_rag.py` | It3 (C-29) | todo | depends on: P-37; open question 9 |
+| P-40 | Docs: mark built parts in `changes-iteration3.md` and technical-architecture section 17; refresh `Documents/current-system/` (with P-29) | It3 (all) | todo | depends on: everything |
+
+## Iteration 3: start here
+
+Plan, order and contracts: [team/PLAN.md](../PLAN.md) section 10; changes, feasibility and open questions: `Documents/changes-iteration3.md` (C-23 to C-34).
+
+- **Start with:** P-30 after A-25 (the API rename goes first; pause and pull for it).
+- **Others wait on you:** P-30 (A-17), P-32 (A-26, then A-27 and J-18), P-36 (J-17).
+- **You wait on:** A-25 (paths), A-17 (unit-manager validation) for P-33.
+- **Decided 15 Oct:** unit manager = product manager; sign-up chooses the role (not admin, which is seeded); Document / Instance IDs embedded in the file (SHA-256 fallback); catalog from flex.com/products and official unit pages with name versions.
+- **Still to ask the Zensar point of contact:** same document for another bid, re-reads after the freeze, reference documents and reviewers, score formula, non-technical routing, go/no-go alongside the approvals.
 
 ## Iteration 2: start here
 
@@ -82,3 +103,4 @@ Plan and contracts: [team/PLAN.md](../PLAN.md) section 9; design: `Documents/tec
 | 13 Oct 2026 | P-25 permissions in opportunities, ingestion, requirements and changes; pytest green; build clean | P-27 activity API |
 | 13 Oct 2026 | P-27 activity API for J-13; pytest green | P-24 anchoring |
 | 14 Oct 2026 | P-24 anchoring, spans, location hints and coverage; frozen answers regenerated; pytest green; build clean | P-26 seed (after J-14) |
+| 15 Oct 2026 | Iteration 3 planned from the written change request of 15 Oct: P-30 to P-40, A-25 to A-27, J-17, J-18 (team/PLAN.md section 10); detailed register and integration-feasibility analysis in `Documents/changes-iteration3.md` | A-25 first, then P-30 |

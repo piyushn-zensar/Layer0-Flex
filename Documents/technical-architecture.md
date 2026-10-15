@@ -540,7 +540,7 @@ Each piece is ported only when its stage needs it, with its known defects fixed 
 
 ## 16. Target Design after the 12 Oct 2026 Review (Proposed (inferred design))
 
-This section is the build design for the changes in [changes.md](changes.md). It is written so that the module owners can build in parallel: each subsection names the module that owns it and fixes the interface the others rely on. Nothing here is built yet; each part is marked built as it lands.
+This section is the build design for the changes in [changes.md](changes.md). The changes requested on 15 Oct 2026 (C-23 to C-34), their proposed design and a quick integration-feasibility analysis are in [changes-iteration3.md](changes-iteration3.md); where they replace a rule of this section (publishing, validation by the bid manager, unchanged API paths, evidence kept out of prompts), that document says so, and this document is updated as they are built. It is written so that the module owners can build in parallel: each subsection names the module that owns it and fixes the interface the others rely on. Nothing here is built yet; each part is marked built as it lands.
 
 ### 16.1 Rules for this iteration
 

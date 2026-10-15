@@ -30,6 +30,18 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | A-22 | Questions and comments: `comment` table, `GET` / `POST /api/opportunities/{id}/comments`, `POST /api/comments/{id}/close`; on Assessment and in the inbox; open questions block consolidation | It2 (C-17) | done | `comment` table in workpackages (nullable `assignment_id`; reseed after pulling); `workpackages.comments`, `add_comment`, `close_comment` (author or bid manager), `open_questions`; `GET` / `POST /api/opportunities/{id}/comments` (filters `req_id`, `status`), `POST /api/comments/{id}/close`; inbox rows carry `open_questions` and a Questions and comments thread; open questions count in the summary (`open_questions`) and its Open questions criterion; test appended. Blocking consolidation asked of Janvia; the Assessment screen (A-16) can list `workpackages.comments` |
 | A-23 | Matcher answers for the independent RFP | It2 (C-11) | todo | depends on: P-26 |
 | A-24 | Optional: summary counts link to Traceability filtered (`?category=`, `?offering=`) | It2 (C-20) | review | my side done: the Assessment summary's category and offering counts and the Bid decision category rows link to `/opportunities/{id}/trace?category=...` / `?offering=...`; the Traceability page still has to read and apply the filter (asked of Janvia); until then the links open Traceability unfiltered |
+| A-25 | API paths `/opportunities` → `/bids`: 38 route decorators, 20 web files, tests (about 318 uses), 5 walkthrough chapters; page addresses unchanged; one announced commit | It3 (C-31) | todo | goes first; everyone pauses and pulls |
+| A-26 | Requirements page merged into **Requirement Traceability** (register / exceptions, corrections, line picker, history in pane 2); old address redirects; links and walkthrough updated | It3 (C-30) | todo | depends on: P-32 |
+| A-27 | Filtering and sorting on Requirement Traceability, kept in the page address (applies A-24's `?category=` / `?offering=` links) | It3 (C-32, C-20) | todo | depends on: A-26 |
+
+## Iteration 3: start here
+
+Plan, order and contracts: [team/PLAN.md](../PLAN.md) section 10; changes, feasibility and open questions: `Documents/changes-iteration3.md` (C-23 to C-34).
+
+- **Start with:** A-25 (the API rename) before anyone else starts iteration 3; announce it, land it as one commit, everyone pulls.
+- **Changed by iteration 3:** A-17 uses the unit manager and unit designer / engineer roles (P-30) and clears its blocker by validating the seed as each unit's manager; A-16's Send for assessment only dispatches after P-32; A-24's Traceability side comes with A-27.
+- **Others wait on you:** A-25 (everyone), A-26 (J-18), A-17 (P-33).
+- **Ownership this iteration:** A-25 touches every module, the web calls, the tests and the walkthrough (paths only); A-26 moves Piyush's Requirements controls into Janvia's Traceability pane 2 ([contract], see PLAN 10.3).
 
 ## Iteration 2: start here
 
@@ -79,3 +91,4 @@ Plan and contracts: [team/PLAN.md](../PLAN.md) section 9; design: `Documents/tec
 | 15 Oct 2026 | A-16 done: Assessment screen; the Bid decision page is go/no-go only | A-17 |
 | 15 Oct 2026 | A-20 done: role checks on my write routes. A-17 blocked on the seed's validation (Piyush) | A-24 |
 | 15 Oct 2026 | A-24 my side: filtered links from the summary counts; the filter itself is Janvia's | A-23 (needs approval for live Azure calls) |
+| 15 Oct 2026 | Iteration 3 planned (team/PLAN.md section 10): A-25, A-26, A-27 added; A-17 and A-24 notes in PLAN 10.5 | A-25 first |

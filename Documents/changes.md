@@ -13,7 +13,7 @@ Status: **Expected (review meetings)** for what the review asked; **Proposed (in
 - The project team's comparison of that review with the documented current system (13 Oct 2026).
 - The documented current system at commit 4c6d866: [current-system/01-system-architecture.md](current-system/01-system-architecture.md), [current-system/02-technical-architecture.md](current-system/02-technical-architecture.md), [current-system/03-ui-view.md](current-system/03-ui-view.md), [current-system/04-api-view.md](current-system/04-api-view.md).
 
-**How it relates to the other documents.** This document supersedes parts of the target workflow in [project-overview.md](project-overview.md) section 7 (marked there as history). Build details of the new design are in [technical-architecture.md](technical-architecture.md) section 16.
+**How it relates to the other documents.** This document supersedes parts of the target workflow in [project-overview.md](project-overview.md) section 7 (marked there as history). Build details of the new design are in [technical-architecture.md](technical-architecture.md) section 16. The changes requested on 15 Oct 2026 (C-23 to C-34) are registered in [changes-iteration3.md](changes-iteration3.md); where they replace a rule of this document, that document says so (its section 1).
 
 ## 2. Summary
 
@@ -296,4 +296,4 @@ Priority 3 items (C-18 to C-21) are investigated as time allows and do not block
 - Traceability to page and lines as the centre of the product; the three screens.
 - Agents propose and named people decide; requirement identification never falls back to pattern matching.
 - Change handling as a delta against the working baseline.
-- API paths and stored identifiers, in this iteration (labels change, contracts do not, unless a change above says so).
+- API paths and stored identifiers, in this iteration (labels change, contracts do not, unless a change above says so). History: the API paths change in iteration 3 ([changes-iteration3.md](changes-iteration3.md), C-31); stored identifiers still stay.
