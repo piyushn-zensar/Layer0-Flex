@@ -10,7 +10,11 @@ import { complianceLabel, type Assignment, type Requirement, type Unit } from "@
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
 
-type Item = Assignment & { requirement: Requirement | null };
+// C-12 response fields (A-18): every assignment row carries them; null until a unit fills them in
+type Fields = { reason: string | null; conditions: string | null; workaround: string | null; next_steps: string | null };
+type Item = Assignment & Fields & { requirement: Requirement | null };
+const FIELDS: { name: keyof Fields; label: string }[] = [
+  { name: "conditions", label: "Conditions" }, { name: "workaround", label: "Workaround" }, { name: "next_steps", label: "Next steps" }];
 type Data = { bu: string; unit: Unit | null; compliance: string[]; items: Item[] };
 type Portfolio = { progress: Record<string, { total: number; submitted: number; validated: number }> }[];
 
@@ -73,7 +77,7 @@ export default function InboxPage() {
   return (
     <div className="content">
       <PageHead title={`My work: ${data.unit?.name ?? BID_DESK}`}
-        help="Each line is a requirement assigned to this unit. Mark it fully, partially or non-compliant, say how it is met, then submit. The bid manager validates or returns it with a note.">
+        help="Each line is a requirement assigned to this unit. Mark it fully, partially or non-compliant, say how it is met (for partially or non-compliant: what is not met and why), add conditions, a workaround or next steps where they apply, then submit. The bid manager validates or returns it with a note.">
         {canAnswer && openCount > 0 && <button disabled={busy !== undefined} onClick={submitAll} data-tour="inbox-submit-all">Submit all answered rows</button>}
         {busy === "all" && <Busy label="Sending…" />}
       </PageHead>
@@ -124,6 +128,10 @@ export default function InboxPage() {
                       <input name="product_ref" defaultValue={a.product_ref ?? ""} placeholder="Product / configuration" /></label>
                     <label data-tour={t("inbox-response")}><span className="sr-only">How it is met</span>
                       <textarea name="response" rows={2} defaultValue={a.response} placeholder="How it is met" /></label>
+                    <label data-tour={t("inbox-reason")}><span className="sr-only">Reason</span>
+                      <textarea name="reason" rows={2} defaultValue={a.reason ?? ""} placeholder="Reason: what is not met and why (required for partially or non-compliant)" /></label>
+                    {FIELDS.map((f) => <label key={f.name}><span className="sr-only">{f.label}</span>
+                      <input name={f.name} defaultValue={a[f.name] ?? ""} placeholder={`${f.label} (optional)`} /></label>)}
                     <div className="inline">
                       <button className="sm" disabled={busy !== undefined} data-tour={t("inbox-submit")}>Submit</button>
                       {busy === a.id && <Busy label="Sending…" />}
@@ -133,6 +141,8 @@ export default function InboxPage() {
                   // UX-04: compliance, product and status are separate blocks, never adjacent text
                   <div data-tour={v("inbox-answer-submitted")}>{a.compliance && <strong>{answerLabel(a.compliance)}</strong>}{a.product_ref && <> <span className="mono">{a.product_ref}</span></>}
                     {a.response && <div className="muted">{a.response}</div>}
+                    {a.reason && <div><strong>Reason:</strong> {a.reason}</div>}
+                    {FIELDS.map((f) => a[f.name] && <div key={f.name} className="muted"><strong>{f.label}:</strong> {a[f.name]}</div>)}
                     {!a.compliance && <div className="muted">not answered yet</div>}</div>
                 )}
                 {results[a.id] && <div className={results[a.id] === "sent" ? "ok" : "warn"}>{results[a.id]}</div>}

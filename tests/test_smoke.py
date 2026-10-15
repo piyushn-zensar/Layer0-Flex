@@ -406,7 +406,7 @@ def test_returned_items_reopen_with_a_note():
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp and i["status"] == "assigned")
     url = f"/api/assignments/{item['id']}"
-    client.post(f"{url}/respond", json={"compliance": "partial", "response": "first try"}, headers=CROWN)
+    client.post(f"{url}/respond", json={"compliance": "partial", "response": "first try", "reason": "model open"}, headers=CROWN)
     assert client.post(f"{url}/validate", json={"ok": False, "note": "  "}, headers=BM).status_code == 422
     assert client.post(f"{url}/validate", json={"ok": False, "note": "Name the breaker model."}, headers=BM).status_code == 200
     back = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["id"] == item["id"])
@@ -1142,3 +1142,37 @@ def test_dispatch_without_go_and_no_go_withdraws():
     assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go"}).json()["withdrawn"] == 0
     assert client.post(f"/api/opportunities/{opp}/dispatch").status_code == 200
     assert all(states()[i] == "assigned" for i in open_ids)  # the go resumes the withdrawn work
+
+
+def test_response_fields_and_reason():
+    """A-18 (C-12): reason, conditions, workaround and next steps on every assignment row; a reason is required for
+    partially and non-compliant answers; "exception" is no longer offered. Appended by Atharv (append-only)."""
+    from app.core.db import SessionLocal
+    from app.modules.workpackages import service as workpackages
+
+    seed_demo.main()
+    client, crown = signed_in(), auth("crown.de")
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    inbox = client.get("/api/inbox/CROWN").json()
+    assert inbox["compliance"] == ["met", "partial", "not_met"]
+    item = next(i for i in inbox["items"] if i["opportunity_id"] == opp and i["status"] == "assigned")
+    assert {"reason", "conditions", "workaround", "next_steps"} <= set(item)
+    url = f"/api/assignments/{item['id']}/respond"
+    assert client.post(url, json={"compliance": "exception", "reason": "x"}, headers=crown).status_code == 422
+    assert client.post(url, json={"compliance": "not_met", "reason": "  "}, headers=crown).status_code == 422
+    with SessionLocal() as db, pytest.raises(ValueError):
+        workpackages.respond(db, item["id"], "partial", None, "", "Crown Design Engineer")  # the service checks too
+    answer = {"compliance": "partial", "response": "Lineup offered", "reason": "Only 12 of 20 breaker positions",
+              "conditions": "Delivery after week 30", "workaround": "Second lineup", "next_steps": "Confirm count"}
+    assert client.post(url, json=answer, headers=crown).status_code == 200
+
+    fields = {k: answer[k] for k in ("reason", "conditions", "workaround", "next_steps")}
+    row = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["id"] == item["id"])
+    assert {k: row[k] for k in fields} == fields
+    trace = next(r for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"] if r["req"]["req_id"] == item["req_id"])
+    assert any({k: a[k] for k in fields} == fields for a in trace["assignments"])
+    matrix = [r for r in client.get(f"/api/opportunities/{opp}/compliance-matrix").json()["rows"] if r["assignment_id"] == item["id"]]
+    assert matrix and {k: matrix[0][k] for k in fields} == fields
+    handoff = client.get(f"/api/opportunities/{opp}/handoff/CROWN").json()
+    answers = [i["unit_answer"] for r in handoff["routes"].values() for i in r["items"] if i["req_id"] == item["req_id"]]
+    assert answers and answers[0]["reason"] == fields["reason"]

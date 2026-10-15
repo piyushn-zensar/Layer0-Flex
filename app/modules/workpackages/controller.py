@@ -10,16 +10,26 @@ from app.core.web import actor, row
 from app.modules.catalog import service as catalog
 from app.modules.requirements import service as requirements
 from app.modules.workpackages import service
-from app.modules.workpackages.models import BID_DESK, COMPLIANCE
+from app.modules.workpackages.models import BID_DESK, NEEDS_REASON, OFFERED
 
 router = APIRouter(tags=["workpackages"])
 AssignmentId = Path(ge=1, le=2**31 - 1)
 
 
 class RespondIn(BaseModel):
-    compliance: Literal["met", "partial", "not_met", "exception"]  # = models.COMPLIANCE
+    compliance: Literal["met", "partial", "not_met"]  # = models.OFFERED; "exception" is no longer offered (16.5)
     product_ref: str = ""
     response: str = ""
+    reason: str = ""       # required for partial and not_met (C-12)
+    conditions: str = ""
+    workaround: str = ""
+    next_steps: str = ""
+
+    @model_validator(mode="after")
+    def _partial_needs_reason(self):
+        if self.compliance in NEEDS_REASON and not self.reason.strip():
+            raise ValueError("Say what is not met and why (reason) for a partially or non-compliant answer.")
+        return self
 
 
 class ValidateIn(BaseModel):
@@ -65,12 +75,13 @@ def inbox(bu: str, db: Session = Depends(get_db)):
     def item(a):
         req = requirements.get(db, a.req_id)  # None if the requirement was deleted after dispatch
         return row(a) | {"requirement": row(req, "source") if req else None}
-    return {"bu": bu, "unit": catalog.unit(bu), "compliance": COMPLIANCE, "items": [item(a) for a in service.inbox(db, bu)]}
+    return {"bu": bu, "unit": catalog.unit(bu), "compliance": OFFERED, "items": [item(a) for a in service.inbox(db, bu)]}
 
 
 @router.post("/assignments/{assignment_id}/respond")
 def respond(body: RespondIn, request: Request, assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
-    _call(service.respond, db, assignment_id, body.compliance, body.product_ref, body.response, actor(request))
+    _call(service.respond, db, assignment_id, body.compliance, body.product_ref, body.response, actor(request),
+          body.reason, body.conditions, body.workaround, body.next_steps)
     return {"ok": True}
 
 

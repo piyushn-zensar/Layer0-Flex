@@ -14,9 +14,11 @@ Public contract:
     by_requirement(db, opp_id) -> dict[str, list[Assignment]]   active (not withdrawn) assignments
     inbox(db, bu) -> list[Assignment]                     a unit's active work across all opportunities
     get(db, assignment_id) -> Assignment | None           one assignment
-    respond(db, assignment_id, compliance, product_ref, response, actor)
+    respond(db, assignment_id, compliance, product_ref, response, actor, reason="", conditions="", workaround="",
+            next_steps="")
         only that unit's product manager / design engineer (bid desk: the Bid Manager), only while assigned or
-        returned. LookupError: no such assignment; PermissionError: wrong person; ValueError: wrong state
+        returned. partial and not_met need a reason (C-12); empty fields are stored as None.
+        LookupError: no such assignment; PermissionError: wrong person; ValueError: wrong state, missing reason
     validate(db, assignment_id, ok, note, actor)
         only the Bid Manager, only submitted work; a return (ok=False) needs a note. The unit can then answer the
         returned item again. LookupError / PermissionError / ValueError as above
@@ -42,7 +44,7 @@ from app.modules.decisions import service as decisions
 from app.modules.matching import service as matching
 from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service as requirements
-from app.modules.workpackages.models import BID_DESK, COMPLIANCE, Assignment
+from app.modules.workpackages.models import BID_DESK, COMPLIANCE, EXTENDED, NEEDS_REASON, Assignment
 
 BID_MANAGER = "Bid Manager"  # ponytail: PoC actor name from the header picker; real roles come with sign-in
 
@@ -124,16 +126,24 @@ def _may_answer(actor: str, bu: str) -> bool:
     return bool(unit) and actor in (unit["product_manager"], unit["design_engineer"])
 
 
-def respond(db: Session, assignment_id: int, compliance: str, product_ref: str | None, response: str, actor: str) -> None:
+def respond(db: Session, assignment_id: int, compliance: str, product_ref: str | None, response: str, actor: str,
+            reason: str = "", conditions: str = "", workaround: str = "", next_steps: str = "") -> None:
+    # ponytail: "exception" is still accepted here for the seed's earlier-value answer; the API offers only OFFERED
     assert compliance in COMPLIANCE, compliance
+    if compliance in NEEDS_REASON and not (reason or "").strip():
+        raise ValueError("Say what is not met and why (reason) for a partially or non-compliant answer.")
     a = _get(db, assignment_id)
     if not _may_answer(actor, a.bu):
         raise PermissionError(f"Only {a.bu}'s product manager or design engineer can answer this item.")
     if a.status not in ("assigned", "returned"):
         raise ValueError(f"This item is {a.status}; only assigned or returned items can be answered.")
     a.compliance, a.product_ref, a.response = compliance, product_ref or a.product_ref, response
+    fields = {"reason": reason, "conditions": conditions, "workaround": workaround, "next_steps": next_steps}
+    for f in EXTENDED:
+        setattr(a, f, (fields[f] or "").strip() or None)
     a.status, a.responded_by, a.responded_at = "submitted", actor, utcnow()
-    audit.record(db, actor, "responded", "assignment", a.req_id, a.opportunity_id, bu=a.bu, compliance=compliance)
+    audit.record(db, actor, "responded", "assignment", a.req_id, a.opportunity_id, bu=a.bu, compliance=compliance,
+                 **{f: getattr(a, f) for f in EXTENDED if getattr(a, f)})
     db.commit()
 
 
@@ -239,7 +249,8 @@ def handoff(db: Session, opp_id: str, bu: str) -> dict:
                 "product_id": product_id, "product": (catalog.product(product_id) or {}).get("name"),
                 "offering_type": offering, "engineering_flags": flags.get(a.req_id, []),
                 "unit_answer": {"status": a.status, "compliance": a.compliance, "product_ref": a.product_ref,
-                                "response": a.response or None, "validated_by": a.validated_by},
+                                "response": a.response or None, "validated_by": a.validated_by,
+                                **{f: getattr(a, f) for f in EXTENDED}},
             }
             if route == "cpq_seed":
                 item["configuration_seed"] = {"product_id": product_id, "bom_lines": catalog.bom(product_id) if product_id else []}

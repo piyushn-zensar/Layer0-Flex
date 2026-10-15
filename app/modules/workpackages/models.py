@@ -5,7 +5,10 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db import Base, utcnow
 
-COMPLIANCE = ["met", "partial", "not_met", "exception"]
+COMPLIANCE = ["met", "partial", "not_met", "exception"]  # stored values; "exception" only on earlier answers
+OFFERED = ["met", "partial", "not_met"]   # what a unit answers: Fully / Partially / Non-compliant (16.5)
+NEEDS_REASON = ("partial", "not_met")     # these need a reason: what is not met and why
+EXTENDED = ("reason", "conditions", "workaround", "next_steps")  # the response fields beside the answer (C-12)
 BID_DESK = "BID"  # pseudo-unit: requirements the bid manager answers (commercial, submission, legal)
 
 
@@ -27,4 +30,8 @@ class Assignment(Base):
     responded_at: Mapped[datetime | None]
     validated_by: Mapped[str | None] = mapped_column(String(80))
     validation_note: Mapped[str] = mapped_column(Text, default="")
+    reason: Mapped[str | None] = mapped_column(Text)       # what is not met and why (required for partial, not_met)
+    conditions: Mapped[str | None] = mapped_column(Text)   # under which conditions it is met
+    workaround: Mapped[str | None] = mapped_column(Text)   # what the unit offers instead
+    next_steps: Mapped[str | None] = mapped_column(Text)   # what has to happen next, and by whom
     created_at: Mapped[datetime] = mapped_column(default=utcnow)
