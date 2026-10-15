@@ -37,7 +37,7 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | P-29 | Docs: mark built parts in technical-architecture §16 and changes.md; refresh `Documents/current-system/` at the end | It2 (all) | todo | depends on: everything |
 | P-30 | Unit roles in core: Unit manager (= the unit's product manager, decided 15 Oct) and Unit designer / engineer, role and unit helpers in `web.py`, labels in the web app | It3 (C-25) | todo | default for open question 2 until answered |
 | P-31 | Sign-up with the role chosen by the person (not admin; admin seeded by the server, decided 15 Oct), attempt limit, `web/middleware.ts` guard, role-aware actions, per-role 403 test over every write route | It3 (C-26) | todo | depends on: P-30 |
-| P-32 | Automatic freeze per document instance: Document ID and Instance ID embedded in the file (PDF `/ID` or XMP, Word settings; SHA-256 fallback) in a new `document_identity` table; a known instance opens its bid; a successful extract freezes at once; Publish removed; Send for assessment dispatches only; re-read refused after the freeze | It3 (C-27) | todo | depends on: P-31 (order); open questions 6, 7 |
+| P-32 | Automatic freeze per document instance: Document ID and Instance ID embedded in the file (PDF `/ID` or XMP, Word settings; SHA-256 fallback) in a new `document_identity` table; a known instance opens its bid; a successful extract freezes at once; Publish removed; Send for assessment dispatches only; re-read refused after the freeze | It3 (C-27) | todo | depends on: P-31 (order); open question 7; same instance for another bid opens the existing bid (decided 15 Oct) |
 | P-33 | Bid schedule and bid-manager approvals: unit completion dates, consolidated schedule and planned submission date, schedule and high-level compliance approvals (new tables), `schedule` criterion on dates | It3 (C-24) | todo | depends on: P-30, A-17; open questions 3, 4 |
 | P-34 | Catalog refresh from `flex.com/products` and the official pages it links to (power and cooling, power modules, Anord Mardix, Crown, EP², JetCool) on start and every 24 h; product-name versions kept; source and refresh times; last good catalog kept; catalog version pinned per bid | It3 (C-28) | todo | sources decided 15 Oct |
 | P-35 | RAG R1: sources and passages (four collections, registration, layout-model ingestion, frozen annotations, document review, bid isolation) | It3 (C-29) | todo | open question 9 |
@@ -55,7 +55,7 @@ Plan, order and contracts: [team/PLAN.md](../PLAN.md) section 10; changes, feasi
 - **Others wait on you:** P-30 (A-17), P-32 (A-26, then A-27 and J-18), P-36 (J-17).
 - **You wait on:** A-25 (paths), A-17 (unit-manager validation) for P-33.
 - **Decided 15 Oct:** unit manager = product manager; sign-up chooses the role (not admin, which is seeded); Document / Instance IDs embedded in the file (SHA-256 fallback); catalog from flex.com/products and official unit pages with name versions.
-- **Still to ask the Zensar point of contact:** same document for another bid, re-reads after the freeze, reference documents and reviewers, score formula, non-technical routing, go/no-go alongside the approvals.
+- **Still to ask the Zensar point of contact:** re-reads after the freeze, reference documents and reviewers, score formula, non-technical routing, go/no-go alongside the approvals.
 
 ## Iteration 2: start here
 
