@@ -1,0 +1,116 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "Rack DC power systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Rack DC power requirements",
+          "Dynamic loading",
+          "Open Compute Project",
+          "Diablo 400"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the context of the percentages and frequencies provided."
+        ],
+        "applicability": "Rack DC power systems",
+        "attributes": [
+          {
+            "conditions": "Dynamic loading",
+            "name": "Load percentage",
+            "unit": "%",
+            "value": "10% to 150%"
+          },
+          {
+            "conditions": "Dynamic loading",
+            "name": "Frequency",
+            "unit": "kHz",
+            "value": "4kHz to 10kHz"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Dynamic loading profiles",
+          "Pulse load characteristics",
+          "Frequency specifications"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the exact conditions under which the pulse load profiles are tested."
+        ],
+        "applicability": "Rack DC power systems",
+        "attributes": [],
+        "content_type": "test_or_compliance",
+        "n": 3,
+        "topics": [
+          "Pulse load profiles",
+          "Testing conditions",
+          "Dynamic loading"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the relationship between the load percentages and the slew rate values."
+        ],
+        "applicability": "Rack DC power systems",
+        "attributes": [
+          {
+            "conditions": "Dynamic loading",
+            "name": "Low load",
+            "unit": "%",
+            "value": "0% to 70%"
+          },
+          {
+            "conditions": "Dynamic loading",
+            "name": "High load",
+            "unit": "%",
+            "value": "80% to 175%"
+          },
+          {
+            "conditions": "Dynamic loading",
+            "name": "Frequency",
+            "unit": "Hz",
+            "value": "10Hz to 10kHz"
+          },
+          {
+            "conditions": "Dynamic loading",
+            "name": "PSU slew rate",
+            "unit": "A/us",
+            "value": "0.1A/us to 1A/us"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 4,
+        "topics": [
+          "Pulse load profiles",
+          "Dynamic loading",
+          "PSU slew rate",
+          "Frequency specifications"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Define the process for translating test performance to system integrator conditions."
+        ],
+        "applicability": "Rack DC power systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 5,
+        "topics": [
+          "System integration",
+          "Dynamic loading translation",
+          "Design requirements"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

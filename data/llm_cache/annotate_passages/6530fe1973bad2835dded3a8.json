@@ -1,0 +1,73 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Figure 11 is referenced but not provided, which may require clarification."
+        ],
+        "applicability": "Data hall-level high-density deployment",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Data hall deployment",
+          "DC power block",
+          "Equipment layout"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'catcher capability' is used but not defined.",
+          "Figure 12 is referenced but not provided, which may require clarification."
+        ],
+        "applicability": "Option C deployment",
+        "attributes": [
+          {
+            "conditions": "Standardized per cluster for Option C",
+            "name": "Cluster capacity",
+            "unit": "MW",
+            "value": "4.8"
+          },
+          {
+            "conditions": "Configured in 4-to-make-3 redundancy architecture",
+            "name": "Power center capacity",
+            "unit": "MW",
+            "value": "1.6"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Standardized power block",
+          "Cluster architecture",
+          "Redundancy design",
+          "DC static transfer switch"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific implementation details of 'Semiconductor-based OR-ing architectures' and 'Adjustable DC/DC voltage-controlled catcher paths' are not provided."
+        ],
+        "applicability": "Option C deployment",
+        "attributes": [
+          {
+            "conditions": "Rated per power block",
+            "name": "Power block capacity",
+            "unit": "MW",
+            "value": "4.8"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "STS architecture",
+          "Semiconductor OR-ing",
+          "DC/DC voltage control",
+          "Redundancy philosophy"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

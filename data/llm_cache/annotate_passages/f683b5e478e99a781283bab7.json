@@ -1,0 +1,51 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage mentions a discussion about removing the 5 A limitation in the new edition of UL 2367, but does not provide a timeline or confirmation."
+        ],
+        "applicability": "Solid-state overcurrent protectors for electronic equipment",
+        "attributes": [
+          {
+            "conditions": "As per UL 2367 and IEC 62368-1",
+            "name": "current rating",
+            "unit": "A",
+            "value": "5"
+          },
+          {
+            "conditions": "As per UL 2367 and IEC 62368-1",
+            "name": "power rating",
+            "unit": "VA",
+            "value": "250"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 1,
+        "topics": [
+          "Solid-state overcurrent protection",
+          "UL 2367 standard",
+          "IEC 62368-1 standard",
+          "Overcurrent protection devices"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions that application for higher power distribution is not addressed, but does not clarify what constitutes 'higher power distribution'."
+        ],
+        "applicability": "Electronic equipment and Class 2 circuits",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Overcurrent protection",
+          "UL/IEC 62368-1 standard",
+          "NFPA 70 Article 725",
+          "Class 2 circuit protection"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

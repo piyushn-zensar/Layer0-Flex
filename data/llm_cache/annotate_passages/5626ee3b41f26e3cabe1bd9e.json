@@ -1,0 +1,100 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "System behavior",
+          "State machine"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "State machine transitions",
+          "System behavior"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [
+          {
+            "conditions": "SST is freshly off the dock",
+            "name": "State S0",
+            "unit": "",
+            "value": "OFF"
+          },
+          {
+            "conditions": "Auxiliary power on, control system alive, provisioning done, no fault",
+            "name": "State Sb",
+            "unit": "",
+            "value": "Standby"
+          },
+          {
+            "conditions": "Internal energy storage charged, ready to convert power",
+            "name": "State Sp",
+            "unit": "",
+            "value": "Precharged"
+          },
+          {
+            "conditions": "SST healthy, steady state operations, converting power",
+            "name": "State S1",
+            "unit": "",
+            "value": "ON"
+          },
+          {
+            "conditions": "SST not healthy, stops converting power",
+            "name": "State S2",
+            "unit": "",
+            "value": "FAULT"
+          }
+        ],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "State machine states",
+          "SST operational states"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the exact conditions under which the system transitions between states in fault scenarios.",
+          "Define 'marginal/derated state' more precisely."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "Fault states",
+          "System control logic"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the duration considered 'brief' for the transient response state.",
+          "Clarify the exact conditions for transitioning back to S1 after a temporary fault."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 5,
+        "topics": [
+          "Temporary fault handling",
+          "System recovery"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

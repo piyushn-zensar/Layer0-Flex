@@ -1,0 +1,65 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific technical challenges addressed by 800 VDC are not detailed."
+        ],
+        "applicability": "Data centers, AI factories",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Data center design evolution",
+          "800 VDC distribution",
+          "AI factory scalability",
+          "High-density computing"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the compatibility mechanisms for 800 VDC and AC systems are not fully explained."
+        ],
+        "applicability": "Cloud service providers, data center operators, equipment manufacturers",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "800 VDC adoption",
+          "Power conversion",
+          "AI infrastructure compatibility"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific conditions under which 800 VDC should be adopted are not specified."
+        ],
+        "applicability": "Data centers with existing AC infrastructure",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "800 VDC coexistence",
+          "AC infrastructure integration",
+          "Incremental adoption"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact configurations and their suitability for different scenarios are not detailed."
+        ],
+        "applicability": "Data centers planning 800 VDC adoption",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "Deployment flexibility",
+          "800 VDC configurations",
+          "Transition strategies"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

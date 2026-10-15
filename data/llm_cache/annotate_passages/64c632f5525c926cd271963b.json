@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "Data center facilities",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Data center power distribution",
+          "Low voltage DC",
+          "OCP standards"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

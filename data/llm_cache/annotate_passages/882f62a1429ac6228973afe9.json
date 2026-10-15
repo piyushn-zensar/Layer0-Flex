@@ -1,0 +1,63 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "No standards or practices exist for assessing short-circuit current in DC systems.",
+          "Details on the type of converter affecting steady-state fault current are not provided."
+        ],
+        "applicability": "DC power systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "DC power systems",
+          "short-circuit current",
+          "fault-limiting converters",
+          "capacitor discharge",
+          "steady-state fault current"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the specifications of fast-acting overcurrent protection devices are not provided.",
+          "The exact operating conditions for fault-feeding converters are not described."
+        ],
+        "applicability": "DC power systems",
+        "attributes": [
+          {
+            "conditions": "depends on capacitors and fault-loop inductance",
+            "name": "time to reach minimum operating voltage",
+            "unit": "microseconds",
+            "value": "a few 100s"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "DC voltage drop",
+          "overcurrent protection",
+          "fault-loop inductance",
+          "fault-feeding converters",
+          "system reliability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No technical content is provided in this passage."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 3,
+        "topics": [
+          "licensing",
+          "Creative Commons",
+          "document metadata"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

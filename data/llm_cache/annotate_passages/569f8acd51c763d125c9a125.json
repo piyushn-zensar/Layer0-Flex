@@ -1,0 +1,60 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific power density thresholds for compute racks requiring 800 VDC inputs.",
+          "Define the exact configurations for N+N feed redundancy."
+        ],
+        "applicability": "800 VDC data centers, rack-level integration",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "rack-level integration",
+          "power rack design",
+          "data center power architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the management strategy for 12x to 24x 100A AC power whips per Power Rack.",
+          "Specify the exact row footprint required for Power Rack placement."
+        ],
+        "applicability": "800 VDC data centers, rack-level integration",
+        "attributes": [
+          {
+            "conditions": "used with interlocked connector systems",
+            "name": "DC power whip current",
+            "unit": "A",
+            "value": "125"
+          },
+          {
+            "conditions": "12x to 24x per Power Rack",
+            "name": "AC power whip current",
+            "unit": "A",
+            "value": "100"
+          },
+          {
+            "conditions": "",
+            "name": "production start date",
+            "unit": "",
+            "value": "Q3 2026"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "800 VDC distribution",
+          "rack-level integration",
+          "power rack design",
+          "data center power architecture",
+          "power whip management"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

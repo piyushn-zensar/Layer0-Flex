@@ -1,0 +1,81 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific implementation details for the listed mitigation strategies are not provided."
+        ],
+        "applicability": "800 VDC AI Factory infrastructure",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "fault mitigation",
+          "electrical safety",
+          "circuit protection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The conditions under which the described behaviors occur are not fully detailed."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "AC vs. DC fault behavior",
+          "fault current characteristics",
+          "shock hazard",
+          "protection devices"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific methods for achieving current limiting and rapid fault isolation are not described."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "arc flash",
+          "fault isolation",
+          "current limiting",
+          "converter-limited systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The table content is not included in the passage, leaving details unspecified."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 4,
+        "topics": [
+          "AC vs. DC fault behavior",
+          "comparison table"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details of the grounding approaches in Figure 13 are not provided."
+        ],
+        "applicability": "800 VDC distribution at the facility level",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 5,
+        "topics": [
+          "grounding strategies",
+          "protection zoning",
+          "800 VDC distribution",
+          "personnel safety"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

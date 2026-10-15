@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific details of 'Option 1b' and its alternatives are not provided in this passage."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "AC/DC conversion",
+          "isolation",
+          "power distribution"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'curtailability' is not clearly defined.",
+          "The specific conditions for 'fault ride through' are not detailed.",
+          "The exact specifications for 'DC-coupled' and 'AC-coupled' storage/generation are not provided."
+        ],
+        "applicability": "Data centers with GPU serverboards and energy storage systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Utility Communications",
+          "Energy Storage Systems",
+          "Fault Ride Through",
+          "Grid Services"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific conditions for resistance sizing are not detailed.",
+          "The term 'personnel safety limits' is not quantified.",
+          "Details on the implementation of residual current monitoring are not provided."
+        ],
+        "applicability": "800 VDC distribution systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "grounding strategies",
+          "800 VDC distribution",
+          "fault detection",
+          "personnel safety",
+          "residual current monitoring"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'improved EMC performance' is not quantified.",
+          "Conditions under which HRRG experiences delayed detection are not specified.",
+          "Details on the 'continued operation following a first ground fault' are not elaborated."
+        ],
+        "applicability": "800 VDC distribution systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "grounding strategies",
+          "fault detection",
+          "EMC performance",
+          "system reliability",
+          "ground-fault current limiting"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

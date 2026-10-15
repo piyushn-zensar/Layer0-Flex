@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific voltage levels used in unipolar systems.",
+          "Define the conditions under which positive or negative systems are preferred.",
+          "Explain the implications of fully routing the M conductor."
+        ],
+        "applicability": "LVDC power distribution systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Unipolar LVDC systems",
+          "Grounding configurations",
+          "Power distribution",
+          "Voltage levels"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

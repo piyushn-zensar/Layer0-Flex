@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage mentions both dependency and independence of Vdc on Vac input, which seems contradictory.",
+          "The grounding configurations are stated as both dependent and independent, which requires clarification.",
+          "The statement about galvanic isolation is contradictory, as it mentions both presence and absence of isolation."
+        ],
+        "applicability": "Low Voltage DC power distribution systems",
+        "attributes": [
+          {
+            "conditions": "any fluctuation on Vac will impact Vdc",
+            "name": "Vdc output dependency",
+            "unit": "",
+            "value": "dependent on Vac input"
+          },
+          {
+            "conditions": "to the limit of the converter topology",
+            "name": "Vdc output dependency",
+            "unit": "",
+            "value": "independent of Vac input"
+          },
+          {
+            "conditions": "for 'boost type'",
+            "name": "Vdc relation to Vac",
+            "unit": "",
+            "value": ">Vac"
+          },
+          {
+            "conditions": "for 'buck type'",
+            "name": "Vdc relation to Vac",
+            "unit": "",
+            "value": "<Vac"
+          },
+          {
+            "conditions": "for 'boost/buck type'",
+            "name": "Vdc relation to Vac",
+            "unit": "",
+            "value": "> or <Vac"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "AC/DC conversion",
+          "Grounding configurations"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

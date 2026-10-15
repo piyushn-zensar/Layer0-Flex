@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify if the voltage range of 90-254 VAC is universally applicable or specific to certain conditions."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "applies to the rated 100-240 VAC (as no tolerance is indicated on the rating nameplate)",
+            "name": "voltage",
+            "unit": "VAC",
+            "value": "90-254"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "AC voltage range"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm if the tolerances listed are universally applicable or if they depend on specific conditions."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "for 230/400 VAC",
+            "name": "AC tolerance",
+            "unit": "",
+            "value": "±10%"
+          },
+          {
+            "conditions": "otherwise",
+            "name": "AC tolerance",
+            "unit": "",
+            "value": "-10/+6%"
+          },
+          {
+            "conditions": "",
+            "name": "DC tolerance",
+            "unit": "",
+            "value": "-15/+20%"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "IEC standards",
+          "AC and DC tolerances"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the specific applications or limitations of slash rated overcurrent protection devices."
+        ],
+        "applicability": "AC systems with 3-phase or 1-phase products",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "Voltage levels",
+          "Slash ratings",
+          "AC voltage",
+          "Overcurrent protection devices"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

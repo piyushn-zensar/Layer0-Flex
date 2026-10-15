@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'M conductor' is not defined in the passage.",
+          "The specific conditions under which 'adequate balancing power' is achieved are not detailed."
+        ],
+        "applicability": "Bipolar TN-S grounding systems with partially distributed M conductor",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Bipolar TN-S grounding",
+          "Partially distributed M conductor",
+          "Power distribution design",
+          "Copper saving in circuits"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The criteria for 'adequate balancing power' are not specified.",
+          "The exact implications of the Creative Commons license on the technical content are unclear."
+        ],
+        "applicability": "Long cable power distribution scenarios",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Long cable power distribution",
+          "Balancing power requirements",
+          "Voltage level considerations"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

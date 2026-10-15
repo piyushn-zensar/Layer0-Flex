@@ -1,0 +1,49 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarification needed on the scope permitting 850 VDC and the proposed modification to 1000 VAC / 1500 VDC.",
+          "Details on the refinement to the proposal shown in Figure 11M.",
+          "Specifics of the joint working group organization."
+        ],
+        "applicability": "LVDC systems",
+        "attributes": [
+          {
+            "conditions": "Defined in Section 5.2",
+            "name": "low voltage limit",
+            "unit": "VDC",
+            "value": "1500"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "IEC standards",
+          "LVDC distribution",
+          "White paper proposals"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarification on the distinction between average voltage and nominal voltage definitions.",
+          "Context of IEC TS 63527 in defining voltage limits."
+        ],
+        "applicability": "Voltage definitions in LVDC systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Voltage definitions",
+          "Nominal vs average voltage",
+          "Power quality",
+          "IEC standards"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

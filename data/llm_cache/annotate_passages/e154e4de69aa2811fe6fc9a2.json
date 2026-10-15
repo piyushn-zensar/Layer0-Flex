@@ -1,0 +1,39 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'x pulses' for uncontrolled rectifiers is undefined and should be clarified.",
+          "The specific technologies and their pros and cons are not detailed in this passage."
+        ],
+        "applicability": "facility-level AC/DC conversion systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "AC/DC conversion",
+          "DC distribution systems",
+          "power flow capabilities",
+          "battery energy storage integration"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions future analysis but does not specify the timeline or responsible parties for this analysis."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 2,
+        "topics": [
+          "AC/DC conversion",
+          "maintenance analysis",
+          "cost analysis",
+          "efficiency analysis"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

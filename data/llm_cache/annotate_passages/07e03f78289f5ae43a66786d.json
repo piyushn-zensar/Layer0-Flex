@@ -1,0 +1,66 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact runtime of ESS systems replacing generators is not specified.",
+          "Conditions under which ESS can replace generators are not detailed."
+        ],
+        "applicability": "data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "backup power systems",
+          "UPS and BBU",
+          "data center reliability",
+          "grid disturbance handling",
+          "ESS alternatives"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific battery technologies or configurations for achieving zero-emission backup are not mentioned.",
+          "Details on how ESS mimics the load for the grid are not provided."
+        ],
+        "applicability": "data centers",
+        "attributes": [
+          {
+            "conditions": "within about one second",
+            "name": "pre-fault power consumption recovery",
+            "unit": "%",
+            "value": "90–100"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "zero-emission backup",
+          "battery sizing",
+          "post-fault recovery",
+          "grid reconnection",
+          "ESS functionality"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific mechanisms for energy arbitrage and distribution efficiency are not elaborated.",
+          "The requirements for grid-code compliance are not detailed."
+        ],
+        "applicability": "regions with grid service markets",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "grid services",
+          "energy optimization",
+          "frequency regulation",
+          "energy arbitrage",
+          "distribution efficiency"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

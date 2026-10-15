@@ -1,0 +1,65 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'Solid Grounding' should be clarified for specific implementation details."
+        ],
+        "applicability": "OCP Diablo 400 project",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "solid grounding",
+          "grounding methods",
+          "OCP Diablo 400"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The method for estimating average and RMS values should be detailed further."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "thermal power estimation",
+          "average and RMS values",
+          "Appendix B"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The definitions of terms such as 'GF', 'Worst Case Max', and 'VR' should be clarified.",
+          "The conditions under which the equations apply should be explicitly stated."
+        ],
+        "applicability": "GPUs, CPUs, power algorithms",
+        "attributes": [
+          {
+            "conditions": "Dynamic power calculation",
+            "name": "Pdyn",
+            "unit": "",
+            "value": "Idyn * Vcc"
+          },
+          {
+            "conditions": "Dynamic current calculation",
+            "name": "Idyn",
+            "unit": "",
+            "value": "C * Vcc * Freq."
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "thermal impact analysis",
+          "average current",
+          "RMS current",
+          "processor power algorithms"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

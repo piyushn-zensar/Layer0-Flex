@@ -1,0 +1,140 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage references 'Table 1' but does not provide its content or details."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "NEC wiring classes"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'Low by design' and 'Low by reaction' are not quantitatively defined."
+        ],
+        "applicability": "Class 2, 3, and 4 systems",
+        "attributes": [
+          {
+            "conditions": "Class 2 systems",
+            "name": "Typical Voltage",
+            "unit": "VAC",
+            "value": "≤30"
+          },
+          {
+            "conditions": "Class 2 systems",
+            "name": "Typical Voltage",
+            "unit": "VDC",
+            "value": "≤60"
+          },
+          {
+            "conditions": "Class 2 systems",
+            "name": "Power",
+            "unit": "VA",
+            "value": "≤100"
+          },
+          {
+            "conditions": "Class 3 systems",
+            "name": "Typical Voltage",
+            "unit": "V",
+            "value": "up to 150"
+          },
+          {
+            "conditions": "Class 3 systems",
+            "name": "Power",
+            "unit": "VA",
+            "value": "~150"
+          },
+          {
+            "conditions": "Class 4 systems",
+            "name": "Typical Voltage",
+            "unit": "V peak",
+            "value": "up to 450"
+          },
+          {
+            "conditions": "Class 4 systems",
+            "name": "Power",
+            "unit": "W",
+            "value": "100"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "NEC wiring classes",
+          "Class 2, 3, and 4 systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'variously defined at different levels' for medium voltage upper limit, which could lead to interpretation issues."
+        ],
+        "applicability": "High voltage and medium voltage systems",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "High Voltage Threshold",
+            "unit": "VAC",
+            "value": ">1000"
+          },
+          {
+            "conditions": "",
+            "name": "High Voltage Threshold",
+            "unit": "VDC",
+            "value": ">1500"
+          },
+          {
+            "conditions": "According to ANSI C84.1",
+            "name": "Medium Voltage Upper Limit",
+            "unit": "kV",
+            "value": "<100"
+          }
+        ],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "High voltage definition",
+          "Medium voltage range",
+          "Voltage classification"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage references 'Table 690.31(A)(3)(1)' but does not provide its content or details."
+        ],
+        "applicability": "Medium voltage systems",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Type MV Cable Voltage Range",
+            "unit": "kV",
+            "value": "≥2001 and ≤35"
+          },
+          {
+            "conditions": "According to Table 690.31(A)(3)(1)",
+            "name": "Other Cable Types Voltage Range",
+            "unit": "V",
+            "value": "≤2000"
+          }
+        ],
+        "content_type": "definition",
+        "n": 4,
+        "topics": [
+          "Medium voltage applications",
+          "Cable types",
+          "Voltage classification"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,58 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details on 'industry-leading system efficiency' are not quantified.",
+          "Conditions for 'defined SST roadmap' are not specified."
+        ],
+        "applicability": "AI data centers larger than 75 MW",
+        "attributes": [
+          {
+            "conditions": "Applicable to AI data centers",
+            "name": "Voltage",
+            "unit": "VDC",
+            "value": "800"
+          },
+          {
+            "conditions": "For modern GPUs",
+            "name": "System efficiency",
+            "unit": "",
+            "value": "industry-leading"
+          },
+          {
+            "conditions": "Per system",
+            "name": "Scalability",
+            "unit": "MW",
+            "value": "6"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "AI data center power management",
+          "grid support capabilities",
+          "modular power systems",
+          "SiC-based inverters"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'redundancy' is mentioned but not elaborated upon."
+        ],
+        "applicability": "AI data centers",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "800 VDC distribution",
+          "AI data center power management",
+          "redundancy"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

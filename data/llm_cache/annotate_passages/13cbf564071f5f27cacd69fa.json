@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific implementation details of the high resistance mid-point grounding PE are not provided."
+        ],
+        "applicability": "±400VDC PE grounding systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "±400VDC grounding",
+          "PE grounding",
+          "high resistance grounding",
+          "ground fault detection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The conditions under which the Ground Fault Detector is optional are not fully detailed."
+        ],
+        "applicability": "±400VDC PE grounding systems with 3-wire interface",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "±400VDC grounding",
+          "PE grounding",
+          "solid contact grounding",
+          "ground fault detection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact PSU requirements for connector selection are not specified."
+        ],
+        "applicability": "AC/DC PSU shelf for racks",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "shelf height",
+            "unit": "OU",
+            "value": "2OU"
+          },
+          {
+            "conditions": "",
+            "name": "shelf width",
+            "unit": "inches",
+            "value": "21 to 24"
+          },
+          {
+            "conditions": "",
+            "name": "input type",
+            "unit": "",
+            "value": "3-phase AC"
+          },
+          {
+            "conditions": "",
+            "name": "output type",
+            "unit": "",
+            "value": "±400VDC"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "AC/DC PSU shelf",
+          "rack compatibility",
+          "3-phase AC input",
+          "±400VDC output"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

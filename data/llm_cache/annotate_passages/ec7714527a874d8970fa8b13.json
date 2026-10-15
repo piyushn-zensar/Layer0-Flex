@@ -1,0 +1,72 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific methods for digital simulation and hardware testing are not detailed.",
+          "Criteria for validation are broad and may need further specification."
+        ],
+        "applicability": "power systems involving medium-voltage AC to GPU chip",
+        "attributes": [],
+        "content_type": "test_or_compliance",
+        "n": 1,
+        "topics": [
+          "system validation",
+          "power path testing",
+          "interoperability",
+          "multi-vendor deployments"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the consistent practices for certification and approval are not provided.",
+          "The scope of regulatory organizations involved is not specified."
+        ],
+        "applicability": "equipment certification and deployment across regions",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "certification",
+          "deployment readiness",
+          "regulatory compliance",
+          "installation practices"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Standardized procedures are mentioned but not defined.",
+          "The scope of troubleshooting practices is not detailed."
+        ],
+        "applicability": "deployment and operational procedures for power systems",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "factory acceptance testing",
+          "site acceptance testing",
+          "commissioning",
+          "maintenance procedures"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific metrics for cost and reliability analysis are not provided.",
+          "The definition of 'AI Factory infrastructure' is not clarified."
+        ],
+        "applicability": "economic and technical evaluation of 800 VDC systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "business value assessment",
+          "reliability analysis",
+          "800 VDC deployment",
+          "AI Factory infrastructure"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

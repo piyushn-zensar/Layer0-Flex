@@ -1,0 +1,42 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific conditions under which the grounding configuration must be engineered are not detailed.",
+          "The exact efficiency of the technology is not quantified.",
+          "The term 'very high power' is not defined."
+        ],
+        "applicability": "LVDC power distribution systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "LVDC power distribution",
+          "Active Front End (AFE)",
+          "Interlink Converter",
+          "Power electronics",
+          "Grounding configuration"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific constraints related to integration, footprint, weight, and transportation are not detailed.",
+          "The term 'converter type number 4' is not defined in this passage."
+        ],
+        "applicability": "AI rack power supply systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Converter types in power systems",
+          "AI rack power supply",
+          "Power quality",
+          "Integration constraints"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

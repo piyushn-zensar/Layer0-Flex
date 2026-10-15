@@ -1,0 +1,100 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific technical tradeoffs and design options are not detailed.",
+          "The exact definitions of TN-S and IT earthing schemes are not provided."
+        ],
+        "applicability": "DC data center power systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "DC polarity configurations",
+          "System earthing",
+          "Data center power systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific practical implications of stray currents and corrosion risks are not detailed.",
+          "The exact interaction between polarity, earthing, and isolation is not fully explained."
+        ],
+        "applicability": "AC/DC interlink systems in data centers",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "AC/DC interlink",
+          "Stray currents",
+          "Corrosion risks",
+          "Fault behavior"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The table mentioned is not included in the passage, leaving the definitions incomplete."
+        ],
+        "applicability": "DC grid systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "DC grid conductor designations"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "DC grid systems",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "L+",
+            "unit": "",
+            "value": "Positive Line"
+          },
+          {
+            "conditions": "Labeled N in NEC",
+            "name": "M (or N)",
+            "unit": "",
+            "value": "Midpoint Conductor (close to ground)"
+          },
+          {
+            "conditions": "",
+            "name": "L-",
+            "unit": "",
+            "value": "Negative Line"
+          }
+        ],
+        "content_type": "definition",
+        "n": 4,
+        "topics": [
+          "Conductor symbols in DC grids"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The relevance of the licensing information to the technical content is not clear."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "background",
+        "n": 5,
+        "topics": [
+          "Document licensing",
+          "Publication date"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

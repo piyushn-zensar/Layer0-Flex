@@ -1,0 +1,53 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specifics of the 'single line-up' topology are not detailed.",
+          "Conditions for the 3 MW+ AI load are not specified."
+        ],
+        "applicability": "MV to LV power blocks for AI loads and data centers",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "MV to LV power distribution",
+          "AI load power supply",
+          "Data center power architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details of the reserve and dynamic bus topologies are not fully explained.",
+          "The term 'eventual conversion' from AC to DC is vague."
+        ],
+        "applicability": "MV/LV power nodes in data centers",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "Redundant power routing",
+          "MV/LV transformers",
+          "Reserve and dynamic bus topologies"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The Mt. Diablo specification is referenced but not detailed.",
+          "The staged approach for adoption is not elaborated."
+        ],
+        "applicability": "Data centers transitioning to DC networks",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "DC network integration",
+          "Data center power transformation",
+          "Compute densification"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

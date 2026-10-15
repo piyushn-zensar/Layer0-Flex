@@ -1,0 +1,146 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific capacity or configuration of the BESS is not detailed.",
+          "The exact conditions under which the backup generation comes online are not specified."
+        ],
+        "applicability": "Cooling systems, backup power systems",
+        "attributes": [
+          {
+            "conditions": "Dry coolers, CUB pumps, and controls",
+            "name": "Voltage",
+            "unit": "V",
+            "value": "480"
+          },
+          {
+            "conditions": "",
+            "name": "Evaporative water use",
+            "unit": "",
+            "value": "none"
+          },
+          {
+            "conditions": "",
+            "name": "UPS",
+            "unit": "",
+            "value": "Core CUB only"
+          },
+          {
+            "conditions": "",
+            "name": "BESS bus",
+            "unit": "kV",
+            "value": "34.5"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Cooling systems",
+          "Dry coolers",
+          "Backup power",
+          "Battery Energy Storage System (BESS)",
+          "Dynamic AI loads"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific sizing criteria for the BESS and generators are not provided.",
+          "The term 'DSX Flex and DSX MaxLPS' is mentioned but not defined."
+        ],
+        "applicability": "Critical Core network and mechanical loads",
+        "attributes": [
+          {
+            "conditions": "Critical Core network and mechanical loads",
+            "name": "Reliability",
+            "unit": "%",
+            "value": "99.999"
+          },
+          {
+            "conditions": "",
+            "name": "Backup generation configuration",
+            "unit": "",
+            "value": "N+2"
+          },
+          {
+            "conditions": "",
+            "name": "BESS bus",
+            "unit": "kV",
+            "value": "34.5"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "Backup power",
+          "Reliability",
+          "BESS functions",
+          "Standby generators",
+          "Site power architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific capacity or configuration of the chillers and pumps is not detailed.",
+          "The term '250 MW / 96 SU Example Site Figures' is mentioned but not explained."
+        ],
+        "applicability": "Cooling systems, CUB design",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Chiller bus voltage",
+            "unit": "kV",
+            "value": "4.16"
+          },
+          {
+            "conditions": "",
+            "name": "CUB/coolers bus voltage",
+            "unit": "V",
+            "value": "480"
+          },
+          {
+            "conditions": "",
+            "name": "UPS",
+            "unit": "",
+            "value": "Core CUB only"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "Cooling systems",
+          "CUB design",
+          "Chillers",
+          "Power distribution",
+          "UPS"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact specifications of the 'validated CDU partner list' are not provided.",
+          "The term 'MP-Ready and Sample-Ready products' is mentioned but not defined."
+        ],
+        "applicability": "Cooling systems, data hall cooling",
+        "attributes": [
+          {
+            "conditions": "Minimum design flow",
+            "name": "TCS design flow",
+            "unit": "LPM/kW",
+            "value": "1.5"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 4,
+        "topics": [
+          "Cooling systems",
+          "CDUs",
+          "CRAHs",
+          "Concurrent maintenance",
+          "Data hall cooling"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

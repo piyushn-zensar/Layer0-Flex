@@ -1,0 +1,83 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific sensitivity levels for fault detection are not provided.",
+          "The exact implementation details for fault location systems in floating-ground systems are not described."
+        ],
+        "applicability": "HRG and solid-grounding systems, floating-ground systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Ground Fault Detection",
+          "Arc Flash Detection",
+          "Residual Current Monitoring",
+          "Floating-Ground Systems",
+          "HRG Systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific sensing technologies for monitoring compute racks and TRU/SST outputs are not detailed."
+        ],
+        "applicability": "compute racks, TRU or SST outputs",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Arc Flash Detection",
+          "Compute Rack Monitoring",
+          "DC Distribution Fault Monitoring"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact specifications for the fast shutdown capability and current-limiting technologies are not provided."
+        ],
+        "applicability": "TRUs, SSTs, DC sources, batteries, capacitors, energy storage systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Source Fault Current Control",
+          "TRU and SST Shutdown",
+          "DC/DC Converter Stages",
+          "Fault Current Limitation"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific performance metrics for SSCBs in terms of fault detection and interruption are not detailed."
+        ],
+        "applicability": "high-density 800 VDC power systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "Solid-State Circuit Breakers",
+          "Fault Detection",
+          "Arc Flash Mitigation",
+          "High-Density 800 VDC Systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The two target ratings for SSCBs are not specified in the passage."
+        ],
+        "applicability": "800 VDC power distribution systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 5,
+        "topics": [
+          "Solid-State Circuit Breakers",
+          "SSCB Ratings",
+          "800 VDC Power Systems"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

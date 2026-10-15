@@ -1,0 +1,63 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific technical details of the 800 VDC architecture are not provided."
+        ],
+        "applicability": "AI Factories, data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "AI infrastructure power architecture",
+          "800 VDC distribution",
+          "data center evolution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact certification pathways and system-level requirements are not detailed."
+        ],
+        "applicability": "AI Factories, data centers",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "800 VDC validation",
+          "system interoperability",
+          "certification pathways"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific roles of the mentioned organizations in the collaboration are not defined."
+        ],
+        "applicability": "AI Factories, data centers",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "collaboration in power infrastructure",
+          "scalable migration paths",
+          "AI Factory power systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific steps for making 800 VDC a trusted foundation are not outlined."
+        ],
+        "applicability": "AI Factories, data centers",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "800 VDC deployment",
+          "AI infrastructure execution"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

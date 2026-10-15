@@ -1,0 +1,61 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific context or application of the grounding terminology equivalents is not provided."
+        ],
+        "applicability": "grounding systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "grounding terminology",
+          "UL/NEC standards",
+          "IEC standards",
+          "power quality"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'depends on implementation' for high-resistance grounded systems, which requires clarification.",
+          "The equivalence of 'corner-grounded delta' to IEC standards is stated as 'no direct equivalent,' which might need further explanation."
+        ],
+        "applicability": "grounding systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "grounding systems",
+          "NEC/UL standards",
+          "IEC system types",
+          "power distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific content of Table 7 is not included in the passage, which might be necessary for full understanding."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "IEC standards",
+          "power quality",
+          "grounding systems",
+          "documentation licensing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

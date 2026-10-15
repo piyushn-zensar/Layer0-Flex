@@ -1,0 +1,116 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact voltage ranges for bands B2 and B4.",
+          "Define the conditions for 'limited time' operation outside bands B2 and B4.",
+          "Specify the criteria for 'critical loads' and 'non-critical loads' operation."
+        ],
+        "applicability": "LVDC power distribution systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage bands",
+          "Undervoltage operation",
+          "Overvoltage operation",
+          "Power quality",
+          "Protection devices"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the differences between Current/OS and ODCA definitions for bands B2 to B5.",
+          "Ensure alignment with IEC TR 63282 definitions."
+        ],
+        "applicability": "LVDC power distribution systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Voltage bands",
+          "Power quality",
+          "IEC standards",
+          "Voltage definitions"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm the exact voltage values for U1 through U6.",
+          "Clarify the operational implications of each band."
+        ],
+        "applicability": "LVDC power distribution systems",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "U6",
+            "unit": "",
+            "value": "Maximum voltage that equipment overvoltage protection devices clamp"
+          },
+          {
+            "conditions": "",
+            "name": "U5",
+            "unit": "",
+            "value": "Overvoltage disconnecting voltage"
+          },
+          {
+            "conditions": "",
+            "name": "U4",
+            "unit": "",
+            "value": "Maximum temporary operating voltage"
+          },
+          {
+            "conditions": "",
+            "name": "U3",
+            "unit": "",
+            "value": "Maximum continuous operating voltage"
+          },
+          {
+            "conditions": "",
+            "name": "U2",
+            "unit": "",
+            "value": "Minimum voltage for continuous operation with full functionality"
+          },
+          {
+            "conditions": "",
+            "name": "U1",
+            "unit": "",
+            "value": "Undervoltage disconnecting voltage"
+          }
+        ],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "Voltage bands",
+          "Power quality",
+          "Voltage levels",
+          "Protection devices"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Ensure the licensing terms are correctly applied and understood."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "Document licensing",
+          "Publication date",
+          "Creative Commons license"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

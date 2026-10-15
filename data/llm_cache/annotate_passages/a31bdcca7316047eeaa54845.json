@@ -1,0 +1,79 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact meaning of '8 to make 6 configuration' should be clarified.",
+          "Details on the 'Vera Rubin NVL72' component are not provided."
+        ],
+        "applicability": "rack power systems",
+        "attributes": [
+          {
+            "conditions": "utilizing 60A power whips in an 8 to make 6 configuration",
+            "name": "Gen 1 rack power",
+            "unit": "kW",
+            "value": "145"
+          },
+          {
+            "conditions": "with Vera Rubin NVL72 and both AC and DC input options",
+            "name": "Gen 2 rack power",
+            "unit": "kW",
+            "value": "330"
+          },
+          {
+            "conditions": "100% liquid-cooled power shelves",
+            "name": "Gen 3 rack power",
+            "unit": "kW",
+            "value": "570"
+          },
+          {
+            "conditions": "planned transition to 800 VDC in rack distribution",
+            "name": "Gen 4 voltage",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Rack power roadmap",
+          "Power density growth",
+          "800 VDC distribution",
+          "Liquid-cooled power shelves"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific details of 'alignment between rack- and data hall-level architectures' are not provided.",
+          "The term 'minimizing power conversion stages' could be elaborated for clarity."
+        ],
+        "applicability": "800 VDC systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "800 VDC benefits",
+          "Power distribution efficiency",
+          "System design simplification"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The 'focused set of practical and deployable architectures' is not detailed.",
+          "The term 'industry alignment' could be clarified further."
+        ],
+        "applicability": "AI Factory deployment conditions",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "800 VDC deployment",
+          "AI Factory power systems",
+          "Converged architecture"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

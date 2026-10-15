@@ -1,0 +1,80 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage does not provide specific details about the base product specifications."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Base product specifications"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify the internal compositions of the product."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Product internal compositions"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage lists components but does not provide detailed descriptions or specifications for each."
+        ],
+        "applicability": "Solid State Transformer",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "Firmware and control",
+          "MVAC input",
+          "LVDC output",
+          "Power conversion",
+          "Auxiliary power"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions performance specifications but does not detail them.",
+          "The term 'MVAC transient event' is not defined."
+        ],
+        "applicability": "Solid State Transformer",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "Power conversion",
+          "MVAC input",
+          "Thermal management",
+          "Mechanical design"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify the output port configurations or terminations.",
+          "The term 'neuron layer' is metaphorical and may need clarification."
+        ],
+        "applicability": "Solid State Transformer",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 5,
+        "topics": [
+          "LVDC output",
+          "Firmware and control",
+          "Communications",
+          "Switchgear design"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

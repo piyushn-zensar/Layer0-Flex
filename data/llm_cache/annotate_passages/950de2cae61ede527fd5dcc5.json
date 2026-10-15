@@ -1,0 +1,71 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'future-proofing' is not explicitly defined and may require clarification."
+        ],
+        "applicability": "data center high-density deployment",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "power block capacity",
+            "unit": "MW",
+            "value": "4.8"
+          },
+          {
+            "conditions": "",
+            "name": "DC busduct distribution capacity",
+            "unit": "A",
+            "value": "6000"
+          },
+          {
+            "conditions": "",
+            "name": "row-level busway system capacity",
+            "unit": "A",
+            "value": "1250"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "data center architecture",
+          "scalable power blocks",
+          "high-density deployment"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'NVL72 deployments' is not defined and may require clarification.",
+          "The specific requirements for '1+1 rack-level redundancy' are not detailed."
+        ],
+        "applicability": "data center high-density deployment",
+        "attributes": [
+          {
+            "conditions": "future native 800 VDC compute racks",
+            "name": "compute rack power capacity",
+            "unit": "MW",
+            "value": "1"
+          },
+          {
+            "conditions": "future higher-density cluster deployments with 1+1 rack-level redundancy",
+            "name": "cluster configuration capacity",
+            "unit": "MW",
+            "value": "8"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "800 VDC distribution",
+          "prefabricated power systems",
+          "AI Factory deployment",
+          "high-density compute racks"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

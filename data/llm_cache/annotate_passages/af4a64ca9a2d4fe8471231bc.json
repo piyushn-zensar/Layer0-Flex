@@ -1,0 +1,82 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific engineering adaptations required for hyperscale computing environments are not detailed."
+        ],
+        "applicability": "AI factory power systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "LVDC distribution",
+          "AI factory power systems",
+          "renewable integration",
+          "electrical safety"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on compatibility and integration challenges for each DC architecture are not provided."
+        ],
+        "applicability": "Facility-level DC distribution",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "Gallium Nitride (GaN) devices",
+          "SiC devices",
+          "DC architectures",
+          "AI compute integration"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Challenges for implementing 1500 VDC in confined rack spaces are mentioned but not elaborated."
+        ],
+        "applicability": "Data centers and AI factories",
+        "attributes": [
+          {
+            "conditions": "Low voltage class under NEC Article 690 and IEC 62477-1",
+            "name": "Voltage limit",
+            "unit": "VDC",
+            "value": "1500"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "1500 VDC distribution",
+          "solar and rail applications",
+          "arc-flash safety",
+          "UL and NEC standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific conditions for transitioning to 1500 VDC are not detailed."
+        ],
+        "applicability": "AI factory power systems",
+        "attributes": [
+          {
+            "conditions": "Using commercially available 1000 V-class components",
+            "name": "Voltage for near-term deployment",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "Phased adoption strategy",
+          "800 VDC deployment",
+          "1500 VDC transition",
+          "DC/DC density"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

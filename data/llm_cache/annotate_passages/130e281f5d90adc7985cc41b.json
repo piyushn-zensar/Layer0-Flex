@@ -1,0 +1,41 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the scope of 'Facilities Infrastructure' and its specific components.",
+          "Define 'performance per watt' in the context of the design guide."
+        ],
+        "applicability": "AI Factory Facilities",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Facilities Infrastructure",
+          "AI Factory Design",
+          "Power and Cooling Systems",
+          "Energy Efficiency",
+          "DSX Architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the relationship between example-site figures and actual site configurations.",
+          "Clarify the scope of 'Supplemental design references' available through NVOnline."
+        ],
+        "applicability": "Site Configurations",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Facilities Infrastructure",
+          "Site Configuration",
+          "Rendering Notes",
+          "Design Guide Reference"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

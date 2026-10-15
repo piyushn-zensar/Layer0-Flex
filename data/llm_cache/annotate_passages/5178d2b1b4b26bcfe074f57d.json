@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact specifications and compatibility of DC junction boxes with higher input DC voltage.",
+          "Verify the progression steps and their feasibility in practical implementations."
+        ],
+        "applicability": "data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "IT rack progression",
+          "DC power shelves",
+          "50 VDC distribution",
+          "DC junction boxes",
+          "vertical distribution"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

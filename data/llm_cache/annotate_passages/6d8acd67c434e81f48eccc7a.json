@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific technical specifications and equipment requirements are not detailed.",
+          "The exact role of 800 VDC systems in AI infrastructure is not elaborated."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "AI infrastructure scaling",
+          "Power distribution",
+          "800 VDC systems",
+          "OCP collaboration",
+          "Solid-state transformers"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

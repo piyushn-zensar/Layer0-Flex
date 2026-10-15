@@ -1,0 +1,23 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific details of the 'Example of SST Integration Busway' are not provided in the text."
+        ],
+        "applicability": "DCH distribution systems, SST integration",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "DCH distribution architecture",
+          "SST integration",
+          "busway design",
+          "redundancy"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

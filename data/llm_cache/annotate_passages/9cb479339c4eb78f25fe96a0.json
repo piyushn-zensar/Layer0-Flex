@@ -1,0 +1,42 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific requirements for each deployment option (A, B, C).",
+          "Define 'BBUs' and their role in the architecture.",
+          "Explain the term 'DSX Reference Architecture' in more detail."
+        ],
+        "applicability": "800 VDC systems, AI Factories, NVIDIA compute racks",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "data center architecture",
+          "deployment options",
+          "AI Factory infrastructure"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the specific benefits of 800 VDC for GPU compute loads.",
+          "Define the scope of 'rack, row, or pod level' deployment.",
+          "Explain the integration process with existing AC-based infrastructure."
+        ],
+        "applicability": "GPU compute racks, AI Factories, 800 VDC systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "800 VDC distribution",
+          "GPU compute infrastructure",
+          "power density scaling",
+          "data center deployment"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

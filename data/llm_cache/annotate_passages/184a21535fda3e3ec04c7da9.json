@@ -1,0 +1,77 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific methods for achieving increased direct current voltage distribution are not detailed."
+        ],
+        "applicability": "datacenter IT racks",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "OCP compliance",
+          "power distribution efficiency",
+          "datacenter power architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact implementation of leveraging EV industry technologies is not specified."
+        ],
+        "applicability": "datacenter power racks",
+        "attributes": [
+          {
+            "conditions": "from charging/battery infrastructure",
+            "name": "direct current voltage",
+            "unit": "VDC",
+            "value": "±400"
+          },
+          {
+            "conditions": "from charging/battery infrastructure",
+            "name": "direct current voltage",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "disaggregated power rack",
+          "high voltage architecture",
+          "EV industry technologies"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific scalability metrics or methods are not provided."
+        ],
+        "applicability": "disaggregated power racks",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "scalability",
+          "redundancy schemes",
+          "backup power"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The extent to which the power racks can be reused across generations is not quantified."
+        ],
+        "applicability": "disaggregated power racks and IT racks",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "sustainability",
+          "reuse of power racks",
+          "IT rack updates"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

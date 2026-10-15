@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific configurations where grounding current mitigation is required are not detailed.",
+          "The exact conditions under which arcing may occur are not specified.",
+          "The requirements for the bond between conductive parts and ground are not quantified."
+        ],
+        "applicability": "Diablo 400 system",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "solid grounding",
+          "400VDC systems",
+          "fault protection",
+          "ground loops"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

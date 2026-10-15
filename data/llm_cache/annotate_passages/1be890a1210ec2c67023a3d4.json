@@ -1,0 +1,54 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Figure 1 is referenced but not provided, which may contain critical information."
+        ],
+        "applicability": "AI factory deployment",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "AI factory deployment",
+          "power architecture options"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific values for key design parameters are not provided.",
+          "The term 'open OEM development model' is not clearly defined."
+        ],
+        "applicability": "compute, facility, and equipment stakeholders",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "ecosystem alignment",
+          "standardized requirements",
+          "power block sizing",
+          "redundancy models"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the Open Compute Project's specific contributions are not provided.",
+          "The term 'open standards' is broad and could benefit from clarification."
+        ],
+        "applicability": "data hall-level 800 VDC architectures",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Open Compute Project",
+          "800 VDC architectures",
+          "ecosystem participation",
+          "open standards"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,53 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific conditions under which each solution is most effective are not detailed.",
+          "The term 'corner cases' is not explicitly defined."
+        ],
+        "applicability": "NVIDIA GPUs, AI infrastructure",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "GPU load management",
+          "energy storage",
+          "load swing mitigation",
+          "performance throttling"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'Electrical Design Point (EDPp)' is mentioned but not defined.",
+          "The specific requirements for energy storage to meet both grid and GPU demands are not detailed."
+        ],
+        "applicability": "NVIDIA GPUs, AI infrastructure",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "workload idle periods",
+            "unit": "ms",
+            "value": "up to 100"
+          },
+          {
+            "conditions": "",
+            "name": "checkpointing duration",
+            "unit": "seconds",
+            "value": "1 to 5"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "GPU workload dynamics",
+          "energy storage requirements",
+          "grid stability",
+          "Electrical Design Point (EDPp)"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

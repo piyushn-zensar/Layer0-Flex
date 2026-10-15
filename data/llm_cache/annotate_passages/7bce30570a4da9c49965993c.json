@@ -1,0 +1,155 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify if the GPU rack count of 1,536 is a fixed maximum or an example value."
+        ],
+        "applicability": "250 MW-class IT load design with 96 Scalable Units",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Site footprint",
+            "unit": "acres",
+            "value": "157"
+          },
+          {
+            "conditions": "",
+            "name": "Building area",
+            "unit": "SF",
+            "value": "972,500"
+          },
+          {
+            "conditions": "",
+            "name": "Compute halls",
+            "unit": "",
+            "value": "4"
+          },
+          {
+            "conditions": "",
+            "name": "GPU racks",
+            "unit": "",
+            "value": "1,536"
+          },
+          {
+            "conditions": "",
+            "name": "GPUs",
+            "unit": "",
+            "value": "110,592"
+          },
+          {
+            "conditions": "",
+            "name": "Compute IT and mechanical load",
+            "unit": "MW",
+            "value": "240"
+          },
+          {
+            "conditions": "",
+            "name": "Core IT and mechanical load",
+            "unit": "MW",
+            "value": "22.8"
+          },
+          {
+            "conditions": "",
+            "name": "Stormwater drainage",
+            "unit": "acres",
+            "value": "5"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 1,
+        "topics": [
+          "site planning",
+          "data center design",
+          "IT load sizing",
+          "stormwater management"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the exact conditions under which the switchgear ratings apply."
+        ],
+        "applicability": "Grid Substation & Utility Interconnect",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Utility input voltage",
+            "unit": "kV+",
+            "value": "100"
+          },
+          {
+            "conditions": "",
+            "name": "Switchgear voltage",
+            "unit": "kV",
+            "value": "34.5"
+          },
+          {
+            "conditions": "",
+            "name": "Switchgear current rating",
+            "unit": "A",
+            "value": "2,500"
+          },
+          {
+            "conditions": "",
+            "name": "Switchgear fault current rating",
+            "unit": "kA",
+            "value": "40"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "power distribution",
+          "substation design",
+          "medium voltage systems",
+          "BESS integration"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the specific design parameters for the detention basins, such as volume or flow rate."
+        ],
+        "applicability": "Stormwater Detention Basins",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Number of basins",
+            "unit": "",
+            "value": "2"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "stormwater management",
+          "environmental compliance",
+          "site hydrology"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Define the specific operational limits of the dry coolers under varying environmental conditions."
+        ],
+        "applicability": "Dry Coolers - Outdoor Heat Rejection",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Liquid-cooling design point",
+            "unit": "°C",
+            "value": "45"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "cooling systems",
+          "liquid cooling",
+          "heat rejection",
+          "energy efficiency"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

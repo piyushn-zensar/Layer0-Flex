@@ -1,0 +1,63 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Definition of 'local or aggregated energy storage' and its specific implementation.",
+          "Details on the '1+1 redundant feeds' configuration."
+        ],
+        "applicability": "datacenter compute racks",
+        "attributes": [
+          {
+            "conditions": "single rectifier operation under worst-case loading",
+            "name": "compute load capacity",
+            "unit": "MW",
+            "value": "3.3"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "energy storage",
+          "redundant power feeds",
+          "datacenter reliability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific voltage ranges, connectors, and current levels to be standardized.",
+          "Details on the 'consistent framework' mentioned."
+        ],
+        "applicability": "AI Factories adopting 800 VDC architectures",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "standardization",
+          "800 VDC architecture",
+          "modularity",
+          "AI infrastructure"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the 'new generation of DC-native equipment' and its specifications.",
+          "Clarification on 'transfer trip schemes' and their role in the architecture."
+        ],
+        "applicability": "facility-level DC distribution",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "DC-native equipment",
+          "800 VDC distribution",
+          "protective devices",
+          "datacenter infrastructure"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

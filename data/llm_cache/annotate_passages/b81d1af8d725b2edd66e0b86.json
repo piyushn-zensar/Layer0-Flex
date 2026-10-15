@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific requirements or thresholds for compliance with EN 61000-4-2 are not detailed in the passage."
+        ],
+        "applicability": "Diablo 400 project",
+        "attributes": [],
+        "content_type": "test_or_compliance",
+        "n": 1,
+        "topics": [
+          "EMC compliance",
+          "Electrostatic discharge immunity",
+          "Testing standards"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

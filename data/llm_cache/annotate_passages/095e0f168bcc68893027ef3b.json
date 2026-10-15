@@ -1,0 +1,71 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Alliance Partners",
+          "ODCA",
+          "Sub-Project Leads"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Alliance Members",
+          "ODCA Leadership"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Contributors",
+          "ODCA Members"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "Contributors",
+          "ODCA Members"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "background",
+        "n": 5,
+        "topics": [
+          "Document Metadata",
+          "Licensing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

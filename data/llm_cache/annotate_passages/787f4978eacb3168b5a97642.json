@@ -1,0 +1,62 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific details of the 'advanced communication protocols' are not provided.",
+          "The exact specifications of 'megawatt-class' are not defined."
+        ],
+        "applicability": "Mount Diablo deployments",
+        "attributes": [
+          {
+            "conditions": "rack power delivery targets in Mount Diablo deployments",
+            "name": "Scale",
+            "unit": "",
+            "value": "megawatt-class"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Power Management Module",
+          "Battery Backup Unit",
+          "DC bus continuity",
+          "High rack power levels"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact durations for 'ride-through' are not specified.",
+          "The conditions for 'hot-swap where applicable' are not detailed."
+        ],
+        "applicability": "power sidecar rack",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Ride-through capability",
+          "Modularity and redundancy",
+          "Power sidecar rack integration",
+          "Thermal management"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific performance metrics for 'ultra-fast, high-peak-power support' are not provided.",
+          "The exact duration of 'milliseconds to short seconds' is not defined."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "Capacitor Backup Unit",
+          "AI workload power stabilization",
+          "Voltage/current excursion smoothing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

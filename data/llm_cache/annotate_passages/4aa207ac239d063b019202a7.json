@@ -1,0 +1,69 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific scope of 'general characteristics of an installation'."
+        ],
+        "applicability": "low-voltage electrical installations",
+        "attributes": [
+          {
+            "conditions": "applies to installations",
+            "name": "nominal voltage limit",
+            "unit": "VAC",
+            "value": "1000"
+          },
+          {
+            "conditions": "applies to installations",
+            "name": "nominal voltage limit",
+            "unit": "VDC",
+            "value": "1500"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "IEC 60364 series",
+          "low-voltage electrical installations",
+          "electrical safety",
+          "nominal voltage limits",
+          "installation rules"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Verify the specific requirements for 'periodic testing' in Part 6."
+        ],
+        "applicability": "low-voltage electrical installations",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "electrical safety",
+          "protection mechanisms",
+          "installation verification",
+          "special installations",
+          "IEC 60364 series"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the hierarchy of federal safety standards applicable to DC systems."
+        ],
+        "applicability": "DC systems in the United States",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "functional aspects of installations",
+          "energy efficiency",
+          "prosumer installations",
+          "US DC system requirements",
+          "federal safety standards"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

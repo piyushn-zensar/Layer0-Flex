@@ -1,0 +1,163 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details for grounding are deferred to later revisions, which may require clarification."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "grounding",
+          "specification reference"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No specific grounding impedance values or conditions are provided."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "grounding impedance"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No details on insulation monitoring or protection are provided."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "insulation monitoring",
+          "protection systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No specific details are provided in this section."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "environmental and structural requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Derating factors above 40°C and 1000m are not specified and require supplier input."
+        ],
+        "applicability": "Outdoor equipment",
+        "attributes": [
+          {
+            "conditions": "Outdoor rated",
+            "name": "Equipment Rating",
+            "unit": "",
+            "value": "NEMA 3R"
+          },
+          {
+            "conditions": "",
+            "name": "Design Life",
+            "unit": "Years",
+            "value": "15+"
+          },
+          {
+            "conditions": "",
+            "name": "Environmental conditions",
+            "unit": "°C",
+            "value": "-30 to 40"
+          },
+          {
+            "conditions": "",
+            "name": "Corrosion Class",
+            "unit": "",
+            "value": "C5"
+          },
+          {
+            "conditions": "no condensing",
+            "name": "Relative Humidity",
+            "unit": "%",
+            "value": "95"
+          },
+          {
+            "conditions": "",
+            "name": "Site Elevation",
+            "unit": "m",
+            "value": "≤ 1000"
+          },
+          {
+            "conditions": "",
+            "name": "Forward Deceleration",
+            "unit": "g",
+            "value": "0.8"
+          },
+          {
+            "conditions": "",
+            "name": "Rearward Acceleration",
+            "unit": "g",
+            "value": "0.5"
+          },
+          {
+            "conditions": "",
+            "name": "Lateral Acceleration",
+            "unit": "g",
+            "value": "0.5"
+          },
+          {
+            "conditions": "",
+            "name": "Risk Category",
+            "unit": "",
+            "value": "II"
+          },
+          {
+            "conditions": "",
+            "name": "Seismic Design Category",
+            "unit": "",
+            "value": "D"
+          },
+          {
+            "conditions": "",
+            "name": "SDS",
+            "unit": "g",
+            "value": "1.193"
+          },
+          {
+            "conditions": "",
+            "name": "Uniform Ground Snow Load",
+            "unit": "psf",
+            "value": "48"
+          },
+          {
+            "conditions": "3-Second Gust",
+            "name": "Ultimate Wind Speed",
+            "unit": "mph",
+            "value": "120"
+          },
+          {
+            "conditions": "",
+            "name": "Exposure Class",
+            "unit": "",
+            "value": "C"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 5,
+        "topics": [
+          "environmental conditions",
+          "equipment rating",
+          "structural design"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,30 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific safety measures for adopting 800 VDC at scale are not detailed."
+        ],
+        "applicability": "AI data centers",
+        "attributes": [
+          {
+            "conditions": "for next-generation AI data centers",
+            "name": "standardized power architecture",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "AI data centers",
+          "standardized power architecture",
+          "low voltage direct current (LVDC)"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

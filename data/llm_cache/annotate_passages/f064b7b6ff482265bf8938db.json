@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage lists references but does not specify their direct relevance to the document's content."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "References",
+          "Standards",
+          "Interconnection",
+          "Distributed Energy Resources",
+          "LVDC Power Distribution"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

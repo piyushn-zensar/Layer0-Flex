@@ -1,0 +1,87 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact safety specified time period for SELV voltage drop is not defined.",
+          "The maximum current rating for individual outputs is not specified."
+        ],
+        "applicability": "±400VDC distribution cables",
+        "attributes": [
+          {
+            "conditions": "at 5m length for output cables",
+            "name": "Voltage drop budget",
+            "unit": "%",
+            "value": "0.1"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "±400VDC distribution",
+          "connector safety",
+          "voltage drop budget",
+          "current limiting"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific tolerance for current sharing between cables is not defined."
+        ],
+        "applicability": "±400VDC distribution cables",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "±400VDC distribution",
+          "current sharing",
+          "cable sizing"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not provide specific details about the management, telemetry, and communication interface."
+        ],
+        "applicability": "Diablo 400 sidecar module",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "management interface",
+          "sidecar module"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific requirements for the secure control unit are not detailed.",
+          "The compatibility of proprietary interfaces with the Redfish standard is not clarified."
+        ],
+        "applicability": "Diablo 400 sidecar module",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 4,
+        "topics": [
+          "management interface",
+          "Redfish standard",
+          "secure control unit"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify which telemetry protocols are preferred or mandatory."
+        ],
+        "applicability": "Diablo 400 telemetry systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 5,
+        "topics": [
+          "telemetry interface",
+          "power management",
+          "communication protocols"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

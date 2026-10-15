@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific ESS technologies and form factors are not detailed.",
+          "Criteria for selecting fire suppression mediums are not fully defined."
+        ],
+        "applicability": "ESS technology and form factor",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "fire suppression",
+          "heat removal",
+          "ESS technology",
+          "system engineering"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on how these standards interact or overlap are not provided.",
+          "The passage does not specify how these standards apply to different ESS technologies."
+        ],
+        "applicability": "ESS installations in the US",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "ESS standards",
+          "fire safety",
+          "UL standards",
+          "NFPA 855"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific requirements for certification/listing of DC equipment are not detailed.",
+          "The passage does not elaborate on the criteria for selecting conductors and connectors."
+        ],
+        "applicability": "LVDC distribution systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "LVDC distribution",
+          "power transfer",
+          "AI rack",
+          "DC equipment certification"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

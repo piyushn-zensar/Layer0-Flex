@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific standards for device interaction and fault reaction are not defined.",
+          "The exact nature of the unique DC hazards like sustained arcs is not elaborated.",
+          "The specifications for AC/DC interface management are described as varying widely, which could lead to inconsistencies."
+        ],
+        "applicability": "Low Voltage DC (LVDC) installations",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "LVDC installations",
+          "AC/DC interface",
+          "Maintenance procedures"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions critical gaps in NFPA 70E safety protocols for DC systems but does not specify what these gaps are.",
+          "It states that no comprehensive methodology exists for DC arc-flash risks but does not provide details on ongoing efforts to address this."
+        ],
+        "applicability": "DC power systems with increased voltage levels",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "DC arc-flash protection",
+          "NFPA 70E",
+          "IEEE 1584",
+          "Safety protocols for DC systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The range of product categories is listed, but specific standards or requirements for each category are not detailed."
+        ],
+        "applicability": "DC system architectures and components",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "DC system architectures",
+          "Component standards",
+          "Grounding and bonding",
+          "Overcurrent protection"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

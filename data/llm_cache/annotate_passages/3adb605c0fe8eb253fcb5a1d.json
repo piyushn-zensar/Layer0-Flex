@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The defined operating temperature for cooling is not specified.",
+          "The influence of the surrounding magnetic field on current carrying capacity is not quantified."
+        ],
+        "applicability": "cable and busbar configuration",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Superconductors",
+          "Cable and busbar configuration"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

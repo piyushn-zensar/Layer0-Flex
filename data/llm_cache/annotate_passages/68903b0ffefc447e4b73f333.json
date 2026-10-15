@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage does not provide specific technical details or context about the project."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Diablo 400 Project",
+          "Rack and Power",
+          "Open Compute Project"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

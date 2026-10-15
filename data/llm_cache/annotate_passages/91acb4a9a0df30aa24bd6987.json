@@ -1,0 +1,30 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Open Compute Project",
+          "Solid State Transformer"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Version history",
+          "Document authorship"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

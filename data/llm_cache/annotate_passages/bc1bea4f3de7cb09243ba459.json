@@ -1,0 +1,87 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific conditions under which each time frame applies are not detailed."
+        ],
+        "applicability": "data center infrastructure",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "time frame for local power quality",
+            "unit": "",
+            "value": "milliseconds"
+          },
+          {
+            "conditions": "",
+            "name": "time frame for rapid stabilization and ride-through",
+            "unit": "",
+            "value": "seconds"
+          },
+          {
+            "conditions": "",
+            "name": "time frame for UPS bridging and peak shaving",
+            "unit": "",
+            "value": "minutes"
+          },
+          {
+            "conditions": "",
+            "name": "time frame for energy arbitrage, renewable shifting, and extended backup",
+            "unit": "",
+            "value": "hours"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Energy Storage Systems (ESS)",
+          "Data Center Infrastructure",
+          "Power Quality",
+          "Renewable Integration",
+          "Grid Services"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact methods or technologies used by ESS to address these dynamics are not specified."
+        ],
+        "applicability": "data center infrastructure",
+        "attributes": [
+          {
+            "conditions": "occurs in milliseconds",
+            "name": "power fluctuation range for AI workloads",
+            "unit": "",
+            "value": "30% to 100%"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "AI Workloads",
+          "Power Fluctuations",
+          "Voltage Sags",
+          "Energy Storage Systems",
+          "Grid Stability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific coordinated controls mentioned are not detailed."
+        ],
+        "applicability": "data center infrastructure",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Voltage Stability",
+          "Frequency Stability",
+          "Coordinated Controls",
+          "Energy Storage Systems"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

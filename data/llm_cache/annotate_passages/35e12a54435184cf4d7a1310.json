@@ -1,0 +1,48 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific safety standards and operational practices to be updated or expanded are not detailed.",
+          "The exact roles of industry working groups and regulatory bodies are not specified."
+        ],
+        "applicability": "data center environments",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "safety standards",
+          "arc-flash protection",
+          "grounding strategies",
+          "data center operations"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on how energy storage is integrated with 800 VDC distribution are not provided.",
+          "The specific methods to address synchronous load swings are not elaborated."
+        ],
+        "applicability": "AI factories and data centers",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "distribution voltage",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "GPU power consumption",
+          "800 VDC distribution",
+          "energy storage integration",
+          "AI infrastructure efficiency"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

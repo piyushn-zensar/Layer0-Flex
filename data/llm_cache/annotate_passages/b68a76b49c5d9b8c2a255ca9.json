@@ -1,0 +1,98 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact implementation details of the TRU architectures are not fully described.",
+          "The specific conditions under which the 5 MW-class power block deployment is practical are not detailed."
+        ],
+        "applicability": "Data Hall-Level High-Density Deployment (DC Power Block)",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "utility distribution infrastructure voltage",
+            "unit": "kV",
+            "value": "34.5"
+          },
+          {
+            "conditions": "",
+            "name": "power block deployment capacity",
+            "unit": "MW",
+            "value": "5"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Transformer Rectifier Unit (TRU)",
+          "800 VDC distribution",
+          "Data center power architecture",
+          "IGBT-based power conversion"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'Panama Architecture' is not defined in detail.",
+          "The specific advantages and limitations of the Panama approach compared to other architectures are not fully elaborated."
+        ],
+        "applicability": "Data Hall-Level High-Density Deployment (DC Power Block)",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "Panama Architecture",
+          "800 VDC distribution",
+          "Data center power architecture",
+          "Medium-voltage entry point"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific challenges and solutions for scaling SST to 34.5kV systems are not detailed.",
+          "The term 'hyperscale AI' is not defined in the context of this passage."
+        ],
+        "applicability": "Data Hall-Level High-Density Deployment (DC Power Block)",
+        "attributes": [
+          {
+            "conditions": "current commercially available SST platforms",
+            "name": "input system voltage class",
+            "unit": "kV",
+            "value": "15"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "Solid-State Transformer (SST)",
+          "High-frequency power electronics",
+          "800 VDC distribution",
+          "Data center power architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific development requirements for insulation coordination, protection, thermal management, and utility interconnection are not detailed."
+        ],
+        "applicability": "Data Hall-Level High-Density Deployment (DC Power Block)",
+        "attributes": [
+          {
+            "conditions": "Factory deployments",
+            "name": "medium-voltage distribution",
+            "unit": "kV",
+            "value": "34.5"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "Solid-State Transformer (SST)",
+          "Medium-voltage distribution",
+          "800 VDC distribution",
+          "Data center power architecture"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

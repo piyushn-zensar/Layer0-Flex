@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact scope of the specification regarding the dotted frame.",
+          "Define the term 'catcher' in the context of block redundancy."
+        ],
+        "applicability": "LVDC distribution systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "LVDC architecture",
+          "block redundancy",
+          "solid state transformer",
+          "distribution system"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

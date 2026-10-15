@@ -1,0 +1,81 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage references IEC standards and terms but does not provide specific definitions or values for 'nominal voltage' in the context of the document."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "IEC standards",
+          "Nominal voltage"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact definitions of U2, U3, and Un are not provided in the passage.",
+          "The term 'Current/OS' is unclear and requires clarification."
+        ],
+        "applicability": "LVDC systems",
+        "attributes": [
+          {
+            "conditions": "U2 ≤ Un ≤ U3",
+            "name": "Nominal voltage range",
+            "unit": "",
+            "value": "[U2; U3]"
+          },
+          {
+            "conditions": "For LVDC systems from 120V to 1500V",
+            "name": "Standard nominal voltages for LVDC",
+            "unit": "V",
+            "value": "175/350V, 350V, 350/700V, 700V, 700/1400V, 1400V"
+          }
+        ],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Nominal voltage range",
+          "Bipolar systems",
+          "IEC 60038",
+          "LVDC standard voltages"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'Current/OS' and 'ODCA' without further explanation of these terms.",
+          "The relationship between rated voltage and operating voltage is mentioned but not elaborated."
+        ],
+        "applicability": "DC grids",
+        "attributes": [
+          {
+            "conditions": "Used as nominal voltages for DC grids",
+            "name": "Nominal voltages for DC grids",
+            "unit": "V",
+            "value": "350V, 700V, 1400V"
+          },
+          {
+            "conditions": "Maximum voltage for low voltage classification",
+            "name": "Low voltage limit",
+            "unit": "V",
+            "value": "1500"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "Nominal voltage",
+          "Rated voltage",
+          "LVDC grids",
+          "Voltage scaling"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

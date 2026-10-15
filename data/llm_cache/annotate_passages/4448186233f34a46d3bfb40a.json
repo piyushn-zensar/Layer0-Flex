@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'Material' is defined but not elaborated upon in this passage."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "disclaimer",
+          "document limitations",
+          "liability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'testing of all parameters' but does not specify which parameters are referred to."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "customer responsibilities",
+          "terms of sale",
+          "product suitability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage refers to 'weaknesses in customer’s product designs' but does not specify what constitutes such weaknesses."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "customer testing",
+          "product reliability",
+          "design responsibility"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'third-party products or services' but does not specify any examples or contexts."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "intellectual property",
+          "licensing",
+          "reproduction conditions"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage uses the term 'Materials' but does not specify what is included under this term."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 5,
+        "topics": [
+          "warranty disclaimer",
+          "liability limitations",
+          "document usage"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'Terms of Sale' but does not provide details about these terms."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 6,
+        "topics": [
+          "trademarks",
+          "liability limitations",
+          "copyright"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

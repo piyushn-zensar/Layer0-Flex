@@ -1,0 +1,58 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific details of the 'common design framework' are not elaborated."
+        ],
+        "applicability": "future AI Factory deployments",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC architecture",
+          "AI Factory deployment",
+          "system interoperability",
+          "power quality",
+          "scalability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term '4-to-make-3 power feed architecture' may require clarification for precise implementation."
+        ],
+        "applicability": "current NVIDIA compute infrastructure",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "power distribution",
+            "unit": "VAC",
+            "value": "480"
+          },
+          {
+            "conditions": "",
+            "name": "power whips",
+            "unit": "A",
+            "value": "100"
+          },
+          {
+            "conditions": "",
+            "name": "power feed architecture",
+            "unit": "",
+            "value": "4-to-make-3"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "AC-based deployment",
+          "480 VAC distribution",
+          "rack-level redundancy",
+          "compute infrastructure"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

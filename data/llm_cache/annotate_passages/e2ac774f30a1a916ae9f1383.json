@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific conditions under which superconducting solutions become economical are not detailed.",
+          "The exact specifications of the liquid-cooled cables for rack connections are not provided."
+        ],
+        "applicability": "Data center power distribution systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Superconducting solutions",
+          "Liquid-cooled cables",
+          "Data center power distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify if the standards mentioned are mandatory or recommended."
+        ],
+        "applicability": "Superconducting AC power cables",
+        "attributes": [
+          {
+            "conditions": "For superconducting AC power cables and their accessories",
+            "name": "Rated voltages",
+            "unit": "kV",
+            "value": "6 to 500"
+          }
+        ],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Standards for cables",
+          "Superconducting cables",
+          "IEC 63075 standard"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,252 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact conditions for LVRT range #1 and #2.",
+          "Define 'acceptable power quality' for restoration."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [
+          {
+            "conditions": "LVRT range #1",
+            "name": "nominal input current",
+            "unit": "",
+            "value": "nominal"
+          },
+          {
+            "conditions": "LVRT range #1",
+            "name": "rated output load",
+            "unit": "",
+            "value": "100%"
+          },
+          {
+            "conditions": "LVRT range #2",
+            "name": "input current",
+            "unit": "",
+            "value": "none"
+          },
+          {
+            "conditions": "LVRT range #2",
+            "name": "rated output load",
+            "unit": "",
+            "value": "100%"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "Voltage Ride Through",
+          "Low Voltage Ride Through",
+          "Energy Storage Control",
+          "Power Quality Restoration"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the exact meaning of 'functional with full capacity'."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [
+          {
+            "conditions": "LVRT range #1",
+            "name": "full capacity",
+            "unit": "",
+            "value": "functional"
+          },
+          {
+            "conditions": "LVRT range #1",
+            "name": "output load",
+            "unit": "",
+            "value": "no derating"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "Voltage Ride Through",
+          "Full Capacity Operation",
+          "Low Voltage Ride Through"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm the exact conditions under which this voltage applies."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [
+          {
+            "conditions": "500ms",
+            "name": "voltage",
+            "unit": "pu",
+            "value": "0.8"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "Voltage Ride Through",
+          "Low Voltage Ride Through",
+          "Duration Specification"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the conditions under which 'no derating' applies."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "output load",
+            "unit": "",
+            "value": "no derating"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "Voltage Ride Through",
+          "Output Load Maintenance"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm the context for the temperature value."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "temperature",
+            "unit": "c",
+            "value": "30"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 5,
+        "topics": [
+          "Voltage Ride Through",
+          "Temperature Specification"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the conditions for the voltage and temperature values."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [
+          {
+            "conditions": "250ms",
+            "name": "voltage",
+            "unit": "pu",
+            "value": "0.5"
+          },
+          {
+            "conditions": "",
+            "name": "temperature",
+            "unit": "c",
+            "value": "15"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 6,
+        "topics": [
+          "Voltage Ride Through",
+          "Low Voltage Ride Through",
+          "Duration Specification",
+          "Temperature Specification"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the role of data center architecture in ride-through scenarios."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 7,
+        "topics": [
+          "Voltage Ride Through",
+          "Data Center Architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Define the exact requirements for internal energy storage ride-through."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 8,
+        "topics": [
+          "Voltage Ride Through",
+          "Energy Storage Ride-Through"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the actions to be taken during voltage ride-through."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 9,
+        "topics": [
+          "Voltage Ride Through",
+          "Action Specification"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm the conditions for the voltage, output load, and temperature values."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [
+          {
+            "conditions": "150ms",
+            "name": "voltage",
+            "unit": "pu",
+            "value": "0.2"
+          },
+          {
+            "conditions": "",
+            "name": "output load",
+            "unit": "",
+            "value": "no derating"
+          },
+          {
+            "conditions": "",
+            "name": "temperature",
+            "unit": "c",
+            "value": "9"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 10,
+        "topics": [
+          "Voltage Ride Through",
+          "Low Voltage Ride Through",
+          "Duration Specification",
+          "Output Load Maintenance",
+          "Temperature Specification"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Ensure Figure 3 accurately represents the requirements."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [],
+        "content_type": "other",
+        "n": 11,
+        "topics": [
+          "Voltage Ride Through",
+          "Graphical Representation"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

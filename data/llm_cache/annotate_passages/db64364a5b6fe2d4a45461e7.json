@@ -1,0 +1,73 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific targeted updates needed for standards are not detailed.",
+          "Conditions for leveraging existing certification frameworks are not specified."
+        ],
+        "applicability": "800 VDC AI Factory infrastructure",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "800 VDC infrastructure",
+          "certification strategy",
+          "regulatory alignment",
+          "AHJ enablement"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on installation best practices and inspection guidelines are not provided.",
+          "Specific technical training content for AHJs is not described."
+        ],
+        "applicability": "800 VDC AI Factory infrastructure",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "AHJ engagement",
+          "certification practices",
+          "deployment practices",
+          "technical training"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific engineering requirements and validation methods are not detailed.",
+          "Conditions for large-scale commercial deployment are not specified."
+        ],
+        "applicability": "800 VDC AI Factory infrastructure",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "800 VDC ecosystem",
+          "deployment planning",
+          "system validation",
+          "engineering requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Exact specifications for power quality and system stability are not provided.",
+          "Details on protection coordination and grounding requirements are missing."
+        ],
+        "applicability": "OEM equipment development for 800 VDC systems",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "system-level specifications",
+          "power quality",
+          "dynamic response",
+          "system stability",
+          "grid compliance"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

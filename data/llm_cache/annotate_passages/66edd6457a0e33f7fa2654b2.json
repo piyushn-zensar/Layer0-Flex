@@ -1,0 +1,85 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage contains legal language that may require clarification by a legal expert."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 1,
+        "topics": [
+          "legal disclaimer",
+          "liability",
+          "Open Compute Project"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage lists contributors but does not specify their roles or contributions."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "acknowledgements",
+          "contributors",
+          "Open Compute Project"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not elaborate on the specific tenets or their implications."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "OCP compliance",
+          "tenets"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions standardization goals but does not specify the standards or timelines."
+        ],
+        "applicability": "disaggregated power rack",
+        "attributes": [
+          {
+            "conditions": "For power delivery to a nearby IT rack",
+            "name": "Voltage",
+            "unit": "VDC",
+            "value": "±400"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 4,
+        "topics": [
+          "400 VDC distribution",
+          "disaggregated power rack",
+          "Open Rack standard",
+          "high voltage connectors"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions efficiency improvements but does not provide quantitative data or specific conditions."
+        ],
+        "applicability": "datacenter",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 5,
+        "topics": [
+          "power efficiency",
+          "high voltage transmission",
+          "disaggregated power rack"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

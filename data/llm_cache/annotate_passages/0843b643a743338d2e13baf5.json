@@ -1,0 +1,75 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'gray space' and 'white space' are not defined in this context.",
+          "The specific types of 'other conversion components' are not detailed.",
+          "The conditions under which 'varying levels of available fault current' are considered are not specified."
+        ],
+        "applicability": "LVDC power distribution systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "LVDC power distribution",
+          "MVAC to LVDC conversion",
+          "Solid State Transformer",
+          "energy storage interface"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'loosely regulated droop control' is not fully explained.",
+          "The future consideration of MVDC underlay grid and SST conversion lacks specific details."
+        ],
+        "applicability": "LVDC systems up to 1500 VDC",
+        "attributes": [
+          {
+            "conditions": "Current scope of the white paper",
+            "name": "Voltage limit",
+            "unit": "VDC",
+            "value": "1500"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "1500 VDC systems",
+          "MVDC exclusion",
+          "future MVDC considerations",
+          "droop control in microgrids"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The 'narrow band of continuous voltage' is not quantified.",
+          "The 'higher voltage limits of IT rack compute loads' are not specified."
+        ],
+        "applicability": "Data center DC power systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "DC usage in data centers",
+          "tightly regulated voltage operation",
+          "efficiency in DC distribution",
+          "non-regenerative loads"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "Creative Commons licensing",
+          "document usage rights"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

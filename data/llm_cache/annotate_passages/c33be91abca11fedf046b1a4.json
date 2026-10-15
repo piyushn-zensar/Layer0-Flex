@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage does not provide details about the acquisition, such as the terms, purpose, or implications."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Acquisition",
+          "EPC Power",
+          "Flex"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

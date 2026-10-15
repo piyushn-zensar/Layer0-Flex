@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific values for maximum switching overvoltage are not provided.",
+          "Conditions for overvoltage coordination are not detailed."
+        ],
+        "applicability": "DC power systems in data centers",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "DC power systems",
+          "overvoltage protection",
+          "arc-flash risks",
+          "AI factory safety"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on how to calculate Incident Energy (IE) in DC systems are not provided."
+        ],
+        "applicability": "Data centers operating 24/7/365",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "arc-flash protection",
+          "personal protective equipment",
+          "NFPA 70E compliance",
+          "Incident energy calculation"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No standard for DC system IE calculation equivalent to IEEE 1584 for AC systems.",
+          "Details on the 'Maximum Power Method' are not fully provided."
+        ],
+        "applicability": "Distribution equipment with overcurrent protective devices rated 1200 amperes or higher",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "arc-flash hazard labeling",
+          "NFPA 70 compliance",
+          "overcurrent protection",
+          "Incident energy calculation methods"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No technical content or context provided."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "Creative Commons licensing",
+          "document usage rights"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

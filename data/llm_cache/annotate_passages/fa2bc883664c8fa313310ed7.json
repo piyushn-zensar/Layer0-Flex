@@ -1,0 +1,49 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact rating requirements for SRDs under different fault current scenarios.",
+          "Define the conditions under which capacitive behavior and clamping mechanisms are required."
+        ],
+        "applicability": "DC power distribution systems",
+        "attributes": [
+          {
+            "conditions": "SRDs must be rated for this value",
+            "name": "maximum fault current",
+            "unit": "",
+            "value": "expected maximum"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "System Referencing Devices (SRD)",
+          "Fault current protection",
+          "Capacitive grounding",
+          "Voltage clamping",
+          "Grid islanding"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the requirements for Switching Device for Islanding (SDFI) technology.",
+          "Clarify the transition conditions to IT systems and insulation monitoring requirements."
+        ],
+        "applicability": "Electrical systems with islanding configurations",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Grid islanding",
+          "Earthing reference",
+          "Insulation monitoring",
+          "IEC 60364-8-82 compliance",
+          "System Referencing Devices (SRD)"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

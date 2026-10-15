@@ -1,0 +1,54 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific gaps in the standardization landscape are not detailed.",
+          "The exact codes and standards referenced (UL, IEC, IEEE) are not specified."
+        ],
+        "applicability": "DC systems, AI data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "DC system standards",
+          "AI data centers",
+          "Global codes and standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific challenges in transitioning to higher voltage DC are not detailed.",
+          "The list of codes and standards is noted as incomplete."
+        ],
+        "applicability": "DC products and systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "DC codes and standards",
+          "Safety in DC systems",
+          "Interoperability in DC systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific standards enabling scalability and efficiency are not detailed.",
+          "The term 'proper DC design' is not defined."
+        ],
+        "applicability": "DC systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Scalability in DC systems",
+          "Efficiency in DC systems",
+          "Regulatory compliance"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

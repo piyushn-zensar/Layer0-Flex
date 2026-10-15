@@ -1,0 +1,60 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific components and their availability for 800 VDC deployment are not detailed.",
+          "The efficiency of the transitional architecture is not quantified."
+        ],
+        "applicability": "800 VDC data centers",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "AC/DC conversion",
+          "data center power architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact conditions under which the rectifier achieves ~99% efficiency are not specified.",
+          "The integration method for energy storage at the DC output is not detailed."
+        ],
+        "applicability": "800 VDC data centers",
+        "attributes": [
+          {
+            "conditions": "typical rectifier string",
+            "name": "rectifier capacity",
+            "unit": "MVA",
+            "value": "1.5"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "800 VDC distribution",
+          "rectifier systems",
+          "data center power architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The timeline for the development and deployment of MV Rectifiers and SSTs is not provided.",
+          "The specific advantages of SSTs over traditional transformers are not elaborated."
+        ],
+        "applicability": "AI Factories",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "800 VDC distribution",
+          "medium voltage rectifiers",
+          "solid state transformers"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific details of the 'standardized' methodologies are not provided."
+        ],
+        "applicability": "NVIDIA DSX reference architectures",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "AC-based deployment",
+          "DSX reference architectures",
+          "AI Factory infrastructure"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact method of 'localized conversion' is not detailed.",
+          "The compatibility requirements with existing AC infrastructure are not fully described."
+        ],
+        "applicability": "800 VDC architecture with existing AC infrastructure",
+        "attributes": [
+          {
+            "conditions": "initial design",
+            "name": "Power Rack capacity",
+            "unit": "kW",
+            "value": "660"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "800 VDC distribution",
+          "rack-level integration",
+          "power rack design"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

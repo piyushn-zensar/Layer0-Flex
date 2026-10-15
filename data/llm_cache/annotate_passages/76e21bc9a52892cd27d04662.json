@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific medium voltage range is not defined."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Solid State Transformer",
+          "Medium Voltage to 800 VDC",
+          "Power Conversion Platform"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

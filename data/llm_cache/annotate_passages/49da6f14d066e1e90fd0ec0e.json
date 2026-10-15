@@ -1,0 +1,23 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details about the segments, brands, and specific technologies like 800 VDC or grid-to-chip are not included in this filing."
+        ],
+        "applicability": "Axiom Solutions International, Inc.",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Axiom Solutions International",
+          "digital infrastructure",
+          "power and cooling integration",
+          "compute systems"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

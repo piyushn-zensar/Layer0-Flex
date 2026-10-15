@@ -1,0 +1,160 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific conditions under which the PSU input current waveform shall not be clamped."
+        ],
+        "applicability": "Rack DC power systems",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "PSU input current waveform",
+          "pulse loading operation",
+          "rack power capabilities"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the exact meaning of 'Option 2', 'Option 3', and 'Option1' in the context of vendors."
+        ],
+        "applicability": "Rack DC power systems",
+        "attributes": [
+          {
+            "conditions": "@415VAC Vin",
+            "name": "Rack average power DC load",
+            "unit": "kW",
+            "value": "800kW to 1.1MW"
+          },
+          {
+            "conditions": "@400VAC Vin",
+            "name": "Rack average power DC load",
+            "unit": "kW",
+            "value": "Up to 1.1MW"
+          },
+          {
+            "conditions": "@480VAC Vin",
+            "name": "Rack average power DC load",
+            "unit": "kW",
+            "value": "Up to 718kW"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "DC power output",
+          "rack average power",
+          "load step requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Define the exact voltage variation limits for undershoot and overshoot."
+        ],
+        "applicability": "AC/DC PSU module or power shelf",
+        "attributes": [
+          {
+            "conditions": "With and without capacitive loading on a single unit of 10mF",
+            "name": "Settling time",
+            "unit": "ms",
+            "value": "3ms"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "DC output voltage stability",
+          "dynamic loading",
+          "capacitive loading"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the conditions under which the slew rate applies."
+        ],
+        "applicability": "PSU dynamic loading",
+        "attributes": [
+          {
+            "conditions": "10% min. load",
+            "name": "Step load",
+            "unit": "%",
+            "value": "50%"
+          },
+          {
+            "conditions": "50% step load",
+            "name": "Frequency",
+            "unit": "kHz",
+            "value": "Up to 10kHz"
+          },
+          {
+            "conditions": "50% step load",
+            "name": "Slew rate",
+            "unit": "A/us",
+            "value": "1A/us"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 4,
+        "topics": [
+          "step load increase",
+          "dynamic loading",
+          "slew rate"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the exact dynamic load profiles under test."
+        ],
+        "applicability": "Dynamic load testing",
+        "attributes": [],
+        "content_type": "test_or_compliance",
+        "n": 5,
+        "topics": [
+          "dynamic load profiles",
+          "test conditions"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the conditions for each dynamic load profile."
+        ],
+        "applicability": "Dynamic load testing",
+        "attributes": [
+          {
+            "conditions": "Dynamic load profile No. 1",
+            "name": "Low load",
+            "unit": "%",
+            "value": "10%"
+          },
+          {
+            "conditions": "Dynamic load profile No. 1",
+            "name": "High load",
+            "unit": "%",
+            "value": "60%"
+          },
+          {
+            "conditions": "Dynamic load profile No. 1",
+            "name": "Duty cycle",
+            "unit": "%",
+            "value": "50%"
+          },
+          {
+            "conditions": "Dynamic load profile No. 1",
+            "name": "Frequency",
+            "unit": "Hz",
+            "value": "20Hz, 100Hz, 500Hz, 1kHz"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 6,
+        "topics": [
+          "dynamic load profiles",
+          "frequency and duty cycle"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,40 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details on the efficiency improvement when using DC power for CDU.",
+          "Specific requirements for metering and monitoring in DC systems.",
+          "Details on operation and maintenance equipment for DC systems."
+        ],
+        "applicability": "Cooling Distribution Unit, DC power systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Cooling Distribution Unit",
+          "DC power efficiency",
+          "Metering and monitoring",
+          "Operation and maintenance"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarification on why voltage levels and power quality are not covered in this paper.",
+          "Specific sections of NFPA70B relevant to the topic."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "NFPA70B reference"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

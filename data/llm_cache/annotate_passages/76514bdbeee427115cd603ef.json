@@ -1,0 +1,76 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details on the specific system-level performance requirements are not provided.",
+          "Conditions for power quality and smoothing standards are not defined."
+        ],
+        "applicability": "power distribution systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "LVDC systems",
+          "power conversion",
+          "system performance requirements",
+          "industry collaboration"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specifics of the Solid-State Transformer Specification v0.3 are not included.",
+          "Details on the safety certifications and regulatory frameworks are not provided."
+        ],
+        "applicability": "power conversion systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "solid-state transformer",
+          "safety certifications",
+          "regulatory frameworks",
+          "AI infrastructure",
+          "interoperable power conversion"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Conditions for phased upgrades and direct MVAC-to-800 VDC designs are not detailed.",
+          "Specifics of NVIDIA's 800 VDC power distribution architecture are not provided."
+        ],
+        "applicability": "power distribution systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "800 VDC framework",
+          "OEM alignment",
+          "power distribution architecture",
+          "AI infrastructure",
+          "supply chain optimization"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the hyperscale operator requirements are not included.",
+          "Conditions for global deployment of repeatable designs are not specified."
+        ],
+        "applicability": "AI infrastructure",
+        "attributes": [],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "AI infrastructure engineering",
+          "800 VDC power distribution",
+          "global deployment",
+          "repeatable designs",
+          "hyperscale operator requirements"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

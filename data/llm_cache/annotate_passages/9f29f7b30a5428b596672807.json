@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific criteria for minimizing fire hazards are not detailed.",
+          "The relationship between EMC and fire hazards is not explicitly stated."
+        ],
+        "applicability": "Stationary combustion engines and gas turbines for emergency generators, fire pumps, and stand-by and peak power systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Fire Hazards",
+          "Stationary Combustion Engines",
+          "Emergency Generators"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The lack of a specific chapter for data centers in the mentioned codes might require clarification on how they are addressed.",
+          "The connection between EMC and the fire codes is not explicitly described."
+        ],
+        "applicability": "Telecommunications facilities and IT equipment",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Telecommunications Facilities",
+          "Fire Code",
+          "Data Centers"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific emerging trends and recommendations are not detailed.",
+          "The training and education requirements for DC vs. AC systems are not specified."
+        ],
+        "applicability": "Local authorities handling commissioning and approvals for DC vs. AC systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Emerging Trends",
+          "DC vs. AC Systems",
+          "Commissioning and Approvals"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

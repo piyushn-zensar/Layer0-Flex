@@ -1,0 +1,37 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific EMC standards or tests required are not listed."
+        ],
+        "applicability": "Open Compute Project Diablo 400",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "EMC compliance",
+          "regulatory requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific implementation details for compliance with the listed regulations are not provided."
+        ],
+        "applicability": "fully integrated power rack system and subcomponents",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "environmental compliance",
+          "eco-design",
+          "sustainability",
+          "RoHS",
+          "REACH"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,76 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Document structure",
+          "Table of contents"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Document structure",
+          "Executive summary"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "System architecture",
+          "Power distribution stages"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 4,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Low voltage classes"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 5,
+        "topics": [
+          "Voltage levels",
+          "High voltage classes",
+          "Nominal voltage"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 6,
+        "topics": [
+          "Document licensing",
+          "Creative Commons"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

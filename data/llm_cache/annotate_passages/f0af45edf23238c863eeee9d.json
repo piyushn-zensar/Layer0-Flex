@@ -1,0 +1,49 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The conditions under which the M conductor can be rated for lower current are not fully specified.",
+          "The implications of imbalanced loading on system performance are not detailed."
+        ],
+        "applicability": "bipolar DC systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "bipolar DC system",
+          "M conductor distribution",
+          "power quality",
+          "load balancing",
+          "conductor rating"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact maximum current rating of the M conductor is not provided.",
+          "The configuration details for protection devices adhering to NEC standards are not elaborated."
+        ],
+        "applicability": "bipolar DC systems with M grounded conductor",
+        "attributes": [
+          {
+            "conditions": "in the event of a fault in the other pole",
+            "name": "maximum current rating of M conductor",
+            "unit": "",
+            "value": "not specified"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "bipolar DC system",
+          "M conductor protection",
+          "NEC standards compliance",
+          "fault tolerance",
+          "current rating"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

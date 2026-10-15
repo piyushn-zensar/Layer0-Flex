@@ -1,0 +1,23 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage mentions 'LVDC' without defining it, which could be ambiguous for readers unfamiliar with the term."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "AI power systems",
+          "LVDC standardization",
+          "industry transition",
+          "Open Compute Project"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

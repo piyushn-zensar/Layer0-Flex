@@ -1,0 +1,65 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific requirements for ground fault detection and protection are not detailed.",
+          "The impact of combining droop-controlled devices with simple loads is not quantified."
+        ],
+        "applicability": "Active DC microgrids",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Ground fault detection",
+          "Active DC microgrids",
+          "Voltage droop control",
+          "Voltage bands",
+          "IEC TR 63282"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact specifications of the droop curves are not provided.",
+          "The relationship between voltage change and power balance is described qualitatively but lacks quantitative details."
+        ],
+        "applicability": "Active DC microgrids",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Active DC microgrids",
+          "Voltage bands",
+          "Droop curves",
+          "Power management",
+          "UL standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The criteria for devices to disconnect in ODCA systems during temporary overvoltage are not specified."
+        ],
+        "applicability": "LVDC commercial and industrial installations",
+        "attributes": [
+          {
+            "conditions": "In Current/OS systems",
+            "name": "Temporary overvoltage operation duration",
+            "unit": "minutes",
+            "value": "10"
+          }
+        ],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "Voltage band definitions",
+          "IEC TR 63282",
+          "ODCA systems",
+          "Current/OS systems",
+          "LVDC installations"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

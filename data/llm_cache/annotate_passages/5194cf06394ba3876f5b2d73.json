@@ -1,0 +1,70 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the scope of IEC report on MVDC grids.",
+          "Confirm the exact standards for MVDC up to 2kV and 3kV DC levels."
+        ],
+        "applicability": "Utility transmission systems",
+        "attributes": [
+          {
+            "conditions": "Defined by ANSI C84.1",
+            "name": "High Voltage (HV)",
+            "unit": "kV",
+            "value": "≥100 kV and ≤230 kV"
+          },
+          {
+            "conditions": "Defined by ANSI C84.1",
+            "name": "Extra High Voltage (EHV)",
+            "unit": "kV",
+            "value": ">230 kV and <1000 kV"
+          },
+          {
+            "conditions": "Defined by ANSI C84.1",
+            "name": "Ultra High Voltage (UHV)",
+            "unit": "kV",
+            "value": "≥1000 kV"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "MVDC standards",
+          "High Voltage definitions",
+          "IEC MVDC grids",
+          "ANSI C84.1 voltage classifications"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Verify the range of actual voltage variation permissible for satisfactory operation of equipment."
+        ],
+        "applicability": "Facility wiring and product rating classes",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Nominal voltage definition",
+          "NEC Article 100",
+          "Voltage class identification"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm the relevance of ANSI C84.1-2011 for the described voltage ratings."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "ANSI C84.1 voltage ratings",
+          "Creative Commons licensing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

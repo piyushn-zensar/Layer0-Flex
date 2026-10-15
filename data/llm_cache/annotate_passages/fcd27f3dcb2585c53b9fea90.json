@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific equipment scope for certification is not detailed.",
+          "Deployment architectures defined in the paper are not explicitly described."
+        ],
+        "applicability": "AI Factory deployment",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "certification strategy",
+          "regulatory development",
+          "AI Factory deployment"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details of the power quality requirements and voltage regulation limits are not provided.",
+          "Grounding methodologies and protection coordination requirements are not explicitly defined."
+        ],
+        "applicability": "power infrastructure and NVIDIA compute platforms",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "system-level requirements",
+          "power quality",
+          "fault current management",
+          "interoperability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific simulation and modeling techniques are not described.",
+          "Initial validation limits are not explicitly stated."
+        ],
+        "applicability": "800 VDC data center distribution",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "system simulation",
+          "validation framework",
+          "800 VDC data center",
+          "interoperability"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

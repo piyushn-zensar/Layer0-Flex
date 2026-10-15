@@ -1,0 +1,53 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the conditions under which unbalanced situations require additional balancing equipment.",
+          "Specify the exact operational limits for reduced capacity operation when one pole is lost."
+        ],
+        "applicability": "Bipolar TN-S grounding systems",
+        "attributes": [
+          {
+            "conditions": "For 600V or 650V silicon or GaN devices",
+            "name": "Voltage level",
+            "unit": "V",
+            "value": "350"
+          },
+          {
+            "conditions": "For higher power units utilizing SiC devices or multi-level topologies with GaN",
+            "name": "Voltage level",
+            "unit": "V",
+            "value": "700"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Grounding topology",
+          "Silicon and GaN devices",
+          "SiC devices"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Define the criteria for protective selectivity enhancement through localized ground fault return paths."
+        ],
+        "applicability": "Grounding systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Ground fault protection",
+          "Protective selectivity",
+          "Localized grounding",
+          "System design"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

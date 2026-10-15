@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage references a figure and a table (Figure 38 and Table 14) that are not included in the text, which may contain critical details."
+        ],
+        "applicability": "Power shelf",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Power shelf configuration"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

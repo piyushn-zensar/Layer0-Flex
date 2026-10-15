@@ -1,0 +1,77 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific conditions for reactive power and voltage control are not detailed.",
+          "Details on how to implement peak shaving and capacity reduction are not provided."
+        ],
+        "applicability": "Electrical power systems, grid-connected systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Grid stabilization",
+          "Renewable energy integration",
+          "Reactive power control"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The figure mentioned is not included in the passage.",
+          "Specific trade-offs for different technologies are not detailed."
+        ],
+        "applicability": "Data centers, energy storage systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Energy storage systems",
+          "Data center power architecture",
+          "UPS alternatives",
+          "Energy storage placement"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Table 13 is referenced but not included in the passage.",
+          "Specific voltage ratings and configurations are not detailed."
+        ],
+        "applicability": "Power distribution systems, energy storage systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Battery energy storage systems (BESS)",
+          "E-STATCOM",
+          "Load dynamics",
+          "DC-DC converters"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No technical content to verify."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "Document licensing",
+          "Publication date"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

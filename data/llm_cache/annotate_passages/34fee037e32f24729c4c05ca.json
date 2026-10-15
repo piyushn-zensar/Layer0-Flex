@@ -1,0 +1,86 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific gaps for DC systems and data center infrastructure are not detailed."
+        ],
+        "applicability": "AC and DC premises wiring systems connected to the load side of the utility service point",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Next revision completion",
+            "unit": "",
+            "value": "third quarter of 2028"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "NFPA 70",
+          "DC systems",
+          "Data center infrastructure"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact process and timeline for updating NEC in various jurisdictions are not specified."
+        ],
+        "applicability": "US states and several international jurisdictions",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "NEC editions in effect",
+            "unit": "",
+            "value": "2008 to 2023"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "NEC revision process",
+          "Electrical safety codes"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific sections of the code under evaluation for DC systems are not identified."
+        ],
+        "applicability": "AC and DC premises wiring systems connected to the load side of the utility service point",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "NFPA 70 edition",
+            "unit": "",
+            "value": "2026"
+          }
+        ],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "NFPA 70",
+          "DC systems",
+          "Electrical safety standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The relevance of the licensing information to the technical content is unclear."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "Creative Commons License",
+          "Document licensing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

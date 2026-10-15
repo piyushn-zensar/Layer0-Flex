@@ -1,0 +1,74 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The duration considered 'long period of time' for operation under a first fault is not specified.",
+          "The specific conditions under which fault locator devices are recommended are not detailed."
+        ],
+        "applicability": "IT systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Direct Touch Protection",
+          "Insulation Monitoring Device (IMD)",
+          "IT Systems Safety",
+          "Fault Detection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact capacitance values that differentiate 'smaller' and 'larger' systems are not defined.",
+          "The methods to properly limit or control hazardous touch voltage are not specified."
+        ],
+        "applicability": "low-power and high-power systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Y Capacitors",
+          "Electromagnetic Interference Filtering",
+          "Touch Safety",
+          "Capacitance Hazards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific scenarios where currents leave the intended metallic PE conductor are not elaborated."
+        ],
+        "applicability": "DC installations with grounding systems",
+        "attributes": [
+          {
+            "conditions": "at the metal-electrolyte interface for steel-reinforced concrete",
+            "name": "Threshold potential difference",
+            "unit": "mV",
+            "value": "200"
+          },
+          {
+            "conditions": "exposed to an electrolyte for one year",
+            "name": "Current causing corrosion",
+            "unit": "A",
+            "value": "1"
+          },
+          {
+            "conditions": "exposed to 1 A current for one year",
+            "name": "Iron electrode loss",
+            "unit": "kg",
+            "value": "9.13"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "Electrochemical Corrosion",
+          "Stray Current Effects",
+          "DC Systems Grounding",
+          "EN 50162 Standard"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The purpose of the documentation index and its specific use cases are not explicitly stated."
+        ],
+        "applicability": "NVIDIA DSX Facilities Infrastructure",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "DSX Facilities Infrastructure",
+          "Documentation Index",
+          "Reference Design"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

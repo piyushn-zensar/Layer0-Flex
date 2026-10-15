@@ -1,0 +1,164 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Load step conditions for dynamic regulation are TBD.",
+          "Detailed design for grounding and protection coordination is TBD.",
+          "Output DC link cap size is subject to further simulation and testing."
+        ],
+        "applicability": "LVDC solid-state transformer",
+        "attributes": [
+          {
+            "conditions": "unipolar system",
+            "name": "Output Voltage (nominal)",
+            "unit": "Vdc",
+            "value": "800"
+          },
+          {
+            "conditions": "",
+            "name": "Switching frequency ripples",
+            "unit": "%",
+            "value": "±0.5"
+          },
+          {
+            "conditions": "0-100% loading",
+            "name": "Static tolerance",
+            "unit": "%",
+            "value": "±1"
+          },
+          {
+            "conditions": "load step TBD",
+            "name": "Dynamic regulation",
+            "unit": "%",
+            "value": "±3"
+          },
+          {
+            "conditions": "for 150 milliseconds",
+            "name": "Overload Rating (constant current mode)",
+            "unit": "%",
+            "value": "150"
+          },
+          {
+            "conditions": "for 5 seconds",
+            "name": "Overload capacity (constant voltage mode)",
+            "unit": "%",
+            "value": "120"
+          },
+          {
+            "conditions": "per 4 MW output",
+            "name": "Output DC link cap size",
+            "unit": "mF",
+            "value": "10"
+          },
+          {
+            "conditions": "between 50-100% utilization",
+            "name": "Efficiency",
+            "unit": "%",
+            "value": ">=98"
+          },
+          {
+            "conditions": "",
+            "name": "Physical envelope range",
+            "unit": "",
+            "value": "10-20’ L x 8’ D x 8.5’ H"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 1,
+        "topics": [
+          "LVDC output specifications",
+          "solid-state transformer",
+          "efficiency requirements",
+          "overload ratings"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on environmental conditioning for indoor and outdoor options are not specified."
+        ],
+        "applicability": "solid-state transformer",
+        "attributes": [
+          {
+            "conditions": "backed up by data center system UPS",
+            "name": "Source #1",
+            "unit": "Vac",
+            "value": "480"
+          },
+          {
+            "conditions": "for control and telemetry",
+            "name": "Auxiliary power - 1",
+            "unit": "",
+            "value": ""
+          },
+          {
+            "conditions": "internally generated for converter semiconductor actuation and cooling",
+            "name": "Auxiliary power - 2",
+            "unit": "",
+            "value": ""
+          },
+          {
+            "conditions": "",
+            "name": "Communications",
+            "unit": "",
+            "value": "Modbus TCP/IP"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "auxiliary power sources",
+          "environmental conditions",
+          "communication protocols"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The section appears to be a placeholder or incomplete."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 3,
+        "topics": [
+          "electrical specifications"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The section appears to be a placeholder or incomplete."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "MVAC interface"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No specific values or conditions for grounding resistance are provided."
+        ],
+        "applicability": "data center medium-voltage transformer interface",
+        "attributes": [
+          {
+            "conditions": "for Wye (Y) secondary winding",
+            "name": "Grounding type",
+            "unit": "",
+            "value": "low-resistance grounded (LRG) neutral or solid grounding"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 5,
+        "topics": [
+          "grounding configurations",
+          "MVAC interface",
+          "data center applications"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

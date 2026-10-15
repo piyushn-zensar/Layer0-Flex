@@ -1,0 +1,65 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific conditions under which the LVDC Side Power Rack operates."
+        ],
+        "applicability": "AI data centers",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "AC to DC conversion",
+          "AI data center power architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the specifications of Mt Diablo 2.0 are not provided."
+        ],
+        "applicability": "AI data centers",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "800 VDC distribution",
+          "MVAC to DC conversion",
+          "AI data center power architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specifics on the safety engineering measures and their implementation are not detailed."
+        ],
+        "applicability": "AI data centers",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Battery Energy Storage System (BESS)",
+          "DC UPS integration",
+          "DC microgrids",
+          "Safety engineering"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The statement mentions alignment with major companies but does not specify the nature of the collaboration."
+        ],
+        "applicability": "AI data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "800 VDC distribution",
+          "AI data center power architecture",
+          "Energy efficiency"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

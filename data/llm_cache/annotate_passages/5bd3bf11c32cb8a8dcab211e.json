@@ -1,0 +1,21 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage does not provide technical content or context, making its relevance unclear."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 1,
+        "topics": [
+          "Document navigation",
+          "Hyperlink behavior"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

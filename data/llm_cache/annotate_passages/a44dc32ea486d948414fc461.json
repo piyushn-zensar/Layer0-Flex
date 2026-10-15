@@ -1,0 +1,42 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific applicability of each standard to the design context is not detailed.",
+          "Conditions under which these standards are applied are not specified."
+        ],
+        "applicability": "Solid State Transformer design",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "Compliance standards",
+          "UL standards",
+          "IEEE standards",
+          "Arc-flash protection",
+          "Seismic design"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarification needed on how these standards integrate into the design.",
+          "Conditions for grounding practices are not specified."
+        ],
+        "applicability": "Electric Power Transmission and Distribution Systems (1MW and Greater)",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "Compliance standards",
+          "Power transmission",
+          "Grounding practices",
+          "Electrical safety",
+          "DC equipment"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific conditions under which DC ground currents and corrosion are reduced.",
+          "Define the exact configuration of the AC/DC converter in the TN-S system."
+        ],
+        "applicability": "TN-S grounding systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "TN-S grounding system",
+          "DC ground currents",
+          "AC/DC converter grounding",
+          "Power distribution grounding"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Verify the grounding configuration of the midpoint on the DC side.",
+          "Ensure the licensing terms are correctly applied to the described system."
+        ],
+        "applicability": "AC/DC converters with midpoint grounding",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "AC/DC converter midpoint grounding",
+          "Voltage levels",
+          "Power quality"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

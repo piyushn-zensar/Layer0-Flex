@@ -1,0 +1,23 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage mentions that the full filing was not stored, so the information might be incomplete."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "SEC filing",
+          "Axiom announcement",
+          "Flex Ltd.",
+          "DEFA14A form"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

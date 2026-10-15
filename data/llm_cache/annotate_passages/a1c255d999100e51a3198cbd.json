@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'Mt. Diablo side car concept' is not defined.",
+          "Specific values for line inductance or cyclic load variability are not provided."
+        ],
+        "applicability": "DC power distribution systems for IT racks",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "DC power distribution",
+          "IT rack power delivery",
+          "line inductance",
+          "AI compute power requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The 'set of principles' for harmonization is not detailed in the passage."
+        ],
+        "applicability": "data centers and DC microgrids",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "data center design principles",
+          "DC microgrids",
+          "economies of scale"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

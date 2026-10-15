@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific details of 'Figure 7' are not provided in the text, which might be necessary for full understanding."
+        ],
+        "applicability": "IT modules, cooling distribution units, building infrastructure",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "DC distribution",
+          "IT module cooling",
+          "AC infrastructure"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

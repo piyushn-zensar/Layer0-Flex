@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage does not provide specific technical details or context about the 800 VDC architecture."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "800 VDC architecture",
+          "industry alignment",
+          "execution strategies"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

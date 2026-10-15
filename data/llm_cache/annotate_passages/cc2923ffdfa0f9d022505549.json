@@ -1,0 +1,112 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific details of Table 10 are not provided in the passage."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Pollution degree",
+          "Standards compliance"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact environmental conditions for each pollution degree are not fully detailed."
+        ],
+        "applicability": "IT equipment racks, servers, power distribution units, ancillary facility zones",
+        "attributes": [
+          {
+            "conditions": "No pollution or only dry, non-conductive pollution",
+            "name": "Pollution Degree",
+            "unit": "",
+            "value": "1"
+          },
+          {
+            "conditions": "Normally, only non-conductive pollution is present. Some condensation possible.",
+            "name": "Pollution Degree",
+            "unit": "",
+            "value": "2"
+          },
+          {
+            "conditions": "Conductive pollution or dry, non-conductive pollution that becomes conductive due to condensation.",
+            "name": "Pollution Degree",
+            "unit": "",
+            "value": "3"
+          }
+        ],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Pollution degree",
+          "Data center applications",
+          "Environmental conditions"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific CTI values for Material Group 1 and 3 are not provided."
+        ],
+        "applicability": "PCB design and assembly",
+        "attributes": [
+          {
+            "conditions": "High CTI laminates or conformal coatings are used on the PCBs",
+            "name": "Material Group",
+            "unit": "",
+            "value": "1"
+          },
+          {
+            "conditions": "Standard PCB FR4 (no coatings)",
+            "name": "Material Group",
+            "unit": "",
+            "value": "3"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Creepage",
+          "Material group",
+          "PCB design",
+          "Insulation"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact testing and validation requirements for achieving Material Group 1 classification are not detailed."
+        ],
+        "applicability": "Assemblies in DCF applications, industrial applications",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "Material group",
+          "Creepage spacing",
+          "Industrial applications"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific values for clearance and creepage for the mentioned systems are not provided."
+        ],
+        "applicability": "Bipolar TN-S and IT systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 5,
+        "topics": [
+          "Clearance and creepage",
+          "Bipolar TN-S systems",
+          "Bipolar IT systems"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

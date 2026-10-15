@@ -1,0 +1,61 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact specifications for the Molex plug and mating receptacle.",
+          "Confirm the compliance of the described assembly with relevant standards."
+        ],
+        "applicability": "AC interconnects for Diablo 400 racks",
+        "attributes": [
+          {
+            "conditions": "Delta connection, 3 phase",
+            "name": "Voltage",
+            "unit": "Vac",
+            "value": "415-480"
+          },
+          {
+            "conditions": "AC interconnect cables",
+            "name": "Current",
+            "unit": "A",
+            "value": "100"
+          },
+          {
+            "conditions": "Single conductor, mesh encapsulated",
+            "name": "Wire gauge",
+            "unit": "AWG",
+            "value": "2"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "AC input interconnects",
+          "Diablo 400 rack power",
+          "415-480Vac Delta connection",
+          "100A cables",
+          "Open Compute Project"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Verify the applicability of the listed standards to the Diablo 400 project.",
+          "Ensure the latest versions of the standards are referenced."
+        ],
+        "applicability": "Reference standards for electrical and energy systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Safety standards",
+          "Energy storage systems",
+          "Electromagnetic compatibility",
+          "Rechargeable batteries",
+          "Fire propagation testing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

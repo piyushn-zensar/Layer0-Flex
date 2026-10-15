@@ -1,0 +1,45 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific efficiency improvements of 800 VDC over traditional AC power delivery are not quantified.",
+          "Details on the NVIDIA DSX reference designs are not provided."
+        ],
+        "applicability": "AI compute infrastructure",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "power conversion efficiency",
+          "AI compute infrastructure"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details of the LVDC Solid-State Transformer Specification are not included.",
+          "The specific contributions of NVIDIA, Google, and Microsoft to the OCP are not detailed."
+        ],
+        "applicability": "800 VDC facilities",
+        "attributes": [
+          {
+            "conditions": "Published July 2026",
+            "name": "LVDC Solid-State Transformer Specification version",
+            "unit": "",
+            "value": "0.3"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "800 VDC architecture",
+          "Open Compute Project",
+          "LVDC Solid-State Transformer Specification"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

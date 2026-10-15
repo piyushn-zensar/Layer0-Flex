@@ -1,0 +1,101 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'partially distributed M' should be clarified.",
+          "Conditions for 'enhanced safety' are not fully defined."
+        ],
+        "applicability": "Data centers",
+        "attributes": [
+          {
+            "conditions": "Designed for full voltage to earth",
+            "name": "Voltage",
+            "unit": "V",
+            "value": "700"
+          },
+          {
+            "conditions": "Designed for full voltage to earth",
+            "name": "Voltage",
+            "unit": "V",
+            "value": "800"
+          },
+          {
+            "conditions": "Supported by the system",
+            "name": "Voltage",
+            "unit": "V",
+            "value": "350"
+          },
+          {
+            "conditions": "Supported by the system",
+            "name": "Voltage",
+            "unit": "V",
+            "value": "400"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Data center architectures",
+          "Device interoperability",
+          "Safety enhancements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'reduced and more balanced leakage currents' should be quantified.",
+          "Conditions for 'enhanced safety' are not fully defined.",
+          "The term 'higher clearances' should be specified."
+        ],
+        "applicability": "Data centers",
+        "attributes": [
+          {
+            "conditions": "Applicable to the described systems",
+            "name": "Voltage",
+            "unit": "V",
+            "value": "800"
+          },
+          {
+            "conditions": "Applicable to the described systems",
+            "name": "Voltage",
+            "unit": "V",
+            "value": "700"
+          },
+          {
+            "conditions": "Applicable to the described systems",
+            "name": "Voltage",
+            "unit": "V",
+            "value": "350"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "LVAC connection",
+          "System configurations",
+          "Safety enhancements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No technical ambiguities present."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 3,
+        "topics": [
+          "Licensing",
+          "Creative Commons",
+          "Document usage"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,72 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'next-generation distribution system' could benefit from a more precise definition.",
+          "Details on how energy storage integrates with 800 VDC architectures are not provided."
+        ],
+        "applicability": "AI Factories",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "AI infrastructure",
+          "power delivery",
+          "energy storage",
+          "datacenter design"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'rapid swings' could be quantified further.",
+          "Details on the scale of 'large enough cluster sizes' are missing."
+        ],
+        "applicability": "datacenters with synchronized GPU workloads",
+        "attributes": [
+          {
+            "conditions": "during idle periods",
+            "name": "idle power utilization",
+            "unit": "%",
+            "value": "30"
+          },
+          {
+            "conditions": "during peak periods",
+            "name": "peak power utilization",
+            "unit": "%",
+            "value": "100"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "load swings",
+          "energy storage",
+          "GPU synchronization",
+          "power grid impact",
+          "datacenter power management"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'low pass filter the rack current demand' could be clarified.",
+          "Details on the implementation of 'Power Smoothing' in Nvidia GPUs are not provided."
+        ],
+        "applicability": "datacenters with dynamic workloads",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "load management",
+          "energy storage solutions",
+          "software optimization",
+          "power smoothing",
+          "rack current demand"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

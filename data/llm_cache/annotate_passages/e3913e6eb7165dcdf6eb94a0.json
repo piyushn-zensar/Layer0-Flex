@@ -1,0 +1,53 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage mentions 'many aspects' to consider but does not list all of them, leaving the scope undefined."
+        ],
+        "applicability": "data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "electrical protection",
+          "data center safety",
+          "fault management",
+          "arc-flash protection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage references 'applicable codes and standards' but does not specify which ones beyond the examples given."
+        ],
+        "applicability": "data centers",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "fault isolation",
+          "overcurrent protection",
+          "standards compliance",
+          "service continuity"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'relatively low inductance' is not quantified, which could lead to interpretation issues."
+        ],
+        "applicability": "AI data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "DC power distribution",
+          "AI data centers",
+          "low inductance systems",
+          "power electronics"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

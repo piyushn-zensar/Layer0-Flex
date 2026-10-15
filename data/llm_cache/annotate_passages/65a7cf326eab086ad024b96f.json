@@ -1,0 +1,47 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific interfaces defined by the 800 VDC architecture specifications.",
+          "Details on the NVIDIA DSX reference designs and their scope."
+        ],
+        "applicability": "800 VDC facilities",
+        "attributes": [
+          {
+            "conditions": "through 2040",
+            "name": "global AI and data infrastructure investment",
+            "unit": "USD",
+            "value": "$9 trillion"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "open standards",
+          "AI infrastructure",
+          "data center design"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the path for existing facilities to adopt 800 VDC.",
+          "Specifics of the NVIDIA DSX reference architecture guide."
+        ],
+        "applicability": "existing and new 800 VDC facilities",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "800 VDC distribution",
+          "open standards",
+          "AI infrastructure",
+          "data center retrofitting"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

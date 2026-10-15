@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific performance metrics of the devices in Figure 15 are not detailed."
+        ],
+        "applicability": "Data centers powered by direct current",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Solid-State Circuit Breakers",
+          "DC Short Circuit Fault Clearing",
+          "Protection Devices",
+          "Data Center Safety"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific details of standardized targets and redundancy philosophies are not provided."
+        ],
+        "applicability": "Next-generation AI Factories",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "800 VDC Facility Distribution",
+          "AI Infrastructure",
+          "Standardization",
+          "Redundancy Strategies"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact scope of converged architectures and standardized interfaces is not defined."
+        ],
+        "applicability": "Equipment suppliers for AI Factories",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "Converged Architectures",
+          "Standardized Interfaces",
+          "Equipment Development",
+          "Regulatory Pathways"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific methodologies for arc flash evaluation and grounding are not detailed."
+        ],
+        "applicability": "Large-scale 800 VDC power systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "DC Grounding",
+          "Arc Flash Evaluation",
+          "Equipment Certification",
+          "Safety Requirements"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

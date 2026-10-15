@@ -1,0 +1,77 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific metrics for stability criteria and rectifier behavior."
+        ],
+        "applicability": "rack, distribution, and load requirements",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "system simulation",
+          "dynamic response",
+          "equipment performance requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the implementation of current-limited power sources and their integration."
+        ],
+        "applicability": "800 VDC systems",
+        "attributes": [
+          {
+            "conditions": "Available fault current",
+            "name": "fault current",
+            "unit": "",
+            "value": "I"
+          },
+          {
+            "conditions": "Fault clearing time",
+            "name": "fault clearing time",
+            "unit": "",
+            "value": "t"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "DC arc flash protection",
+          "fault current control",
+          "current limiting technologies"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Validation and certification process for calculation methodology."
+        ],
+        "applicability": "800 VDC systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "arc fault detection",
+          "fault clearing time",
+          "protection methods"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specifics on scalability and future certification requirements."
+        ],
+        "applicability": "800 VDC systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "layered protection philosophy",
+          "800 VDC deployment",
+          "certification"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

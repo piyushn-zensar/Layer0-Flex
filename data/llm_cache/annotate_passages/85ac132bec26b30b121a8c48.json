@@ -1,0 +1,84 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Figure 7 is referenced but not provided, which may limit understanding of the layout."
+        ],
+        "applicability": "rack-level integration",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "rack-level integration",
+          "compute scalable unit",
+          "equipment layout"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details about the 'dynamic loading' and its impact on the AC input are not provided.",
+          "The figure referenced (Figure 8) is not included, which may limit understanding of the design."
+        ],
+        "applicability": "VR Power Rack",
+        "attributes": [
+          {
+            "conditions": "true 3 phase input, no Neutral connection required",
+            "name": "AC input current",
+            "unit": "VAC",
+            "value": "415-480"
+          },
+          {
+            "conditions": "air-cooled PSUs",
+            "name": "PSU power",
+            "unit": "kW",
+            "value": "18.3"
+          },
+          {
+            "conditions": "AC input current shaping",
+            "name": "energy storage",
+            "unit": "J",
+            "value": "1200"
+          },
+          {
+            "conditions": "supports for 60 seconds with 4x20kW BBUs",
+            "name": "BBU power",
+            "unit": "kW",
+            "value": "80"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "power rack design",
+          "AC to DC conversion",
+          "energy storage",
+          "battery backup units"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details about the cross cable specifications and its compatibility with the compute rack are not provided."
+        ],
+        "applicability": "power rack interconnection",
+        "attributes": [
+          {
+            "conditions": "used for connecting from the power rack into the compute rack",
+            "name": "cross cable current rating",
+            "unit": "A",
+            "value": "125"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "power rack interconnection",
+          "800 VDC distribution",
+          "cross cable"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,174 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'highest level of availability' is not quantified.",
+          "The conditions for 'multiple sources of power' are not specified."
+        ],
+        "applicability": "solid state transformer",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Auxiliary power",
+          "Solid state transformer",
+          "Power availability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The section title is repeated, which might be an error."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "MVAC configurations",
+          "Power rating"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The duration for 'TBD seconds' is not defined.",
+          "The exact conditions for 'Utility design based' grounding system are not specified."
+        ],
+        "applicability": "MVAC configurations",
+        "attributes": [
+          {
+            "conditions": "+/-10%, 3 phase 3 wire + PE",
+            "name": "Input Voltage",
+            "unit": "kVac",
+            "value": "13.8"
+          },
+          {
+            "conditions": "+/-10%, 3 phase 3 wire + PE",
+            "name": "Input Voltage",
+            "unit": "kVac",
+            "value": "34.5"
+          },
+          {
+            "conditions": "up to 5Hz/s as ROCOF",
+            "name": "Input Frequency",
+            "unit": "Hz",
+            "value": "57-63"
+          },
+          {
+            "conditions": "DC output",
+            "name": "Power Rating",
+            "unit": "MW",
+            "value": "5"
+          },
+          {
+            "conditions": "DC output",
+            "name": "Power Rating",
+            "unit": "MW",
+            "value": "10"
+          },
+          {
+            "conditions": "at full loading",
+            "name": "Input Power Factor",
+            "unit": "",
+            "value": ">0.99"
+          },
+          {
+            "conditions": "@ load ≥20%",
+            "name": "Input Power Factor",
+            "unit": "",
+            "value": ">0.98"
+          },
+          {
+            "conditions": "@ load < 20%",
+            "name": "Input Power Factor",
+            "unit": "",
+            "value": ">0.95"
+          },
+          {
+            "conditions": "for TBD seconds",
+            "name": "Short-Circuit Fault Current Capability",
+            "unit": "kA symmetrical RMS",
+            "value": "18-40"
+          },
+          {
+            "conditions": "",
+            "name": "Short-Circuit Fault Current Capability",
+            "unit": "kA asymmetrical",
+            "value": "~104"
+          },
+          {
+            "conditions": "for TBD seconds",
+            "name": "Short-Circuit Fault Current Capability",
+            "unit": "kA symmetrical RMS",
+            "value": "25-50"
+          },
+          {
+            "conditions": "",
+            "name": "Short-Circuit Fault Current Capability",
+            "unit": "kA asymmetrical",
+            "value": "~130"
+          },
+          {
+            "conditions": "@ 13.8kV",
+            "name": "Basic Impulse Level (BIL)",
+            "unit": "kV",
+            "value": ">=110"
+          },
+          {
+            "conditions": "@ 34.5kV",
+            "name": "Basic Impulse Level (BIL)",
+            "unit": "kV",
+            "value": ">=150-200"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "MVAC configurations",
+          "Input voltage",
+          "Power rating",
+          "Harmonics",
+          "Grounding system"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The rate for 'TBD MW/s for gensets' is not defined.",
+          "The conditions for 'Other energy sources TBD (renewables)' are not specified."
+        ],
+        "applicability": "utility and genset power sources",
+        "attributes": [
+          {
+            "conditions": "for utility",
+            "name": "Acceptance and Rejection Rate",
+            "unit": "MW/min",
+            "value": "20~50"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 4,
+        "topics": [
+          "Acceptance and rejection rates",
+          "Utility and genset power sources"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'example reference LVDC architectures' is not detailed.",
+          "The conditions for 'future product specification' are not defined."
+        ],
+        "applicability": "LVDC configurations",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 5,
+        "topics": [
+          "LVDC definitions",
+          "Output ports",
+          "Future product specifications"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

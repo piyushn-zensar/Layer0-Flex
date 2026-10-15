@@ -1,0 +1,139 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific local exceptions or product standard scoping limitations are not detailed.",
+          "The conditions under which the IEEE C37.14 standard applies are not fully described."
+        ],
+        "applicability": "LVDC systems",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Voltage level in Japan (JIS standards)",
+            "unit": "VAC",
+            "value": "600"
+          },
+          {
+            "conditions": "",
+            "name": "Voltage level in Japan (JIS standards)",
+            "unit": "VDC",
+            "value": "750"
+          },
+          {
+            "conditions": "",
+            "name": "Voltage limit for LVDC power breakers (IEEE C37.14)",
+            "unit": "VDC",
+            "value": "3200"
+          },
+          {
+            "conditions": "",
+            "name": "NEC LVDC limit",
+            "unit": "VDC",
+            "value": "1500"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "LVDC standards",
+          "Regional standards",
+          "Electrical codes"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific conditions for corona discharge occurrence are not fully detailed.",
+          "The rationale for the 1.5x and 2.4x multipliers between DC and AC ratings is not elaborated."
+        ],
+        "applicability": "Low voltage systems",
+        "attributes": [
+          {
+            "conditions": "Certain conditions of sharp edges, defects, and low pressure environments",
+            "name": "Voltage threshold for corona discharge",
+            "unit": "V",
+            "value": "300"
+          },
+          {
+            "conditions": "",
+            "name": "Voltage threshold for additional design measures",
+            "unit": "VAC",
+            "value": "1000"
+          },
+          {
+            "conditions": "",
+            "name": "Voltage threshold for additional design measures",
+            "unit": "VDC",
+            "value": "1500"
+          },
+          {
+            "conditions": "Defined by IEC 61140",
+            "name": "ELV AC voltage limit",
+            "unit": "VAC",
+            "value": "50"
+          },
+          {
+            "conditions": "Defined by IEC 61140",
+            "name": "ELV DC voltage limit",
+            "unit": "VDC",
+            "value": "120"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Voltage levels",
+          "Corona discharge",
+          "ELV classification",
+          "Dielectric strength",
+          "Altitude effects"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact definition of 'dry locations' and 'large-area contact' is not provided.",
+          "The criteria for SELV and PELV systems are mentioned but not detailed."
+        ],
+        "applicability": "ELV systems",
+        "attributes": [
+          {
+            "conditions": "Large-area contact with live parts is not expected",
+            "name": "Touch voltage limit in dry locations",
+            "unit": "VAC",
+            "value": "25"
+          },
+          {
+            "conditions": "Large-area contact with live parts is not expected",
+            "name": "Touch voltage limit in dry locations",
+            "unit": "VDC",
+            "value": "60"
+          },
+          {
+            "conditions": "",
+            "name": "Touch voltage limit in other conditions",
+            "unit": "VAC",
+            "value": "6"
+          },
+          {
+            "conditions": "",
+            "name": "Touch voltage limit in other conditions",
+            "unit": "VDC",
+            "value": "15"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "Electric shock protection",
+          "Touch voltage limits",
+          "SELV and PELV systems",
+          "Safety standards"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

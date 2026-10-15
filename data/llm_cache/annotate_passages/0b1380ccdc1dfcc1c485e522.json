@@ -1,0 +1,53 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific harmonized standards for utility-specific study requirements and commissioning criteria are not detailed."
+        ],
+        "applicability": "Data center power systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Load Management",
+          "Grid Balancing",
+          "Data Center Standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact methods for coordinated control and protection strategies are not specified."
+        ],
+        "applicability": "DC power systems in various industries",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "DC Microgrids",
+          "Renewable Energy Integration",
+          "Marine DC Grids"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific technologies and methods for high-current protection and AC/DC interfacing are not detailed."
+        ],
+        "applicability": "High-power DC systems and data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "EV Charging Infrastructure",
+          "High-Power DC Systems",
+          "Data Center Applications"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,49 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific sustainability requirements or metrics are not detailed."
+        ],
+        "applicability": "Open Compute Project Diablo 400",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "OCP compliance",
+          "sustainability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact configurations and conditions for the power distribution options are not specified.",
+          "The term '100’s of kW' is vague and should be clarified."
+        ],
+        "applicability": "disaggregated power rack",
+        "attributes": [
+          {
+            "conditions": "increased rack power",
+            "name": "rack power",
+            "unit": "kW",
+            "value": "33kW to 100’s of kW"
+          },
+          {
+            "conditions": "scalable and updated disaggregated power rack",
+            "name": "power requirements",
+            "unit": "kW",
+            "value": "800kW to 1MW+"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "rack power scaling",
+          "AI accelerator integration",
+          "disaggregated power rack"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

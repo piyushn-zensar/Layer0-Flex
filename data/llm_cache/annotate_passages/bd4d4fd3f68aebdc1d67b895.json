@@ -1,0 +1,33 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Open Compute Project",
+          "Diablo 400"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the implications of removing HVDC and rectifier terms.",
+          "Verify the tolerance statement added in section 6."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 2,
+        "topics": [
+          "Document revision history",
+          "OCP standards compliance"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

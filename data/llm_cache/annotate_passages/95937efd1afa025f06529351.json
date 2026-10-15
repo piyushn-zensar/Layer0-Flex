@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Further investigation required for alternative methods.",
+          "Market availability of semiconductor circuit breakers."
+        ],
+        "applicability": "DC grid systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "DC grid protection",
+          "Energy storage devices",
+          "Semiconductor circuit breakers",
+          "Current flow detection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Evaluation of stored energy for safety and reliability.",
+          "Design constraints introduced by redundant feeders architecture."
+        ],
+        "applicability": "DC power distribution systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Voltage hold-up time",
+          "Capacitor energy storage",
+          "Redundant feeders architecture",
+          "Arc-flash protection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarification on instantaneous interruption time for arc-flash.",
+          "Distinction between branch and supplementary protection devices."
+        ],
+        "applicability": "Electrical distribution systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "Arc-flash energy release",
+          "Overcurrent protection",
+          "NFPA 70 compliance",
+          "Branch circuit protection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No technical ambiguities present."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "Creative Commons licensing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

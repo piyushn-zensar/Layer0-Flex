@@ -1,0 +1,97 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific conditions under which floating-ground systems are preferred over solid grounding are not detailed.",
+          "The exact requirements for insulation monitoring devices (IMD) and fault locator systems are not specified."
+        ],
+        "applicability": "800 VDC compute rack designs",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Grounding strategies",
+          "Fault current management",
+          "Insulation monitoring",
+          "800 VDC systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The criteria for determining the preferred grounding approach are not fully detailed.",
+          "The specific characteristics of 'fast protection devices' are not defined."
+        ],
+        "applicability": "800 VDC systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Grounding strategies",
+          "Fault current management",
+          "Protection coordination",
+          "800 VDC systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The number and specific characteristics of the protection zones are not described."
+        ],
+        "applicability": "800 VDC systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "Protection zones",
+          "800 VDC protection architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific thresholds for insulation degradation detection and high overcurrent conditions are not provided.",
+          "The exact operational parameters for insulation monitoring devices (IMD) or insulation resistance monitoring (IRM) systems are not detailed."
+        ],
+        "applicability": "Facility distribution zone in 800 VDC systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "Facility distribution zone",
+          "Insulation monitoring",
+          "800 VDC systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific differences in protection philosophy between floating-ground and HRG systems are not elaborated."
+        ],
+        "applicability": "Facility distribution zone in 800 VDC systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 5,
+        "topics": [
+          "Facility distribution zone",
+          "Protection philosophy",
+          "800 VDC systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific protection measures for the rack interface protection zone are not detailed.",
+          "The conditions under which human interaction is considered safe are not specified."
+        ],
+        "applicability": "Rack interface protection zone in 800 VDC systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 6,
+        "topics": [
+          "Rack interface protection zone",
+          "Human interaction safety",
+          "800 VDC systems"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

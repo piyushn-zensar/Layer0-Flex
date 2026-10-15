@@ -1,0 +1,87 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact publication date of IEC 60947-10.",
+          "Define the specific operating conditions for the breaking time in microseconds."
+        ],
+        "applicability": "Low Voltage DC Power Distribution",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Solid State Circuit Breakers",
+          "Semiconductor Hybrid Circuit Breakers",
+          "Ground-Fault Protection",
+          "Electronic Trip Units",
+          "UL 489I and IEC 60947-10"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the exact range of 'several hundreds A/µs' for breaking capacity.",
+          "Clarify the cooling requirements for SSCBs under different operating conditions."
+        ],
+        "applicability": "Low Voltage DC Power Distribution",
+        "attributes": [
+          {
+            "conditions": "Depending on the design",
+            "name": "breaking capacity",
+            "unit": "A/µs",
+            "value": "several hundreds"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Fault Current Limitation",
+          "Voltage Drop Management",
+          "SSCB Performance Metrics",
+          "Cooling Requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Define 'a few hundreds µs' more precisely.",
+          "Clarify the rate of rise of current suitable for SCHCBs."
+        ],
+        "applicability": "Low Voltage DC Power Distribution",
+        "attributes": [
+          {
+            "conditions": "Typical for SCHCBs",
+            "name": "breaking time",
+            "unit": "µs",
+            "value": "a few hundreds"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "Semiconductor Hybrid Circuit Breakers",
+          "Power Loss Reduction",
+          "Breaking Time",
+          "IEC 60947-10 and UL 489I"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the breaking time for e-Fuses.",
+          "Specify the differences between e-Fuses and SSCBs."
+        ],
+        "applicability": "Low Voltage DC Power Distribution",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 4,
+        "topics": [
+          "Solid-State Overcurrent Protectors",
+          "e-Fuses",
+          "Breaking Time",
+          "Creative Commons Licensing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

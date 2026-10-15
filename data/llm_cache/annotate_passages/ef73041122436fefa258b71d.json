@@ -1,0 +1,58 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific conditions under which the gR semiconductor fuses are not suitable for branch protection are not detailed.",
+          "The exact specifications for the hot-swap controller's electronic fuse functionality are not provided."
+        ],
+        "applicability": "Power electronic equipment, server shelf input",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Overcurrent protection",
+          "Hot-swap controllers",
+          "Semiconductor fuses"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific performance criteria for supplementary protection devices are not detailed.",
+          "The exact requirements for the visual indication of disconnection are not specified."
+        ],
+        "applicability": "DC PDU output, DC bus input",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "Branch circuit protection",
+          "Supplementary protection",
+          "Overcurrent protection",
+          "NFPA 70 compliance",
+          "Lockout/tagout (LOTO)"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The lack of a standard or recognized practice for coordinating overcurrent protection devices with available fault current is noted."
+        ],
+        "applicability": "DC systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Overcurrent protection devices",
+          "DC circuit breakers",
+          "NFPA 70 compliance",
+          "Fault current coordination",
+          "Arc voltage"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

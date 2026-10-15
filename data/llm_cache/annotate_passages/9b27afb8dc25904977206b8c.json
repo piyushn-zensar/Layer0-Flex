@@ -1,0 +1,125 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify conditions for 'may ride-through or trip' for frequencies below 57.0 Hz."
+        ],
+        "applicability": "Upstream MVAC interface",
+        "attributes": [
+          {
+            "conditions": "continuous",
+            "name": "Frequency range (continuous)",
+            "unit": "Hz",
+            "value": "58.8 ≤ f ≤ 61.2"
+          },
+          {
+            "conditions": "ride-through or trip",
+            "name": "Frequency range (ride-through or trip)",
+            "unit": "Hz",
+            "value": "57.0 ≤ f < 58.8"
+          },
+          {
+            "conditions": "may ride-through or trip",
+            "name": "Frequency range (may ride-through or trip)",
+            "unit": "Hz",
+            "value": "f < 57.0"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 1,
+        "topics": [
+          "Frequency Ride Through",
+          "MVAC interface",
+          "Electrical specifications"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No specific details provided in this section."
+        ],
+        "applicability": "Downstream LVDC interface",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Downstream LVDC interface",
+          "Electrical interface"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details for 'voltage levels for seamless redundancy design' are marked as TBD.",
+          "Details for 'power and energy management coordinations' are marked as TBD."
+        ],
+        "applicability": "Downstream LVDC interface",
+        "attributes": [
+          {
+            "conditions": "ripples + static regulation/static droop",
+            "name": "Static range",
+            "unit": "%",
+            "value": "1.5"
+          },
+          {
+            "conditions": "control loop response",
+            "name": "Dynamic regulation range",
+            "unit": "%",
+            "value": "3"
+          },
+          {
+            "conditions": "Ldi/dt",
+            "name": "LVDC conveyance parasitics",
+            "unit": "%",
+            "value": "4"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "Voltage and power quality",
+          "SST output voltage",
+          "LVDC conveyance parasitics"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Detailed profiles for testing are marked as pending future versions.",
+          "Clarify the exact voltage tolerance band for SST output terminal voltage."
+        ],
+        "applicability": "Downstream LVDC interface",
+        "attributes": [],
+        "content_type": "test_or_compliance",
+        "n": 4,
+        "topics": [
+          "Verification",
+          "SST testing",
+          "Voltage tolerance band"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Ramp rates for gensets and renewable energy are marked as TBD.",
+          "Clarify coordination design between SST and ESS with utility ramp rate as reference."
+        ],
+        "applicability": "MVAC energy plane",
+        "attributes": [
+          {
+            "conditions": "current data center infrastructure",
+            "name": "Utility ramp rate",
+            "unit": "MW/min",
+            "value": "20~50"
+          }
+        ],
+        "content_type": "background",
+        "n": 5,
+        "topics": [
+          "MVAC Load Acceptance and Rejection",
+          "Ramp rates",
+          "Energy sources"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific technologies for AC/DC conversion are not detailed.",
+          "The types of ESS technologies are not specified.",
+          "The scope of the AI Rack section is unclear."
+        ],
+        "applicability": "Main components of the power distribution system",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "AC zone requirements",
+          "AC/DC conversion",
+          "Energy Storage Systems (ESS)",
+          "Power distribution",
+          "AI rack power"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific metrics for grid stability impact are not provided.",
+          "The term 'gigawatt scale' is not quantified."
+        ],
+        "applicability": "Data centers relying on grid power",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Grid power for data centers",
+          "Data center load growth",
+          "Impact on grid stability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The nature of grid disturbances is not described.",
+          "The geographic scope 'North' is incomplete."
+        ],
+        "applicability": "Data centers and grid interaction",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Grid disturbances",
+          "Data center impact on grid",
+          "Licensing information"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

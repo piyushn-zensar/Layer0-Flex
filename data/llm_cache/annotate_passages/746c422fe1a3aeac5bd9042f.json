@@ -1,0 +1,96 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage lists sections without providing detailed content, which may require clarification for specific topics."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Document structure",
+          "Executive summary",
+          "Protection and safety"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions various protection devices but does not specify their ratings or conditions of use."
+        ],
+        "applicability": "DC power systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Overcurrent protection",
+          "DC systems",
+          "Circuit breakers",
+          "Fuses"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage lists protection types without detailing implementation or conditions."
+        ],
+        "applicability": "Electrical safety systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Electric shock protection",
+          "Thermal effects",
+          "Voltage disturbances",
+          "Arc-flash protection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions ESS technology and safety but does not elaborate on specific technologies or safety measures."
+        ],
+        "applicability": "Power distribution systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "On-site generation",
+          "AC/DC conversion",
+          "Energy storage systems (ESS)",
+          "Distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions AI rack and EMC but does not provide specific details or conditions."
+        ],
+        "applicability": "Data center systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 5,
+        "topics": [
+          "AI rack",
+          "System operation",
+          "Electromagnetic compatibility (EMC)",
+          "Codes and standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions challenges in DC standardization but does not specify what these challenges are."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 6,
+        "topics": [
+          "DC standardization",
+          "System-level standards",
+          "Creative Commons license"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

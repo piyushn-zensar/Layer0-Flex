@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details on the specific implementation of 800 VDC direct connection to grid voltages.",
+          "Clarification on the role of capacitive energy storage solutions in the architecture."
+        ],
+        "applicability": "Data centers",
+        "attributes": [
+          {
+            "conditions": "Directly connecting loads to grid voltages",
+            "name": "Voltage",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Integrated grid-to-chip portfolio",
+          "Data center power architecture",
+          "800 VDC distribution",
+          "Cooling technologies",
+          "Power modules"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Further explanation of the SST platform roadmap and its specific applications.",
+          "Clarification on the integration of MW scale digital rectifiers with existing systems."
+        ],
+        "applicability": "Utility, power, cooling, and compute systems",
+        "attributes": [
+          {
+            "conditions": "SST platform roadmap",
+            "name": "Voltage",
+            "unit": "V",
+            "value": "34.5kV – 800"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "Energy storage",
+          "Medium voltage UPS",
+          "Solid-state transformers",
+          "Power distribution units",
+          "AI infrastructure"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,39 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific voltage and frequency thresholds for ride-through are not provided.",
+          "Conditions under which the data center must meet these requirements are not detailed."
+        ],
+        "applicability": "data centers",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "grid connection requirements",
+          "data center reliability",
+          "voltage and frequency ride-through",
+          "grid protection systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details of the voltage ride-through curve are not included.",
+          "Specific requirements for post-fault active power recovery are not provided."
+        ],
+        "applicability": "data centers",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "voltage ride-through curve",
+          "post-fault active power recovery",
+          "grid connection requirements"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

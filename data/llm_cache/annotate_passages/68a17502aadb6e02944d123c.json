@@ -1,0 +1,72 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific voltage level is not mentioned.",
+          "The exact requirements for isolation are not detailed."
+        ],
+        "applicability": "Low Voltage DC systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "System earthing",
+          "Electrical isolation"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific content of the IEC 60050-195 and IEC 60364 series standards is not detailed."
+        ],
+        "applicability": "Low Voltage DC systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Standards and terminology"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact definitions and applications of the terms in the table are not provided."
+        ],
+        "applicability": "Low Voltage DC systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "Grounding terminology",
+          "Standards comparison",
+          "Electrical safety"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The relevance of the licensing information to the technical content is not clear."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "Document metadata",
+          "Licensing information"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

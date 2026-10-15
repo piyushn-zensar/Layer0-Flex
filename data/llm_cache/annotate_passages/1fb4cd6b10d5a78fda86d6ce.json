@@ -1,0 +1,53 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific architectural approaches mentioned are not detailed.",
+          "The conditions for 'incremental deployment' and 'modular growth' are not specified."
+        ],
+        "applicability": "data center power distribution",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "DC power distribution",
+          "scalability",
+          "data center architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific methods for reducing energy losses and enabling higher system efficiency are not detailed.",
+          "The integration strategies with energy storage and advanced grid interaction are not specified."
+        ],
+        "applicability": "data center power distribution",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "sustainability",
+          "energy efficiency",
+          "grid interaction"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific guidelines and technology roadmaps for achieving net zero carbon goals are not provided.",
+          "The role of the OCP Ready Program in accelerating sustainability goals is not elaborated."
+        ],
+        "applicability": "data center industry",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "decarbonization",
+          "data center sustainability",
+          "net zero carbon goals"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

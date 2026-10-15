@@ -1,0 +1,122 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify if additional safety standards are applicable.",
+          "Specify the exact criteria for 'no external flames' during rack-level testing."
+        ],
+        "applicability": "Diablo 400 rack system",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Safety Standards",
+            "unit": "",
+            "value": "UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855, UN 38.3, IATA DGR, IMO International Maritime Dangerous Goods Code"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "Safety standards",
+          "Fire propagation tests",
+          "Rack-level safety"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify if the listed standards are exhaustive or if additional standards apply.",
+          "Define the exact configurations and operational states for testing."
+        ],
+        "applicability": "Fully integrated power rack system and subcomponents",
+        "attributes": [
+          {
+            "conditions": "ANSI C63.4/CISPR 32",
+            "name": "Radiated and Conducted Emissions",
+            "unit": "dB margin",
+            "value": "-6"
+          },
+          {
+            "conditions": "Preferred, Criteria A",
+            "name": "Electrostatic Discharge (ESD) - Contact Discharge",
+            "unit": "kV",
+            "value": "±5.6"
+          },
+          {
+            "conditions": "Minimum, Criteria A",
+            "name": "Electrostatic Discharge (ESD) - Contact Discharge",
+            "unit": "kV",
+            "value": "±4"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Class A device compliance",
+          "EMC standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify if the preferred values are mandatory or optional.",
+          "Specify the testing conditions for radiated immunity."
+        ],
+        "applicability": "Fully integrated power rack system and subcomponents",
+        "attributes": [
+          {
+            "conditions": "Preferred, Criteria A",
+            "name": "Electrostatic Discharge (ESD) - Air",
+            "unit": "kV",
+            "value": "±11.2"
+          },
+          {
+            "conditions": "Minimum, Criteria A",
+            "name": "Electrostatic Discharge (ESD) - Air",
+            "unit": "kV",
+            "value": "±8"
+          },
+          {
+            "conditions": "Preferred, Criteria A",
+            "name": "Surge Differential Mode",
+            "unit": "kV",
+            "value": "±2"
+          },
+          {
+            "conditions": "Minimum, Criteria A",
+            "name": "Surge Differential Mode",
+            "unit": "kV",
+            "value": "±1"
+          },
+          {
+            "conditions": "Preferred, Criteria A",
+            "name": "Surge Common Mode",
+            "unit": "kV",
+            "value": "±4"
+          },
+          {
+            "conditions": "Minimum, Criteria A",
+            "name": "Surge Common Mode",
+            "unit": "kV",
+            "value": "±2"
+          },
+          {
+            "conditions": "Minimum, Criteria A",
+            "name": "Radiated Immunity",
+            "unit": "V/m",
+            "value": "10"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Surge immunity",
+          "Radiated immunity"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,108 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "Open Compute Project Diablo 400",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "AC PDU configuration",
+          "rack power distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the exact specifications of the vertical busbar and its compatibility with different rack designs."
+        ],
+        "applicability": "±400VDC power distribution in racks",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "±400VDC distribution",
+          "vertical busbar",
+          "power shelves"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the exact specifications for the manageability and telemetry features."
+        ],
+        "applicability": "±400VDC or 800VDC busbar systems",
+        "attributes": [
+          {
+            "conditions": "maximum output of the DC PDU Module",
+            "name": "output power",
+            "unit": "kW",
+            "value": "400"
+          },
+          {
+            "conditions": "per cable, quantity as needed",
+            "name": "output cable power (Option 1)",
+            "unit": "kW",
+            "value": "50"
+          },
+          {
+            "conditions": "per cable, quantity as needed",
+            "name": "output cable power (Option 2)",
+            "unit": "kW",
+            "value": "100"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "±400VDC PDU",
+          "output protection",
+          "control module"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Define the standard for the Rack Management Unit interface mentioned in section 9."
+        ],
+        "applicability": "±400VDC PDU Output Protection and Control Module",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "output protection",
+          "voltage disconnect",
+          "active management"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the pros and cons of the grounding options are not provided in this passage."
+        ],
+        "applicability": "±400VDC systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 5,
+        "topics": [
+          "±400VDC grounding",
+          "PE grounding",
+          "safety"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the implementation details of the 3wires+PE configuration."
+        ],
+        "applicability": "±400VDC systems with high resistance mid-point grounding",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 6,
+        "topics": [
+          "high resistance grounding",
+          "±400VDC routing",
+          "PE grounding"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

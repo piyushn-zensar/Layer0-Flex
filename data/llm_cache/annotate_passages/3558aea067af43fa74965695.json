@@ -1,0 +1,61 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Version history",
+          "Document metadata"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 MARCH 2026"
+          },
+          {
+            "conditions": "",
+            "name": "Version #",
+            "unit": "",
+            "value": "1.0"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Version information",
+          "Document authorship"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "License",
+            "unit": "",
+            "value": "Creative Commons Attribution-ShareAlike 4.0 International"
+          }
+        ],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Licensing information",
+          "Creative Commons"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

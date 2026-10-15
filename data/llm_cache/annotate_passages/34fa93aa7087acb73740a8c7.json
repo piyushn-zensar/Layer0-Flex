@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific advantages or reasons for using separate transformers for DC and AC distribution."
+        ],
+        "applicability": "DC and AC distribution systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "DC distribution",
+          "AC distribution",
+          "transformer separation"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

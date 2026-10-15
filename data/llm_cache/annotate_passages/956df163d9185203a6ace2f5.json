@@ -1,0 +1,66 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact definition of the undervoltage portion of the DC ITIC curve is not provided.",
+          "The specific requirements for additional energy storage are not detailed."
+        ],
+        "applicability": "Load converter (power shelf)",
+        "attributes": [
+          {
+            "conditions": "Referenced from 2011 timeframe",
+            "name": "Voltage",
+            "unit": "VDC",
+            "value": "380"
+          },
+          {
+            "conditions": "For large loads",
+            "name": "Voltage ride-through",
+            "unit": "",
+            "value": "Undervoltage portion of DC ITIC curve"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "380 VDC systems",
+          "Voltage ride-through",
+          "Undervoltage considerations",
+          "Energy storage requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'Current/OS' is not defined.",
+          "The pending interpretive guidance is not detailed."
+        ],
+        "applicability": "High voltage DC systems",
+        "attributes": [
+          {
+            "conditions": "According to Current/OS",
+            "name": "Highest designed protection value",
+            "unit": "VDC",
+            "value": "840"
+          },
+          {
+            "conditions": "Sources must not produce this voltage",
+            "name": "Overvoltage constraint",
+            "unit": "VDC",
+            "value": "800 +10%"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "Voltage bands definition",
+          "Protection levels",
+          "840 VDC systems",
+          "Overvoltage constraints"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

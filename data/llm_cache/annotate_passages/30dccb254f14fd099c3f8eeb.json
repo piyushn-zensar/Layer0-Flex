@@ -1,0 +1,51 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details of the state machine transitions are not provided; a specialist should verify the exact transition conditions and states."
+        ],
+        "applicability": "solid state transformer (SST)",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "startup scenarios",
+          "shutdown scenarios",
+          "state machine transitions"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'evolving compliance standard source' without specifying the source; clarification is needed."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "compliance standards",
+          "evolving standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage lists standards but does not specify how they apply to the SST design; further clarification is needed."
+        ],
+        "applicability": "electrical equipment",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "NFPA standards",
+          "UL standards",
+          "electrical safety",
+          "insulation coordination",
+          "distributed energy resources"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,31 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specifics of the DC supply system used in the BMW factory.",
+          "Details on how the energy reduction was measured."
+        ],
+        "applicability": "BMW car body cell in Bavaria",
+        "attributes": [
+          {
+            "conditions": "after two years of operation",
+            "name": "energy reduction",
+            "unit": "%",
+            "value": "8.8"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "DC power distribution",
+          "energy efficiency",
+          "automobile production",
+          "sustainability"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

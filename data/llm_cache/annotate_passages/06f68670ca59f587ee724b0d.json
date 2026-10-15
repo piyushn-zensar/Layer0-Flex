@@ -1,0 +1,52 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The practical upper current limit of air-cooled SSCB technologies is under evaluation, which might affect design decisions.",
+          "The readiness of supply chains and regulatory certifications for SSCBs is not detailed."
+        ],
+        "applicability": "Compute racks, 800 VDC systems",
+        "attributes": [
+          {
+            "conditions": "air-cooled, for DC/DC (800V-to-54V) Power Shelves",
+            "name": "SSCB current rating",
+            "unit": "A",
+            "value": "125"
+          },
+          {
+            "conditions": "likely liquid-cooled, for future native 800 VDC compute rack power interfaces",
+            "name": "SSCB current rating",
+            "unit": "A",
+            "value": "1250"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Solid-State Circuit Breakers",
+          "800 VDC distribution",
+          "DC/DC power shelves",
+          "Compute rack power interfaces"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific conditions under which SSCBs will become the preferred solution are not fully detailed."
+        ],
+        "applicability": "High-density DC power distribution architectures",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Solid-State Circuit Breakers",
+          "AI compute density",
+          "Fault protection",
+          "High-density DC power distribution"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

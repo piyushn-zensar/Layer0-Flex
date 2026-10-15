@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage mentions infrastructure requirements do not currently exist, but does not specify what these requirements entail.",
+          "The next revision date is stated, but the scope of the revisions is unclear."
+        ],
+        "applicability": "DC systems, data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "DC Infrastructure",
+          "Preventive Maintenance",
+          "NFPA Standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage states a focus on AC systems but does not clarify the extent of coverage for DC systems.",
+          "The revision cycle dates are provided, but the specific changes or updates are not detailed."
+        ],
+        "applicability": "AC and DC systems rated over 50 volts",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Personnel Safety",
+          "Arc Flash Protection",
+          "NFPA Standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions minimum requirements for mitigating hazards but does not specify what these requirements are.",
+          "The next revision cycle date is provided, but the scope of revisions is not detailed."
+        ],
+        "applicability": "Utility and customer-owned energy storage systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Energy Storage Systems",
+          "Fire Protection",
+          "NFPA Standards"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Open Compute Project",
+          "Diablo 400"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Licensing",
+          "OWFa 0.9"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'Modified Open Web Foundation Agreement 0.9' and 'Final Specification Agreement' but does not provide details about their specific terms."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "Open Web Foundation CLA",
+          "Specification License"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'rights of third parties' but does not specify what these rights might entail."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "Disclaimer",
+          "Liability"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

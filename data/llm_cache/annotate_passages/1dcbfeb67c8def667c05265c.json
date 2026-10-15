@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "Diablo 400 project",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Voltage distributions",
+          "Energy storage solutions",
+          "BBU option"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "BBU option",
+        "attributes": [
+          {
+            "conditions": "100% loading",
+            "name": "Battery backup time",
+            "unit": "seconds",
+            "value": "45 to 90"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Battery backup time",
+          "BBU option",
+          "Energy storage solutions"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Power and duration specifics are not defined.",
+          "Electrical specification for power ranges is not provided.",
+          "Interface standard in section 9 is referenced but not detailed."
+        ],
+        "applicability": "Rack design",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Capacitor bank option",
+          "Energy storage solutions",
+          "Rack management"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "Rack DC power",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 4,
+        "topics": [
+          "Rack DC power requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Table 4 is referenced but not provided in the passage."
+        ],
+        "applicability": "Rack DC power",
+        "attributes": [],
+        "content_type": "rating_or_limit",
+        "n": 5,
+        "topics": [
+          "DC output voltage",
+          "Nominal ±400VDC",
+          "Voltage regulation"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Ripple and noise specification mentions 'maybe' which is unclear.",
+          "Nominal V_droop dc setpoint is mentioned but not fully defined."
+        ],
+        "applicability": "Rack DC power",
+        "attributes": [
+          {
+            "conditions": "No load",
+            "name": "Nominal voltage no load +400 to COM",
+            "unit": "VDC",
+            "value": "410"
+          },
+          {
+            "conditions": "Full load",
+            "name": "Nominal voltage full load +400 to COM",
+            "unit": "VDC",
+            "value": "400"
+          },
+          {
+            "conditions": "No load",
+            "name": "Nominal voltage no load -400 to COM",
+            "unit": "VDC",
+            "value": "-410"
+          },
+          {
+            "conditions": "Full load",
+            "name": "Nominal voltage full load -400 to COM",
+            "unit": "VDC",
+            "value": "-400"
+          },
+          {
+            "conditions": "Nominal V_droop dc setpoint",
+            "name": "Ripple and noise",
+            "unit": "pk_pk",
+            "value": "±1% or ±2%"
+          },
+          {
+            "conditions": "",
+            "name": "Output voltage transient overshoot/undershoot",
+            "unit": "from typical set point",
+            "value": "±3%"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 6,
+        "topics": [
+          "DC output voltage",
+          "Voltage regulation",
+          "Ripple and noise",
+          "Transient overshoot/undershoot"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Table 5 is referenced but not provided in the passage.",
+          "Conditions for peak power requirements are not fully detailed."
+        ],
+        "applicability": "Rack DC power",
+        "attributes": [],
+        "content_type": "rating_or_limit",
+        "n": 7,
+        "topics": [
+          "DC output power",
+          "Nominal ±400VDC",
+          "Peak power requirements",
+          "BBU backup"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

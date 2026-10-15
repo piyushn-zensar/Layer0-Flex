@@ -1,0 +1,99 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact specifications for the Scalable Unit components."
+        ],
+        "applicability": "Compute Data Hall",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "CDU redundancy",
+            "unit": "",
+            "value": "N+1"
+          },
+          {
+            "conditions": "",
+            "name": "Cabinet TDP",
+            "unit": "kW",
+            "value": "198 to 330"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "CDU redundancy",
+          "Scalable Unit design",
+          "Cabinet TDP range",
+          "GPU generation support"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Define the exact design limits for fiber paths."
+        ],
+        "applicability": "Network Core and Shared Services",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "Air cooling via CRAHs",
+          "Network Core design",
+          "CIN Spine integration"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the conditions under which the H-shaped form factor is required."
+        ],
+        "applicability": "Cluster Interconnect Network",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "CIN distance limit",
+            "unit": "m",
+            "value": "500"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "CIN Spine distance limit",
+          "Cluster Interconnect Network",
+          "Modular building components"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the scaling rules for TAN and SMN sizing."
+        ],
+        "applicability": "Operations Center and Site Entry",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 4,
+        "topics": [
+          "CIN modular design",
+          "TAN and SMN sizing",
+          "Operations Center layout"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the operational roles of NOC, SOC, and FOC."
+        ],
+        "applicability": "Site Operations",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 5,
+        "topics": [
+          "Site entry points",
+          "Operations monitoring",
+          "Structural grid flexibility"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

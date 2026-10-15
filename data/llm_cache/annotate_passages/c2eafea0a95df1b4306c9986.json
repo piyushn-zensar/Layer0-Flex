@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific properties of the protection devices are not detailed in this passage."
+        ],
+        "applicability": "Overcurrent protection devices",
+        "attributes": [],
+        "content_type": "rating_or_limit",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Overcurrent protection",
+          "Protection devices"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific devices corresponding to each property are not clearly matched."
+        ],
+        "applicability": "Overcurrent protection devices",
+        "attributes": [
+          {
+            "conditions": "For certain devices",
+            "name": "Interruption speed",
+            "unit": "µs",
+            "value": "1-100s µs"
+          },
+          {
+            "conditions": "For certain devices",
+            "name": "Interruption speed",
+            "unit": "ms",
+            "value": "0.1-1 ms"
+          },
+          {
+            "conditions": "For certain devices",
+            "name": "Interruption speed",
+            "unit": "ms",
+            "value": "1-10s ms"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Protection devices",
+          "Standards compliance",
+          "Overcurrent protection",
+          "Ground fault protection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'off-the-shelf' and 'market availability' without specifying the context or details."
+        ],
+        "applicability": "Overcurrent protection devices",
+        "attributes": [],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "Protection devices",
+          "Resettable features",
+          "Galvanic isolation",
+          "Remote control"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify the context of the licensing beyond the document."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 March, 2026"
+          }
+        ],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "Document licensing",
+          "Publication date"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

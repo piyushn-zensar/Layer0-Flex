@@ -1,0 +1,66 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact method to measure the potential drop is not specified."
+        ],
+        "applicability": "metallic housing grounding in data centers",
+        "attributes": [
+          {
+            "conditions": "between any metallic housing and the central earthing point",
+            "name": "potential drop",
+            "unit": "mV",
+            "value": "200"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "grounding",
+          "electrochemical corrosion",
+          "potential drop",
+          "earthing"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific criteria for choosing nominal voltages are not detailed."
+        ],
+        "applicability": "LVDC distribution in data centers",
+        "attributes": [
+          {
+            "conditions": "chosen for scaling and compatibility in LVDC distribution",
+            "name": "nominal voltage",
+            "unit": "V",
+            "value": "350, 700, 1400"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "LVDC distribution",
+          "nominal voltage",
+          "data center power systems",
+          "international standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The grey columns mentioned are not described in detail."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "LVDC voltage levels",
+          "data center power quality",
+          "standardization"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

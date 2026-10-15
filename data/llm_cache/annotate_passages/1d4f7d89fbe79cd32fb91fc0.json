@@ -1,0 +1,92 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific conditions for 'low-impedance fault' are not detailed.",
+          "Clarification on 'isolated interlink converters' definition may be needed."
+        ],
+        "applicability": "TN-S systems with isolated interlink converters",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "electric shock protection",
+          "IEC 60364-4-41 compliance",
+          "grounding systems",
+          "interlink converters"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Conditions for 'non-isolated interlink converters' are not fully defined.",
+          "Applicability to IT systems is mentioned but not detailed."
+        ],
+        "applicability": "systems with non-isolated interlink converters",
+        "attributes": [
+          {
+            "conditions": "final circuits with rated current up to 63 A including socket-outlets, and up to 32 A for fixed connected equipment",
+            "name": "disconnection time",
+            "unit": "s",
+            "value": "0.1"
+          },
+          {
+            "conditions": "distribution circuits and other final circuits",
+            "name": "disconnection time",
+            "unit": "s",
+            "value": "5"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "disconnection time requirements",
+          "400 VDC systems",
+          "branch circuits",
+          "distribution circuits"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Definition of 'ordinary persons' in the context of socket usage is unclear.",
+          "Specific applications requiring special attention are listed but not exhaustively defined."
+        ],
+        "applicability": "IT systems and grounding systems other than IT",
+        "attributes": [
+          {
+            "conditions": "additional protection for AC sockets with rated current up to 32 A",
+            "name": "residual current",
+            "unit": "mA",
+            "value": "30"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "fault detection in IT systems",
+          "residual current monitoring",
+          "NFPA 70 compliance",
+          "IEC 60364-4-41 requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on 'additional protection for DC systems' are under consideration but not specified.",
+          "Scope of the Creative Commons license in terms of usage is not detailed."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "DC system protection",
+          "eV-charging installations",
+          "outdoor installations",
+          "Creative Commons licensing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

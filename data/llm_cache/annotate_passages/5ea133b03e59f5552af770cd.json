@@ -1,0 +1,75 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Connector part numbers are preliminary and marked as TBD for some entries."
+        ],
+        "applicability": "DC PDU, IT DC/DC shelf",
+        "attributes": [
+          {
+            "conditions": "3W to 3W, 3W+PE+2S",
+            "name": "output power",
+            "unit": "kW",
+            "value": "50"
+          },
+          {
+            "conditions": "3W to 3W, 3W+PE+2S",
+            "name": "output power",
+            "unit": "kW",
+            "value": "100"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "DC interconnect options",
+          "liquid cooling connectors",
+          "power distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Connector part numbers are marked as TBD for all entries."
+        ],
+        "applicability": "DC PDU, IT DC/DC shelf",
+        "attributes": [
+          {
+            "conditions": "3/2W+PE+2S",
+            "name": "output power",
+            "unit": "kW",
+            "value": "400"
+          },
+          {
+            "conditions": "3/2W+PE+2S",
+            "name": "output power",
+            "unit": "kW",
+            "value": "800"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "DC interconnect options",
+          "high power connectors",
+          "power distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No specific details or values are provided for the AC interconnect cables."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "AC interconnect options",
+          "cable specifications"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

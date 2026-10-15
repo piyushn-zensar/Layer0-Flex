@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact specifications for 800 VDC-compatible infrastructure.",
+          "Details on the standardization process for DC distribution interfaces."
+        ],
+        "applicability": "data centers, AI-focused facilities",
+        "attributes": [
+          {
+            "conditions": "data centers in 2025",
+            "name": "electricity consumption growth",
+            "unit": "%",
+            "value": "17"
+          },
+          {
+            "conditions": "AI-focused facilities in 2025",
+            "name": "electricity consumption growth",
+            "unit": "%",
+            "value": "50"
+          },
+          {
+            "conditions": "by 2030",
+            "name": "global electricity consumption projection",
+            "unit": "TWh",
+            "value": "950"
+          },
+          {
+            "conditions": "through 2040",
+            "name": "infrastructure investment estimate",
+            "unit": "trillion USD",
+            "value": "9"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "DC-native AI factories",
+          "Transformer Rectifier Units",
+          "Solid-State Transformers",
+          "Data center electricity consumption"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Define the scope of 'open, standardized 800 VDC architecture'."
+        ],
+        "applicability": "data center infrastructure",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "800 VDC architecture",
+          "Standardization",
+          "Open Compute Project"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

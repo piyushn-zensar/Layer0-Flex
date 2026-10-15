@@ -1,0 +1,66 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact range and conditions for the ±0.95 power factor.",
+          "Define the requirements for high-fidelity dynamic models in positive-sequence and EMT domains."
+        ],
+        "applicability": "Data centers, Transmission System Operator coordination",
+        "attributes": [
+          {
+            "conditions": "predefined range",
+            "name": "power factor",
+            "unit": "",
+            "value": "±0.95"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Grid modeling",
+          "Dynamic response modeling",
+          "Data center behavior"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the additional challenges for on-site power generation.",
+          "Clarify the requirements for grid interconnection when the grid is not the source of power."
+        ],
+        "applicability": "Data centers with insufficient or unavailable grid infrastructure",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "On-site power generation",
+          "Microgrid solutions",
+          "Grid interconnection",
+          "Dispatchable resources",
+          "Data center power independence"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Define the impact of AC/DC conversion harmonics on microgrid power quality.",
+          "Clarify the limitations of on-site generation in reacting to AI workload oscillations."
+        ],
+        "applicability": "Microgrid systems for data centers",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "AC/DC conversion harmonics",
+          "Microgrid power quality",
+          "Reactive power",
+          "AI workload oscillations",
+          "On-site generation limitations"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

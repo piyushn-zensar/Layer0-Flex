@@ -1,0 +1,59 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "What specific standardization gaps exist for DC systems?",
+          "What are the exact technical challenges mentioned?"
+        ],
+        "applicability": "AI data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "DC power distribution",
+          "AI data centers",
+          "standardization challenges",
+          "efficiency gains",
+          "scalability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "What are the 'Known Unknowns' of DC technology?",
+          "What specific interim guidance is recommended?"
+        ],
+        "applicability": "DC systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "DC arc flash methodology",
+          "marine and industrial standards",
+          "collaboration in DC technology",
+          "risk mitigation",
+          "interim guidance"
+        ]
+      },
+      {
+        "ambiguities": [
+          "What specific sub-workstream focus is needed for scaling?",
+          "What are the current bottlenecks for DC infrastructure development?"
+        ],
+        "applicability": "DC infrastructure",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "risk assessments",
+          "Hardware-in-the-Loop simulations",
+          "voltage and power quality",
+          "DC arc flash rules",
+          "industry alignment"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

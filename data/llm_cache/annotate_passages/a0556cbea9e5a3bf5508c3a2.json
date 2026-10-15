@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific requirements of California's A.B. 222 are not detailed.",
+          "The exact implications of Texas SB-6 on data centers are unclear."
+        ],
+        "applicability": "Large-scale data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Data Center Regulations",
+          "Energy Performance Standards",
+          "Grid Reliability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'OOIs' and 'CRDs' are not defined.",
+          "Specific standards for PV and EV applications are not listed."
+        ],
+        "applicability": "DC systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "DC System Design",
+          "Risk Mitigation",
+          "Standards Evaluation"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the methodologies for PHIL/CHIL and EMT simulations are not provided.",
+          "Criteria for pilot project success are not specified."
+        ],
+        "applicability": "High-power DC systems",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "test_or_compliance",
+        "n": 3,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Risk Assessment",
+          "Modeling and Simulation",
+          "Laboratory Testing",
+          "Pilot Projects"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

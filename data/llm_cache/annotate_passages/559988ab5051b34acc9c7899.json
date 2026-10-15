@@ -1,0 +1,137 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific requirements for dynamic loading are not detailed in this passage."
+        ],
+        "applicability": "Rack DC Power Systems",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "Rack DC Power Requirements",
+          "Dynamic Loading",
+          "Open Compute Project"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific minimum efficiency values are referenced in Table 9, which is not provided in the passage."
+        ],
+        "applicability": "Rack Power Systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Power Conversion Efficiency",
+          "Rack Power Systems",
+          "Energy Losses"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The conditions for the efficiency values are not fully detailed, such as temperature or other environmental factors."
+        ],
+        "applicability": "Rack Power Systems",
+        "attributes": [
+          {
+            "conditions": "@480VAC Vin",
+            "name": "Efficiency at 20% load",
+            "unit": "%",
+            "value": ">95"
+          },
+          {
+            "conditions": "@480VAC Vin",
+            "name": "Efficiency at 50% load",
+            "unit": "%",
+            "value": ">98"
+          },
+          {
+            "conditions": "@480VAC Vin",
+            "name": "Efficiency at 100% load",
+            "unit": "%",
+            "value": ">97"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "Power Conversion Efficiency",
+          "Voltage Input Levels",
+          "Load Efficiency"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific implementation details for synchronization and current sharing are not provided."
+        ],
+        "applicability": "Multi Rack Power Systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "Multi Rack Parallel Option",
+          "Power Synchronization",
+          "Current Sharing"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No specific details are provided about the building blocks."
+        ],
+        "applicability": "Power Rack Systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 5,
+        "topics": [
+          "Power Rack Building Blocks"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact configuration and specifications of the modules are not detailed."
+        ],
+        "applicability": "Power Rack Systems",
+        "attributes": [
+          {
+            "conditions": "For 3 phase AC input and DC ±400VDC Output Protection and Control Modules",
+            "name": "Space Allocation",
+            "unit": "OU",
+            "value": "15"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 6,
+        "topics": [
+          "AC & DC PDU",
+          "Power Rack Design",
+          "Space Allocation"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions optional AC Panel/Cabinet but does not provide details about its specifications or use cases."
+        ],
+        "applicability": "AC PDU Systems",
+        "attributes": [
+          {
+            "conditions": "Maximum input connection to AC PDU",
+            "name": "Input Connection Quantity",
+            "unit": "200A cords",
+            "value": "12"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 7,
+        "topics": [
+          "AC PDU Configuration",
+          "Power Distribution",
+          "Protection Fuses"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

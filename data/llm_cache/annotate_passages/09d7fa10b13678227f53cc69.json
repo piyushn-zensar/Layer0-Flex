@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact conditions under which the voltage bands B4 and B5 apply.",
+          "Define the parameters of the surge protective devices mentioned."
+        ],
+        "applicability": "DC microgrids",
+        "attributes": [
+          {
+            "conditions": "Temporary overvoltage band B4 (U4 level) with margin above in voltage band B5 (U5 level)",
+            "name": "Voltage level",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "DC microgrids",
+          "Surge protection",
+          "800 VDC distribution"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

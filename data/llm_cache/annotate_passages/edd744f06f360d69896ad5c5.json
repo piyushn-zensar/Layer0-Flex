@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific training and certification levels required for operators/installers are not defined.",
+          "The exact conditions under which voltage peaks and inrush currents occur are not detailed."
+        ],
+        "applicability": "Data centers",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Inrush currents",
+          "Connector design",
+          "Data center power distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The detailed specifications of the DC Power shelf are not provided."
+        ],
+        "applicability": "IT rack in data centers",
+        "attributes": [
+          {
+            "conditions": "For the DC Power shelf in the IT rack",
+            "name": "Power capacity",
+            "unit": "kW",
+            "value": "100"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "DC power shelf",
+          "Compute load power supply",
+          "Data center equipment"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

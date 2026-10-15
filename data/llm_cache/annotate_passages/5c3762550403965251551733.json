@@ -1,0 +1,58 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific conditions under which the nominal voltages are applied are not detailed.",
+          "The relationship between the mentioned organizations and the standards is not fully explained."
+        ],
+        "applicability": "DC microgrids and data centers",
+        "attributes": [
+          {
+            "conditions": "Adopted by Current/OS, EMerge Alliance, and ODCA",
+            "name": "Nominal voltage",
+            "unit": "V",
+            "value": "700"
+          },
+          {
+            "conditions": "Adopted by Current/OS, EMerge Alliance, and ODCA",
+            "name": "Nominal voltage",
+            "unit": "V",
+            "value": "350"
+          },
+          {
+            "conditions": "Defined by Current/OS",
+            "name": "Nominal voltage",
+            "unit": "V",
+            "value": "1400"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "DC microgrids",
+          "Data center power distribution",
+          "Nominal voltages"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific updates to IEC 60038 are not detailed.",
+          "The context of the publication date in relation to the content is unclear."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Voltage standards",
+          "IEC 60038",
+          "Power quality"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

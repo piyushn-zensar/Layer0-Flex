@@ -1,0 +1,52 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific voltage levels and power quality standards are not detailed in this passage."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "rating_or_limit",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions topics to be developed but does not provide any specific details or requirements."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "System operation",
+          "Control and monitoring",
+          "Startup sequence",
+          "Hot connection/disconnection",
+          "Energy measurement"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions topics to be developed but does not provide any specific details or requirements."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Electromagnetic compatibility",
+          "Emissions and immunity",
+          "Ripple voltage",
+          "Cable shielding"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

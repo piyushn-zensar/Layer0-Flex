@@ -1,0 +1,75 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact maximum value of prospective touch voltage for ELV is not specified.",
+          "Conditions for external influences affecting ELV are not detailed.",
+          "The definition of PELV is incomplete in the passage."
+        ],
+        "applicability": "low voltage systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "IEC 60050-195 definitions",
+          "Extra-Low Voltage (ELV)",
+          "Safety Extra-Low Voltage (SELV)",
+          "Protective Extra-Low Voltage (PELV)"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific conditions for the 100 VDC threshold are not fully detailed.",
+          "The exceptions to the OSHA 50V threshold are not listed."
+        ],
+        "applicability": "low voltage systems",
+        "attributes": [
+          {
+            "conditions": "AC or DC, general criteria for electrically safe working condition",
+            "name": "Voltage threshold",
+            "unit": "V",
+            "value": "50"
+          },
+          {
+            "conditions": "Certain equipment under additional restrictions for fault current",
+            "name": "Voltage threshold",
+            "unit": "VDC",
+            "value": "100"
+          },
+          {
+            "conditions": "100 VDC, Sections 320.3, 330.3, 340.4, 350.9",
+            "name": "Fault current",
+            "unit": "mA",
+            "value": "40"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "NFPA 70E voltage thresholds",
+          "OSHA voltage thresholds",
+          "Limited Energy Systems (LES)",
+          "Fault current restrictions"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details of NEC Chapter 9, Tables 11(A) and 11(B) are not provided.",
+          "The specific voltage and power ratings for classes 2 and 3 are not included."
+        ],
+        "applicability": "low voltage systems",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "NEC wiring classes",
+          "Limited Energy Systems (LES)",
+          "Shock and fire hazard mitigation"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,67 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage mentions 'thermal risk' and 'flammability and/or explosion' but does not specify the conditions under which these risks are quantified or assessed."
+        ],
+        "applicability": "Energy Storage Systems (ESS)",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "ESS safety",
+          "thermal risks",
+          "flammability risks",
+          "lithium-ion batteries",
+          "electrochemical storage"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage discusses 'thermal risks' and 'risk profiles' but does not provide specific metrics or thresholds for these risks."
+        ],
+        "applicability": "Energy Storage Systems (ESS)",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "lithium-ion battery safety",
+          "material impact on safety",
+          "capacitor safety",
+          "thermal event risks"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'standards and best practices' but does not specify which standards or practices are being referred to."
+        ],
+        "applicability": "Energy Storage Systems (ESS), particularly indoor installations",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "ESS safety standards",
+          "indoor ESS challenges",
+          "human error in ESS",
+          "standardization issues"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'thermal runaway' is defined but lacks specific examples or conditions under which it occurs."
+        ],
+        "applicability": "Energy Storage Systems (ESS)",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 4,
+        "topics": [
+          "thermal runaway",
+          "chemical energy storage risks"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

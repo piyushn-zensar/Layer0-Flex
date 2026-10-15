@@ -1,0 +1,62 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific conditions under which the line-earth voltage constraints apply are not fully detailed.",
+          "The impact of line losses is mentioned but not elaborated in this edition."
+        ],
+        "applicability": "DC data centers, Britain",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Line-line voltage constraint",
+            "unit": "VAC",
+            "value": "1000"
+          },
+          {
+            "conditions": "",
+            "name": "Line-line voltage constraint",
+            "unit": "VDC",
+            "value": "1500"
+          },
+          {
+            "conditions": "Applicable in Britain",
+            "name": "Line-earth voltage constraint (BS 7671)",
+            "unit": "VAC",
+            "value": "600"
+          },
+          {
+            "conditions": "Applicable in Britain",
+            "name": "Line-earth voltage constraint (BS 7671)",
+            "unit": "VDC",
+            "value": "900"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Line-line voltage constraints",
+          "Line-earth voltage constraints"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The relevance of the licensing information to the technical content of the document is unclear."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 2,
+        "topics": [
+          "Licensing",
+          "Creative Commons"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

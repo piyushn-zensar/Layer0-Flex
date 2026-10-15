@@ -1,0 +1,48 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific obligations of contributors regarding the irrevocable rights granted to OCP are not detailed."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "OCP licensing",
+          "community feedback",
+          "intellectual property"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The process for verifying authority to grant rights and licenses is not specified."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Creative Commons licensing",
+          "intellectual property compliance"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact requirements for evidence of third-party permissions are not detailed."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Third-party permissions",
+          "OCP publication policy"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

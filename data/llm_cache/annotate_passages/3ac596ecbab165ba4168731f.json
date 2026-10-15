@@ -1,0 +1,37 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact specifications of the mechanical interlock and short pin mechanism are not detailed.",
+          "The conditions under which the 2:1 compute to power rack ratio is optimal are not specified."
+        ],
+        "applicability": "Power racks and compute racks in data centers",
+        "attributes": [
+          {
+            "conditions": "developed for Vera Rubin",
+            "name": "AC to 54 VDC power shelf solution",
+            "unit": "kW",
+            "value": "110"
+          },
+          {
+            "conditions": "800V cables",
+            "name": "Cable current rating",
+            "unit": "A",
+            "value": "125"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "Power rack design",
+          "Safety mechanisms",
+          "Data center power architecture"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

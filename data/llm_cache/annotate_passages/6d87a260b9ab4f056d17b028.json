@@ -1,0 +1,30 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'grid-forming capability' could be clarified further.",
+          "Details on the 'defined roadmap for solid-state transformers (SST)' are not provided."
+        ],
+        "applicability": "advanced grid applications, storage, and AI data centers",
+        "attributes": [
+          {
+            "conditions": "data center architectures",
+            "name": "voltage",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "power conversion",
+          "grid applications",
+          "data center power"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

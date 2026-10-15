@@ -1,0 +1,53 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific fault current values and durations for which the converters can withstand or limit are not provided.",
+          "The exact definitions and differences between converter types 1, 2, and 3 are not detailed."
+        ],
+        "applicability": "Converters type 1, 2, and 3 in AC to DC distribution systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Fault current behavior",
+          "Converter types",
+          "AC to DC distribution",
+          "Fault protection mechanisms"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact conditions under which the fault current and duration limits apply are not fully specified.",
+          "The term 'short surge current' is mentioned but not quantified or detailed."
+        ],
+        "applicability": "Converter type 4 in AC to DC distribution systems",
+        "attributes": [
+          {
+            "conditions": "During fault conditions",
+            "name": "Fault current limit",
+            "unit": "nominal current",
+            "value": "1.5x to 2x"
+          },
+          {
+            "conditions": "During fault conditions",
+            "name": "Fault duration limit",
+            "unit": "ms",
+            "value": "100 to 200"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Fault current limiting",
+          "Converter type 4",
+          "AC to DC distribution",
+          "Standards for converters"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

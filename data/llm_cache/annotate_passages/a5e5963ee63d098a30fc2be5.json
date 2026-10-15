@@ -1,0 +1,60 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The table mentioned is not provided, so the exact configurations and their implications are unclear."
+        ],
+        "applicability": "Electrical systems with bipolar and unipolar configurations",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Bipolar systems",
+          "Unipolar systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The meaning of 'partially distributed M' and its implications are not defined.",
+          "The table format and its exact content are not fully clear."
+        ],
+        "applicability": "Electrical systems with specified conductor configurations",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Voltage polarities",
+          "Conductor configurations",
+          "Bipolar systems",
+          "Unipolar systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific requirements and characteristics of the variants are not detailed in this passage."
+        ],
+        "applicability": "Future sections of the document",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "License",
+            "unit": "",
+            "value": "Creative Commons Attribution-ShareAlike 4.0 International"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Voltage levels",
+          "System requirements",
+          "Equipment compatibility"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

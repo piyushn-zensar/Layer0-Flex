@@ -1,0 +1,45 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Resistor values are design dependent, but no specific range or criteria are provided."
+        ],
+        "applicability": "Open Compute Project Diablo 400 power rack",
+        "attributes": [
+          {
+            "conditions": "All outputs are floating voltage design",
+            "name": "Voltage",
+            "unit": "VDC",
+            "value": "±400"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "±400VDC grounding",
+          "high resistance grounding",
+          "power distribution unit",
+          "floating voltage design"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specifics of the voltage balance detection circuit are not detailed.",
+          "The standard for the Rack Management Unit-interface is referenced but not included in this section."
+        ],
+        "applicability": "Ground Fault Detector for power rack outputs",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "ground fault detection",
+          "high resistance grounding",
+          "rack management interface"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,51 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Figure 10 is referenced but not provided, requiring clarification of the layout details."
+        ],
+        "applicability": "cluster-level deployment",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC architecture",
+          "cluster-level deployment",
+          "compute scalable unit layout"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact conditions under which the clearing time of 20 ms applies are not fully detailed.",
+          "The term 'tap can' is used but not defined, requiring clarification."
+        ],
+        "applicability": "800 VDC tap can design",
+        "attributes": [
+          {
+            "conditions": "depending on device selection and fault conditions",
+            "name": "clearing time",
+            "unit": "ms",
+            "value": "20"
+          },
+          {
+            "conditions": "initial tap can protection needs",
+            "name": "branch level current",
+            "unit": "A",
+            "value": "125"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "branch protection",
+          "800 VDC tap can design",
+          "MCCB and SSCB protection",
+          "compute rack interface safety"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

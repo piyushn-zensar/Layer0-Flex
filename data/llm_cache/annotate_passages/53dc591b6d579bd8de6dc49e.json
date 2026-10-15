@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific voltage ranges or values are not provided in the passage."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "IEC standards",
+          "Rated voltage"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'continuous and temporary operating voltage range' but does not define these terms or provide specific values."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Operating voltage",
+          "IEC standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage refers to 'Section 5.6 (Voltage Bands)' and 'pending update and release of IEC 60038' without providing specific details."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Operating voltage range",
+          "IEC standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage references 'Table 1B and Figure 11B' without providing their content or context."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "IEC 62368-1",
+          "Operating voltage tolerance"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

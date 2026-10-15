@@ -1,0 +1,63 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific conditions or parameters for Voltage Ride Through are not detailed."
+        ],
+        "applicability": "Upstream MVAC interface",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "Voltage Ride Through",
+          "MVAC interface",
+          "OCP specification"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific conditions or parameters for Frequency Ride Through are not detailed."
+        ],
+        "applicability": "Upstream MVAC interface",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "Frequency Ride Through",
+          "MVAC interface",
+          "OCP specification"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The conditions under which the ride-through or trip decision is made for frequencies > 61.8 Hz are not specified."
+        ],
+        "applicability": "Upstream MVAC interface",
+        "attributes": [
+          {
+            "conditions": "May ride-through or trip",
+            "name": "Frequency",
+            "unit": "Hz",
+            "value": "> 61.8"
+          },
+          {
+            "conditions": "Minimum Ride-Through Time: 299 seconds",
+            "name": "Frequency",
+            "unit": "Hz",
+            "value": "61.2 < f ≤ 61.8"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "Frequency Ride Through",
+          "MVAC interface",
+          "OCP specification"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

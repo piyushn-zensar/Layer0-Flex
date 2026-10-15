@@ -1,0 +1,48 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific technologies used for grid-forming and load smoothing.",
+          "Define the scope of 'next-generation data center deployments'."
+        ],
+        "applicability": "AI data centers and grid applications",
+        "attributes": [
+          {
+            "conditions": "next-generation architectures",
+            "name": "Voltage",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC architectures",
+          "grid interconnect",
+          "data center power conversion",
+          "power stabilization",
+          "cooling integration"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the functions traditionally provided by UPS systems that are being consolidated.",
+          "Clarify the nature of 'margin-accretive growth'."
+        ],
+        "applicability": "AI data centers and grid applications",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "UPS system consolidation",
+          "AC power distribution",
+          "engineering and manufacturing",
+          "long-term demand visibility"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

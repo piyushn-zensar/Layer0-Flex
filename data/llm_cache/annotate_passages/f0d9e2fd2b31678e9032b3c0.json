@@ -1,0 +1,80 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Open Compute Project",
+          "Diablo 400",
+          "Version history"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact changes in the 'Updated Interface Section and Compliance Section' are not detailed.",
+          "The specific updates to the 'PSU power for 400Vac input' are not described.",
+          "The details of the 'Updated Telemetry section' and 'updated doors section' are not provided."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Initial Release Date",
+            "unit": "",
+            "value": "5 May 2025"
+          },
+          {
+            "conditions": "",
+            "name": "Version 0.5.0",
+            "unit": "",
+            "value": "5 May 2025"
+          },
+          {
+            "conditions": "",
+            "name": "Version 0.5.1",
+            "unit": "",
+            "value": "May 2025"
+          },
+          {
+            "conditions": "",
+            "name": "Version 0.5.2",
+            "unit": "",
+            "value": "May 2025"
+          },
+          {
+            "conditions": "",
+            "name": "Version 0.7",
+            "unit": "",
+            "value": "2026"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Version history",
+          "Document authorship",
+          "Power supply updates"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The roles or contributions of the listed authors are not specified."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Document authorship",
+          "Contributors"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

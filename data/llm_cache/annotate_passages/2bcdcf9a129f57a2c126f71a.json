@@ -1,0 +1,62 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage mentions 'no applicable standard' but lists several standards that might be used; clarification is needed on how these standards are to be applied."
+        ],
+        "applicability": "data center power distribution",
+        "attributes": [
+          {
+            "conditions": "for separable connectors in data center applications",
+            "name": "Voltage range",
+            "unit": "VDC",
+            "value": "1500"
+          },
+          {
+            "conditions": "for separable connectors in data center applications",
+            "name": "Current range",
+            "unit": "kADC",
+            "value": "1"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "1500 VDC connectors",
+          "data center power distribution",
+          "connector standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage suggests that EV charging standards might be applicable to AI datacenters but does not specify which requirements need to be adapted or verified."
+        ],
+        "applicability": "AI datacenter power distribution",
+        "attributes": [
+          {
+            "conditions": "for MCS cables and connectors in the EV industry",
+            "name": "Voltage rating",
+            "unit": "VDC",
+            "value": "1500"
+          },
+          {
+            "conditions": "for MCS cables and connectors in the EV industry",
+            "name": "Current rating",
+            "unit": "A",
+            "value": "3000"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "EV industry connectors",
+          "AI datacenter power distribution",
+          "1500 VDC and 3000 A rating"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

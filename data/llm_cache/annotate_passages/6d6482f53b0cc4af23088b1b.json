@@ -1,0 +1,113 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific locations or appliances requiring GFCI protection under NEC Section 210.8."
+        ],
+        "applicability": "AC receptacles, up to 150 VAC, non-dwelling units",
+        "attributes": [
+          {
+            "conditions": "for GFCI protection of AC receptacles in certain locations or supplying specific appliances",
+            "name": "tripping threshold",
+            "unit": "mA",
+            "value": "6"
+          },
+          {
+            "conditions": "for receptacles required by NEC Section 210.63",
+            "name": "rated voltage",
+            "unit": "VAC",
+            "value": "150"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "GFCI requirements",
+          "NEC Section 210.8",
+          "UL 943 standards",
+          "AC receptacle protection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the technical specifications being developed for DC RCDs by Current/OS and UL."
+        ],
+        "applicability": "Data centers, TN-S supply systems, 800 VDC distribution",
+        "attributes": [
+          {
+            "conditions": "for TN-S supply to racks in data centers",
+            "name": "internal vertical bus voltage",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "DC GFCI requirements",
+          "RCDs in data centers",
+          "800 VDC distribution",
+          "TN-S supply systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the exact steps required in the written procedure for discharging capacitors."
+        ],
+        "applicability": "DC power distribution systems in data centers",
+        "attributes": [
+          {
+            "conditions": "if stored energy exceeds 0.25 J in a DC power distribution system",
+            "name": "voltage",
+            "unit": "V",
+            "value": "400"
+          },
+          {
+            "conditions": "for DC power distribution systems in data centers",
+            "name": "stored energy hazard threshold",
+            "unit": "J",
+            "value": "0.25"
+          },
+          {
+            "conditions": "for 100 J stored energy as per NFPA 70E Section 360.3",
+            "name": "safe voltage level",
+            "unit": "V",
+            "value": "100"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "Capacitor discharge safety",
+          "NFPA 70E Article 360",
+          "Stored energy hazard threshold",
+          "Safe voltage level"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm if NEC Section 460.6 applies to all capacitor types or only specific configurations."
+        ],
+        "applicability": "Capacitors in equipment",
+        "attributes": [
+          {
+            "conditions": "to be reduced within 60 s after disconnection from the source",
+            "name": "residual voltage",
+            "unit": "V",
+            "value": "50"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "Capacitor residual voltage",
+          "NEC Section 460.6",
+          "Voltage reduction requirements"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

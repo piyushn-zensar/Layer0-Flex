@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "800 VDC architecture",
+          "AI infrastructure",
+          "energy storage"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Figure 4 is referenced but not provided in the text."
+        ],
+        "applicability": "solid state transformer",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "state machine",
+          "system behavior",
+          "solid state transformer"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Figure 5 is referenced but not provided in the text."
+        ],
+        "applicability": "solid state transformer",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "05/20/2026"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "startup scenarios",
+          "shutdown scenarios",
+          "state machine transitions",
+          "solid state transformer"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

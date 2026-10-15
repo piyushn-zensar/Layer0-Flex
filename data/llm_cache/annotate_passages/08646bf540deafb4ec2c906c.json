@@ -1,0 +1,75 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific requirements for redundancy at the power distribution level.",
+          "Define the conditions under which a DC Static Transfer Switch is necessary."
+        ],
+        "applicability": "AI data centers",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "targeted reliability level for training AI data centers",
+            "unit": "%",
+            "value": "99.9"
+          },
+          {
+            "conditions": "",
+            "name": "targeted reliability level for inference AI data centers",
+            "unit": "%",
+            "value": "99.999"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "AI data center reliability",
+          "DC distribution redundancy",
+          "power block redundancy",
+          "static transfer switch",
+          "N+1 strategy"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the modularity requirements for AC/DC conversion blocks.",
+          "Clarify the conditions for bypass testing applicability."
+        ],
+        "applicability": "AC/DC conversion blocks in data centers",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "useful life of the data center",
+            "unit": "years",
+            "value": "~10"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "AC/DC conversion redundancy",
+          "failure rate considerations",
+          "ambient temperature effects",
+          "data center lifespan",
+          "bypass testing"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm the scope of the Creative Commons Attribution-ShareAlike 4.0 International License for this document."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 3,
+        "topics": [
+          "Creative Commons licensing",
+          "document licensing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,52 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact conditions under which the 20% TDP increase applies are not detailed."
+        ],
+        "applicability": "Data centers with GPU-based AI infrastructure",
+        "attributes": [
+          {
+            "conditions": "generation over generation",
+            "name": "GPU thermal design point (TDP) increase",
+            "unit": "%",
+            "value": "20"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Data center evolution",
+          "GPU power density",
+          "Thermal design point (TDP)",
+          "AI infrastructure"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific conditions or configurations leading to the stated power increases are not fully detailed."
+        ],
+        "applicability": "Data centers using NVLink for GPU networking",
+        "attributes": [
+          {
+            "conditions": "with the increase in NVLink networking domain size",
+            "name": "Power increase",
+            "unit": "",
+            "value": "2x, 4x, or 8x"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "NVLink networking",
+          "GPU performance scaling",
+          "Copper interconnects",
+          "Power density"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

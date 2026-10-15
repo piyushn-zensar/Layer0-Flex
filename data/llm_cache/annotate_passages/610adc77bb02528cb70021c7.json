@@ -1,0 +1,93 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage lists multiple voltage levels without specifying their application contexts."
+        ],
+        "applicability": "Voltage classes",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Voltage Level",
+            "unit": "VAC",
+            "value": "120/240"
+          },
+          {
+            "conditions": "",
+            "name": "Voltage Level",
+            "unit": "VDC",
+            "value": "125/250"
+          },
+          {
+            "conditions": "",
+            "name": "Voltage Level",
+            "unit": "VDC",
+            "value": "350/700"
+          },
+          {
+            "conditions": "",
+            "name": "Voltage Level",
+            "unit": "VDC",
+            "value": "400/800"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Voltage levels",
+          "AC and DC distribution",
+          "Power quality"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarification needed on the distinction between ±400 VDC and 400/800 VDC in practical applications."
+        ],
+        "applicability": "Solid grounding systems",
+        "attributes": [
+          {
+            "conditions": "Bipolar symmetrical distribution",
+            "name": "Voltage Level",
+            "unit": "VDC",
+            "value": "±400"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Bipolar DC distribution",
+          "Voltage insulation",
+          "Grounding systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the isolation requirements for transitioning between voltage classifications are not fully elaborated."
+        ],
+        "applicability": "MVAC, LVDC, ELV systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "Voltage isolation",
+          "Grounding compatibility",
+          "Pollution degree"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

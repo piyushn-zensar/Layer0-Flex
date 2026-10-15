@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "OCP compliance",
+          "Solid State Transformer",
+          "design specification"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "Solid State Transformers, LVDC distribution architectures, data centers",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "openness",
+          "interoperability",
+          "LVDC distribution"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "Solid State Transformers, medium voltage to DC conversion",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "efficiency",
+          "power conversion",
+          "data center power"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "Solid State Transformers, data center power architectures",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 4,
+        "topics": [
+          "impact",
+          "standardization",
+          "data center power architecture"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "Solid State Transformers, multi-megawatt loads",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 5,
+        "topics": [
+          "scalability",
+          "power levels",
+          "deployment sizes"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

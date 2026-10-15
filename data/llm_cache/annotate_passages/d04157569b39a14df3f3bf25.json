@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Figure 12 is referenced but not provided, requiring clarification of the layout details."
+        ],
+        "applicability": "800 VDC compute rack deployment",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "compute rack layout",
+          "data hall deployment"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The conditions under which the optional 6000A DC switchboard distribution is utilized are not specified."
+        ],
+        "applicability": "Option C deployment models",
+        "attributes": [
+          {
+            "conditions": "Optional",
+            "name": "DC switchboard distribution",
+            "unit": "A",
+            "value": "6000"
+          },
+          {
+            "conditions": "Parallel",
+            "name": "busway distribution",
+            "unit": "A",
+            "value": "1250"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "DC busbars",
+          "6000A DC switchboard",
+          "1250A busway",
+          "distribution architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific details about the TRU architecture implementation are not provided."
+        ],
+        "applicability": "large-scale industrial and utility power conversion systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "transformer rectifier unit",
+          "fault isolation",
+          "line-frequency transformers"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,39 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Economic feasibility conditions for superconducting conductors are not fully detailed.",
+          "Specific cooling system requirements for superconductors are not described."
+        ],
+        "applicability": "data center power distribution",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "superconducting conductors",
+          "data center power delivery",
+          "HVAC system impact",
+          "high-density compute deployments"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Deployment timeline for superconducting conductors in data centers is not specified.",
+          "Details on the tested components are missing."
+        ],
+        "applicability": "data center power distribution",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "superconducting conductors",
+          "data center technology development",
+          "component testing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

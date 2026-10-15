@@ -1,0 +1,76 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Conditions for normal operation and failure are not defined.",
+          "The economic feasibility of hybrid electronic switching is suggested but not quantified."
+        ],
+        "applicability": "MCS Connector",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Disconnect under load",
+          "Hybrid electronic switching",
+          "Safety interlocks"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact conditions under which the breaking capacity of 2 to 5 A applies are not fully detailed."
+        ],
+        "applicability": "Connectors rated for 800V and 125A",
+        "attributes": [
+          {
+            "conditions": "For the connector",
+            "name": "Rated voltage",
+            "unit": "V",
+            "value": "800"
+          },
+          {
+            "conditions": "For the connector",
+            "name": "Rated current",
+            "unit": "A",
+            "value": "125"
+          },
+          {
+            "conditions": "For the connector under load",
+            "name": "Breaking capacity current",
+            "unit": "A",
+            "value": "2 to 5"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Breaking capacity",
+          "Operator skill levels",
+          "Disconnect under load"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific values for I^2t and I_peak are not provided and are stated to be determined at the system level."
+        ],
+        "applicability": "Connectors in DC grid and load systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Failure conditions",
+          "Short circuit parameters",
+          "Connector design"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

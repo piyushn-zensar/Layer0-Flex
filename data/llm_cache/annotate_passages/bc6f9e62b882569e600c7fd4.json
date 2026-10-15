@@ -1,0 +1,156 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "Diablo 400 rack",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "rack dimensions",
+          "mechanical features"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "voltage distributions",
+          "AC input",
+          "DC output",
+          "energy storage"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "rack systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "rack AC power requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Table 2 is referenced but not provided, requiring clarification of the specific configurations."
+        ],
+        "applicability": "rack systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 4,
+        "topics": [
+          "AC input voltage",
+          "3-phase power",
+          "redundancy"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "rack AC input",
+        "attributes": [
+          {
+            "conditions": "±10%",
+            "name": "Nominal1 WYE 5Wire 3L+N+PE",
+            "unit": "Vrms",
+            "value": "480"
+          },
+          {
+            "conditions": "±10%",
+            "name": "Nominal2 WYE 5Wire 3L+N+PE",
+            "unit": "Vrms",
+            "value": "415"
+          },
+          {
+            "conditions": "±10%",
+            "name": "Nominal3 WYE 5Wire 3L+N+PE",
+            "unit": "Vrms",
+            "value": "400"
+          },
+          {
+            "conditions": "±10%",
+            "name": "Min/Max WYE 5Wire 3L+N+PE",
+            "unit": "Vrms",
+            "value": "277/240/230"
+          },
+          {
+            "conditions": "±3Hz",
+            "name": "Frequency",
+            "unit": "Hz",
+            "value": "50/60"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 5,
+        "topics": [
+          "AC input voltage specifications",
+          "voltage ranges",
+          "frequency"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Table 3 is referenced but not provided, requiring clarification of the specific requirements."
+        ],
+        "applicability": "rack AC input",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 6,
+        "topics": [
+          "power quality",
+          "power factor",
+          "total harmonic distortion"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "rack AC input",
+        "attributes": [
+          {
+            "conditions": "@480VAC Vin, @415VAC Vin, @400VAC Vin",
+            "name": "PF load <20%",
+            "unit": "",
+            "value": ">0.95"
+          },
+          {
+            "conditions": "@480VAC Vin, @415VAC Vin, @400VAC Vin",
+            "name": "PF load ≥20%",
+            "unit": "",
+            "value": ">0.99"
+          },
+          {
+            "conditions": "@480VAC Vin, @415VAC Vin, @400VAC Vin",
+            "name": "THD 5%< load <15%",
+            "unit": "",
+            "value": "<15%"
+          },
+          {
+            "conditions": "@480VAC Vin, @415VAC Vin, @400VAC Vin",
+            "name": "THD 15% ≤ load <30%",
+            "unit": "",
+            "value": "<10%"
+          },
+          {
+            "conditions": "@480VAC Vin, @415VAC Vin, @400VAC Vin",
+            "name": "THD load ≥30%",
+            "unit": "",
+            "value": "<5%"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 7,
+        "topics": [
+          "power factor",
+          "total harmonic distortion",
+          "load conditions"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,59 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details on the specific implementation of Residual Current Monitoring (RCM) are not provided."
+        ],
+        "applicability": "800 VDC rack power interface",
+        "attributes": [
+          {
+            "conditions": "N/A",
+            "name": "Power whip current rating",
+            "unit": "A",
+            "value": "125"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "fault detection",
+          "residual current monitoring",
+          "rack interface protection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact specifications of the mechanical locking mechanism are not detailed."
+        ],
+        "applicability": "800 VDC rack power interface",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "800 VDC distribution",
+          "mechanical interlocks",
+          "safety mechanisms",
+          "rack interface protection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific additional protection mechanisms required are not described."
+        ],
+        "applicability": "rack interface zone",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "ground fault detection",
+          "arc flash detection",
+          "rack interface protection"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

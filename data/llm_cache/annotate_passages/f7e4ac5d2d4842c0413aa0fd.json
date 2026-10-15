@@ -1,0 +1,77 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific details of the grounding mechanisms (LRG and solid grounding) are not described in the passage."
+        ],
+        "applicability": "Upstream MVAC interface",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Upstream grounding",
+          "MVAC interface",
+          "Grounding configurations"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact criteria for LVRT design are not defined, as the passage states there is no unified standard."
+        ],
+        "applicability": "Conversion and energy storage systems between MVAC to LVDC",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Voltage Ride Through",
+          "SST and ESS coordination",
+          "MVUPS application"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific behavior expectations for SST in grey zones are not fully detailed."
+        ],
+        "applicability": "SST systems under various utility authority standards",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Voltage Ride Through",
+          "Grid-code definitions",
+          "SST behavior under voltage conditions"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term '∞' in the acceptable power quality range condition is not clearly defined."
+        ],
+        "applicability": "SST systems",
+        "attributes": [
+          {
+            "conditions": "For ∞",
+            "name": "Acceptable power quality range",
+            "unit": "pu",
+            "value": "0.9pu < x < 1.1pu"
+          },
+          {
+            "conditions": "In the acceptable power quality range",
+            "name": "Rated output load supply",
+            "unit": "rated output load",
+            "value": "100%"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 4,
+        "topics": [
+          "Voltage Ride Through",
+          "SST operational range",
+          "Power quality conditions"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

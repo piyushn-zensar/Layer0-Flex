@@ -1,0 +1,84 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarification needed on whether the prospective short circuit current Ibf is the peak value, steady-state fault current, or a combination."
+        ],
+        "applicability": "800 VDC systems with SSCB protection",
+        "attributes": [
+          {
+            "conditions": "Fault at 800 VDC, protected by SSCB clearing in 50 μs",
+            "name": "short circuit current",
+            "unit": "kA",
+            "value": "100"
+          },
+          {
+            "conditions": "Fault at 800 VDC, protected by SSCB clearing in 50 μs",
+            "name": "incident energy",
+            "unit": "cal/cm²",
+            "value": "18"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "arc-flash protection",
+          "incident energy calculation",
+          "short circuit current",
+          "800 VDC distribution",
+          "SSCB fault clearing"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Verification of the graph in Figure 26 and its representation of IE calculations."
+        ],
+        "applicability": "DC systems used in data centers",
+        "attributes": [
+          {
+            "conditions": "45.7 cm working distance in open air",
+            "name": "incident energy",
+            "unit": "cal/cm²",
+            "value": "0.02"
+          },
+          {
+            "conditions": "45.7 cm working distance inside an enclosure",
+            "name": "incident energy",
+            "unit": "cal/cm²",
+            "value": "0.012"
+          },
+          {
+            "conditions": "Threshold for PPE requirements",
+            "name": "arc flash boundary threshold",
+            "unit": "cal/cm²",
+            "value": "1.2"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "arc-flash protection",
+          "incident energy thresholds",
+          "PPE requirements",
+          "DC system fault energy",
+          "selectivity strategies"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 3,
+        "topics": [
+          "licensing",
+          "Creative Commons",
+          "documentation"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

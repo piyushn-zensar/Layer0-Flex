@@ -1,0 +1,55 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Figure 5 is referenced but not provided, making it unclear what specific data is being discussed.",
+          "The term 'volumetric solution' is used but not clearly defined."
+        ],
+        "applicability": "datacenter power systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "energy storage",
+          "load swings",
+          "GPU power management",
+          "slew rate control",
+          "RMS current reduction"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific method for reducing peaks close to the GPU is not detailed.",
+          "The term 'square wave with a 50% duty cycle' is mentioned but not elaborated upon in the context of GPU power management."
+        ],
+        "applicability": "datacenter power systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "RMS losses",
+          "peak current management",
+          "datacenter equipment sizing",
+          "GPU power optimization"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'greater load flexibility' but does not specify what measures or technologies are required to achieve this."
+        ],
+        "applicability": "grid interconnection for datacenters",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "grid interconnect",
+          "load flexibility",
+          "power demand volatility"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

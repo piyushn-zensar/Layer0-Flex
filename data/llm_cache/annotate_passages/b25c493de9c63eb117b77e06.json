@@ -1,0 +1,101 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific application of NEC Section 240.85 to DC systems.",
+          "Verify the interpretation of slash ratings for DC chargers."
+        ],
+        "applicability": "grounded systems, corner grounded delta systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "grounded systems",
+          "NEC Section 240.85",
+          "DC slash ratings",
+          "corner grounded delta systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm the applicability of the example ratings to specific equipment or configurations."
+        ],
+        "applicability": "DC 3-wire systems",
+        "attributes": [
+          {
+            "conditions": "DC 3-wire systems",
+            "name": "DC voltage",
+            "unit": "VDC",
+            "value": "125/250"
+          },
+          {
+            "conditions": "DC 3-wire systems",
+            "name": "DC voltage",
+            "unit": "VDC",
+            "value": "400/800"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "voltage levels",
+          "power quality",
+          "DC 3-wire systems",
+          "example ratings"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Verify the compatibility of grounding types with the stated voltage ratings."
+        ],
+        "applicability": "AC systems with specified grounding types",
+        "attributes": [
+          {
+            "conditions": "Solid (TN-S) grounding",
+            "name": "AC voltage",
+            "unit": "VAC",
+            "value": "480Y/277"
+          },
+          {
+            "conditions": "Functional (IT) grounding",
+            "name": "AC voltage",
+            "unit": "VAC",
+            "value": "480"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "NEC grounding compatibility",
+          "line-line and line-neutral ratings",
+          "solid grounding",
+          "functional grounding"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Ensure the licensing terms are correctly applied to the document content."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "document licensing",
+          "Creative Commons",
+          "publication date"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

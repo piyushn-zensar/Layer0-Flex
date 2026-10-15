@@ -1,0 +1,93 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact conditions under which 800V devices can operate under 750V.",
+          "Define the term 'distributed M' more clearly."
+        ],
+        "applicability": "LVDC systems, Bipolar TN-S configuration",
+        "attributes": [
+          {
+            "conditions": "Full LVDC range",
+            "name": "Voltage range",
+            "unit": "V",
+            "value": "1500"
+          },
+          {
+            "conditions": "Low voltage DC limit",
+            "name": "Steady state voltage limit",
+            "unit": "V",
+            "value": "1500"
+          },
+          {
+            "conditions": "Steady state voltage limit",
+            "name": "Voltage per pole",
+            "unit": "V",
+            "value": "750"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "LVDC systems",
+          "Bipolar TN-S",
+          "Device compatibility"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the term 'first fault' and its implications.",
+          "Define the term 'distributed M' more clearly."
+        ],
+        "applicability": "LVDC systems, various configurations",
+        "attributes": [
+          {
+            "conditions": "350/700V Bipolar IT with (partially) distributed M",
+            "name": "Voltage to ground in case of first fault",
+            "unit": "V",
+            "value": "700"
+          },
+          {
+            "conditions": "700/1400V Bipolar IT with (partially) distributed M",
+            "name": "Voltage to ground in case of first fault",
+            "unit": "V",
+            "value": "1400"
+          },
+          {
+            "conditions": "To earth in some countries",
+            "name": "Additional LVDC limit",
+            "unit": "V",
+            "value": "900"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Bipolar IT",
+          "Bipolar TN-S",
+          "Device compatibility"
+        ]
+      },
+      {
+        "ambiguities": [
+          "None"
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Document metadata",
+          "Licensing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

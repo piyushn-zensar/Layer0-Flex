@@ -1,0 +1,40 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific implementation details of the RCD and RCM in the TN-S system are not provided.",
+          "The conditions under which the RCD ensures selective protection are not fully detailed."
+        ],
+        "applicability": "TN-S DC systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "TN-S DC system",
+          "grounding",
+          "residual current detection",
+          "direct touch protection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific conditions under which multiple references to earth are beneficial versus detrimental are not fully detailed.",
+          "The term 'new architectures' is not defined or elaborated upon."
+        ],
+        "applicability": "DC power distribution systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "DC earthing",
+          "system referencing conductors",
+          "corrosion risks",
+          "data center redundancy"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

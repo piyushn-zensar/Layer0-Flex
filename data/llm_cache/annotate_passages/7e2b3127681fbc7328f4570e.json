@@ -1,0 +1,66 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact duration for which the system can continue operation after a first ground fault is not specified.",
+          "The specific conditions under which the impedance values are applicable are not detailed."
+        ],
+        "applicability": "IT grounding systems",
+        "attributes": [
+          {
+            "conditions": "Typically kept higher than this value",
+            "name": "Impedance for DC systems",
+            "unit": "Ohm/V",
+            "value": "100"
+          },
+          {
+            "conditions": "Typically kept higher than this value",
+            "name": "Impedance for non-isolated AC systems",
+            "unit": "Ohm/V",
+            "value": "500"
+          }
+        ],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "IT grounding systems",
+          "High impedance grounding",
+          "DC power systems",
+          "Ground fault tolerance"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'clearance distances need to be larger' is not quantified.",
+          "The statement about future requirements for protection devices is speculative and lacks current standards."
+        ],
+        "applicability": "IT grounding systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "IT grounding systems",
+          "Clearance distances",
+          "Fault protection",
+          "Insulation monitoring"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify how the licensing terms apply to the content of the document."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 3,
+        "topics": [
+          "Licensing",
+          "Creative Commons"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

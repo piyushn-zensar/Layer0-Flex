@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage lists figures but does not provide detailed descriptions or context for their content."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Solid State Transformer",
+          "Version History",
+          "OCP Specification"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

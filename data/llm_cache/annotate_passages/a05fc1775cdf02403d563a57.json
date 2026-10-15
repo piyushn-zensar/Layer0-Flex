@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage does not provide specific technical details or context about the new power architecture."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "AI compute performance",
+          "power architecture",
+          "NVIDIA"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

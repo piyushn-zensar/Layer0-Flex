@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'DC is still emerging at scale' could be clarified with specific examples or metrics.",
+          "The phrase 'power levels relevant to data centers' lacks specific numerical values or ranges."
+        ],
+        "applicability": "DC power systems, data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "DC Standardization Challenges",
+          "AC vs DC Systems",
+          "Data Center Power Levels"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'duplicated testing' could be clarified with examples of specific tests.",
+          "The phrase 'significant redesign' lacks specific examples or metrics."
+        ],
+        "applicability": "DC power systems, global deployment",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Standard Development Organizations",
+          "Global Standards Alignment",
+          "Country-Specific Requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'dynamic, high-density environments' could be clarified with specific examples or metrics.",
+          "The phrase 'strain traditional grid' lacks specific examples or metrics."
+        ],
+        "applicability": "DC power systems, data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "DC Training and Education",
+          "Utility Interface Challenges",
+          "Dynamic Load Management"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

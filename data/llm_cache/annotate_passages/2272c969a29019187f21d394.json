@@ -1,0 +1,63 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details of the gaps in standards requiring updates or new standards creation are not provided.",
+          "The master reference file link is not included in the passage."
+        ],
+        "applicability": "800V DC power distribution architecture",
+        "attributes": [
+          {
+            "conditions": "for 800V DC architecture",
+            "name": "product-level standards identified",
+            "unit": "count",
+            "value": "70"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "800 VDC architecture",
+          "Product-level standards",
+          "Data center power distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific standards with gaps are not listed.",
+          "Details of the tools used by UL Enterprise are not fully elaborated."
+        ],
+        "applicability": "800-1500V DC for data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "800 VDC and 1500 VDC testing",
+          "UL Standards updates",
+          "Data center power distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify examples of products or systems addressed by the Outlines of Investigation.",
+          "The scope of immediate compliance paths is not detailed."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Compliance paths",
+          "UL Certification Requirement Decisions",
+          "Outlines of Investigation"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

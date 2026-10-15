@@ -1,0 +1,130 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific telemetry parameters are not detailed."
+        ],
+        "applicability": "Sidecar management interface",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Telemetry",
+          "Communication interface",
+          "Sidecar management"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific communication protocols or standards are not specified."
+        ],
+        "applicability": "Sidecar communication interfaces",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "Communication interfaces",
+          "Sidecar networking",
+          "In-rack communication"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'preferred' and 'required' for temperature ranges could be clarified further."
+        ],
+        "applicability": "Diablo 400 power rack and building blocks",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Ambient temperature range (preferred)",
+            "unit": "°C",
+            "value": "-5 to 45"
+          },
+          {
+            "conditions": "",
+            "name": "Ambient temperature range (required)",
+            "unit": "°C",
+            "value": "-5 to 35"
+          },
+          {
+            "conditions": "non-condensing",
+            "name": "Relative humidity",
+            "unit": "%",
+            "value": "10 to 90"
+          },
+          {
+            "conditions": "",
+            "name": "Altitude without de-ratings",
+            "unit": "m",
+            "value": "3050"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "Operating conditions",
+          "Temperature range",
+          "Humidity range",
+          "Altitude limits"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The 'specified load profile/range' is not defined."
+        ],
+        "applicability": "Subsystems such as PSU, BBU, CBU",
+        "attributes": [
+          {
+            "conditions": "de-rated values",
+            "name": "Thermal margin (temperature rating)",
+            "unit": "%",
+            "value": "≥ 4"
+          },
+          {
+            "conditions": "rated load and elevated or worst-case environmental conditions",
+            "name": "Thermal margin (temperature difference)",
+            "unit": "°C",
+            "value": "≥ 3"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "Thermal design",
+          "Subsystem requirements",
+          "Temperature margins"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact parameters for thermal monitoring are not fully listed."
+        ],
+        "applicability": "Subsystems in Diablo 400",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 5,
+        "topics": [
+          "Thermal monitoring",
+          "Subsystem diagnostics"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'appropriate containment features' is not specific."
+        ],
+        "applicability": "L11 rack-level assembly",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 6,
+        "topics": [
+          "Rack-level requirements",
+          "Airflow management",
+          "Safety design"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

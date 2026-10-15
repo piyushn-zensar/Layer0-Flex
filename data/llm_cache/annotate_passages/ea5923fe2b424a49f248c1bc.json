@@ -1,0 +1,72 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific details on 'acceptable bands' for voltage and frequency deviations are not provided.",
+          "Conditions for 'real-time power compensation' are not detailed."
+        ],
+        "applicability": "AI compute loads",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "grid interconnect requirements",
+          "AI workload impact",
+          "power conditioning",
+          "energy storage systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Exact utility requirements for ramp rate, transient stability, harmonics/flicker, and voltage ride-through are not specified.",
+          "Details on 'grid-forming and fast-response controls' are not elaborated."
+        ],
+        "applicability": "AI Factories",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "GPU performance tuning",
+          "workload pacing",
+          "grid compliance",
+          "energy systems support"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specifics of 'enhanced fault ride-through capability' are not provided.",
+          "Conditions for 'real-time power support' are not detailed."
+        ],
+        "applicability": "large electronic loads",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "fault ride-through capability",
+          "ERCOT VRT requirements",
+          "real-time power support",
+          "grid stability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on 'strategic deployment' of energy storage are not provided.",
+          "Exact specifications for Battery Energy Storage System (BESS) are not mentioned."
+        ],
+        "applicability": "high-density AI Factories",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "resilient system design",
+          "energy storage deployment",
+          "grid reliability",
+          "AI Factory scaling"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

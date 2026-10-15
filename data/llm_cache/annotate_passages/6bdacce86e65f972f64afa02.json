@@ -1,0 +1,49 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details on the 'customary adjustments' for the purchase price.",
+          "Specifics of the 'customary regulatory approvals and closing conditions'."
+        ],
+        "applicability": "EPC Power acquisition",
+        "attributes": [
+          {
+            "conditions": "subject to customary adjustments",
+            "name": "Purchase Price",
+            "unit": "B",
+            "value": "4.4"
+          },
+          {
+            "conditions": "expected in calendar 2026",
+            "name": "Revenue",
+            "unit": "M",
+            "value": "800"
+          },
+          {
+            "conditions": "expected in 2027",
+            "name": "Organic revenue growth",
+            "unit": "%",
+            "value": "40"
+          },
+          {
+            "conditions": "expected in 2027",
+            "name": "EBITDA margin",
+            "unit": "%",
+            "value": "30"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Transaction overview",
+          "Financial projections",
+          "EPC Power acquisition",
+          "Cloud and Power Infrastructure segment"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

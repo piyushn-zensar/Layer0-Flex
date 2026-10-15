@@ -1,0 +1,55 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific scope of 'commonly discussed approaches' is not defined.",
+          "The term 'ecosystem alignment' could benefit from clarification."
+        ],
+        "applicability": "data center DC power distribution",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Open Compute Project tenets",
+          "DC power distribution",
+          "data center architecture",
+          "vendor-neutral design"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact metrics for 'improved utilization of conductors' are not provided.",
+          "Conditions for 'realized gains' are mentioned but not detailed."
+        ],
+        "applicability": "data center DC power distribution",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "DC power distribution efficiency",
+          "power conversion stages",
+          "energy storage integration",
+          "system-level design"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'emerging DC power distribution concepts' is not explicitly defined.",
+          "The scope of 'high-level, accessible reference' could be clarified."
+        ],
+        "applicability": "next-generation high-density data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "DC power distribution impact",
+          "high-density data centers",
+          "industry reference document"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

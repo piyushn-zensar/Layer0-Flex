@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact conditions under which firmware modification is required for lower voltage operation.",
+          "Details on the derated performance curve and its implications."
+        ],
+        "applicability": "Data center power shelves",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Point-of-load limiting converters",
+          "Undervoltage protection",
+          "Firmware modification"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

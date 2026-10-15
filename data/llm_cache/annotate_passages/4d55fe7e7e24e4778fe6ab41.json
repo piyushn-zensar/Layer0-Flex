@@ -1,0 +1,87 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact conditions for the stated creepage distances are not fully detailed.",
+          "The compatibility of devices with specific voltages is marked ambiguously with 'x' and '(x)'."
+        ],
+        "applicability": "LVDC systems",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Nominal Voltage",
+            "unit": "V",
+            "value": "350/700 (400/800)"
+          },
+          {
+            "conditions": "",
+            "name": "Creepage for L-L, PD2, Mat Grp 3",
+            "unit": "mm",
+            "value": "10"
+          },
+          {
+            "conditions": "",
+            "name": "Creepage for L-L, PD3, Mat Grp 3",
+            "unit": "mm",
+            "value": "16"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Nominal voltage levels",
+          "Earthing systems",
+          "Creepage distances",
+          "Isolation requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The meaning of 'Relative Active Wire Material' and its values is unclear.",
+          "The conditions for 'Min. # of Overcurrent Protected Poles' are not fully specified."
+        ],
+        "applicability": "LVDC systems",
+        "attributes": [
+          {
+            "conditions": "for same balanced power",
+            "name": "Relative Cable Losses",
+            "unit": "",
+            "value": "1-2"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "Active wires",
+          "Cable losses",
+          "Overcurrent protection"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "Document licensing",
+          "Publication date"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

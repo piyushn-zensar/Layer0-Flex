@@ -1,0 +1,19 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 1,
+        "topics": [
+          "Open Compute Project",
+          "Diablo 400"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

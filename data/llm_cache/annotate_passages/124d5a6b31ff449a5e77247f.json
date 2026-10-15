@@ -1,0 +1,105 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'Material' is mentioned but not defined in this passage."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 1,
+        "topics": [
+          "disclaimer",
+          "document limitations",
+          "liability statement"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'NVIDIA standard terms and conditions of sale' but does not provide details or a reference to these terms."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 2,
+        "topics": [
+          "customer guidance",
+          "terms of sale",
+          "product suitability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage refers to 'testing of all parameters' but does not specify which parameters are tested or under what conditions."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 3,
+        "topics": [
+          "product liability",
+          "application suitability",
+          "testing responsibility"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'third-party products or services' but does not specify examples or contexts."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "design responsibility",
+          "intellectual property",
+          "third-party products"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'applicable export laws and regulations' but does not specify which laws or regulations apply."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 5,
+        "topics": [
+          "intellectual property",
+          "reproduction conditions",
+          "export compliance"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage refers to 'Terms of Sale' but does not provide a direct reference or summary of these terms."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 6,
+        "topics": [
+          "warranty disclaimer",
+          "liability limitation",
+          "trademark information"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'other companies and product names' but does not specify which companies or products are being referred to."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 7,
+        "topics": [
+          "trademark information",
+          "copyright notice"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,67 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 1,
+        "topics": [
+          "Executive Summary"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific metrics for 'higher power densities' and 'dynamic load behavior' are not provided.",
+          "Conditions for 'early deployment' of DC power distribution are not detailed."
+        ],
+        "applicability": "Data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Data center power systems",
+          "DC power distribution",
+          "Power density",
+          "Dynamic load behavior",
+          "System scale"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The 'key system components and interfaces' are not explicitly listed.",
+          "The 'technical tradeoffs' influencing design decisions are not detailed."
+        ],
+        "applicability": "Data centers",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "DC power distribution configurations",
+          "System components and interfaces",
+          "Technical tradeoffs",
+          "Design decisions"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific 'applicable codes, standards, and equipment certification' are not mentioned.",
+          "Details on 'regional practices' and 'ecosystem maturity' are not provided."
+        ],
+        "applicability": "Data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "Audience for white paper",
+          "Codes and standards",
+          "AC and DC distribution coexistence",
+          "Site-specific requirements"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact definition of 'Semiconductor Circuit Breaker Figure of Merit' is not provided.",
+          "The specific voltage levels considered for LVDC systems are not mentioned."
+        ],
+        "applicability": "LVDC systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Voltage rating impact on cost",
+          "Semiconductor circuit breakers",
+          "LVDC systems",
+          "Protection device cost scaling"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific current ratings and their corresponding costs are not provided.",
+          "The details of the 'Section 7, Protection and Safety' are not included in this passage."
+        ],
+        "applicability": "DC grids and circuit breakers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Current rating impact on cost",
+          "Circuit breaker sizing",
+          "Protection devices",
+          "DC grid configurations"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific combinations of polarities, system earthing, and nominal voltages that are more likely to be implemented are not detailed.",
+          "The criteria for the analysis of system options are not explicitly stated."
+        ],
+        "applicability": "Data center electrical systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "System earthing options",
+          "DC grid polarities",
+          "Nominal system voltages",
+          "Data center electrical systems"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

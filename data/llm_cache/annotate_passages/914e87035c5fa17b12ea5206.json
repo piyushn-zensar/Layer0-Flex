@@ -1,0 +1,113 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarification on the differentiation of nameplate labels for systems/sources versus products/loads."
+        ],
+        "applicability": "600 VAC systems, power breakers",
+        "attributes": [
+          {
+            "conditions": "commonly applies to nominal voltages such as 600V",
+            "name": "Tolerance",
+            "unit": "%",
+            "value": "5.08"
+          },
+          {
+            "conditions": "defined in ANSI C37.50 for power breakers",
+            "name": "Maximum voltage",
+            "unit": "VAC",
+            "value": "1058"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Voltage tolerance",
+          "ANSI C84.1",
+          "Power breakers",
+          "Nominal voltage"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarification on the handling of source tolerance at the limit."
+        ],
+        "applicability": "DER systems, utility grid synchronization",
+        "attributes": [
+          {
+            "conditions": "continuous for DER systems",
+            "name": "Overvoltage tolerance",
+            "unit": "%",
+            "value": "110"
+          },
+          {
+            "conditions": "incorporated in ANSI C84.1 for utilization voltage",
+            "name": "Line loss factor",
+            "unit": "%",
+            "value": "5"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Overvoltage tolerance",
+          "Distributed Energy Resources (DER)",
+          "ANSI C84.1",
+          "UL 3001"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarification on the caveat regarding open terminal floating voltage versus loaded condition."
+        ],
+        "applicability": "800 VDC sources, power control systems",
+        "attributes": [
+          {
+            "conditions": "to avoid series usage issues with 800V sources",
+            "name": "Maximum voltage setpoint",
+            "unit": "VDC",
+            "value": "1500"
+          },
+          {
+            "conditions": "possible during series usage of 800V sources",
+            "name": "Maximum operation voltage",
+            "unit": "VDC",
+            "value": "1600"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "Voltage setpoints",
+          "800 VDC sources",
+          "UL 3141",
+          "NEC Article 130"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Further definition needed for transient and swell conditions."
+        ],
+        "applicability": "High voltage DC systems",
+        "attributes": [
+          {
+            "conditions": "to avoid extended excursions",
+            "name": "Maximum voltage",
+            "unit": "VDC",
+            "value": "1500"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "Voltage excursions",
+          "Transient definitions",
+          "IEC TS 63527"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

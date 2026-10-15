@@ -1,0 +1,86 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific certification status under UL 62368-1 and IEC standards."
+        ],
+        "applicability": "Compute rack with MGX form factor",
+        "attributes": [
+          {
+            "conditions": "Internal to the compute rack",
+            "name": "Input Voltage",
+            "unit": "VDC",
+            "value": "800"
+          },
+          {
+            "conditions": "Internal to the compute rack",
+            "name": "Output Voltage",
+            "unit": "VDC",
+            "value": "54"
+          },
+          {
+            "conditions": "Internal to the compute rack",
+            "name": "Power Supply Units",
+            "unit": "kW",
+            "value": "6x15"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "DC/DC power conversion",
+          "MGX form factor",
+          "UL 62368-1 certification"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the implementation timeline for the 100% liquid-cooled design."
+        ],
+        "applicability": "Next generation power racks",
+        "attributes": [
+          {
+            "conditions": "Next generation power racks",
+            "name": "Power Shelf Density",
+            "unit": "kW per RU",
+            "value": "55"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Liquid cooling",
+          "Power density",
+          "BBU power density",
+          "Power shelf density"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specifics on the compatibility with existing AC infrastructure."
+        ],
+        "applicability": "Cluster-level deployment with centralized rectification",
+        "attributes": [
+          {
+            "conditions": "From centralized DC Power Centers",
+            "name": "Output Voltage",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "Cluster-level deployment",
+          "800 VDC distribution",
+          "Centralized rectification",
+          "DC busways"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

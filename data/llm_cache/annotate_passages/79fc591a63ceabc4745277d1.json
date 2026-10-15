@@ -1,0 +1,23 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'N redundant' should be clarified, as it may refer to a specific redundancy configuration or a general concept."
+        ],
+        "applicability": "DCH distribution systems using SSTs",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "DCH distribution architecture",
+          "Solid State Transformer (SST)",
+          "Busway integration",
+          "Redundancy in power systems"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

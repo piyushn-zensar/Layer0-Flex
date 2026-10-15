@@ -1,0 +1,126 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Comparison between MV Rectifiers and SSTs lacks detailed performance metrics.",
+          "Conditions for achieving stated efficiency are not specified."
+        ],
+        "applicability": "AI Factory power systems",
+        "attributes": [
+          {
+            "conditions": "per unit",
+            "name": "Size of MV Rectifier and SST",
+            "unit": "MVA",
+            "value": "7.5"
+          },
+          {
+            "conditions": "or better",
+            "name": "Efficiency",
+            "unit": "%",
+            "value": "98.5"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "medium-voltage rectifiers",
+          "solid-state transformers",
+          "AI Factory power systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Challenges in scaling SSTs to multi-megawatt capacity are mentioned but not detailed.",
+          "Specific resilience and scalability metrics are not provided."
+        ],
+        "applicability": "AI Factory power systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "solid-state transformers",
+          "scalability challenges",
+          "AI Factory power systems",
+          "thermal management"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the integration of DC energy storage are not provided.",
+          "Specifications for coordinated protection schemes are missing."
+        ],
+        "applicability": "high-density compute environments",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "DC distribution boards",
+          "power rectification",
+          "fault isolation",
+          "energy storage"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the '5-to-make-4' redundant configuration are not provided.",
+          "Evolution of reference design with compute product specifications is mentioned but not elaborated."
+        ],
+        "applicability": "AI Factory deployment",
+        "attributes": [
+          {
+            "conditions": "leveraging five 3.5 MW MV rectifiers",
+            "name": "Power block capacity",
+            "unit": "MW",
+            "value": "17.5"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 4,
+        "topics": [
+          "datacenter reference design",
+          "AI Factory deployment",
+          "power block configuration"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specifications for liquid-cooled cables are not detailed.",
+          "Conditions for fault protection and isolation are not fully described."
+        ],
+        "applicability": "AI Factory power systems",
+        "attributes": [
+          {
+            "conditions": "centralized",
+            "name": "DC distribution board capacity",
+            "unit": "A",
+            "value": "5000"
+          },
+          {
+            "conditions": "each equipped with load-break contactor, solid-state circuit breaker, and blocking diode",
+            "name": "Busduct or cable capacity",
+            "unit": "A",
+            "value": "1500"
+          },
+          {
+            "conditions": "per rack",
+            "name": "Compute rack power delivery",
+            "unit": "MW",
+            "value": "1.1"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 5,
+        "topics": [
+          "DC distribution boards",
+          "busducts",
+          "fault protection",
+          "compute rack power delivery"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

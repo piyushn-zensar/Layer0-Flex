@@ -1,0 +1,51 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific context or application of the referenced papers is not detailed."
+        ],
+        "applicability": "DC microgrids, low-voltage DC grids",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Fault current limiting",
+          "DC microgrids",
+          "Arc-flash incident energy",
+          "Short-circuit protection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The relevance of the web resources to the main document is not explicitly stated."
+        ],
+        "applicability": "DC microgrids, AI training datacenters, data center facilities",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Short-circuit faults",
+          "DC microgrids",
+          "Power stabilization",
+          "Sustainability metrics"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific implications of the licensing for the use of the document are not detailed."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 3,
+        "topics": [
+          "Creative Commons licensing",
+          "Attribution-ShareAlike 4.0"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

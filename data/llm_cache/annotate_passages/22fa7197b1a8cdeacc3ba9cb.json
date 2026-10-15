@@ -1,0 +1,108 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Appendix D",
+          "Open Compute Project",
+          "Diablo 400"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Connector part numbers are preliminary.",
+          "Details about the specific connectors in Table 14 are not provided in the passage."
+        ],
+        "applicability": "North America, ACPDU interconnects",
+        "attributes": [
+          {
+            "conditions": "3 phase, Delta connection",
+            "name": "Voltage",
+            "unit": "Vac",
+            "value": "415-480"
+          },
+          {
+            "conditions": "For all cables",
+            "name": "Current",
+            "unit": "A",
+            "value": "200"
+          },
+          {
+            "conditions": "Single 200A conductors",
+            "name": "Conductor size (single)",
+            "unit": "AWG",
+            "value": "1/0"
+          },
+          {
+            "conditions": "4 200A conductor whips",
+            "name": "Conductor size (whip)",
+            "unit": "AWG",
+            "value": "3/0"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "AC Input Interconnect",
+          "ACPDU",
+          "Cable Specifications"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific details about the connectors and their compatibility are not fully described."
+        ],
+        "applicability": "AC PDU interconnects",
+        "attributes": [
+          {
+            "conditions": "Whip one phase connector",
+            "name": "Current",
+            "unit": "A",
+            "value": "200"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "AC PDU Connectors",
+          "Electrical Interconnects",
+          "Connector Types"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details about the connectors and implementation specifics are left to the solution implementer."
+        ],
+        "applicability": "ACPDU output cables",
+        "attributes": [
+          {
+            "conditions": "AC output cables",
+            "name": "Current",
+            "unit": "A",
+            "value": "60"
+          },
+          {
+            "conditions": "AC output cables",
+            "name": "Current",
+            "unit": "A",
+            "value": "100"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "ACPDU Output Cables",
+          "Power Shelves",
+          "Cable Design Options"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

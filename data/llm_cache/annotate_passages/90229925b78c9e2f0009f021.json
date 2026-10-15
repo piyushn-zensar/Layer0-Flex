@@ -1,0 +1,89 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Country-specific workplace safety regulations may set additional requirements.",
+          "Further evaluation of risks related to insulation failures, ground faults, and series-arc faults is mentioned but not detailed."
+        ],
+        "applicability": "power distribution systems",
+        "attributes": [
+          {
+            "conditions": "within 5 s after disconnection",
+            "name": "discharge voltage",
+            "unit": "V",
+            "value": "60"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "capacitor discharge requirements",
+          "arc-flash protection",
+          "thermal effects",
+          "fire prevention"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The measures are stated as not mandatory but recommended for data centers, which may require clarification for implementation."
+        ],
+        "applicability": "TN-S and IT grounding systems",
+        "attributes": [
+          {
+            "conditions": "for non-resistive loads",
+            "name": "rated residual operating current",
+            "unit": "mA",
+            "value": "300"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "grounding systems",
+          "residual current devices",
+          "insulation monitoring",
+          "fire protection"
+        ]
+      },
+      {
+        "ambiguities": [
+          "UL listing for DC systems is under investigation, which may require clarification on current compliance standards."
+        ],
+        "applicability": "solidly grounded DC systems",
+        "attributes": [
+          {
+            "conditions": "installed in solidly grounded DC systems at voltage up to 1500 VDC",
+            "name": "branch-protection disconnecting means rating",
+            "unit": "A",
+            "value": "1000"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "ground-fault protection",
+          "branch-protection disconnecting means",
+          "solidly grounded DC systems",
+          "NFPA 70 compliance"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No technical ambiguities, but the licensing terms may require clarification for specific use cases."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "licensing",
+          "Creative Commons",
+          "documentation"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

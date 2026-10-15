@@ -1,0 +1,40 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'highly simplified' for the single line diagram could be clarified further.",
+          "Details on the 'principal power train components' are not provided.",
+          "The criteria for entering more detail for clarification purposes are not defined."
+        ],
+        "applicability": "datacenter power distribution",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "DC power distribution",
+          "AI rack power supply",
+          "system components",
+          "single line diagram",
+          "datacenter power architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify how the licensing applies to the content of the document."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 2,
+        "topics": [
+          "Creative Commons licensing",
+          "document licensing",
+          "intellectual property"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

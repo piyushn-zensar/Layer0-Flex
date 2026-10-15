@@ -1,0 +1,157 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "AC/DC PSU Shelf",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "AC/DC PSU Shelf",
+          "Open Compute Project",
+          "Diablo 400"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The size is stated to be updated in a future revision, leaving the current size undefined."
+        ],
+        "applicability": "AC/DC PSU Shelf",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "AC/DC PSU Shelf",
+          "Size specification"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific company requirements for the secure control unit are not detailed.",
+          "The interface standard for the Rack Management Unit is referenced but not included in this section."
+        ],
+        "applicability": "AC/DC Power Shelf Control Module",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "AC/DC Power Shelf Control Module",
+          "Rack Management Unit interface"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The dimensions for the Meta control unit are marked as N/A, which could imply they are not available or not applicable."
+        ],
+        "applicability": "Control Module",
+        "attributes": [
+          {
+            "conditions": "Microsoft RSCM",
+            "name": "Width",
+            "unit": "mm",
+            "value": "81.2"
+          },
+          {
+            "conditions": "Microsoft RSCM",
+            "name": "Height",
+            "unit": "mm",
+            "value": "30"
+          },
+          {
+            "conditions": "Microsoft RSCM",
+            "name": "Depth",
+            "unit": "mm",
+            "value": "340.9"
+          },
+          {
+            "conditions": "Google module",
+            "name": "Width",
+            "unit": "mm",
+            "value": "42"
+          },
+          {
+            "conditions": "Google module",
+            "name": "Height",
+            "unit": "mm",
+            "value": "39.7"
+          },
+          {
+            "conditions": "Google module",
+            "name": "Depth",
+            "unit": "mm",
+            "value": "885"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 4,
+        "topics": [
+          "Control Module Dimensions",
+          "AC/DC Power Shelf"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The thermal requirements referenced in section 10.1 are not detailed in this section."
+        ],
+        "applicability": "±400VDC Distribution Busbar",
+        "attributes": [
+          {
+            "conditions": "For the vertical busbar",
+            "name": "Average load power",
+            "unit": "MW",
+            "value": "1.1"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 5,
+        "topics": [
+          "±400VDC Distribution Busbar",
+          "Power distribution",
+          "Safety design"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact specifications for the LMFB short pins are not provided."
+        ],
+        "applicability": "±400VDC to IT rack Distribution Cable",
+        "attributes": [
+          {
+            "conditions": "For cabled cross links to IT rack DC/DC converter shelf",
+            "name": "Minimum current per cable",
+            "unit": "A",
+            "value": "63"
+          },
+          {
+            "conditions": "For cabled cross links to IT rack DC/DC converter shelf",
+            "name": "Minimum power per cable",
+            "unit": "kW",
+            "value": "50"
+          },
+          {
+            "conditions": "For cabled cross links to IT rack DC/DC converter shelf",
+            "name": "Maximum current per cable",
+            "unit": "A",
+            "value": "125"
+          },
+          {
+            "conditions": "For cabled cross links to IT rack DC/DC converter shelf",
+            "name": "Maximum power per cable",
+            "unit": "kW",
+            "value": "100"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 6,
+        "topics": [
+          "±400VDC Distribution Cable",
+          "Power connectors",
+          "Safety features"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

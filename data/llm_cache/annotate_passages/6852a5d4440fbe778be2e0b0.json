@@ -1,0 +1,115 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details on SST maturity and specific technologies used.",
+          "Conditions for achieving 10 MW power block scale."
+        ],
+        "applicability": "AI Factories, medium-voltage systems",
+        "attributes": [
+          {
+            "conditions": "utility-scale",
+            "name": "medium-voltage distribution",
+            "unit": "kV",
+            "value": "34.5"
+          },
+          {
+            "conditions": "",
+            "name": "data hall-level distribution",
+            "unit": "VDC",
+            "value": "800"
+          },
+          {
+            "conditions": "future deployment",
+            "name": "power block scale",
+            "unit": "MW",
+            "value": "10"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "medium-voltage conversion",
+          "solid-state transformer (SST)",
+          "AI Factory infrastructure"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific advancements required for SST scalability.",
+          "Integration details with battery energy storage and renewable resources."
+        ],
+        "applicability": "AI Factories, medium-voltage systems",
+        "attributes": [
+          {
+            "conditions": "direct conversion",
+            "name": "medium-voltage to DC conversion",
+            "unit": "kV to VDC",
+            "value": "34.5 to 800"
+          },
+          {
+            "conditions": "next generation SST",
+            "name": "expected SST launch year",
+            "unit": "",
+            "value": "2029"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "solid-state transformer (SST)",
+          "800 VDC distribution",
+          "AI Factory infrastructure",
+          "DC microgrids"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific research directions and standards evolution details."
+        ],
+        "applicability": "AI Factories",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "800 VDC distribution",
+          "AI Factory infrastructure",
+          "system flexibility",
+          "energy utilization"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No specific content provided in the passage."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "engineering design updates"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on sustained arcing and grounding challenges.",
+          "Specifics of solid-state protection technologies."
+        ],
+        "applicability": "800 VDC systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 5,
+        "topics": [
+          "800 VDC distribution",
+          "electrical fault behavior",
+          "solid-state protection",
+          "system-level mitigation"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

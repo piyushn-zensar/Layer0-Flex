@@ -1,0 +1,132 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact conditions for the nominal voltage values are not fully specified.",
+          "The details of the new table with DC values in IEC 60364-4-44 are not provided."
+        ],
+        "applicability": "Voltage levels and power quality",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Nominal Voltage",
+            "unit": "V",
+            "value": "350/700 (400/800) 700 (800) 700/1400 (750/1500) 1400 (1500)"
+          },
+          {
+            "conditions": "IEC 60364-4-44, under revision",
+            "name": "Impulse Withstand Voltage",
+            "unit": "times AC rms voltage",
+            "value": "1.5"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Nominal voltage",
+          "Earthing systems",
+          "Semiconductor circuit breakers",
+          "Impulse withstand voltage",
+          "Clearance distances"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific values for pollution degree 2 and 3 are not listed.",
+          "The exact application of reinforced insulation (RI) versus basic insulation (BI) is not fully detailed."
+        ],
+        "applicability": "PCB design, Assembly",
+        "attributes": [
+          {
+            "conditions": "For 350V, 700V, and 1400V respectively",
+            "name": "Creepage distances",
+            "unit": "Vrms",
+            "value": "500V, 1000V, 1600V"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Creepage distances",
+          "Insulation coordination",
+          "Material groups"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact breakdown of x and (x) in Table 11 is not provided.",
+          "The standards for SST applications are still under development."
+        ],
+        "applicability": "TN-S DC grid, SSCB",
+        "attributes": [
+          {
+            "conditions": "Corresponding electrical spacing of the device from earth",
+            "name": "Rated voltage",
+            "unit": "rated voltage",
+            "value": "1x, 2x"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "Insulation requirements",
+          "Electrical spacing",
+          "Protection devices"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The impact of the combination table analysis on protection devices is not fully explained."
+        ],
+        "applicability": "Protection devices",
+        "attributes": [
+          {
+            "conditions": "Semiconductor selection in a protection device",
+            "name": "Semiconductor voltage example",
+            "unit": "V",
+            "value": "0.5=600V, 1=1200V, 2=2400V"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 5,
+        "topics": [
+          "Protection requirements",
+          "NEC 240.15(A)",
+          "Semiconductor voltage examples"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Publication Date",
+            "unit": "",
+            "value": "30 March 2026"
+          }
+        ],
+        "content_type": "background",
+        "n": 6,
+        "topics": [
+          "Document licensing",
+          "Publication date"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

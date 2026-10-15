@@ -1,0 +1,76 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific technologies and architectures introduced by LVDC distribution.",
+          "Define the major building blocks SST, UPS, BBU, PCS mentioned."
+        ],
+        "applicability": "AI data centers, LVDC distribution",
+        "attributes": [
+          {
+            "conditions": "training AI data centers",
+            "name": "availability",
+            "unit": "%",
+            "value": "99.9"
+          },
+          {
+            "conditions": "inference AI data centers",
+            "name": "availability",
+            "unit": "%",
+            "value": "99.999"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "solid-state solutions",
+          "LVDC distribution",
+          "data center availability",
+          "AI data centers"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Investigate the strategies for achieving availability in LVDC data centers.",
+          "Clarify the scope and application of VDE SPEC 90037."
+        ],
+        "applicability": "Schaltbau’s NExT Factory, LVDC installations",
+        "attributes": [
+          {
+            "conditions": "normal operation",
+            "name": "operating voltage band",
+            "unit": "V",
+            "value": "750"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "modular sub-blocks",
+          "live-swap capabilities",
+          "LVDC data centers",
+          "DC installations"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm the conclusions regarding the preference for DC technology in new and large data centers.",
+          "Clarify the relevance of ABB Review 4|2013 to the current context."
+        ],
+        "applicability": "DC-powered data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "DC microgrid",
+          "DC-powered data centers",
+          "ABB and Green collaboration",
+          "DC technology"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

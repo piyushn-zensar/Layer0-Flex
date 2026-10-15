@@ -1,0 +1,105 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Section 7.4 and section 9 references need verification for details.",
+          "Conditions for thermal shutdown are not specified."
+        ],
+        "applicability": "AC/DC PSU shelf",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "AC/DC PSU shelf design",
+          "current sharing",
+          "thermal management",
+          "rack management interface"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Safety isolation details for 800VDC output need clarification.",
+          "Table 10 reference requires verification for power range details."
+        ],
+        "applicability": "AC/DC PSU modules",
+        "attributes": [
+          {
+            "conditions": "Connected at power shelf output as floating output with 3 wires",
+            "name": "PSU output voltage",
+            "unit": "VDC",
+            "value": "400"
+          },
+          {
+            "conditions": "Connected at power shelf output as 2 wires, safety isolated from PE ground",
+            "name": "PSU output voltage",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "AC/DC PSU module specifications",
+          "hot-swappable PSU design",
+          "galvanic isolation",
+          "400VDC and 800VDC output options"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Mechanical dimensions for Solution 1 are marked as TBD, requiring clarification.",
+          "Size XYZ (mm) details need verification for accuracy."
+        ],
+        "applicability": "AC/DC PSU modules",
+        "attributes": [
+          {
+            "conditions": "@480VAC Vin, Solution 1",
+            "name": "Power rating",
+            "unit": "kW",
+            "value": "30"
+          },
+          {
+            "conditions": "@480VAC Vin, Solution 2",
+            "name": "Power rating",
+            "unit": "kW",
+            "value": "27"
+          },
+          {
+            "conditions": "@415VAC Vin, Solution 1",
+            "name": "Power rating",
+            "unit": "kW",
+            "value": "26"
+          },
+          {
+            "conditions": "@415VAC Vin, Solution 2",
+            "name": "Power rating",
+            "unit": "kW",
+            "value": "27"
+          },
+          {
+            "conditions": "@400VAC Vin, Solution 1",
+            "name": "Power rating",
+            "unit": "kW",
+            "value": "25"
+          },
+          {
+            "conditions": "@400VAC Vin, Solution 2",
+            "name": "Power rating",
+            "unit": "kW",
+            "value": "27"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "AC/DC PSU power ratings",
+          "mechanical dimensions",
+          "input voltage variations"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,36 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific conditions under which each energy storage technology is preferred are not detailed."
+        ],
+        "applicability": "Data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Energy storage technologies",
+          "Electrochemical energy storage",
+          "Data center power systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify examples of mechanical energy storage systems or their applications."
+        ],
+        "applicability": "Data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Mechanical energy storage",
+          "Energy storage technologies",
+          "Data center power systems"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

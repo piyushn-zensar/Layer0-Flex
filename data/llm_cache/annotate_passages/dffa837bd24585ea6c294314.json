@@ -1,0 +1,80 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific application standards in IEC are not listed.",
+          "The exact conditions for applying higher isolation requirements are not detailed."
+        ],
+        "applicability": "Electrical systems with bipolar TN-S configuration",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Insulation types",
+          "Isolation requirements",
+          "IEC standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact values for clearance and creepage are not provided.",
+          "The interpretation of L-L clearance is not explicitly defined."
+        ],
+        "applicability": "Busway systems as per IEC 61439 and UL 857",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Busway applications",
+          "Clearance and creepage",
+          "High current effects",
+          "Protection devices"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact method to determine L-L clearance based on L-M clearance is not fully clarified.",
+          "The conditions for device compatibility are not explicitly stated."
+        ],
+        "applicability": "Electrical systems with specified device voltage ratings",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Working voltage",
+            "unit": "VDC",
+            "value": "800"
+          },
+          {
+            "conditions": "",
+            "name": "Device compatibility voltage",
+            "unit": "V",
+            "value": "350, 400, 700, 800, 1400, 1500"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Voltage levels",
+          "Device compatibility",
+          "Impulse withstand voltage",
+          "Clearance requirements"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "Licensing",
+          "Creative Commons"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,54 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage lists various topics but does not provide specific details or definitions for each."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "System-level knowledge",
+          "System-level standards",
+          "Product-level standards",
+          "Installation codes",
+          "Standards development"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions requirements and trends but does not specify the details or context."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Global installation requirements",
+          "United States installation requirements",
+          "Emerging trends",
+          "Interim guidance",
+          "Stakeholder takeaways"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions references and licensing but does not elaborate on the content or implications."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "References",
+          "License",
+          "Open Compute Foundation"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

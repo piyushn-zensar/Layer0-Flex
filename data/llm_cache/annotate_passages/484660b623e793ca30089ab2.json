@@ -1,0 +1,73 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details on the specific implementation of symmetrical fusing and hotswap controllers.",
+          "Clarification on the grounding schemes supported."
+        ],
+        "applicability": "800 VDC MGX Architecture, IT rack, GPU power supply",
+        "attributes": [
+          {
+            "conditions": "800 VDC to 12V conversion",
+            "name": "Voltage conversion ratio",
+            "unit": "",
+            "value": "64:1"
+          },
+          {
+            "conditions": "Compared to multistage approach",
+            "name": "Efficiency improvement",
+            "unit": "%",
+            "value": "1"
+          },
+          {
+            "conditions": "Compared to multistage approach",
+            "name": "Area reduction",
+            "unit": "%",
+            "value": "26"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "DC/DC conversion",
+          "GPU power supply",
+          "efficiency improvement"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specifics on the methods for generating 800 VDC.",
+          "Details on the practical considerations for choosing single-ended configuration."
+        ],
+        "applicability": "800 VDC MGX Architecture, datacenter level distribution",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "800 VDC generation",
+          "power distribution methods",
+          "protection devices"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the load balancing issues in bipolar configurations.",
+          "Clarification on the transition process from 415 VAC to 800 VDC systems."
+        ],
+        "applicability": "Datacenter power distribution, AI Factory",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "800 VDC distribution",
+          "datacenter power evolution",
+          "AI Factory power needs"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

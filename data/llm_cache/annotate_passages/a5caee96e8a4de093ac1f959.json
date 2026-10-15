@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Definition of 'young' technology and its implications",
+          "Specific conditions for fault current control",
+          "Efficiency metrics for SST at scale"
+        ],
+        "applicability": "LVAC and MVAC power distribution systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "LVAC input topologies",
+          "MVAC input topologies",
+          "Solid State Transformer (SST)",
+          "Fault current control",
+          "Power distribution efficiency"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Standardization of fault current behavior",
+          "Role of controls in fault current behavior"
+        ],
+        "applicability": "Power electronic converters and DC UPS systems",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Solid State Transformer (SST)",
+          "Wide-Bandgap semiconductors",
+          "Medium-to-high-frequency transformers",
+          "DC UPS systems",
+          "Fault current behavior"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

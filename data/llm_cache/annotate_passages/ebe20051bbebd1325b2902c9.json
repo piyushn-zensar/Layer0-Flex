@@ -1,0 +1,87 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Further investigations are needed about the ground-fault detection requirement.",
+          "No similar requirement applies for commercial and industrial applications, neither in AC nor in DC."
+        ],
+        "applicability": "ungrounded DC systems, grounded DC systems, 120-volt single-phase AC circuits in dwelling units",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "ground-fault detection",
+          "arc-fault protection",
+          "NFPA 70 requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Consideration of arc-fault detection in DC data centers is suggested but not mandated.",
+          "Alternative measures to avoid hot swapping are mentioned but not detailed."
+        ],
+        "applicability": "PV systems, DC data centers",
+        "attributes": [
+          {
+            "conditions": "installation in or on buildings",
+            "name": "arc-fault protection voltage threshold",
+            "unit": "VDC",
+            "value": "80"
+          },
+          {
+            "conditions": "PV DC AFCIs as per UL 1699B",
+            "name": "arc-fault protection voltage range",
+            "unit": "VDC",
+            "value": "up to 1500"
+          },
+          {
+            "conditions": "circuits supplying racks in DC data centers",
+            "name": "vertical-bus voltage",
+            "unit": "V",
+            "value": "800"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "arc-fault protection",
+          "PV systems",
+          "DC data centers",
+          "voltage disturbances"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific design considerations for limiting switching overvoltages are not detailed.",
+          "The characteristics of the circuit affecting overvoltage are not specified."
+        ],
+        "applicability": "DC systems, overcurrent protection devices",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "voltage surges",
+          "switching overvoltages",
+          "overcurrent protection devices"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific requirements of IEC 60947-10 and IEC 60269-3 are not detailed."
+        ],
+        "applicability": "SSCBs, SCHCBs, semiconductor fuses",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 4,
+        "topics": [
+          "standards for protection devices",
+          "IEC 60947-10",
+          "IEC 60269-3"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

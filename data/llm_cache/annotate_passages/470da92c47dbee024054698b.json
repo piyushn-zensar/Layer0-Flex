@@ -1,0 +1,96 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact values for I2t melt and I2t fault are not provided.",
+          "The conditions under which the capacitors are considered large enough are not fully detailed."
+        ],
+        "applicability": "DC fault limiting converters",
+        "attributes": [
+          {
+            "conditions": "Minimum energy required to melt and interrupt the current",
+            "name": "I2t melt",
+            "unit": "",
+            "value": "not specified"
+          },
+          {
+            "conditions": "Energy of the fault current",
+            "name": "I2t fault",
+            "unit": "",
+            "value": "not specified"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "DC fault coordination",
+          "Fuse operation",
+          "Capacitor discharge",
+          "I2t rating"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific conditions for the range of interruption times are not detailed.",
+          "The applicability of UL standards to DC systems is not explicitly clarified."
+        ],
+        "applicability": "Low-voltage fuses, branch circuit overcurrent protection",
+        "attributes": [
+          {
+            "conditions": "Depends on the type of fuse and fault current",
+            "name": "Interruption time",
+            "unit": "ms",
+            "value": "<1 to several"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Fuse trip time",
+          "Short-circuit protection",
+          "Standards for fuses",
+          "Low-voltage fuses"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact conditions under which electronic trip units are preferred are not fully detailed.",
+          "The range of breaking times for different circuit breakers is not fully specified."
+        ],
+        "applicability": "Active DC systems, fault limiting converters",
+        "attributes": [
+          {
+            "conditions": "Depends on the type of circuit breaker and fault conditions",
+            "name": "Breaking time",
+            "unit": "ms",
+            "value": "1 to tens of"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Circuit breaker operation",
+          "Arc voltage",
+          "Fault limiting converters",
+          "Electronic trip units"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific terms of the Creative Commons Attribution-ShareAlike 4.0 International License are not detailed."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "Licensing",
+          "Creative Commons"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

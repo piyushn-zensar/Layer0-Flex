@@ -1,0 +1,101 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific voltage bands and their ranges.",
+          "Define the criteria for narrow vs. wide voltage bands."
+        ],
+        "applicability": "Active DC Microgrids",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Voltage Bands",
+          "DC Microgrids",
+          "Interoperable Voltage Band",
+          "Voltage Band Definitions"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the meaning of 'Distributed M' in bipolar systems.",
+          "Define the implications of system earthing methods."
+        ],
+        "applicability": "Electrical Systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "Power Quality",
+          "Polarities",
+          "System Earthing",
+          "Bipolar Systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the isolation methods between MV and LV systems.",
+          "Define the grounding methods for LVAC to LVDC transitions."
+        ],
+        "applicability": "Electrical Systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "Unipolar Systems",
+          "System Isolation",
+          "Medium Voltage to Low Voltage",
+          "Grounded AC to DC Systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the role of RCD in direct touch protection.",
+          "Define the limitations of Y capacitors in IT systems."
+        ],
+        "applicability": "Electrical Systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 4,
+        "topics": [
+          "TN-S Systems",
+          "IT Systems",
+          "Direct Touch Protection",
+          "Safety Capacitor Limitations"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the compatibility criteria for devices with different voltage ratings.",
+          "Define the impact of wiring choices on protection devices."
+        ],
+        "applicability": "Electrical Systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 5,
+        "topics": [
+          "Combination Analysis",
+          "Overvoltage Category",
+          "Device Compatibility",
+          "Wiring Impact"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm the licensing terms and their implications for document usage."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 6,
+        "topics": [
+          "Creative Commons License",
+          "Attribution-ShareAlike License"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

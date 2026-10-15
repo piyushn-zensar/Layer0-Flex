@@ -1,0 +1,23 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific details of the N+C redundancy implementation are not provided.",
+          "The figures referenced (Figure 9 and Figure 10) are not included in the text, so their content cannot be verified."
+        ],
+        "applicability": "DCH distribution systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "Solid State Transformer (SST)",
+          "DCH distribution architecture",
+          "N+C redundancy"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

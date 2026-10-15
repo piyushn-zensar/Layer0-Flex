@@ -1,0 +1,40 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific conditions under which isolation is mandatory are not fully detailed.",
+          "The term 'TN-S-AC' is mentioned but not explained in this passage."
+        ],
+        "applicability": "Electrical systems with different voltage levels or grounding requirements",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Electrical system isolation",
+          "Grounding configurations",
+          "Voltage level transition",
+          "Separately derived systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific characteristics of the SST or dedicated AC transformer are not detailed.",
+          "The term 'Symmetrical power distribution' is mentioned but not explained in this passage."
+        ],
+        "applicability": "MVAC or MVDC to LVDC distribution systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Medium Voltage to Low Voltage transition",
+          "Isolation requirements",
+          "Solid State Transformer (SST)",
+          "AC transformer"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

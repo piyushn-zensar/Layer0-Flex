@@ -1,0 +1,126 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific details of the spin-off process and its conditions are not fully described."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Forward-Looking Statements",
+          "Securities Act Compliance",
+          "Spin-Off Planning"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact criteria for tax-free treatment are not detailed."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Tax-Free Spin-Off",
+          "Company Performance Post-Spin-Off"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific conditions for the spin-off's completion are not listed."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Spin-Off Risks",
+          "Regulatory Approvals"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The potential adverse effects on relationships and market price are not quantified."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "Spin-Off Disruptions",
+          "Market Reactions"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific impacts of geopolitical conflicts are not elaborated."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 5,
+        "topics": [
+          "Personnel Retention",
+          "Economic Impacts"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The timeline for filing the proxy statement and Form 10 is not specified."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 6,
+        "topics": [
+          "SEC Filings",
+          "Proxy Statement"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact content of the proxy statement and Form 10 is not detailed."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 7,
+        "topics": [
+          "Investor Information",
+          "Document Access"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific roles of participants in the solicitation are not described."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 8,
+        "topics": [
+          "Proxy Solicitation",
+          "Executive Officers"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The changes in beneficial ownership are not quantified."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 9,
+        "topics": [
+          "Beneficial Ownership",
+          "SEC Filings"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

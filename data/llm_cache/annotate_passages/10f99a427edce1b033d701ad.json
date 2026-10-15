@@ -1,0 +1,105 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact configurations and conditions for the stated reductions in cable losses and current rating."
+        ],
+        "applicability": "LVDC power distribution systems",
+        "attributes": [
+          {
+            "conditions": "0.5 scaling of active wire material",
+            "name": "Voltage transition",
+            "unit": "",
+            "value": "350/700V to 700/1400V"
+          },
+          {
+            "conditions": "Under voltage transition",
+            "name": "Relative cable losses",
+            "unit": "",
+            "value": "halved"
+          },
+          {
+            "conditions": "Under voltage transition",
+            "name": "Relative current rating",
+            "unit": "",
+            "value": "halved"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 1,
+        "topics": [
+          "Voltage scaling",
+          "Cable losses",
+          "Current rating",
+          "Power delivery",
+          "LVDC systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Verify the efficiency impacts and loss reductions for the bipolar setup under varying load conditions."
+        ],
+        "applicability": "LVDC power distribution systems",
+        "attributes": [
+          {
+            "conditions": "Comparison of setups",
+            "name": "Voltage configuration",
+            "unit": "",
+            "value": "700V unipolar TN-S vs. 700/1400V bipolar with M TN-S"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Bipolar setups",
+          "Neutral conductor",
+          "Efficiency impacts",
+          "Power losses",
+          "Protection devices"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the implications of protection device requirements for bipolar versus unipolar systems."
+        ],
+        "applicability": "LVDC power distribution systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Protection devices",
+          "Overcurrent coordination",
+          "Semiconductor circuit breakers",
+          "Bipolar systems",
+          "Unipolar systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm the specific configurations requiring double voltage ratings for semiconductor breakers."
+        ],
+        "applicability": "LVDC power distribution systems",
+        "attributes": [
+          {
+            "conditions": "For some semiconductor breaker designs",
+            "name": "Relative voltage rating",
+            "unit": "",
+            "value": "double"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 4,
+        "topics": [
+          "Semiconductor circuit breakers",
+          "Voltage rating",
+          "SiC and GaN semiconductors",
+          "SSCB considerations",
+          "LVDC systems"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

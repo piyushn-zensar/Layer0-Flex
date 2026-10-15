@@ -1,0 +1,91 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Table 8 is referenced but not provided, which may contain critical information."
+        ],
+        "applicability": "devices designed for 700V compatibility",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "700V compatibility",
+          "device design",
+          "electrical spacing",
+          "market versatility"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Table 8 and Footnote (e) are referenced but not provided, which may contain critical information."
+        ],
+        "applicability": "facility voltage-rated products",
+        "attributes": [
+          {
+            "conditions": "Referenced in Table 8 and Footnote (e).",
+            "name": "voltage compatibility",
+            "unit": "V",
+            "value": "350V, 400V, 700V, 800V, 1400V, 1500V"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "voltage selection",
+          "facility design",
+          "product compatibility",
+          "strategic planning"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific design considerations for cross-compatibility are mentioned but not detailed."
+        ],
+        "applicability": "devices designed for bipolar 350/700V or unipolar 700V",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "electrical spacing",
+          "clearance and creepage",
+          "cross-compatibility",
+          "impulse voltages"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The statement is unclear about the specific conditions under which voltage is not available."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "distribution system configurations",
+          "voltage availability"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "publication date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "background",
+        "n": 5,
+        "topics": [
+          "document licensing",
+          "publication date"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

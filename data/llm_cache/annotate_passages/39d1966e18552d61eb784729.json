@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage references external documents without summarizing their content.",
+          "The licensing terms are mentioned but not elaborated."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Energy storage systems",
+          "Data center power protection",
+          "Direct current power systems",
+          "OCP white papers",
+          "Licensing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

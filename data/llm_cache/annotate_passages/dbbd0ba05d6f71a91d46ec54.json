@@ -1,0 +1,112 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "background context",
+          "OCP LVDC power distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the basis for the 1.5x multiplier from AC RMS to DC."
+        ],
+        "applicability": "low voltage power distribution",
+        "attributes": [
+          {
+            "conditions": "operation in power distribution",
+            "name": "low voltage limit (AC)",
+            "unit": "VAC",
+            "value": "1000"
+          },
+          {
+            "conditions": "operation in power distribution",
+            "name": "low voltage limit (DC)",
+            "unit": "VDC",
+            "value": "1500"
+          }
+        ],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "voltage levels",
+          "low voltage definition",
+          "power quality"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Ensure consistency across standards regarding voltage limits."
+        ],
+        "applicability": "voltage classification in standards",
+        "attributes": [
+          {
+            "conditions": "as per IEC 60050-195",
+            "name": "low voltage limit (AC)",
+            "unit": "VAC",
+            "value": "1000"
+          },
+          {
+            "conditions": "as per IEC 60050-195",
+            "name": "low voltage limit (DC)",
+            "unit": "VDC",
+            "value": "1500"
+          },
+          {
+            "conditions": "as per NFPA 70",
+            "name": "high voltage threshold (AC)",
+            "unit": "VAC",
+            "value": "1000"
+          },
+          {
+            "conditions": "as per NFPA 70",
+            "name": "high voltage threshold (DC)",
+            "unit": "VDC",
+            "value": "1500"
+          }
+        ],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "voltage classifications",
+          "standards definitions",
+          "low voltage",
+          "high voltage"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Verify the definition of 'normally exceeding' in the context of high voltage."
+        ],
+        "applicability": "high voltage power distribution",
+        "attributes": [
+          {
+            "conditions": "normally exceeding",
+            "name": "high voltage threshold (AC)",
+            "unit": "VAC",
+            "value": "1000"
+          },
+          {
+            "conditions": "normally exceeding",
+            "name": "high voltage threshold (DC)",
+            "unit": "VDC",
+            "value": "1500"
+          }
+        ],
+        "content_type": "definition",
+        "n": 4,
+        "topics": [
+          "high voltage definition",
+          "voltage thresholds"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

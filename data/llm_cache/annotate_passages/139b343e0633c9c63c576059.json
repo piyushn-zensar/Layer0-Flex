@@ -1,0 +1,59 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific requirements for the design of LVDC equipment are not detailed, such as the exact standards or configurations for 2 or 3 wire systems."
+        ],
+        "applicability": "LVDC equipment",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "LVDC equipment",
+          "circuit protection",
+          "polarity and earthing",
+          "power distribution standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions challenges with traditional cable or busway for very high power but does not specify alternative solutions or detailed requirements."
+        ],
+        "applicability": "Switchboards and Panelboards",
+        "attributes": [
+          {
+            "conditions": "As per UL 891 and UL 67 standards",
+            "name": "Rated voltage",
+            "unit": "Vdc",
+            "value": "1000"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "Switchboard standards",
+          "Panelboard standards",
+          "Conductor technologies",
+          "High power DC distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage introduces superconductors but does not provide specific details about their application in high power distribution systems."
+        ],
+        "applicability": "Very high power distribution systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Superconductor technology",
+          "High power distribution",
+          "Electrical resistance"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,49 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact specifications for the centralized power block capacity.",
+          "Define the conditions under which the optional direct multi-port outputs are used."
+        ],
+        "applicability": "Data hall-level high-density deployment",
+        "attributes": [
+          {
+            "conditions": "Approximately",
+            "name": "Centralized power block capacity",
+            "unit": "MW",
+            "value": "4.8"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "data hall power architecture",
+          "high-density AI infrastructure",
+          "modular power systems",
+          "DC switchboards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the types of renewable energy sources compatible with the architecture.",
+          "Clarify the scope of factory testing procedures."
+        ],
+        "applicability": "Data hall-level high-density deployment",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "DC UPS integration",
+          "battery energy storage systems",
+          "renewable energy interconnection",
+          "DC microgrid capability",
+          "simplified installation"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

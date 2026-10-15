@@ -1,0 +1,47 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific optimizations mentioned for each stage.",
+          "Define the scope of 'other equipment powered by AC'."
+        ],
+        "applicability": "IT racks and associated cooling systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "DC power transition stages",
+          "IT rack power supply",
+          "AC and DC power coexistence",
+          "DC/DC converter isolation"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Verify the exact voltage range for 'below 50 V'.",
+          "Clarify the role of isolation in the DC/DC converters."
+        ],
+        "applicability": "DC/DC converters for IT racks",
+        "attributes": [
+          {
+            "conditions": "Conversion to below 50 V",
+            "name": "Voltage step-down",
+            "unit": "V",
+            "value": "800"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "DC/DC conversion",
+          "Voltage step-down",
+          "800 VDC distribution",
+          "Low voltage DC (<50 V)"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

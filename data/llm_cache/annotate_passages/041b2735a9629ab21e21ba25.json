@@ -1,0 +1,76 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Version history",
+          "Solid State Transformer",
+          "Open Compute Project"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the scope of the CLA and FSA agreements for contributions."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "License agreement",
+          "Contributor License Agreement",
+          "Open Web Foundation Agreement"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Verify the applicability of the OWFa 0.9 agreement to the specification."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "Open Web Foundation CLA",
+          "Specification License",
+          "Contributor License Agreement"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the extent of rights not granted under the license agreements."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 4,
+        "topics": [
+          "Warranty disclaimer",
+          "Specification usage",
+          "Legal terms"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm the scope of liability exclusions stated in the specification."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 5,
+        "topics": [
+          "Liability disclaimer",
+          "Specification usage",
+          "Legal terms"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

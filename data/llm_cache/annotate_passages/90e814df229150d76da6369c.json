@@ -1,0 +1,53 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific voltage levels for LV and ELV are not defined.",
+          "The economic viability of isolated converters is mentioned but not quantified."
+        ],
+        "applicability": "ELV applications, data centers",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage isolation",
+          "Low Voltage to Extra Low Voltage",
+          "Data center power distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific voltage levels for 'low-voltage AC' and 'DC voltage' are not provided.",
+          "The conditions under which grounding the DC side is preferable are not fully detailed."
+        ],
+        "applicability": "LVDC systems with AC/DC interlink",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Grounding in LVDC systems",
+          "AC/DC interlink",
+          "Bipolar and unipolar DC systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific conditions under which common mode currents become significant are not detailed.",
+          "The term '3rd harmonic' is mentioned but not explained in the context of its impact."
+        ],
+        "applicability": "Non-isolated interlink systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Non-isolated interlink advantages and limitations",
+          "Harmonic effects in power systems",
+          "Common mode currents"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,30 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'Bipolar IT without distributed M' is not clearly defined and may require clarification.",
+          "The specific countries where the 900V limit applies are not listed."
+        ],
+        "applicability": "LVDC systems",
+        "attributes": [
+          {
+            "conditions": "in some countries",
+            "name": "voltage limit to earth",
+            "unit": "V",
+            "value": "900"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 1,
+        "topics": [
+          "LVDC voltage levels",
+          "power quality",
+          "bipolar IT systems"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

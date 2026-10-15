@@ -1,0 +1,81 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact conditions under which load converters contribute to fault current are not detailed.",
+          "The specific methods for achieving protection selectivity are not described."
+        ],
+        "applicability": "DC power distribution systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Fault current in DC systems",
+          "Converter contributions",
+          "Protection selectivity",
+          "Data center system availability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify the exact time delays used in Time-Current Selectivity.",
+          "The term 'high inertia' is not explicitly defined in this context."
+        ],
+        "applicability": "AC distribution systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Protection selectivity",
+          "Time-Current Selectivity",
+          "AC distribution systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The minimum operating voltage of the converter is not specified.",
+          "The alternative strategies for maintaining system function are not detailed."
+        ],
+        "applicability": "DC power distribution systems",
+        "attributes": [
+          {
+            "conditions": "In AC systems, delays can result in long arcing time and high energy release.",
+            "name": "fault clearing delay",
+            "unit": "ms",
+            "value": "100-200"
+          }
+        ],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Fault clearing in DC systems",
+          "Voltage drop during faults",
+          "Energy storage challenges in DC systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The relevance of the licensing information to the technical content is not clear."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Publication Date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "Document licensing",
+          "Publication date"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

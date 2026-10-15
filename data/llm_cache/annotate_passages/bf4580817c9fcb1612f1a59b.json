@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details of the collaboration scope and specific contributions of each entity are not provided."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "800 VDC ecosystem",
+          "collaborative development",
+          "industry alignment"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific details on the liquid-cooled power delivery components are not provided."
+        ],
+        "applicability": "compute racks",
+        "attributes": [
+          {
+            "conditions": "near-term generations",
+            "name": "distribution plane voltage",
+            "unit": "VDC",
+            "value": "54"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "rack power roadmap",
+          "NVLink technology",
+          "liquid-cooled power delivery"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Practical low-voltage distribution limits are mentioned but not quantified."
+        ],
+        "applicability": "compute racks",
+        "attributes": [
+          {
+            "conditions": "future native rack architecture",
+            "name": "distribution plane voltage",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "800 VDC rack architecture",
+          "scalable power delivery",
+          "compute density growth"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -14,6 +14,7 @@ import json
 import re
 import shutil
 import zipfile
+from concurrent.futures import ThreadPoolExecutor
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -348,22 +349,29 @@ def annotate(db: Session, ks_id: str, actor: str) -> int:
     by_page: dict[int, list[KbPassage]] = {}
     for p in todo:
         by_page.setdefault(p.page, []).append(p)
-    done = 0
-    for page_no, items in sorted(by_page.items()):
+    def ask(items: list[KbPassage]) -> dict | None:
         prompt = f"Document: {src.title} ({src.publisher}, {src.revision})\n\n" + "\n\n".join(
             f"[{i}] {(p.heading + ': ') if p.heading else ''}{p.text}" for i, p in enumerate(items, 1))
         try:
-            answer = llm.complete_json("annotate_passages", ANNOTATE_SYSTEM, prompt, ANNOTATE_SCHEMA)
+            return llm.complete_json("annotate_passages", ANNOTATE_SYSTEM, prompt, ANNOTATE_SCHEMA)
         except llm.LLMUnavailable:
-            db.commit()
-            raise
-        for a in answer["passages"]:
+            return None
+
+    pages = [items for _, items in sorted(by_page.items())]
+    with ThreadPoolExecutor(4) as pool:  # independent pages, as in matching; the session stays on this thread
+        answers = list(pool.map(ask, pages))
+    done = 0
+    for items, answer in zip(pages, answers):
+        for a in (answer or {"passages": []})["passages"]:
             if 1 <= a["n"] <= len(items):
                 items[a["n"] - 1].annotations = {k: a[k] for k in ("topics", "content_type", "attributes",
                                                                    "applicability", "ambiguities")}
                 done += 1
+    missing = sum(a is None for a in answers)
     audit.record(db, actor, "annotated", "kb_source", ks_id, src.opportunity_id, passages=done)
     db.commit()
+    if missing:
+        raise llm.LLMUnavailable(f"{missing} page(s) have no model answer yet; {done} passages annotated and kept.")
     return done
 
 
@@ -371,7 +379,8 @@ def annotate(db: Session, ks_id: str, actor: str) -> int:
 
 def register_references(db: Session, actor: str = "Layer 0 setup") -> list[str]:
     """Register the public references listed in data/references/sources.json (engineering references and market
-    context; test RFPs are bids, not knowledge) as drafts. Idempotent: a registered instance is skipped."""
+    context; test RFPs are bids, not knowledge) as drafts, with their frozen annotations when they exist.
+    Idempotent: a registered instance is skipped."""
     manifest = json.loads((config.DATA / "references" / "sources.json").read_text("utf-8"))
     out = []
     for e in manifest["sources"]:
@@ -379,5 +388,9 @@ def register_references(db: Session, actor: str = "Layer 0 setup") -> list[str]:
             continue
         src, _ = register(db, config.ROOT / e["file"], actor, e["collection"], e["title"], e["publisher"],
                           e["revision"], e["note"], "public", e["url"])
+        try:
+            annotate(db, src.ks_id, actor)
+        except llm.LLMUnavailable:
+            pass  # not generated yet (mock mode): the passages stand without annotations
         out.append(src.ks_id)
     return out

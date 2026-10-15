@@ -1,0 +1,37 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details on the specific conditions for the spin-off completion are not provided.",
+          "The exact strategies of the companies post-spin-off are not detailed."
+        ],
+        "applicability": "Corporate restructuring of Flex and Axiom",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Completion Date",
+            "unit": "",
+            "value": "First quarter of calendar 2027"
+          },
+          {
+            "conditions": "",
+            "name": "Ticker Symbol",
+            "unit": "",
+            "value": "AXM"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Spin-off structure",
+          "Corporate strategy",
+          "Public trading",
+          "Company separation"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

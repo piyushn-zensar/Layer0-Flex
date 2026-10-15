@@ -1,0 +1,73 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage mentions 'high-power protection requirements' but does not specify what these entail.",
+          "The term 'coordinated control of power flow and voltage levels' is broad and could benefit from clarification."
+        ],
+        "applicability": "DC grids across industries",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "DC grid architecture",
+          "Electromagnetic Compatibility",
+          "Power flow control",
+          "High-power protection",
+          "AC utility interface"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage references 'emerging technical reference documents' but does not specify their titles or contents.",
+          "The 'master reference file' is mentioned but not provided in the passage."
+        ],
+        "applicability": "800V DC power distribution architecture",
+        "attributes": [
+          {
+            "conditions": "for 800V DC architecture",
+            "name": "system-level standards identified",
+            "unit": "count",
+            "value": "20"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "800 VDC architecture",
+          "Electromagnetic Compatibility",
+          "System-level standards",
+          "Data center applications",
+          "Technical reference documents"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage lists standards but does not elaborate on their specific requirements or applications.",
+          "The term 'Prefabricated Power Assemblies' is mentioned but not defined."
+        ],
+        "applicability": "DC systems and Modular Data Centers",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "DC system requirements",
+          "AC utility interconnection",
+          "Modular Data Centers",
+          "Testing and certification standards"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

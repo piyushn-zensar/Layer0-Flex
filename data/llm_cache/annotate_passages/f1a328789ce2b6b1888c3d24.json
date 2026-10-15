@@ -1,0 +1,60 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Compatibility of rectification architectures with specific deployment scenarios.",
+          "Details on the conditions for adjustable output capacity."
+        ],
+        "applicability": "compute clusters",
+        "attributes": [
+          {
+            "conditions": "adjustable",
+            "name": "output capacity",
+            "unit": "MW",
+            "value": "2"
+          },
+          {
+            "conditions": "aggregated for future scalability",
+            "name": "feeder rating",
+            "unit": "A",
+            "value": "1250"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "cluster-level deployment",
+          "power center architecture",
+          "rectification technologies"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specifications for interlocked DC Power Whip and Connector System.",
+          "Details on protection relay systems and their configurations."
+        ],
+        "applicability": "downstream distribution architecture",
+        "attributes": [
+          {
+            "conditions": "Day-1 deployment",
+            "name": "tap can rating",
+            "unit": "A",
+            "value": "125"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "800 VDC distribution",
+          "DC feeder breakers",
+          "busway systems",
+          "rack-level interfaces"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

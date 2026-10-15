@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific role and configuration of the solid-state transformer in the LVDC distribution part."
+        ],
+        "applicability": "LVDC distribution systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "LVDC distribution",
+          "solid-state transformer",
+          "AC distribution"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

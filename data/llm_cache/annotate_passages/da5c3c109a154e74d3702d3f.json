@@ -1,0 +1,59 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the conditions under which the 122 kJ threshold is relevant.",
+          "Verify the applicability of NFPA 70E Article 360 to DC power systems."
+        ],
+        "applicability": "data centers",
+        "attributes": [
+          {
+            "conditions": "hearing protection required",
+            "name": "energy stored in capacitors",
+            "unit": "J",
+            "value": "100"
+          },
+          {
+            "conditions": "lung-protection boundary",
+            "name": "energy stored in capacitors",
+            "unit": "kJ",
+            "value": "122"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "arc-flash behavior",
+          "DC power systems",
+          "incident energy calculation",
+          "NFPA 70E compliance",
+          "capacitor safety measures"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm the relevance of the lung-protection boundary in the context of DC power systems."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "threshold for triggering",
+            "name": "lung-protection boundary",
+            "unit": "kJ",
+            "value": "122"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "lung-protection boundary",
+          "energy thresholds",
+          "safety standards"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

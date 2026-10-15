@@ -1,0 +1,72 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact application of the NEC update for 2000 VDC in solar PV installations is not detailed."
+        ],
+        "applicability": "Low and high voltage DC systems",
+        "attributes": [
+          {
+            "conditions": "EU Low Voltage Directive",
+            "name": "Voltage range for AC",
+            "unit": "V",
+            "value": "50-1000"
+          },
+          {
+            "conditions": "EU Low Voltage Directive",
+            "name": "Voltage range for DC",
+            "unit": "V",
+            "value": "75-1500"
+          },
+          {
+            "conditions": "China GB/T 35727",
+            "name": "Low voltage DC range",
+            "unit": "V",
+            "value": "110-1500"
+          },
+          {
+            "conditions": "China GB/T 35727",
+            "name": "High voltage DC range",
+            "unit": "V",
+            "value": "3000-50000"
+          }
+        ],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "EU Low Voltage Directive",
+          "China GB/T 35727",
+          "DC distribution ranges"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific details of Figure 11 referenced in the text are not provided."
+        ],
+        "applicability": "Low and high voltage DC systems",
+        "attributes": [
+          {
+            "conditions": "Based on insulation coordination and equipment design constraints",
+            "name": "Low voltage DC limit",
+            "unit": "V",
+            "value": "1500"
+          }
+        ],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Insulation coordination",
+          "Personnel protection",
+          "Low voltage DC limit"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

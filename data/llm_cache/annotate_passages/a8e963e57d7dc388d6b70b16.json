@@ -1,0 +1,67 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'dynamic load profiles' could be clarified further.",
+          "Specific metrics for 'efficiency, scalability, and grid interaction' are not provided."
+        ],
+        "applicability": "data center power systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "AI-driven workloads",
+          "data center power systems",
+          "DC power distribution",
+          "rack power densities"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'representative DC power distribution approaches' could be elaborated with examples.",
+          "The scope of 'regulatory considerations' is not detailed."
+        ],
+        "applicability": "data center facilities",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "DC power distribution architectures",
+          "data center design concepts",
+          "power conversion",
+          "grounding and earthing",
+          "regulatory considerations"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The 'areas requiring further development' are not specified."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "License",
+            "unit": "",
+            "value": "Creative Commons Attribution-ShareAlike 4.0 International"
+          },
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 March 2026"
+          }
+        ],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "DC power distribution framework",
+          "Creative Commons licensing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

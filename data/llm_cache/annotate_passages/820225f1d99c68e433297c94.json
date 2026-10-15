@@ -1,0 +1,72 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage mentions 'DC components must' but does not complete the statement, leaving the requirement unclear."
+        ],
+        "applicability": "grid-interactive equipment, data center environments, electrical and cooling systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Cybersecurity Standards",
+          "Fire Protection Standards",
+          "Power Redundancy",
+          "DC Standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'critical system-level blind spots' but does not specify what these are."
+        ],
+        "applicability": "DC power systems for data centers",
+        "attributes": [
+          {
+            "conditions": "for data centers",
+            "name": "DC power system voltage range",
+            "unit": "Vdc",
+            "value": "300 to 1500"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "DC Power System Standards",
+          "Safety Metrics",
+          "System-Level Gaps"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'ongoing strategies' but does not specify what these strategies entail."
+        ],
+        "applicability": "DC systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "System Design Principles",
+          "Control and Coordination",
+          "DC System Architecture"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "Licensing",
+          "Creative Commons"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

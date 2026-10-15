@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific compatibility requirements for the NVIDIA MGX-compatible 800 VDC power rack with existing AC infrastructure are not detailed."
+        ],
+        "applicability": "Existing facilities with AC infrastructure",
+        "attributes": [
+          {
+            "conditions": "delivered to compute racks within the row",
+            "name": "Voltage",
+            "unit": "VDC",
+            "value": "800"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "AI factory power architecture",
+          "hybrid power systems",
+          "rack-scale compute performance"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific technical details of how the hybrid approach preserves existing investments are not provided."
+        ],
+        "applicability": "Site owners with existing facilities",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Hybrid power systems",
+          "AI factory infrastructure",
+          "Compute density"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

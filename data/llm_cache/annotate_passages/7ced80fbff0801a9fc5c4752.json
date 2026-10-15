@@ -1,0 +1,114 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific operational requirements are not detailed in this passage."
+        ],
+        "applicability": "Rack-level systems in the Diablo 400 project",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "Operating Environmental Conditions",
+          "Rack-level Requirements",
+          "Open Compute Project"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No specific regulatory or compliance requirements are detailed in this passage."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "Regulatory Compliance",
+          "Safety Standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific applications for the SSCR rating range are not detailed.",
+          "The term 'PS2 limits' is not defined in this passage."
+        ],
+        "applicability": "Power rack systems and associated subcomponents/assemblies",
+        "attributes": [
+          {
+            "conditions": "Dependent on specific application",
+            "name": "SSCR Rating",
+            "unit": "",
+            "value": "10kA to 40kA"
+          },
+          {
+            "conditions": "For cables rated above 60Vdc or 42.4Vac",
+            "name": "Cable temperature rating",
+            "unit": "°C",
+            "value": "90"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "Safety Requirements",
+          "Short Circuit Current Rating",
+          "Cable Assembly Standards",
+          "Accessibility Requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific spacing requirements for creepage and clearance are not detailed.",
+          "The term 'PS2 limits' is not defined in this passage."
+        ],
+        "applicability": "Sidecar modules and connectors",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "Safety Requirements",
+          "Creepage and Clearance",
+          "Interlock Mechanisms"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific safety requirements for Energy Storage Systems are not detailed."
+        ],
+        "applicability": "Power rack systems",
+        "attributes": [
+          {
+            "conditions": "For the power rack system",
+            "name": "Leakage current (AC)",
+            "unit": "mA",
+            "value": "3.5"
+          },
+          {
+            "conditions": "For the power rack system",
+            "name": "Leakage current (DC)",
+            "unit": "mA",
+            "value": "10"
+          },
+          {
+            "conditions": "In any direction",
+            "name": "Stability tilt angle",
+            "unit": "°",
+            "value": "10"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 5,
+        "topics": [
+          "Overcurrent Protection",
+          "Protective Earthing",
+          "Leakage Current",
+          "Stability",
+          "Energy Storage Systems"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

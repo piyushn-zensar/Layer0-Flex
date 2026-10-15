@@ -1,0 +1,39 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact voltage ranges for bands B2, B3, B4, and B5 are not specified.",
+          "The term 'ample overvoltage margin' is not quantified."
+        ],
+        "applicability": "DC microgrid systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "DC microgrid design",
+          "voltage bands",
+          "interoperability",
+          "energy storage efficiency"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific conditions under which voltage swell occurs are not detailed.",
+          "The term 'simple loads' is not defined."
+        ],
+        "applicability": "DC systems with motor drives",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "voltage swell",
+          "regenerative energy",
+          "motor drives"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

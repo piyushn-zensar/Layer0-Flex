@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific details of 'DC Distribution Progression' and 'Example Interfacing to Power Rack and IT Rack DC Vertical Bus' are not provided in the passage."
+        ],
+        "applicability": "data centers",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "DC distribution",
+          "data center power",
+          "vertical bus interfacing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

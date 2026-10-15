@@ -1,0 +1,72 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage mentions 'emerging technologies or specialized products' but does not specify what these are.",
+          "The scope of 'Guide Information' is not fully detailed."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Safety Certification",
+          "UL Product iQ",
+          "Category Control Numbers",
+          "Guide Information"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions 'several key standards' but does not specify all of them.",
+          "The term 'urgent, collaborative sprints' is not defined in detail."
+        ],
+        "applicability": "High power DC systems",
+        "attributes": [
+          {
+            "conditions": "As of early 2026",
+            "name": "Year",
+            "unit": "",
+            "value": "2026"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Product-level Standards",
+          "Standards Development Organizations",
+          "High Power DC Systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage references a 'master reference file' but does not provide a direct link or location.",
+          "The specific details of the 'adhoc group' and its scope are not provided."
+        ],
+        "applicability": "High power DC systems",
+        "attributes": [
+          {
+            "conditions": "For equipment covered by UL 2877",
+            "name": "Input/output ratings",
+            "unit": "V",
+            "value": "above 1000 V up to 38 kV"
+          }
+        ],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Standards Development",
+          "High Power DC Systems",
+          "Solid State Transformers",
+          "Safety Requirements"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

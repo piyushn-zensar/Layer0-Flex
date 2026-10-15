@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Definition of U2 and U5 levels",
+          "Details of droop curves and their configuration"
+        ],
+        "applicability": "Voltage bands B3 to B5",
+        "attributes": [
+          {
+            "conditions": "Interoperability hinge point",
+            "name": "U5",
+            "unit": "VDC",
+            "value": "840"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Firmware adjustable values",
+          "Hardware anchor points",
+          "Interoperability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details of Option 2 Fixed Ratio with Power Limiting converters",
+          "Implementation specifics of narrow band voltage curve"
+        ],
+        "applicability": "Voltage band B3",
+        "attributes": [
+          {
+            "conditions": "Optional, accommodating Option 2 Fixed Ratio with Power Limiting converters",
+            "name": "Voltage band below 800VDC",
+            "unit": "VDC",
+            "value": "760"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "Voltage bands",
+          "Power limiting converters",
+          "Optional voltage ranges",
+          "Narrow band voltage curve",
+          "Prior art"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

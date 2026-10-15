@@ -1,0 +1,36 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage does not specify examples of systems where these earthing nomenclatures are applied."
+        ],
+        "applicability": "Earthing systems in electrical power distribution",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Earthing nomenclature",
+          "Electrical grounding systems",
+          "Power distribution standards"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage mentions a 'small voltage threshold' for corrosion but does not specify its exact value."
+        ],
+        "applicability": "DC power distribution systems",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "DC earthing systems",
+          "Corrosion in grounding systems",
+          "Electrical safety standards"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

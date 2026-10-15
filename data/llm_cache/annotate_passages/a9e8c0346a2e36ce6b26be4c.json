@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the term 'I_Pk' and its specific definition in this context.",
+          "Specify the exact relationship between RMS current and average power for the VR circuits."
+        ],
+        "applicability": "Voltage Regulator (VR) design",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "thermal impact of current",
+          "VR design considerations",
+          "current types in power systems"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details about the specific options for DC output interconnect cables are not provided in this passage."
+        ],
+        "applicability": "DC power distribution systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "DC output interconnect cables",
+          "rack power distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specifications for 400kW and 800kW cables are mentioned but not detailed.",
+          "The term 'impedance targets-inductance characterization' needs further clarification."
+        ],
+        "applicability": "DC power distribution systems for IT racks",
+        "attributes": [
+          {
+            "conditions": "4x 4AWG cables, NEC derating for 65C ambient",
+            "name": "50kW current",
+            "unit": "A",
+            "value": "63"
+          },
+          {
+            "conditions": "4x 1AWG cables, NEC derating for 65C ambient",
+            "name": "100kW current",
+            "unit": "A",
+            "value": "125"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "DC output interconnect cables",
+          "power distribution design",
+          "cable specifications"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

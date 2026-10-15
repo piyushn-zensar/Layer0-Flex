@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific technologies and their implementations are not detailed.",
+          "The term 'margin-accretive growth' is not quantified or explained."
+        ],
+        "applicability": "Cloud & Power Infrastructure",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "grid-forming power conversion",
+          "energy storage",
+          "800 VDC architectures",
+          "digital rectifiers",
+          "solid-state transformer (SST) technology"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

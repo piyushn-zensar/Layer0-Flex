@@ -1,0 +1,76 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific technical details of 'DC breaker selection and certification' and 'Tap can protection coordination' are not provided.",
+          "The exact implementation of 'arc fault and ground fault detection integration' is not detailed."
+        ],
+        "applicability": "800 VDC compute rows, mixed AC and DC compute environments",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "cluster-level deployment",
+          "branch protection",
+          "data center architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific methodologies for 'protection coordination' and 'end-to-end system simulation' are not described.",
+          "The timeline for 'multiple OEMs' product development is not specified."
+        ],
+        "applicability": "800 VDC AI Factory deployment",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "800 VDC rectifier development",
+          "DC busway validation",
+          "protection coordination",
+          "data center deployment"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The readiness of the infrastructure and components for the stated timeline is not detailed."
+        ],
+        "applicability": "Option B deployment",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "deployment timeline",
+            "unit": "",
+            "value": "Q3 2027"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "deployment timeline",
+          "800 VDC architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific design and operational details of 'large-scale DC Power Blocks' are not provided.",
+          "The comparison metrics between Option B and Option C are not fully elaborated."
+        ],
+        "applicability": "future ultra-high-density AI Factory deployments",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 4,
+        "topics": [
+          "800 VDC distribution",
+          "data hall-level deployment",
+          "high-density AI Factory",
+          "DC Power Block"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

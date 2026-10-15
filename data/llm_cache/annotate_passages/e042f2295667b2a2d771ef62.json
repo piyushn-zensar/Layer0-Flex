@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific applications or use cases for each energy storage technology mentioned.",
+          "Define the operating conditions for the technologies, such as temperature or voltage ranges."
+        ],
+        "applicability": "energy storage systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "energy storage technologies",
+          "superconducting magnetic energy storage",
+          "supercapacitors",
+          "electrostatic energy storage"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Confirm if the licensing applies to the entire document or specific sections."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 2,
+        "topics": [
+          "licensing",
+          "Creative Commons",
+          "documentation"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

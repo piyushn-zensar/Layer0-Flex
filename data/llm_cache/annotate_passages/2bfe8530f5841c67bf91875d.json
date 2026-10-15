@@ -1,0 +1,89 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "rating_or_limit",
+        "n": 1,
+        "topics": [
+          "AC vs. DC power distribution",
+          "power cable comparison"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "power distribution systems",
+        "attributes": [
+          {
+            "conditions": "415 VAC",
+            "name": "Power per cable diameter",
+            "unit": "kW/mm²",
+            "value": "0.6"
+          },
+          {
+            "conditions": "480 VAC",
+            "name": "Power per cable diameter",
+            "unit": "kW/mm²",
+            "value": "0.8"
+          },
+          {
+            "conditions": "800 VDC",
+            "name": "Power per cable diameter",
+            "unit": "kW/mm²",
+            "value": "1.7"
+          },
+          {
+            "conditions": "1500 VDC",
+            "name": "Power per cable diameter",
+            "unit": "kW/mm²",
+            "value": "3.1"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "voltage levels",
+          "power density comparison"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "800 VDC power distribution systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "800 VDC distribution",
+          "GPU rack power density"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "facility-level power distribution",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "system architecture",
+          "medium voltage AC-to-DC conversion"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "adjacent industries",
+        "attributes": [],
+        "content_type": "background",
+        "n": 5,
+        "topics": [
+          "LVDC distribution",
+          "electric vehicles",
+          "photovoltaics"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

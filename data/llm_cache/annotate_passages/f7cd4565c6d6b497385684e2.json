@@ -1,0 +1,142 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Open Compute Project",
+          "Diablo 400",
+          "Scope"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The height of the rack with casters is not included in the table, which might need clarification."
+        ],
+        "applicability": "Diablo 400 power rack",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "target loading capacity",
+            "unit": "lbs",
+            "value": "6000"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Rack dimensions",
+          "Loading capacity"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The asterisk (*) for Google's height is not explained in this passage."
+        ],
+        "applicability": "Diablo 400 power rack",
+        "attributes": [
+          {
+            "conditions": "Microsoft",
+            "name": "Height",
+            "unit": "mm",
+            "value": "2329 ±3"
+          },
+          {
+            "conditions": "Microsoft",
+            "name": "Width",
+            "unit": "mm",
+            "value": "600 ±2"
+          },
+          {
+            "conditions": "Microsoft",
+            "name": "Depth",
+            "unit": "mm",
+            "value": "1200 ±2"
+          },
+          {
+            "conditions": "Meta",
+            "name": "Height",
+            "unit": "mm",
+            "value": "2329"
+          },
+          {
+            "conditions": "Meta",
+            "name": "Width",
+            "unit": "mm",
+            "value": "600"
+          },
+          {
+            "conditions": "Meta",
+            "name": "Depth",
+            "unit": "mm",
+            "value": "1219"
+          },
+          {
+            "conditions": "Google",
+            "name": "Height",
+            "unit": "mm",
+            "value": "2329*"
+          },
+          {
+            "conditions": "Google",
+            "name": "Width",
+            "unit": "mm",
+            "value": "711"
+          },
+          {
+            "conditions": "Google",
+            "name": "Depth",
+            "unit": "mm",
+            "value": "1219.2"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "Rack dimensions",
+          "Vendor-specific dimensions"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Tolerances for the height option are not defined and are deferred to a future revision."
+        ],
+        "applicability": "Diablo 400 power rack",
+        "attributes": [
+          {
+            "conditions": "future revision",
+            "name": "Height option",
+            "unit": "mm",
+            "value": "2410"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "Rack dimensions",
+          "Height options"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Some options and features are described without specific implementation details, such as the type of intrusion detection switch or emergency shutoff."
+        ],
+        "applicability": "Diablo 400 power rack",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 5,
+        "topics": [
+          "Mechanical features",
+          "Rack design",
+          "Safety features"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

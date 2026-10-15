@@ -1,0 +1,73 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'higher density data center power distribution architectures' could benefit from a more precise definition.",
+          "The specific contributions to the renewable energy industry are not detailed."
+        ],
+        "applicability": "Data center power distribution systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Sustainability",
+          "Solid State Transformer",
+          "Data Center Power Distribution",
+          "Renewable Energy Integration"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'megawatt-scale power electronic converter' could be clarified with specific power ratings.",
+          "Details on the coupling with energy storage are not provided."
+        ],
+        "applicability": "Medium Voltage Solid-State Transformer (MVSST)",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "Solid State Transformer",
+          "Medium Voltage Uninterruptible Power Supply",
+          "AC-to-DC Conversion",
+          "Low Voltage Direct Current Distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'programmable MVAC response compliant with evolving grid codes' could be clarified with examples.",
+          "Specifics on the 'high-density data center design' are not provided."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Grid-Interactive Capabilities",
+          "Programmable MVAC Response",
+          "Controlled LVDC Voltage Regulation",
+          "High-Density Data Center Design",
+          "Wide-Bandgap Semiconductors"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The 'dotted frame in the architecture graph' is referenced but not included in the passage.",
+          "Details on the examples in Appendix A are not provided."
+        ],
+        "applicability": "Solid State Transformer (SST)",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "Application Architectures",
+          "Engineering Solutions",
+          "Specification Framework",
+          "Design Target"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

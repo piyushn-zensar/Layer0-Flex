@@ -1,0 +1,81 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage mentions 'different chemistries' but does not specify which ones.",
+          "The term 'benign responses' is not clearly defined.",
+          "Conditions under which 'thermal events' occur are not detailed."
+        ],
+        "applicability": "Battery systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Battery thermal events",
+          "Cell chemistry risks",
+          "Thermal runaway",
+          "Battery safety testing"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify the exact conditions under which propagation occurs.",
+          "Details on UL 9540a testing requirements are not provided.",
+          "The term 'vast majority of risk' is subjective and lacks quantification."
+        ],
+        "applicability": "ESS systems",
+        "attributes": [
+          {
+            "conditions": "Batteries present voltages often over this value.",
+            "name": "Voltage",
+            "unit": "VDC",
+            "value": "1000"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "Thermal propagation in batteries",
+          "ESS system design",
+          "UL 9540a testing",
+          "Electrical safety risks"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify the types of gases released during thermal events.",
+          "Details on 'different approaches' for ventilation are not provided.",
+          "The term 'substantial challenges' is subjective and lacks quantification."
+        ],
+        "applicability": "Indoor battery installations",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Battery isolation and disconnect",
+          "Ventilation for thermal events",
+          "Safety during installation and service"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify methods for fire suppression.",
+          "Details on 'access directly to the cell' are not provided.",
+          "The term 'difficult' is subjective and lacks quantification."
+        ],
+        "applicability": "Lithium-ion battery systems",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "Fire suppression for lithium-ion batteries",
+          "Safety systems for battery installations",
+          "Thermal runaway management"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

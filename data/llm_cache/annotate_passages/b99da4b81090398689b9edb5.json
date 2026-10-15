@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific details of the Mt. Diablo specification are not provided.",
+          "The scope limitation regarding bidirectional power flow and energy storage is not fully detailed."
+        ],
+        "applicability": "DC-supplied IT racks",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Bidirectional power flow",
+          "Energy storage",
+          "DC-supplied IT racks",
+          "OCP Rack & Power project",
+          "Mt. Diablo specification"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

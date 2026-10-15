@@ -1,0 +1,69 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Details of the preliminary report expected in Q2 2026 are not provided.",
+          "Specific regional codes and standards are not listed."
+        ],
+        "applicability": "Data centers, electrical installations",
+        "attributes": [
+          {
+            "conditions": "Proposed expansion of IEC 62368 scope",
+            "name": "Voltage Scope Expansion",
+            "unit": "",
+            "value": "1000 VAC / 1500 VDC"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "IEC 62368",
+          "Voltage Standards",
+          "Data Center Codes"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The document mentions a future revision for a comprehensive global analysis but does not specify a timeline.",
+          "Differences between IEC and UL standards are described but not detailed."
+        ],
+        "applicability": "Global electrical installations",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "IEC Standards",
+          "UL Standards",
+          "Global Installation Requirements"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage references a 'Voltage section above,' which is not included in the provided text."
+        ],
+        "applicability": "Global electrical installations",
+        "attributes": [
+          {
+            "conditions": "Defined by international product standards and regulations",
+            "name": "Low Voltage Definition",
+            "unit": "",
+            "value": "1000 VAC / 1500 VDC"
+          }
+        ],
+        "content_type": "definition",
+        "n": 3,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Low Voltage Definition",
+          "IEC 60364",
+          "Voltage Standards"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

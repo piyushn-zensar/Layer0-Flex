@@ -1,0 +1,166 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific characteristics and device compatibility details are not provided in the passage."
+        ],
+        "applicability": "Voltage levels and power quality systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "System earthing",
+          "Device compatibility"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The table references 'M conductor' and 'g' without defining them.",
+          "The conditions for the values are not fully described."
+        ],
+        "applicability": "Low Voltage DC systems",
+        "attributes": [
+          {
+            "conditions": "Equivalent voltage",
+            "name": "Nominal Voltage",
+            "unit": "V",
+            "value": "350/700"
+          },
+          {
+            "conditions": "Equivalent voltage",
+            "name": "Nominal Voltage",
+            "unit": "V",
+            "value": "700"
+          },
+          {
+            "conditions": "Equivalent voltage",
+            "name": "Nominal Voltage",
+            "unit": "V",
+            "value": "700/1400"
+          },
+          {
+            "conditions": "Equivalent voltage",
+            "name": "Nominal Voltage",
+            "unit": "V",
+            "value": "1400"
+          },
+          {
+            "conditions": "",
+            "name": "Impulse Withstand Voltage, OVC II",
+            "unit": "kV",
+            "value": "2.5"
+          },
+          {
+            "conditions": "",
+            "name": "Impulse Withstand Voltage, OVC III",
+            "unit": "kV",
+            "value": "4"
+          },
+          {
+            "conditions": "",
+            "name": "Clearance to PE, OVC II",
+            "unit": "mm",
+            "value": "1.5"
+          },
+          {
+            "conditions": "",
+            "name": "Clearance to PE, OVC III",
+            "unit": "mm",
+            "value": "3"
+          },
+          {
+            "conditions": "",
+            "name": "Clearance to PE, OVC IV",
+            "unit": "mm",
+            "value": "5.5"
+          },
+          {
+            "conditions": "",
+            "name": "Creepage to PE, PD2, Mat Grp 1",
+            "unit": "mm",
+            "value": "2.5"
+          },
+          {
+            "conditions": "",
+            "name": "Creepage to PE, PD2, Mat Grp 3",
+            "unit": "mm",
+            "value": "5"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Nominal voltage levels",
+          "System earthing",
+          "Impulse withstand voltage",
+          "Clearance and creepage distances"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The table uses abbreviations like 'L-M', 'PD2', and 'Mat Grp 1' without providing definitions.",
+          "Some values are missing or marked with a dash ('-'), which requires clarification."
+        ],
+        "applicability": "Low Voltage DC systems",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Creepage for L-M, PD2, Mat Grp 1",
+            "unit": "mm",
+            "value": "2.5"
+          },
+          {
+            "conditions": "",
+            "name": "Creepage for L-M, PD2, Mat Grp 3",
+            "unit": "mm",
+            "value": "5"
+          },
+          {
+            "conditions": "",
+            "name": "Creepage for L-M, PD3, Mat Grp 3",
+            "unit": "mm",
+            "value": "8"
+          },
+          {
+            "conditions": "",
+            "name": "Creepage for L-L, PD2, Mat Grp 1",
+            "unit": "mm",
+            "value": "5"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "Creepage distances",
+          "Material groups",
+          "Pollution degree"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The passage does not specify the scope of the license beyond the name."
+        ],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 March 2026"
+          }
+        ],
+        "content_type": "background",
+        "n": 4,
+        "topics": [
+          "Document metadata",
+          "Licensing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,116 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "Open Compute Project Diablo 400",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "Regulatory compliance",
+          "Environmental requirements",
+          "Eco-design",
+          "Sustainability"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "PE grounding methods",
+          "Appendix A"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Increased spacing requirements of downstream DCDC to be confirmed by DCDC Designer/safety."
+        ],
+        "applicability": "High Resistance Grounding (HRG)",
+        "attributes": [
+          {
+            "conditions": "Touching +/-400V to PE",
+            "name": "Voltage",
+            "unit": "V",
+            "value": "400"
+          },
+          {
+            "conditions": "Touching +400V to -400V",
+            "name": "Electric shock risk",
+            "unit": "",
+            "value": "Exists"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "High Resistance Grounding",
+          "HRG pros and cons",
+          "Electrical safety",
+          "Grounding methods"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on how to implement fault detection at rack or sidecar level.",
+          "Clarification on the priority of resolving first faults to ground."
+        ],
+        "applicability": "High Resistance Grounding (HRG)",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "High Resistance Grounding",
+          "Fault detection",
+          "Grounding safety",
+          "Sensor calibration"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific requirements for components designed for high impedance grounding systems in low impedance systems."
+        ],
+        "applicability": "High Resistance Grounding (HRG)",
+        "attributes": [
+          {
+            "conditions": "Between 400V to chassis in high impedance grounding system",
+            "name": "Voltage",
+            "unit": "V",
+            "value": "400"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 5,
+        "topics": [
+          "High Resistance Grounding",
+          "Component compatibility",
+          "Grounding system design"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "Solid Grounding (SG)",
+        "attributes": [
+          {
+            "conditions": "Based on 400Vdc",
+            "name": "Safety distance",
+            "unit": "Vdc",
+            "value": "400"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 6,
+        "topics": [
+          "Solid Grounding",
+          "Grounding methods",
+          "Electrical safety"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

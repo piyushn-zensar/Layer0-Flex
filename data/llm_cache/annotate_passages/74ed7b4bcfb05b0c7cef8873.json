@@ -1,0 +1,53 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific methods for 'localized peak shaving' and 'power smoothing' are not detailed.",
+          "The term 'minimal energy storage' is not quantified."
+        ],
+        "applicability": "compute racks, 800 VDC systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "AI workload power requirements",
+          "rack-level power management"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific 'energy storage and power conditioning solutions' are not described.",
+          "The term 'bounded and interoperable equipment ecosystem' requires clarification."
+        ],
+        "applicability": "facility-level power systems, grid interface",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "energy storage solutions",
+          "grid interconnection",
+          "DC arc flash safety"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The timeline for 'accelerating equipment development' and 'conducting pilot deployments' is mentioned as 12 months but lacks specific milestones.",
+          "The term 'coexistence strategy' is not elaborated."
+        ],
+        "applicability": "800 VDC systems, AI factories",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "800 VDC adoption",
+          "AI factory deployment",
+          "coexistence with AC systems"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

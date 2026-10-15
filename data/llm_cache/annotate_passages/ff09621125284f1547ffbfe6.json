@@ -1,0 +1,37 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact specifications and compatibility of the row power center and DC power block.",
+          "Define the term 'medium-voltage conversion' in the context of the DC power block."
+        ],
+        "applicability": "AI factory environments",
+        "attributes": [
+          {
+            "conditions": "overhead busway for row power center",
+            "name": "busway voltage",
+            "unit": "VDC",
+            "value": "800"
+          },
+          {
+            "conditions": "row power center, availability expected in 2027",
+            "name": "power capacity per row",
+            "unit": "MW",
+            "value": "2"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "800 VDC distribution",
+          "AI factory power architecture",
+          "scalable power systems",
+          "medium-voltage conversion"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

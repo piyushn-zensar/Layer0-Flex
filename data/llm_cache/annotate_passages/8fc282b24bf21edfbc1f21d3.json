@@ -1,0 +1,111 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Introduction"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact implementation details of LVDC power distribution are not provided."
+        ],
+        "applicability": "Data centers, AI compute loads",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "LVDC Voltage",
+            "unit": "VDC",
+            "value": "≤1500"
+          }
+        ],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "Data center transition to DC",
+          "AI compute density",
+          "LVDC power distribution"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific technical details of the Mt. Diablo Power Rack are not provided."
+        ],
+        "applicability": "HPR IT Racks",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "HPR v1 power shelf capacity",
+            "unit": "kW",
+            "value": "33"
+          },
+          {
+            "conditions": "",
+            "name": "HPR v2 power shelf capacity",
+            "unit": "kW",
+            "value": "72"
+          },
+          {
+            "conditions": "",
+            "name": "HPR v4 power shelf capacity",
+            "unit": "kW",
+            "value": "100"
+          },
+          {
+            "conditions": "Per power shelf",
+            "name": "Power density increase",
+            "unit": "%",
+            "value": "39"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 3,
+        "topics": [
+          "Power rack design",
+          "HPR power shelves",
+          "In-rack energy storage"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact design and implementation of the 800 VDC vertical bus are not detailed."
+        ],
+        "applicability": "IT racks with vertical bus distribution",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Existing vertical bus voltage",
+            "unit": "VDC",
+            "value": "50"
+          },
+          {
+            "conditions": "",
+            "name": "Proposed vertical bus voltage",
+            "unit": "VDC",
+            "value": "800"
+          },
+          {
+            "conditions": "",
+            "name": "IT rack roofline power potential",
+            "unit": "MW",
+            "value": "1+"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 4,
+        "topics": [
+          "High voltage DC distribution",
+          "Vertical bus design",
+          "IT rack power capacity"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

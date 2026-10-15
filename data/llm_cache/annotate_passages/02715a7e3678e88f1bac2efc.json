@@ -1,0 +1,82 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The term 'significant load stability differences' is not quantified or explained.",
+          "The specific control measures for avoiding regeneration during deceleration are not detailed."
+        ],
+        "applicability": "data center applications",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "data center cooling",
+          "motor braking",
+          "regeneration control",
+          "converter design",
+          "800 VDC batteries"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The term 'logical progression' is subjective and not clearly defined.",
+          "The framework for DC system interoperability is mentioned but not detailed."
+        ],
+        "applicability": "data center power distribution",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "DC input power shelf voltage",
+            "unit": "VDC",
+            "value": "±400 or 800"
+          },
+          {
+            "conditions": "",
+            "name": "Mt. Diablo power rack voltage",
+            "unit": "VDC",
+            "value": "±750 or 1500"
+          }
+        ],
+        "content_type": "architecture_description",
+        "n": 2,
+        "topics": [
+          "±400 VDC distribution",
+          "800 VDC distribution",
+          "DC microgrids",
+          "power shelves",
+          "LVDC interoperability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The method or conditions for increasing the current limit are not specified."
+        ],
+        "applicability": "DC microgrids",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "current limit increase",
+            "unit": "A",
+            "value": "131.6 to 140.3"
+          },
+          {
+            "conditions": "",
+            "name": "voltage range for full power",
+            "unit": "VDC",
+            "value": "750 ±5%"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 3,
+        "topics": [
+          "current limit adjustment",
+          "750 VDC operation",
+          "power limiting converters"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

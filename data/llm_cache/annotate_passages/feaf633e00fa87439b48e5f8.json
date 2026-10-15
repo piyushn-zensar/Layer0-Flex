@@ -1,0 +1,66 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact programming settings required for grid reconnection.",
+          "Define the timing needs for high-speed reclosing and transmission breaker operations."
+        ],
+        "applicability": "Data centers",
+        "attributes": [
+          {
+            "conditions": "within one second",
+            "name": "Pre-fault power consumption recovery",
+            "unit": "%",
+            "value": "90-100"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "Fault recovery",
+          "Grid reconnection",
+          "Protection system coordination",
+          "High-speed reclosing",
+          "Transmission breaker operations"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specify the acceptable ramp rates for active power consumption.",
+          "Clarify the methods for managing forced oscillations on the grid."
+        ],
+        "applicability": "Data centers",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "Ramp rate management",
+          "Active power control",
+          "Local generation and storage",
+          "Grid reliability",
+          "Forced oscillations"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Define the specific power quality requirements.",
+          "Clarify the expectations for reactive power provision and voltage management."
+        ],
+        "applicability": "Data centers",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "Power quality requirements",
+          "Reactive power control",
+          "Voltage management",
+          "Monitoring methods",
+          "Oscillation management"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

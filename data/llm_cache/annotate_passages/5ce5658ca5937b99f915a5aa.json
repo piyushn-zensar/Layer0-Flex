@@ -1,0 +1,73 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific details of the 'frameworks under development' are not provided.",
+          "The exact nature of the 'sub-workstream' and its deliverables are not defined."
+        ],
+        "applicability": "data center power infrastructure",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Electromagnetic Compatibility",
+          "Power Distribution",
+          "Rack and Power Alignment",
+          "Data Center Safety",
+          "DC Power Infrastructure"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific 'key design trade-offs' are mentioned but not detailed.",
+          "The 'representative DC approaches' are not explicitly listed."
+        ],
+        "applicability": "data center facilities",
+        "attributes": [],
+        "content_type": "background",
+        "n": 2,
+        "topics": [
+          "AI-driven Workloads",
+          "Data Center Power Landscape",
+          "DC Power Distribution",
+          "Architectural Concepts",
+          "Design Trade-offs"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The 'specific areas for further collaborative development' are not detailed.",
+          "The term 'multi-modal power environment' could be clarified further."
+        ],
+        "applicability": "DC architectures",
+        "attributes": [],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "OCP Tenets",
+          "Stakeholder Collaboration",
+          "DC Architecture Evolution",
+          "Sustainability in Power Solutions",
+          "Energy and IT Convergence"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The implications of the coexistence of AC and DC models are not elaborated."
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "other",
+        "n": 4,
+        "topics": [
+          "AC and DC Coexistence",
+          "Power Models Evolution",
+          "Creative Commons Licensing"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

@@ -1,0 +1,42 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact impedance value for the M conductor connection to earth.",
+          "Specify the voltage levels for L+ and L- conductors.",
+          "Define the insulation stress values for pole-to-ground and pole-to-pole."
+        ],
+        "applicability": "Bipolar DC systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 1,
+        "topics": [
+          "Bipolar DC systems",
+          "Voltage levels",
+          "Power quality",
+          "Isolation requirements",
+          "Protection devices"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the conditions under which grounding on the AC side ensures compatibility.",
+          "Specify the voltage levels and power quality requirements for the AC/DC interlink."
+        ],
+        "applicability": "AC/DC interlink systems",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "AC/DC interlink compatibility",
+          "Grounding methods",
+          "Voltage levels",
+          "Power quality"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

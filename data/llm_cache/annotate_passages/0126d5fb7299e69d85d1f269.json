@@ -1,0 +1,95 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the calculation method for Figure of Merit (FoM).",
+          "Define 'M conductor' and its implications."
+        ],
+        "applicability": "LVDC systems",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Nominal Voltage",
+            "unit": "V",
+            "value": "350/700 (400/800) 700 (800) 700/1400 (750/1500) 1400 (1500)"
+          },
+          {
+            "conditions": "",
+            "name": "Earthing",
+            "unit": "",
+            "value": "TN-S, IT"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Nominal voltage",
+          "Earthing types",
+          "Semiconductor circuit breaker effort"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details of the combinations table are not provided.",
+          "Clarify the relationship between OVC, PD, and impulse withstand voltage."
+        ],
+        "applicability": "Data center applications",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Overvoltage category",
+          "Impulse withstand voltage",
+          "Clearance and creepage"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarify the distinction between OVC categories for different equipment types.",
+          "Define the scope of 'Utility' in OVC IV."
+        ],
+        "applicability": "Data center applications",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 4,
+        "topics": [
+          "OVC applications",
+          "Semiconductor circuit breakers",
+          "Busway systems"
+        ]
+      },
+      {
+        "ambiguities": [],
+        "applicability": "",
+        "attributes": [
+          {
+            "conditions": "",
+            "name": "Date",
+            "unit": "",
+            "value": "30 MARCH, 2026"
+          }
+        ],
+        "content_type": "other",
+        "n": 5,
+        "topics": [
+          "Document licensing",
+          "Publication date"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

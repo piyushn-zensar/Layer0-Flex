@@ -1,0 +1,99 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific values for PF and THD are not provided."
+        ],
+        "applicability": "Rack AC power systems",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "AC power requirements",
+          "power factor",
+          "total harmonic distortion"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Conditions for holdup and ride-through are described but not quantified."
+        ],
+        "applicability": "PSU systems",
+        "attributes": [],
+        "content_type": "definition",
+        "n": 2,
+        "topics": [
+          "AC loss",
+          "holdup time",
+          "ride-through capability"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on system distributed holdup are not fully specified."
+        ],
+        "applicability": "PSU systems in Diablo 400 rack",
+        "attributes": [
+          {
+            "conditions": "100% loading",
+            "name": "Minimum holdup without energy storage",
+            "unit": "msec",
+            "value": "20"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 3,
+        "topics": [
+          "PSU ride-through",
+          "energy storage",
+          "voltage sag and swell"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Specific duration for energy storage hold-up time is not provided."
+        ],
+        "applicability": "PSU systems with energy storage",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 4,
+        "topics": [
+          "PSU ride-through",
+          "energy storage",
+          "transition time"
+        ]
+      },
+      {
+        "ambiguities": [
+          "No specific technical specifications for BBUs and CBUs are provided."
+        ],
+        "applicability": "Rack systems",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 5,
+        "topics": [
+          "energy storage solutions",
+          "battery backup units",
+          "capacitor bank units"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Electrical specifications for power ranges are not detailed."
+        ],
+        "applicability": "Rack systems with BBU options",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 6,
+        "topics": [
+          "BBU options",
+          "rack management",
+          "microcontroller integration"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

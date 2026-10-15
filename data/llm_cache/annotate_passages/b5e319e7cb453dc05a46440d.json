@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The passage references a table (Table 13) but does not provide its content."
+        ],
+        "applicability": "data center",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "energy storage technologies",
+          "data center power quality",
+          "voltage levels"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

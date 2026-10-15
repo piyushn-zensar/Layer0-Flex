@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Specific conditions under which the protection strategies act are not detailed.",
+          "The maturity level of the mentioned technologies is not quantified."
+        ],
+        "applicability": "DC power distribution systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "DC bus protection",
+          "Solid-state circuit breakers",
+          "Overcurrent blocking",
+          "Fault protection strategies"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The document mentions further investigations needed for power converters in current codes and standards but does not specify the scope of these investigations."
+        ],
+        "applicability": "DC power systems for AI factories",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "Overcurrent protection",
+          "DC power systems",
+          "AI factory power distribution",
+          "IEC 60364-4-43 compliance",
+          "NFPA 70 compliance"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The exact value of 'several tens of A/µs' is not specified.",
+          "The term 'required control band' is not defined."
+        ],
+        "applicability": "DC power distribution systems for data centers",
+        "attributes": [
+          {
+            "conditions": "In the event of a short circuit in DC installations with capacitive sources connected at a short distance to the loads",
+            "name": "Fault current increase rate",
+            "unit": "A/µs",
+            "value": "several tens"
+          }
+        ],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "Active DC systems",
+          "Fault current dynamics",
+          "Capacitive sources",
+          "Short circuit behavior",
+          "Power converter regulation"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

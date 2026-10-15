@@ -1,0 +1,77 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The exact conditions under which the stated increases were measured are not detailed."
+        ],
+        "applicability": "GPU racks",
+        "attributes": [
+          {
+            "conditions": "from Hopper to GB300",
+            "name": "TDP power increase",
+            "unit": "%",
+            "value": "75"
+          },
+          {
+            "conditions": "from Hopper to GB300",
+            "name": "performance increase",
+            "unit": "x",
+            "value": "50"
+          },
+          {
+            "conditions": "from 4x8 GPU NVLink domains to 72 GPU NVLink domain",
+            "name": "rack power density increase",
+            "unit": "x",
+            "value": "3.4"
+          }
+        ],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "GPU power density",
+          "NVLink domain",
+          "rack power architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific safety measures for 800 VDC systems are not detailed.",
+          "The exact comparison metrics for copper use and cable bulk reduction are not provided."
+        ],
+        "applicability": "datacenter power distribution",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 2,
+        "topics": [
+          "800 VDC distribution",
+          "power architecture",
+          "datacenter efficiency"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific methods for energy storage integration are not described."
+        ],
+        "applicability": "datacenters with GPU workloads",
+        "attributes": [
+          {
+            "conditions": "beyond this value",
+            "name": "power density",
+            "unit": "MW",
+            "value": "1"
+          }
+        ],
+        "content_type": "background",
+        "n": 3,
+        "topics": [
+          "datacenter power density",
+          "energy storage",
+          "load management"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

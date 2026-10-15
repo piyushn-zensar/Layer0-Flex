@@ -1,0 +1,40 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific technical details of the 800 VDC distribution system are not provided.",
+          "The exact requirements for the power distribution architecture are not detailed."
+        ],
+        "applicability": "AI infrastructure, high-density systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "AI infrastructure power requirements",
+          "800 VDC distribution",
+          "high-density AI deployments",
+          "power distribution architecture"
+        ]
+      },
+      {
+        "ambiguities": [
+          "The specific 'common set of interfaces and system requirements' is not defined.",
+          "The exact role of OCP in the standardization process is not fully detailed."
+        ],
+        "applicability": "AI infrastructure, data centers",
+        "attributes": [],
+        "content_type": "requirement_or_rule",
+        "n": 2,
+        "topics": [
+          "800 VDC standardization",
+          "interoperable power systems",
+          "OCP collaboration",
+          "data center power interfaces"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

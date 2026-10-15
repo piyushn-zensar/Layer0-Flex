@@ -1,0 +1,23 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "The specific conditions under which an MV/LV transformer with an AC/DC converter is preferred over an SST are not detailed.",
+          "The term 'isolated or non-isolated' for the AC/DC converter could be clarified further."
+        ],
+        "applicability": "Data center power systems",
+        "attributes": [],
+        "content_type": "background",
+        "n": 1,
+        "topics": [
+          "LVDC distribution",
+          "MV to LV conversion",
+          "Data center power architecture"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

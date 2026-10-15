@@ -1,0 +1,85 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Definition of 'extremely fast response' and 'sub-millisecond class'",
+          "Clarification on 'very high peak current/power'"
+        ],
+        "applicability": "Power sidecar rack",
+        "attributes": [
+          {
+            "conditions": "typical of capacitor systems",
+            "name": "Response time",
+            "unit": "class",
+            "value": "sub-millisecond"
+          },
+          {
+            "conditions": "for short durations to hold bus stability under AI load steps and switching events",
+            "name": "Peak power capability",
+            "unit": "current/power",
+            "value": "very high"
+          }
+        ],
+        "content_type": "requirement_or_rule",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "Capacitor systems",
+          "Transient mitigation",
+          "Thermal management"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Clarification on 'policy-dependent' time scales",
+          "Definition of 'very high peak power' and 'moderate peak power'"
+        ],
+        "applicability": "CBU and BBU systems",
+        "attributes": [
+          {
+            "conditions": "policy-dependent",
+            "name": "Typical time scale (CBU)",
+            "unit": "",
+            "value": "Milliseconds to short seconds"
+          },
+          {
+            "conditions": "policy-dependent",
+            "name": "Typical time scale (BBU)",
+            "unit": "",
+            "value": "Seconds to minutes"
+          }
+        ],
+        "content_type": "rating_or_limit",
+        "n": 2,
+        "topics": [
+          "Capacitor Backup Unit (CBU)",
+          "Battery Backup Unit (BBU)",
+          "Transient stabilization",
+          "Ride-through capability",
+          "AI load steps"
+        ]
+      },
+      {
+        "ambiguities": [
+          "Details on the 'newer solutions' combining BBU and CBU functionality",
+          "Metrics for 'space, density, performance, efficiency, sustainability, and TCO'"
+        ],
+        "applicability": "",
+        "attributes": [],
+        "content_type": "design_guidance",
+        "n": 3,
+        "topics": [
+          "Integrated backup solutions",
+          "Space and density optimization",
+          "Performance and efficiency",
+          "Sustainability",
+          "Total cost of ownership (TCO)"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

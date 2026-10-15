@@ -1,0 +1,45 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the specific conditions under which each voltage level is preferred.",
+          "Define 'narrowband' and 'wideband' DC in this context.",
+          "Confirm the scalability options and their implications."
+        ],
+        "applicability": "Data center power distribution and rack utilization",
+        "attributes": [
+          {
+            "conditions": "Wideband power distribution",
+            "name": "Voltage",
+            "unit": "VDC",
+            "value": "1500 or ±750"
+          },
+          {
+            "conditions": "Narrowband rack utilization",
+            "name": "Voltage",
+            "unit": "VDC",
+            "value": "800"
+          },
+          {
+            "conditions": "Rack utilization for efficiency optimization",
+            "name": "Voltage",
+            "unit": "VDC",
+            "value": "±750"
+          }
+        ],
+        "content_type": "design_guidance",
+        "n": 1,
+        "topics": [
+          "Voltage levels",
+          "Power quality",
+          "DC power distribution",
+          "Rack utilization",
+          "Efficiency optimization"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}

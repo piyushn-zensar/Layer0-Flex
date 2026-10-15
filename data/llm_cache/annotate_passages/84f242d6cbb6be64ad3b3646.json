@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "passages": [
+      {
+        "ambiguities": [
+          "Clarify the exact voltage level provided by the system.",
+          "Define the term 'M node' and its role in the system.",
+          "Specify the conditions under which power loss is lower compared to systems with M."
+        ],
+        "applicability": "bipolar DC systems without distributed M",
+        "attributes": [],
+        "content_type": "architecture_description",
+        "n": 1,
+        "topics": [
+          "bipolar DC system",
+          "voltage levels",
+          "power quality",
+          "electrolytic corrosion",
+          "power loss"
+        ]
+      }
+    ]
+  },
+  "task": "annotate_passages"
+}
