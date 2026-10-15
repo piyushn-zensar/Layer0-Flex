@@ -86,6 +86,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: var(--s4) 0; }
 .step-later { display: flex; align-items: center; gap: var(--s2); font-size: var(--fs-md); color: var(--muted); padding: var(--s2) var(--s3) 10px;
   border-bottom: 3px solid transparent; white-space: nowrap; }
 .step-later:hover { color: var(--ink); text-decoration: none; }
+.step-side { display: flex; align-items: flex-end; gap: var(--s2); } /* Changes and Activity: the side pages, together at the right */
 .step-later.current { color: var(--ink); font-weight: 600; border-bottom-color: var(--accent); }
 
 /* ---------- Page header: title, help, actions ---------- */

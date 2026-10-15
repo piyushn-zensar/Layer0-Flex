@@ -45,7 +45,7 @@ const NO_FILTER = { q: "", unit: "", compliance: "", state: "", category: "", on
 type Filters = typeof NO_FILTER;
 
 // A row is a button for the keyboard: Enter or Space on the row itself selects it (links, badges and buttons inside keep their own keys).
-const Row = memo(function Row({ row, href, selected, onSelect }: { row: MatrixRow; href: string; selected: boolean; onSelect: (key: string) => void }) {
+const Row = memo(function Row({ row, href, selected, onSelect }: { row: MatrixRow; href: string; selected: boolean; onSelect: (key: string, history?: boolean) => void }) {
   const key = rowKey(row);
   return (
     <tr data-key={key} tabIndex={0} aria-current={selected ? "true" : undefined}
@@ -59,7 +59,9 @@ const Row = memo(function Row({ row, href, selected, onSelect }: { row: MatrixRo
         ? <><strong>{row.unit}</strong><div className="muted">{row.unit_name}</div>{row.product && <div className="muted">{row.product}</div>}</>
         : <span className="muted">not assigned</span>}</td>
       <td>{row.status ? <StatusBadge status={row.status} /> : <StatusBadge status={row.state} />}
-        {row.response && <div className="muted cons-response" title={row.response}>{row.response}</div>}</td>
+        {row.response && <div className="muted cons-response" title={row.response}>{row.response}</div>}
+        {row.assignment_id != null && <button type="button" className="link row-history" onClick={(e) => { e.stopPropagation(); onSelect(key, true); }}
+          aria-label={`Show the history of ${row.req_id} for ${row.unit}`}>History</button>}</td>
       <td>{row.compliance ? <ComplianceBadge row={row} /> : <span className="muted">{row.unit ? "No compliance yet" : ""}</span>}</td>
       <td className="muted">{row.source}</td>
     </tr>
@@ -76,7 +78,8 @@ export default function ConsolidationPage() {
   const { data: opp } = useApi<{ documents: Doc[] }>(`/api/opportunities/${id}`); // file names for the detail's source line
   const [selectedKey, setSelectedKey] = useState<string>();
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const select = useCallback((key: string) => setSelectedKey(key), []);
+  const [historyOpen, setHistoryOpen] = useState(false); // the table's "History" link opens the row with its history showing
+  const select = useCallback((key: string, history = false) => { setSelectedKey(key); setHistoryOpen(history); }, []);
   const selected = useMemo(() => rows?.find((r) => rowKey(r) === selectedKey), [rows, selectedKey]);
   const close = useCallback(() => {
     const key = selectedKey;
@@ -132,6 +135,7 @@ export default function ConsolidationPage() {
       {/* UX-12: the downloads and the outline are page actions, not part of the sentence */}
       <PageHead level={2} title="Compliance matrix" help={HELP}>
         <Link className="button secondary" href={`/opportunities/${id}/consolidation/outline`} data-tour="cons-outline-link">Response outline (draft)</Link>
+        <Link className="button secondary" href={`/opportunities/${id}/consolidation/activity`} data-tour="cons-activity-link">Activity log</Link>
         <a className="button secondary" href={`/api/opportunities/${id}/compliance-matrix.csv`} data-tour="cons-csv">CSV</a>
         <a className="button" href={`/api/opportunities/${id}/compliance-matrix.xlsx`} data-tour="cons-xlsx">Download compliance matrix (Excel)</a>
       </PageHead>
@@ -229,7 +233,8 @@ export default function ConsolidationPage() {
           </div>
           {selected && (() => {
             const doc = opp?.documents.find((d) => d.id === selected.document_id);
-            return <DetailPanel ref={headingRef} row={selected} traceHref={traceHref(selected.req_id)} onClose={close}
+            return <DetailPanel ref={headingRef} row={selected} traceHref={traceHref(selected.req_id)} onClose={close} historyOpen={historyOpen}
+              activityHref={`/opportunities/${id}/consolidation/activity?req_id=${encodeURIComponent(selected.req_id)}`}
               docName={doc ? `${doc.filename}${doc.role !== "main" ? ` (${docTypeLabel(doc.role)})` : ""}` : "RFP document"} />;
           })()}
           </div>

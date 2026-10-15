@@ -73,3 +73,13 @@
   .matrix-layout.has-detail { grid-template-columns: 1fr; } /* stacked: the panel comes first and takes focus, so it is the first thing seen */
   .matrix-detail { order: -1; position: static; max-height: none; }
 }
+
+/* ---- J-13: answer history in the matrix detail, and the Activity page ---- */
+.row-history { padding: 0; margin-top: var(--s1); font-size: var(--fs-sm); display: block; }
+.resp-history > summary { cursor: pointer; color: var(--accent); font-size: var(--fs-sm); }
+.resp-history-list { margin: var(--s2) 0 0; padding-left: 18px; display: grid; gap: var(--s2); font-size: var(--fs-sm); }
+.act-table { table-layout: auto; } .act-table td, .act-table th { vertical-align: top; }
+.act-when { white-space: nowrap; } .act-detail { min-width: 220px; overflow-wrap: anywhere; }
+.act-raw { margin-top: var(--s1); font-size: var(--fs-sm); } .act-raw summary { cursor: pointer; color: var(--accent); }
+.act-raw pre { margin: var(--s1) 0 0; max-height: 180px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--surface-2); border-radius: 4px; padding: var(--s2); }
+.matrix-filters .act-req { flex: 1 1 200px; } .matrix-filters .act-req input { width: 100%; }

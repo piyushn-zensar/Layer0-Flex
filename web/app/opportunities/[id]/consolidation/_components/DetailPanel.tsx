@@ -5,6 +5,7 @@ import Link from "next/link";
 import { forwardRef, useState } from "react";
 import { StatusBadge } from "@/components/ui";
 import ComplianceBadge from "./ComplianceBadge";
+import ResponseHistory from "./ResponseHistory";
 import SourcePreview from "./SourcePreview";
 import { rowKey, type MatrixRow } from "./types";
 
@@ -16,8 +17,9 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   return <div className="detail-field"><dt>{label}</dt><dd>{children}</dd></div>;
 }
 
-const DetailPanel = forwardRef<HTMLHeadingElement, { row: MatrixRow; docName: string; traceHref: string; onClose: () => void }>(
-  function DetailPanel({ row, docName, traceHref, onClose }, headingRef) {
+// activityHref: the Activity page filtered to this requirement; historyOpen: the table's "History" link opened this row to show it.
+const DetailPanel = forwardRef<HTMLHeadingElement, { row: MatrixRow; docName: string; traceHref: string; activityHref: string; historyOpen: boolean; onClose: () => void }>(
+  function DetailPanel({ row, docName, traceHref, activityHref, historyOpen, onClose }, headingRef) {
     const [showSource, setShowSource] = useState(false);
     const text = (v: string | null) => (v && v.trim() ? <span className="detail-text">{v}</span> : NOT_PROVIDED);
     const hasSource = row.spans.some((s) => s.document_id && s.page);
@@ -51,6 +53,12 @@ const DetailPanel = forwardRef<HTMLHeadingElement, { row: MatrixRow; docName: st
             <Field label="Answered by">{row.responded_by ?? "—"}{row.validated_by && <span className="muted"> · validated by {row.validated_by}</span>}
               {row.validation_note && <div className="muted">{row.validation_note}</div>}</Field>
           )}
+          <Field label="History">
+            {row.assignment_id != null
+              ? <ResponseHistory assignmentId={row.assignment_id} unit={row.unit} defaultOpen={historyOpen} />
+              : <span className="muted">No unit holds this requirement yet, so there is no answer history.</span>}
+            <div className="detail-actions"><Link href={activityHref} data-tour="matrix-activity-link">All activity for {row.req_id}</Link></div>
+          </Field>
           <Field label="Source">
             {row.source} <span className="muted">· {docName}</span>
             <div className="detail-actions">

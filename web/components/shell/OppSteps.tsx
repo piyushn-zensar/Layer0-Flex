@@ -41,6 +41,7 @@ export default function OppSteps() {
   const base = `/opportunities/${id}`;
   const status = data?.opportunity.status ?? "new";
   const onChanges = path === base + "/changes";
+  const onActivity = path === base + "/consolidation/activity"; // J-13: a side page of the matrix, not the matrix step itself
 
   return (
     <div className="opp-head" data-tour="opp-head">
@@ -51,7 +52,7 @@ export default function OppSteps() {
       <nav aria-label="Workflow steps">
         <ol className="stepper" data-tour="stepper">
           {STEPS.map((s, i) => {
-            const current = path === base + s.suffix || (s.suffix !== "" && path.startsWith(base + s.suffix + "/")); // sub-pages too
+            const current = !(s.suffix === "/consolidation" && onActivity) && (path === base + s.suffix || (s.suffix !== "" && path.startsWith(base + s.suffix + "/"))); // sub-pages too
             const done = rank(status) >= rank(s.doneFrom);
             return (
               <li key={s.label} className={`${current ? "current" : ""} ${done ? "done" : ""}`} data-tour={s.tour}>
@@ -62,9 +63,14 @@ export default function OppSteps() {
             );
           })}
         </ol>
+        <div className="step-side">
         <Link className={`step-later ${onChanges ? "current" : ""}`} href={`${base}/changes`} aria-current={onChanges ? "page" : undefined} data-tour="step-changes">
           <span className="step-no" aria-hidden>Δ</span>Changes
         </Link>
+        <Link className={`step-later ${onActivity ? "current" : ""}`} href={`${base}/consolidation/activity`} aria-current={onActivity ? "page" : undefined} data-tour="step-activity">
+          <span className="step-no" aria-hidden>≡</span>Activity
+        </Link>
+        </div>
       </nav>
     </div>
   );
