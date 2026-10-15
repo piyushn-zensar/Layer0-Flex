@@ -73,6 +73,12 @@ def dispatch(opp_id: str, request: Request, db: Session = Depends(get_db)):
     return {"created": created, "needs_owner": len(service.needs_owner(db, opp_id))}
 
 
+@router.get("/opportunities/{opp_id}/assessment")
+def assessment(opp_id: str, db: Session = Depends(get_db)):
+    """The Assessment step (technical-architecture 16.5): bid summary, open questions, participation, routing, progress."""
+    return _call(service.assessment, db, opp_id)
+
+
 @router.get("/opportunities/{opp_id}/needs-owner")
 def needs_owner(opp_id: str, db: Session = Depends(get_db)):
     """Product requirements no participating unit holds: not dispatched until a unit or a capability gap (C-08)."""

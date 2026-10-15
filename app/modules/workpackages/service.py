@@ -20,6 +20,12 @@ Public contract:
     record_gap(db, opp_id, req_id, reason, actor) -> Assignment   a capability gap: no unit can offer this product
         requirement; a validated non-compliant bid desk answer with the reason, kept in the register and the matrix.
         LookupError: not in the published register; ValueError: no reason, or a participating unit holds it
+    assessment(db, opp_id) -> dict                        the Assessment step (16.5): published, baseline, summary
+        {requirements, by_category, by_offering, sections, suggested_units}, open_questions {exceptions, needs_owner,
+        rule_warnings, questions}, participation {id, units, rationale, decided_by} | None, no_go, units (catalog),
+        routing [{req_id, text, category, section, route: unit | bid_desk |
+        capability_gap | needs_owner, units [{bu, product_id, specialists}]}] (before publishing: a preview of the
+        register; without a participation: with the suggested units), sent, progress. LookupError: unknown bid
     by_requirement(db, opp_id) -> dict[str, list[Assignment]]   active (not withdrawn) assignments
     inbox(db, bu) -> list[Assignment]                     a unit's active work across all opportunities
     get(db, assignment_id) -> Assignment | None           one assignment
@@ -50,7 +56,7 @@ Public contract:
         their submitted / validated answers are returned with the note (the unit answers again), assigned and
         returned work keeps its status and gets the note. Returns how many assignments were touched
 """
-from collections import defaultdict
+from collections import Counter, defaultdict
 
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
@@ -115,13 +121,13 @@ def _is_gap(a: Assignment | None) -> bool:
     return bool(a) and a.status in ("submitted", "validated") and a.compliance == "not_met" and bool(a.reason)
 
 
-def _routing(db: Session, opp_id: str, units: set[str], existing: dict):
-    """(requirement, targets) for every published approved requirement: targets = {bu: product_ref}, one per matched
-    participating unit (its first product); else the bid desk for a non-product item or a recorded capability gap;
-    else None: a product requirement that needs an owner (C-08)."""
+def _routing(db: Session, opp_id: str, units: set[str], existing: dict, preview: bool = False):
+    """(requirement, targets) for every published approved requirement (preview: the register before publishing too):
+    targets = {bu: product_ref}, one per matched participating unit (its first product); else the bid desk for a
+    non-product item or a recorded capability gap; else None: a product requirement that needs an owner (C-08)."""
     matches = matching.for_opportunity(db, opp_id)
     for req in requirements.current(db, opp_id):
-        if req.status != "approved" or req.baseline is None:
+        if req.status != "approved" or (req.baseline is None and not preview):
             continue
         m = matches.get(req.req_id)
         targets = {}
@@ -138,6 +144,50 @@ def needs_owner(db: Session, opp_id: str) -> list[dict]:
     return [{"req_id": req.req_id, "text": req.text, "category": req.category,
              "suggested": [u["bu"] for u in (matches[req.req_id].units if req.req_id in matches else [])]}
             for req, targets in _routing(db, opp_id, units, _existing(db, opp_id)) if targets is None]
+
+
+def _specialists(bu: str) -> list[str]:
+    unit = catalog.unit(bu)
+    return [unit["product_manager"], unit["design_engineer"]] if unit else [BID_MANAGER]
+
+
+def assessment(db: Session, opp_id: str) -> dict:
+    opportunities.require(db, opp_id)
+    ev, base = decisions.evidence(db, opp_id), requirements.baseline(db, opp_id)
+    p, go = decisions.latest(db, opp_id, "participation"), decisions.latest(db, opp_id, "go_no_go")
+    units = set(p.units if p else ev["suggested_units"])  # no participation yet: route with the suggested units (a preview)
+    existing, matches = _existing(db, opp_id), matching.for_opportunity(db, opp_id)
+    routing, sections = [], defaultdict(int)
+    for req, targets in _routing(db, opp_id, units, existing, preview=True):
+        sections[req.section] += bool(req.section)
+        m = matches.get(req.req_id)
+        if targets is None:
+            route, rows = "needs_owner", [{"bu": u["bu"], "product_id": u["product_id"], "specialists": []} for u in (m.units if m else [])]
+        elif BID_DESK in targets:
+            route = "capability_gap" if _is_gap(existing.get((req.req_id, BID_DESK))) else "bid_desk"
+            rows = [{"bu": BID_DESK, "product_id": None, "specialists": [BID_MANAGER]}]
+        else:
+            route = "unit"
+            rows = [{"bu": bu, "product_id": p, "specialists": _specialists(bu)} for bu, p in targets.items()]
+        routing.append({"req_id": req.req_id, "text": req.text, "category": req.category, "section": req.section,
+                        "route": route, "units": rows})
+    rules = [{"id": r["id"], "status": r["status"], "note": r["note"]} for r in ev["checks"]["rules"] if r["status"] in ("warn", "fail")]
+    return {
+        "published": base is not None, "baseline": base.number if base else None,
+        "summary": {"requirements": len(routing), "by_category": dict(Counter(r["category"] for r in routing)),
+                    "by_offering": ev["offering_mix"], "suggested_units": ev["suggested_units"],
+                    "sections": [{"section": s, "count": n} for s, n in sorted(sections.items(), key=lambda x: -x[1]) if s][:8]},
+        "open_questions": {
+            "exceptions": [{"req_id": e["req_id"], "text": e["text"], "reason": e["reason"]} for e in requirements.exceptions(db, opp_id)],
+            "needs_owner": [{"req_id": r["req_id"], "text": r["text"], "category": r["category"],
+                             "suggested": [u["bu"] for u in r["units"]]} for r in routing if r["route"] == "needs_owner"],
+            "rule_warnings": rules,
+            "questions": [{"id": c.id, "req_id": c.req_id, "author": c.author, "text": c.text} for c in open_questions(db, opp_id)],
+        },
+        "participation": {"id": p.id, "units": p.units, "rationale": p.rationale, "decided_by": p.decided_by} if p else None,
+        "no_go": bool(go and go.outcome == "no_go"), "units": catalog.units(), "routing": routing,
+        "sent": bool(by_requirement(db, opp_id)), "progress": progress(db, opp_id),
+    }
 
 
 def record_gap(db: Session, opp_id: str, req_id: str, reason: str, actor: str) -> Assignment:

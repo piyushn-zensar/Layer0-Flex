@@ -1,5 +1,5 @@
 "use client";
-// Evidence pack, participation, go/no-go and one-step dispatch.  Owner: Atharv.
+// Bid decision: the evidence pack and the go/no-go (participation and dispatch moved to the Assessment step, A-16).  Owner: Atharv.
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
@@ -130,20 +130,14 @@ export default function DecisionsPage() {
   const bm = isBidManager(useMe()); // the bid manager makes the final go/no-go call (technical-architecture 16.5)
   if (error) return <Alert kind="error" title="Could not load the bid decision.">{error}</Alert>;
   if (!data) return <Skeleton lines={5} />;
-  const { evidence: ev, participation: part, go_no_go: go } = data;
+  const { evidence: ev, go_no_go: go } = data;
 
-  // one action at a time: a double click must not record two decisions or start two dispatches
+  // one action at a time: a double click must not record two decisions
   const run = <T,>(label: string, request: Promise<T>, done: (r: T) => void = () => {}) => {
     setBusy(label);
     request.then((r) => { done(r); return reload(); }, (e) => toast.error(errorMessage(e))).finally(() => setBusy(undefined));
   };
-  const recordGap = (reqId: string, form: FormData) =>
-    run("gap", post(`/api/opportunities/${id}/requirements/${reqId}/capability-gap`, { reason: form.get("reason") }),
-      () => toast.success(`${reqId}: capability gap recorded (non-compliant, with the reason).`));
   const statusChanged = () => window.dispatchEvent(new Event(STATUS_EVENT)); // header stepper and badge
-  const recordParticipation = (form: FormData) =>
-    run("participation", post(`/api/opportunities/${id}/participation`, { units: form.getAll("units"), rationale: form.get("rationale") }),
-      () => toast.success("Participation recorded."));
   const decide = async (outcome: string, form: HTMLFormElement) => {
     const f = new FormData(form);
     const criteria = (data.summary?.criteria ?? []).map((c) => ({ id: c.id, status: f.get(`crit-${c.id}`), note: f.get(`note-${c.id}`) ?? "" }));
@@ -152,15 +146,10 @@ export default function DecisionsPage() {
     run("decision", post<{ withdrawn: number }>(`/api/opportunities/${id}/go-no-go`, { outcome, rationale: f.get("rationale"), criteria }),
       (r) => { toast.success(outcome === "go" ? "Decision recorded: go." : `Decision recorded: no-go. ${r.withdrawn} open item(s) withdrawn from the units.`); statusChanged(); });
   };
-  const dispatch = () => run("dispatch", post<{ created: number; needs_owner: number }>(`/api/opportunities/${id}/dispatch`), (r) => {
-    toast.success((r.created ? `${r.created} new assignment(s) sent to the units.` : "Nothing new to send: every unit already has its work.")
-      + (r.needs_owner ? ` ${r.needs_owner} product requirement(s) need an owner and were not sent.` : ""));
-    statusChanged();
-  });
 
   return (
     <div className="decisions">
-      <PageHead level={2} title="Bid decision" help="Review the evidence, choose the participating business units and send each unit its work. Once the units have assessed it, the bid manager decides go or no-go." />
+      <PageHead level={2} title="Bid decision" help="Go/no-go only: once the units have assessed the bid (Assessment step), review the evidence and their answers; the bid manager decides go or no-go." />
       <section className="card" data-tour="dec-evidence">
         <div className="card-head"><h2>Evidence</h2>
           <span className="muted" data-tour="dec-evidence-counts">{ev.requirements} requirements · {Object.entries(ev.by_category).map(([k, v]) => `${k} ${v}`).join(", ")}</span></div>
@@ -177,49 +166,11 @@ export default function DecisionsPage() {
       {ev.frozen && <EngineeringChecks c={ev.checks} oppId={id} />}
       {ev.frozen && <PortfolioChecks ev={ev} />}
 
-      <section className="card" data-tour="dec-participation">
-        <div className="card-head"><h2>1. Which business units take part?</h2>
-          {part && <span className="muted" data-tour="dec-part-recorded">Recorded by <strong>{part.decided_by}</strong>: {part.units.join(", ")}</span>}</div>
-        {part && <p>{part.rationale}
-          {part.rationale && <> <SendToKnowledge kind="decision" refId={part.id} status={sent?.[`decision:${part.id}`]} onSent={reloadSent} /></>}</p>}
-        <form className="form" action={recordParticipation}>
-          <fieldset className="dec-units" data-tour="dec-units"><legend className="sr-only">Business units</legend>
-            {data.units.map((u) => (
-              <label key={u.code} className="check">
-                <input type="checkbox" name="units" value={u.code}
-                  defaultChecked={part ? part.units.includes(u.code) : u.code in ev.suggested_units} /> {u.name}
-              </label>
-            ))}
-          </fieldset>
-          <label data-tour="dec-part-rationale">Rationale <input name="rationale" /></label>
-          <button disabled={!!busy} data-tour="dec-part-record">Record participation</button>
-          {busy === "participation" && <Busy label="Recording…" />}
-        </form>
-      </section>
-
-      {ev.frozen && <section className="card" data-tour="dec-dispatch">
-        <div className="card-head"><h2>2. Send the work to the units</h2>
-          <span className="muted">The units assess before the go/no-go. Repeat after changing matches or participation: new work is sent, work that no longer fits is withdrawn.</span></div>
-        <div className="row">
-          <button disabled={!!busy || !part || go?.outcome === "no_go"} onClick={dispatch} data-tour="dec-dispatch-button">Dispatch work packages to units</button>
-          {busy === "dispatch" && <Busy label="Dispatching…" />}
-          {!part && <span className="muted">Record which business units take part first.</span>}
-          {go?.outcome === "no_go" && <span className="muted">The bid is marked no-go: nothing is sent until a go decision resumes it.</span>}
-        </div>
-        {data.summary && data.summary.needs_owner.length > 0 && <div data-tour="dec-needs-owner">
-          <Alert kind="warn" title={`Needs an owner: ${data.summary.needs_owner.length} product requirement(s)`}>Not sent to any unit. Assign a unit
-            in Traceability (pane 3), let the matched unit take part, or record a capability gap: why no unit can offer it.</Alert>
-          <ul className="per-req">{data.summary.needs_owner.map((o) => <li key={o.req_id}>
-            <a className="mono" href={`/opportunities/${id}/trace#${o.req_id}`}>{o.req_id}</a> {o.text}
-            {o.suggested.length > 0 && <span className="muted"> (matched to {o.suggested.join(", ")}, not taking part)</span>}
-            {bm && <form className="inline" action={(f) => recordGap(o.req_id, f)}>
-              <label><span className="sr-only">Why no unit can offer {o.req_id}</span><input name="reason" required placeholder="Capability gap: why no unit can offer it" /></label>
-              <button className="secondary sm" disabled={!!busy}>Record capability gap</button></form>}
-          </li>)}</ul></div>}
-      </section>}
+      <div data-tour="dec-assessment-link"><Alert kind="info">Participation, routing and sending the work to the units are on the{" "}
+        <a href={`/opportunities/${id}/assessment`}>Assessment</a> step; decide here once the units have answered.</Alert></div>
 
       <section className="card" data-tour="dec-gonogo">
-        <div className="card-head"><h2>3. Go / no-go</h2>
+        <div className="card-head"><h2>Go / no-go</h2>
           {go && <span className="muted" data-tour="dec-gng-recorded">Decision <StatusBadge status={go.outcome} kind="opp" label={go.outcome.replace("_", "-")} /> by <strong>{go.decided_by}</strong></span>}</div>
         {go && <p>{go.rationale}
           {go.criteria && go.criteria.length > 0 && <span className="muted"> Criteria judged: {(["met", "not_met", "unknown"] as Judgement[])

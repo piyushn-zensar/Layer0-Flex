@@ -1273,3 +1273,47 @@ def test_questions_and_comments():
     assert client.get(url, params={"status": "open"}).json() == [c for c in thread if c["kind"] == "comment"]
     assert client.post("/api/comments/999999/close").status_code == 404
     assert client.get("/api/opportunities/OPP-9999/comments").status_code == 404
+
+
+def test_assessment_step():
+    """A-16 (C-05): the Assessment step - bid summary, open questions, participation, routing preview before
+    publishing, Send for assessment (publish, then dispatch) and progress per unit. Appended by Atharv (append-only)."""
+    import json
+
+    from app.core.db import SessionLocal
+    from app.modules.ingestion import service as ingestion
+    from app.modules.matching import service as matching
+    from app.modules.opportunities import service as opportunities
+    from app.modules.requirements import service as requirements
+
+    client, bm = signed_in(), "Bid Manager"
+    seed = json.loads((ROOT / "data/seed/demo_syracuse.json").read_text("utf-8"))
+    with SessionLocal() as db:  # a register that is matched but not yet published
+        opp = opportunities.create(db, "assessment", "", "", bm).id
+        pdf = ROOT / seed["document"]
+        doc = opportunities.add_document(db, opp, pdf.name, pdf.read_bytes(), "main", bm)
+        ingestion.ingest(db, doc.id)
+        for i in seed["requirements"]:
+            requirements.add(db, opp, doc.id, i["quote"], i["text"], i["category"], "test", i["section"], i["page"])
+        matching.match(db, opp, "test")
+
+    a = client.get(f"/api/opportunities/{opp}/assessment").json()
+    assert not a["published"] and not a["sent"] and a["participation"] is None
+    assert a["summary"]["requirements"] == len(seed["requirements"]) == len(a["routing"])  # a preview before publishing
+    assert a["summary"]["sections"] and sum(a["summary"]["by_category"].values()) == a["summary"]["requirements"]
+    routes = {r["req_id"]: r for r in a["routing"]}
+    assert {r["route"] for r in a["routing"]} <= {"unit", "bid_desk", "capability_gap", "needs_owner"}
+    assert all(r["route"] == "bid_desk" for r in a["routing"] if r["category"] not in ("technical", "compliance"))
+    unit = next(r for r in a["routing"] if r["route"] == "unit")
+    assert all(u["specialists"] and u["bu"] != "BID" for u in unit["units"])  # the unit's product manager and design engineer
+    assert {o["req_id"] for o in a["open_questions"]["needs_owner"]} == {k for k, r in routes.items() if r["route"] == "needs_owner"}
+    assert {"exceptions", "rule_warnings", "questions"} <= set(a["open_questions"])
+
+    # Send for assessment, as the screen does it: participation, publish, dispatch
+    client.post(f"/api/opportunities/{opp}/participation", json={"units": list(a["summary"]["suggested_units"])})
+    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 200
+    assert client.post(f"/api/opportunities/{opp}/dispatch").json()["created"] >= 1
+    after = client.get(f"/api/opportunities/{opp}/assessment").json()
+    assert after["published"] and after["baseline"] == 1 and after["sent"] and after["participation"]["decided_by"] == bm
+    assert sum(p["total"] for p in after["progress"].values()) == sum(len(r["units"]) for r in after["routing"] if r["route"] != "needs_owner")
+    assert client.get("/api/opportunities/OPP-9999/assessment").status_code == 404
