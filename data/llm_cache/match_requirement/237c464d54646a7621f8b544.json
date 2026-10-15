@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.95,
+        "n": 1,
+        "rationale": "The requirement specifies metal-clad switchgear designed for operation on a three-phase, four-wire, 60-hertz system, and compliant with IEEE C37.20.2. The CROWN-ARMV product is a metal-clad MV switchgear that meets IEEE C37.20.2 standards and is suitable for the described application.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "This requirement specifies compliance with various standards and codes, which is a general compliance requirement and not specific to a product. The bid manager should address this.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,80 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement pertains to the physical dimensions and shipment details of switchgear cubicles. The CROWN-ARMV product is the default for metal-clad switchgear lines, which includes such cubicles.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "The CT relaying accuracy class is a technical specification related to switchgear. The CROWN-ARMV product includes CTs as part of its standard offering.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "Bus material and cross-section dimensions are part of the switchgear's technical specifications. The CROWN-ARMV product includes bus and construction details.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The RMS symmetrical rating (bus bracing) is a technical specification of switchgear. The CROWN-ARMV product is designed to meet such requirements.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 5,
+        "rationale": "The maximum temperature rise in a 40°C ambient is a technical specification of switchgear. The CROWN-ARMV product is engineered to meet such environmental conditions.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "The manufacturer, model/type, and various ratings are specific to the switchgear. The CROWN-ARMV product includes these details as part of its offering.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to the provision of documentation such as drawings and manuals, which is typically a commercial or project management requirement rather than a specific product requirement. Therefore, it does not map to any specific product in the catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

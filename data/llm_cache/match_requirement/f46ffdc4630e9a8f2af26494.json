@@ -1,0 +1,62 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to lighting and receptacles, which are not covered by the listed products in the catalog. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement specifies current transformers and terminal blocks for feeder breaker cubicles, which align with the features of CROWN-ARMV metal-clad switchgear, including CTs and VTs for relaying and metering.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 3,
+        "rationale": "Voltage transformers for metering on the main bus are typically part of the metal-clad switchgear lineup, which matches the CROWN-ARMV product description.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 4,
+        "rationale": "Thermostatically controlled heaters and LED lamps in control cubicles are features of metal-clad switchgear cubicles, aligning with the CROWN-ARMV product.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 5,
+        "rationale": "The AC and DC voltage distribution panelboard described matches the auxiliary power system (AC/DC) provided by EP2-AUX, which includes AC/DC panels and distribution systems.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "EP2-AUX"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

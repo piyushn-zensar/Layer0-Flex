@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies protective relays, recording instruments, and other panel-mounted devices, which align with the description of the EP2-RPP product as it includes protective relays and relay panels.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "This requirement pertains to ensuring the manufacturer provides all necessary items and accessories, which is a general commercial or contractual requirement and not specific to a product.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement describes a switchgear lineup with specific wiring and SCADA provisions, which matches the description of the CROWN-ARMV product as arc-resistant metal-clad switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.85,
+        "n": 4,
+        "rationale": "The requirement for spare fuses and a breaker transfer truck aligns with the accessories provided under the CROWN-ACC product, which includes such items for MV switchgear.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

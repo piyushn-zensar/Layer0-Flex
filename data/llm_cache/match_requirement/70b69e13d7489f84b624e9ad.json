@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies 15 kV walk-through switchgear, which aligns with the CROWN-ARMV product description for arc-resistant metal-clad MV switchgear. This product is engineered to order and meets IEEE C37.20.2 and C37.20.7 standards, suitable for the specified voltage level.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 1.0,
+        "n": 2,
+        "rationale": "This requirement pertains to compliance and exceptions, which are not product-specific. The bid manager should address this.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

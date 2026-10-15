@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement specifies construction materials for walls, which is not directly tied to a specific product in the catalog. It is likely part of the bid manager's scope.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement describes structural and installation details for switchgear assemblies. CROWN-ARMV is suitable as it provides arc-resistant metal-clad MV switchgear, which aligns with the described structural framework and installation requirements.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "This requirement specifies insulation values and preferences for the structure, which is not directly tied to a specific product in the catalog. It is likely part of the bid manager's scope.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 4,
+        "rationale": "The requirement specifies compartmentalization and isolation for switchgear components. CROWN-ARMV provides arc-resistant metal-clad MV switchgear with compartmentalized construction, meeting these specifications.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 5,
+        "rationale": "The requirement describes operational and safety features for circuit breaker compartments. CROWN-ARMV includes vacuum breakers and interlocks, which align with the described features.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 6,
+        "rationale": "The requirement specifies cable entry plates and supports for feeder cables. CROWN-ACC provides accessories for MV switchgear, including cable termination compartments and related hardware, which meet these specifications.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "CTO",
+            "product_id": "CROWN-ACC"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

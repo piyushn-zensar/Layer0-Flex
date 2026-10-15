@@ -1,0 +1,80 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies breakers and enclosures associated with 15 kV metal-clad switchgear. CROWN-ARMV is the appropriate product for arc-resistant metal-clad MV switchgear, which includes breaker positions and enclosures.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement specifies an AC panelboard labeled \"AC LOADCENTER\". ANORD-DPB provides compact distribution panelboards suitable for AC applications, meeting the labeling and configuration requirements.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "CTO",
+            "product_id": "ANORD-DPB"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement specifies a DC distribution panelboard with specific ratings and labeling. ANORD-DPB is suitable for DC applications and can be configured to meet the specified requirements.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "CTO",
+            "product_id": "ANORD-DPB"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement involves pre-wiring for protective relays and SCADA circuits. EP2-RPP is designed for relay and protection panels, including wiring and SCADA interface.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 5,
+        "rationale": "The requirement specifies wireway and conduit for external cables and field wiring. EP2-PDC includes provisions for such installations within substation control buildings.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-PDC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 6,
+        "rationale": "The requirement specifies HVAC units and associated wiring. EP2-PDC includes HVAC controls and can accommodate the specified HVAC unit and wiring requirements.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-PDC"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

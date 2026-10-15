@@ -1,0 +1,62 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies hinged steel panels for mounting relays, instruments, and controls, with attention to isolation and ergonomic placement. This aligns with the EP2-RPP product, which includes relay and protection panels designed for such applications.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement describes breakers that roll directly from cubicle to switchgear floor and compartments allowing racking with the door closed. This matches the CROWN-ARMV product, which is arc-resistant metal-clad switchgear designed for such operational features.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "The requirement pertains to the cleaning and treatment of steel, which is a manufacturing process detail. This is not specific to a product and would be addressed by the manufacturing standards of the supplier.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 4,
+        "rationale": "The requirement specifies color and finish details for structures, which are general specifications for the construction process and not tied to a specific product.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "The requirement for a field termination cabinet with terminal blocks aligns with the EP2-PDC product, which includes substation control buildings with provisions for such field terminations.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-PDC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 6,
+        "rationale": "The requirement for interior lighting with switches near access doors is a general construction specification and not tied to a specific product.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}
