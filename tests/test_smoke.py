@@ -569,8 +569,9 @@ def test_response_outline_agent():
 
 
 def test_knowledge_base_queue():
-    """A-11: people send a requirement, a validated answer or a decision rationale; only the curator approves;
-    approved items join the long-term search index (never the matcher's fixed prompt part)."""
+    """A-11, reviewers from P-36: people nominate a requirement, a validated answer or a decision rationale; a unit's
+    answer is reviewed by its own specialists, a bid-level item by the bid manager; approved items join the long-term
+    search index (never the matcher's fixed prompt part)."""
     from app.modules.catalog import service as catalog
 
     seed_demo.main()  # its own opportunity, some answers validated
@@ -592,11 +593,11 @@ def test_knowledge_base_queue():
     assert dec["response"].startswith("go:")
 
     review = f"/api/knowledge/{kb['kb_id']}/review"
-    assert client.post(review, json={"approve": True}, headers=unit).status_code == 403  # only the curator
+    assert client.post(review, json={"approve": True}).status_code == 403  # a unit's answer: its own specialists
     assert client.post(f"/api/knowledge/{dec['kb_id']}/review", json={"approve": False}).status_code == 409  # reject needs a note
-    ok = client.post(review, json={"approve": True, "response": "Met. Two-section lineup, reusable wording."}).json()
-    assert ok["status"] == "approved" and ok["reviewed_by"] == "Bid Manager"
-    assert client.post(review, json={"approve": True}).status_code == 409  # decided once
+    ok = client.post(review, json={"approve": True, "response": "Met. Two-section lineup, reusable wording."}, headers=unit).json()
+    assert ok["status"] == "approved" and ok["reviewed_by"] == "Crown Product Manager"
+    assert client.post(review, json={"approve": True}, headers=unit).status_code == 409  # decided once
     assert client.post(f"/api/knowledge/{dec['kb_id']}/review", json={"approve": False, "note": "not general"}).json()["status"] == "rejected"
 
     hits = client.get("/api/catalog", params={"q": "Two-section lineup reusable wording"}).json()["results"]

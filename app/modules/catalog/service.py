@@ -63,19 +63,23 @@ def items(family: str | None = None) -> list[dict]:
     return [i for i in _load("catalog_items")["items"] if i["bu"] in active and (family is None or i["family"] == family)]
 
 
-LEARNED = "knowledge_learned.json"  # in the store (per installation, gitignored), next to the database
-
-
 def learned() -> list[dict]:
-    path = config.STORE / LEARNED
-    return json.loads(path.read_text("utf-8"))["responses"] if path.exists() else []
+    """Approved reviewed examples, read from the knowledge module's database records (P-36; they replaced
+    knowledge_learned.json). Empty before the tables exist (this module's self-check)."""
+    from sqlalchemy.exc import OperationalError
+
+    from app.core.db import SessionLocal
+    from app.modules.knowledge import service as knowledge  # here, not at the top: knowledge imports this module
+    try:
+        with SessionLocal() as db:
+            return knowledge.learned(db)
+    except OperationalError:
+        return []
 
 
-def learn(entry: dict) -> None:
-    """Approved knowledge joins the search index only, never past_responses(): the matcher's fixed prompt part
-    (catalog + past responses) stays the same, so its frozen answers stay valid."""
-    entries = [e for e in learned() if e["id"] != entry["id"]] + [entry]
-    (config.STORE / LEARNED).write_text(json.dumps({"responses": entries}, indent=2, ensure_ascii=False), "utf-8")
+def learn(entry: dict | None = None) -> None:
+    """A reviewed example was approved: rebuild the search index from learned(). Approved knowledge joins the search
+    index only, never past_responses(): the matcher's fixed prompt part stays the same, so its frozen answers stay valid."""
     _index.cache_clear()
 
 
@@ -85,7 +89,7 @@ def _index() -> Index:
     Semantic (embeddings, frozen in data/vector_cache) with a keyword fallback offline; see app/core/vectors.py."""
     docs = [{"kind": "product", "id": p["id"], "bu": p["bu"], "offering_type": p["offering_type"],
              "text": f"{p['name']}. {p['description']} {p['keywords']}"} for p in products()]
-    docs += [{"kind": "past_response", "id": r["id"], "bu": r["bu"],
+    docs += [{"kind": "past_response", "id": r["id"], "bu": r["bu"], "illustrative": True,  # sample format, never verified
               "text": f"{r['requirement']} {r['response']}"} for r in _load("past_responses")["responses"]]
     docs += [{"kind": "past_response", "id": r["id"], "bu": r["bu"], "learned": True,
               "text": f"{r['requirement']} {r['response']}"} for r in learned()]

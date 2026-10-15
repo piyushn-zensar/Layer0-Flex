@@ -128,3 +128,17 @@ export interface SourcePassage {
   id: number; page: number; line_start: number; line_end: number; heading: string; table: string | null; text: string; annotations: PassageAnnotation | null;
 }
 export interface SourceDetail { source: KnowledgeSource; passages: SourcePassage[] }
+// GET/POST /api/knowledge (P-36): reviewed examples. A person nominates one; the person who may review it approves or rejects.
+export type KbExampleType = "requirement" | "preference" | "background" | "partial_compliance" | "insufficient_evidence" | "other";
+export type KbStatus = "queued" | "approved" | "rejected" | "retired";
+export interface KbItem {
+  kb_id: string; kind: "requirement" | "response" | "decision" | "correction"; example_type: KbExampleType; source_ref: string;
+  opportunity_id: string; bu: string; requirement: string; response: string; source: string; conditions: string; limits: string; note: string;
+  illustrative: boolean; status: KbStatus; version: number; supersedes: string | null; sent_by: string; sent_at: string;
+  reviewed_by: string | null; reviewed_at: string | null; review_note: string; may_review: boolean;
+}
+export interface KbList { items: KbItem[]; curator: string; example_types: KbExampleType[]; learned: number; index: string }
+export const KB_EXAMPLE_TYPES: Record<KbExampleType, string> = {
+  requirement: "Requirement", preference: "Preference", background: "Background information", partial_compliance: "Partial compliance",
+  insufficient_evidence: "Insufficient evidence", other: "Other",
+};

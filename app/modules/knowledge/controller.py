@@ -16,9 +16,13 @@ router = APIRouter(tags=["knowledge"])
 
 
 class SendIn(BaseModel):
-    kind: Literal["requirement", "response", "decision"]  # = models.KINDS
+    kind: Literal["requirement", "response", "decision", "correction"]  # = models.KINDS
     ref: str = Field(min_length=1, max_length=40)
     note: str = Field("", max_length=2000)
+    example_type: Literal["requirement", "preference", "background", "partial_compliance", "insufficient_evidence",
+                          "other"] = "other"  # = models.EXAMPLE_TYPES
+    conditions: str = Field("", max_length=2000)
+    limits: str = Field("", max_length=2000)
 
 
 class ReviewIn(BaseModel):
@@ -27,10 +31,18 @@ class ReviewIn(BaseModel):
     response: str | None = Field(None, max_length=8000)
 
 
-def _call(fn, *args):
+class ReviseIn(BaseModel):
+    response: str | None = Field(None, max_length=8000)
+    example_type: str | None = None
+    conditions: str | None = Field(None, max_length=2000)
+    limits: str | None = Field(None, max_length=2000)
+    note: str | None = Field(None, max_length=2000)
+
+
+def _call(fn, *args, **kwargs):
     """Service errors as HTTP: unknown -> 404, wrong person -> 403, wrong state -> 409."""
     try:
-        return fn(*args)
+        return fn(*args, **kwargs)
     except LookupError as exc:
         raise HTTPException(404, str(exc))
     except PermissionError as exc:
@@ -39,26 +51,43 @@ def _call(fn, *args):
         raise HTTPException(409, str(exc))
 
 
+def _item(i, request: Request) -> dict:
+    return row(i) | {"may_review": service.may_review(i, user(request))}
+
+
 @router.post("/knowledge")
 def send(body: SendIn, request: Request, db: Session = Depends(get_db)):
-    return row(_call(service.send, db, body.kind, body.ref, body.note, actor(request)))
+    """Nominate a reviewed example (P-36)."""
+    require(request, *CORRECTORS)
+    return _item(_call(service.nominate, db, body.kind, body.ref, actor(request), body.note, body.example_type,
+                       body.conditions, body.limits), request)
 
 
 @router.get("/knowledge")
-def items(status: Literal["queued", "approved", "rejected"] | None = None, db: Session = Depends(get_db)):
-    return {"items": [row(i) for i in service.items(db, status)], "curator": service.CURATOR,
-            "learned": len(catalog.learned()), "index": catalog.index_mode()}
+def items(request: Request, status: Literal["queued", "approved", "rejected", "retired"] | None = None,
+          reviewable: bool = False, db: Session = Depends(get_db)):
+    """All items, or with reviewable=true only those the signed-in person may review (the review list in My work)."""
+    found = service.items(db, status, user(request) if reviewable else None)
+    return {"items": [_item(i, request) for i in found], "curator": service.REVIEWED_BY,
+            "example_types": service.EXAMPLE_TYPES, "learned": len(catalog.learned()), "index": catalog.index_mode()}
 
 
 @router.get("/opportunities/{opp_id}/knowledge")
 def sent(opp_id: str, db: Session = Depends(get_db)):
-    """What was already sent from this opportunity: "<kind>:<ref>" -> status (for the buttons)."""
+    """What was already nominated from this bid: "<kind>:<ref>" -> status (for the buttons)."""
     return service.for_opportunity(db, opp_id)
 
 
 @router.post("/knowledge/{kb_id}/review")
 def review(kb_id: str, body: ReviewIn, request: Request, db: Session = Depends(get_db)):
-    return row(_call(service.review, db, kb_id, body.approve, body.note, actor(request), body.response))
+    return _item(_call(service.review, db, kb_id, body.approve, body.note, user(request), body.response), request)
+
+
+@router.post("/knowledge/{kb_id}/revise")
+def revise(kb_id: str, body: ReviseIn, request: Request, db: Session = Depends(get_db)):
+    require(request, *CORRECTORS)
+    fields = {k: v for k, v in body.model_dump().items() if v is not None}
+    return _item(_call(service.revise, db, kb_id, actor(request), **fields), request)
 
 
 # --- knowledge sources (P-35) ---------------------------------------------------------------------------------

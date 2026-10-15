@@ -8,6 +8,7 @@ import { useState } from "react";
 import { api, errorMessage, post, useApi, useMe } from "@/lib/api";
 import { complianceLabel, type Assignment, type Requirement, type Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
+import KnowledgeReview from "@/components/knowledge/KnowledgeReview";
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
 
 // C-12 response fields (A-18): every assignment row carries them; null until a unit fills them in
@@ -149,6 +150,7 @@ export default function InboxPage() {
         {canAnswer && openCount > 0 && <button disabled={busy !== undefined} onClick={submitAll} data-tour="inbox-submit-all">Submit all answered rows</button>}
         {busy === "all" && <Busy label="Sending…" />}
       </PageHead>
+      <KnowledgeReview />
       <nav className="row inbox-links" aria-label="Work packages" data-tour="inbox-units">
         <span>Work package:</span>
         {Object.keys(waiting).sort((a, b) => (a === "BID" ? -1 : b === "BID" ? 1 : a.localeCompare(b))).map((u) => (

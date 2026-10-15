@@ -26,7 +26,7 @@ from app.core import audit, config, llm
 from app.core.db import utcnow
 from app.modules.ingestion import office
 from app.modules.ingestion import service as ingestion
-from app.modules.knowledge.models import KbPassage, KbSource
+from app.modules.knowledge.models import KbItem, KbPassage, KbSource
 
 COLLECTIONS = {
     "engineering_reference": "Engineering references",
@@ -304,10 +304,21 @@ def evidence(db: Session, collections: list[str] | None = None, opp_id: str | No
     if collections:
         q = q.where(KbSource.collection.in_(collections))
     q = q.where((KbSource.collection != "bid_evidence") | (KbSource.opportunity_id == (opp_id or "")))
-    return [{"passage_id": p.id, "ks_id": s.ks_id, "collection": s.collection, "title": s.title, "version": s.version,
-             "page": p.page, "line_start": p.line_start, "line_end": p.line_end, "heading": p.heading,
-             "table": p.table, "text": p.text, "annotations": p.annotations}
-            for p, s in db.execute(q.order_by(KbPassage.id))]
+    out = [{"passage_id": p.id, "ks_id": s.ks_id, "collection": s.collection, "title": s.title, "version": s.version,
+            "page": p.page, "line_start": p.line_start, "line_end": p.line_end, "heading": p.heading,
+            "table": p.table, "text": p.text, "annotations": p.annotations}
+           for p, s in db.execute(q.order_by(KbPassage.id))]
+    if not collections or "reviewed_example" in collections:  # approved reviewed examples (P-36), never illustrative ones
+        items = db.scalars(select(KbItem).where(KbItem.status == "approved", KbItem.illustrative.is_(False))
+                           .order_by(KbItem.id))
+        out += [{"passage_id": None, "ks_id": i.kb_id, "collection": "reviewed_example",
+                 "title": f"{i.kind} example from {i.opportunity_id}", "version": i.version, "page": None,
+                 "line_start": None, "line_end": None, "heading": i.example_type, "table": None,
+                 "text": " ".join(x for x in (i.requirement, f"-> {i.response}" if i.response else "",
+                                              f"Conditions: {i.conditions}" if i.conditions else "",
+                                              f"Limits: {i.limits}" if i.limits else "") if x),
+                 "annotations": None, "source": i.source} for i in items]
+    return out
 
 
 # --- annotations (model proposals beside the passage) ---------------------------------------------------------
