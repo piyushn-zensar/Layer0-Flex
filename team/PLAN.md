@@ -325,14 +325,15 @@ One task at a time, top to bottom. Size: S hours, M one to two days, L several d
 
 ### 10.6 Order across the team
 
-1. A-25 API rename (everyone pauses for it).
-2. P-30 roles, then A-17 on them (clears its blocker), then P-31 sign-up and authorization.
-3. P-32 automatic freeze (Send for assessment becomes dispatch only).
-4. A-26 Requirement Traceability, A-27 filters, J-18 detachable panes.
-5. P-33 schedule and approvals.
-6. P-34 catalog refresh.
-7. P-35, P-36 (then J-17), P-37, P-38, P-39.
-8. J-15 walkthrough, P-40 (with P-29) docs.
+**Priority change (Piyush, 15 Oct 2026): RAG first.** Piyush starts with RAG; the others keep their order.
+
+1. **RAG (Piyush):** P-35 sources and passages, P-36 reviewed examples (then J-17), P-34 catalog refresh (before P-37, so the frozen matcher answers are regenerated only once), P-37 retrieval in prompts, P-38 executive summary, P-39 evaluation. RAG routes live under `/api/knowledge/...` (or `/api/bids/...` when a route belongs to one bid), so A-25 does not touch them.
+2. A-25 API rename (everyone pauses for it; Piyush pauses RAG for that commit).
+3. P-30 roles, then A-17 on them (clears its blocker), then P-31 sign-up and authorization.
+4. P-32 automatic freeze (Send for assessment becomes dispatch only).
+5. A-26 Requirement Traceability, A-27 filters, J-18 detachable panes.
+6. P-33 schedule and approvals.
+7. J-15 walkthrough, P-40 (with P-29) docs.
 
 ### 10.7 Integration feasibility (internal summary)
 

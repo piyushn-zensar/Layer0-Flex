@@ -12,6 +12,15 @@ Public contract:
     review(db, kb_id, approve, note, actor, response=None) -> KnowledgeItem
         only the curator (PoC: the Bid Manager), only queued items; a rejection needs a note; the curator may
         tidy the response text before approving. LookupError / PermissionError / ValueError
+
+Knowledge sources (P-35, C-29; implemented in sources.py, re-exported here):
+    register(db, path, actor, collection, title, publisher, revision, scope, permissions, url, opp_id, file_name)
+        -> (KbSource, existing)                         a draft read into passages; a known document instance is returned
+    sources(db, collection=None, status=None), get(db, ks_id), source_passages(db, ks_id), counts(db)
+    review(db, ks_id, approve, note, actor, role)       document-level review by the collection's REVIEWERS
+    annotate(db, ks_id, actor) -> int                   model annotations beside each passage (frozen answers)
+    evidence(db, collections=None, opp_id=None)         published passages with citations; bid evidence only for its bid
+    register_references(db)                             the public references in data/references/sources.json
 """
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -21,6 +30,9 @@ from app.core.db import utcnow
 from app.modules.catalog import service as catalog
 from app.modules.decisions import service as decisions
 from app.modules.knowledge.models import KINDS, KnowledgeItem
+from app.modules.knowledge.sources import (  # noqa: F401  (public contract)
+    COLLECTIONS, REVIEWERS, STATUSES, SUFFIXES, annotate, counts, evidence, get, register, register_references, review as review_source,
+    source_passages, sources)
 from app.modules.requirements import service as requirements
 from app.modules.workpackages import service as workpackages
 

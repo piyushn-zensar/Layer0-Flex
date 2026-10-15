@@ -1,0 +1,383 @@
+"""Knowledge sources (P-35, C-29 points 1-4): register a source document, read it into passages with their exact
+location, let the model annotate them, and admit the document by review. Re-exported by knowledge/service.py.
+
+Collections keep evidence apart (COLLECTIONS). A source is evidence only once published by a reviewer of its
+collection; current bid evidence is only ever returned for its own bid (passages(..., opp_id)).
+
+Reading reuses the RFP layout model, so a passage is "p. 12, lines 4-9" exactly as in the three panes: PDF as is,
+Word and Excel through office.py, web pages and text files rendered the same deterministic way. Headings come from
+the PDF's outline (or each section's first line for rendered files); table passages keep their table id.
+Annotations are model proposals stored beside the passage (task annotate_passages, frozen like every answer).
+"""
+import hashlib
+import json
+import re
+import shutil
+import zipfile
+from html.parser import HTMLParser
+from pathlib import Path
+
+import pymupdf
+from sqlalchemy import func, select
+from sqlalchemy.orm import Session
+
+from app.core import audit, config, llm
+from app.core.db import utcnow
+from app.modules.ingestion import office
+from app.modules.ingestion import service as ingestion
+from app.modules.knowledge.models import KbPassage, KbSource
+
+COLLECTIONS = {
+    "engineering_reference": "Engineering references",
+    "product_evidence": "Product capability evidence",
+    "reviewed_example": "Reviewed examples and experience",
+    "bid_evidence": "Current bid evidence",
+    "market_context": "Market and vendor context (never verified evidence)",
+}
+# Who may admit a document of each collection (qualified specialists, C-29 point 3).
+REVIEWERS = {
+    "engineering_reference": ["design_engineer", "product_manager"],
+    "product_evidence": ["product_manager"],
+    "reviewed_example": ["product_manager", "design_engineer"],
+    "bid_evidence": ["bid_manager"],
+    "market_context": ["bid_manager", "product_manager"],
+}
+STATUSES = ["draft", "published", "rejected", "retired"]
+SUFFIXES = (".pdf", ".docx", ".xlsx", ".html", ".htm", ".md", ".txt")
+FILES = config.STORE / "kb_files"
+PASSAGE_CHARS = 900  # references are dense: about two paragraphs per passage
+
+
+# --- identity --------------------------------------------------------------------------------------------------
+
+def identity(path: Path, sha256: str) -> tuple[str, str, str]:
+    """(document_id, instance_id, id_source) as decided for C-27: the IDs embedded in the file (PDF trailer /ID, else
+    XMP DocumentID / InstanceID; Word settings docId), else the file fingerprint for both."""
+    suffix = path.suffix.lower()
+    if suffix == ".pdf":
+        with pymupdf.open(path) as pdf:
+            kind, value = pdf.xref_get_key(-1, "ID")
+            ids = re.findall(r"<([0-9A-Fa-f]+)>", value) if kind == "array" else []
+            if len(ids) == 2:
+                return ids[0].upper(), ids[1].upper(), "embedded"
+            xmp = pdf.get_xml_metadata() or ""
+            doc, inst = (re.search(rf"xmpMM:{t}(?:>|=\")([^<\"]+)", xmp) for t in ("DocumentID", "InstanceID"))
+            if doc and inst:
+                return doc.group(1), inst.group(1), "embedded"
+    if suffix == ".docx":
+        with zipfile.ZipFile(path) as z:
+            settings = z.read("word/settings.xml").decode("utf-8", "replace") if "word/settings.xml" in z.namelist() else ""
+        found = re.search(r"w15:docId w15:val=\"([^\"]+)\"", settings) or re.search(r"w14:docId w14:val=\"([^\"]+)\"", settings)
+        if found:
+            return found.group(1), sha256, "embedded"  # Word keeps no instance ID: the exact file is the instance
+    return sha256, sha256, "fingerprint"
+
+
+# --- reading ---------------------------------------------------------------------------------------------------
+
+class _Html(HTMLParser):
+    """Visible text of a web page as sections of lines; h1 and h2 start a section. Scripts, menus and forms are left out."""
+    SKIP = {"script", "style", "noscript", "nav", "header", "footer", "svg", "form", "button", "template", "aside"}
+    BLOCK = {"p", "li", "div", "section", "article", "tr", "br", "pre", "blockquote", "dt", "dd", "figcaption",
+             "caption", "h3", "h4", "h5", "h6", "table", "ul", "ol"}
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.parts: list[list[str]] = [[]]
+        self.buf: list[str] = []
+        self.skip = 0
+
+    def _flush(self):
+        text = " ".join(" ".join(self.buf).split())
+        if text:
+            self.parts[-1].append(text)
+        self.buf = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in self.SKIP:
+            self.skip += 1
+        elif tag in ("h1", "h2"):
+            self._flush()
+            if self.parts[-1]:
+                self.parts.append([])
+        elif tag in ("td", "th"):
+            self.buf.append("|" if self.buf else "")
+        elif tag in self.BLOCK:
+            self._flush()
+
+    def handle_endtag(self, tag):
+        if tag in self.SKIP:
+            self.skip = max(0, self.skip - 1)
+        elif tag in self.BLOCK or tag in ("h1", "h2"):
+            self._flush()
+
+    def handle_data(self, data):
+        if not self.skip and data.strip():
+            self.buf.append(data.strip())
+
+
+def _sections(path: Path) -> list[list[str]]:
+    """Web pages and text files as sections of lines (a Markdown '#' / '##' heading starts a section)."""
+    text = path.read_text("utf-8", "replace")
+    if path.suffix.lower() in (".html", ".htm"):
+        parser = _Html()
+        parser.feed(text)
+        parser._flush()
+        parts = parser.parts
+    else:
+        parts = [[]]
+        for line in text.splitlines():
+            if re.match(r"#{1,2} ", line) and parts[-1]:
+                parts.append([])
+            if line.strip():
+                parts[-1].append(line.lstrip("#> ").strip())
+    return [p for p in parts if p]
+
+
+def read(path: Path, title: str) -> tuple[dict, list[tuple[int, str, int]]]:
+    """A file -> (layout model, outline [(level, heading, page)]). Same parser and line numbers as an RFP."""
+    suffix = path.suffix.lower()
+    if suffix == ".pdf":
+        with pymupdf.open(path) as pdf:
+            outline = [(lvl, title_, page) for lvl, title_, page in pdf.get_toc(simple=True) if page >= 1]
+        frozen = ingestion.LAYOUT_CACHE / f"{path.stem}.json"  # stored files are named by their sha256
+        model = json.loads(frozen.read_text("utf-8")) if frozen.exists() else ingestion.parse(str(path), path.stem)
+        return model, outline
+    parts = office.sections(path) if suffix in office.SUFFIXES else _sections(path)
+    data, starts = office.render(parts, title)
+    rendered = FILES / f"{path.stem}.rendered.pdf"
+    rendered.write_bytes(data)
+    return ingestion.parse(str(rendered), path.stem), [(1, part[0], page) for part, page in zip(parts, starts)]
+
+
+def _norm(text: str) -> str:
+    return " ".join(re.sub(r"[^\w]+", " ", text.lower()).split())
+
+
+def passages(model: dict, outline: list[tuple[int, str, int]]) -> list[dict]:
+    """Passages that never cross a page, a heading or a table edge, about PASSAGE_CHARS long, each with its heading
+    path. Headers, footers and contents pages are left out."""
+    heads: dict[tuple[int, int], tuple[int, str]] = {}
+    for level, heading, page_no in outline:
+        if page_no > len(model["pages"]):
+            continue
+        key = _norm(heading)[:60]
+        for line in model["pages"][page_no - 1]["lines"]:
+            text = _norm(line["text"])
+            if key and text and (text.startswith(key) or key.startswith(text)) and not line.get("furniture"):
+                heads.setdefault((page_no, line["n"]), (level, heading.strip()))
+                break
+    out, stack = [], []
+    for page in model["pages"]:
+        if page.get("toc"):
+            continue
+        chunk, start_path, table = [], "", None
+
+        def flush():
+            if chunk:
+                out.append({"page": page["page"], "line_start": chunk[0]["n"], "line_end": chunk[-1]["n"],
+                            "heading": start_path, "table": table, "text": " ".join(l["text"] for l in chunk)})
+
+        for line in page["lines"]:
+            if line.get("furniture"):
+                continue
+            head = heads.get((page["page"], line["n"]))
+            cell = (line.get("cell") or [None])[0]
+            size = sum(len(l["text"]) for l in chunk) + len(line["text"])
+            if chunk and (head or cell != table or size > PASSAGE_CHARS):
+                flush()
+                chunk = []
+            if head:
+                level, heading = head
+                stack[level - 1:] = [heading]
+            if not chunk:
+                start_path, table = " > ".join(stack), cell
+            chunk.append(line)
+        flush()
+    return out
+
+
+# --- register, review, read ------------------------------------------------------------------------------------
+
+def _next_id(db: Session) -> str:
+    return f"KS-{(db.scalar(select(func.max(KbSource.id))) or 0) + 1:04d}"
+
+
+def register(db: Session, path: str | Path, actor: str, collection: str, title: str = "", publisher: str = "",
+             revision: str = "", scope: str = "", permissions: str = "public", url: str = "",
+             opp_id: str | None = None, file_name: str | None = None) -> tuple[KbSource, bool]:
+    """Register a file as a draft source and read it into passages. Returns (source, existing): the same document
+    instance registered before (and not rejected) is returned as it is, never read twice (C-27).
+    ValueError: unknown collection, unsupported file, or bid evidence without its bid (or other evidence with one)."""
+    path = Path(path)
+    if collection not in COLLECTIONS:
+        raise ValueError(f"Unknown collection {collection!r}; one of {', '.join(COLLECTIONS)}.")
+    if (collection == "bid_evidence") != bool(opp_id):
+        raise ValueError("Current bid evidence belongs to one bid; other collections belong to none.")
+    if path.suffix.lower() not in SUFFIXES:
+        raise ValueError(f"Unsupported file type {path.suffix!r}; use {', '.join(SUFFIXES)}.")
+    sha = hashlib.sha256(path.read_bytes()).hexdigest()
+    document_id, instance_id, id_source = identity(path, sha)
+    same = db.scalar(select(KbSource).where(KbSource.document_id == document_id, KbSource.instance_id == instance_id,
+                                            KbSource.status != "rejected"))
+    if same:
+        return same, True
+    FILES.mkdir(parents=True, exist_ok=True)
+    stored = FILES / f"{sha}{path.suffix.lower()}"
+    if not stored.exists():
+        shutil.copyfile(path, stored)
+    model, outline = read(stored, title or path.stem)
+    found = passages(model, outline)
+    if not found:
+        raise ValueError("No readable text found in the file.")
+    earlier = db.scalar(select(func.max(KbSource.version)).where(KbSource.document_id == document_id)) or 0
+    src = KbSource(ks_id=_next_id(db), collection=collection, title=title or path.stem, publisher=publisher,
+                   revision=revision, scope=scope, permissions=permissions, url=url, file_name=file_name or path.name,
+                   path=str(stored), sha256=sha, document_id=document_id, instance_id=instance_id, id_source=id_source,
+                   version=earlier + 1, opportunity_id=opp_id, pages=model["page_count"],
+                   pipeline_version=model["pipeline_version"], registered_by=actor)
+    db.add(src)
+    db.flush()
+    db.add_all(KbPassage(source_id=src.id, **p) for p in found)
+    audit.record(db, actor, "registered", "kb_source", src.ks_id, opp_id, collection=collection, title=src.title,
+                 version=src.version, passages=len(found))
+    db.commit()
+    return src, False
+
+
+def get(db: Session, ks_id: str) -> KbSource:
+    src = db.scalar(select(KbSource).where(KbSource.ks_id == ks_id))
+    if src is None:
+        raise LookupError(f"Source {ks_id} not found.")
+    return src
+
+
+def sources(db: Session, collection: str | None = None, status: str | None = None) -> list[KbSource]:
+    q = select(KbSource).order_by(KbSource.id.desc())
+    if collection:
+        q = q.where(KbSource.collection == collection)
+    if status:
+        q = q.where(KbSource.status == status)
+    return list(db.scalars(q))
+
+
+def counts(db: Session) -> dict[int, tuple[int, int]]:
+    """source id -> (passages, annotated passages)."""
+    rows = db.execute(select(KbPassage.source_id, func.count(), func.count(KbPassage.annotations))
+                      .group_by(KbPassage.source_id))
+    return {sid: (n, a) for sid, n, a in rows}
+
+
+def source_passages(db: Session, ks_id: str) -> list[KbPassage]:
+    src = get(db, ks_id)
+    return list(db.scalars(select(KbPassage).where(KbPassage.source_id == src.id).order_by(KbPassage.id)))
+
+
+def review(db: Session, ks_id: str, approve: bool, note: str, actor: str, role: str) -> KbSource:
+    """Document-level review: a reviewer of the collection publishes or rejects a draft (a rejection needs a note).
+    Publishing retires the earlier published version of the same document."""
+    src = get(db, ks_id)
+    if role not in REVIEWERS[src.collection]:
+        allowed = ", ".join(r.replace("_", " ") for r in REVIEWERS[src.collection])
+        raise PermissionError(f"Only a {allowed} reviews {COLLECTIONS[src.collection].lower()}.")
+    if src.status != "draft":
+        raise ValueError(f"{ks_id} is {src.status}; only a draft is reviewed.")
+    if not approve and not note.strip():
+        raise ValueError("A rejection needs a note.")
+    src.status, src.reviewed_by, src.reviewed_at, src.review_note = ("published" if approve else "rejected"), actor, utcnow(), note
+    if approve:
+        for old in db.scalars(select(KbSource).where(KbSource.document_id == src.document_id, KbSource.id != src.id,
+                                                     KbSource.status == "published")):
+            old.status = "retired"
+            audit.record(db, actor, "retired", "kb_source", old.ks_id, old.opportunity_id, replaced_by=src.ks_id)
+    audit.record(db, actor, "published" if approve else "rejected", "kb_source", src.ks_id, src.opportunity_id, note=note)
+    db.commit()
+    return src
+
+
+def evidence(db: Session, collections: list[str] | None = None, opp_id: str | None = None) -> list[dict]:
+    """Published passages to retrieve from (P-37 builds on this). Current bid evidence only for `opp_id`, never
+    another bid's; nothing in draft, rejected or retired. Each passage carries its citation."""
+    q = (select(KbPassage, KbSource).join(KbSource, KbPassage.source_id == KbSource.id)
+         .where(KbSource.status == "published"))
+    if collections:
+        q = q.where(KbSource.collection.in_(collections))
+    q = q.where((KbSource.collection != "bid_evidence") | (KbSource.opportunity_id == (opp_id or "")))
+    return [{"passage_id": p.id, "ks_id": s.ks_id, "collection": s.collection, "title": s.title, "version": s.version,
+             "page": p.page, "line_start": p.line_start, "line_end": p.line_end, "heading": p.heading,
+             "table": p.table, "text": p.text, "annotations": p.annotations}
+            for p, s in db.execute(q.order_by(KbPassage.id))]
+
+
+# --- annotations (model proposals beside the passage) ---------------------------------------------------------
+
+ANNOTATE_SYSTEM = """You annotate passages of an engineering reference document for an electrical power, cooling and
+data-centre bid team. For each numbered passage propose:
+- topics: 1-5 short topic labels (for example "800 VDC distribution", "arc-flash protection");
+- content_type: what the passage is;
+- attributes: technical values stated in the passage itself (name, value, unit, the operating conditions under which
+  the value holds); none when the passage states no value; never invent or convert a value;
+- applicability: where the passage applies (equipment, voltage class, site type), or "" when not stated;
+- ambiguities: statements a specialist should check (undefined terms, conflicting values, missing conditions).
+Use only the passage text. Return one entry per passage, with its number."""
+CONTENT_TYPES = ["requirement_or_rule", "rating_or_limit", "definition", "test_or_compliance", "design_guidance",
+                 "architecture_description", "background", "other"]
+ANNOTATE_SCHEMA = {
+    "type": "object", "additionalProperties": False, "required": ["passages"],
+    "properties": {"passages": {"type": "array", "items": {
+        "type": "object", "additionalProperties": False,
+        "required": ["n", "topics", "content_type", "attributes", "applicability", "ambiguities"],
+        "properties": {
+            "n": {"type": "integer"},
+            "topics": {"type": "array", "items": {"type": "string"}},
+            "content_type": {"type": "string", "enum": CONTENT_TYPES},
+            "attributes": {"type": "array", "items": {
+                "type": "object", "additionalProperties": False, "required": ["name", "value", "unit", "conditions"],
+                "properties": {k: {"type": "string"} for k in ("name", "value", "unit", "conditions")}}},
+            "applicability": {"type": "string"},
+            "ambiguities": {"type": "array", "items": {"type": "string"}},
+        }}}},
+}
+
+
+def annotate(db: Session, ks_id: str, actor: str) -> int:
+    """Annotate every passage not yet annotated, one model call per page (answers frozen in llm_cache/annotate_passages).
+    llm.LLMUnavailable when an answer is neither frozen nor obtainable; pages done before that are kept."""
+    src = get(db, ks_id)
+    todo = [p for p in source_passages(db, ks_id) if p.annotations is None]
+    by_page: dict[int, list[KbPassage]] = {}
+    for p in todo:
+        by_page.setdefault(p.page, []).append(p)
+    done = 0
+    for page_no, items in sorted(by_page.items()):
+        prompt = f"Document: {src.title} ({src.publisher}, {src.revision})\n\n" + "\n\n".join(
+            f"[{i}] {(p.heading + ': ') if p.heading else ''}{p.text}" for i, p in enumerate(items, 1))
+        try:
+            answer = llm.complete_json("annotate_passages", ANNOTATE_SYSTEM, prompt, ANNOTATE_SCHEMA)
+        except llm.LLMUnavailable:
+            db.commit()
+            raise
+        for a in answer["passages"]:
+            if 1 <= a["n"] <= len(items):
+                items[a["n"] - 1].annotations = {k: a[k] for k in ("topics", "content_type", "attributes",
+                                                                   "applicability", "ambiguities")}
+                done += 1
+    audit.record(db, actor, "annotated", "kb_source", ks_id, src.opportunity_id, passages=done)
+    db.commit()
+    return done
+
+
+# --- the public references in the repository --------------------------------------------------------------------
+
+def register_references(db: Session, actor: str = "Layer 0 setup") -> list[str]:
+    """Register the public references listed in data/references/sources.json (engineering references and market
+    context; test RFPs are bids, not knowledge) as drafts. Idempotent: a registered instance is skipped."""
+    manifest = json.loads((config.DATA / "references" / "sources.json").read_text("utf-8"))
+    out = []
+    for e in manifest["sources"]:
+        if e["collection"] not in COLLECTIONS:
+            continue
+        src, _ = register(db, config.ROOT / e["file"], actor, e["collection"], e["title"], e["publisher"],
+                          e["revision"], e["note"], "public", e["url"])
+        out.append(src.ks_id)
+    return out

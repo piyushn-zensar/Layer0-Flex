@@ -25,6 +25,7 @@ from app.main import app  # noqa: E402,F401  (imports every module and creates t
 from app.core.db import SessionLocal  # noqa: E402
 from app.modules.decisions import service as decisions  # noqa: E402
 from app.modules.ingestion import service as ingestion  # noqa: E402
+from app.modules.knowledge import service as knowledge  # noqa: E402
 from app.modules.matching import service as matching  # noqa: E402
 from app.modules.opportunities import service as opportunities  # noqa: E402
 from app.modules.requirements import anchoring  # noqa: E402  (a pure helper: quote -> lines on the page)
@@ -110,3 +111,5 @@ def _read_and_review(db, opp_id: str, doc_id: str, seed: dict) -> dict:
 if __name__ == "__main__":
     main(real=True)  # P-08: the demo runs on the real extraction; only electrical-domain bids are seeded (C-11)
     independent()  # P-26: the independent validation RFP
+    with SessionLocal() as db:  # P-35: the public references, registered as drafts waiting for review
+        print("knowledge sources:", knowledge.register_references(db))

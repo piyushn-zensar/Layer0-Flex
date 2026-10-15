@@ -1,10 +1,12 @@
 "use client";
 // Business units, product families with their published models, and knowledge-base search.  Owner: Atharv.
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useApi } from "@/lib/api";
 import type { Product, Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, EmptyState, Skeleton, StatusBadge } from "@/components/ui";
+import SourcesTab from "./SourcesTab";
 
 type Hit = { kind: string; id: string; bu: string; score: number; text: string; family?: string };
 type Item = { id: string; family: string; bu: string; model: string; name: string; specs: string; source_url: string };
@@ -13,12 +15,11 @@ type Data = { units: Unit[]; products: Product[]; items: Item[]; results: Hit[] 
 const Source = ({ url }: { url?: string }) =>
   url ? <a className="catalog-source" href={url} target="_blank" rel="noopener noreferrer">source</a> : null;
 
-export default function CatalogPage() {
+function ProductsTab() {
   const [q, setQ] = useState("");
   const { data, error } = useApi<Data>(`/api/catalog?q=${encodeURIComponent(q)}`);
   return (
-    <div className="content">
-      <PageHead title="Product catalog" help="Business units, their product families and models, and the past responses used for matching." />
+    <>
       <p className="muted catalog-provenance">Families and models from public Flex web pages (retrieved 12 Oct 2026); to be confirmed with each unit.</p>
       <form className="inline catalog-search" role="search" action={(f) => setQ(String(f.get("q") ?? "").trim())} data-tour="catalog-search">
         <label><span className="sr-only">Search the knowledge base</span>
@@ -69,6 +70,26 @@ export default function CatalogPage() {
           </section>
         );
       })}
+    </>
+  );
+}
+
+function CatalogPage() {
+  const router = useRouter();
+  const tab = useSearchParams().get("tab") === "sources" ? "sources" : "products";
+  return (
+    <div className="content">
+      <PageHead title="Product catalog" help="Business units, their product families and models, the past responses used for matching, and the reference documents (sources) that back them." />
+      <div className="filters" role="tablist" aria-label="Catalog view" data-tour="catalog-tabs">
+        {(["products", "sources"] as const).map((t) => (
+          <button key={t} role="tab" aria-selected={tab === t} className={`chip ${tab === t ? "on" : ""}`} data-tour={`catalog-tab-${t}`}
+            onClick={() => router.replace(t === "products" ? "/catalog" : "/catalog?tab=sources")}>{t === "products" ? "Products" : "Sources"}</button>))}
+      </div>
+      {tab === "products" ? <ProductsTab /> : <SourcesTab />}
     </div>
   );
+}
+
+export default function CatalogRoute() {
+  return <Suspense fallback={<div className="content"><Skeleton lines={4} /></div>}><CatalogPage /></Suspense>;
 }

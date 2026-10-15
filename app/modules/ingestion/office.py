@@ -71,21 +71,30 @@ def _xlsx(path) -> list[list[str]]:
 
 def to_pdf(path: str | Path) -> bytes:
     """Render the sections as PDF pages: long lines wrap (each piece is its own line), a section starts a page."""
+    return render(sections(path), Path(path).stem)[0]
+
+
+def render(parts: list[list[str]], title: str) -> tuple[bytes, list[int]]:
+    """Sections of lines -> deterministic PDF bytes and the page number each section starts on (its first line is
+    the section's heading). Also used for web pages and text files in the knowledge base (P-35)."""
     pdf = pymupdf.open()
     width = PAGE.width - 2 * MARGIN
-    for section in sections(path):
+    starts = []
+    for section in parts:
         page, y = None, 0.0
         for raw in section:
             for piece in _wrap(raw, width):
                 if page is None or y > PAGE.height - MARGIN:
+                    if page is None:
+                        starts.append(len(pdf) + 1)
                     page, y = pdf.new_page(width=PAGE.width, height=PAGE.height), MARGIN
                 page.insert_text((MARGIN, y), piece, fontname="helv", fontsize=FONT_SIZE)
                 y += LEADING
     if not len(pdf):
         raise ValueError("The document has no text to read.")
-    pdf.set_metadata({"title": Path(path).stem, "producer": "Layer 0 office.py", "creator": "Layer 0",
+    pdf.set_metadata({"title": title, "producer": "Layer 0 office.py", "creator": "Layer 0",
                       "creationDate": "", "modDate": ""})
-    return pdf.tobytes(garbage=4, deflate=True, no_new_id=True)
+    return pdf.tobytes(garbage=4, deflate=True, no_new_id=True), starts
 
 
 def _wrap(text: str, width: float) -> list[str]:

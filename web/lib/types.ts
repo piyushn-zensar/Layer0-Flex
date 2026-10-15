@@ -109,3 +109,22 @@ export interface Changes { baseline: { number: number; count: number } | null; d
 // before (= next_before of the previous page), limit. Read-only.
 export interface ActivityEvent { id: number; at: string; actor: string; action: string; entity: string; entity_id: string; data: Record<string, unknown> }
 export interface Activity { events: ActivityEvent[]; total: number; next_before: number | null; filters: { entities: string[]; people: string[]; units: string[] } }
+// GET/POST /api/knowledge/sources (P-35): reference documents registered for retrieval, reviewed before they count as evidence.
+export type SourceStatus = "draft" | "published" | "rejected" | "retired";
+export interface KnowledgeSource {
+  ks_id: string; collection: string; title: string; publisher: string; revision: string; scope: string; permissions: string; url: string;
+  file_name: string; sha256: string; document_id: string; instance_id: string; id_source: "embedded" | "fingerprint"; version: number;
+  status: SourceStatus; opportunity_id: string | null; pages: number; passages: number; annotated: number;
+  registered_by: string; registered_at: string; reviewed_by: string | null; reviewed_at: string | null; review_note: string;
+}
+export interface SourceList {
+  sources: KnowledgeSource[]; collections: Record<string, string>; reviewers: Record<string, string[]>; statuses: SourceStatus[];
+}
+export interface PassageAnnotation {
+  topics: string[]; content_type: string; attributes: { name: string; value: string; unit: string; conditions: string }[];
+  applicability: string; ambiguities: string[];
+}
+export interface SourcePassage {
+  id: number; page: number; line_start: number; line_end: number; heading: string; table: string | null; text: string; annotations: PassageAnnotation | null;
+}
+export interface SourceDetail { source: KnowledgeSource; passages: SourcePassage[] }
