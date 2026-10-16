@@ -150,7 +150,8 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
   ctxRef.current = ctx;
 
   // Hidden on the sign-in page (nothing there may call the API); the stored progress is untouched.
-  const shown: TourStatus = pathname === "/login" ? "loading" : status;
+  const signedOut = pathname === "/login" || pathname === "/signup"; // P-31: no walkthrough before sign-in
+  const shown: TourStatus = signedOut ? "loading" : status;
   const step: Step | null = shown === "running" ? STEPS[index] ?? null : null;
   const chapter = step ? CHAPTERS.find((c) => c.id === step.chapter) ?? null : null;
   const stepInChapter = step && chapter ? index - firstIndex(chapter.id) + 1 : 0;
@@ -158,7 +159,7 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
   // ----- session + stored progress (once per page load) -----
   useEffect(() => {
     let cancelled = false;
-    if (pathname !== "/login") api<Me>("/api/auth/me").then((me) => { if (!cancelled) setActorState(me.name); }, () => { /* 401: lib/api goes to sign-in */ });
+    if (!signedOut) api<Me>("/api/auth/me").then((me) => { if (!cancelled) setActorState(me.name); }, () => { /* 401: lib/api goes to sign-in */ });
     (async () => {
       let id = "";
       try { id = (await (await fetch("/tour-session", { cache: "no-store" })).json()).id as string; } catch { id = "no-session"; }

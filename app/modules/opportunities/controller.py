@@ -90,6 +90,7 @@ def samples():
 def upload_sample(opp_id: str, body: SampleIn, request: Request, background: BackgroundTasks,
                   db: Session = Depends(get_db)):
     """Attach a sample RFP as the main document: the same storing, reading, JSON and status transitions as an upload."""
+    require(request, BID_MANAGER)  # P-31: the role check comes first, before anything about the bid or the sample
     if not service.get(db, opp_id):
         raise HTTPException(404, f"Bid {opp_id} not found.")
     try:

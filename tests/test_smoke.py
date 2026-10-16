@@ -1047,7 +1047,7 @@ def test_permissions_in_bids_documents_requirements_and_changes():
     url = f"/api/bids/{opp}/requirements/from-lines"
     lines = {"page": 55, "line_start": 52, "line_end": 53, "category": "technical"}
     r = client.post(url, json=lines, headers=admin)
-    assert r.status_code == 403 and r.json()["detail"].startswith("Only a bid manager, unit manager or unit designer / engineer")  # P-30 labels
+    assert r.status_code == 403 and r.json()["detail"].startswith("The administrator reads only")  # P-31: one rule for every write
     added = client.post(url, json=lines, headers=pm).json()
     assert added["created_by"] == "Crown Product Manager"
     exclude = {"action": "reject", "reason": "duplicate of the reader's item"}
@@ -1415,3 +1415,108 @@ def test_workflow_roles(monkeypatch):
     routed = {r["req_id"]: r for r in client.get(f"/api/bids/{opp}/assessment").json()["routing"]}
     other = next(r for r in rows if r["req"]["category"] == "submission")
     assert {u["bu"] for u in routed[other["req"]["req_id"]]["units"]} == units
+
+
+def test_signup_and_attempt_limits():
+    """P-31 (C-26): sign-up with a chosen role (never administrator) and a unit for unit roles; unique usernames and
+    names; roster accounts cannot be taken; repeated failures are refused (429); init() leaves sign-up accounts alone.
+    Done by Atharv for Piyush ([contract] Piyush); appended (append-only on this shared file)."""
+    from fastapi.testclient import TestClient
+
+    from app.core import auth as core_auth
+
+    anon = TestClient(app)
+    units = anon.get("/api/auth/units").json()  # public: the sign-up page reads it before anyone is signed in
+    assert {"code": "CROWN", "name": next(u["name"] for u in units if u["code"] == "CROWN")} in units
+    core_auth._failures.clear()
+    good = {"username": "Jane.Doe", "name": "Jane Doe", "password": "long-enough-1", "role": "design_engineer", "bu": "CROWN"}
+    r = anon.post("/api/auth/signup", json=good)
+    assert r.status_code == 200 and "layer0_token" in r.cookies, r.text
+    me = TestClient(app, headers={"Authorization": f"Bearer {r.json()['token']}"}).get("/api/auth/me").json()
+    assert (me["sub"], me["name"], me["role"], me["bu"], me["role_label"]) == ("jane.doe", "Jane Doe", "design_engineer", "CROWN", "Unit designer / engineer")
+    core_auth.init()  # the roster sync leaves sign-up accounts alone
+    assert core_auth.accounts()["jane.doe"]["role"] == "design_engineer"
+    assert anon.post("/api/auth/login", json={"username": "jane.doe", "password": "long-enough-1"}).status_code == 200
+
+    refused = [(good | {"username": "Jane.Doe2", "role": "admin"}, 422), (good | {"username": "jd2", "bu": None}, 422),
+               (good | {"username": "jd3", "password": "short"}, 422), (good | {"name": "J. Doe"}, 409),
+               (good | {"username": "bid.manager", "name": "Someone"}, 409)]
+    for body, status in refused:
+        assert anon.post("/api/auth/signup", json=body).status_code == status, body
+    assert anon.post("/api/auth/signup", json=good | {"username": "jd4", "name": "Jane Doe"}).status_code == 429  # 5 failures
+    core_auth._failures.clear()
+    assert anon.post("/api/auth/signup", json=good | {"username": "bm.two", "name": "Second Bid Manager", "role": "bid_manager", "bu": "CROWN"}).json()["user"]["bu"] is None
+
+    for _ in range(core_auth.MAX_FAILURES):
+        assert anon.post("/api/auth/login", json={"username": "jane.doe", "password": "wrong"}).status_code == 401
+    assert anon.post("/api/auth/login", json={"username": "jane.doe", "password": "long-enough-1"}).status_code == 429
+    core_auth._failures.clear()
+
+
+def test_every_write_route_by_role():
+    """P-31 (C-26, technical-architecture 16.6): every write route x every role. Bid-manager routes refuse the unit
+    roles; correction routes take the bid manager and the unit roles; the administrator reads only. Routes whose rule
+    depends on the item (respond, validate, close, knowledge reviews) are checked for the administrator here and in
+    their own tests otherwise. Bodies come from the OpenAPI schema, so each request is well formed and reaches the role
+    check. Done by Atharv for Piyush ([contract] Piyush); appended (append-only on this shared file)."""
+    seed_demo.main()
+    client = signed_in()
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    req_id = client.get(f"/api/bids/{opp}/trace").json()["rows"][0]["req"]["req_id"]
+    roles = {"bid_manager": auth("bid.manager"), "product_manager": auth("crown.pm"), "design_engineer": auth("crown.de"), "admin": auth("admin")}
+    bid_manager_only = {
+        "/api/bids", "/api/bids/{opp_id}/documents", "/api/bids/{opp_id}/documents/from-sample", "/api/documents/{doc_id}/ingest",
+        "/api/bids/{opp_id}/requirements/extract", "/api/bids/{opp_id}/baselines", "/api/bids/{opp_id}/changes",
+        "/api/bids/{opp_id}/changes/from-sample", "/api/changes/{set_id}/apply", "/api/changes/{set_id}/discard",
+        "/api/bids/{opp_id}/match", "/api/matches/{match_id}/decide", "/api/bids/{opp_id}/requirements/{req_id}/match",
+        "/api/bids/{opp_id}/participation", "/api/bids/{opp_id}/go-no-go", "/api/bids/{opp_id}/dispatch",
+        "/api/bids/{opp_id}/requirements/{req_id}/capability-gap", "/api/knowledge/sources/{ks_id}/annotate"}
+    correctors = {
+        "/api/bids/{opp_id}/corrections", "/api/changes/{set_id}/items/{item_id}", "/api/changes/{set_id}/confirm-all",
+        "/api/bids/{opp_id}/requirements", "/api/bids/{opp_id}/requirements/from-lines", "/api/bids/{opp_id}/requirements/merge",
+        "/api/requirements/{req_id}/review", "/api/requirements/{req_id}/resolve", "/api/requirements/{req_id}/dismiss",
+        "/api/requirements/{req_id}/ungroup", "/api/requirements/{req_id}/split", "/api/knowledge", "/api/knowledge/{kb_id}/revise",
+        "/api/knowledge/sources", "/api/bids/{opp_id}/comments"}
+    by_item = {"/api/assignments/{assignment_id}/respond", "/api/assignments/{assignment_id}/validate",
+               "/api/comments/{comment_id}/close", "/api/knowledge/{kb_id}/review", "/api/knowledge/sources/{ks_id}/review"}
+
+    spec = app.openapi()
+    comps = spec.get("components", {}).get("schemas", {})
+
+    def sample(s):  # a minimal value that passes the schema: required fields only, the first enum value
+        if "$ref" in s:
+            return sample(comps[s["$ref"].split("/")[-1]])
+        if "anyOf" in s:
+            return sample(next(x for x in s["anyOf"] if x.get("type") != "null"))
+        if "enum" in s or "const" in s:
+            return s["enum"][0] if "enum" in s else s["const"]
+        if s.get("type") == "object":
+            return {k: sample(v) for k, v in s.get("properties", {}).items() if k in s.get("required", [])}
+        return {"string": "x", "integer": 1, "number": 1, "boolean": True, "array": []}.get(s.get("type"), "x")
+
+    def request(path, op):
+        values = {"opp_id": opp, "req_id": req_id}
+        for p in op.get("parameters", []):
+            if p["in"] == "path":
+                values.setdefault(p["name"], 1 if p["schema"].get("type") == "integer" else "x")
+        content = op.get("requestBody", {}).get("content", {})
+        if "multipart/form-data" in content:
+            props = sample(content["multipart/form-data"]["schema"])
+            files = {k: ("x.pdf", b"%PDF-1.4", "application/pdf") for k in props if k in ("file", "files")}
+            return path.format(**values), {"files": files, "data": {k: v for k, v in props.items() if k not in files}}
+        return path.format(**values), ({"json": sample(content["application/json"]["schema"])} if content else {})
+
+    writes = [(p, m, op) for p, ops in spec["paths"].items() for m, op in ops.items()
+              if m in ("post", "put", "patch", "delete") and not p.startswith("/api/auth")]
+    assert {p for p, _, _ in writes} == bid_manager_only | correctors | by_item  # a new write route is added to the matrix here
+    for path, method, op in writes:
+        url, kwargs = request(path, op)
+        for role, headers in roles.items():
+            if role == "bid_manager" and path in bid_manager_only | correctors:
+                continue  # allowed; the bid manager's own outcome is covered by each module's tests
+            status = client.request(method.upper(), url, headers=headers, **kwargs).status_code
+            refused = role == "admin" or (path in bid_manager_only)
+            if refused:
+                assert status == 403, (role, method, path, status)
+            elif path in correctors:
+                assert status != 403, (role, method, path, status)

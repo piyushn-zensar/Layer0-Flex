@@ -11,7 +11,9 @@ type Offering = "CTO" | "SEMI_CUSTOM" | "ETO";
 type MatchUnit = { bu: string; product_id: string; offering_type: Offering };
 type Props = { oppId: string; reqId: string; match: (Match & { units?: MatchUnit[] }) | null; dispatched: boolean; onDone: () => void;
   /** Walkthrough targets (data-tour="match-*"): the trace page sets it on the selected row only, so each id is unique. */
-  tour?: boolean };
+  tour?: boolean;
+  /** P-31: the signed-in user may change matches (the bid manager); the page reads it once for every row. The API checks too. */
+  canChange?: boolean };
 
 const OFFERINGS: Offering[] = ["CTO", "SEMI_CUSTOM", "ETO"];
 // QA-04: how the match came about (matching.service stores the method; "rule" is a non-product category routed to the bid desk)
@@ -21,7 +23,7 @@ const METHOD: Record<string, string> = {
 };
 const stop = (e: React.SyntheticEvent) => e.stopPropagation();
 
-export default function MatchActions({ oppId, reqId, match: m, dispatched, onDone, tour }: Props) {
+export default function MatchActions({ oppId, reqId, match: m, dispatched, onDone, tour, canChange = true }: Props) {
   const toast = useToast();
   const t = (name: string) => (tour ? name : undefined);
   const [catalog, setCatalog] = useState<{ units: Unit[]; products: Product[] }>();
@@ -63,10 +65,11 @@ export default function MatchActions({ oppId, reqId, match: m, dispatched, onDon
       {draft === undefined ? (
         <div className="row-actions" onClick={stop} onKeyDown={stop} data-tour={t("match-buttons")}>
           {m?.status === "proposed" && <>
-            <button disabled={busy} onClick={() => decide("accept")} data-tour={t("match-accept")}>Accept</button>
-            <button disabled={busy} className="secondary" onClick={() => decide("reject")} data-tour={t("match-reject")}>Reject</button>
+            <button disabled={busy || !canChange} onClick={() => decide("accept")} data-tour={t("match-accept")}>Accept</button>
+            <button disabled={busy || !canChange} className="secondary" onClick={() => decide("reject")} data-tour={t("match-reject")}>Reject</button>
           </>}
-          <button disabled={busy} className="secondary" onClick={openChange} data-tour={t("match-change")}>Change</button>
+          <button disabled={busy || !canChange} className="secondary" onClick={openChange} data-tour={t("match-change")}
+            title={canChange ? undefined : "Only the bid manager changes product matches."}>Change</button>
           {busy && <Busy label="Saving…" />}
         </div>
       ) : (
