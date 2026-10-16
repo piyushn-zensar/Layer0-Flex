@@ -174,7 +174,7 @@ def record(db: Session, opp_id: str, kind: str, outcome: str, units: list[str], 
     if not opportunities.get(db, opp_id):
         raise LookupError(f"Bid {opp_id} not found.")
     if kind == "go_no_go" and not requirements.baseline(db, opp_id):
-        raise ValueError("Publish the requirement register before deciding go or no-go (Requirements step).")
+        raise ValueError("The requirement register is not frozen yet: read the RFP before deciding go or no-go (RFP step).")
     if kind == "participation":
         active = {u["code"] for u in catalog.units()}
         if not units or set(units) - active:

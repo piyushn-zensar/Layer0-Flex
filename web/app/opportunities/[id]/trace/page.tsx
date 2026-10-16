@@ -30,6 +30,9 @@ export default function TracePage() {
   const [matching, setMatching] = useState(false);
   const [linked, setLinked] = useState<Record<Pane, boolean>>({ 1: true, 2: true, 3: true }); // J-12: which panes follow the selection
   const [enlarged, setEnlarged] = useState<Pane | null>(null);
+  // P-32 (C-27): the RFP step sends an already-read document here (?known=<file>): its stored requirements, not a new read
+  const [known, setKnown] = useState<string | null>(null);
+  useEffect(() => setKnown(new URLSearchParams(location.search).get("known")), []);
   const linkedRef = useRef(linked); // select() is a stable callback, so it reads the current links from a ref
   const selectedRef = useRef<string | undefined>(undefined);
 
@@ -147,6 +150,7 @@ export default function TracePage() {
         {matching && <Busy label="Matching…" />}
         <button className="secondary" disabled={matching} onClick={matchProducts} data-tour="trace-match-button">Match products</button>
       </PageHead>
+      {known && <Alert kind="info" onClose={() => setKnown(null)}>{known} was read before in this bid, so it was not read again: these are its stored, frozen requirements.</Alert>}
       <div className="toolbar">
         <span className="muted" data-tour="trace-unit-responses">Unit responses: {assessed ? Object.entries(data.progress).map(([bu, p]) => (
           <StatusBadge key={bu} status={p.validated === p.total ? "validated" : p.submitted > 0 ? "submitted" : "assigned"}

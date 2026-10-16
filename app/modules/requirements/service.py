@@ -14,7 +14,12 @@ Public contract:
     extract(db, opp_id, actor, reason="") -> dict   reader agent on the main RFP, then duplicates marked and related
                                                  items grouped into requirements with sub-requirements; anchored
                                                  items enter the register, the others the exception queue; writes
-                                                 snapshot E1, or E2... when read again, which needs a reason
+                                                 snapshot E1, or E2... when read again, which needs a reason. P-32
+                                                 (C-27): a complete read (every page read or deliberately skipped, no
+                                                 failed chunk) freezes the register at once as baseline 1 ("frozen":
+                                                 its number, else None with "not_frozen": why); once frozen, the RFP
+                                                 is not read again (open question 7 default): corrections and change
+                                                 documents only
     snapshots(db, opp_id) -> list[ExtractionSnapshot]   newest first
     snapshot(db, opp_id, number) -> ExtractionSnapshot  LookupError
     add(db, opp_id, document_id, quote, text, category, actor, section="", hint_page=None, origin="extraction")
@@ -113,7 +118,7 @@ def _writable(db: Session, opp_id: str) -> None:
     opportunities.require(db, opp_id)
     b = baseline(db, opp_id)
     if b:
-        raise ValueError(f"The register is published (baseline {b.number}); correct it with a reason, or through a "
+        raise ValueError(f"The register is frozen (baseline {b.number}); correct it with a reason, or through a "
                          "change document.")
 
 
@@ -328,9 +333,21 @@ def extract(db: Session, opp_id: str, actor: str, reason: str = "") -> dict:
                  reason=snap.reason, coverage=coverage)
     db.commit()
     opportunities.set_status(db, opp_id, "review", actor)
+    frozen, why = None, "The RFP was not read completely; read it again before it can be frozen."
+    if read_complete(coverage):  # C-27: an automatic system action, no one approves it
+        try:
+            frozen = freeze(db, opp_id, actor).number
+            why = ""
+        except ValueError as exc:  # e.g. no verified requirement: nothing is frozen, the read can be retried
+            why = str(exc)
     return {"proposed": len(proposed), "duplicates": len(dups), "groups": len(made),
             "requirements": len(current(db, opp_id)), "exceptions": coverage["exceptions"], "snapshot": snap.number,
-            "coverage": coverage, "problems": problems + group_problems}
+            "coverage": coverage, "problems": problems + group_problems, "frozen": frozen, "not_frozen": why}
+
+
+def read_complete(coverage: dict) -> bool:
+    """C-27: the read succeeded when every page was read or deliberately skipped and no chunk failed."""
+    return not (coverage.get("pages_failed") or coverage.get("pages_unreadable") or coverage.get("chunks_failed"))
 
 
 def _snapshot_item(r: Requirement) -> dict:

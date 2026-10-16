@@ -13,7 +13,7 @@ os.environ["LLM_PROVIDER"] = "mock"
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
-from conftest import auth, signed_in  # noqa: E402
+from conftest import auth, freeze, signed_in  # noqa: E402
 from sqlalchemy import text  # noqa: E402
 
 from app.core.db import engine  # noqa: E402
@@ -55,7 +55,8 @@ def test_demo_flow_and_api():
     csv = client.get("/api/bids/OPP-0001/compliance-matrix.csv").text
     assert "p. 55, lines" in csv
 
-    # rule R6: the same file in a second opportunity is that opportunity's own document
+    # the same file in a second bid is that bid's own document while P-32's known-instance lookup is off (conftest;
+    # test_known_document_instance covers the lookup)
     opp2 = client.post("/api/bids", json={"title": "second"}).json()["id"]
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
     doc2 = client.post(f"/api/bids/{opp2}/documents", files={"file": ("rfp.pdf", pdf)}).json()
@@ -111,7 +112,7 @@ def test_people_decide_and_dispatch_needs_go():
     assert client.get(f"/api/bids/{opp}").json()["opportunity"]["status"] == "no_go"
 
 
-def test_requirement_review_actions():
+def test_requirement_review_actions(incomplete_read):
     """P-06: edit, split, merge, add missed; the register freezes as it is (P-22: no approve step); replaced items leave the flow."""
     client = signed_in()
     opp = client.post("/api/bids", json={"title": "review actions"}).json()["id"]
@@ -142,7 +143,7 @@ def test_requirement_review_actions():
                          json={"quote": "Each phase shall have 1 inch diameter ground ball.", "category": "technical", "page": 55}).json()
     assert missed["provenance"] == "EXTRACTED" and missed["page"] == 55
 
-    assert client.post(f"/api/bids/{opp}/baselines").status_code == 200
+    freeze(opp)  # P-32: no publish route
     statuses = {r["req_id"]: r["status"] for r in client.get(f"/api/bids/{opp}/requirements").json()["requirements"]}
     assert statuses[p55[1]["req_id"]] == "split" and statuses[p55[2]["req_id"]] == "merged"
     trace_ids = {r["req"]["req_id"] for r in client.get(f"/api/bids/{opp}/trace").json()["rows"]}
@@ -247,7 +248,7 @@ def test_workflow_order_and_roles():
     assert client.get("/api/catalog/search?q=relay&k=-1").status_code == 422
 
 
-def test_review_findings_fixed():
+def test_review_findings_fixed(incomplete_read):
     """Review of 9 Oct: path traversal, freeze guards, unknown opportunities, parallel create, ID reuse, input checks."""
     import concurrent.futures
 
@@ -268,10 +269,13 @@ def test_review_findings_fixed():
 
     # unknown opportunity: 404 and nothing stored
     assert client.post("/api/bids/OPP-9996/documents", files={"file": ("x.pdf", pdf)}).status_code == 404
-    assert client.post("/api/bids/OPP-9997/baselines").status_code == 404
+    with pytest.raises(LookupError):
+        freeze("OPP-9997")
 
-    # freeze: needs approved items; once only; nothing changes afterwards
-    assert client.post(f"/api/bids/{opp}/baselines").status_code == 409  # nothing read or approved yet
+    # freeze: needs approved items; once only; nothing changes afterwards (P-32: the service; no publish route)
+    assert client.post(f"/api/bids/{opp}/baselines").status_code in (404, 405)
+    with pytest.raises(ValueError):
+        freeze(opp)  # nothing read or approved yet
     client.post(f"/api/bids/{opp}/requirements/extract")
     everything = client.get(f"/api/bids/{opp}/requirements").json()["requirements"]
     first_ids = {r["req_id"] for r in everything}
@@ -287,8 +291,9 @@ def test_review_findings_fixed():
     p56 = next(r for r in alone if r["page"] != p55["page"])
     assert client.post(f"/api/bids/{opp}/requirements/merge",
                        json={"req_ids": [p55["req_id"], p56["req_id"]], "text": "x"}).status_code == 409  # cross-page
-    assert client.post(f"/api/bids/{opp}/baselines").status_code == 200
-    assert client.post(f"/api/bids/{opp}/baselines").status_code == 409  # no empty baseline 2
+    freeze(opp)
+    with pytest.raises(ValueError):
+        freeze(opp)  # no empty baseline 2
     assert client.post(f"/api/requirements/{rows[0]['req_id']}/review", json={"action": "approve"}).status_code == 409
     assert len(client.get(f"/api/bids/{opp}/requirements").json()["requirements"]) == len(first_ids)
 
@@ -340,7 +345,7 @@ def test_trace_and_consolidation_findings_fixed():
     assert rows and all(r["match"] is None or "evidence" not in r["match"] for r in rows)
 
 
-def test_requirement_history():
+def test_requirement_history(incomplete_read):
     """P-13: every version (who, when, wording) and every event is shown; merged originals point to the merge."""
     client = signed_in()
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
@@ -366,7 +371,7 @@ def test_requirement_history():
     assert client.get("/api/requirements/REQ-9999-0001/history").status_code == 404
 
 
-def test_grouping_and_duplicates():
+def test_grouping_and_duplicates(incomplete_read):
     """P-16: related line items become one requirement with sub-requirements; duplicates point to the first one."""
     client = signed_in()
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
@@ -944,7 +949,7 @@ def test_register_and_exception_queue():
 
     # open exceptions never block the baseline; nothing in it lacks a source
     client.post(url, json={"quote": "The vendor shall paint the switchgear green.", "page": 55})
-    assert client.post(f"/api/bids/{opp}/baselines").json()["count"] == 2
+    assert freeze(opp)["count"] == 2
     assert client.post(dismiss.replace(other["req_id"], lost["req_id"]), json={"reason": "x"}).status_code == 409  # frozen
 
 
@@ -956,6 +961,7 @@ def test_extraction_snapshot_and_corrections():
     opp = client.post("/api/bids", json={"title": "snapshot"}).json()["id"]
     client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
     read = client.post(f"/api/bids/{opp}/requirements/extract").json()
+    assert (read["frozen"], read["not_frozen"]) == (1, "")  # P-32 (C-27): a complete read is frozen at once, no one publishes
     assert read["snapshot"] == 1 and read["coverage"]["candidates"] == 818 and read["coverage"]["exceptions"] == read["exceptions"]
     # P-24 (C-03): the coverage adds up; anchored to the reader's lines, fewer exceptions than the 33 before
     c = read["coverage"]
@@ -977,11 +983,10 @@ def test_extraction_snapshot_and_corrections():
     rows = client.get(f"/api/bids/{opp}/requirements").json()
     assert rows["coverage"] == read["coverage"] and {r["origin"] for r in rows["requirements"]} == {"extraction"}
 
-    # corrections need a published register; publishing needs no decision per item and ignores open exceptions
+    # the frozen register (baseline 1, open exceptions included) takes corrections right away
     p55 = same_page(rows["requirements"], 4)
     url = f"/api/bids/{opp}/corrections"
-    assert client.post(url, json={"kind": "exclude", "req_id": p55[0]["req_id"], "reason": "x"}).status_code == 409
-    assert client.post(f"/api/bids/{opp}/baselines").json()["number"] == 1
+    assert rows["baseline"]["number"] == 1
     assert client.post(url, json={"kind": "exclude", "req_id": p55[0]["req_id"], "reason": " "}).status_code == 409
     assert client.post(url, json={"kind": "edit", "req_id": p55[0]["req_id"], "reason": "same"}).status_code == 409  # no change
 
@@ -1021,7 +1026,7 @@ def test_extraction_snapshot_and_corrections():
     assert client.get(f"/api/bids/{opp}/extraction/1").json()["items"] == items  # E1 unchanged
 
 
-def test_permissions_in_bids_documents_requirements_and_changes():
+def test_permissions_in_bids_documents_requirements_and_changes(incomplete_read):
     """P-25 (C-09, technical-architecture section 16.6): the server checks the role on every write; a forbidden action
     is a 403 that says who may do it. Reading stays open to every signed-in account."""
     client = signed_in()
@@ -1056,8 +1061,7 @@ def test_permissions_in_bids_documents_requirements_and_changes():
     exception = next(r for r in client.get(f"/api/bids/{opp}/requirements/exceptions").json())
     assert client.post(f"/api/requirements/{exception['req_id']}/dismiss", json={"reason": "x"}, headers=admin).status_code == 403
 
-    assert client.post(f"/api/bids/{opp}/baselines", headers=pm).status_code == 403
-    assert client.post(f"/api/bids/{opp}/baselines").status_code == 200
+    freeze(opp)  # P-32: no publish route (test_every_write_route_by_role covers every remaining write)
     corr = {"kind": "edit", "req_id": added["req_id"], "text": "x", "reason": "y"}
     assert client.post(f"/api/bids/{opp}/corrections", json=corr, headers=admin).status_code == 403
     assert client.post(f"/api/bids/{opp}/changes", data={"role": "addendum"},
@@ -1279,7 +1283,7 @@ def test_questions_and_comments():
 
 def test_assessment_step():
     """A-16 (C-05): the Assessment step - bid summary, open questions, participation, routing preview before
-    publishing, Send for assessment (publish, then dispatch) and progress per unit. Appended by Atharv (append-only)."""
+    the freeze, Send for assessment (dispatch only after P-32) and progress per unit. Appended by Atharv (append-only)."""
     import json
 
     from app.core.db import SessionLocal
@@ -1314,7 +1318,7 @@ def test_assessment_step():
 
     # Send for assessment, as the screen does it: participation, publish, dispatch
     client.post(f"/api/bids/{opp}/participation", json={"units": list(a["summary"]["suggested_units"])})
-    assert client.post(f"/api/bids/{opp}/baselines").status_code == 200
+    freeze(opp)  # P-32: a complete read freezes by itself; this register was built by hand, as the seed does
     assert client.post(f"/api/bids/{opp}/dispatch").json()["created"] >= 1
     after = client.get(f"/api/bids/{opp}/assessment").json()
     assert after["published"] and after["baseline"] == 1 and after["sent"] and after["participation"]["decided_by"] == bm
@@ -1466,7 +1470,7 @@ def test_every_write_route_by_role():
     roles = {"bid_manager": auth("bid.manager"), "product_manager": auth("crown.pm"), "design_engineer": auth("crown.de"), "admin": auth("admin")}
     bid_manager_only = {
         "/api/bids", "/api/bids/{opp_id}/documents", "/api/bids/{opp_id}/documents/from-sample", "/api/documents/{doc_id}/ingest",
-        "/api/bids/{opp_id}/requirements/extract", "/api/bids/{opp_id}/baselines", "/api/bids/{opp_id}/changes",
+        "/api/bids/{opp_id}/requirements/extract", "/api/bids/{opp_id}/changes",
         "/api/bids/{opp_id}/changes/from-sample", "/api/changes/{set_id}/apply", "/api/changes/{set_id}/discard",
         "/api/bids/{opp_id}/match", "/api/matches/{match_id}/decide", "/api/bids/{opp_id}/requirements/{req_id}/match",
         "/api/bids/{opp_id}/participation", "/api/bids/{opp_id}/go-no-go", "/api/bids/{opp_id}/dispatch",
@@ -1520,3 +1524,87 @@ def test_every_write_route_by_role():
                 assert status == 403, (role, method, path, status)
             elif path in correctors:
                 assert status != 403, (role, method, path, status)
+
+
+@pytest.mark.known_instances
+def test_known_document_instance():
+    """P-32 (C-27): the Document ID and Instance ID come from the file (PDF trailer /ID, Word settings, else SHA-256);
+    the same instance sent to another bid opens the bid that holds it, an earlier instance names that bid. Done by
+    Atharv for Piyush ([contract] Piyush); appended (append-only on this shared file)."""
+    import io
+    import zipfile
+
+    import pymupdf
+
+    from app.modules.opportunities import service as opportunities
+
+    def pdf(base: bytes | None = None, text: str = "Synthetic RFP for P-32") -> bytes:
+        d = pymupdf.open(stream=base, filetype="pdf") if base else pymupdf.open()
+        (d[0] if base else d.new_page()).insert_text((72, 100 + 20 * len(text) % 300), text)
+        if not base:
+            d.xref_set_key(-1, "ID", f"[<{os.urandom(8).hex().upper()}><00>]")  # a document ID of its own for this test
+        return d.tobytes()  # saving writes a new instance ID, as an editing tool does
+
+    first = pdf()
+    newer = pdf(first, "edited and saved again")
+    a, b = opportunities.identity("rfp.pdf", first), opportunities.identity("rfp.pdf", newer)
+    assert a["source"] == b["source"] == "pdf_trailer" and a["doc_uid"] == b["doc_uid"] and a["instance_uid"] != b["instance_uid"]
+    word = io.BytesIO()
+    with zipfile.ZipFile(word, "w") as z:
+        z.writestr("word/settings.xml", '<w:settings xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" '
+                   'xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml"><w15:docId w15:val="{1A2B-3C4D}"/></w:settings>')
+    assert opportunities.identity("spec.docx", word.getvalue())["doc_uid"] == "1A2B-3C4D"
+    assert opportunities.identity("sheet.xlsx", b"no ids")["source"] == "sha256"
+    # a writer may put an ID as a literal string, escapes and all: decoded to the same hex as <...>
+    assert opportunities._pdf_strings(r"[(a\)b)<0a 1B>(\101\n)]") == ["612962", "0A1B", "410A"]
+
+    client = signed_in()
+    holder, other, third = (client.post("/api/bids", json={"title": t}).json()["id"] for t in ("holder", "other", "third"))
+    assert "id" in client.post(f"/api/bids/{holder}/documents", files={"file": ("rfp.pdf", first)}).json()
+    known = client.post(f"/api/bids/{other}/documents", files={"file": ("copy.pdf", first)}).json()["known"]
+    assert (known["kind"], known["bid"], known["title"]) == ("instance", holder, "holder")
+    assert client.get(f"/api/bids/{other}").json()["documents"] == []  # nothing stored, nothing read again
+    earlier = client.post(f"/api/bids/{third}/documents", files={"file": ("v2.pdf", newer)}).json()["known"]
+    assert (earlier["kind"], earlier["bid"]) == ("document", holder)  # add the newer instance there as a change document
+    # the bundled sample opens its seeded bid
+    seed_demo.main()  # a seeded bid holding the Syracuse RFP
+    sample = client.post(f"/api/bids/{third}/documents/from-sample", json={"name": "syracuse_rfp"}).json()
+    assert sample["known"]["kind"] == "instance" and sample["known"]["bid"] != third
+
+
+def test_automatic_freeze_and_nothing_else_writes_requirements():
+    """P-32 (C-27): a complete read freezes the register at once (no one publishes, no publish route); it is not read
+    again (open question 7 default); a re-match and a knowledge approval leave every requirement row and baseline as
+    they were. Done by Atharv for Piyush ([contract] Piyush); appended (append-only on this shared file)."""
+    from sqlalchemy import select
+
+    from app.core.db import SessionLocal
+    from app.modules.knowledge import service as knowledge
+    from app.modules.requirements.models import Baseline, Requirement
+
+    client = signed_in()
+    pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
+    opp = client.post("/api/bids", json={"title": "automatic freeze"}).json()["id"]
+    client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    read = client.post(f"/api/bids/{opp}/requirements/extract").json()
+    assert (read["frozen"], read["not_frozen"]) == (1, "")
+    listed = client.get(f"/api/bids/{opp}/requirements").json()
+    assert listed["baseline"]["number"] == 1 and listed["baseline"]["frozen_by"] == "Bid Manager"
+    assert client.get(f"/api/bids/{opp}").json()["opportunity"]["status"] == "frozen"
+    assert client.post(f"/api/bids/{opp}/requirements/extract", json={"reason": "again"}).status_code == 409  # no re-read
+    item = next(r for r in listed["requirements"] if r["status"] == "approved" and r["kind"] == "item")
+    assert client.post(f"/api/requirements/{item['req_id']}/review", json={"action": "edit", "text": "x"}).status_code == 409
+    assert client.post(f"/api/bids/{opp}/baselines").status_code in (404, 405)
+
+    def state():
+        with SessionLocal() as db:
+            rows = [(r.req_id, r.version, r.text, r.status, r.baseline, r.page) for r in
+                    db.scalars(select(Requirement).where(Requirement.opportunity_id == opp).order_by(Requirement.id))]
+            return rows, [(b.number, b.count) for b in db.scalars(select(Baseline).where(Baseline.opportunity_id == opp))]
+
+    before = state()
+    assert client.post(f"/api/bids/{opp}/match").status_code == 200  # a re-match
+    with SessionLocal() as db:
+        kb_id = knowledge.nominate(db, "requirement", item["req_id"], "Bid Manager").kb_id
+    assert client.post(f"/api/knowledge/{kb_id}/review", json={"approve": True}).status_code == 200  # a knowledge approval
+    assert state() == before  # requirement rows and baselines unchanged (catalog refresh: P-34, not built yet)

@@ -10,7 +10,7 @@ from pathlib import Path
 os.environ["STORE_DIR"] = tempfile.mkdtemp()
 os.environ["LLM_PROVIDER"] = "mock"
 
-from conftest import auth, signed_in  # noqa: E402
+from conftest import auth, freeze, signed_in  # noqa: E402
 
 from app.main import app  # noqa: E402
 from scripts import seed_demo  # noqa: E402
@@ -61,7 +61,7 @@ def test_add_requirement_from_selected_lines():
     # after the freeze, missed requirements come in through the Changes page
     for r in (req, head):
         assert client.post(f"/api/requirements/{r['req_id']}/review", json={"action": "approve"}).status_code == 200
-    assert client.post(f"/api/bids/{opp}/baselines").status_code == 200
+    freeze(opp)  # P-32: no publish route
     r = client.post(url, json={"page": 55, "line_start": 67, "line_end": 67})
     assert r.status_code == 409 and "Changes page" in r.json()["detail"]
     assert len(client.get(f"/api/bids/{opp}/requirements").json()["requirements"]) == 2

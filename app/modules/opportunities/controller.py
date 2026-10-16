@@ -54,8 +54,12 @@ def _ingest_in_background(doc_id: str):
 
 def _attach(db: Session, request: Request, background: BackgroundTasks, opp_id: str, filename: str, data: bytes,
             role: str) -> dict:
-    """Store the file, read it in the background, answer at once (the page polls the document's status)."""
+    """Store the file, read it in the background, answer at once (the page polls the document's status). P-32 (C-27):
+    a main RFP whose document is already in another bid is not stored: the answer is {"known": ...} (open that bid,
+    or add this newer instance there as a change document)."""
     require(request, BID_MANAGER)
+    if role == "main" and (known := service.known(db, opp_id, filename, data)):
+        return {"known": known}
     known = {d.id for d in service.documents(db, opp_id)}
     try:
         doc = service.add_document(db, opp_id, filename, data, role, actor(request))

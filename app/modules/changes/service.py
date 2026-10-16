@@ -115,7 +115,7 @@ def upload(db: Session, opp_id: str, filename: str, data: bytes, actor: str, rol
         raise ValueError(f"Unknown document type {role!r}; expected addendum, qa (clarification) or change (request).")
     b = requirements.baseline(db, opp_id)
     if b is None:
-        raise ValueError("Publish the register first: a change document is compared with the published baseline.")
+        raise ValueError("Read the RFP first: a change document is compared with the frozen baseline.")
     _no_set_in_review(db, opp_id)
     if not filename.lower().endswith(".pdf"):
         raise ValueError("Upload the change document as a PDF.")

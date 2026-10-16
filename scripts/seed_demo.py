@@ -54,7 +54,8 @@ def main(seed_file: str = "demo_syracuse.json", real: bool = False) -> None:
                 if "response" in item:
                     responses[req.req_id] = item["response"]
                 print(f"  {req.req_id} {req.provenance:10} {req.source}")
-        requirements.freeze(db, opp.id, BM)
+        if not requirements.baseline(db, opp.id):  # P-32: a complete read froze it already; the hand-picked items did not
+            requirements.freeze(db, opp.id, BM)
 
         print("matching:", matching.match(db, opp.id, "matching agent (seed)"))
         units = list(matching.suggested_units(db, opp.id))
@@ -74,8 +75,8 @@ def main(seed_file: str = "demo_syracuse.json", real: bool = False) -> None:
 
 def independent(seed_file: str = "demo_logan.json") -> None:
     """C-11: the independent validation RFP (another issuer, public), read from its own frozen answers into the
-    register and the exception queue; the bid stays in review. Matching and dispatch follow once its matcher answers
-    are frozen (A-23)."""
+    register and the exception queue; the complete read freezes the register (P-32). Matching and dispatch are not
+    seeded for it."""
     seed = json.loads((config.SEED / seed_file).read_text("utf-8"))
     with SessionLocal() as db:
         o = seed["opportunity"]

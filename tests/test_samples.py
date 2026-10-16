@@ -57,8 +57,8 @@ def test_sample_rfp_is_read_and_extracted_from_frozen_answers(client):
 
     read = client.post(f"/api/bids/{opp}/requirements/extract")
     assert read.status_code == 200, read.text
-    assert read.json()["requirements"] > 300 and not read.json()["problems"]
-    assert client.get(f"/api/bids/{opp}").json()["opportunity"]["status"] == "review"
+    assert read.json()["requirements"] > 300 and not read.json()["problems"] and read.json()["frozen"] == 1
+    assert client.get(f"/api/bids/{opp}").json()["opportunity"]["status"] == "frozen"  # P-32: frozen right after the read
 
 
 def test_sample_addendum_on_the_demo_opportunity(client):
@@ -84,7 +84,7 @@ def test_sample_errors(client):
         assert r.status_code == 409, (route, name, r.text)
     # a change document needs a frozen baseline, as for an upload
     r = client.post(f"/api/bids/{opp}/changes/from-sample", json={"name": "syracuse_addendum_1"})
-    assert r.status_code == 409 and "Publish the register first" in r.json()["detail"]
+    assert r.status_code == 409 and "Read the RFP first" in r.json()["detail"]  # P-32: no publish step
     assert client.get(f"/api/bids/{opp}").json()["documents"] == []  # nothing was stored
 
 

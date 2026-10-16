@@ -7,8 +7,14 @@ Public contract (other modules call only these):
     list_all(db) -> list[Opportunity]
     set_status(db, opp_id, status, actor) -> bool  moves forward only (see FORWARD); False if the move was ignored;
                                                  "go" after a "no_go" resumes at the status the stop replaced
-    add_document(db, opp_id, filename, data, role, actor) -> Document   id = <opp>-<sha256[:12]>;
-                                                 ValueError if a second main RFP is uploaded
+    add_document(db, opp_id, filename, data, role, actor) -> Document   id = <opp>-<sha256[:12]>; records its
+                                                 identity (DocumentIdentity); ValueError if a second main RFP is uploaded
+    identity(filename, data) -> dict             {doc_uid, instance_uid, source}: the IDs embedded in the file
+                                                 (P-32, C-27), the SHA-256 for both when it carries none
+    known(db, opp_id, filename, data) -> dict | None   the same document in another bid: {kind: "instance" (this very
+                                                 instance is that bid's main RFP: open it) | "document" (an earlier
+                                                 instance: add this one there as a change document), bid, title,
+                                                 document, filename}
     get_document(db, doc_id) -> Document | None
     documents(db, opp_id) -> list[Document]
     main_document(db, opp_id) -> Document | None
@@ -18,7 +24,12 @@ Public contract (other modules call only these):
     sample_file(name, kind) -> (filename, bytes)  ValueError for an unknown name or a sample of another kind
 """
 import hashlib
+import io
+import xml.etree.ElementTree as ET
+import zipfile
 from pathlib import Path
+
+import pymupdf
 
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
@@ -26,7 +37,7 @@ from sqlalchemy.orm import Session
 
 from app.core import audit, config
 from app.core.audit import AuditEvent
-from app.modules.opportunities.models import STATUSES, Document, Opportunity
+from app.modules.opportunities.models import STATUSES, Document, DocumentIdentity, Opportunity
 
 FILES = config.STORE / "files"
 READABLE = (".pdf", ".docx", ".xlsx")  # Word and Excel are read through a rendered PDF (ingestion/office.py, P-28)
@@ -150,9 +161,103 @@ def add_document(db: Session, opp_id: str, filename: str, data: bytes, role: str
     doc = Document(id=f"{opp_id}-{sha[:12]}", sha256=sha, opportunity_id=opp_id, filename=filename, role=role, path=str(path),
                    status="uploaded" if path.suffix in READABLE else "unsupported")
     db.add(doc)
+    db.add(DocumentIdentity(document_id=doc.id, opportunity_id=opp_id, **identity(filename, data)))
     audit.record(db, actor, "uploaded", "document", doc.id, opp_id, sha256=sha, filename=filename, role=role)
     db.commit()
     return doc
+
+
+XMP_MM = "{http://ns.adobe.com/xap/1.0/mm/}"
+WORD_DOC_ID = ("{http://schemas.microsoft.com/office/word/2012/wordml}docId",   # w15: a GUID, preferred
+               "{http://schemas.microsoft.com/office/word/2010/wordml}docId")   # w14: hex
+
+
+def _xmp(xmp: str, name: str) -> str:
+    """xmpMM:<name> from XMP metadata, as an element or as an attribute of rdf:Description."""
+    for el in ET.fromstring(xmp).iter():
+        if el.tag == XMP_MM + name and (el.text or "").strip():
+            return el.text.strip()
+        if el.get(XMP_MM + name):
+            return el.get(XMP_MM + name).strip()
+    return ""
+
+
+def _pdf_strings(value: str) -> list[str]:
+    """The strings of a PDF array (as PyMuPDF prints it) in upper-case hex: <hex> as written, (literal) decoded from
+    its escapes. Writers use either form for the trailer /ID, so both give the same value."""
+    out, i = [], 0
+    while i < len(value):
+        if value[i] == "<":
+            j = value.index(">", i)
+            out.append("".join(value[i + 1:j].split()).upper())
+            i = j + 1
+        elif value[i] == "(":
+            buf, depth, i = bytearray(), 1, i + 1
+            while i < len(value):
+                c = value[i]
+                if c == "\\" and i + 1 < len(value):
+                    digits = ""
+                    while len(digits) < 3 and i + 1 + len(digits) < len(value) and value[i + 1 + len(digits)] in "01234567":
+                        digits += value[i + 1 + len(digits)]
+                    if digits:
+                        buf.append(int(digits, 8) & 0xFF)
+                        i += 1 + len(digits)
+                    else:
+                        n = value[i + 1]
+                        buf += {"n": b"\n", "r": b"\r", "t": b"\t", "b": b"\b", "f": b"\f"}.get(n, n.encode("latin-1", "replace"))
+                        i += 2
+                    continue
+                depth += c == "("
+                depth -= c == ")"
+                i += 1
+                if not depth:
+                    break
+                buf += c.encode("latin-1", "replace")
+            out.append(buf.hex().upper())
+        else:
+            i += 1
+    return out
+
+
+def identity(filename: str, data: bytes) -> dict:
+    sha = hashlib.sha256(data).hexdigest()
+    suffix = Path(filename).suffix.lower()
+    try:
+        if suffix == ".pdf":
+            with pymupdf.open(stream=data, filetype="pdf") as pdf:
+                kind, value = pdf.xref_get_key(-1, "ID")  # trailer /ID: [<permanent ID><changing ID>]
+                ids = _pdf_strings(value) if kind == "array" else []
+                if len(ids) == 2:
+                    return {"doc_uid": ids[0].upper(), "instance_uid": ids[1].upper(), "source": "pdf_trailer"}
+                xmp = pdf.get_xml_metadata()
+                doc_uid, instance = (_xmp(xmp, "DocumentID"), _xmp(xmp, "InstanceID")) if xmp else ("", "")
+                if doc_uid and instance:
+                    return {"doc_uid": doc_uid, "instance_uid": instance, "source": "xmp"}
+        elif suffix == ".docx":
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                settings = ET.fromstring(z.read("word/settings.xml"))
+            for tag in WORD_DOC_ID:  # Word keeps a document ID only; every save is a new instance (its fingerprint)
+                found = next((el for el in settings.iter(tag)), None)
+                val = found.get(tag.replace("docId", "val")) if found is not None else None
+                if val:
+                    return {"doc_uid": val.strip("{}").upper(), "instance_uid": sha, "source": "docx"}
+    except Exception:  # noqa: BLE001 - unreadable or odd metadata: fall back to the fingerprint, never fail the upload
+        pass
+    return {"doc_uid": sha, "instance_uid": sha, "source": "sha256"}
+
+
+def known(db: Session, opp_id: str, filename: str, data: bytes) -> dict | None:
+    ident = identity(filename, data)
+    rows = db.execute(select(DocumentIdentity, Document).join(Document, Document.id == DocumentIdentity.document_id)
+                      .where(DocumentIdentity.doc_uid == ident["doc_uid"], DocumentIdentity.opportunity_id != opp_id)
+                      .order_by(Document.received_at)).all()
+    same = [(i, d) for i, d in rows if i.instance_uid == ident["instance_uid"] and d.role == "main"]
+    hit = (same or rows or [None])[0]
+    if not hit:
+        return None
+    d = hit[1]
+    return {"kind": "instance" if same else "document", "bid": d.opportunity_id, "title": require(db, d.opportunity_id).title,
+            "document": d.id, "filename": d.filename}
 
 
 def get_document(db: Session, doc_id: str) -> Document | None:

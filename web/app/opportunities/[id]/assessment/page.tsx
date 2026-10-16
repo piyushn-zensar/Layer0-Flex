@@ -1,6 +1,7 @@
 "use client";
 // Assessment step (A-16, technical-architecture 16.5): bid summary, open questions, participation, routing, Send for
-// assessment (publish the register, then dispatch) and progress per unit. Go/no-go follows on the Bid decision step.  Owner: Atharv.
+// assessment (dispatch: the register is frozen when the RFP is read, P-32) and progress per unit. Go/no-go follows on
+// the Bid decision step.  Owner: Atharv.
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -54,10 +55,7 @@ export default function AssessmentPage() {
   const recordGap = (reqId: string, form: FormData) =>
     run("gap", post(`/api/bids/${id}/requirements/${reqId}/capability-gap`, { reason: form.get("reason") }),
       () => toast.success(`${reqId}: capability gap recorded (non-compliant, with the reason).`));
-  const send = () => run("send", (async () => {
-    if (!data.published) await post(`/api/bids/${id}/baselines`); // publish the register first (16.3)
-    return post<{ created: number; needs_owner: number }>(`/api/bids/${id}/dispatch`);
-  })(), (r) => {
+  const send = () => run("send", post<{ created: number; needs_owner: number }>(`/api/bids/${id}/dispatch`), (r) => {
     toast.success((r.created ? `${r.created} new assignment(s) sent to the units.` : "Nothing new to send: every unit already has its work.")
       + (r.needs_owner ? ` ${r.needs_owner} product requirement(s) need an owner and were not sent.` : ""));
     statusChanged();
@@ -70,7 +68,7 @@ export default function AssessmentPage() {
 
       <section className="card" data-tour="asm-summary">
         <div className="card-head"><h2>Bid summary</h2>
-          <span className="muted">{s.requirements} requirement(s) in the register · {data.published ? `published as baseline ${data.baseline}` : "not published yet"}</span></div>
+          <span className="muted">{s.requirements} requirement(s) in the register · {data.published ? `frozen as baseline ${data.baseline}` : "not frozen yet: read the RFP first"}</span></div>
         {/* A-24 (C-20): each count opens Traceability filtered to it (?category= / ?offering=) */}
         <p>By category: {Object.entries(s.by_category).map(([k, v]) => <Link key={k} className="chip" href={`/opportunities/${id}/trace?category=${encodeURIComponent(k)}`}>{k} {v}</Link>)}</p>
         <p>By offering type: {Object.entries(s.by_offering).map(([k, v]) => (
@@ -135,10 +133,10 @@ export default function AssessmentPage() {
 
       <section className="card" data-tour="asm-send">
         <div className="card-head"><h2>2. Send for assessment</h2>
-          <span className="muted">{data.published ? "Sends each participating unit its work. Repeat after changing matches or participation: new work is sent, work that no longer fits is withdrawn."
-            : "Publishes the requirement register as baseline 1, then sends each participating unit its work."}</span></div>
+          <span className="muted">Sends each participating unit its work. Repeat after changing matches or participation: new work is sent, work that no longer fits is withdrawn.</span></div>
         <div className="row">
-          <button disabled={!!busy || !part || data.no_go || !bm} onClick={send} data-tour="asm-send-button">Send for assessment</button>
+          <button disabled={!!busy || !part || data.no_go || !bm || !data.published} onClick={send} data-tour="asm-send-button">Send for assessment</button>
+          {!data.published && <span className="muted">The register is frozen automatically when the RFP has been read (RFP step).</span>}
           {busy === "send" && <Busy label="Sending…" />}
           {!part && <span className="muted">Record which business units take part first.</span>}
           {data.no_go && <span className="muted">The bid is marked no-go: nothing is sent until a go decision resumes it.</span>}
