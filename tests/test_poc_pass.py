@@ -13,7 +13,7 @@ os.environ["LLM_PROVIDER"] = "mock"
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
-from conftest import signed_in  # noqa: E402
+from conftest import auth, signed_in  # noqa: E402
 from sqlalchemy import text  # noqa: E402
 
 from app.core.db import SessionLocal, engine  # noqa: E402
@@ -147,7 +147,8 @@ def test_offline_wording_for_missing_frozen_answers(client, seeded, tmp_path):
     submitted = [a for a in client.get("/api/inbox/CROWN").json()["items"]
                  if a["status"] == "submitted" and a["opportunity_id"] == seeded]
     assert submitted
-    assert client.post(f"/api/assignments/{submitted[0]['id']}/validate", json={"ok": True}).status_code == 200
+    assert client.post(f"/api/assignments/{submitted[0]['id']}/validate", json={"ok": True},
+                       headers=auth("crown.pm")).status_code == 200  # A-17: the unit manager validates
     outline = client.get(f"/api/bids/{seeded}/response-outline").json()
     assert outline["summary"]["drafted"] is False
     assert outline["summary"]["note"].startswith("Draft not refreshed: the model service is not connected")

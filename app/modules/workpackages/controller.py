@@ -100,22 +100,24 @@ def handoff(opp_id: str, bu: str, db: Session = Depends(get_db)):
 
 
 @router.get("/inbox/{bu}")
-def inbox(bu: str, db: Session = Depends(get_db)):
+def inbox(bu: str, request: Request, db: Session = Depends(get_db)):
     if bu != BID_DESK and catalog.unit(bu) is None:
         raise HTTPException(404, f"Unit {bu} not found.")
 
     questions = Counter(c.req_id for o in {a.opportunity_id for a in service.inbox(db, bu)} for c in service.open_questions(db, o))
+    me = user(request)
 
     def item(a):
         req = requirements.get(db, a.req_id)  # None if the requirement was deleted after dispatch
-        return row(a) | {"requirement": row(req, "source") if req else None, "open_questions": questions[a.req_id]}
+        return row(a) | {"requirement": row(req, "source") if req else None, "open_questions": questions[a.req_id],
+                         "may": service.actions(db, a, me)}  # what the signed-in user may do with this row (C-25)
     return {"bu": bu, "unit": catalog.unit(bu), "compliance": OFFERED, "items": [item(a) for a in service.inbox(db, bu)]}
 
 
 @router.post("/assignments/{assignment_id}/respond")
 def respond(body: RespondIn, request: Request, assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
-    require(request, *CORRECTORS)  # no administrator; the service checks the unit's own people (bid desk: bid manager)
-    _call(service.respond, db, assignment_id, body.compliance, body.product_ref, body.response, actor(request),
+    require(request, *CORRECTORS)  # no administrator; the service checks the workflow's role in the item's unit
+    _call(service.respond, db, assignment_id, body.compliance, body.product_ref, body.response, user(request),
           body.reason, body.conditions, body.workaround, body.next_steps)
     return {"ok": True}
 
@@ -151,6 +153,6 @@ def history(assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
 
 @router.post("/assignments/{assignment_id}/validate")
 def validate(body: ValidateIn, request: Request, assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
-    require(request, BID_MANAGER)  # ponytail: the bid manager validates until A-17 moves it to the unit's configured role
-    _call(service.validate, db, assignment_id, body.ok, body.note, actor(request))
+    require(request, *CORRECTORS)  # the service checks the workflow: the unit manager validates, the bid manager returns
+    _call(service.validate, db, assignment_id, body.ok, body.note, user(request))
     return {"ok": True}

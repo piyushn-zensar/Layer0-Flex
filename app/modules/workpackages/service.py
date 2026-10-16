@@ -28,18 +28,26 @@ Public contract:
         register; without a participation: with the suggested units), sent, progress. LookupError: unknown bid
     by_requirement(db, opp_id) -> dict[str, list[Assignment]]   active (not withdrawn) assignments
     inbox(db, bu) -> list[Assignment]                     a unit's active work across all opportunities
+    workflow() -> dict                                    data/knowledge_base/workflow.json: who answers, validates and
+        returns with a question (C-07, C-25), and which non-technical categories go to the units' managers
+    people(db, assignment) -> dict                        {"answer": [...], "validate": [...]}: the people
+        ({name, role, bu}) the workflow gives this assignment (scripts act as them, e.g. the seed)
+    actions(db, assignment, user) -> dict                 what the signed-in user may do now: {answer, validate,
+        return}; role and unit come from the token (C-25)
     get(db, assignment_id) -> Assignment | None           one assignment
     history(db, assignment_id) -> list[dict]              every event of the assignment, oldest first (C-16):
         {id, at, actor, action, note, before, after}; before / after hold only what the event changed (status,
         compliance, product_ref, response, reason, conditions, workaround, next_steps). LookupError: no such assignment
-    respond(db, assignment_id, compliance, product_ref, response, actor, reason="", conditions="", workaround="",
+    respond(db, assignment_id, compliance, product_ref, response, user, reason="", conditions="", workaround="",
             next_steps="")
-        only that unit's product manager / design engineer (bid desk: the Bid Manager), only while assigned or
+        user = {name, role, bu}: the workflow's answering role in the assignment's unit (technical items: unit
+        designer / engineer; non-technical: unit manager; bid desk: bid manager), only while assigned or
         returned. partial and not_met need a reason (C-12); empty fields are stored as None.
         LookupError: no such assignment; PermissionError: wrong person; ValueError: wrong state, missing reason
-    validate(db, assignment_id, ok, note, actor)
-        only the Bid Manager, only submitted work; a return (ok=False) needs a note. The unit can then answer the
-        returned item again. LookupError / PermissionError / ValueError as above
+    validate(db, assignment_id, ok, note, user)
+        the unit's validating role (unit manager; bid desk: bid manager) validates or returns submitted work; the
+        return_with_question roles (bid manager) may also return submitted or validated work. A return (ok=False)
+        needs a note; the unit answers the returned item again. LookupError / PermissionError / ValueError as above
     progress(db, opp_id) -> dict[str, dict]               bu -> {"total", "submitted", "validated"} (active work)
     handoff(db, opp_id, bu) -> dict                       per-unit hand-off payload (M8): items grouped by route
         (CPQ seed / basis of design / specialist queue), each with its source document (the main RFP or a change
@@ -56,14 +64,17 @@ Public contract:
         their submitted / validated answers are returned with the note (the unit answers again), assigned and
         returned work keeps its status and gets the note. Returns how many assignments were touched
 """
+import functools
+import json
 from collections import Counter, defaultdict
 
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.core import audit
+from app.core import audit, config
 from app.core.db import utcnow
+from app.core.web import same_unit
 from app.modules.catalog import service as catalog
 from app.modules.decisions import service as decisions
 from app.modules.matching import service as matching
@@ -71,7 +82,53 @@ from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service as requirements
 from app.modules.workpackages.models import BID_DESK, COMMENT_KINDS, COMPLIANCE, EXTENDED, NEEDS_REASON, Assignment, Comment
 
-BID_MANAGER = "Bid Manager"  # ponytail: PoC actor name from the header picker; real roles come with sign-in
+BID_MANAGER = "Bid Manager"  # the bid desk's person (the seeded bid manager account), shown as the owner of its items
+
+
+@functools.cache
+def workflow() -> dict:
+    return json.loads((config.DATA / "knowledge_base" / "workflow.json").read_text("utf-8"))
+
+
+def _kind(category: str | None) -> str:
+    return "technical" if category in matching.PRODUCT_CATEGORIES else "non_technical"
+
+
+def _roles(bu: str, category: str | None) -> tuple[list[str], list[str]]:
+    """(answering roles, validating roles) for an item of this unit and category."""
+    wf = workflow()
+    if bu == BID_DESK:
+        return wf["respond"]["BID"], wf["validate"]["BID"]
+    return wf["respond"][_kind(category)], wf["validate"]["unit"]
+
+
+def _staff(bu: str, role: str) -> dict:
+    if bu == BID_DESK:
+        return {"name": BID_MANAGER, "role": role, "bu": None}
+    return {"name": catalog.unit(bu)[role], "role": role, "bu": bu}
+
+
+def _category(db: Session, a: Assignment) -> str | None:
+    req = requirements.get(db, a.req_id)
+    return req.category if req else None
+
+
+def people(db: Session, a: Assignment) -> dict:
+    answer, check = _roles(a.bu, _category(db, a))
+    return {"answer": [_staff(a.bu, r) for r in answer], "validate": [_staff(a.bu, r) for r in check]}
+
+
+def _holds(user: dict, a: Assignment, roles: list[str]) -> bool:
+    """The user has one of `roles`, in the assignment's own unit (bid desk items: no unit)."""
+    return user["role"] in roles and (a.bu == BID_DESK or same_unit(user, a.bu))
+
+
+def actions(db: Session, a: Assignment, user: dict) -> dict:
+    answer, check = _roles(a.bu, _category(db, a))
+    validator = a.status == "submitted" and _holds(user, a, check)
+    question = a.status in ("submitted", "validated") and user["role"] in workflow()["return_with_question"]
+    return {"answer": a.status in ("assigned", "returned") and _holds(user, a, answer), "validate": validator,
+            "return": validator or question}
 
 
 def dispatch(db: Session, opp_id: str, actor: str) -> int:
@@ -84,8 +141,9 @@ def dispatch(db: Session, opp_id: str, actor: str) -> int:
     if not units:
         raise ValueError("Record which business units take part before dispatch.")
     existing = _existing(db, opp_id)
-    wanted = {}
+    wanted, categories = {}, {}
     for req, targets in _routing(db, opp_id, units, existing):
+        categories[req.req_id] = req.category
         for bu, product_ref in (targets or {}).items():  # None: needs an owner, not dispatched
             wanted[(req.req_id, bu)] = product_ref
     created = 0
@@ -95,7 +153,7 @@ def dispatch(db: Session, opp_id: str, actor: str) -> int:
             a.status = "assigned"
             audit.record(db, actor, "reopened", "assignment", req_id, opp_id, bu=bu)
         elif not a:
-            owner = catalog.unit(bu)["design_engineer"] if bu != BID_DESK else BID_MANAGER
+            owner = _staff(bu, _roles(bu, categories[req_id])[0][0])["name"]  # the first answering role
             db.add(Assignment(opportunity_id=opp_id, req_id=req_id, bu=bu, owner=owner, product_ref=product_ref))
             audit.record(db, actor, "assigned", "assignment", req_id, opp_id, bu=bu, owner=owner)
             created += 1
@@ -123,8 +181,10 @@ def _is_gap(a: Assignment | None) -> bool:
 
 def _routing(db: Session, opp_id: str, units: set[str], existing: dict, preview: bool = False):
     """(requirement, targets) for every published approved requirement (preview: the register before publishing too):
-    targets = {bu: product_ref}, one per matched participating unit (its first product); else the bid desk for a
-    non-product item or a recorded capability gap; else None: a product requirement that needs an owner (C-08)."""
+    targets = {bu: product_ref}, one per matched participating unit (its first product); else every participating
+    unit's manager for a non-technical item of workflow()["unit_manager_categories"] that the matcher routed by rule
+    (C-25); else the bid desk for a non-product item or a recorded capability gap; else None: a product requirement
+    that needs an owner (C-08)."""
     matches = matching.for_opportunity(db, opp_id)
     for req in requirements.current(db, opp_id):
         if req.status != "approved" or (req.baseline is None and not preview):
@@ -134,7 +194,10 @@ def _routing(db: Session, opp_id: str, units: set[str], existing: dict, preview:
         for u in m.units if m else []:
             if u["bu"] in units:
                 targets.setdefault(u["bu"], u["product_id"])
-        if not targets and (req.category not in matching.PRODUCT_CATEGORIES or _is_gap(existing.get((req.req_id, BID_DESK)))):
+        by_rule = not m or m.method == "rule"  # a person's own "no unit" keeps a non-product item on the bid desk
+        if not targets and by_rule and units and req.category in workflow()["unit_manager_categories"]:
+            targets = {bu: None for bu in sorted(units)}
+        elif not targets and (req.category not in matching.PRODUCT_CATEGORIES or _is_gap(existing.get((req.req_id, BID_DESK)))):
             targets = {BID_DESK: None}
         yield req, targets or None
 
@@ -146,9 +209,10 @@ def needs_owner(db: Session, opp_id: str) -> list[dict]:
             for req, targets in _routing(db, opp_id, units, _existing(db, opp_id)) if targets is None]
 
 
-def _specialists(bu: str) -> list[str]:
-    unit = catalog.unit(bu)
-    return [unit["product_manager"], unit["design_engineer"]] if unit else [BID_MANAGER]
+def _specialists(bu: str, category: str | None) -> list[str]:
+    """Who answers, then who validates (the same person is named once)."""
+    answer, check = _roles(bu, category)
+    return list(dict.fromkeys(_staff(bu, r)["name"] for r in answer + check))
 
 
 def assessment(db: Session, opp_id: str) -> dict:
@@ -168,7 +232,7 @@ def assessment(db: Session, opp_id: str) -> dict:
             rows = [{"bu": BID_DESK, "product_id": None, "specialists": [BID_MANAGER]}]
         else:
             route = "unit"
-            rows = [{"bu": bu, "product_id": p, "specialists": _specialists(bu)} for bu, p in targets.items()]
+            rows = [{"bu": bu, "product_id": p, "specialists": _specialists(bu, req.category)} for bu, p in targets.items()]
         routing.append({"req_id": req.req_id, "text": req.text, "category": req.category, "section": req.section,
                         "route": route, "units": rows})
     rules = [{"id": r["id"], "status": r["status"], "note": r["note"]} for r in ev["checks"]["rules"] if r["status"] in ("warn", "fail")]
@@ -233,28 +297,23 @@ def inbox(db: Session, bu: str) -> list[Assignment]:
                            .order_by(Assignment.opportunity_id, Assignment.req_id)))
 
 
-def _may_answer(actor: str, bu: str) -> bool:
-    if bu == BID_DESK:
-        return actor == BID_MANAGER
-    unit = catalog.unit(bu)
-    return bool(unit) and actor in (unit["product_manager"], unit["design_engineer"])
-
-
-def respond(db: Session, assignment_id: int, compliance: str, product_ref: str | None, response: str, actor: str,
+def respond(db: Session, assignment_id: int, compliance: str, product_ref: str | None, response: str, user: dict,
             reason: str = "", conditions: str = "", workaround: str = "", next_steps: str = "") -> None:
     # ponytail: "exception" is still accepted here for the seed's earlier-value answer; the API offers only OFFERED
     assert compliance in COMPLIANCE, compliance
     if compliance in NEEDS_REASON and not (reason or "").strip():
         raise ValueError("Say what is not met and why (reason) for a partially or non-compliant answer.")
     a = _get(db, assignment_id)
-    if not _may_answer(actor, a.bu):
-        raise PermissionError(f"Only {a.bu}'s product manager or design engineer can answer this item.")
+    who = people(db, a)["answer"]
+    if not _holds(user, a, [p["role"] for p in who]):
+        raise PermissionError(f"Only {' or '.join(p['name'] for p in who)} can answer this item.")
     if a.status not in ("assigned", "returned"):
         raise ValueError(f"This item is {a.status}; only assigned or returned items can be answered.")
     a.compliance, a.product_ref, a.response = compliance, product_ref or a.product_ref, response
     fields = {"reason": reason, "conditions": conditions, "workaround": workaround, "next_steps": next_steps}
     for f in EXTENDED:
         setattr(a, f, (fields[f] or "").strip() or None)
+    actor = user["name"]
     a.status, a.responded_by, a.responded_at = "submitted", actor, utcnow()
     audit.record(db, actor, "responded", "assignment", a.req_id, a.opportunity_id, bu=a.bu, compliance=compliance,
                  product_ref=a.product_ref, response=a.response, **{f: getattr(a, f) for f in EXTENDED if getattr(a, f)})
@@ -296,14 +355,19 @@ def _get(db: Session, assignment_id: int) -> Assignment:
     return a
 
 
-def validate(db: Session, assignment_id: int, ok: bool, note: str, actor: str) -> None:
+def validate(db: Session, assignment_id: int, ok: bool, note: str, user: dict) -> None:
     a = _get(db, assignment_id)
-    if actor != BID_MANAGER:
-        raise PermissionError("Only the Bid Manager validates or returns answers.")
-    if a.status != "submitted":
+    who = people(db, a)["validate"]
+    validator = _holds(user, a, [p["role"] for p in who])
+    question = not ok and user["role"] in workflow()["return_with_question"]  # the bid manager's return with a question
+    if not (validator or question):
+        raise PermissionError(f"Only {' or '.join(p['name'] for p in who)} validates this answer; the bid manager may "
+                              "return it with a question.")
+    if a.status not in ({"submitted"} | ({"validated"} if question else set())):
         raise ValueError(f"This item is {a.status}; only submitted answers can be validated or returned.")
     if not ok and not note.strip():
         raise ValueError("A returned answer needs a note saying why.")
+    actor = user["name"]
     a.status, a.validated_by, a.validation_note = ("validated" if ok else "returned"), actor, note
     audit.record(db, actor, a.status, "assignment", a.req_id, a.opportunity_id, bu=a.bu, note=note)
     db.commit()

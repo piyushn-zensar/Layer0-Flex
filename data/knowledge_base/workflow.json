@@ -1,0 +1,7 @@
+{
+ "_note": "Who answers and who validates unit work (C-07, C-25; technical-architecture 16.5). Roles are the stored values: product_manager is shown as Unit manager, design_engineer as Unit designer / engineer. Technical items are the matcher's product categories (technical, compliance). Non-technical items of a unit are answered by its unit manager. PROPOSED DEFAULT for open question 2 of changes-iteration3.md: a non-technical item reaches a unit only when the bid manager routes it to that unit (a manual match); every other non-technical item stays on the bid desk. Listing categories in unit_manager_categories (for example commercial, schedule) sends those items to every participating unit's manager instead. Changing the sequence is a change to this file, not to code.",
+ "unit_manager_categories": [],
+ "respond": {"technical": ["design_engineer"], "non_technical": ["product_manager"], "BID": ["bid_manager"]},
+ "validate": {"unit": ["product_manager"], "BID": ["bid_manager"]},
+ "return_with_question": ["bid_manager"]
+}

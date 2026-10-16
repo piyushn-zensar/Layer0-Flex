@@ -228,12 +228,13 @@ def test_workflow_order_and_roles():
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp and i["status"] == "assigned")
     url = f"/api/assignments/{item['id']}"
-    assert client.post(f"{url}/validate", json={"ok": True}, headers=BM).status_code == 409        # nothing submitted
+    assert client.post(f"{url}/validate", json={"ok": True}, headers=auth("crown.pm")).status_code == 409  # nothing submitted
     assert client.post(f"{url}/respond", json={"compliance": "met"}, headers=auth("ep2.de")).status_code == 403
     assert client.post(f"{url}/respond", json={"compliance": "met"}, headers=CROWN).status_code == 200
     assert client.post(f"{url}/respond", json={"compliance": "met"}, headers=CROWN).status_code == 409  # already submitted
     assert client.post(f"{url}/validate", json={"ok": True}, headers=CROWN).status_code == 403      # no self-validation
-    assert client.post(f"{url}/validate", json={"ok": True}, headers=BM).status_code == 200
+    assert client.post(f"{url}/validate", json={"ok": True}, headers=BM).status_code == 403          # A-17: the unit manager validates
+    assert client.post(f"{url}/validate", json={"ok": True}, headers=auth("crown.pm")).status_code == 200
 
     # the bid manager takes the item away from Crown: re-dispatch withdraws Crown's work; a product item does not
     # fall back to the bid desk, it needs an owner (A-19, C-08; updated by Atharv)
@@ -1164,7 +1165,7 @@ def test_response_fields_and_reason():
     assert client.post(url, json={"compliance": "exception", "reason": "x"}, headers=crown).status_code == 422
     assert client.post(url, json={"compliance": "not_met", "reason": "  "}, headers=crown).status_code == 422
     with SessionLocal() as db, pytest.raises(ValueError):
-        workpackages.respond(db, item["id"], "partial", None, "", "Crown Design Engineer")  # the service checks too
+        workpackages.respond(db, item["id"], "partial", None, "", {"name": "Crown Design Engineer", "role": "design_engineer", "bu": "CROWN"})  # the service checks too
     answer = {"compliance": "partial", "response": "Lineup offered", "reason": "Only 12 of 20 breaker positions",
               "conditions": "Delivery after week 30", "workaround": "Second lineup", "next_steps": "Confirm count"}
     assert client.post(url, json=answer, headers=crown).status_code == 200
@@ -1226,7 +1227,7 @@ def test_assignment_history():
     client.post(f"{url}/respond", json={"compliance": "partial", "response": "12 positions", "reason": "20 asked"}, headers=crown)
     client.post(f"{url}/validate", json={"ok": False, "note": "Can you reach 20?"}, headers=bm)
     client.post(f"{url}/respond", json={"compliance": "met", "response": "Two lineups"}, headers=crown)
-    client.post(f"{url}/validate", json={"ok": True}, headers=bm)
+    client.post(f"{url}/validate", json={"ok": True}, headers=auth("crown.pm"))  # A-17: the unit manager validates
 
     events = client.get(f"{url}/history", headers=crown).json()
     assert [e["action"] for e in events] == ["assigned", "responded", "returned", "responded", "validated"]
@@ -1304,6 +1305,7 @@ def test_assessment_step():
     assert a["summary"]["sections"] and sum(a["summary"]["by_category"].values()) == a["summary"]["requirements"]
     routes = {r["req_id"]: r for r in a["routing"]}
     assert {r["route"] for r in a["routing"]} <= {"unit", "bid_desk", "capability_gap", "needs_owner"}
+    # A-17: non-technical items stay on the bid desk unless workflow.json unit_manager_categories lists them (default: none)
     assert all(r["route"] == "bid_desk" for r in a["routing"] if r["category"] not in ("technical", "compliance"))
     unit = next(r for r in a["routing"] if r["route"] == "unit")
     assert all(u["specialists"] and u["bu"] != "BID" for u in unit["units"])  # the unit's product manager and design engineer
@@ -1341,7 +1343,7 @@ def test_permissions_in_atharvs_modules():
         for who in (pm, de, admin):
             assert client.post(url, json=body, headers=who).status_code == 403, url
     item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp and i["status"] == "submitted")
-    assert client.post(f"/api/assignments/{item['id']}/validate", json={"ok": True}, headers=pm).status_code == 403
+    assert client.post(f"/api/assignments/{item['id']}/validate", json={"ok": True}, headers=de).status_code == 403  # A-17: not the engineer
     for url, body in ((f"/api/assignments/{item['id']}/respond", {"compliance": "met"}),
                       (f"/api/bids/{opp}/comments", {"req_id": req_id, "text": "?", "kind": "question"})):
         assert client.post(url, json=body, headers=admin).status_code == 403, url
@@ -1362,3 +1364,54 @@ def test_unit_role_labels_and_helpers():
     assert web.same_unit({"role": web.UNIT_MANAGER, "bu": "CROWN"}, "CROWN")
     assert not web.same_unit({"role": web.UNIT_ENGINEER, "bu": "CROWN"}, "EP2")
     assert not web.same_unit({"role": web.BID_MANAGER, "bu": None}, "CROWN") and not web.same_unit({"role": web.UNIT_MANAGER, "bu": None}, None)
+
+
+def test_workflow_roles(monkeypatch):
+    """A-17 (C-07, C-25): workflow.json decides who acts. Technical items: the unit's designer / engineer answers;
+    a non-technical item routed to a unit (open question 2 default: by the bid manager's own match) goes to its unit
+    manager; the unit manager validates; the bid manager returns with a question. Role and unit come from the token.
+    Appended by Atharv (append-only on this shared file)."""
+    from app.core.db import SessionLocal
+    from app.modules.workpackages import service as workpackages
+
+    seed_demo.main()  # its own bid; the seed now answers and validates as the workflow's people
+    client, bm, pm, de, ep2_pm = signed_in(), auth("bid.manager"), auth("crown.pm"), auth("crown.de"), auth("ep2.pm")
+    opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    units = set(client.get(f"/api/bids/{opp}/decisions").json()["participation"]["units"])
+    rows = client.get(f"/api/bids/{opp}/trace").json()["rows"]
+    sched = next(r for r in rows if r["req"]["category"] in ("schedule", "commercial"))
+    assert [a["bu"] for a in sched["assignments"]] == ["BID"]  # default: non-technical items stay on the bid desk
+    product = next(r["match"]["units"][0]["product_id"] for r in rows if r["match"] and r["match"]["units"] and r["match"]["bu"] == "CROWN")
+    client.post(f"/api/bids/{opp}/requirements/{sched['req']['req_id']}/match",
+                json={"units": [{"product_id": product, "offering_type": "ETO"}]}, headers=bm)  # the bid manager routes it
+    client.post(f"/api/bids/{opp}/dispatch", headers=bm)
+    sched = next(r for r in client.get(f"/api/bids/{opp}/trace").json()["rows"] if r["req"]["req_id"] == sched["req"]["req_id"])
+    item = next(a for a in sched["assignments"] if a["bu"] == "CROWN")
+    assert item["owner"] == "Crown Product Manager" and "BID" not in {a["bu"] for a in sched["assignments"]}
+    url = f"/api/assignments/{item['id']}"
+    if item["status"] in ("submitted", "validated"):  # an earlier answer came back: the bid manager returns it with a question
+        assert client.post(f"{url}/validate", json={"ok": False, "note": "Which delivery week?"}, headers=bm).status_code == 200
+    assert client.post(f"{url}/respond", json={"compliance": "met"}, headers=de).status_code == 403  # not the engineer's
+    assert client.post(f"{url}/respond", json={"compliance": "met", "response": "Week 30"}, headers=pm).status_code == 200
+    for who in (de, bm, ep2_pm):  # the engineer, the bid manager (ok) and another unit's manager do not validate
+        assert client.post(f"{url}/validate", json={"ok": True}, headers=who).status_code == 403
+    assert client.post(f"{url}/validate", json={"ok": True}, headers=pm).status_code == 200
+    assert client.post(f"{url}/validate", json={"ok": False, "note": "Confirm with the factory."}, headers=bm).status_code == 200
+
+    tech = next(i for i in client.get("/api/inbox/CROWN", headers=de).json()["items"]
+                if i["opportunity_id"] == opp and i["status"] == "assigned" and i["requirement"]["category"] == "technical")
+    assert tech["may"] == {"answer": True, "validate": False, "return": False}
+    as_pm = next(i for i in client.get("/api/inbox/CROWN", headers=pm).json()["items"] if i["id"] == tech["id"])
+    assert as_pm["may"]["answer"] is False
+    assert client.post(f"/api/assignments/{tech['id']}/respond", json={"compliance": "met"}, headers=pm).status_code == 403
+    assert client.post(f"/api/assignments/{tech['id']}/respond", json={"compliance": "met"}, headers=de).status_code == 200
+    with SessionLocal() as db:
+        who = workpackages.people(db, workpackages.get(db, tech["id"]))
+        assert ([p["role"] for p in who["answer"]], [p["name"] for p in who["validate"]]) == (["design_engineer"], ["Crown Product Manager"])
+
+    # configured instead: the listed non-technical categories go to every participating unit's manager
+    wf = workpackages.workflow() | {"unit_manager_categories": ["submission"]}
+    monkeypatch.setattr(workpackages, "workflow", lambda: wf)
+    routed = {r["req_id"]: r for r in client.get(f"/api/bids/{opp}/assessment").json()["routing"]}
+    other = next(r for r in rows if r["req"]["category"] == "submission")
+    assert {u["bu"] for u in routed[other["req"]["req_id"]]["units"]} == units
