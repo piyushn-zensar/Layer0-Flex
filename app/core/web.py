@@ -19,7 +19,15 @@ def actor(request: Request) -> str:
 
 # Default permissions (technical-architecture section 16.6), checked on every write route.
 BID_MANAGER = "bid_manager"
-CORRECTORS = ("bid_manager", "product_manager", "design_engineer")  # extraction corrections, exceptions
+UNIT_MANAGER = "product_manager"    # shown as "Unit manager" (C-25): the unit's manager validates its responses
+UNIT_ENGINEER = "design_engineer"   # shown as "Unit designer / engineer": answers the unit's technical items
+UNIT_ROLES = (UNIT_MANAGER, UNIT_ENGINEER)
+CORRECTORS = (BID_MANAGER, *UNIT_ROLES)  # extraction corrections, exceptions
+
+
+def same_unit(u: dict, bu: str | None) -> bool:
+    """True when the signed-in account holds a unit role in business unit `bu` (role and unit from the token)."""
+    return u["role"] in UNIT_ROLES and bool(bu) and u.get("bu") == bu
 
 
 def require(request: Request, *roles: str) -> dict:

@@ -24,7 +24,9 @@ from app.core import config, db
 
 COOKIE = "layer0_token"
 TTL = 8 * 3600
-ROLES = {"bid_manager": "Bid manager", "product_manager": "Product manager", "design_engineer": "Design engineer",
+# Stored role values stay; the unit roles are shown as Unit manager and Unit designer / engineer (C-25, P-30; the unit
+# manager is the unit's product manager, decided 15 Oct 2026).
+ROLES = {"bid_manager": "Bid manager", "product_manager": "Unit manager", "design_engineer": "Unit designer / engineer",
          "admin": "Administrator"}
 ACCOUNTS = config.DATA / "accounts.json"   # the roster seeded into the accounts table
 ROUNDS = 600_000                           # PBKDF2-SHA256 iterations (OWASP 2023); about 0.4 s per hash

@@ -97,3 +97,4 @@ Plan and contracts: [team/PLAN.md](../PLAN.md) section 9; design: `Documents/tec
 | 15 Oct 2026 | Iteration 3 planned (team/PLAN.md section 10): A-25, A-26, A-27 added; A-17 and A-24 notes in PLAN 10.5 | A-25 first |
 | 16 Oct 2026 | Piyush: all RAG work (catalog, knowledge, matcher evidence, assessment score) is his for iteration 3; nothing RAG for Atharv | A-25 first |
 | 16 Oct 2026 | A-25 done: API paths are `/api/bids/...` from this commit on; everyone pulls before pushing new calls | A-17 after P-30; A-26 after P-32 |
+| 16 Oct 2026 | P-30 built for Piyush (unblocks A-17; [contract] Piyush, his tracker left to him): role labels Unit manager / Unit designer / engineer for the stored product_manager / design_engineer, `web.UNIT_MANAGER`, `UNIT_ENGINEER`, `UNIT_ROLES`, `same_unit(user, bu)`, `ROLE_LABELS` / `roleLabel` in web/lib/types.ts; two of his test messages follow the new labels | A-17 |

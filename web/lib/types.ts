@@ -14,6 +14,10 @@ export interface Person { name: string; bu: string | null } // /api/people: the 
 // Visible labels for stored values (technical-architecture §16.2). The API keeps the stored values; screens show these.
 export const DOC_TYPES: Record<string, string> = { main: "Main RFP", addendum: "Addendum", qa: "Clarification / Q&A", change: "Change request", other: "Other" };
 export const docTypeLabel = (role: string) => DOC_TYPES[role] ?? role;
+// Roles (C-25, P-30): stored values stay, the unit roles read Unit manager and Unit designer / engineer.
+export const ROLE_LABELS: Record<string, string> = { bid_manager: "Bid manager", product_manager: "Unit manager",
+  design_engineer: "Unit designer / engineer", admin: "Administrator" };
+export const roleLabel = (role: string) => ROLE_LABELS[role] ?? role;
 export const COMPLIANCE_LABELS: Record<string, string> = { met: "Fully compliant", partial: "Partially compliant", not_met: "Non-compliant" };
 export const complianceLabel = (c: string | null | undefined) => (c ? COMPLIANCE_LABELS[c] ?? c.replace(/_/g, " ") : "");
 export const sourceLabel = (provenance: string) => (provenance === "EXTRACTED" ? "Source verified" : "Source not verified");

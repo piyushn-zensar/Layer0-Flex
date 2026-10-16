@@ -53,7 +53,7 @@ function ProductsTab() {
               <StatusBadge status={u.status} />
             </div>
             <p>{u.focus} <Source url={u.source_url} /></p>
-            <p className="muted" data-tour={`catalog-unit-people-${u.code}`}>Product manager {u.product_manager} · Design engineer {u.design_engineer}</p>
+            <p className="muted" data-tour={`catalog-unit-people-${u.code}`}>Unit manager {u.product_manager} · Unit designer / engineer {u.design_engineer}</p>
             {products.length === 0 ? <p className="muted">No products listed.</p> : (
               <ul className="catalog-products" data-tour={`catalog-products-${u.code}`}>{products.map((p) => {
                 const models = data.items.filter((i) => i.family === p.id);

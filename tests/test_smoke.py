@@ -1030,7 +1030,7 @@ def test_permissions_in_bids_documents_requirements_and_changes():
     # bid manager only: create a bid, upload and read documents, run the reader, publish, change documents
     r = client.post("/api/bids", json={"title": "not mine"}, headers=pm)
     assert r.status_code == 403 and r.json()["detail"] == \
-        "Only a bid manager can do this; you are signed in as Crown Product Manager (product manager)."
+        "Only a bid manager can do this; you are signed in as Crown Product Manager (unit manager)."  # P-30 label
     opp = client.post("/api/bids", json={"title": "permissions"}).json()["id"]
     assert client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)}, headers=de).status_code == 403
     doc = client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)}).json()["id"]
@@ -1046,7 +1046,7 @@ def test_permissions_in_bids_documents_requirements_and_changes():
     url = f"/api/bids/{opp}/requirements/from-lines"
     lines = {"page": 55, "line_start": 52, "line_end": 53, "category": "technical"}
     r = client.post(url, json=lines, headers=admin)
-    assert r.status_code == 403 and r.json()["detail"].startswith("Only a bid manager, product manager or design engineer")
+    assert r.status_code == 403 and r.json()["detail"].startswith("Only a bid manager, unit manager or unit designer / engineer")  # P-30 labels
     added = client.post(url, json=lines, headers=pm).json()
     assert added["created_by"] == "Crown Product Manager"
     exclude = {"action": "reject", "reason": "duplicate of the reader's item"}
@@ -1349,3 +1349,16 @@ def test_permissions_in_atharvs_modules():
                 f"/api/assignments/{item['id']}/history", f"/api/bids/{opp}/comments"):
         assert client.get(url, headers=admin).status_code == 200, url  # everyone signed in reads
     assert client.post(f"/api/bids/{opp}/participation", json={"units": ["CROWN", "EP2"]}).status_code == 200
+
+
+def test_unit_role_labels_and_helpers():
+    """P-30 (C-25): unit manager and unit designer / engineer are labels for the stored roles; same_unit reads role and
+    unit from the token. Done by Atharv for Piyush ([contract] Piyush); appended (append-only on this shared file)."""
+    from app.core import web
+
+    me = signed_in("crown.pm").get("/api/auth/me").json()
+    assert (me["role"], me["role_label"], me["bu"]) == ("product_manager", "Unit manager", "CROWN")
+    assert signed_in("crown.de").get("/api/auth/me").json()["role_label"] == "Unit designer / engineer"
+    assert web.same_unit({"role": web.UNIT_MANAGER, "bu": "CROWN"}, "CROWN")
+    assert not web.same_unit({"role": web.UNIT_ENGINEER, "bu": "CROWN"}, "EP2")
+    assert not web.same_unit({"role": web.BID_MANAGER, "bu": None}, "CROWN") and not web.same_unit({"role": web.UNIT_MANAGER, "bu": None}, None)
