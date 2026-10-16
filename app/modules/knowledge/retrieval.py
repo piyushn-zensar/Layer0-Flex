@@ -28,6 +28,9 @@ from app.modules.matching import service as matching
 from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service as requirements
 
+# ponytail: placeholder floor for text-embedding-3-small at 256 dimensions (relevant passages scored about 0.6, unrelated
+# questions well below); calibrate it on the reviewed evaluation set (scripts/eval_rag.py)
+MIN_SEMANTIC = 0.35
 _indexes: dict[tuple, Index] = {}  # (source id, version, passages) -> its index; versions never change their text
 
 
@@ -90,7 +93,9 @@ def retrieve(db: Session, task: str, query: str, opp_id: str | None = None, k: i
     if rfp and semantic:
         complete = complete and rfp[1].vectors is not None
         found += [p | {"ks_id": rfp[0].id, "passage_id": None} for p in rfp[1].search(query, depth)] if rfp[1].vectors is not None else []
-    # semantic ranking only when every candidate has vectors: otherwise the embedded ones would be favoured
+    # a semantic hit below the floor is no evidence (cosine is never 0: an unrelated question would always "find"
+    # something); semantic ranking only when every candidate has vectors: otherwise the embedded ones would be favoured
+    found = [h for h in found if h["score"] >= MIN_SEMANTIC]
     if complete and found:
         rankings.append(sorted(found, key=lambda h: -h["score"])[:depth])
     fused: dict[int, float] = {}

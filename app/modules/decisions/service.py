@@ -218,3 +218,63 @@ def get(db: Session, decision_id: int) -> Decision | None:
 def participating_units(db: Session, opp_id: str) -> list[str]:
     d = latest(db, opp_id, "participation")
     return d.units if d else []
+
+
+def assessment_score(db: Session, opp_id: str) -> dict:
+    """The executive summary's assessment (P-38, C-23): four measures kept apart, each with the requirements it counts,
+    and the evidence gaps. Product evidence and feasibility come from the latest assessment run (knowledge.reassess),
+    whose records keep every evidence version; n is None until a run exists. Counts, never a probability."""
+    from app.modules.knowledge import service as knowledge  # imported here: knowledge imports this module
+    from app.modules.workpackages import service as workpackages
+    opportunities.require(db, opp_id)
+    cfg = catalog.go_no_go()["preliminary_feasibility"]
+    reqs = [r for r in requirements.current(db, opp_id) if r.status == "approved"]
+    tech = [r for r in reqs if r.category in matching.PRODUCT_CATEGORIES]
+    matches, work = matching.for_opportunity(db, opp_id), workpackages.by_requirement(db, opp_id)
+    in_domain = [r.req_id for r in tech if (m := matches.get(r.req_id)) and m.units]
+    run = knowledge.assessments(db, opp_id)
+    records = {rec.subject: rec for rec in run["records"]}
+    evidenced = None if run["run"] is None else [
+        r.req_id for r in tech if r.req_id in records and any(c["collection"] == "product_evidence" for c in records[r.req_id].citations)]
+    validated = {r.req_id: [a for a in work.get(r.req_id, []) if a.status == "validated" and a.compliance] for r in tech}
+    feasible, unknown = [], False
+    for r in tech:
+        if validated[r.req_id]:
+            if all(a.compliance in cfg["feasible_compliance"] for a in validated[r.req_id]):
+                feasible.append(r.req_id)
+        elif evidenced is None:
+            unknown = True
+        elif r.req_id in in_domain and r.req_id in evidenced:
+            feasible.append(r.req_id)
+    items = [a for r in reqs for a in work.get(r.req_id, [])]
+    done = sum(a.status == "validated" for a in items)
+    gaps = [
+        ("no_product_evidence", "Technical requirements without reviewed product evidence",
+         [] if evidenced is None else [r.req_id for r in tech if r.req_id not in evidenced]),
+        ("not_in_domain", "Technical requirements matched to no unit's product", [r.req_id for r in tech if r.req_id not in in_domain]),
+        ("exception", "Text with source not verified (exception queue)", [e["req_id"] for e in requirements.exceptions(db, opp_id)]),
+        ("needs_owner", "Product requirements that need an owner", [o["req_id"] for o in workpackages.needs_owner(db, opp_id)]),
+        ("non_compliant", "Validated non-compliant answers", [r.req_id for r in tech if any(a.compliance == "not_met" for a in validated[r.req_id])]),
+    ]
+    first = run["records"][0] if run["records"] else None
+    return {
+        "run": run["run"], "run_at": first.created_at if first else None, "catalog_version": first.catalog_version if first else None,
+        "technical": len(tech),
+        "measures": {
+            "domain_alignment": {"label": "Domain alignment", "n": len(in_domain), "of": len(tech), "req_ids": in_domain,
+                                 "explain": "Technical requirements matched to a participating unit's catalog product."},
+            "product_evidence": {"label": "Product-evidence coverage", "n": None if evidenced is None else len(evidenced),
+                                 "of": len(tech), "req_ids": evidenced or [],
+                                 "explain": "Technical requirements with reviewed, published product evidence in the latest assessment run."},
+            "review_progress": {"label": "Specialist-review progress", "n": done, "of": len(items),
+                                "explain": "Items sent to the units whose answers are validated."},
+            "preliminary_feasibility": {"label": "Preliminary feasibility", "n": None if unknown else len(feasible),
+                                        "of": len(tech), "req_ids": feasible, "formula": cfg["formula"],
+                                        "explain": "Validated answers where they exist, else domain alignment and reviewed product evidence."},
+        },
+        "gaps": [{"kind": k, "label": label, "req_ids": ids} for k, label, ids in gaps if ids],
+        "note": "Preliminary assessment, not a probability: each measure is a count of requirements, and retrieval scores "
+                "or a model's confidence are never part of it. Product evidence and feasibility read the latest "
+                "assessment run, which records every evidence version it used.",
+    }
+

@@ -1,0 +1,30 @@
+{
+ "_note": "RAG evaluation set (P-39, C-29 point 8). DRAFT written by the project team on 16 Oct 2026; it must be reviewed by someone who did not write it before its results count (reviewed_by stays null until then: open question 9). Retrieval cases name a phrase a passage of the expected source must contain, so the expectation never comes from the ranking being measured. Only the engineering references are published for the run; market and vendor context must never be returned. Run: .venv\\Scripts\\python -m scripts.eval_rag",
+ "status": "draft",
+ "author": "project team",
+ "reviewed_by": null,
+ "reviewed_at": null,
+ "retrieval": [
+  {"id": "R-01", "task": "numerical_assessment", "query": "SST input voltage 13.8 kV", "source": "OCP Solid State Transformer Design Specification", "contains": "13.8", "k": 5},
+  {"id": "R-02", "task": "technical_explanation", "query": "sidecar power rack at +/-400 VDC", "source": "OCP Diablo 400 Project: Rack and Power", "contains": "+/-400", "k": 5},
+  {"id": "R-03", "task": "technical_explanation", "query": "grounding of an LVDC distribution system", "source": "OCP LVDC Power Distribution White Paper", "contains": "grounding", "k": 5},
+  {"id": "R-04", "task": "technical_explanation", "query": "arc flash hazard in DC distribution", "source": "OCP LVDC Power Distribution White Paper", "contains": "arc flash", "k": 5},
+  {"id": "R-05", "task": "technical_explanation", "query": "busbar between the power rack and the IT rack", "source": "Powering the Next Era of AI (OCP blog)", "contains": "busbar", "k": 5},
+  {"id": "R-06", "task": "requirement_interpretation", "query": "solid state transformer converting medium voltage to 800 VDC", "source": "OCP Solid State Transformer Design Specification", "contains": "solid state", "k": 6}
+ ],
+ "numerical": [
+  {"id": "N-01", "query": "input voltage 13.8 kV", "value": "13.8", "k": 6},
+  {"id": "N-02", "query": "input voltage 34.5 kV", "value": "34.5", "k": 6}
+ ],
+ "unknowns": [
+  {"id": "U-01", "task": "technical_explanation", "query": "chocolate croissant pastry recipe", "expect": "no evidence"},
+  {"id": "U-02", "task": "product_matching", "query": "reassessment of a bid without reviewed product evidence", "expect": "every technical requirement unresolved: no reviewed product evidence"}
+ ],
+ "isolation": [
+  {"id": "I-01", "query": "site busway rated 4000 A", "expect": "another bid's evidence is never returned"}
+ ],
+ "extraction": [
+  {"id": "E-01", "rfp": "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf", "min_recall": 0.95}
+ ],
+ "not_measured": ["interpretation accuracy: needs reviewed interpretations of requirements, and model-written conclusions are not produced yet (assessment records hold evidence, conclusion None)"]
+}

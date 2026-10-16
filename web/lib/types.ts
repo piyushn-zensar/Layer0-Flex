@@ -169,3 +169,13 @@ export interface PublishedRun {
 export interface PublishedCatalog { products: PublishedProduct[]; runs: PublishedRun[]; catalog_version: number | null }
 // GET /api/catalog/published/versions?key=...
 export interface PublishedVersion { version: number; name: string; features: string[]; link: string; refresh_id: number | string; valid_from: string; valid_to: string | null }
+// GET /api/bids/{id}/assessment-score (P-38, C-23): executive-summary measures for the bid manager. "n" is null until an assessment run exists.
+// A preliminary assessment, never a probability.
+export interface AssessmentMeasure { label: string; n: number | null; of: number; req_ids?: string[]; explain: string; formula?: string }
+export type AssessmentGapKind = "no_product_evidence" | "not_in_domain" | "exception" | "needs_owner" | "non_compliant";
+export interface AssessmentScore {
+  run: number | null; run_at: string | null; catalog_version: number | null; technical: number;
+  measures: { domain_alignment: AssessmentMeasure; product_evidence: AssessmentMeasure; review_progress: AssessmentMeasure; preliminary_feasibility: AssessmentMeasure };
+  gaps: { kind: AssessmentGapKind; label: string; req_ids: string[] }[];
+  note: string;
+}

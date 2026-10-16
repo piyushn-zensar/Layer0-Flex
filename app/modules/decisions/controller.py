@@ -70,3 +70,13 @@ def go_no_go(opp_id: str, body: GoNoGoIn, request: Request, db: Session = Depend
     # a no-go stops dispatch (workpackages.dispatch refuses) and withdraws the units' open work (C-06)
     out["withdrawn"] = workpackages.withdraw_open(db, opp_id, who) if body.outcome == "no_go" else 0
     return out
+
+
+@router.get("/bids/{opp_id}/assessment-score")
+def assessment_score(opp_id: str, db: Session = Depends(get_db)):
+    """The executive summary's assessment (P-38): four separate measures and the evidence gaps."""
+    try:
+        return service.assessment_score(db, opp_id)
+    except LookupError as exc:
+        raise HTTPException(404, str(exc))
+

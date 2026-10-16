@@ -52,5 +52,13 @@
    "name": "Capacity and portfolio conflicts",
    "question": "Do the units have capacity for this work, given their open work on other bids?"
   }
- ]
+ ],
+ "preliminary_feasibility": {
+  "_note": "P-38 (C-23): the overall assessment score, a PLACEHOLDER formula to be agreed with the bid manager. It is a count of requirements, never a probability; retrieval scores and model confidence are not part of it.",
+  "formula": "Of the technical requirements (categories technical and compliance): a requirement with validated unit answers counts as feasible when every validated answer is fully or partially compliant; one without counts as feasible when it is matched to a unit's product (domain alignment) and the latest assessment run found reviewed product evidence for it. Preliminary feasibility = feasible / technical requirements.",
+  "feasible_compliance": [
+   "met",
+   "partial"
+  ]
+ }
 }

@@ -12,6 +12,7 @@ import { STATUS_EVENT } from "@/components/shell/OppSteps"; // the header listen
 import { Alert, Busy, Skeleton, StatusBadge, offeringLabel, useToast } from "@/components/ui";
 import SendToKnowledge from "@/components/knowledge/SendToKnowledge";
 import ScheduleCard from "@/components/schedule/ScheduleCard";
+import AssessmentPanel from "@/components/assessment/AssessmentPanel";
 
 type Route = "unit" | "bid_desk" | "capability_gap" | "needs_owner";
 type Data = {
@@ -78,6 +79,8 @@ export default function AssessmentPage() {
         <p>Suggested units: {Object.entries(s.suggested_units).map(([k, v]) => <strong key={k}>{k} ({v}) </strong>)}
           {Object.keys(s.suggested_units).length === 0 && "none yet: run matching in Traceability"}</p>
       </section>
+
+      <AssessmentPanel oppId={id} />
 
       <section className="card" data-tour="asm-open-questions">
         <div className="card-head"><h2>Open questions</h2><span className="muted">{open === 0 ? "None." : `${open} to look at`}</span></div>
