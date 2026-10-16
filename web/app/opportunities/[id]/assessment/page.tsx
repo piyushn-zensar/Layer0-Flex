@@ -82,7 +82,7 @@ export default function AssessmentPage() {
         <div className="card-head"><h2>Open questions</h2><span className="muted">{open === 0 ? "None." : `${open} to look at`}</span></div>
         {q.exceptions.length > 0 && <><h3>Source not verified ({q.exceptions.length})</h3>
           <ul className="per-req">{q.exceptions.map((e) => <li key={e.req_id}><span className="mono">{e.req_id}</span> {e.text} <span className="muted">{e.reason}</span></li>)}</ul>
-          <p className="muted">Link them to their lines or dismiss them on the <Link href={`/opportunities/${id}/requirements`}>Requirements</Link> step.</p></>}
+          <p className="muted">Link them to their lines or dismiss them on the <Link href={`/opportunities/${id}/trace`}>Requirement Traceability</Link> step.</p></>}
         {q.needs_owner.length > 0 && <div data-tour="asm-needs-owner"><h3>Needs an owner ({q.needs_owner.length})</h3>
           <p className="muted">Product requirements no participating unit holds are not sent. Assign a unit in Traceability (pane 3), let the matched unit take part, or record a capability gap: why no unit can offer it.</p>
           <ul className="per-req">{q.needs_owner.map((o) => <li key={o.req_id}>

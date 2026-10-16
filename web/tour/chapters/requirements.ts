@@ -5,7 +5,7 @@
 import { openDetails, present, statusIn } from "../helpers";
 import type { TourChapter, TourCtx, TourStep } from "../types";
 
-const ROUTE = "/opportunities/{opp}/requirements";
+const ROUTE = "/opportunities/{opp}/trace"; // A-26: the register moved into pane 2 of Requirement Traceability
 /** After the freeze nothing on this page can change: action steps do not apply. */
 // P-22: the register has no approve step; these steps wait for buttons that no longer exist (J-15 rewrites the chapter)
 const RETIRED = () => true;

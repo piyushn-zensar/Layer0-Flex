@@ -59,7 +59,7 @@ export default function DocumentsPage() {
         + (r.frozen ? ` Frozen automatically as baseline ${r.frozen} (P-32).` : r.not_frozen ? ` Not frozen: ${r.not_frozen}` : "");
       window.dispatchEvent(new Event("opp-status-changed")); // the stepper and status badge follow the freeze
       if (r.problems.length) setMessage({ text: `${r.proposed} line items proposed.${saved} Some pages were not read:`, problems: r.problems });
-      else { if (saved) toast.success(`${r.proposed} line items proposed.${saved}`); router.push(`/opportunities/${id}/requirements`); }
+      else { if (saved) toast.success(`${r.proposed} line items proposed.${saved}`); router.push(`/opportunities/${id}/trace`); }
     } catch (e) { fail(e); } finally { setBusy(""); }
   }
   const status = data?.opportunity.status;

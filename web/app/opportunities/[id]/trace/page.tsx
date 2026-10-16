@@ -1,16 +1,19 @@
 "use client";
-// Traceability: three panes: (1) RFP page with highlights, (2) requirement line items, (3) product mapping + responses.
+// Requirement Traceability (A-26, C-30): three panes: (1) RFP page with highlights, (2) the requirement register with its
+// corrections, exceptions, line picker and history (components/requirements/Register, moved from the Requirements page),
+// (3) product mapping + responses.
 // Selecting a requirement selects it everywhere; every pane that is Linked also follows it (pane 1 opens its page, panes 2 and 3
 // scroll to its rows), an Unlinked pane keeps its place. A pane can be enlarged (the other two stay mounted, hidden). Unit
 // responses show only once the bid has been sent for assessment (J-12 / C-15).  Owner: Janvia.
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
-import { complianceLabel, docTypeLabel, sourceLabel } from "@/lib/types";
+import { complianceLabel, docTypeLabel } from "@/lib/types";
 import type { Trace } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
 import MatchActions from "@/components/matching/MatchActions"; // A-05 (Atharv)
+import Register from "@/components/requirements/Register"; // A-26 (Atharv)
 import SendToKnowledge from "@/components/knowledge/SendToKnowledge"; // A-11 (Atharv)
 
 type Pane = 1 | 2 | 3;
@@ -105,15 +108,12 @@ export default function TracePage() {
   const mainId = data.doc?.id ?? docs[0]?.id;
   const shown = docs.find((d) => d.id === docId) ?? docs[0];
   const docName = (d?: { id: string; filename: string }) => (!d || d.id === mainId ? "RFP" : d.filename);
-  const docOf = (of?: string) => (of && mainId && of !== mainId ? docs.find((d) => d.id === of)?.filename ?? "Change document" : null);
   const assessed = data.sent_for_assessment ?? data.rows.some((r) => r.assignments.length > 0); // J-12: unit responses show only once sent
   const pages = shown?.pages ?? [];
   const page = pages[pageNo - 1];
   // Walkthrough targets (tour/chapters/trace.ts): "trace-sel-*" ids sit on the selected row only, so each id is unique;
   // the first group and the first unanchored requirement get one id each.
   const sel = (reqId: string, name: string) => (reqId === selected ? name : undefined);
-  const firstGroup = data.rows.find((r) => r.children.length > 0)?.req.req_id;
-  const firstUnanchored = data.rows.find((r) => r.req.provenance === "UNANCHORED")?.req.req_id;
   const rowProps = (reqId: string) => ({
     "data-req": reqId, className: reqId === selected ? "selected" : "", onClick: () => select(reqId),
     tabIndex: 0, "aria-current": reqId === selected ? ("true" as const) : undefined,
@@ -145,8 +145,8 @@ export default function TracePage() {
 
   return (
     <>
-      <PageHead level={2} title="Traceability"
-        help="Original RFP, requirement breakdown and product mapping side by side. Select a requirement in any linked pane to follow it across the panes; enlarge a pane to work in it.">
+      <PageHead level={2} title="Requirement Traceability"
+        help="Original RFP, the requirement register and product mapping side by side. Select a requirement in any linked pane to follow it across the panes; correct the register in pane 2 (enlarge it to work there).">
         {matching && <Busy label="Matching…" />}
         <button className="secondary" disabled={matching} onClick={matchProducts} data-tour="trace-match-button">Match products</button>
       </PageHead>
@@ -195,27 +195,10 @@ export default function TracePage() {
         </section>
 
         <section className="pane" data-tour="trace-pane-2" {...paneProps(2)}>
-          {paneHead(2, "Requirement breakdown")}
-          {data.rows.length === 0 ? <EmptyState title="No requirements yet" hint="Nothing has been extracted from the RFP for this bid." /> : (
-          <table className="rows" data-tour="trace-table-2">
-            <thead><tr><th className="col-id">ID</th><th className="col-src">Source</th><th>Requirement</th></tr></thead>
-            <tbody>
-              {data.rows.map(({ req, children }) => (
-                <tr key={req.req_id} {...rowProps(req.req_id)}>
-                  <td data-tour={sel(req.req_id, "trace-sel-id")}><div className="mono trace-id">{req.req_id}</div><div className="tag">{req.category}</div></td>
-                  <td className="trace-source" data-tour={sel(req.req_id, "trace-sel-source")}>{docOf(req.document_id) && <div><span className="tag">{docOf(req.document_id)}</span></div>}
-                    {/* UX-14: the same badge as the Requirements page */}
-                    {req.provenance === "UNANCHORED" ? <span data-tour={req.req_id === firstUnanchored ? "trace-unanchored" : undefined}>
-                      <StatusBadge status="medium" kind="severity" label={sourceLabel(req.provenance)} title="Quote not located on the page; check the source manually" /></span> : req.source}</td>
-                  <td data-tour={sel(req.req_id, "trace-sel-text")}><div className="trace-text">{req.text}</div>
-                    {children.length > 0 ? (
-                      <ul className="trace-children" data-tour={req.req_id === firstGroup ? "trace-group" : undefined}>{children.map((k) => <li key={k.req_id}>{k.text} <span className="muted">({docOf(k.document_id) ? `${docOf(k.document_id)}, ` : ""}{k.source})</span></li>)}</ul>
-                    ) : <div className="quote trace-quote">“{req.quote}”</div>}
-                    {req.req_id === selected && <span data-tour="trace-send-knowledge"><SendToKnowledge kind="requirement" refId={req.req_id} status={sent?.[`requirement:${req.req_id}`]} onSent={reloadSent} /></span>}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>)}
+          {paneHead(2, "Requirement register")}
+          <Register bidId={id} onChanged={reload} rowProps={rowProps}
+            extra={(reqId) => reqId === selected && <span data-tour="trace-send-knowledge">
+              <SendToKnowledge kind="requirement" refId={reqId} status={sent?.[`requirement:${reqId}`]} onSent={reloadSent} /></span>} />
         </section>
 
         <section className="pane" data-tour="trace-pane-3" {...paneProps(3)}>

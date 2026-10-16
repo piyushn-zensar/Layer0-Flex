@@ -10,16 +10,15 @@ import { useApi } from "@/lib/api";
 import type { Opportunity } from "@/lib/types";
 import StatusBadge from "@/components/ui/StatusBadge";
 
-// Workflow order: RFP, Requirements, Traceability, Bid decision, Compliance matrix (Changes is a separate link).
+// Workflow order (technical-architecture 16.2, A-26): RFP, Requirement Traceability (the register moved into its pane 2),
+// Assessment (A-16), Compliance matrix, Bid decision (go/no-go only, after the assessment); Changes is a separate link.
 // A step is ticked once the bid status has moved past it. `tour` is the walkthrough's data-tour id.
-// The /decisions page holds the evidence, participation, go/no-go and dispatch, so it is the one "Bid decision" step. When the
-// separate Assessment page lands (A-16, route /assessment), add an "Assessment" step before it (technical-architecture 16.2).
 const STEPS = [
   { suffix: "", label: "RFP", doneFrom: "reading", tour: "step-rfp" },
-  { suffix: "/requirements", label: "Requirements", doneFrom: "frozen", tour: "step-requirements" },
-  { suffix: "/trace", label: "Traceability", doneFrom: "go", tour: "step-trace" },
-  { suffix: "/decisions", label: "Bid decision", doneFrom: "go", tour: "step-decisions" },
+  { suffix: "/trace", label: "Requirement Traceability", doneFrom: "frozen", tour: "step-trace" },
+  { suffix: "/assessment", label: "Assessment", doneFrom: "dispatched", tour: "step-assessment" },
   { suffix: "/consolidation", label: "Compliance matrix", doneFrom: "submitted", tour: "step-consolidation" },
+  { suffix: "/decisions", label: "Bid decision", doneFrom: "submitted", tour: "step-decisions" },
 ];
 const ORDER = ["new", "reading", "review", "frozen", "go", "no_go", "dispatched", "consolidating", "submitted"];
 const rank = (s: string) => (s === "no_go" ? ORDER.indexOf("go") : ORDER.indexOf(s));

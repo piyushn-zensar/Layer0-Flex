@@ -42,7 +42,7 @@ export default function ChangesPage() {
     <>
       {head}
       {data.baseline ? <p data-tour="chg-baseline">Current baseline <strong>{data.baseline.number}</strong>: {data.baseline.count} requirements.</p>
-        : <div data-tour="chg-no-baseline"><Alert kind="warn">The requirements must be published first: publish the register on the <Link href={`/opportunities/${id}/requirements`}>Requirements</Link> page, then read change documents against it.</Alert></div>}
+        : <div data-tour="chg-no-baseline"><Alert kind="warn">The register is not frozen yet: it is frozen when the RFP has been read on the <Link href={`/opportunities/${id}`}>RFP</Link> step; change documents are read against it.</Alert></div>}
       {data.baseline && (
         <form className="card chg-upload" onSubmit={upload} aria-busy={!!busy} data-tour="chg-upload">
           <div className="card-head"><h3>Read a change document</h3><span className="muted">An addendum, Q&A answers or a change request, as a PDF.</span></div>

@@ -159,8 +159,8 @@ export default function ConsolidationPage() {
 
       {rows.length === 0 ? (
         <div data-tour="cons-empty">
-          <EmptyState title="No requirements in the baseline yet" hint="Approve and freeze the requirements first; the coverage check runs against the frozen baseline.">
-            <Link className="button secondary" href={`/opportunities/${id}/requirements`}>Requirements</Link>
+          <EmptyState title="No requirements in the baseline yet" hint="Read the RFP first: its register is frozen then, and the coverage check runs against that baseline.">
+            <Link className="button secondary" href={`/opportunities/${id}/trace`}>Requirement Traceability</Link>
           </EmptyState>
         </div>
       ) : (
