@@ -1,15 +1,12 @@
-// App shell: top bar, signed-in user (name, role, unit, Sign out) and the toast region.  Owner: Janvia.
+// Root layout: the page chrome is components/shell/Shell (top bar, signed-in user, toasts, walkthrough; none of it in a detached pane window).  Owner: Janvia.
 import type { Metadata } from "next";
-import Link from "next/link";
-import TopNav from "@/components/shell/TopNav";
-import UserMenu from "@/components/shell/UserMenu";
-import { ToastProvider } from "@/components/ui/Toast";
-import { TourLauncher, TourOverlay, TourProvider, WalkthroughButton } from "@/components/tour";
+import Shell from "@/components/shell/Shell";
 import "./globals.css";
 // One stylesheet per page group, after the foundation so page rules win on equal specificity.
 import "./styles/overview.css";
 import "./styles/requirements.css";
 import "./styles/trace.css";
+import "./styles/workspace.css"; // J-18: pane order, splitters, detached panes
 import "./styles/consolidation.css";
 import "./styles/tour.css";
 
@@ -19,23 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <ToastProvider>
-          {/* The guided walkthrough (components/tour) wraps the shell so its button, overlay and dialog share one state. */}
-          <TourProvider>
-            <header className="topbar">
-              <Link className="brand" href="/portfolio" data-tour="shell-brand"><span className="brand-mark" aria-hidden>L0</span>Layer 0 <span className="brand-sub">Bid workflow</span></Link>
-              <TopNav />
-              <div className="topbar-right">
-                <Link className="button" href="/opportunities/new" data-tour="shell-new-opportunity">New bid</Link>
-                <UserMenu />
-                <WalkthroughButton />
-              </div>
-            </header>
-            <main>{children}</main>
-            <TourOverlay />
-            <TourLauncher />
-          </TourProvider>
-        </ToastProvider>
+        <Shell>{children}</Shell>
       </body>
     </html>
   );

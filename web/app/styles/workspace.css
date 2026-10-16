@@ -1,0 +1,47 @@
+/* Flexible workspace (J-18, C-34): panes in a grid whose columns come from the saved layout (--ws-cols), splitters between panes, a grip
+   and arrows to reorder, notices for panes open in their own windows, and the bare page of a detached pane.  Owner: Janvia.
+   Up to 1100 px the panes stack: the grip, the arrows and the splitters are off (and so is dragging in the script). */
+.three.ws { grid-template-columns: var(--ws-cols); gap: 0; }
+.three.ws.zoom { grid-template-columns: 1fr; }
+
+/* the bar between two panes: a 10 px grid track, a thin line inside it, wide enough to grab with a finger */
+.ws-split { position: relative; cursor: col-resize; touch-action: none; user-select: none; min-width: 0; }
+.ws-split[hidden] { display: none; }
+.ws-split::before { content: ""; position: absolute; top: 8px; bottom: 8px; left: 3px; right: 3px; background: var(--line); border-radius: 3px; transition: background .12s; }
+.ws-split:hover::before, .ws-split.active::before { background: var(--accent); }
+.ws-split:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 4px; }
+.ws-split:hover::after, .ws-split:focus-visible::after, .ws-split.active::after {
+  content: attr(data-label); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 4; white-space: nowrap;
+  background: var(--ink); color: var(--card); font-size: var(--fs-xs); font-weight: 600; padding: 2px 8px; border-radius: 4px; pointer-events: none;
+}
+
+/* the heading row: grip and arrows, then the title, then the tools */
+.pane-arrange { display: flex; gap: 2px; flex-shrink: 0; align-items: center; }
+.pane-arrange button { min-height: 28px; min-width: 28px; padding: 3px 7px; background: var(--card); color: var(--ink-2); border: 1px solid var(--line-2); font-size: var(--fs-xs); line-height: 1; }
+.pane-arrange button:hover:not(:disabled) { background: var(--surface-2); }
+.pane-arrange button:disabled { opacity: .4; cursor: default; }
+.pane-grip { cursor: grab; display: inline-flex; align-items: center; justify-content: center; }
+.pane-grip:active { cursor: grabbing; }
+.pane { transition: box-shadow .12s; }
+.pane.dragging { opacity: .55; }
+.pane.drop-target { box-shadow: 0 0 0 3px var(--accent); }
+.pane-head h2 { flex: 1 1 140px; }
+.pane-tools { flex-wrap: wrap; }
+
+/* a pane that is open in its own window */
+.ws-detached { display: grid; gap: var(--s2); margin-bottom: var(--s3); }
+.ws-detached-row { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s3); align-items: center; background: var(--surface-2); border: 1px solid var(--line-2); border-radius: var(--radius); padding: var(--s2) var(--s3); }
+.ws-detached-row > span { flex: 1 1 260px; min-width: 0; }
+
+/* a detached pane's own window: no top bar, no bid header, the pane fills the window */
+.pane-window { min-height: 100vh; }
+.pane-window-body { display: flex; flex-direction: column; height: 100vh; padding: var(--s2); gap: var(--s2); min-width: 0; }
+.pane-window-body > .pane { flex: 1 1 auto; min-height: 0; max-height: none; }
+.pane-window-body .filters, .pane-window-body .toolbar { margin-bottom: 0; }
+
+@media (max-width: 1100px) {
+  .three.ws { grid-template-columns: 1fr; }
+  .ws-split, .pane-arrange { display: none; }
+}
+@media (max-width: 640px) { .pane-detach { display: none; } }
+@media (prefers-reduced-motion: reduce) { .ws-split::before, .pane { transition: none; } }
