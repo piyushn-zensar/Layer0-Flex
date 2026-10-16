@@ -37,7 +37,7 @@ def get_db():
         yield db
 
 
-APPEND_ONLY = ("audit_event", "extraction_snapshot")
+APPEND_ONLY = ("audit_event", "extraction_snapshot", "assessment_record")
 
 
 def init_db():

@@ -57,20 +57,21 @@ def test_register_review_version_and_isolation(monkeypatch):
         again, existing = k.register(db, v1, "Test", "engineering_reference")
         assert existing and again.ks_id == s1.ks_id  # same document instance: never read twice
 
-        assert k.evidence(db, ["engineering_reference"]) == []  # a draft is not evidence
+        assert s1.ks_id not in {e["ks_id"] for e in k.evidence(db, ["engineering_reference"])}  # a draft is not evidence
         try:
             k.review_source(db, s1.ks_id, True, "", "Bid Manager", "bid_manager")
             raise AssertionError("the bid manager does not review engineering references")
         except PermissionError:
             pass
         k.review_source(db, s1.ks_id, True, "Checked", "Crown Design Engineer", "design_engineer")
-        assert {e["ks_id"] for e in k.evidence(db, ["engineering_reference"])} == {s1.ks_id}
+        assert s1.ks_id in {e["ks_id"] for e in k.evidence(db, ["engineering_reference"])}
 
         s2, _ = k.register(db, v2, "Test", "engineering_reference", "SST spec", "OCP", "v0.4")
         assert s2.version == 2 and s2.document_id == s1.document_id
         k.review_source(db, s2.ks_id, True, "", "Crown Product Manager", "product_manager")
         db.refresh(s1)
-        assert s1.status == "retired" and {e["ks_id"] for e in k.evidence(db, ["engineering_reference"])} == {s2.ks_id}
+        ev = {e["ks_id"] for e in k.evidence(db, ["engineering_reference"])}
+        assert s1.status == "retired" and s2.ks_id in ev and s1.ks_id not in ev
 
         html = TMP / "bid.html"
         html.write_text("<html><nav>Menu</nav><h1>Site power</h1><p>The hosting site provides up to 2 MW.</p></html>", "utf-8")

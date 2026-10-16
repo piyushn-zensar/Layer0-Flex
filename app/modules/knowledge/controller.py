@@ -144,3 +144,29 @@ def annotate(ks_id: str, request: Request, db: Session = Depends(get_db)):
         return {"annotated": _call(service.annotate, db, ks_id, actor(request))}
     except llm.LLMUnavailable as exc:
         raise HTTPException(503, f"The model is not available for the remaining pages ({exc}). Annotations made so far are kept.")
+
+
+# --- retrieval and assessment records (P-37 part 1) -----------------------------------------------------------
+
+@router.get("/knowledge/retrieve")
+def retrieve(task: str, q: str, bid: str | None = None, k: int | None = None, db: Session = Depends(get_db)):
+    """The evidence a task would use for a question (each hit with its citation); see retrieval.json."""
+    return {"task": task, "hits": _call(service.retrieve, db, task, q, bid, k)}
+
+
+class ReassessIn(BaseModel):
+    reason: str = Field(min_length=1, max_length=2000)
+
+
+@router.post("/bids/{opp_id}/reassessments")
+def reassess(opp_id: str, body: ReassessIn, request: Request, db: Session = Depends(get_db)):
+    """An explicit, versioned reassessment: a new run of evidence records; earlier runs stay and requirements are untouched."""
+    require(request, BID_MANAGER)
+    return _call(service.reassess, db, opp_id, body.reason, actor(request))
+
+
+@router.get("/bids/{opp_id}/assessments")
+def assessments(opp_id: str, run: int | None = None, req_id: str | None = None, db: Session = Depends(get_db)):
+    out = service.assessments(db, opp_id, run, req_id)
+    return out | {"records": [row(r) for r in out["records"]]}
+

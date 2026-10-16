@@ -30,6 +30,12 @@ Knowledge sources (P-35, C-29; implemented in sources.py, re-exported here):
     evidence(db, collections=None, opp_id=None)         published passages and approved reviewed examples, with
                                                         citations; bid evidence only for its bid
     register_references(db)                             the public references in data/references/sources.json
+
+Retrieval and assessment records (P-37 part 1; retrieval.py, re-exported):
+    retrieve(db, task, query, opp_id=None, k=None) -> list[dict]   evidence for a task profile, each with "citation"
+    reassess(db, opp_id, reason, actor) -> dict          a new numbered run of append-only assessment records
+    assessments(db, opp_id, run=None, subject=None) -> dict
+    profiles() -> dict                                   the task profiles of data/knowledge_base/retrieval.json
 """
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -40,6 +46,7 @@ from app.core.web import same_unit
 from app.modules.catalog import service as catalog
 from app.modules.decisions import service as decisions
 from app.modules.knowledge.models import EXAMPLE_TYPES, KINDS, KbItem
+from app.modules.knowledge.retrieval import assessments, profiles, reassess, retrieve  # noqa: F401  (public contract)
 from app.modules.knowledge.sources import (  # noqa: F401  (public contract)
     COLLECTIONS, REVIEWERS, STATUSES, SUFFIXES, annotate, counts, evidence, get, register, register_references,
     review as review_source, source_passages, sources)

@@ -1480,7 +1480,8 @@ def test_every_write_route_by_role():
         "/api/bids/{opp_id}/match", "/api/matches/{match_id}/decide", "/api/bids/{opp_id}/requirements/{req_id}/match",
         "/api/bids/{opp_id}/participation", "/api/bids/{opp_id}/go-no-go", "/api/bids/{opp_id}/dispatch",
         "/api/bids/{opp_id}/requirements/{req_id}/capability-gap", "/api/knowledge/sources/{ks_id}/annotate",
-        "/api/bids/{opp_id}/schedule", "/api/bids/{opp_id}/approvals", "/api/catalog/refresh"}  # P-33, P-34
+        "/api/bids/{opp_id}/schedule", "/api/bids/{opp_id}/approvals", "/api/catalog/refresh",  # P-33, P-34
+        "/api/bids/{opp_id}/reassessments"}  # P-37
     correctors = {
         "/api/bids/{opp_id}/corrections", "/api/changes/{set_id}/items/{item_id}", "/api/changes/{set_id}/confirm-all",
         "/api/bids/{opp_id}/requirements", "/api/bids/{opp_id}/requirements/from-lines", "/api/bids/{opp_id}/requirements/merge",

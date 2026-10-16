@@ -21,12 +21,13 @@ import pymupdf
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.core import audit, config, fileid, llm
+from app.core import audit, config, llm
 from app.core.auth import ROLES
 from app.core.db import utcnow
 from app.modules.ingestion import office
 from app.modules.ingestion import service as ingestion
 from app.modules.knowledge.models import KbItem, KbPassage, KbSource
+from app.modules.opportunities import service as opportunities
 
 COLLECTIONS = {
     "engineering_reference": "Engineering references",
@@ -195,7 +196,9 @@ def register(db: Session, path: str | Path, actor: str, collection: str, title: 
     if path.suffix.lower() not in SUFFIXES:
         raise ValueError(f"Unsupported file type {path.suffix!r}; use {', '.join(SUFFIXES)}.")
     sha = hashlib.sha256(path.read_bytes()).hexdigest()
-    document_id, instance_id, id_source = fileid.identity(path.read_bytes(), path.suffix)
+    ids = opportunities.identity(path.name, path.read_bytes())  # the bids' reader of the embedded IDs (P-32, C-27)
+    document_id, instance_id = ids["doc_uid"], ids["instance_uid"]
+    id_source = "fingerprint" if ids["source"] == "sha256" else "embedded"
     same = db.scalar(select(KbSource).where(KbSource.document_id == document_id, KbSource.instance_id == instance_id,
                                             KbSource.status != "rejected"))
     if same:

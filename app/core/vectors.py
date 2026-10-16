@@ -24,10 +24,10 @@ from app.core import config, llm
 
 
 class Index:
-    def __init__(self, items: list[dict], text_key: str = "text"):
+    def __init__(self, items: list[dict], text_key: str = "text", embed: bool = True):
         self.items = items
         self.texts = [it[text_key] for it in items]
-        self.vectors = _vectors(self.texts)
+        self.vectors = _vectors(self.texts) if embed else None  # embed=False: a keyword-only index (no model call)
         self.mode = "embeddings" if self.vectors is not None else "keywords"
         self._tfidf = None
 
@@ -53,6 +53,22 @@ class Index:
             out.append(self._top(scores, k, where))
         return out
 
+    def hybrid(self, query: str, k: int = 5, where=None, depth: int = 50) -> list[dict]:
+        """Semantic and keyword results combined by reciprocal rank fusion (P-37, C-29 point 5): an exact term (a
+        standard number, a rating) and a paraphrase both rank. Offline (no vectors) it is the keyword ranking.
+        score = sum of 1 / (60 + rank) over the two rankings; it orders results and is never a probability."""
+        if not query.strip() or not self.items:
+            return []
+        rankings = [self._ranked(self._keyword_scores(query), depth, where)]
+        if self.vectors is not None and (qv := llm.embed([query])) is not None:
+            v = np.asarray(qv[0], dtype=np.float32)
+            rankings.append(self._ranked(self.vectors @ (v / (np.linalg.norm(v) or 1.0)), depth, where))
+        fused: dict[int, float] = {}
+        for ranked in rankings:
+            for rank, i in enumerate(ranked):
+                fused[i] = fused.get(i, 0.0) + 1.0 / (60 + rank)
+        return [{**self.items[i], "score": round(fused[i], 4)} for i in sorted(fused, key=lambda i: (-fused[i], i))[:k]]
+
     def _keyword_scores(self, query: str) -> np.ndarray:
         if self._tfidf is None:
             vectorizer = TfidfVectorizer(stop_words="english", ngram_range=(1, 2))
@@ -60,15 +76,18 @@ class Index:
         vectorizer, matrix = self._tfidf
         return cosine_similarity(vectorizer.transform([query]), matrix)[0]
 
-    def _top(self, scores, k: int, where) -> list[dict]:
+    def _ranked(self, scores, k: int, where) -> list[int]:
         out = []
         for i in np.argsort(-scores, kind="stable"):
             if scores[i] <= 0 or (where and not where(self.items[i])):
                 continue
-            out.append({**self.items[i], "score": round(float(scores[i]), 3)})
+            out.append(int(i))
             if len(out) == k:
                 break
         return out
+
+    def _top(self, scores, k: int, where) -> list[dict]:
+        return [{**self.items[i], "score": round(float(scores[i]), 3)} for i in self._ranked(scores, k, where)]
 
 
 def _vectors(texts: list[str]) -> np.ndarray | None:
@@ -96,4 +115,6 @@ if __name__ == "__main__":  # self-check (offline): python -m app.core.vectors
     hits = idx.search("switchgear rated 15 kV", k=2)
     assert hits[0]["id"] == 1, hits
     assert idx.search("insurance", where=lambda it: it["id"] != 2) == []
+    fused = idx.hybrid("liability insurance", k=3)
+    assert [h["id"] for h in fused] == [2] and 0 < fused[0]["score"] < 1, fused  # keyword ranking offline
     print("vectors ok, mode:", idx.mode)

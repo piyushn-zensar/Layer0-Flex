@@ -86,3 +86,27 @@ class KbPassage(Base):
     table: Mapped[str | None] = mapped_column(String(40))                        # layout table id when the passage is a table
     text: Mapped[str] = mapped_column(Text)
     annotations: Mapped[dict | None] = mapped_column(JSON)
+
+
+class AssessmentRecord(Base):
+    """One explainable assessment (P-37, C-29 points 4 and 7): for a bid's requirement (or the bid), the task, the
+    evidence cited with each source's version, the catalog version, the model and prompt or profile it ran with, the
+    conclusion and what is still unresolved. Append-only: a reassessment is a new run; earlier runs stay readable,
+    and no record ever changes a requirement."""
+    __tablename__ = "assessment_record"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    opportunity_id: Mapped[str] = mapped_column(String(20), index=True)
+    run: Mapped[int] = mapped_column(index=True)                         # 1, 2, ... per bid
+    reason: Mapped[str] = mapped_column(Text, default="")               # why this run was requested
+    task: Mapped[str] = mapped_column(String(40))                        # a retrieval profile name
+    subject: Mapped[str] = mapped_column(String(40))                     # req_id, or "bid"
+    query: Mapped[str] = mapped_column(Text)
+    citations: Mapped[list] = mapped_column(JSON, default=list)          # [{citation, ks_id, version, passage_id, ...}]
+    evidence_versions: Mapped[dict] = mapped_column(JSON, default=dict)  # {ks_id or kb_id: version}
+    catalog_version: Mapped[int | None]
+    model: Mapped[str] = mapped_column(String(80), default="")           # "retrieval only" when no model was called
+    prompt_hash: Mapped[str] = mapped_column(String(24), default="")    # instructions or retrieval profile hash
+    conclusion: Mapped[dict | None] = mapped_column(JSON)
+    unresolved: Mapped[list] = mapped_column(JSON, default=list)         # missing evidence, conflicts, assumptions
+    created_by: Mapped[str] = mapped_column(String(80))
+    created_at: Mapped[datetime] = mapped_column(default=utcnow)
