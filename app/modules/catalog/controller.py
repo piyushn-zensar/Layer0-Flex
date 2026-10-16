@@ -44,6 +44,6 @@ def versions(key: str, db: Session = Depends(get_db)):
 
 @router.post("/catalog/refresh")
 def refresh(request: Request, db: Session = Depends(get_db)):
-    """Refresh now instead of waiting for the daily run (bid manager or administrator)."""
-    require(request, BID_MANAGER, "admin")
+    """Refresh now instead of waiting for the daily run (bid manager; the administrator reads only)."""
+    require(request, BID_MANAGER)
     return row(service.refresh(db, actor(request)))

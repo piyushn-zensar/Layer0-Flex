@@ -1,6 +1,6 @@
 "use client";
 // Compliance matrix: what still needs an answer, and one row per requirement and unit answer, with filters.  Owner: Janvia.
-// Rows come from GET /api/opportunities/{id}/compliance-matrix (J-11). Filtering is in the browser (a few hundred rows);
+// Rows come from GET /api/bids/{id}/compliance-matrix (J-11). Filtering is in the browser (a few hundred rows);
 // only the first PAGE rows are drawn, "Show more" adds the next ones.
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -70,12 +70,12 @@ const Row = memo(function Row({ row, href, selected, onSelect }: { row: MatrixRo
 
 export default function ConsolidationPage() {
   const { id } = useParams<{ id: string }>();
-  const { data: matrix, error } = useApi<Matrix>(`/api/opportunities/${id}/compliance-matrix`);
+  const { data: matrix, error } = useApi<Matrix>(`/api/bids/${id}/compliance-matrix`);
   const [f, setFilters] = useState<Filters>(NO_FILTER);
   const [limit, setLimit] = useState(PAGE);
   const q = useDeferredValue(f.q).trim().toLowerCase();
   const rows = matrix?.rows;
-  const { data: opp } = useApi<{ documents: Doc[] }>(`/api/opportunities/${id}`); // file names for the detail's source line
+  const { data: opp } = useApi<{ documents: Doc[] }>(`/api/bids/${id}`); // file names for the detail's source line
   const [selectedKey, setSelectedKey] = useState<string>();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [historyOpen, setHistoryOpen] = useState(false); // the table's "History" link opens the row with its history showing
@@ -136,8 +136,8 @@ export default function ConsolidationPage() {
       <PageHead level={2} title="Compliance matrix" help={HELP}>
         <Link className="button secondary" href={`/opportunities/${id}/consolidation/outline`} data-tour="cons-outline-link">Response outline (draft)</Link>
         <Link className="button secondary" href={`/opportunities/${id}/consolidation/activity`} data-tour="cons-activity-link">Activity log</Link>
-        <a className="button secondary" href={`/api/opportunities/${id}/compliance-matrix.csv`} data-tour="cons-csv">CSV</a>
-        <a className="button" href={`/api/opportunities/${id}/compliance-matrix.xlsx`} data-tour="cons-xlsx">Download compliance matrix (Excel)</a>
+        <a className="button secondary" href={`/api/bids/${id}/compliance-matrix.csv`} data-tour="cons-csv">CSV</a>
+        <a className="button" href={`/api/bids/${id}/compliance-matrix.xlsx`} data-tour="cons-xlsx">Download compliance matrix (Excel)</a>
       </PageHead>
       <p className="cons-summary" data-tour="cons-summary"><strong>{matrix.answered} / {matrix.total}</strong> requirements answered.{" "}
         {matrix.blocking.length ? <span className="warn">{matrix.blocking.length} still need an answer.</span> : <span className="ok">Every requirement is answered.</span>}</p>

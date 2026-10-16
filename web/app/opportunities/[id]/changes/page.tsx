@@ -15,7 +15,7 @@ const HELP = "Addenda, Q&A answers and change requests are read like the RFP and
 
 export default function ChangesPage() {
   const { id } = useParams<{ id: string }>();
-  const { data, error, reload } = useApi<Changes>(`/api/opportunities/${id}/changes`);
+  const { data, error, reload } = useApi<Changes>(`/api/bids/${id}/changes`);
   const bm = isBidManager(useMe()); // reading change documents is the bid manager's (section 16.6)
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState<string>();
@@ -28,7 +28,7 @@ export default function ChangesPage() {
     const form = e.currentTarget;
     const file = new FormData(form); // before the input is disabled below
     setBusy("Reading the change document…"); setMessage(undefined);
-    try { await post(`/api/opportunities/${id}/changes`, file); form.reset(); await reload(); toast.success("Change document read. Confirm each change below."); }
+    try { await post(`/api/bids/${id}/changes`, file); form.reset(); await reload(); toast.success("Change document read. Confirm each change below."); }
     catch (err) { setMessage(errorMessage(err)); } finally { setBusy(""); }
   }
   // Apply or discard changes the baseline, so the header refreshes too.

@@ -20,14 +20,14 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_add_requirement_from_selected_lines():
     client = signed_in()
-    if client.get("/api/opportunities/OPP-0001").status_code == 404:
+    if client.get("/api/bids/OPP-0001").status_code == 404:
         seed_demo.main()  # this file runs before test_smoke.py, which expects the demo to be OPP-0001
-    opp = client.post("/api/opportunities", json={"title": "line select"}).json()["id"]
+    opp = client.post("/api/bids", json={"title": "line select"}).json()["id"]
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
-    doc = client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)}).json()["id"]
+    doc = client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)}).json()["id"]
     page = client.get(f"/api/documents/{doc}/pages/55").json()
     lines = {line["n"]: line for line in page["lines"]}
-    url = f"/api/opportunities/{opp}/requirements/from-lines"
+    url = f"/api/bids/{opp}/requirements/from-lines"
 
     # p. 55, lines 52-53: "Switchgear shall be Arc-resistant Type 2B. ... IEEE C37.20.7." (the same words appear elsewhere)
     req = client.post(url, json={"page": 55, "line_start": 52, "line_end": 53, "category": "technical"},
@@ -55,13 +55,13 @@ def test_add_requirement_from_selected_lines():
                 {"page": 55, "line_start": 52, "line_end": 53, "category": "nope"}]:
         r = client.post(url, json={"category": "technical"} | bad)
         assert r.status_code == 409, (bad, r.text)
-    assert client.post("/api/opportunities/OPP-9997/requirements/from-lines",
+    assert client.post("/api/bids/OPP-9997/requirements/from-lines",
                        json={"page": 1, "line_start": 1, "line_end": 1}).status_code == 404
 
     # after the freeze, missed requirements come in through the Changes page
     for r in (req, head):
         assert client.post(f"/api/requirements/{r['req_id']}/review", json={"action": "approve"}).status_code == 200
-    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 200
+    assert client.post(f"/api/bids/{opp}/baselines").status_code == 200
     r = client.post(url, json={"page": 55, "line_start": 67, "line_end": 67})
     assert r.status_code == 409 and "Changes page" in r.json()["detail"]
-    assert len(client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]) == 2
+    assert len(client.get(f"/api/bids/{opp}/requirements").json()["requirements"]) == 2

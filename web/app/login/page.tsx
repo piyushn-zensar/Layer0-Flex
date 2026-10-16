@@ -2,7 +2,6 @@
 // Sign-in (technical-architecture section 16.6).  Owner: Piyush.
 // Covers the shell, so nothing behind it asks the API before there is a token. After sign-in the browser goes back
 // to ?next= (set by lib/api.ts on a 401), else the portfolio; a full load so every page fetches as the new user.
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { errorMessage, signIn } from "@/lib/api";
 import { Alert, Busy } from "@/components/ui";
@@ -10,7 +9,7 @@ import { Alert, Busy } from "@/components/ui";
 export default function LoginPage() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string>();
-  const [search, setSearch] = useState(""); // keeps ?next= on the sign-up link; read after mount so server and browser render the same
+  const [search, setSearch] = useState(""); // ?next= carried over to the sign-up link (read after mount: no hydration mismatch)
   useEffect(() => setSearch(location.search), []);
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -31,7 +30,7 @@ export default function LoginPage() {
         <button disabled={busy}>Sign in</button>
         {busy && <Busy label="Signing in…" />}
         <Alert kind="error">{message}</Alert>
-        <p className="muted">No account? <Link href={`/signup${search}`}>Create one</Link></p>
+        <p className="muted">No account yet? <a href={`/signup${search}`}>Sign up</a></p>
       </form>
     </div>
   );

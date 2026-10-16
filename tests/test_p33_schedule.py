@@ -15,7 +15,7 @@ def test_schedule_and_approvals():
     seed_demo.main()  # a bid with participating units, dispatched, some answers validated
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    base = f"/api/opportunities/{opp}"
+    base = f"/api/bids/{opp}"
     s = client.get(f"{base}/schedule").json()
     units = [u["bu"] for u in s["units"]]
     assert "CROWN" in units and not s["ready"] and s["planned_submission"] is None and s["compliance"]

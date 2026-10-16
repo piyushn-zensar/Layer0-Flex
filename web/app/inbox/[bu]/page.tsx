@@ -6,7 +6,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { api, errorMessage, post, useApi, useMe } from "@/lib/api";
+import { api, errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
 import { complianceLabel, type Assignment, type Requirement, type Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import KnowledgeReview from "@/components/knowledge/KnowledgeReview";
@@ -15,13 +15,13 @@ import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/comp
 
 // C-12 response fields (A-18): every assignment row carries them; null until a unit fills them in
 type Fields = { reason: string | null; conditions: string | null; workaround: string | null; next_steps: string | null };
-type Item = Assignment & Fields & { requirement: Requirement | null; open_questions: number };
+// may: what the signed-in user may do with the row, from workflow.json with role and unit from the token (A-17, C-25)
+type Item = Assignment & Fields & { requirement: Requirement | null; open_questions: number; may: { answer: boolean; validate: boolean; return: boolean } };
 const FIELDS: { name: keyof Fields; label: string }[] = [
   { name: "conditions", label: "Conditions" }, { name: "workaround", label: "Workaround" }, { name: "next_steps", label: "Next steps" }];
 type Data = { bu: string; unit: Unit | null; compliance: string[]; items: Item[] };
 type Portfolio = { progress: Record<string, { total: number; submitted: number; validated: number }> }[];
 
-const BID_MANAGER = "Bid Manager";
 const BID_DESK = "Bid desk (commercial and submission items)";
 
 // A-21 (C-16): an assignment's history, loaded when it is opened. before / after hold only what the event changed.
@@ -40,7 +40,7 @@ function Questions({ oppId, reqId, assignmentId, open, me, bm, onChanged }:
   const [notes, setNotes] = useState<Note[]>();
   const [error, setError] = useState<string>();
   const [busy, setBusy] = useState(false);
-  const load = () => api<Note[]>(`/api/opportunities/${oppId}/comments?req_id=${encodeURIComponent(reqId)}`).then(setNotes, (e) => setError(errorMessage(e)));
+  const load = () => api<Note[]>(`/api/bids/${oppId}/comments?req_id=${encodeURIComponent(reqId)}`).then(setNotes, (e) => setError(errorMessage(e)));
   const act = (request: Promise<unknown>, done: string) => {
     setBusy(true);
     request.then(() => { toast.success(done); onChanged(); return load(); }, (e) => toast.error(errorMessage(e))).finally(() => setBusy(false));
@@ -60,7 +60,7 @@ function Questions({ oppId, reqId, assignmentId, open, me, bm, onChanged }:
       <form className="form compact" onSubmit={(e) => {
         e.preventDefault();
         const form = e.currentTarget, f = new FormData(form);
-        act(post(`/api/opportunities/${oppId}/comments`, { req_id: reqId, assignment_id: assignmentId, kind: f.get("kind"), text: f.get("text") })
+        act(post(`/api/bids/${oppId}/comments`, { req_id: reqId, assignment_id: assignmentId, kind: f.get("kind"), text: f.get("text") })
           .then(() => form.reset()), f.get("kind") === "question" ? "Question sent." : "Comment added.");
       }}>
         <label><span className="sr-only">Question or comment</span>
@@ -99,7 +99,9 @@ export default function InboxPage() {
   const { bu } = useParams<{ bu: string }>();
   const { data, error, reload } = useApi<Data>(`/api/inbox/${bu}`);
   const { data: portfolio } = useApi<Portfolio>("/api/portfolio");
-  const me = useMe()?.name ?? "";  // unit switcher: which units have work, and waiting answers
+  const signedIn = useMe();
+  const me = signedIn?.name ?? "", bm = isBidManager(signedIn);
+  const reviewer = bm || signedIn?.role === "product_manager"; // unit switcher: which units have answers waiting for validation
   const toast = useToast();
   const [busy, setBusy] = useState<number | "all">();      // what is being saved: no double submit
   const [returning, setReturning] = useState<number>();     // the item whose return note is being written
@@ -108,13 +110,11 @@ export default function InboxPage() {
   if (error) return <div className="content"><PageHead title="My work" /><Alert kind="error">Could not load this work package: {error}</Alert></div>;
   if (!data) return <div className="content"><PageHead title="My work" /><Skeleton lines={4} /></div>;
 
-  const canAnswer = data.unit ? [data.unit.product_manager, data.unit.design_engineer].includes(me) : me === BID_MANAGER;
-  // A-17: the unit's product manager validates (the bid manager for the bid desk); the bid manager may return any answer
-  const canValidate = data.unit ? me === data.unit.product_manager : me === BID_MANAGER;
-  const canReturn = canValidate || me === BID_MANAGER;
+  const canAnswer = data.items.some((a) => a.may.answer);
+  const canValidate = data.items.some((a) => a.may.validate || a.may.return);
   const opportunities = [...new Set(data.items.map((a) => a.opportunity_id))];
-  const openCount = data.items.filter(open).length;
-  const toValidate = data.items.filter((a) => a.status === "submitted").length;
+  const openCount = data.items.filter((a) => a.may.answer).length;
+  const toValidate = data.items.filter((a) => a.may.validate).length;
   // Walkthrough targets (data-tour): the first open, submitted and returned rows carry stable ids; nothing else changes.
   // While the walkthrough runs it names its opportunity on <html data-tour-opp>, and that opportunity's rows come first.
   const focus = typeof document !== "undefined" ? document.documentElement.getAttribute("data-tour-opp") : null;
@@ -132,7 +132,7 @@ export default function InboxPage() {
   const submitAll = async () => {  // every open row with an answer typed in, one after the other
     setBusy("all");
     const out: Record<number, string> = {};
-    for (const a of data.items.filter(open)) {
+    for (const a of data.items.filter((x) => x.may.answer)) {
       const form = document.querySelector<HTMLFormElement>(`form[data-assignment="${a.id}"]`);
       if (!form || !String(new FormData(form).get("response") ?? "").trim()) continue;
       try { await answer(a, new FormData(form)); out[a.id] = "sent"; }
@@ -160,7 +160,7 @@ export default function InboxPage() {
         <span>Work package:</span>
         {Object.keys(waiting).sort((a, b) => (a === "BID" ? -1 : b === "BID" ? 1 : a.localeCompare(b))).map((u) => (
           <Link key={u} href={`/inbox/${u}`} className={`chip${u === bu ? " on" : ""}`} aria-current={u === bu ? "page" : undefined}>
-            {u === "BID" ? BID_DESK : u}{canValidate && waiting[u] > 0 && <span>{waiting[u]} to validate</span>}
+            {u === "BID" ? BID_DESK : u}{reviewer && waiting[u] > 0 && <span>{waiting[u]} to validate</span>}
           </Link>))}
       </nav>
       {opportunities.length > 0 && (
@@ -170,11 +170,11 @@ export default function InboxPage() {
           {data.unit && <>
             <span className="inbox-sep" aria-hidden="true" />
             <span>Hand-off for this unit&apos;s systems <span className="muted">(JSON: CPQ seed, basis of design, specialist queue)</span>:</span>
-            {opportunities.map((o) => <a key={o} className="button secondary sm" href={`/api/opportunities/${o}/handoff/${bu}`} data-tour={`inbox-handoff-${o}`}>{o}</a>)}
+            {opportunities.map((o) => <a key={o} className="button secondary sm" href={`/api/bids/${o}/handoff/${bu}`} data-tour={`inbox-handoff-${o}`}>{o}</a>)}
             <span className="muted">Starting points for people, not a configuration or a design.</span>
           </>}
         </div>)}
-      {!canAnswer && !canValidate && <div data-tour="inbox-readonly"><Alert kind="info">You are signed in as {me}: you can read this work package but not answer it. Sign in as one of this unit's people to answer.</Alert></div>}
+      {!canAnswer && !canValidate && <div data-tour="inbox-readonly"><Alert kind="info">You are signed in as {me}: you can read this work package but not act on it. A unit's technical items are answered by its designers / engineers, its other items by its unit manager, who also validates the answers.</Alert></div>}
       {canAnswer && openCount > 0 && <p className="muted" data-tour="inbox-open-count">{openCount} open row(s). “Submit all answered rows” sends every open row where “How it is met” is filled in.</p>}
       {canValidate && toValidate > 0 && <p className="muted" data-tour="inbox-to-validate">{toValidate} submitted answer(s) waiting for validation.</p>}
       {data.items.length === 0 ? <EmptyState title="Nothing assigned" hint="Requirements appear here once the bid manager dispatches a bid to this unit." /> : (
@@ -192,9 +192,9 @@ export default function InboxPage() {
                   ? <StatusBadge status="medium" kind="severity" label="Source not verified" title="Quote not located on the page; check the source manually" />
                   : <Link className="muted" href={`/opportunities/${a.opportunity_id}/trace#${a.req_id}`} data-tour={t("inbox-source-link")}>{a.requirement.source}: show highlighted source</Link>}</>
                 : <span className="warn">This requirement no longer exists in the bid.</span>}
-                <Questions oppId={a.opportunity_id} reqId={a.req_id} assignmentId={a.id} open={a.open_questions} me={me} bm={canValidate} onChanged={reload} /></td>
+                <Questions oppId={a.opportunity_id} reqId={a.req_id} assignmentId={a.id} open={a.open_questions} me={me} bm={bm} onChanged={reload} /></td>
               <td>
-                {canAnswer && open(a) ? (
+                {a.may.answer ? (
                   <form className="form compact" data-assignment={a.id} aria-busy={busy === a.id} data-tour={t("inbox-form")}
                     onSubmit={(e) => { e.preventDefault(); const f = new FormData(e.currentTarget); run(a.id, () => answer(a, f), `${a.req_id} submitted for validation.`); }}>
                     {a.status === "returned" && <div data-tour={a.id === firstReturned ? "inbox-returned-note" : undefined}><Alert kind="warn" title="Returned">by {a.validated_by}: {a.validation_note}</Alert></div>}
@@ -226,10 +226,10 @@ export default function InboxPage() {
               <td data-tour={v("inbox-validate-cell") ?? t("inbox-status-cell")}>
                 <StatusBadge status={a.status} />{a.validated_by && a.status === "validated" && <div className="muted">by {a.validated_by}</div>}
                 <History id={a.id} />
-                {canReturn && a.status === "submitted" && (returning === a.id ? (
+                {(a.may.validate || a.may.return) && (returning === a.id ? (
                   <div className="form compact inbox-return" data-tour={v("inbox-return-form")}>
                     <label><span className="sr-only">Why is it returned?</span>
-                      <textarea rows={2} value={note} onChange={(e) => setNote(e.target.value)} placeholder="Why is it returned? The unit sees this note." autoFocus data-tour={v("inbox-return-note")} /></label>
+                      <textarea rows={2} value={note} onChange={(e) => setNote(e.target.value)} placeholder={a.may.validate ? "Why is it returned? The unit sees this note." : "Your question: the unit sees it and answers again."} autoFocus data-tour={v("inbox-return-note")} /></label>
                     <div className="inline">
                       <button className="danger sm" disabled={busy !== undefined || !note.trim()} data-tour={v("inbox-return-send")}
                         onClick={() => run(a.id, () => post(`/api/assignments/${a.id}/validate`, { ok: false, note }), `${a.req_id} returned to the unit.`)}>Return with note</button>
@@ -239,8 +239,8 @@ export default function InboxPage() {
                   </div>
                 ) : (
                   <div className="inline inbox-validate">
-                    {canValidate && <button className="sm" disabled={busy !== undefined} data-tour={v("inbox-validate")} onClick={() => run(a.id, () => post(`/api/assignments/${a.id}/validate`, { ok: true, note: "" }), `${a.req_id} validated.`)}>Validate</button>}
-                    <button disabled={busy !== undefined} className="secondary sm" data-tour={v("inbox-return")} onClick={() => { setReturning(a.id); setNote(""); }}>Return</button>
+                    {a.may.validate && <button className="sm" disabled={busy !== undefined} data-tour={v("inbox-validate")} onClick={() => run(a.id, () => post(`/api/assignments/${a.id}/validate`, { ok: true, note: "" }), `${a.req_id} validated.`)}>Validate</button>}
+                    <button disabled={busy !== undefined} className="secondary sm" data-tour={v("inbox-return")} onClick={() => { setReturning(a.id); setNote(""); }}>{a.may.validate ? "Return" : "Return with a question"}</button>
                     {busy === a.id && <Busy label="Saving…" />}
                   </div>
                 ))}

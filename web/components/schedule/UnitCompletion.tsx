@@ -8,7 +8,7 @@ import { Alert, Busy, useToast } from "@/components/ui";
 
 function Row({ oppId, bu }: { oppId: string; bu: string }) {
   const toast = useToast();
-  const { data, error, reload } = useApi<Schedule>(`/api/opportunities/${oppId}/schedule`);
+  const { data, error, reload } = useApi<Schedule>(`/api/bids/${oppId}/schedule`);
   const [busy, setBusy] = useState(false);
   const [formError, setFormError] = useState<string>();
   if (error) return <tr><td className="mono">{oppId}</td><td colSpan={2}><Alert kind="error">{error}</Alert></td></tr>;
@@ -18,7 +18,7 @@ function Row({ oppId, bu }: { oppId: string; bu: string }) {
     const date = String(form.get("estimated_completion") ?? "");
     if (!date) { setFormError("Pick a date."); return; }
     setBusy(true); setFormError(undefined);
-    api(`/api/opportunities/${oppId}/units/${bu}/completion`, { method: "PUT", body: JSON.stringify({ estimated_completion: date, note: String(form.get("note") ?? "").trim() }) })
+    api(`/api/bids/${oppId}/units/${bu}/completion`, { method: "PUT", body: JSON.stringify({ estimated_completion: date, note: String(form.get("note") ?? "").trim() }) })
       .then(() => { toast.success(`${oppId}: completion date saved.`); return reload(); }, (e) => setFormError(errorMessage(e)))
       .finally(() => setBusy(false));
   };

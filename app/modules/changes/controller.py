@@ -19,7 +19,7 @@ class DecideIn(BaseModel):
 
 
 class CorrectionIn(BaseModel):
-    """POST /api/opportunities/{id}/corrections: the fields each kind needs (requirements.apply_correction)."""
+    """POST /api/bids/{id}/corrections: the fields each kind needs (requirements.apply_correction)."""
     kind: Literal["add", "edit", "split", "merge", "exclude", "resolve"]
     reason: str = Field(max_length=1000)
     req_id: str | None = Field(None, max_length=20)
@@ -44,12 +44,12 @@ def _call(fn, *args):
         raise HTTPException(409, str(exc))
 
 
-@router.get("/opportunities/{opp_id}/changes")
+@router.get("/bids/{opp_id}/changes")
 def changes(opp_id: str, db: Session = Depends(get_db)):
     return _call(service.overview, db, opp_id)
 
 
-@router.post("/opportunities/{opp_id}/changes")
+@router.post("/bids/{opp_id}/changes")
 def upload(opp_id: str, request: Request, file: UploadFile = File(...), role: str = Form("change"),
            db: Session = Depends(get_db)):
     """Synchronous: the change document is read and classified before the answer (frozen answers make it quick).
@@ -59,7 +59,7 @@ def upload(opp_id: str, request: Request, file: UploadFile = File(...), role: st
     return service.view(db, _call(service.upload, db, opp_id, file.filename or "change.pdf", data, actor(request), role))
 
 
-@router.post("/opportunities/{opp_id}/corrections")
+@router.post("/bids/{opp_id}/corrections")
 def correct(opp_id: str, body: CorrectionIn, request: Request, db: Session = Depends(get_db)):
     require(request, *CORRECTORS)
     fields = body.model_dump(exclude={"kind", "reason"}, exclude_none=True)
@@ -70,7 +70,7 @@ class SampleIn(BaseModel):
     name: str
 
 
-@router.post("/opportunities/{opp_id}/changes/from-sample")
+@router.post("/bids/{opp_id}/changes/from-sample")
 def upload_sample(opp_id: str, body: SampleIn, request: Request, db: Session = Depends(get_db)):
     """A bundled sample change document (GET /api/samples, kind "change") goes through upload() exactly like a file.
     In mock mode a 409 says no frozen answers exist when the opportunity's requirements differ from the demo's."""

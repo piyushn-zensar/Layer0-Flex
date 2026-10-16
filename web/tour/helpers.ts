@@ -16,7 +16,7 @@ export const textIn = (tourId: string, words: string) => (ctx: TourCtx) =>
 
 /** The opportunity record, or null when it cannot be read. */
 export const opportunity = async (ctx: TourCtx) => {
-  try { return (await ctx.api<{ opportunity: { id: string; status: string } }>(`/api/opportunities/${ctx.oppId}`)).opportunity; }
+  try { return (await ctx.api<{ opportunity: { id: string; status: string } }>(`/api/bids/${ctx.oppId}`)).opportunity; }
   catch { return null; }
 };
 

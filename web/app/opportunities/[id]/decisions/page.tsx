@@ -124,8 +124,8 @@ export default function DecisionsPage() {
   const { id } = useParams<{ id: string }>();
   const toast = useToast();
   const [ask, confirmDialog] = useConfirm();
-  const { data, error, reload } = useApi<Data>(`/api/opportunities/${id}/decisions`);
-  const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/opportunities/${id}/knowledge`); // A-11
+  const { data, error, reload } = useApi<Data>(`/api/bids/${id}/decisions`);
+  const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/bids/${id}/knowledge`); // A-11
   const [busy, setBusy] = useState<string>(); // what is running: one action at a time
   const bm = isBidManager(useMe()); // the bid manager makes the final go/no-go call (technical-architecture 16.5)
   if (error) return <Alert kind="error" title="Could not load the bid decision.">{error}</Alert>;
@@ -143,7 +143,7 @@ export default function DecisionsPage() {
     const criteria = (data.summary?.criteria ?? []).map((c) => ({ id: c.id, status: f.get(`crit-${c.id}`), note: f.get(`note-${c.id}`) ?? "" }));
     if (outcome === "no_go" && !await ask({ title: "Record no-go?", confirmLabel: "Record no-go", danger: true,
       message: "The bid is marked no-go: dispatch stops and the units' open work is withdrawn (submitted and validated answers stay). A later go decision can still overrule it." })) return;
-    run("decision", post<{ withdrawn: number }>(`/api/opportunities/${id}/go-no-go`, { outcome, rationale: f.get("rationale"), criteria }),
+    run("decision", post<{ withdrawn: number }>(`/api/bids/${id}/go-no-go`, { outcome, rationale: f.get("rationale"), criteria }),
       (r) => { toast.success(outcome === "go" ? "Decision recorded: go." : `Decision recorded: no-go. ${r.withdrawn} open item(s) withdrawn from the units.`); statusChanged(); });
   };
 

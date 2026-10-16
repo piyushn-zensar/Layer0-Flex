@@ -35,8 +35,8 @@ export default function AssessmentPage() {
   const { id } = useParams<{ id: string }>();
   const toast = useToast();
   const bm = isBidManager(useMe()); // participation, routing and sending are the bid manager's (16.6)
-  const { data, error, reload } = useApi<Data>(`/api/opportunities/${id}/assessment`);
-  const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/opportunities/${id}/knowledge`); // A-11
+  const { data, error, reload } = useApi<Data>(`/api/bids/${id}/assessment`);
+  const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/bids/${id}/knowledge`); // A-11
   const [busy, setBusy] = useState<string>(); // one action at a time: no double participation or dispatch
   if (error) return <Alert kind="error" title="Could not load the assessment.">{error}</Alert>;
   if (!data) return <Skeleton lines={5} />;
@@ -50,14 +50,14 @@ export default function AssessmentPage() {
   };
   const statusChanged = () => window.dispatchEvent(new Event(STATUS_EVENT));
   const recordParticipation = (form: FormData) =>
-    run("participation", post(`/api/opportunities/${id}/participation`, { units: form.getAll("units"), rationale: form.get("rationale") }),
+    run("participation", post(`/api/bids/${id}/participation`, { units: form.getAll("units"), rationale: form.get("rationale") }),
       () => toast.success("Participation recorded."));
   const recordGap = (reqId: string, form: FormData) =>
-    run("gap", post(`/api/opportunities/${id}/requirements/${reqId}/capability-gap`, { reason: form.get("reason") }),
+    run("gap", post(`/api/bids/${id}/requirements/${reqId}/capability-gap`, { reason: form.get("reason") }),
       () => toast.success(`${reqId}: capability gap recorded (non-compliant, with the reason).`));
   const send = () => run("send", (async () => {
-    if (!data.published) await post(`/api/opportunities/${id}/baselines`); // publish the register first (16.3)
-    return post<{ created: number; needs_owner: number }>(`/api/opportunities/${id}/dispatch`);
+    if (!data.published) await post(`/api/bids/${id}/baselines`); // publish the register first (16.3)
+    return post<{ created: number; needs_owner: number }>(`/api/bids/${id}/dispatch`);
   })(), (r) => {
     toast.success((r.created ? `${r.created} new assignment(s) sent to the units.` : "Nothing new to send: every unit already has its work.")
       + (r.needs_owner ? ` ${r.needs_owner} product requirement(s) need an owner and were not sent.` : ""));

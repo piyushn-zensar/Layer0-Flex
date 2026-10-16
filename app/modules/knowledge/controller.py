@@ -72,7 +72,7 @@ def items(request: Request, status: Literal["queued", "approved", "rejected", "r
             "example_types": service.EXAMPLE_TYPES, "learned": len(catalog.learned()), "index": catalog.index_mode()}
 
 
-@router.get("/opportunities/{opp_id}/knowledge")
+@router.get("/bids/{opp_id}/knowledge")
 def sent(opp_id: str, db: Session = Depends(get_db)):
     """What was already nominated from this bid: "<kind>:<ref>" -> status (for the buttons)."""
     return service.for_opportunity(db, opp_id)

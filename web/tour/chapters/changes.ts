@@ -15,7 +15,7 @@ const BID_MANAGER = "Bid Manager";
 
 /** The newest change set of OPP-0001 (the API lists newest first), or null. */
 async function latest(ctx: TourCtx): Promise<ChangeSet | null> {
-  try { return (await ctx.api<Changes>(`/api/opportunities/${OPP}/changes`)).sets[0] ?? null; } catch { return null; }
+  try { return (await ctx.api<Changes>(`/api/bids/${OPP}/changes`)).sets[0] ?? null; } catch { return null; }
 }
 const inReview = async (ctx: TourCtx) => (await latest(ctx))?.status === "review";
 const notInReview = async (ctx: TourCtx) => !(await inReview(ctx));
@@ -101,7 +101,7 @@ const chapter: TourChapter = {
       example: {
         label: "Use example: Addendum No. 1 (Syracuse)",
         apply: async (ctx) => {
-          const set = await ctx.post<ChangeSet>(`/api/opportunities/${OPP}/changes/from-sample`, { name: SAMPLE });
+          const set = await ctx.post<ChangeSet>(`/api/bids/${OPP}/changes/from-sample`, { name: SAMPLE });
           ctx.set("changes.setId", set.id);
           refreshPage();
         },
@@ -110,7 +110,7 @@ const chapter: TourChapter = {
       fallback: "The 'Read the change document' button is in the upload form; it is disabled while a set is in review.",
       body: [
         "The sample is an **illustrative** Addendum No. 1 to the Syracuse RFP (one page, written for this PoC): two modifications (a new submission date, twenty instead of eighteen breaker positions), two additions (seismic qualification, a 60-month warranty), one deletion (AutoCAD drawings), one question and answer that confirms the RFP, and two lines of cover text.",
-        "*Use example* calls `POST /api/opportunities/OPP-0001/changes/from-sample` with `{\"name\": \"syracuse_addendum_1\"}`, which stores and reads the same PDF the file input would. Reading takes a few seconds offline (frozen answers); the card appears below the form when it is done.",
+        "*Use example* calls `POST /api/bids/OPP-0001/changes/from-sample` with `{\"name\": \"syracuse_addendum_1\"}`, which stores and reads the same PDF the file input would. Reading takes a few seconds offline (frozen answers); the card appears below the form when it is done.",
       ],
     },
     {

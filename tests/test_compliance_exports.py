@@ -34,13 +34,13 @@ def _seeded():
 
 
 def _csv(client, opp) -> list[list[str]]:
-    text = client.get(f"/api/opportunities/{opp}/compliance-matrix.csv").text
+    text = client.get(f"/api/bids/{opp}/compliance-matrix.csv").text
     assert text.startswith("﻿")  # still UTF-8 with a byte order mark, so Excel reads it as UTF-8
     return list(csv.reader(io.StringIO(text.lstrip("﻿"))))
 
 
 def _xlsx(client, opp):
-    r = client.get(f"/api/opportunities/{opp}/compliance-matrix.xlsx")
+    r = client.get(f"/api/bids/{opp}/compliance-matrix.xlsx")
     assert r.status_code == 200
     return load_workbook(io.BytesIO(r.content))
 
@@ -87,7 +87,7 @@ def test_csv_compliance_wording_and_one_row_per_assignment():
     assert not words & {"met", "partial", "not_met", "Comply", "Partially comply", "Does not comply"}
     assert next(r for r in body if r[8] == "") [10] == ""  # a row with no result stays blank (assigned: no validation either)
     # the stored values are untouched: the matrix endpoint still reports them
-    stored = {(r["req_id"], r["unit"]): r["compliance"] for r in client.get(f"/api/opportunities/{opp}/compliance-matrix").json()["rows"]}
+    stored = {(r["req_id"], r["unit"]): r["compliance"] for r in client.get(f"/api/bids/{opp}/compliance-matrix").json()["rows"]}
     assert stored[(first, "EP2")] == "partial"
 
 
@@ -167,8 +167,8 @@ def test_excel_customer_sheet_with_populated_extended_fields_and_two_units():
 
 def test_unknown_opportunity_is_still_a_404_for_both_exports():
     client, _ = _seeded()
-    assert client.get("/api/opportunities/OPP-9999/compliance-matrix.csv").status_code == 404
-    assert client.get("/api/opportunities/OPP-9999/compliance-matrix.xlsx").status_code == 404
+    assert client.get("/api/bids/OPP-9999/compliance-matrix.csv").status_code == 404
+    assert client.get("/api/bids/OPP-9999/compliance-matrix.xlsx").status_code == 404
 
 
 if __name__ == "__main__":

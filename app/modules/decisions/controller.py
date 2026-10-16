@@ -31,7 +31,7 @@ class GoNoGoIn(BaseModel):
     criteria: list[CriterionIn] = []  # the person's judgement per criterion (A-12)
 
 
-@router.get("/opportunities/{opp_id}/decisions")
+@router.get("/bids/{opp_id}/decisions")
 def decisions(opp_id: str, db: Session = Depends(get_db)):
     try:
         opportunities.require(db, opp_id)  # an unknown opportunity is a 404, not an empty evidence pack
@@ -53,13 +53,13 @@ def _record(db: Session, opp_id: str, kind: str, outcome: str, units: list[str],
         raise HTTPException(bad_input, str(exc))
 
 
-@router.post("/opportunities/{opp_id}/participation")
+@router.post("/bids/{opp_id}/participation")
 def participation(opp_id: str, body: ParticipationIn, request: Request, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)  # participation and routing are the bid manager's (technical-architecture 16.6)
     return _record(db, opp_id, "participation", "units", body.units, body.rationale, actor(request), 422)
 
 
-@router.post("/opportunities/{opp_id}/go-no-go")
+@router.post("/bids/{opp_id}/go-no-go")
 def go_no_go(opp_id: str, body: GoNoGoIn, request: Request, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)  # the bid manager makes the final call; no separate approver (team decision, 13 Oct 2026)
     known = {c["id"] for c in catalog.go_no_go()["criteria"]}

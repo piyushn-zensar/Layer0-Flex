@@ -20,7 +20,7 @@ export default function LinePicker({ oppId, startPage, startLines, categories, r
   published?: boolean; // after publish (P-23): the lines go to POST /corrections (kind add / resolve) and a reason is required
   resolve?: { reqId: string; text: string; category: string }; // link an exception to these lines instead of adding a new requirement
 }) {
-  const { data: opp, error: oppError } = useApi<{ documents: Doc[] }>(`/api/opportunities/${oppId}`);
+  const { data: opp, error: oppError } = useApi<{ documents: Doc[] }>(`/api/bids/${oppId}`);
   const doc = opp?.documents.find((d) => d.role === "main");
   const docId = doc?.status === "ingested" ? doc.id : undefined;
   const pageCount = doc?.page_count ?? 1;
@@ -88,14 +88,14 @@ export default function LinePicker({ oppId, startPage, startLines, categories, r
     try {
       const body = { page: pageNo, line_start: a, line_end: b, text, category };
       if (published) {
-        const res = await post<CorrectionResult>(`/api/opportunities/${oppId}/corrections`,
+        const res = await post<CorrectionResult>(`/api/bids/${oppId}/corrections`,
           resolve ? { kind: "resolve", reason: reason.trim(), req_id: resolve.reqId, ...body } : { kind: "add", reason: reason.trim(), ...body });
         clear(); setReason(""); setText(resolve ? text : "");
         setAdded(`Correction saved: baseline ${res.baseline}${res.returned ? `; ${res.returned} answer${res.returned === 1 ? "" : "s"} returned to their units` : ""}.${res.note ? ` ${res.note}` : ""}`);
         await onAdded();
         return;
       }
-      const req = await post<Requirement>(resolve ? `/api/requirements/${resolve.reqId}/resolve` : `/api/opportunities/${oppId}/requirements/from-lines`, body);
+      const req = await post<Requirement>(resolve ? `/api/requirements/${resolve.reqId}/resolve` : `/api/bids/${oppId}/requirements/from-lines`, body);
       clear(); setText(resolve ? text : "");
       setAdded(resolve ? `${req.req_id} linked to ${req.source}; it is now in the register.` : `${req.req_id} added (${req.source}); it is in the register.`);
       await onAdded();

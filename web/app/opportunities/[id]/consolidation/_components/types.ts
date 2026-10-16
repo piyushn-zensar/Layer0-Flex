@@ -1,4 +1,4 @@
-// Row shape of GET /api/opportunities/{id}/compliance-matrix (J-11), shared by the page and its panels.  Owner: Janvia.
+// Row shape of GET /api/bids/{id}/compliance-matrix (J-11), shared by the page and its panels.  Owner: Janvia.
 export type Span = { document_id: string; page: number; line_start: number | null; line_end: number | null; bboxes: number[][] };
 // One requirement and one unit's answer (unit is null for a requirement nobody holds). reason, conditions, workaround and
 // next_steps stay null until A-18 stores them; the history count waits for A-21.

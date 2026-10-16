@@ -24,7 +24,7 @@ class ChangeIn(BaseModel):
     units: list[UnitIn]  # empty = not a product item (bid manager)
 
 
-@router.post("/opportunities/{opp_id}/match")
+@router.post("/bids/{opp_id}/match")
 def match(opp_id: str, request: Request, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)  # product match changes are the bid manager's (technical-architecture 16.6)
     return service.match(db, opp_id, f"matching agent ({actor(request)})")  # the agent proposes; the person asked
@@ -40,7 +40,7 @@ def decide(body: DecideIn, request: Request, match_id: int = Path(ge=1, le=2**31
     return {"ok": True}
 
 
-@router.post("/opportunities/{opp_id}/requirements/{req_id}/match")
+@router.post("/bids/{opp_id}/requirements/{req_id}/match")
 def change(opp_id: str, req_id: str, body: ChangeIn, request: Request, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)
     try:

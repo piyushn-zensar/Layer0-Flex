@@ -1,7 +1,7 @@
 """J-13 (C-16): the links of the matrix to a unit's answer history and to the bid's activity log.
 
 The Compliance matrix screen opens GET /api/assignments/{assignment_id}/history with the row's assignment_id and links to
-GET /api/opportunities/{id}/activity?req_id=...; the Activity page reads the same endpoint with entity / req_id / bu / person.
+GET /api/bids/{id}/activity?req_id=...; the Activity page reads the same endpoint with entity / req_id / bu / person.
 
 Run:  .venv\\Scripts\\python -m pytest -q tests/test_j13_history_links.py
 Uses a temporary store, so it never touches your local database (no model call: frozen answers only).
@@ -26,7 +26,7 @@ def _seeded():
 
 def test_matrix_rows_link_to_their_history_and_activity():
     client, opp = _seeded()
-    rows = client.get(f"/api/opportunities/{opp}/compliance-matrix").json()["rows"]
+    rows = client.get(f"/api/bids/{opp}/compliance-matrix").json()["rows"]
     held = [r for r in rows if r["assignment_id"] is not None]
     assert held and all(r["unit"] for r in held)
     assert all(r["unit"] is None for r in rows if r["assignment_id"] is None)  # no unit, no history to open
@@ -40,7 +40,7 @@ def test_matrix_rows_link_to_their_history_and_activity():
     assert all({"id", "at", "actor", "action", "note", "before", "after"} <= set(e) for e in events)
 
     # the matrix's "All activity for this requirement" link: the same events are in the bid's log, under the requirement
-    log = client.get(f"/api/opportunities/{opp}/activity", params={"req_id": answered["req_id"]}).json()
+    log = client.get(f"/api/bids/{opp}/activity", params={"req_id": answered["req_id"]}).json()
     in_log = {e["id"] for e in log["events"]}
     assert {e["id"] for e in events} <= in_log
     assert all(e["entity_id"] == answered["req_id"] for e in log["events"])
@@ -51,7 +51,7 @@ def test_matrix_rows_link_to_their_history_and_activity():
 
 def test_activity_filters_and_paging_for_the_activity_page():
     client, opp = _seeded()
-    url = f"/api/opportunities/{opp}/activity"
+    url = f"/api/bids/{opp}/activity"
     page = client.get(url, params={"limit": 5}).json()
     assert len(page["events"]) == 5 and page["total"] > 5 and page["next_before"] == page["events"][-1]["id"]
     ids = [e["id"] for e in page["events"]]
@@ -67,4 +67,4 @@ def test_activity_filters_and_paging_for_the_activity_page():
     assert by_person["total"] > 0 and all(e["actor"] == opts["people"][0] for e in by_person["events"])
     nothing = client.get(url, params={"req_id": "REQ-9999-0001"}).json()
     assert nothing["events"] == [] and nothing["total"] == 0 and nothing["next_before"] is None
-    assert client.get("/api/opportunities/OPP-9999/activity").status_code == 404
+    assert client.get("/api/bids/OPP-9999/activity").status_code == 404

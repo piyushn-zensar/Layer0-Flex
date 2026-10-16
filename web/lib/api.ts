@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 export const LOGIN = "/login";
+export const SIGNUP = "/signup";
 /** sessionStorage key for the demo password typed on the sign-in page, so the walkthrough can switch roles. */
 const DEMO_PASSWORD_KEY = "layer0.demo-password";
 
@@ -12,7 +13,7 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
   const headers = new Headers(init.headers);
   if (init.body && !(init.body instanceof FormData)) headers.set("Content-Type", "application/json");
   const res = await fetch(path, { ...init, headers, cache: "no-store", credentials: "same-origin" });
-  if (res.status === 401 && !path.startsWith("/api/auth/login") && typeof location !== "undefined" && ![LOGIN, "/signup"].includes(location.pathname)) {
+  if (res.status === 401 && !path.startsWith("/api/auth/") && typeof location !== "undefined" && ![LOGIN, SIGNUP].includes(location.pathname)) {
     location.assign(`${LOGIN}?next=${encodeURIComponent(location.pathname + location.search)}`);
   }
   if (!res.ok) throw new Error(await errorText(res));
@@ -30,9 +31,12 @@ export async function signIn(username: string, password: string): Promise<Me> {
   return user;
 }
 
-/** POST /api/auth/signup; the API creates the account and sets the cookie, so the person is signed in. bu only for unit roles. */
-export async function signUp(body: { username: string; name: string; password: string; role: string; bu: string | null }): Promise<Me> {
-  return (await post<{ user: Me }>("/api/auth/signup", body)).user;
+/** POST /api/auth/signup (P-31): creates the account with the role the person chose and signs it in (the API sets
+ * the cookie). The administrator cannot be chosen. */
+export interface SignUp { username: string; name: string; password: string; role: string; bu: string | null }
+export async function signUp(body: SignUp): Promise<Me> {
+  const { user } = await post<{ user: Me }>("/api/auth/signup", body);
+  return user;
 }
 
 /** Sign in as another demo account with the password typed on the sign-in page (asks again if it is not known). */

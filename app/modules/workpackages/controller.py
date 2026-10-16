@@ -67,32 +67,32 @@ def _call(fn, *args):
         raise HTTPException(409, str(exc))
 
 
-@router.post("/opportunities/{opp_id}/dispatch")
+@router.post("/bids/{opp_id}/dispatch")
 def dispatch(opp_id: str, request: Request, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)  # sending for assessment is the bid manager's (technical-architecture 16.6)
     created = _call(service.dispatch, db, opp_id, actor(request))
     return {"created": created, "needs_owner": len(service.needs_owner(db, opp_id))}
 
 
-@router.get("/opportunities/{opp_id}/assessment")
+@router.get("/bids/{opp_id}/assessment")
 def assessment(opp_id: str, db: Session = Depends(get_db)):
     """The Assessment step (technical-architecture 16.5): bid summary, open questions, participation, routing, progress."""
     return _call(service.assessment, db, opp_id)
 
 
-@router.get("/opportunities/{opp_id}/needs-owner")
+@router.get("/bids/{opp_id}/needs-owner")
 def needs_owner(opp_id: str, db: Session = Depends(get_db)):
     """Product requirements no participating unit holds: not dispatched until a unit or a capability gap (C-08)."""
     return _call(service.needs_owner, db, opp_id)
 
 
-@router.post("/opportunities/{opp_id}/requirements/{req_id}/capability-gap")
+@router.post("/bids/{opp_id}/requirements/{req_id}/capability-gap")
 def capability_gap(opp_id: str, req_id: str, body: GapIn, request: Request, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)  # owned by the bid manager (technical-architecture 16.5)
     return row(_call(service.record_gap, db, opp_id, req_id, body.reason, actor(request)))
 
 
-@router.get("/opportunities/{opp_id}/handoff/{bu}")
+@router.get("/bids/{opp_id}/handoff/{bu}")
 def handoff(opp_id: str, bu: str, db: Session = Depends(get_db)):
     """The unit's hand-off payload (A-09, M8) as a JSON download."""
     payload = _call(service.handoff, db, opp_id, bu)
@@ -100,33 +100,35 @@ def handoff(opp_id: str, bu: str, db: Session = Depends(get_db)):
 
 
 @router.get("/inbox/{bu}")
-def inbox(bu: str, db: Session = Depends(get_db)):
+def inbox(bu: str, request: Request, db: Session = Depends(get_db)):
     if bu != BID_DESK and catalog.unit(bu) is None:
         raise HTTPException(404, f"Unit {bu} not found.")
 
     questions = Counter(c.req_id for o in {a.opportunity_id for a in service.inbox(db, bu)} for c in service.open_questions(db, o))
+    me = user(request)
 
     def item(a):
         req = requirements.get(db, a.req_id)  # None if the requirement was deleted after dispatch
-        return row(a) | {"requirement": row(req, "source") if req else None, "open_questions": questions[a.req_id]}
+        return row(a) | {"requirement": row(req, "source") if req else None, "open_questions": questions[a.req_id],
+                         "may": service.actions(db, a, me)}  # what the signed-in user may do with this row (C-25)
     return {"bu": bu, "unit": catalog.unit(bu), "compliance": OFFERED, "items": [item(a) for a in service.inbox(db, bu)]}
 
 
 @router.post("/assignments/{assignment_id}/respond")
 def respond(body: RespondIn, request: Request, assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
-    require(request, *CORRECTORS)  # no administrator; the service checks the unit's own people (bid desk: bid manager)
-    _call(service.respond, db, assignment_id, body.compliance, body.product_ref, body.response, actor(request),
+    require(request, *CORRECTORS)  # no administrator; the service checks the workflow's role in the item's unit
+    _call(service.respond, db, assignment_id, body.compliance, body.product_ref, body.response, user(request),
           body.reason, body.conditions, body.workaround, body.next_steps)
     return {"ok": True}
 
 
-@router.get("/opportunities/{opp_id}/comments")
+@router.get("/bids/{opp_id}/comments")
 def comments(opp_id: str, req_id: str | None = None, status: Literal["open", "closed"] | None = None, db: Session = Depends(get_db)):
     """The bid's questions and comments (C-17), oldest first; filter by requirement and status."""
     return [row(c) for c in _call(service.comments, db, opp_id, req_id, status)]
 
 
-@router.post("/opportunities/{opp_id}/comments")
+@router.post("/bids/{opp_id}/comments")
 def add_comment(opp_id: str, body: CommentIn, request: Request, db: Session = Depends(get_db)):
     require(request, *CORRECTORS)  # the administrator reads only
     try:
@@ -151,6 +153,6 @@ def history(assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
 
 @router.post("/assignments/{assignment_id}/validate")
 def validate(body: ValidateIn, request: Request, assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
-    require(request, BID_MANAGER, "product_manager", "design_engineer")  # the service checks the unit's configured validator (A-17)
-    _call(service.validate, db, assignment_id, body.ok, body.note, actor(request))
+    require(request, *CORRECTORS)  # the service checks the workflow: the unit manager validates, the bid manager returns
+    _call(service.validate, db, assignment_id, body.ok, body.note, user(request))
     return {"ok": True}

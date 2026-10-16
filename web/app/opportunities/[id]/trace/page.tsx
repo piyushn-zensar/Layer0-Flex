@@ -5,7 +5,7 @@
 // responses show only once the bid has been sent for assessment (J-12 / C-15).  Owner: Janvia.
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { errorMessage, post, useApi } from "@/lib/api";
+import { errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
 import { complianceLabel, docTypeLabel, sourceLabel } from "@/lib/types";
 import type { Trace } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
@@ -21,8 +21,9 @@ type TraceView = Trace & { sent_for_assessment?: boolean };
 export default function TracePage() {
   const { id } = useParams<{ id: string }>();
   const toast = useToast();
-  const { data, error, reload } = useApi<TraceView>(`/api/opportunities/${id}/trace`);
-  const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/opportunities/${id}/knowledge`); // A-11
+  const { data, error, reload } = useApi<TraceView>(`/api/bids/${id}/trace`);
+  const bm = isBidManager(useMe()); // P-31: match changes are the bid manager's; one lookup for every row
+  const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/bids/${id}/knowledge`); // A-11
   const [selected, setSelected] = useState<string>();
   const [pageNo, setPageNo] = useState(1);
   const [docId, setDocId] = useState<string>(); // P-11: the document shown in pane 1 (default the main RFP)
@@ -35,7 +36,7 @@ export default function TracePage() {
   // Runs the matching agent over the requirements that nobody has decided yet (accepted, manual and rejected stay).
   const matchProducts = () => {
     setMatching(true);
-    post<{ matched: number; kept: number }>(`/api/opportunities/${id}/match`)
+    post<{ matched: number; kept: number }>(`/api/bids/${id}/match`)
       .then((r) => { toast.success(`Matching done: ${r.matched} requirement(s) matched, ${r.kept} kept as decided.`); return reload(); },
         (e) => toast.error(errorMessage(e)))
       .finally(() => setMatching(false));
@@ -231,7 +232,7 @@ export default function TracePage() {
                         <ul>{bom.map((b) => <li key={b.item}>{b.item} — {b.qty}</li>)}</ul></details>}
                     </>) : <span className="muted" data-tour={sel(req.req_id, "trace-sel-unit")}>{m?.status === "rejected" ? "rejected: choose a unit with Change" // QA-11, once the API sends rejected matches
                       : m ? "Bid manager (not a product item)" : "not matched yet"}</span>}
-                    <MatchActions oppId={id} reqId={req.req_id} match={m} dispatched={assignments.length > 0} onDone={reload} tour={req.req_id === selected} />
+                    <MatchActions oppId={id} reqId={req.req_id} match={m} dispatched={assignments.length > 0} onDone={reload} tour={req.req_id === selected} canChange={bm} />
                   </td>
                   <td data-tour={sel(req.req_id, "trace-sel-response")}>
                     {!assessed ? <span className="muted">Responses appear once the bid is sent for assessment</span> : <>

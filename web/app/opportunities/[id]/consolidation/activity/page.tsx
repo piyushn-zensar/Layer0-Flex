@@ -1,6 +1,6 @@
 "use client";
 // Activity: the bid's whole audit log, newest first, read-only, filterable by type, requirement, unit and person (J-13 / C-16).
-// Rows come from GET /api/opportunities/{id}/activity (P-27); the filters are query parameters, so a link from the compliance matrix
+// Rows come from GET /api/bids/{id}/activity (P-27); the filters are query parameters, so a link from the compliance matrix
 // (?req_id=…) opens it already filtered. The first 200 events load, "Show older events" pages back with `before`.  Owner: Janvia.
 import Link from "next/link";
 import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -37,7 +37,7 @@ export default function ActivityPage() {
   useEffect(() => {
     let live = true;
     setOlder([]); setMoreError(undefined);
-    api<Activity>(`/api/opportunities/${id}/activity?${query ? `${query}&` : ""}limit=${PAGE}`).then((d) => {
+    api<Activity>(`/api/bids/${id}/activity?${query ? `${query}&` : ""}limit=${PAGE}`).then((d) => {
       if (!live) return;
       setLoaded({ query, data: d }); setCursor(d.next_before); setOptions((o) => o ?? d.filters);
     }, (e) => { if (live) setLoaded({ query, error: errorMessage(e) }); });
@@ -54,7 +54,7 @@ export default function ActivityPage() {
   const showOlder = () => {
     if (cursor == null) return;
     setMoreBusy(true); setMoreError(undefined);
-    api<Activity>(`/api/opportunities/${id}/activity?${query ? `${query}&` : ""}limit=${PAGE}&before=${cursor}`)
+    api<Activity>(`/api/bids/${id}/activity?${query ? `${query}&` : ""}limit=${PAGE}&before=${cursor}`)
       .then((d) => { setOlder((o) => [...o, ...d.events]); setCursor(d.next_before); }, (e) => setMoreError(errorMessage(e)))
       .finally(() => setMoreBusy(false));
   };

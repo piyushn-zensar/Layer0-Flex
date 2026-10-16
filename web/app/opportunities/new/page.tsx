@@ -23,7 +23,7 @@ export default function NewOpportunityPage() {
     if (!title) { setMessage("A title is required."); return; }
     setBusy(true); setMessage(undefined);
     try {
-      const opp = await post<Opportunity>("/api/opportunities", { ...Object.fromEntries(form), title });
+      const opp = await post<Opportunity>("/api/bids", { ...Object.fromEntries(form), title });
       router.push(`/opportunities/${opp.id}`);
     } catch (err) { setMessage(errorMessage(err)); setBusy(false); }
   }

@@ -13,8 +13,8 @@ export default function DocumentsPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const toast = useToast();
-  const { data, error, reload } = useApi<{ opportunity: Opportunity; documents: Received[] }>(`/api/opportunities/${id}`);
-  const { data: snapshots } = useApi<Snapshot[]>(`/api/opportunities/${id}/extraction`);
+  const { data, error, reload } = useApi<{ opportunity: Opportunity; documents: Received[] }>(`/api/bids/${id}`);
+  const { data: snapshots } = useApi<Snapshot[]>(`/api/bids/${id}/extraction`);
   const bm = isBidManager(useMe()); // uploading and reading are the bid manager's (section 16.6)
   const readBefore = (snapshots?.length ?? 0) > 0; // a snapshot exists: reading again needs a reason (E2, E3...)
   const [busy, setBusy] = useState("");
@@ -24,7 +24,7 @@ export default function DocumentsPage() {
   const [searching, setSearching] = useState(false);
   const search = (form: FormData) => {
     setSearching(true);
-    return api<{ mode: string; passages: Passage[] }>(`/api/opportunities/${id}/rfp-search?q=${encodeURIComponent(String(form.get("q") ?? ""))}`)
+    return api<{ mode: string; passages: Passage[] }>(`/api/bids/${id}/rfp-search?q=${encodeURIComponent(String(form.get("q") ?? ""))}`)
       .then(setFound, fail).finally(() => setSearching(false));
   };
   const fail = (e: unknown) => setMessage({ text: errorMessage(e) });
@@ -37,7 +37,7 @@ export default function DocumentsPage() {
     const file = new FormData(form); // before the inputs are disabled below
     setBusy("Uploading and reading the RFP… (about a minute for a 100-page RFP)"); setMessage(undefined);
     try {
-      const r = await post<{ existing_bid?: string; message?: string; earlier_instance?: { bid: string; same_instance: boolean } | null }>(`/api/opportunities/${id}/documents`, file);
+      const r = await post<{ existing_bid?: string; message?: string; earlier_instance?: { bid: string; same_instance: boolean } | null }>(`/api/bids/${id}/documents`, file);
       form.reset();
       if (r.existing_bid) { toast.info(r.message ?? `Already read in bid ${r.existing_bid}.`); router.push(`/opportunities/${r.existing_bid}/trace`); return; } // C-27: read once
       await reload(); toast.success("Document received and read.");
@@ -48,7 +48,7 @@ export default function DocumentsPage() {
   async function extract(reason?: string) {
     setBusy("Reader agent running… (about a minute for a 100-page RFP)"); setMessage(undefined);
     try {
-      const r = await post<{ proposed: number; problems: string[]; snapshot?: number; exceptions?: number; frozen?: number | null }>(`/api/opportunities/${id}/requirements/extract`, reason ? { reason } : {});
+      const r = await post<{ proposed: number; problems: string[]; snapshot?: number; exceptions?: number; frozen?: number | null }>(`/api/bids/${id}/requirements/extract`, reason ? { reason } : {});
       const saved = (r.snapshot ? ` Saved as extraction snapshot ${snapshotName(r.snapshot)}${r.exceptions !== undefined ? `; ${r.exceptions} exception${r.exceptions === 1 ? "" : "s"}` : ""}.` : "")
         + (r.frozen ? ` Requirements frozen automatically as baseline ${r.frozen}.` : ""); // C-27: no approval step
       if (r.problems.length) setMessage({ text: `${r.proposed} line items proposed.${saved} Some pages were not read:`, problems: r.problems });

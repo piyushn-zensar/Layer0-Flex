@@ -64,11 +64,12 @@ def main(seed_file: str = "demo_syracuse.json", real: bool = False) -> None:
 
         for req_id, items in workpackages.by_requirement(db, opp.id).items():
             r = responses.get(req_id)
-            for a in items if r else []:
-                workpackages.respond(db, a.id, r["compliance"], None, r["response"], a.owner, r.get("reason", ""),
+            for a in items if r else []:  # act as the people the workflow names (A-17, C-25): no bid manager stand-in
+                who = workpackages.people(db, a)
+                workpackages.respond(db, a.id, r["compliance"], None, r["response"], who["answer"][0], r.get("reason", ""),
                                      r.get("conditions", ""), r.get("workaround", ""), r.get("next_steps", ""))
                 if r["validated"]:
-                    workpackages.validate(db, a.id, True, "", workpackages.validator(a.bu))  # the unit's validator (A-17)
+                    workpackages.validate(db, a.id, True, "", who["validate"][0])
         print(f"done: open http://localhost:3000/opportunities/{opp.id}/trace (web) - API on :8000")
 
 

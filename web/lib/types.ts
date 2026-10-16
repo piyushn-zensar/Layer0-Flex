@@ -14,6 +14,10 @@ export interface Person { name: string; bu: string | null } // /api/people: the 
 // Visible labels for stored values (technical-architecture §16.2). The API keeps the stored values; screens show these.
 export const DOC_TYPES: Record<string, string> = { main: "Main RFP", addendum: "Addendum", qa: "Clarification / Q&A", change: "Change request", other: "Other" };
 export const docTypeLabel = (role: string) => DOC_TYPES[role] ?? role;
+// Roles (C-25, P-30): stored values stay, the unit roles read Unit manager and Unit designer / engineer.
+export const ROLE_LABELS: Record<string, string> = { bid_manager: "Bid manager", product_manager: "Unit manager",
+  design_engineer: "Unit designer / engineer", admin: "Administrator" };
+export const roleLabel = (role: string) => ROLE_LABELS[role] ?? role;
 export const COMPLIANCE_LABELS: Record<string, string> = { met: "Fully compliant", partial: "Partially compliant", not_met: "Non-compliant" };
 export const complianceLabel = (c: string | null | undefined) => (c ? COMPLIANCE_LABELS[c] ?? c.replace(/_/g, " ") : "");
 export const sourceLabel = (provenance: string) => (provenance === "EXTRACTED" ? "Source verified" : "Source not verified");
@@ -105,7 +109,7 @@ export interface ChangeSet {
   items: ChangeItem[];
 }
 export interface Changes { baseline: { number: number; count: number } | null; drastic_threshold: number; sets: ChangeSet[] }
-// GET /api/opportunities/{id}/activity (P-27): the bid's audit log, newest first; query entity, req_id, bu, person,
+// GET /api/bids/{id}/activity (P-27): the bid's audit log, newest first; query entity, req_id, bu, person,
 // before (= next_before of the previous page), limit. Read-only.
 export interface ActivityEvent { id: number; at: string; actor: string; action: string; entity: string; entity_id: string; data: Record<string, unknown> }
 export interface Activity { events: ActivityEvent[]; total: number; next_before: number | null; filters: { entities: string[]; people: string[]; units: string[] } }
@@ -144,7 +148,7 @@ export const KB_EXAMPLE_TYPES: Record<KbExampleType, string> = {
 };
 // GET /api/auth/signup-options (P-31): what the sign-up form offers; no sign-in needed. The administrator role is never listed.
 export interface SignupOptions { roles: Record<string, string>; unit_roles: string[]; units: Record<string, string> }
-// GET /api/opportunities/{id}/schedule (P-33, C-24): unit completion dates, planned submission and the two bid-manager approvals. Dates are ISO "YYYY-MM-DD".
+// GET /api/bids/{id}/schedule (P-33, C-24): unit completion dates, planned submission and the two bid-manager approvals. Dates are ISO "YYYY-MM-DD".
 export interface ScheduleUnit { bu: string; estimated_completion: string | null; note: string; entered_by: string | null }
 export interface Approval { id: number; kind: "schedule" | "compliance"; snapshot: unknown; note: string; approved_by: string; approved_at: string; current: boolean }
 export interface ComplianceCounts { met: number; partial: number; not_met: number; open: number }

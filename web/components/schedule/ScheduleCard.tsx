@@ -19,7 +19,7 @@ function ApprovalLine({ a }: { a: Approval | null }) {
 export default function ScheduleCard({ oppId }: { oppId: string }) {
   const toast = useToast();
   const bm = isBidManager(useMe());
-  const { data, error, reload } = useApi<Schedule>(`/api/opportunities/${oppId}/schedule`);
+  const { data, error, reload } = useApi<Schedule>(`/api/bids/${oppId}/schedule`);
   const [ask, confirmDialog] = useConfirm();
   const [busy, setBusy] = useState<string>(); // one action at a time
   const [formError, setFormError] = useState<string>();
@@ -34,7 +34,7 @@ export default function ScheduleCard({ oppId }: { oppId: string }) {
   const save = (form: FormData) => {
     const days = Number(form.get("consolidation_days"));
     if (!Number.isInteger(days) || days < 0) { setFormError("Consolidation days must be a whole number, 0 or more."); return; }
-    run("save", () => api(`/api/opportunities/${oppId}/schedule`, { method: "PUT", body: JSON.stringify({
+    run("save", () => api(`/api/bids/${oppId}/schedule`, { method: "PUT", body: JSON.stringify({
       due_date: String(form.get("due_date") ?? "") || null, consolidation_days: days }) }), "Schedule settings saved.");
   };
   const approve = async (kind: "schedule" | "compliance") => {
@@ -44,7 +44,7 @@ export default function ScheduleCard({ oppId }: { oppId: string }) {
       message: schedule ? `You approve the overall schedule: planned submission ${day(data.planned_submission) || "as shown"}. Each unit's date stays with its manager.`
         : "You approve the high-level compliance position shown here. Each unit validates its own answers.",
       confirmLabel: again ? "Approve again" : "Approve" }))) return;
-    run(kind, () => post(`/api/opportunities/${oppId}/approvals`, { kind, note: "" }), schedule ? "Schedule approved." : "Compliance position approved.");
+    run(kind, () => post(`/api/bids/${oppId}/approvals`, { kind, note: "" }), schedule ? "Schedule approved." : "Compliance position approved.");
   };
 
   const complianceUnits = Object.keys(data.compliance).sort();

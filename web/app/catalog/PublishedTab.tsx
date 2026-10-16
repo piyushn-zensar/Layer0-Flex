@@ -41,7 +41,7 @@ function LastRun({ run, version, reload }: { run?: PublishedRun; version: number
   const me = useMe();
   const [busy, setBusy] = useState(false);
   const [fail, setFail] = useState<string>();
-  const allowed = me?.role === "bid_manager" || me?.role === "admin";
+  const allowed = me?.role === "bid_manager"; // the administrator reads only (P-31)
   async function refresh() {
     setBusy(true); setFail(undefined);
     try {

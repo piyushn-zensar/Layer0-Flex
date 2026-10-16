@@ -44,14 +44,14 @@ def seeded(client) -> str:
 @pytest.fixture(scope="module")
 def draft(client) -> str:
     """An opportunity in review (not frozen) with the Syracuse RFP read from its frozen layout."""
-    opp = client.post("/api/opportunities", json={"title": "qa pass"}).json()["id"]
-    r = client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", RFP.read_bytes())})
+    opp = client.post("/api/bids", json={"title": "qa pass"}).json()["id"]
+    r = client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", RFP.read_bytes())})
     assert r.status_code == 200 and r.json()["existing"] is False
     return opp
 
 
 def _add(client, opp: str, n: int) -> list[str]:
-    return [client.post(f"/api/opportunities/{opp}/requirements", json={"quote": QUOTE, "text": f"item {i}"}).json()["req_id"]
+    return [client.post(f"/api/bids/{opp}/requirements", json={"quote": QUOTE, "text": f"item {i}"}).json()["req_id"]
             for i in range(n)]
 
 
@@ -64,7 +64,7 @@ def test_parallel_reviews_do_not_fail_with_database_locked(client, draft):
     with ThreadPoolExecutor(32) as pool:
         codes = list(pool.map(lambda r: client.post(f"/api/requirements/{r}/review", json={"action": "approve"}).status_code, ids))
     assert codes.count(200) == len(ids), {c: codes.count(c) for c in set(codes)}
-    rows = {r["req_id"]: r for r in client.get(f"/api/opportunities/{draft}/requirements").json()["requirements"]}
+    rows = {r["req_id"]: r for r in client.get(f"/api/bids/{draft}/requirements").json()["requirements"]}
     assert all(rows[r]["status"] == "approved" for r in ids)
 
 
@@ -92,10 +92,10 @@ def test_approving_a_rejected_item_or_group_restores_it(client, draft):
                                            "two items", "technical", "grouping agent (test)").req_id
         db.commit()
     client.post(f"/api/requirements/{group}/review", json={"action": "reject", "reason": "not a requirement"})
-    rows = {r["req_id"]: r["status"] for r in client.get(f"/api/opportunities/{draft}/requirements").json()["requirements"]}
+    rows = {r["req_id"]: r["status"] for r in client.get(f"/api/bids/{draft}/requirements").json()["requirements"]}
     assert (rows[group], rows[a], rows[b]) == ("rejected", "rejected", "rejected")
     client.post(f"/api/requirements/{group}/review", json={"action": "approve"})
-    rows = {r["req_id"]: r["status"] for r in client.get(f"/api/opportunities/{draft}/requirements").json()["requirements"]}
+    rows = {r["req_id"]: r["status"] for r in client.get(f"/api/bids/{draft}/requirements").json()["requirements"]}
     assert (rows[group], rows[a], rows[b]) == ("approved", "approved", "approved")
     assert [e["action"] for e in client.get(f"/api/requirements/{group}/history").json()["events"]] == \
         ["grouped", "reject", "approve"]
@@ -103,26 +103,26 @@ def test_approving_a_rejected_item_or_group_restores_it(client, draft):
 
 def test_go_after_no_go_resumes_where_the_bid_stopped(client, seeded):
     """QA-16: a dispatched bid stopped with no_go and resumed with go is dispatched again, not back at go."""
-    assert client.get(f"/api/opportunities/{seeded}").json()["opportunity"]["status"] == "dispatched"
-    client.post(f"/api/opportunities/{seeded}/go-no-go", json={"outcome": "no_go", "rationale": "stop"})
-    assert client.get(f"/api/opportunities/{seeded}").json()["opportunity"]["status"] == "no_go"
-    client.post(f"/api/opportunities/{seeded}/go-no-go", json={"outcome": "go", "rationale": "resume"})
-    assert client.get(f"/api/opportunities/{seeded}").json()["opportunity"]["status"] == "dispatched"
+    assert client.get(f"/api/bids/{seeded}").json()["opportunity"]["status"] == "dispatched"
+    client.post(f"/api/bids/{seeded}/go-no-go", json={"outcome": "no_go", "rationale": "stop"})
+    assert client.get(f"/api/bids/{seeded}").json()["opportunity"]["status"] == "no_go"
+    client.post(f"/api/bids/{seeded}/go-no-go", json={"outcome": "go", "rationale": "resume"})
+    assert client.get(f"/api/bids/{seeded}").json()["opportunity"]["status"] == "dispatched"
 
 
 def test_unknown_opportunity_and_unit_are_404(client):
     """QA-08: pages for an unknown opportunity or unit must not render as if they existed."""
-    for url in ("/api/opportunities/OPP-9999/requirements", "/api/opportunities/OPP-9999/decisions", "/api/inbox/NOPE"):
+    for url in ("/api/bids/OPP-9999/requirements", "/api/bids/OPP-9999/decisions", "/api/inbox/NOPE"):
         assert client.get(url).status_code == 404, url
     assert client.get("/api/inbox/BID").status_code == 200
 
 
 def test_reupload_of_the_same_file_says_so(client, draft):
     """QA-09: attaching the same file again adds nothing; the page gets a signal instead of a silent no-op."""
-    before = client.get(f"/api/opportunities/{draft}").json()["documents"]
-    r = client.post(f"/api/opportunities/{draft}/documents", files={"file": ("rfp.pdf", RFP.read_bytes())})
+    before = client.get(f"/api/bids/{draft}").json()["documents"]
+    r = client.post(f"/api/bids/{draft}/documents", files={"file": ("rfp.pdf", RFP.read_bytes())})
     assert r.status_code == 200 and r.json()["existing"] is True and r.json()["id"] == before[0]["id"]
-    assert len(client.get(f"/api/opportunities/{draft}").json()["documents"]) == len(before)
+    assert len(client.get(f"/api/bids/{draft}").json()["documents"]) == len(before)
 
 
 def test_capacity_criterion_without_unit_work():
@@ -136,19 +136,20 @@ def test_offline_wording_for_missing_frozen_answers(client, seeded, tmp_path):
     # a change document with no frozen answer is refused, and no change set is created
     (tmp_path / "unfrozen.txt").write_text("ADDENDUM TWO\nReplace the copper bus with aluminium.", "utf-8")
     other = convert(tmp_path / "unfrozen.txt")
-    r = client.post(f"/api/opportunities/{seeded}/changes",
+    r = client.post(f"/api/bids/{seeded}/changes",
                     files={"file": (other.name, other.read_bytes(), "application/pdf")})
     assert r.status_code == 409 and r.json()["detail"] == str(changes._unavailable(other.name))
     assert "offline demo" in r.json()["detail"] and "LLM_PROVIDER" not in r.json()["detail"]
-    assert client.get(f"/api/opportunities/{seeded}/changes").json()["sets"] == []
+    assert client.get(f"/api/bids/{seeded}/changes").json()["sets"] == []
     # validating one more answer changes the chapter's prompt: the outline keeps the raw answers with a plain note
-    outline = client.get(f"/api/opportunities/{seeded}/response-outline").json()
+    outline = client.get(f"/api/bids/{seeded}/response-outline").json()
     assert outline["summary"]["drafted"]
     submitted = [a for a in client.get("/api/inbox/CROWN").json()["items"]
                  if a["status"] == "submitted" and a["opportunity_id"] == seeded]
     assert submitted
-    assert client.post(f"/api/assignments/{submitted[0]['id']}/validate", json={"ok": True}, headers=auth("crown.pm")).status_code == 200  # A-17
-    outline = client.get(f"/api/opportunities/{seeded}/response-outline").json()
+    assert client.post(f"/api/assignments/{submitted[0]['id']}/validate", json={"ok": True},
+                       headers=auth("crown.pm")).status_code == 200  # A-17: the unit manager validates
+    outline = client.get(f"/api/bids/{seeded}/response-outline").json()
     assert outline["summary"]["drafted"] is False
     assert outline["summary"]["note"].startswith("Draft not refreshed: the model service is not connected")
 

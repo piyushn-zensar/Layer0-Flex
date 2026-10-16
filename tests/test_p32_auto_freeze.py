@@ -19,13 +19,13 @@ def test_auto_freeze_and_known_instance(monkeypatch):
 
     monkeypatch.setattr(requirements, "FREEZE_ON_READ", True)  # the product default (conftest switches it off)
     client = signed_in()
-    first = client.post("/api/opportunities", json={"title": "Syracuse switchgear"}).json()["id"]
-    up = client.post(f"/api/opportunities/{first}/documents/from-sample", json={"name": "syracuse_rfp"}).json()
+    first = client.post("/api/bids", json={"title": "Syracuse switchgear"}).json()["id"]
+    up = client.post(f"/api/bids/{first}/documents/from-sample", json={"name": "syracuse_rfp"}).json()
     assert up["status"] in ("uploaded", "ingested")  # other tests may have read this sample: read-once is checked below
-    r = client.post(f"/api/opportunities/{first}/requirements/extract", json={})
+    r = client.post(f"/api/bids/{first}/requirements/extract", json={})
     assert r.status_code == 200 and r.json()["frozen"] == 1, r.text   # frozen at once, nobody approved it
-    assert client.get(f"/api/opportunities/{first}").json()["opportunity"]["status"] == "frozen"
-    assert client.post(f"/api/opportunities/{first}/requirements/extract", json={"reason": "again"}).status_code == 409
+    assert client.get(f"/api/bids/{first}").json()["opportunity"]["status"] == "frozen"
+    assert client.post(f"/api/bids/{first}/requirements/extract", json={"reason": "again"}).status_code == 409
 
     with SessionLocal() as db:
         doc = opportunities.main_document(db, first)
@@ -40,9 +40,9 @@ def test_auto_freeze_and_known_instance(monkeypatch):
         assert rows() == before and requirements.baseline(db, first).number == 1   # nothing rewrote the baseline
 
     monkeypatch.setattr(opportunities, "READ_ONCE", True)  # the product default: the newest bid that read it wins
-    second = client.post("/api/opportunities", json={"title": "Same RFP again"}).json()["id"]
-    again = client.post(f"/api/opportunities/{second}/documents/from-sample", json={"name": "syracuse_rfp"}).json()
+    second = client.post("/api/bids", json={"title": "Same RFP again"}).json()["id"]
+    again = client.post(f"/api/bids/{second}/documents/from-sample", json={"name": "syracuse_rfp"}).json()
     assert again["existing_bid"] == first and "not read again" in again["message"]
-    assert client.get(f"/api/opportunities/{second}").json()["documents"] == []   # nothing attached, nothing read
-    assert client.post(f"/api/opportunities/{second}/documents/from-sample", json={"name": "syracuse_rfp"},
+    assert client.get(f"/api/bids/{second}").json()["documents"] == []   # nothing attached, nothing read
+    assert client.post(f"/api/bids/{second}/documents/from-sample", json={"name": "syracuse_rfp"},
                        headers=auth("crown.pm")).status_code == 403

@@ -23,12 +23,12 @@ const HELP = "A first draft for the bid manager to edit, written by the drafting
 
 export default function OutlinePage() {
   const { id } = useParams<{ id: string }>();
-  const { data: o, error } = useApi<Outline>(`/api/opportunities/${id}/response-outline`);
-  const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/opportunities/${id}/knowledge`); // A-11
+  const { data: o, error } = useApi<Outline>(`/api/bids/${id}/response-outline`);
+  const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/bids/${id}/knowledge`); // A-11
   const head = (
     <PageHead level={2} title="Response outline" help={HELP}>
       <Link className="button secondary" href={`/opportunities/${id}/consolidation`} data-tour="outline-back">Back to Compliance matrix</Link>
-      {o && <a className="button" href={`/api/opportunities/${id}/response-outline.md`} data-tour="outline-download">Download outline (Markdown)</a>}
+      {o && <a className="button" href={`/api/bids/${id}/response-outline.md`} data-tour="outline-download">Download outline (Markdown)</a>}
     </PageHead>);
   if (error) return <>{head}<Alert kind="error">{error}</Alert></>;
   if (!o) return <>{head}<p><Busy label="Drafting the outline…" /></p><Skeleton lines={4} /></>;

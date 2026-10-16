@@ -76,7 +76,7 @@ def _guard(fn):
         raise HTTPException(409, str(exc))
 
 
-@router.get("/opportunities/{opp_id}/requirements")
+@router.get("/bids/{opp_id}/requirements")
 def requirements(opp_id: str, db: Session = Depends(get_db)):
     _guard(lambda: opportunities.require(db, opp_id))  # an unknown opportunity is a 404, not an empty list
     b = service.baseline(db, opp_id)
@@ -92,38 +92,38 @@ def _snapshot(s, items: bool = False) -> dict:
     return out | {"items": s.items} if items else out
 
 
-@router.get("/opportunities/{opp_id}/extraction")
+@router.get("/bids/{opp_id}/extraction")
 def snapshots(opp_id: str, db: Session = Depends(get_db)):
     _guard(lambda: opportunities.require(db, opp_id))
     return [_snapshot(s) for s in service.snapshots(db, opp_id)]
 
 
-@router.get("/opportunities/{opp_id}/extraction/{number}")
+@router.get("/bids/{opp_id}/extraction/{number}")
 def snapshot(opp_id: str, number: int, db: Session = Depends(get_db)):
     _guard(lambda: opportunities.require(db, opp_id))
     return _snapshot(_guard(lambda: service.snapshot(db, opp_id, number)), items=True)
 
 
-@router.get("/opportunities/{opp_id}/requirements/exceptions")
+@router.get("/bids/{opp_id}/requirements/exceptions")
 def exceptions(opp_id: str, db: Session = Depends(get_db)):
     _guard(lambda: opportunities.require(db, opp_id))
     return service.exceptions(db, opp_id)
 
 
-@router.post("/opportunities/{opp_id}/requirements/extract")
+@router.post("/bids/{opp_id}/requirements/extract")
 def extract(opp_id: str, request: Request, body: ExtractIn | None = None, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)
     return _guard(lambda: service.extract(db, opp_id, actor(request), body.reason if body else ""))
 
 
-@router.post("/opportunities/{opp_id}/requirements")
+@router.post("/bids/{opp_id}/requirements")
 def add_missed(opp_id: str, body: AddIn, request: Request, db: Session = Depends(get_db)):
     require(request, *CORRECTORS)
     req = _guard(lambda: service.add_missed(db, opp_id, body.quote, body.text, body.category, actor(request), body.page))
     return row(req, "source")
 
 
-@router.post("/opportunities/{opp_id}/requirements/from-lines")
+@router.post("/bids/{opp_id}/requirements/from-lines")
 def add_from_lines(opp_id: str, body: LinesIn, request: Request, db: Session = Depends(get_db)):
     require(request, *CORRECTORS)
     req = _guard(lambda: service.add_from_lines(db, opp_id, body.page, body.line_start, body.line_end, body.text,
@@ -131,7 +131,7 @@ def add_from_lines(opp_id: str, body: LinesIn, request: Request, db: Session = D
     return row(req, "source")
 
 
-@router.post("/opportunities/{opp_id}/requirements/merge")
+@router.post("/bids/{opp_id}/requirements/merge")
 def merge(opp_id: str, body: MergeIn, request: Request, db: Session = Depends(get_db)):
     require(request, *CORRECTORS)
     req = _guard(lambda: service.merge(db, opp_id, body.req_ids, body.text, actor(request), body.reason))
@@ -176,7 +176,7 @@ def split(req_id: str, body: SplitIn, request: Request, db: Session = Depends(ge
     return [row(r, "source") for r in _guard(lambda: service.split(db, req_id, parts, actor(request), body.reason))]
 
 
-@router.post("/opportunities/{opp_id}/baselines")
+@router.post("/bids/{opp_id}/baselines")
 def freeze(opp_id: str, request: Request, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)
     return row(_guard(lambda: service.freeze(db, opp_id, actor(request))))

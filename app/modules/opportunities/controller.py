@@ -26,7 +26,7 @@ def _doc(d) -> dict:
     return {k: v for k, v in row(d).items() if k != "path"}  # never expose the server's file system
 
 
-@router.post("/opportunities")
+@router.post("/bids")
 def create(body: OpportunityIn, request: Request, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)  # section 16.6: the bid manager creates bids and uploads their documents
     try:
@@ -35,7 +35,7 @@ def create(body: OpportunityIn, request: Request, db: Session = Depends(get_db))
         raise HTTPException(422, str(exc))
 
 
-@router.get("/opportunities/{opp_id}")
+@router.get("/bids/{opp_id}")
 def detail(opp_id: str, db: Session = Depends(get_db)):
     opp = service.get(db, opp_id)
     if not opp:
@@ -43,7 +43,7 @@ def detail(opp_id: str, db: Session = Depends(get_db)):
     return {"opportunity": row(opp), "documents": [_doc(d) for d in service.documents(db, opp_id)]}
 
 
-@router.get("/opportunities/{opp_id}/activity")
+@router.get("/bids/{opp_id}/activity")
 def activity(opp_id: str, entity: str | None = None, req_id: str | None = None, bu: str | None = None,
              person: str | None = None, before: int | None = None, limit: int = 200, db: Session = Depends(get_db)):
     """The bid's activity log (C-16): every recorded event, newest first, read-only, open to everyone signed in."""
@@ -80,7 +80,7 @@ def _attach(db: Session, request: Request, background: BackgroundTasks, opp_id: 
     return _doc(doc) | {"existing": doc.id in known, "earlier_instance": seen}
 
 
-@router.post("/opportunities/{opp_id}/documents")
+@router.post("/bids/{opp_id}/documents")
 async def upload(opp_id: str, request: Request, background: BackgroundTasks, role: str = Form("main"),
                  file: UploadFile = File(...), db: Session = Depends(get_db)):
     data = await file.read()
@@ -97,10 +97,11 @@ def samples():
     return {"samples": service.samples()}
 
 
-@router.post("/opportunities/{opp_id}/documents/from-sample")
+@router.post("/bids/{opp_id}/documents/from-sample")
 def upload_sample(opp_id: str, body: SampleIn, request: Request, background: BackgroundTasks,
                   db: Session = Depends(get_db)):
     """Attach a sample RFP as the main document: the same storing, reading, JSON and status transitions as an upload."""
+    require(request, BID_MANAGER)  # P-31: the role check comes first, before anything about the bid or the sample
     if not service.get(db, opp_id):
         raise HTTPException(404, f"Bid {opp_id} not found.")
     try:
@@ -146,7 +147,7 @@ def _approval(db: Session, opp_id: str, a) -> dict | None:
     return None if a is None else row(a) | {"current": a.snapshot == _snapshot(db, opp_id, a.kind)}
 
 
-@router.get("/opportunities/{opp_id}/schedule")
+@router.get("/bids/{opp_id}/schedule")
 def schedule(opp_id: str, db: Session = Depends(get_db)):
     """The consolidated schedule, the compliance position and the bid manager's approvals (C-24)."""
     s = _guard(lambda: service.schedule(db, opp_id, decisions.participating_units(db, opp_id)))
@@ -159,7 +160,7 @@ class DueIn(BaseModel):
     consolidation_days: int = Field(5, ge=0, le=365)
 
 
-@router.put("/opportunities/{opp_id}/schedule")
+@router.put("/bids/{opp_id}/schedule")
 def set_due(opp_id: str, body: DueIn, request: Request, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)
     return row(_guard(lambda: service.set_due(db, opp_id, body.due_date, body.consolidation_days, actor(request))))
@@ -170,7 +171,7 @@ class CompletionIn(BaseModel):
     note: str = Field("", max_length=2000)
 
 
-@router.put("/opportunities/{opp_id}/units/{bu}/completion")
+@router.put("/bids/{opp_id}/units/{bu}/completion")
 def set_completion(opp_id: str, bu: str, body: CompletionIn, request: Request, db: Session = Depends(get_db)):
     """The unit manager of `bu` gives the unit's estimated completion date (C-24, C-25)."""
     u = require(request, UNIT_MANAGER)
@@ -186,7 +187,7 @@ class ApproveIn(BaseModel):
     note: str = Field("", max_length=2000)
 
 
-@router.post("/opportunities/{opp_id}/approvals")
+@router.post("/bids/{opp_id}/approvals")
 def approve(opp_id: str, body: ApproveIn, request: Request, db: Session = Depends(get_db)):
     """The bid manager approves the overall schedule (only once every participating unit has a date) or the
     high-level compliance position (C-24)."""

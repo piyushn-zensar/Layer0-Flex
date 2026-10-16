@@ -26,10 +26,10 @@ type FilterKey = keyof typeof FILTERS;
 
 export default function RequirementsPage() {
   const { id } = useParams<{ id: string }>();
-  const { data, error, reload } = useApi<{ requirements: Requirement[]; baseline: Baseline | null; exceptions: number; coverage?: Coverage | null }>(`/api/opportunities/${id}/requirements`);
-  const { data: snapshots } = useApi<Snapshot[]>(`/api/opportunities/${id}/extraction`);
+  const { data, error, reload } = useApi<{ requirements: Requirement[]; baseline: Baseline | null; exceptions: number; coverage?: Coverage | null }>(`/api/bids/${id}/requirements`);
+  const { data: snapshots } = useApi<Snapshot[]>(`/api/bids/${id}/extraction`);
   const bm = isBidManager(useMe()); // publishing is the bid manager's (section 16.6)
-  const { data: exc, error: excError, reload: reloadExc } = useApi<RequirementException[]>(`/api/opportunities/${id}/requirements/exceptions`);
+  const { data: exc, error: excError, reload: reloadExc } = useApi<RequirementException[]>(`/api/bids/${id}/requirements/exceptions`);
   const [tab, setTab] = useState<"register" | "exceptions">("register");
   const toast = useToast();
   const [ask, confirmDialog] = useConfirm();
@@ -71,9 +71,9 @@ export default function RequirementsPage() {
   const review = (reqId: string, body: object, msg?: string, at?: string) => act(post(`/api/requirements/${reqId}/review`, body), msg, at);
   // After publish every change is a correction: POST /corrections with a required reason; each makes the next baseline (P-23).
   const saved = (res: CorrectionResult) => `Correction saved: baseline ${res.baseline}${res.returned ? `; ${res.returned} answer${res.returned === 1 ? "" : "s"} returned to their units` : ""}.${res.note ? ` ${res.note}` : ""}`;
-  const correct = (body: object, at?: string) => act(post<CorrectionResult>(`/api/opportunities/${id}/corrections`, body), saved, at);
+  const correct = (body: object, at?: string) => act(post<CorrectionResult>(`/api/bids/${id}/corrections`, body), saved, at);
   const merge = (text: string, reason: string) => frozen ? correct({ kind: "merge", reason, req_ids: [...selected], text }, "merge")
-    : act(post(`/api/opportunities/${id}/requirements/merge`, { req_ids: [...selected], text }), `${selected.size} line items merged into one.`, "merge");
+    : act(post(`/api/bids/${id}/requirements/merge`, { req_ids: [...selected], text }), `${selected.size} line items merged into one.`, "merge");
   // QA-10: check the part count here so the message is ours, not the validator's
   const split = (r: Requirement, raw: string, reason: string) => {
     const parts = raw.split("\n").map((q) => ({ quote: q.trim() })).filter((p) => p.quote);
@@ -248,7 +248,7 @@ export default function RequirementsPage() {
             requirements={(data.requirements ?? []).filter((r) => !INACTIVE.has(r.status))} />}
           {!frozen && <>
           <h3 className="lp-heading">Or paste the quote</h3>
-          <form className="form" data-tour="req-paste-form" aria-label="Add a requirement from a pasted quote" action={(f) => act(post(`/api/opportunities/${id}/requirements`, {
+          <form className="form" data-tour="req-paste-form" aria-label="Add a requirement from a pasted quote" action={(f) => act(post(`/api/bids/${id}/requirements`, {
             quote: f.get("quote"), text: f.get("text"), category: f.get("category"), page: Number(f.get("page")) || null }),
             "Requirement added; it is in the register.", "add")}>
             <label className="grow">Quote, copied from the RFP <textarea name="quote" data-tour="req-paste-quote" rows={2} required /></label>
@@ -384,7 +384,7 @@ function Snapshots({ bidId, snapshots }: { bidId: string; snapshots: Snapshot[] 
 }
 
 function SnapshotItems({ bidId, number }: { bidId: string; number: number }) {
-  const { data, error } = useApi<SnapshotDetail>(`/api/opportunities/${bidId}/extraction/${number}`);
+  const { data, error } = useApi<SnapshotDetail>(`/api/bids/${bidId}/extraction/${number}`);
   if (error) return <Alert kind="error">{error}</Alert>;
   if (!data) return <Skeleton lines={3} />;
   return (

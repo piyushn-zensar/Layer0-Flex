@@ -7,28 +7,38 @@ only as salted PBKDF2-SHA256 hashes (standard library).
 POST /api/auth/login returns an HS256 token (claims sub, name, role, bu, exp; 8 hours) and sets it in the HttpOnly
 cookie layer0_token; the API also accepts it as "Authorization: Bearer <token>" (scripts, tests). Every other /api
 route depends on `authenticated` (app/main.py): no valid token is a 401. Expired token: sign in again.
+Sign-up (P-31, C-26): POST /api/auth/signup creates an account with the role the person chooses (bid manager, unit
+manager, unit designer / engineer; never administrator, which only the roster seeds) and signs it in; GET
+/api/auth/units lists the units to choose from. Roster usernames cannot be signed up; init() only touches roster
+accounts. Repeated failed sign-ins (per username) and sign-ups (per address) are refused for a while (429). The
+administrator reads only: `authenticated` refuses its writes on every module route (403).
 """
 import hashlib
 import hmac
 import json
 import os
 import time
-from typing import Literal
 
 import jwt
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
-from pydantic import BaseModel, Field
-from sqlalchemy import String, create_engine, select, text
+from pydantic import BaseModel
+from sqlalchemy import String, create_engine, func, select, text
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
 
 from app.core import config, db
 
 COOKIE = "layer0_token"
 TTL = 8 * 3600
+# Stored role values stay; the unit roles are shown as Unit manager and Unit designer / engineer (C-25, P-30; the unit
+# manager is the unit's product manager, decided 15 Oct 2026).
 ROLES = {"bid_manager": "Bid manager", "product_manager": "Unit manager", "design_engineer": "Unit designer / engineer",
          "admin": "Administrator"}
 ACCOUNTS = config.DATA / "accounts.json"   # the roster seeded into the accounts table
 ROUNDS = 600_000                           # PBKDF2-SHA256 iterations (OWASP 2023); about 0.4 s per hash
+SIGNUP_ROLES = ("bid_manager", "product_manager", "design_engineer")  # never admin: seeded by the server (C-26)
+MIN_PASSWORD = 10
+MAX_FAILURES, WINDOW = 5, 300              # failed attempts per key within WINDOW seconds, then 429 until they age out
+_failures: dict[str, list[float]] = {}     # ponytail: in this process only; one API process in the PoC, a shared store when scaled
 
 router = APIRouter(tags=["auth"])
 
@@ -87,6 +97,26 @@ def init() -> None:
             s.add(row)
 
 
+def _limited(key: str) -> None:
+    """429 while `key` has MAX_FAILURES failed attempts within the last WINDOW seconds."""
+    now = time.time()
+    recent = _failures[key] = [t for t in _failures.get(key, []) if now - t < WINDOW]
+    if len(recent) >= MAX_FAILURES:
+        raise HTTPException(429, f"Too many failed attempts. Try again in {int(WINDOW - (now - recent[0])) + 1} seconds.")
+
+
+def _failed(key: str, status: int, detail: str) -> HTTPException:
+    _failures.setdefault(key, []).append(time.time())
+    return HTTPException(status, detail)
+
+
+def _units() -> dict[str, str]:
+    """Active business units, code -> name, for sign-up."""
+    # ponytail: read from the catalog's data file (core does not import modules); switch when P-34 moves units to tables
+    data = json.loads((config.DATA / "knowledge_base" / "business_units.json").read_text(encoding="utf-8"))
+    return {u["code"]: u["name"] for u in data["units"] if u.get("status") == "active"}
+
+
 def accounts() -> dict[str, dict]:
     with Session(engine) as s:
         return {a.username: a.profile() for a in s.scalars(select(Account))}
@@ -113,6 +143,8 @@ def authenticated(request: Request) -> dict:
     claims = decode(token) if token else None
     if not claims:
         raise HTTPException(401, "Please sign in.", headers={"WWW-Authenticate": "Bearer"})
+    if claims["role"] == "admin" and request.method not in ("GET", "HEAD", "OPTIONS"):  # 16.6: the administrator reads only
+        raise HTTPException(403, "The administrator reads only; sign in with a bid or unit role to make changes.")
     request.state.user = claims
     return claims
 
@@ -122,23 +154,8 @@ class LoginIn(BaseModel):
     password: str
 
 
-# ponytail: in-process attempt limit (one API process in the PoC); a shared store when the API runs several workers
-LIMIT, WINDOW = 5, 300          # failed sign-ins per username, or sign-ups per client, within 5 minutes
-_attempts: dict[str, list[float]] = {}
-
-
-def _limited(key: str) -> bool:
-    now = time.time()
-    _attempts[key] = [t for t in _attempts.get(key, []) if now - t < WINDOW]
-    return len(_attempts[key]) >= LIMIT
-
-
-def _note(key: str) -> None:
-    _attempts.setdefault(key, []).append(time.time())
-
-
-def _signed_in(profile: dict, response: Response) -> dict:
-    token = issue(profile)
+def _signed_in(account: Account, response: Response) -> dict:
+    token = issue(account.profile())
     # ponytail: secure=False because the demo runs on http://localhost; set secure=True when served over HTTPS
     response.set_cookie(COOKIE, token, max_age=TTL, httponly=True, samesite="lax", path="/")
     return {"token": token, "user": decode(token)}
@@ -147,69 +164,62 @@ def _signed_in(profile: dict, response: Response) -> dict:
 @router.post("/auth/login")
 def login(body: LoginIn, response: Response):
     username = body.username.strip().lower()
-    if _limited(f"login:{username}"):
-        raise HTTPException(429, "Too many failed sign-ins for this account; wait five minutes and try again.")
+    key = f"login:{username}"
+    _limited(key)
     with Session(engine) as s:
         account = s.get(Account, username)
     if account and not account.password_hash:
         raise HTTPException(503, f"No password is set for {account.username}: set DEMO_PASSWORD in .env and restart "
                                  "the API, or run '.venv\\Scripts\\python -m scripts.set_password <username>'.")
     if not account or not verify_password(body.password, account.password_hash):
-        _note(f"login:{username}")
-        raise HTTPException(401, "Wrong username or password.")
-    _attempts.pop(f"login:{username}", None)
-    return _signed_in(account.profile(), response)
-
-
-SIGNUP_ROLES = ("bid_manager", "product_manager", "design_engineer")   # never admin: it is seeded by the server
+        raise _failed(key, 401, "Wrong username or password.")
+    _failures.pop(key, None)
+    return _signed_in(account, response)
 
 
 class SignupIn(BaseModel):
-    username: str = Field(min_length=3, max_length=40, pattern=r"^[A-Za-z0-9._-]+$")
-    name: str = Field(min_length=2, max_length=80)
-    password: str = Field(min_length=10, max_length=200)
-    role: Literal["bid_manager", "product_manager", "design_engineer"]
-    bu: str | None = Field(None, max_length=32)
+    username: str
+    name: str
+    password: str
+    role: str
+    bu: str | None = None
 
 
-def units() -> dict[str, str]:
-    """Active business units (code -> name), read from the data file: core does not import the catalog module."""
-    data = json.loads((config.DATA / "knowledge_base" / "business_units.json").read_text(encoding="utf-8"))
-    return {u["code"]: u["name"] for u in data["units"] if u["status"] == "active"}
-
-
-@router.get("/auth/signup-options")
-def signup_options():
-    """What the sign-up form offers (C-26): the roles a person may choose and the units for unit roles."""
-    return {"roles": {r: ROLES[r] for r in SIGNUP_ROLES}, "unit_roles": ["product_manager", "design_engineer"],
-            "units": units()}
+@router.get("/auth/units")
+def units():
+    """The business units a unit manager or unit designer / engineer can sign up for (public: used before sign-in)."""
+    return [{"code": code, "name": name} for code, name in _units().items()]
 
 
 @router.post("/auth/signup")
 def signup(body: SignupIn, request: Request, response: Response):
-    """Self sign-up (decided 16 Oct 2026): the person chooses the role and, for a unit role, the unit; no email
-    verification. Usernames and display names are unique, because records name people by their display name."""
-    client = f"signup:{request.client.host if request.client else '?'}"
-    if _limited(client):
-        raise HTTPException(429, "Too many sign-ups from this computer; wait five minutes and try again.")
-    unit_role = body.role != "bid_manager"
-    if unit_role and body.bu not in units():
-        raise HTTPException(422, "Choose the business unit you work in.")
+    key = f"signup:{request.client.host if request.client else ''}"
+    _limited(key)
     username, name = body.username.strip().lower(), " ".join(body.name.split())
-    roster = json.loads(ACCOUNTS.read_text(encoding="utf-8"))
+    unit_role = body.role in ("product_manager", "design_engineer")
+    roster = {a["username"] for a in json.loads(ACCOUNTS.read_text(encoding="utf-8"))}
+    if not (3 <= len(username) <= 64) or not all(c.isalnum() or c in "._-" for c in username):
+        raise _failed(key, 422, "Choose a username of 3 to 64 letters, digits, dots, dashes or underscores.")
+    if not (2 <= len(name) <= 128):
+        raise _failed(key, 422, "Enter the name to show on your records (2 to 128 characters).")
+    if len(body.password) < MIN_PASSWORD:
+        raise _failed(key, 422, f"Choose a password of at least {MIN_PASSWORD} characters.")
+    if body.role not in SIGNUP_ROLES:
+        raise _failed(key, 422, "Choose bid manager, unit manager or unit designer / engineer; the administrator "
+                                "account is set up by the server.")
+    if unit_role and body.bu not in _units():
+        raise _failed(key, 422, "Choose your business unit.")
     with Session(engine) as s, s.begin():
-        taken = {a.username for a in s.scalars(select(Account))} | {a["username"] for a in roster}
-        names = {a.name.lower() for a in s.scalars(select(Account))} | {a["name"].lower() for a in roster}
-        if username in taken:
-            raise HTTPException(409, "This username is taken; choose another.")
-        if name.lower() in names:
-            raise HTTPException(409, "Someone already uses this display name; add a surname or initial.")
+        if username in roster or s.get(Account, username):
+            raise _failed(key, 409, f"The username {username} is taken; choose another.")
+        if s.scalar(select(Account).where(func.lower(Account.name) == name.lower())):
+            raise _failed(key, 409, f"Someone already uses the name {name}; add an initial or your unit.")
         account = Account(username=username, name=name, role=body.role, bu=body.bu if unit_role else None,
                           password_hash=hash_password(body.password))
         s.add(account)
-        profile = account.profile()
-    _note(client)
-    return _signed_in(profile, response)
+        s.flush()
+        s.expunge(account)
+    return _signed_in(account, response)
 
 
 @router.post("/auth/logout")
