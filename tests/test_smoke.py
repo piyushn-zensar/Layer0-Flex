@@ -557,15 +557,18 @@ def test_bid_and_portfolio_checks():
     assert crit["capacity"]["status"] == ("not_met" if over else "met") and "placeholder" in crit["capacity"]["detail"]
 
 
-def test_response_outline_agent():
+def test_response_outline_agent(monkeypatch):
     """P-10 + J-07: the drafting agent writes only from validated answers (frozen drafts, no model call), every
     paragraph cites them, open requirements are listed and never drafted, and the outline downloads as Markdown."""
+    from app.modules.consolidation import service as consolidation
+    # the frozen drafts were made without reviewed evidence; other tests publish some in the shared store (P-37)
+    monkeypatch.setattr(consolidation.knowledge, "retrieve", lambda *a, **k: [])
     seed_demo.main()  # its own opportunity: 13 line items, 4 validated answers
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     o = client.get(f"/api/bids/{opp}/response-outline").json()
     validated = {a["req_id"] for c in o["chapters"] for a in c["material"]}
-    assert o["validated_answers"] == len(validated) > 0 and o["summary"]["drafted"]
+    assert o["validated_answers"] >= len(validated) > 0 and o["summary"]["drafted"]  # a requirement may have one answer per unit
     for d in [o["summary"]] + [c["draft"] for c in o["chapters"]]:
         assert all(p["sources"] and set(p["sources"]) <= validated for p in d["paragraphs"])  # cites validated answers only
     by_id = {c["id"]: c for c in o["chapters"]}
@@ -1313,8 +1316,12 @@ def test_assessment_step():
     assert a["summary"]["sections"] and sum(a["summary"]["by_category"].values()) == a["summary"]["requirements"]
     routes = {r["req_id"]: r for r in a["routing"]}
     assert {r["route"] for r in a["routing"]} <= {"unit", "bid_desk", "capability_gap", "needs_owner"}
-    # A-17: non-technical items stay on the bid desk unless workflow.json unit_manager_categories lists them (default: none)
-    assert all(r["route"] == "bid_desk" for r in a["routing"] if r["category"] not in ("technical", "compliance"))
+    # A-17 and the routing decided on 16 Oct: only the non-technical categories outside workflow.json unit_manager_categories
+    # (bid-level, consolidated: submission, legal) stay on the bid desk
+    from app.modules.workpackages import service as workpackages
+    managers = set(workpackages.workflow()["unit_manager_categories"])
+    assert all(r["route"] == "bid_desk" for r in a["routing"]
+               if r["category"] not in ("technical", "compliance") and r["category"] not in managers)
     unit = next(r for r in a["routing"] if r["route"] == "unit")
     assert all(u["specialists"] and u["bu"] != "BID" for u in unit["units"])  # the unit's product manager and design engineer
     assert {o["req_id"] for o in a["open_questions"]["needs_owner"]} == {k for k, r in routes.items() if r["route"] == "needs_owner"}
@@ -1389,7 +1396,7 @@ def test_workflow_roles(monkeypatch):
     units = set(client.get(f"/api/bids/{opp}/decisions").json()["participation"]["units"])
     rows = client.get(f"/api/bids/{opp}/trace").json()["rows"]
     sched = next(r for r in rows if r["req"]["category"] in ("schedule", "commercial"))
-    assert [a["bu"] for a in sched["assignments"]] == ["BID"]  # default: non-technical items stay on the bid desk
+    assert sorted(a["bu"] for a in sched["assignments"]) == sorted(units)  # routing (16 Oct): every participating unit's manager
     product = next(r["match"]["units"][0]["product_id"] for r in rows if r["match"] and r["match"]["units"] and r["match"]["bu"] == "CROWN")
     client.post(f"/api/bids/{opp}/requirements/{sched['req']['req_id']}/match",
                 json={"units": [{"product_id": product, "offering_type": "ETO"}]}, headers=bm)  # the bid manager routes it

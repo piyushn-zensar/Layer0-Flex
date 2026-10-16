@@ -1,0 +1,29 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "gaps": [],
+    "paragraphs": [
+      {
+        "cites": [
+          1,
+          4
+        ],
+        "text": "Crown Technical Systems proposes to supply a two-section 15 kV arc-resistant metal-clad switchgear lineup. This lineup is configured to include 18 vacuum circuit breaker positions with protective relays, two revenue metering compartments, and isolation switches, meeting the requirements specified in the RFP."
+      },
+      {
+        "cites": [
+          5
+        ],
+        "text": "The proposed switchgear is designed to be arc-resistant Type 2B, adhering to the most conservative interpretation of IEEE C37.20.7 standards. This ensures compliance with the safety and performance criteria outlined in the RFP."
+      },
+      {
+        "cites": [
+          2,
+          3
+        ],
+        "text": "A comprehensive project schedule is included with the bid, detailing the timelines for drawings, factory shipment, site delivery, overall lead time after receipt of order (ARO), and field works. This schedule consolidates inputs from all relevant units to provide a clear and actionable timeline."
+      }
+    ]
+  },
+  "task": "draft_outline"
+}

@@ -36,6 +36,7 @@ Retrieval and assessment records (P-37 part 1; retrieval.py, re-exported):
     reassess(db, opp_id, reason, actor) -> dict          a new numbered run of append-only assessment records
     assessments(db, opp_id, run=None, subject=None) -> dict
     profiles() -> dict                                   the task profiles of data/knowledge_base/retrieval.json
+    embed_sources(db) -> dict                            freeze every source's passage vectors (needs the embedding service)
 """
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -46,7 +47,7 @@ from app.core.web import same_unit
 from app.modules.catalog import service as catalog
 from app.modules.decisions import service as decisions
 from app.modules.knowledge.models import EXAMPLE_TYPES, KINDS, KbItem
-from app.modules.knowledge.retrieval import assessments, profiles, reassess, retrieve  # noqa: F401  (public contract)
+from app.modules.knowledge.retrieval import assessments, embed_sources, profiles, reassess, retrieve  # noqa: F401  (public contract)
 from app.modules.knowledge.sources import (  # noqa: F401  (public contract)
     COLLECTIONS, REVIEWERS, STATUSES, SUFFIXES, annotate, counts, evidence, get, register, register_references,
     review as review_source, source_passages, sources)

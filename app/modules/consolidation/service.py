@@ -27,6 +27,7 @@ from sqlalchemy.orm import Session
 from app.modules.catalog import service as catalog
 from app.modules.consolidation import agent, excel
 from app.modules.ingestion import service as ingestion
+from app.modules.knowledge import service as knowledge
 from app.modules.matching import service as matching
 from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service as requirements
@@ -202,10 +203,15 @@ def _past(answers: list[dict]) -> list[str]:
     return out
 
 
-def _draft(title: str, answers: list[dict]) -> dict:
+def _draft(db: Session, opp_id: str, title: str, answers: list[dict]) -> dict:
+    """P-37: reviewed evidence (approved examples, published product evidence; keyword-ranked so the prompt is the
+    same on every machine) goes into the prompt when it exists; each paragraph keeps the evidence it cites."""
+    evidence = knowledge.retrieve(db, "response_drafting", " ".join([title] + [a["requirement"] for a in answers[:3]]),
+                                  opp_id, semantic=False) if answers else []
     d = agent.draft(title, [{k: a[k] for k in ("unit", "compliance", "product", "requirement", "wording", "response")}
-                            for a in answers], _past(answers))
-    paragraphs = [{"text": p["text"], "sources": list(dict.fromkeys(answers[c - 1]["req_id"] for c in p["cites"]))}
+                            for a in answers], _past(answers), [f"{e['citation']}: {e['text']}" for e in evidence])
+    paragraphs = [{"text": p["text"], "sources": list(dict.fromkeys(answers[c - 1]["req_id"] for c in p["cites"])),
+                   "evidence": [evidence[e - 1]["citation"] for e in p.get("evidence", [])]}
                   for p in d["paragraphs"]]
     return {k: v for k, v in d.items() if k != "paragraphs"} | {"paragraphs": paragraphs}
 
@@ -242,7 +248,7 @@ def response_outline(db: Session, opp_id: str) -> dict:
         everything += answers
         chapters.append({
             "id": cid, "title": title, "total": len(rows), "answered": sum(r["state"] == "answered" for r in rows),
-            "draft": _draft(title, answers), "material": answers,
+            "draft": _draft(db, opp_id, title, answers), "material": answers,
             "exceptions": [a for a in answers if a["compliance"] != "Comply"],
             "open": [{"req_id": r["req"].req_id, "source": source(r["req"]), "text": r["req"].text, "state": r["state"]}
                      for r in rows if r["state"] != "answered"],
@@ -251,7 +257,7 @@ def response_outline(db: Session, opp_id: str) -> dict:
     first = sorted(everything, key=lambda a: order[a["req_id"]])[:SUMMARY_ANSWERS]
     return {"opportunity": {"id": opp.id, "title": opp.title, "customer": opp.customer},
             "total": cov["total"], "answered": cov["answered"], "validated_answers": len(everything),
-            "summary": _draft("Executive summary", first), "chapters": chapters,
+            "summary": _draft(db, opp_id, "Executive summary", first), "chapters": chapters,
             "note": "A first draft for the bid manager to edit, written only from validated answers; every paragraph "
                     "cites its requirements. Writing the final response stays a human task."}
 

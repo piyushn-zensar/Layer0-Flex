@@ -68,3 +68,32 @@ def test_retrieval_profiles_and_reassessment():
     assert client.get("/api/knowledge/retrieve", params={"task": "nonsense", "q": "x"}).status_code == 409
     with SessionLocal() as db:
         assert sorted((r.req_id, r.version, r.text) for r in requirements.current(db, opp, include_children=True)) == before
+
+
+def test_evidence_enters_prompts_only_when_reviewed(monkeypatch):
+    """P-37 part 2: reviewed evidence goes into the matcher and outline prompts (keyword-ranked, so the same offline),
+    only where it exists; an outline paragraph keeps the evidence it cites, an out-of-range citation is dropped."""
+    from app.modules.consolidation import agent as outline
+    from app.modules.matching import agent as matcher
+
+    seen = []
+
+    def fake(task, system, prompt, schema):
+        seen.append((task, system, prompt, schema))
+        if task == "draft_outline":
+            ev = "evidence" in schema["properties"]["paragraphs"]["items"]["properties"]
+            return {"paragraphs": [{"text": "The proposer offers it.", "cites": [1], **({"evidence": [1, 9]} if ev else {})}], "gaps": []}
+        return {"answers": []}
+    monkeypatch.setattr(matcher, "complete_json", fake)
+    monkeypatch.setattr(outline, "complete_json", fake)
+    reqs = [{"category": "technical", "quote": "4000 A busway", "evidence": ["[KS-0001 v1, p. 1, lines 1-2] rated 4000 A"]},
+            {"category": "technical", "quote": "15 kV switchgear"}]
+    matcher.propose_page("", reqs, [], [])
+    matcher.propose_page("", [{"category": "technical", "quote": "15 kV switchgear"}], [], [])
+    assert "REVIEWED EVIDENCE" in seen[0][2] and "For 1: [KS-0001" in seen[0][2] and "For 2" not in seen[0][2]
+    assert "REVIEWED EVIDENCE" not in seen[1][2]  # no evidence: the prompt (and its frozen answer) is unchanged
+    answers = [{"unit": "Anord", "compliance": "Comply", "product": "-", "requirement": "busway", "wording": "w", "response": "Met."}]
+    d = outline.draft("Technical", answers, [], ["KS-0001 v1, p. 1, lines 1-2: rated 4000 A"])
+    assert d["paragraphs"][0]["evidence"] == [1] and "[E1] KS-0001" in seen[2][2] and seen[2][1] == outline.SYSTEM_EVIDENCE
+    outline.draft("Technical", answers, [])
+    assert seen[3][1] == outline.SYSTEM and "REVIEWED EVIDENCE" not in seen[3][2]

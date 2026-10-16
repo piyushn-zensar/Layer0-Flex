@@ -66,6 +66,11 @@ def match(db: Session, opp_id: str, actor: str, req_ids: list[str] | None = None
     reqs = [r for r in requirements.current(db, opp_id) if r.status == "approved" and r.req_id not in decided
             and (req_ids is None or r.req_id in req_ids)]
     evidence = dict(zip((r.req_id for r in reqs), catalog.search_many([r.quote for r in reqs], k=5)))
+    # P-37 (C-29 point 5): reviewed product evidence and reviewed examples, keyword-ranked so the prompt is the same on
+    # every machine; it enters the prompt only where it exists, so pages without it keep their frozen answers
+    from app.modules.knowledge import service as knowledge  # here, not at the top: knowledge imports this module
+    reviewed = {r.req_id: knowledge.retrieve(db, "product_matching", r.quote, opp_id, semantic=False)
+                for r in reqs if r.category in PRODUCT_CATEGORIES}
     products, past = catalog.products(), catalog.past_responses()
     candidates = [{"kind": "product", "id": p["id"], "bu": p["bu"]} for p in products]
     layouts: dict = {}
@@ -84,8 +89,9 @@ def match(db: Session, opp_id: str, actor: str, req_ids: list[str] | None = None
         (_, page), items = batch
         header = _header(items[0], layouts)
         try:
-            return items, agent.propose_page(header, [{"category": r.category, "quote": r.quote} for r in items],
-                                             products, past)
+            return items, agent.propose_page(header, [{"category": r.category, "quote": r.quote,
+                                                       "evidence": [f"[{h['citation']}] {h['text'][:300]}" for h in reviewed.get(r.req_id, [])]}
+                                                      for r in items], products, past)
         except agent.LLMUnavailable:
             return items, [None] * len(items)
 
@@ -106,8 +112,10 @@ def match(db: Session, opp_id: str, actor: str, req_ids: list[str] | None = None
     method_count = defaultdict(int)
     for req in reqs:
         out, method = results[req.req_id]
+        cited = [{"kind": "reviewed_evidence", "id": h["citation"], "bu": None, "score": h["score"], "text": h["text"][:300]}
+                 for h in reviewed.get(req.req_id, [])]
         m = _row(opp_id, req.req_id, out["units"], confidence=out["confidence"], rationale=out["rationale"],
-                 evidence=evidence[req.req_id], method=method)
+                 evidence=evidence[req.req_id] + cited, method=method)
         db.add(m)
         method_count[method] += 1
         audit.record(db, actor, "proposed", "match", req.req_id, opp_id, units=m.units, method=method)

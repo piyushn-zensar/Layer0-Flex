@@ -131,8 +131,11 @@ def test_capacity_criterion_without_unit_work():
     assert ok and detail == "Open work vs capacity: no unit work yet. Capacity is a placeholder."
 
 
-def test_offline_wording_for_missing_frozen_answers(client, seeded, tmp_path):
+def test_offline_wording_for_missing_frozen_answers(client, seeded, tmp_path, monkeypatch):
     """QA-01 / QA-15: when the frozen answers do not cover a call, the page says so in the audience's words."""
+    from app.modules.consolidation import service as consolidation
+    # the frozen drafts were made without reviewed evidence; other tests publish some in the shared store (P-37)
+    monkeypatch.setattr(consolidation.knowledge, "retrieve", lambda *a, **k: [])
     # a change document with no frozen answer is refused, and no change set is created
     (tmp_path / "unfrozen.txt").write_text("ADDENDUM TWO\nReplace the copper bus with aluminium.", "utf-8")
     other = convert(tmp_path / "unfrozen.txt")

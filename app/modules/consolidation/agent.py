@@ -35,9 +35,20 @@ SCHEMA = {
     "additionalProperties": False,
 }
 MAX_GAPS = 4
+# P-37 (C-29 point 5): with reviewed evidence the prompt adds it, numbered E1..; these variants are used only then, so
+# a chapter without evidence keeps its frozen answer
+SYSTEM_EVIDENCE = SYSTEM + """
+REVIEWED EVIDENCE (approved examples and published product evidence, numbered E1, E2, ...) may support the wording
+or the product facts of what an answer states; cite the E-numbers you used in "evidence". Never take a commitment,
+rating or product from evidence that no validated answer states."""
+SCHEMA_EVIDENCE = {**SCHEMA, "properties": {**SCHEMA["properties"], "paragraphs": {"type": "array", "items": {
+    "type": "object",
+    "properties": {"text": {"type": "string"}, "cites": {"type": "array", "items": {"type": "integer"}},
+                   "evidence": {"type": "array", "items": {"type": "integer"}}},
+    "required": ["text", "cites", "evidence"], "additionalProperties": False}}}}
 
 
-def prompt(title: str, answers: list[dict], past: list[str]) -> str:
+def prompt(title: str, answers: list[dict], past: list[str], evidence: list[str] | None = None) -> str:
     """answers: [{"unit", "compliance", "product", "requirement", "wording", "response"}] in RFP order (numbered from 1)."""
     lines = [f"CHAPTER: {title}", "", "VALIDATED ANSWERS ([number] unit | compliance | product | requirement;"
              " RFP wording; answer)"]
@@ -45,34 +56,40 @@ def prompt(title: str, answers: list[dict], past: list[str]) -> str:
         lines += [f"[{n}] {a['unit']} | {a['compliance']} | {a['product'] or '-'} | {a['requirement']}",
                   f"    RFP wording: {(a['wording'] or '-')[:400]}", f"    Answer: {a['response']}"]
     lines += ["", "PAST RESPONSES (style only)"] + [f"- {r[:300]}" for r in past]
+    if evidence:
+        lines += ["", "REVIEWED EVIDENCE ([E number] citation: text)"] + [f"[E{n}] {e[:400]}" for n, e in enumerate(evidence, 1)]
     return "\n".join(lines)
 
 
-def guard(answer: dict, n_answers: int) -> tuple[list[dict], list[str], int]:
-    """Keep paragraphs whose citations are all valid answer numbers (at least one). Returns (paragraphs, gaps, dropped)."""
+def guard(answer: dict, n_answers: int, n_evidence: int = 0) -> tuple[list[dict], list[str], int]:
+    """Keep paragraphs whose citations are all valid answer numbers (at least one); evidence numbers out of range
+    are dropped from the paragraph. Returns (paragraphs, gaps, dropped)."""
     kept, dropped = [], 0
     for p in answer.get("paragraphs", []):
         cites = sorted(set(p.get("cites") or []))
         if p.get("text", "").strip() and cites and all(1 <= c <= n_answers for c in cites):
-            kept.append({"text": p["text"].strip(), "cites": cites})
+            kept.append({"text": p["text"].strip(), "cites": cites,
+                         "evidence": sorted({e for e in p.get("evidence") or [] if 1 <= e <= n_evidence})})
         else:
             dropped += 1
     gaps = [g.strip() for g in answer.get("gaps", []) if g.strip()][:MAX_GAPS]
     return kept, gaps, dropped
 
 
-def draft(title: str, answers: list[dict], past: list[str]) -> dict:
-    """{"drafted": bool, "paragraphs": [{"text", "cites"}], "gaps", "dropped", "note"}; cites are answer numbers."""
+def draft(title: str, answers: list[dict], past: list[str], evidence: list[str] | None = None) -> dict:
+    """{"drafted": bool, "paragraphs": [{"text", "cites", "evidence"}], "gaps", "dropped", "note"}; cites are answer
+    numbers, evidence are E-numbers (1-based positions in `evidence`)."""
     if not answers:
         return {"drafted": False, "paragraphs": [], "gaps": [], "dropped": 0, "note": "No validated answer yet."}
     try:
-        answer = complete_json("draft_outline", SYSTEM, prompt(title, answers, past), SCHEMA)
+        answer = complete_json("draft_outline", SYSTEM_EVIDENCE if evidence else SYSTEM,
+                               prompt(title, answers, past, evidence), SCHEMA_EVIDENCE if evidence else SCHEMA)
     except LLMUnavailable:
         # the demo laptop replays frozen answers: a chapter whose validated set changed since they were frozen has none
         return {"drafted": False, "paragraphs": [], "gaps": [], "dropped": 0,
                 "note": "Draft not refreshed: the model service is not connected in this demo, so the validated "
                         "answers are shown as they are."}
-    paragraphs, gaps, dropped = guard(answer, len(answers))
+    paragraphs, gaps, dropped = guard(answer, len(answers), len(evidence or []))
     note = f"{dropped} paragraph(s) without a valid citation removed." if dropped else ""
     return {"drafted": bool(paragraphs), "paragraphs": paragraphs, "gaps": gaps, "dropped": dropped, "note": note}
 
@@ -82,7 +99,8 @@ if __name__ == "__main__":  # self-check: python -m app.modules.consolidation.ag
                          {"text": "Out of range.", "cites": [3]}, {"text": " ", "cites": [1]}],
           "gaps": ["Confirm the delivery date.", " ", "a", "b", "c", "d"]}
     paragraphs, gaps, dropped = guard(ok, 2)
-    assert paragraphs == [{"text": "Meets it.", "cites": [1]}] and dropped == 3 and len(gaps) == MAX_GAPS
+    assert paragraphs == [{"text": "Meets it.", "cites": [1], "evidence": []}] and dropped == 3 and len(gaps) == MAX_GAPS
+    assert guard({"paragraphs": [{"text": "x", "cites": [1], "evidence": [1, 5]}]}, 1, 2)[0][0]["evidence"] == [1]
     p = prompt("Technical", [{"unit": "Crown", "compliance": "Comply", "product": "CROWN-ARMV", "requirement": "r",
                               "wording": "w", "response": "a"}], ["past"])
     assert "[1] Crown | Comply | CROWN-ARMV | r\n    RFP wording: w\n    Answer: a" in p and "REQ-" not in p

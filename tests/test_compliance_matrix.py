@@ -37,7 +37,7 @@ def test_matrix_response_shape_and_unknown_bid():
     assert res.status_code == 200
     data = res.json()
     assert set(data) == {"rows", "total", "answered", "blocking"} and data["total"] == 13
-    assert data["answered"] == 13 - len(data["blocking"]) and len(data["rows"]) == 13
+    assert data["answered"] == 13 - len(data["blocking"]) and len(data["rows"]) == 14  # the schedule item goes to two unit managers (routing, 16 Oct)
     assert all(set(r) == ROW_KEYS for r in data["rows"])
     places = [(r["page"], r["line_start"]) for r in data["rows"]]
     assert places == sorted(places)  # RFP order: by page, then line
@@ -84,7 +84,7 @@ def test_one_row_per_requirement_and_assignment_keeps_each_units_answer():
         withdrawn.status = "withdrawn"  # nobody holds this one any more
         db.commit()
     data = client.get(f"/api/bids/{opp}/compliance-matrix").json()
-    assert len(data["rows"]) == 14 and data["total"] == 13  # 13 requirements, one with two units, one with none
+    assert len(data["rows"]) == 15 and data["total"] == 13  # 13 requirements, two with two units (one by routing), one with none
     mine = {r["unit"]: r for r in data["rows"] if r["req_id"] == req}
     assert set(mine) == {"CROWN", "EP2"} and all(r["assignments"] == 2 for r in mine.values())
     assert (mine["CROWN"]["status"], mine["CROWN"]["compliance"]) == ("validated", "met")

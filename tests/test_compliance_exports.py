@@ -65,7 +65,7 @@ def test_csv_keeps_its_columns_and_appends_the_four_new_ones():
     assert "Not provided" not in "".join("".join(r) for r in table)
     ids = [r[0] for r in body]
     assert ids == [r[0] for r in _csv(client, opp)[1:]]  # deterministic order: a second download is the same
-    assert len(body) == 13  # one row per assignment (13 requirements, one unit each)
+    assert len(body) == 14  # one row per assignment (13 requirements; the schedule item goes to two unit managers)
 
 
 def test_csv_compliance_wording_and_one_row_per_assignment():
@@ -78,7 +78,7 @@ def test_csv_compliance_wording_and_one_row_per_assignment():
                           status="submitted", compliance="not_met", response="Not offered", responded_by="EP² PM"))
         db.commit()
     body = _csv(client, opp)[1:]
-    assert len(body) == 15  # two more assignments, two more rows
+    assert len(body) == 16  # two more assignments, two more rows
     mine = {r[5]: r for r in body if r[0] == first}
     assert set(mine) == {"CROWN", "EP2"}  # one requirement, two units: each keeps its own answer
     assert mine["CROWN"][8] == "Fully" and mine["EP2"][8] == "Partially" and mine["EP2"][9] == "Auxiliary supply only"

@@ -68,6 +68,11 @@ def propose_page(header: str, requirements: list[dict], products: list[dict], pa
     Raises LLMUnavailable when there is no cached answer and no provider; the service then falls back."""
     prompt = (f"Page header: {header or '(none)'}\n\nRequirements:\n"
               + "\n".join(f"{i}. ({r['category']}) {r['quote']}" for i, r in enumerate(requirements, 1)))
+    cited = [(i, r["evidence"]) for i, r in enumerate(requirements, 1) if r.get("evidence")]
+    if cited:  # P-37: only when reviewed evidence exists, so a page without it keeps its frozen answer
+        prompt += ("\n\nREVIEWED EVIDENCE (published product evidence and approved examples; use it only to choose among "
+                   "the catalog products above, never to add a product or a capability):\n"
+                   + "\n".join(f"For {i}: {e}" for i, ev in cited for e in ev))
     answers = complete_json("match_requirement", SYSTEM + "\n\n" + catalog_text(products, past), prompt, SCHEMA)["answers"]
     by_n = {}
     for a in answers:

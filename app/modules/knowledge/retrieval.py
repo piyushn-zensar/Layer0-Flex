@@ -52,16 +52,21 @@ def _index(key: tuple, items: list[dict], embed: bool = True) -> Index:
     return _indexes[key]
 
 
-def retrieve(db: Session, task: str, query: str, opp_id: str | None = None, k: int | None = None) -> list[dict]:
+def retrieve(db: Session, task: str, query: str, opp_id: str | None = None, k: int | None = None,
+             semantic: bool = True) -> list[dict]:
     """The evidence for one task and question, best first, each with its citation. ValueError: unknown task.
     One keyword ranking over every eligible passage, one semantic ranking from each source's own frozen vectors
-    (cosine scores compare across sources), fused by reciprocal rank (score orders results; it is no probability)."""
+    (cosine scores compare across sources), fused by reciprocal rank (score orders results; it is no probability).
+    semantic=False: the keyword ranking only. Model prompts use it, so the evidence they cite is the same on every
+    machine and the frozen answers replay offline (query vectors need the embedding service).
+    ponytail: keyword-only evidence in prompts; frozen query vectors per prompt would let prompts use meaning too."""
     if task not in profiles():
         raise ValueError(f"Unknown task {task!r}; one of {', '.join(profiles())}.")
     prof = profiles()[task]
     k, depth = k or prof["k"], 50
-    items = [e for e in evidence(db, prof["collections"], opp_id)
-             if not prof.get("values_only") or (e.get("annotations") or {}).get("attributes")]
+    every = evidence(db, prof["collections"], opp_id)
+    keep = (lambda e: bool((e.get("annotations") or {}).get("attributes"))) if prof.get("values_only") else (lambda e: True)
+    items = [e for e in every if keep(e)]
     rfp = None
     if "bid_evidence" in prof["collections"] and opp_id:
         doc = opportunities.main_document(db, opp_id)
@@ -74,21 +79,20 @@ def retrieve(db: Session, task: str, query: str, opp_id: str | None = None, k: i
     where = {(e["ks_id"], e.get("page"), e.get("line_start"), e.get("passage_id")): i for i, e in enumerate(items)}
     pos = lambda e: where[(e["ks_id"], e.get("page"), e.get("line_start"), e.get("passage_id"))]
     rankings = [_index(("keywords", tuple(where)), items, embed=False).hybrid(query, depth)]
-    semantic, complete = [], True
+    found, complete = [], semantic
     groups: dict[tuple, list[dict]] = {}
-    for e in items:
-        if e["collection"] != "bid_evidence" or e.get("passage_id"):
-            groups.setdefault((e["ks_id"], e["version"]), []).append(e)
-    for (ks, version), group in groups.items():
+    for e in every:  # each source's index covers all its passages, so its frozen vectors fit every profile
+        groups.setdefault((e["ks_id"], e["version"]), []).append(e)
+    for (ks, version), group in groups.items() if semantic else ():
         idx = _index((ks, version, len(group)), group)
         complete = complete and idx.vectors is not None
-        semantic += idx.search(query, depth) if idx.vectors is not None else []
-    if rfp:
+        found += idx.search(query, depth, where=keep) if idx.vectors is not None else []
+    if rfp and semantic:
         complete = complete and rfp[1].vectors is not None
-        semantic += [p | {"ks_id": rfp[0].id, "passage_id": None} for p in rfp[1].search(query, depth)] if rfp[1].vectors is not None else []
+        found += [p | {"ks_id": rfp[0].id, "passage_id": None} for p in rfp[1].search(query, depth)] if rfp[1].vectors is not None else []
     # semantic ranking only when every candidate has vectors: otherwise the embedded ones would be favoured
-    if complete and semantic:
-        rankings.append(sorted(semantic, key=lambda h: -h["score"])[:depth])
+    if complete and found:
+        rankings.append(sorted(found, key=lambda h: -h["score"])[:depth])
     fused: dict[int, float] = {}
     for ranked in rankings:
         for rank, hit in enumerate(ranked):
@@ -138,3 +142,15 @@ def assessments(db: Session, opp_id: str, run: int | None = None, subject: str |
     if subject:
         q = q.where(AssessmentRecord.subject == subject)
     return {"runs": runs, "run": run, "records": list(db.scalars(q.order_by(AssessmentRecord.id)))}
+
+
+def embed_sources(db: Session) -> dict:
+    """Freeze the vectors of every registered source's passages (data/vector_cache), drafts included, so semantic
+    ranking works offline once a source is published. Needs the embedding service; without it nothing is stored."""
+    from app.modules.knowledge.sources import source_passages, sources
+    done = {}
+    for s in sources(db):
+        texts = [{"text": p.text} for p in source_passages(db, s.ks_id)]
+        done[s.ks_id] = Index(texts).mode if texts else "empty"
+    return done
+
