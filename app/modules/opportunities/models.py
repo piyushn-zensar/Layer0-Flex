@@ -22,8 +22,8 @@ class Opportunity(Base):
 
 
 class Document(Base):
-    """A received file in one opportunity. The bytes are stored once under their SHA-256 and never modified;
-    the same file sent to two opportunities is two documents (rule R6)."""
+    """A received file in one opportunity. The bytes are stored once under their SHA-256 and never modified.
+    P-32 (C-27): the same document instance sent to another bid opens the existing bid (see DocumentIdentity)."""
     __tablename__ = "document"
     id: Mapped[str] = mapped_column(String(40), primary_key=True)         # <opportunity>-<sha256[:12]>
     sha256: Mapped[str] = mapped_column(String(64), index=True)
@@ -37,13 +37,16 @@ class Document(Base):
 
 
 class DocumentIdentity(Base):
-    """The Document ID and Document Instance ID of a received file (C-27), read from the file itself (core/fileid.py).
-    A new table beside document, so existing databases need no reset."""
+    """The identity a stored file carries (P-32, C-27): the Document ID, the same for the document's whole life, and the
+    Instance ID, new with every save, as written by the authoring tool (PDF trailer /ID or XMP xmpMM:DocumentID /
+    InstanceID; Word settings document ID); the SHA-256 when the file carries none. A table beside the document, so
+    the document table keeps its columns."""
     __tablename__ = "document_identity"
-    document_id: Mapped[str] = mapped_column(String(40), primary_key=True)   # document.id
-    doc_ident: Mapped[str] = mapped_column(String(100), index=True)           # Document ID
-    instance_ident: Mapped[str] = mapped_column(String(100), index=True)      # Document Instance ID
-    id_source: Mapped[str] = mapped_column(String(12))                        # embedded | fingerprint
+    document_id: Mapped[str] = mapped_column(String(40), primary_key=True)
+    opportunity_id: Mapped[str] = mapped_column(String(20), index=True)
+    doc_uid: Mapped[str] = mapped_column(String(128), index=True)
+    instance_uid: Mapped[str] = mapped_column(String(128), index=True)
+    source: Mapped[str] = mapped_column(String(20))   # pdf_trailer | xmp | docx | sha256
 
 
 class BidSchedule(Base):

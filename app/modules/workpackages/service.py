@@ -133,7 +133,7 @@ def actions(db: Session, a: Assignment, user: dict) -> dict:
 
 def dispatch(db: Session, opp_id: str, actor: str) -> int:
     if not requirements.baseline(db, opp_id):
-        raise ValueError("Publish the requirement register before dispatch (Requirements step).")
+        raise ValueError("The requirement register is not frozen yet: read the RFP first (RFP step).")
     go = decisions.latest(db, opp_id, "go_no_go")
     if go and go.outcome == "no_go":
         raise ValueError("The bid is marked no-go: nothing is dispatched until a go decision resumes it.")

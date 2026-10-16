@@ -1,5 +1,6 @@
 "use client";
 // Documents: upload the RFP, see ingestion status, run the reader agent.  Owner: Piyush.
+import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { BID_MANAGER_ONLY, api, errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
@@ -8,6 +9,8 @@ import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, Skeleton, StatusBadge, useToast } from "@/components/ui";
 
 type Received = Doc & { received_at?: string }; // the API row carries received_at; the shared Doc type does not list it yet
+// P-32 (C-27): the uploaded RFP is already in another bid: this very instance (open it) or an earlier one (add it there)
+type Known = { kind: "instance" | "document"; bid: string; title: string; document: string; filename: string };
 
 export default function DocumentsPage() {
   const { id } = useParams<{ id: string }>();
@@ -19,6 +22,7 @@ export default function DocumentsPage() {
   const readBefore = (snapshots?.length ?? 0) > 0; // a snapshot exists: reading again needs a reason (E2, E3...)
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState<{ text: string; problems?: string[] }>();
+  const [earlier, setEarlier] = useState<Known>(); // an earlier instance of this document sits in another bid
   type Passage = { page: number; line_start: number; line_end: number; text: string; score: number };
   const [found, setFound] = useState<{ mode: string; passages: Passage[] }>();
   const [searching, setSearching] = useState(false);
@@ -37,20 +41,23 @@ export default function DocumentsPage() {
     const file = new FormData(form); // before the inputs are disabled below
     setBusy("Uploading and reading the RFP… (about a minute for a 100-page RFP)"); setMessage(undefined);
     try {
-      const r = await post<{ existing_bid?: string; message?: string; earlier_instance?: { bid: string; same_instance: boolean } | null }>(`/api/bids/${id}/documents`, file);
-      form.reset();
-      if (r.existing_bid) { toast.info(r.message ?? `Already read in bid ${r.existing_bid}.`); router.push(`/opportunities/${r.existing_bid}/trace`); return; } // C-27: read once
-      await reload(); toast.success("Document received and read.");
-      if (r.earlier_instance) toast.info(`An earlier version of this document was read in bid ${r.earlier_instance.bid}; if this one replaces it, add it there as a change document.`);
+      const r = await post<Received | { known: Known }>(`/api/bids/${id}/documents`, file);
+      if ("known" in r && r.known.kind === "instance") {  // read before: its bid and stored requirements, not a new read
+        location.assign(`/opportunities/${r.known.bid}/trace?known=${encodeURIComponent(r.known.filename)}`);
+        return;
+      }
+      if ("known" in r) { setEarlier(r.known); return; }
+      form.reset(); await reload(); toast.success("Document received and read.");
     } catch (err) { fail(err); }
     finally { setBusy(""); }
   }
   async function extract(reason?: string) {
     setBusy("Reader agent running… (about a minute for a 100-page RFP)"); setMessage(undefined);
     try {
-      const r = await post<{ proposed: number; problems: string[]; snapshot?: number; exceptions?: number; frozen?: number | null }>(`/api/bids/${id}/requirements/extract`, reason ? { reason } : {});
+      const r = await post<{ proposed: number; problems: string[]; snapshot?: number; exceptions?: number; frozen?: number | null; not_frozen?: string }>(`/api/bids/${id}/requirements/extract`, reason ? { reason } : {});
       const saved = (r.snapshot ? ` Saved as extraction snapshot ${snapshotName(r.snapshot)}${r.exceptions !== undefined ? `; ${r.exceptions} exception${r.exceptions === 1 ? "" : "s"}` : ""}.` : "")
-        + (r.frozen ? ` Requirements frozen automatically as baseline ${r.frozen}.` : ""); // C-27: no approval step
+        + (r.frozen ? ` Frozen automatically as baseline ${r.frozen} (P-32).` : r.not_frozen ? ` Not frozen: ${r.not_frozen}` : "");
+      window.dispatchEvent(new Event("opp-status-changed")); // the stepper and status badge follow the freeze
       if (r.problems.length) setMessage({ text: `${r.proposed} line items proposed.${saved} Some pages were not read:`, problems: r.problems });
       else { if (saved) toast.success(`${r.proposed} line items proposed.${saved}`); router.push(`/opportunities/${id}/requirements`); }
     } catch (e) { fail(e); } finally { setBusy(""); }
@@ -75,6 +82,9 @@ export default function DocumentsPage() {
       <PageHead level={2} title="RFP documents"
         help={`${data?.opportunity.customer || "Customer not set"} · ${data?.opportunity.customer_type || "customer type not set"}. Upload the RFP, then let the reader agent break it into requirements.`} />
       <Alert kind="error">{error}</Alert>
+      {earlier && <Alert kind="warn" onClose={() => setEarlier(undefined)}><p>An earlier version of this document ({earlier.filename}) is
+        already in bid <Link href={`/opportunities/${earlier.bid}`}>{earlier.bid}: {earlier.title}</Link>. This newer version was not stored here;
+        add it to that bid as a change document on its <Link href={`/opportunities/${earlier.bid}/changes`}>Changes</Link> step.</p></Alert>}
       {message && <Alert kind="error" onClose={() => setMessage(undefined)}><p>{message.text}</p>
         {message.problems && <ul>{message.problems.map((p) => <li key={p}>{p}</li>)}</ul>}</Alert>}
       {!data && !error && <Skeleton lines={3} />}

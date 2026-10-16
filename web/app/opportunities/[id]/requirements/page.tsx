@@ -1,14 +1,14 @@
 "use client";
 // Requirement register and exception queue: exclude (with a reason), restore, edit, split, merge, ungroup, add missed (select lines or paste a quote); exceptions
-// (source not verified) are linked to lines or dismissed; then publish the register as baseline 1; after publish every change is a correction with a reason.  Owner: Piyush.
+// (source not verified) are linked to lines or dismissed; a complete read freezes the register as baseline 1 (P-32); after that every change is a correction with a reason.  Owner: Piyush.
 // Requirements are shown in document order; a group lists its sub-requirements when expanded.
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Fragment, useMemo, useState } from "react";
 import PageHead from "@/components/shell/PageHead";
 import LinePicker from "@/components/requirements/LinePicker"; // P-15
-import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useConfirm, useToast } from "@/components/ui";
-import { BID_MANAGER_ONLY, errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
+import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
+import { errorMessage, post, useApi } from "@/lib/api";
 import { coverageLabel, originLabel, snapshotName, sourceLabel, statusLabel, type Baseline, type Coverage, type CorrectionResult, type Requirement, type RequirementException, type RequirementHistory, type Snapshot, type SnapshotDetail } from "@/lib/types";
 
 const CATEGORIES = ["technical", "compliance", "commercial", "schedule", "submission", "legal", "staffing"];
@@ -28,11 +28,9 @@ export default function RequirementsPage() {
   const { id } = useParams<{ id: string }>();
   const { data, error, reload } = useApi<{ requirements: Requirement[]; baseline: Baseline | null; exceptions: number; coverage?: Coverage | null }>(`/api/bids/${id}/requirements`);
   const { data: snapshots } = useApi<Snapshot[]>(`/api/bids/${id}/extraction`);
-  const bm = isBidManager(useMe()); // publishing is the bid manager's (section 16.6)
   const { data: exc, error: excError, reload: reloadExc } = useApi<RequirementException[]>(`/api/bids/${id}/requirements/exceptions`);
   const [tab, setTab] = useState<"register" | "exceptions">("register");
   const toast = useToast();
-  const [ask, confirmDialog] = useConfirm();
   const [chosen, setFilter] = useState<FilterKey>();
   const [busy, setBusy] = useState(false);
   const [query, setQuery] = useState("");
@@ -172,11 +170,10 @@ export default function RequirementsPage() {
 
   return (
     <>
-      {confirmDialog}
       <PageHead level={2} title="Requirements"
-        help={frozen ? <span data-tour="req-baseline">Baseline {data.baseline!.number} published by {data.baseline!.frozen_by} ({data.baseline!.count} items).
+        help={frozen ? <span data-tour="req-baseline">Baseline {data.baseline!.number} frozen automatically when {data.baseline!.frozen_by} read the RFP ({data.baseline!.count} items).
             Edits, splits, merges, exclusions and missed requirements are saved as corrections with a reason; customer documents run on the <Link href={`/opportunities/${id}/changes`}>Changes</Link> step.</span>
-          : <span data-tour="req-help">{activeCount} requirements in the register; related line items are grouped (expand a group to see its sub-requirements). Each was verified against its source; a complete reading is frozen automatically (C-27); this one was not complete, so read the RFP again with a reason from the RFP step.</span>}>
+          : <span data-tour="req-help">{activeCount} requirements in the register; related line items are grouped (expand a group to see its sub-requirements). Each was verified against its source. The register is frozen automatically once the RFP has been read completely (P-32); until then, exclude anything that is not a requirement and read the RFP again.</span>}>
         {busy && <Busy label="Saving…" />}
       </PageHead>
 

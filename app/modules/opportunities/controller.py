@@ -59,14 +59,13 @@ def _ingest_in_background(doc_id: str):
 
 def _attach(db: Session, request: Request, background: BackgroundTasks, opp_id: str, filename: str, data: bytes,
             role: str) -> dict:
-    """Store the file, read it in the background, answer at once (the page polls the document's status)."""
+    """Store the file, read it in the background, answer at once (the page polls the document's status). P-32 (C-27):
+    a main RFP whose document is already in another bid is not stored: the answer is {"known": ...} (open that bid,
+    or add this newer instance there as a change document)."""
     require(request, BID_MANAGER)
+    if role == "main" and (known := service.known(db, opp_id, filename, data)):
+        return {"known": known}
     known = {d.id for d in service.documents(db, opp_id)}
-    seen = service.known_instance(db, filename, data, opp_id) if role == "main" and service.READ_ONCE else None
-    if seen and seen["same_instance"]:  # C-27: a document instance is read once; its bid holds the frozen requirements
-        return {"existing_bid": seen["bid"], "document": seen["document"],
-                "message": f"This document was already read in bid {seen['bid']} ({seen['bid_title']}). "
-                           "Its stored requirements are shown there; it is not read again."}
     try:
         doc = service.add_document(db, opp_id, filename, data, role, actor(request))
     except LookupError as exc:
@@ -76,8 +75,7 @@ def _attach(db: Session, request: Request, background: BackgroundTasks, opp_id: 
     if doc.status == "uploaded":  # also a re-upload of a file whose reading never finished: it is read again
         background.add_task(_ingest_in_background, doc.id)
     # existing: the same file was attached before (same content), so nothing new was added; the page can say so
-    # earlier_instance: another bid read an earlier version of this document (same Document ID, new Instance ID)
-    return _doc(doc) | {"existing": doc.id in known, "earlier_instance": seen}
+    return _doc(doc) | {"existing": doc.id in known}
 
 
 @router.post("/bids/{opp_id}/documents")

@@ -15,16 +15,6 @@ os.environ["MYSQL_HOST"] = ""                    # accounts go in the test store
 os.environ["CATALOG_REFRESH_HOURS"] = "0"        # no network in tests (P-34)
 
 
-@pytest.fixture(autouse=True, scope="session")
-def draft_stage():
-    """Tests written before C-27 build bids by reading the same sample RFP and reviewing the draft; switch the
-    automatic freeze and the read-once rule off for the whole run (session scope: module fixtures need it too).
-    tests/test_p32_auto_freeze.py switches both on again for its own test (monkeypatch restores them)."""
-    from app.modules.opportunities import service as opportunities
-    from app.modules.requirements import service as requirements
-    requirements.FREEZE_ON_READ, opportunities.READ_ONCE = False, False
-
-
 @functools.cache   # one sign-in per account: checking a password takes about 0.4 s by design
 def auth(username: str = "bid.manager") -> dict:
     """Headers that sign the request in as `username`, through the real login route."""
@@ -42,3 +32,49 @@ def signed_in(username: str = "bid.manager"):
 
     from app.main import app
     return TestClient(app, headers=auth(username))
+
+
+# P-32 (C-27). The tests read the same sample RFPs into many bids of one store. The known-instance lookup would send
+# every later upload of a file to the first bid that holds it, so it is off unless a test is marked known_instances.
+import pytest  # noqa: E402
+
+
+def pytest_configure(config):
+    config.addinivalue_line("markers", "known_instances: keep P-32's known-instance lookup on for this test")
+
+
+_LOOKUP = {"on": False}
+
+
+@pytest.fixture(autouse=True, scope="session")
+def _one_rfp_many_bids():
+    """Session-wide, so module-scoped fixtures that create bids see it too; the marker turns the lookup on per test."""
+    from app.modules.opportunities import service
+    real = service.known
+    service.known = lambda *args, **kwargs: real(*args, **kwargs) if _LOOKUP["on"] else None
+    yield
+    service.known = real
+
+
+@pytest.fixture(autouse=True)
+def _known_instances_marker(request):
+    _LOOKUP["on"] = "known_instances" in request.keywords
+    yield
+    _LOOKUP["on"] = False
+
+
+@pytest.fixture
+def incomplete_read(monkeypatch):
+    """The read counts as incomplete, so extract leaves the register unfrozen: the working-register actions (edit,
+    split, merge, add, exclude before a baseline exists) are reachable as after a real incomplete read (P-32)."""
+    from app.modules.requirements import service
+    monkeypatch.setattr(service, "read_complete", lambda coverage: False)
+
+
+def freeze(opp: str):
+    """Freeze a register the way the seed does (P-32 removed the publish route; a complete read freezes by itself)."""
+    from app.core.db import SessionLocal
+    from app.modules.requirements import service
+    with SessionLocal() as db:
+        b = service.freeze(db, opp, "Bid Manager")
+        return {"number": b.number, "count": b.count}

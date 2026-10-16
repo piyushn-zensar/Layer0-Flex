@@ -220,9 +220,10 @@ if __name__ == "__main__":  # freeze the matcher's answers for an RFP (task A-03
             ingestion.ingest(db, doc.id)
             print(f"{arg}: provider={config.LLM_PROVIDER} model={config.LLM_MODEL}", flush=True)
             print("reader:", requirements.extract(db, opp.id, who), flush=True)
-            for r in requirements.current(db, opp.id):
-                requirements.review(db, r.req_id, "approve", who)
-            requirements.freeze(db, opp.id, who)
+            if not requirements.baseline(db, opp.id):  # P-32: a complete read is frozen by extract itself
+                for r in requirements.current(db, opp.id):
+                    requirements.review(db, r.req_id, "approve", who)
+                requirements.freeze(db, opp.id, who)
             print("matcher:", match(db, opp.id, "matching agent"))
             ms = for_opportunity(db, opp.id).values()
             print("by unit:", Counter(m.bu or "BID" for m in ms))

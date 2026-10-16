@@ -176,7 +176,4 @@ def split(req_id: str, body: SplitIn, request: Request, db: Session = Depends(ge
     return [row(r, "source") for r in _guard(lambda: service.split(db, req_id, parts, actor(request), body.reason))]
 
 
-@router.post("/bids/{opp_id}/baselines")
-def freeze(opp_id: str, request: Request, db: Session = Depends(get_db)):
-    require(request, BID_MANAGER)
-    return row(_guard(lambda: service.freeze(db, opp_id, actor(request))))
+# P-32 (C-27): no publish route. A complete read freezes the register (requirements.extract); the freeze service stays.
