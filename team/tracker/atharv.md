@@ -41,6 +41,7 @@ Plan, order and contracts: [team/PLAN.md](../PLAN.md) section 10; changes, feasi
 - **Start with:** A-25 (the API rename) before anyone else starts iteration 3; announce it, land it as one commit, everyone pulls.
 - **Changed by iteration 3:** A-17 uses the unit manager and unit designer / engineer roles (P-30) and clears its blocker by validating the seed as each unit's manager; A-16's Send for assessment only dispatches after P-32; A-24's Traceability side comes with A-27.
 - **Others wait on you:** A-25 (everyone), A-26 (J-18), A-17 (P-33).
+- **RAG is Piyush's (16 Oct 2026):** for iteration 3 the catalog module, `data/knowledge_base/{products,catalog_items,past_responses}.json`, the matcher's retrieval and evidence, the assessment score in `decisions`, the Product catalog page and the Knowledge review list in My work are Piyush's (PLAN 10.3); no RAG work or contract requests for you.
 - **Ownership this iteration:** A-25 touches every module, the web calls, the tests and the walkthrough (paths only); A-26 moves Piyush's Requirements controls into Janvia's Traceability pane 2 ([contract], see PLAN 10.3).
 
 ## Iteration 2: start here
@@ -94,3 +95,4 @@ Plan and contracts: [team/PLAN.md](../PLAN.md) section 9; design: `Documents/tec
 | 15 Oct 2026 | A-24 my side: filtered links from the summary counts; the filter itself is Janvia's | A-23 (needs approval for live Azure calls) |
 | 15 Oct 2026 | A-23 done: Logan matcher answers frozen (32 live calls, approved by Atharv). Open: A-17 (blocked on the seed's validation), A-24 (Janvia's filter); requests to Piyush and Janvia in Blocked on | — |
 | 15 Oct 2026 | Iteration 3 planned (team/PLAN.md section 10): A-25, A-26, A-27 added; A-17 and A-24 notes in PLAN 10.5 | A-25 first |
+| 16 Oct 2026 | Piyush: all RAG work (catalog, knowledge, matcher evidence, assessment score) is his for iteration 3; nothing RAG for Atharv | A-25 first |

@@ -45,14 +45,15 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | P-37 | RAG R3-R4: task retrieval profiles, combined semantic and keyword search, cited evidence in prompts, `assessment_record`, versioned reassessment, frozen answers regenerated, rule R2 updated | It3 (C-29) | todo | depends on: P-36, P-34 |
 | P-38 | Executive summary with the assessment score (four measures, evidence gaps, evidence versions recorded) on the Assessment screen | It3 (C-23) | todo | depends on: P-37; open question 10 |
 | P-39 | RAG R5: independently reviewed evaluation set and `scripts/eval_rag.py` | It3 (C-29) | todo | depends on: P-37; open question 9 |
+| P-41 | Remove the Knowledge base page (moved from J-17 on 16 Oct: RAG is entirely Piyush's), its top-bar link and walkthrough chapter; the knowledge API stays | It3 (C-33) | todo | P-36 done |
 | P-40 | Docs: mark built parts in `changes-iteration3.md` and technical-architecture section 17; refresh `Documents/current-system/` (with P-29) | It3 (all) | todo | depends on: everything |
 
 ## Iteration 3: start here
 
 Plan, order and contracts: [team/PLAN.md](../PLAN.md) section 10; changes, feasibility and open questions: `Documents/changes-iteration3.md` (C-23 to C-34).
 
-- **Start with:** RAG (priority from 15 Oct): P-35, P-36, P-34, P-37, P-38, P-39; pause for A-25's commit when it is announced.
-- **Others wait on you:** P-30 (A-17), P-32 (A-26, then A-27 and J-18), P-36 (J-17).
+- **Start with:** RAG (priority from 15 Oct; entirely yours from 16 Oct, including the catalog module, matcher evidence, assessment score, catalog and knowledge pages): P-35 and P-36 done, then P-34, P-41, P-37, P-38, P-39; pause for A-25's commit when it is announced.
+- **Others wait on you:** P-30 (A-17), P-32 (A-26, then A-27 and J-18), P-36 (P-41).
 - **You wait on:** A-25 (paths), A-17 (unit-manager validation) for P-33.
 - **Decided 15 Oct:** unit manager = product manager; sign-up chooses the role (not admin, which is seeded); Document / Instance IDs embedded in the file (SHA-256 fallback); catalog from flex.com/products and official unit pages with name versions.
 - **Still to ask the Zensar point of contact:** re-reads after the freeze, reference documents and reviewers, score formula, non-technical routing, go/no-go alongside the approvals.
