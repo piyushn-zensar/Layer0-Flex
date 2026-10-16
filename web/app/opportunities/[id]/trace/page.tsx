@@ -14,6 +14,7 @@ import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
 import MatchActions from "@/components/matching/MatchActions"; // A-05 (Atharv)
 import Register from "@/components/requirements/Register"; // A-26 (Atharv)
+import { RESPONSES, SORTS, applyFilters, filtersUrl, isFiltered, readFilters, type FilterKey, type Filters } from "@/components/requirements/filters"; // A-27
 import SendToKnowledge from "@/components/knowledge/SendToKnowledge"; // A-11 (Atharv)
 
 type Pane = 1 | 2 | 3;
@@ -35,7 +36,15 @@ export default function TracePage() {
   const [enlarged, setEnlarged] = useState<Pane | null>(null);
   // P-32 (C-27): the RFP step sends an already-read document here (?known=<file>): its stored requirements, not a new read
   const [known, setKnown] = useState<string | null>(null);
-  useEffect(() => setKnown(new URLSearchParams(location.search).get("known")), []);
+  // A-27 (C-32): filters and sort live in the page address, so a link (e.g. from a summary count) opens that view
+  const [filters, setFilters] = useState<Filters>({});
+  useEffect(() => { setKnown(new URLSearchParams(location.search).get("known")); setFilters(readFilters(location.search)); }, []);
+  const setFilter = (k: FilterKey, v: string) => {
+    const next = { ...filters, [k]: v || undefined };
+    setFilters(next);
+    history.replaceState(null, "", filtersUrl(location.pathname, next, location.hash));
+  };
+  const clearFilters = () => { setFilters({}); history.replaceState(null, "", filtersUrl(location.pathname, {}, location.hash)); };
   const linkedRef = useRef(linked); // select() is a stable callback, so it reads the current links from a ref
   const selectedRef = useRef<string | undefined>(undefined);
 
@@ -111,6 +120,14 @@ export default function TracePage() {
   const assessed = data.sent_for_assessment ?? data.rows.some((r) => r.assignments.length > 0); // J-12: unit responses show only once sent
   const pages = shown?.pages ?? [];
   const page = pages[pageNo - 1];
+  const view = applyFilters(data.rows, filters); // A-27: what panes 2 and 3 list
+  const filtered = isFiltered(filters);
+  const categories = [...new Set(data.rows.map((r) => r.req.category))].sort();
+  const units = [...new Set(data.rows.flatMap((r) => [...(r.match?.units ?? []).map((u) => u.bu), ...r.assignments.map((a) => a.bu)]))].sort();
+  const choose = (k: FilterKey, label: string, options: [string, string][]) => (
+    <label>{label} <select value={filters[k] ?? ""} onChange={(e) => setFilter(k, e.target.value)} data-tour={`trace-filter-${k}`}>
+      <option value="">{k === "sort" ? "RFP order" : "All"}</option>
+      {options.map(([v, l]) => <option key={v} value={v}>{l}</option>)}</select></label>);
   // Walkthrough targets (tour/chapters/trace.ts): "trace-sel-*" ids sit on the selected row only, so each id is unique;
   // the first group and the first unanchored requirement get one id each.
   const sel = (reqId: string, name: string) => (reqId === selected ? name : undefined);
@@ -156,6 +173,21 @@ export default function TracePage() {
           <StatusBadge key={bu} status={p.validated === p.total ? "validated" : p.submitted > 0 ? "submitted" : "assigned"}
             label={`${bu} ${p.validated}/${p.total} validated`} title={`${p.submitted} of ${p.total} answers submitted`} />)) : "Not sent for assessment yet"}</span>
       </div>
+      <div className="filters trace-filters" role="search" aria-label="Filter and sort the requirements" data-tour="trace-filters">
+        {choose("category", "Category", categories.map((c) => [c, c]))}
+        {choose("offering", "Offering", [["CTO", "CTO"], ["SEMI_CUSTOM", "Semi-custom"], ["ETO", "ETO"], ["NONE", "Bid desk"], ["unmatched", "Not matched"]])}
+        {choose("unit", "Unit", units.map((u) => [u, u === "BID" ? "Bid desk" : u]))}
+        {choose("response", "Response", Object.entries(RESPONSES))}
+        {choose("compliance", "Compliance", [["met", complianceLabel("met")], ["partial", complianceLabel("partial")], ["not_met", complianceLabel("not_met")]])}
+        {choose("source", "Source", [["verified", "Verified"], ["not_verified", "Not verified"]])}
+        {choose("origin", "Origin", [["extraction", "Extraction"], ["correction", "Correction"], ["customer_change", "Customer change"]])}
+        <label>Pages <input type="number" min={1} className="narrow" value={filters.from ?? ""} onChange={(e) => setFilter("from", e.target.value)} aria-label="From page" />
+          – <input type="number" min={1} className="narrow" value={filters.to ?? ""} onChange={(e) => setFilter("to", e.target.value)} aria-label="To page" /></label>
+        <input type="search" placeholder="Search ID or text" value={filters.q ?? ""} onChange={(e) => setFilter("q", e.target.value)} aria-label="Search the requirements" />
+        {choose("sort", "Sort", Object.entries(SORTS).filter(([k]) => k !== "rfp"))}
+        <span className="muted">{view.length} of {data.rows.length}</span>
+        {filtered && <button type="button" className="secondary sm" onClick={clearFilters}>Clear</button>}
+      </div>
       <div className="trace-legend" aria-label="Offering type legend" data-tour="trace-legend">
         <span className="tag CTO"><strong>CTO</strong> Configure-to-order: catalog product with options (CPQ)</span>
         <span className="tag SEMI_CUSTOM"><strong>Semi-custom</strong> Configured product plus workshop work for this customer</span>
@@ -196,7 +228,7 @@ export default function TracePage() {
 
         <section className="pane" data-tour="trace-pane-2" {...paneProps(2)}>
           {paneHead(2, "Requirement register")}
-          <Register bidId={id} onChanged={reload} rowProps={rowProps}
+          <Register bidId={id} onChanged={reload} rowProps={rowProps} order={filtered ? view.map((r) => r.req.req_id) : undefined}
             extra={(reqId) => reqId === selected && <span data-tour="trace-send-knowledge">
               <SendToKnowledge kind="requirement" refId={reqId} status={sent?.[`requirement:${reqId}`]} onSent={reloadSent} /></span>} />
         </section>
@@ -207,7 +239,7 @@ export default function TracePage() {
           <table className="rows" data-tour="trace-table-3">
             <thead><tr><th className="col-id">ID</th><th>Unit · product</th><th>Response</th></tr></thead>
             <tbody>
-              {data.rows.map(({ req, match: m, unit, product, bom, assignments }) => (
+              {view.map(({ req, match: m, unit, product, bom, assignments }) => (
                 <tr key={req.req_id} {...rowProps(req.req_id)}>
                   <td className="mono trace-id">{req.req_id}</td>
                   <td>

@@ -33,9 +33,11 @@ type Props = {
   rowProps?: (reqId: string) => { className?: string } & Record<string, unknown>;
   /** extra controls under a row's text (e.g. Send to knowledge base on the selected row) */
   extra?: (reqId: string) => React.ReactNode;
+  /** A-27: the trace page's filters and sort: "In register" shows only these requirements, in this order */
+  order?: string[];
 };
 
-export default function Register({ bidId: id, onChanged, rowProps, extra }: Props) {
+export default function Register({ bidId: id, onChanged, rowProps, extra, order }: Props) {
   const { data, error, reload } = useApi<{ requirements: Requirement[]; baseline: Baseline | null; exceptions: number; coverage?: Coverage | null }>(`/api/bids/${id}/requirements`);
   const { data: snapshots } = useApi<Snapshot[]>(`/api/bids/${id}/extraction`);
   const { data: exc, error: excError, reload: reloadExc } = useApi<RequirementException[]>(`/api/bids/${id}/requirements/exceptions`);
@@ -62,8 +64,11 @@ export default function Register({ bidId: id, onChanged, rowProps, extra }: Prop
   const rows = useMemo(() => {
     const q = query.toLowerCase();
     const hit = (r: Requirement) => `${r.req_id} ${r.text} ${r.quote}`.toLowerCase().includes(q);
-    return all.filter((r) => FILTERS[filter].test(r) && (!q || hit(r) || (kidsOf.get(r.req_id) ?? []).some(hit)));
-  }, [all, kidsOf, filter, query]);
+    const base = all.filter((r) => FILTERS[filter].test(r) && (!q || hit(r) || (kidsOf.get(r.req_id) ?? []).some(hit)));
+    if (!order || filter !== "register") return base;
+    const pos = new Map(order.map((rid, i) => [rid, i]));
+    return base.filter((r) => pos.has(r.req_id)).sort((a, b) => pos.get(a.req_id)! - pos.get(b.req_id)!);
+  }, [all, kidsOf, filter, query, order]);
   if (error) return <Alert kind="error" title="Requirements could not be loaded.">{error}</Alert>;
   if (!data) return <Skeleton lines={6} />;
 
@@ -211,6 +216,7 @@ export default function Register({ bidId: id, onChanged, rowProps, extra }: Prop
           ))}
           <input type="search" data-tour="req-search" placeholder="Search ID or text" value={query} onChange={(e) => setQuery(e.target.value)} aria-label="Search line items" />
         </div>
+        {order && filter === "register" && <p className="muted" data-tour="req-filtered">Filtered and sorted by the bar above: {rows.length} of {activeCount} requirements.</p>}
 
         {selected.size > 0 && (
           <div className="bulkbar" role="region" aria-label="Selected line items" data-tour="req-bulkbar">
