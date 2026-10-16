@@ -109,3 +109,4 @@ Plan and contracts: [team/PLAN.md](../PLAN.md) section 9; design: `Documents/tec
 | 15 Oct 2026 | Iteration 3 planned (team/PLAN.md section 10): J-17, J-18 added; J-15 also waits for iteration 3 | J-15 after the screens settle |
 | 16 Oct 2026 | Piyush: RAG is entirely Piyush's; J-17 (remove the Knowledge base page) moved to him as P-41 | J-18 after A-26 |
 | 16 Oct 2026 | Piyush: J-18 has no dependency any more (start now; coordinate the Traceability page with A-26) | J-18 |
+| 16 Oct 2026 | Piyush: P-41 (your prepared J-17 patch) was built directly on main as the same change: page and top-bar link removed, catalog steps moved to `catalog.ts`, walkthrough wording updated; your patch is no longer needed | J-18 |

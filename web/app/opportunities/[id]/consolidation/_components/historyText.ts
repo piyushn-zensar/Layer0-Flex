@@ -29,7 +29,8 @@ const WHAT: Record<string, string> = {
   "change.applied": "applied a change set", "change.discarded": "discarded a change set", "change.follow_up_failed": "could not finish the follow-up of a change set",
   "document.uploaded": "uploaded a document", "extraction_snapshot.read": "read the RFP",
   "comment.asked": "asked a question", "comment.commented": "added a comment", "comment.closed": "closed a question",
-  "knowledge.sent": "sent an item to the knowledge base",
+  "knowledge.sent": "nominated a reviewed example",
+  "knowledge.nominated": "nominated a reviewed example",
 };
 export const what = (e: Pick<ActivityEvent, "entity" | "action">) => WHAT[`${e.entity}.${e.action}`] ?? pretty(e.action).toLowerCase();
 

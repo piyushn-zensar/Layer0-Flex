@@ -58,7 +58,7 @@ const chapter: TourChapter = {
       id: "recap-finish",
       title: "You have completed the walkthrough",
       body: [
-        "You created an opportunity, loaded and read an RFP, reviewed and froze requirements, read the trace, recorded a bid decision and dispatched work, answered and validated a work package, consolidated the response, visited the knowledge queue and handled an addendum. That is the whole Layer 0 loop: agents propose, a named person decides, and every requirement traces back to its page and lines.",
+        "You created an opportunity, loaded and read an RFP, reviewed and froze requirements, read the trace, recorded a bid decision and dispatched work, answered and validated a work package, consolidated the response, searched the product catalog and handled an addendum. That is the whole Layer 0 loop: agents propose, a named person decides, and every requirement traces back to its page and lines.",
         "Press **Finish** to close the walkthrough. It will not open again by itself in this server session; the Walkthrough button in the top bar restarts it or opens a single chapter whenever you want.",
       ],
       instruction: "Press Finish to mark the walkthrough as done.",

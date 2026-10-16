@@ -38,7 +38,7 @@ const chapter: TourChapter = {
       id: "welcome-you",
       title: "What you will do",
       body: [
-        "In the next chapters you will walk through every screen in the order a bid uses them. You will create a new opportunity called **Walkthrough: Syracuse switchgear**, load the Syracuse RFP from the built-in samples, review a few requirements and freeze the baseline, read the traceability view, record a bid decision and dispatch work, answer a work package as a unit, validate and consolidate as the bid manager, visit the knowledge base queue, and finally handle an addendum on the seeded demo opportunity.",
+        "In the next chapters you will walk through every screen in the order a bid uses them. You will create a new opportunity called **Walkthrough: Syracuse switchgear**, load the Syracuse RFP from the built-in samples, review a few requirements and freeze the baseline, read the traceability view, record a bid decision and dispatch work, answer a work package as a unit, validate and consolidate, search the product catalog, and finally handle an addendum on the seeded demo opportunity.",
         "Where a step needs the opportunity in an earlier state than the one you have, the walkthrough skips it or explains what would happen instead. Nothing destructive runs without an explicit instruction, and you can also choose **Use the demo opportunity instead** in chapter 4 to work on the seeded `OPP-0001`, which is already frozen, decided and dispatched.",
         "Expect about **25 to 30 minutes** end to end; reading the Syracuse RFP into line items takes about a minute of that.",
       ],

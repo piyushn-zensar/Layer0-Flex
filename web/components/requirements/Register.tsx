@@ -31,7 +31,7 @@ type Props = {
   onChanged?: () => unknown;
   /** the trace page's selection and linking for a top-level row (data-req, click, keys, selected class) */
   rowProps?: (reqId: string) => { className?: string } & Record<string, unknown>;
-  /** extra controls under a row's text (e.g. Send to knowledge base on the selected row) */
+  /** extra controls under a row's text (e.g. Nominate as a reviewed example on the selected row) */
   extra?: (reqId: string) => React.ReactNode;
   /** A-27: the trace page's filters and sort: "In register" shows only these requirements, in this order */
   order?: string[];

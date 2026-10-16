@@ -146,8 +146,6 @@ export const KB_EXAMPLE_TYPES: Record<KbExampleType, string> = {
   requirement: "Requirement", preference: "Preference", background: "Background information", partial_compliance: "Partial compliance",
   insufficient_evidence: "Insufficient evidence", other: "Other",
 };
-// GET /api/auth/signup-options (P-31): what the sign-up form offers; no sign-in needed. The administrator role is never listed.
-export interface SignupOptions { roles: Record<string, string>; unit_roles: string[]; units: Record<string, string> }
 // GET /api/bids/{id}/schedule (P-33, C-24): unit completion dates, planned submission and the two bid-manager approvals. Dates are ISO "YYYY-MM-DD".
 export interface ScheduleUnit { bu: string; estimated_completion: string | null; note: string; entered_by: string | null }
 export interface Approval { id: number; kind: "schedule" | "compliance"; snapshot: unknown; note: string; approved_by: string; approved_at: string; current: boolean }

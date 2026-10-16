@@ -186,7 +186,7 @@ const chapter: TourChapter = {
       id: "decisions-part-rationale", route: ROUTE, target: "dec-part-rationale", placement: "top",
       title: "Participation rationale",
       body: [
-        "A free-text reason for the record. Keep it short and factual; it is shown on this card, stored with the decision and can be sent to the knowledge base as a reusable precedent (\"for switchgear RFPs of this kind, Crown leads and EP² supplies auxiliary power\").",
+        "A free-text reason for the record. Keep it short and factual; it is shown on this card, stored with the decision and can be nominated as a reviewed example, a reusable precedent (\"for switchgear RFPs of this kind, Crown leads and EP² supplies auxiliary power\").",
       ],
       example: {
         label: "Fill an example rationale",
@@ -251,7 +251,7 @@ const chapter: TourChapter = {
       id: "decisions-gng-rationale", route: ROUTE, target: "dec-gng-rationale", placement: "top",
       title: "Go/no-go rationale",
       body: [
-        "The reason for the decision, in your words; it is shown under the card header once recorded and can be sent to the knowledge base. The example also marks *Open questions* as not met with a note, which is how you record a reservation without blocking the bid.",
+        "The reason for the decision, in your words; it is shown under the card header once recorded and can be nominated as a reviewed example. The example also marks *Open questions* as not met with a note, which is how you record a reservation without blocking the bid.",
       ],
       example: {
         label: "Fill an example rationale and a note",

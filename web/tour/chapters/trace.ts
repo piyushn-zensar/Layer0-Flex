@@ -131,10 +131,10 @@ const chapter: TourChapter = {
     },
     {
       id: "trace-send-knowledge", route: ROUTE, target: "trace-send-knowledge", placement: "left",
-      title: "Send a requirement to the knowledge base",
+      title: "Nominate a requirement as a reviewed example",
       body: [
-        "The selected requirement carries a **Send to knowledge base** link. It puts the requirement in the curator's queue (chapter 10) with an optional note on why it is worth keeping, for example a recurring clause future bids will meet again. Once sent, the link turns into a badge: *sent to knowledge base*, then *in knowledge base* once a curator approves it.",
-        "Validated unit answers (pane 3) and decision rationales (Bid decision page) have the same link. Nothing is added to the knowledge base without a curator's approval.",
+        "The selected requirement carries **Nominate as a reviewed example**. A short form asks what it teaches (requirement, preference, background, partial compliance, insufficient evidence), when it holds, when it does not apply and why it is worth keeping, for example a recurring clause future bids will meet again. It then shows *Waiting for review*, and *Reviewed example* once approved.",
+        "Validated unit answers (pane 3) and decision rationales (Bid decision page) carry the same control. The reviewer is the right person for the item (a unit's manager or designer / engineer for its answers, the bid manager for bid-level items), in **Knowledge review in My work**; nothing becomes reusable without that approval.",
       ],
       fallback: "Select a requirement in pane 2: the link appears under the selected row.",
     },
@@ -294,7 +294,7 @@ const chapter: TourChapter = {
       body: [
         "The Response column lists the work items created at dispatch for the selected requirement: one per participating unit that is matched to it, else the bid desk (**BID**). Each shows the unit, a status badge and, once answered, a compliance badge and the unit's text.",
         "Statuses: **assigned** (sent, no answer yet), **submitted** (the unit answered), **returned** (the bid manager sent it back with a note; the unit answers again), **validated** (the bid manager accepted the answer). Withdrawn items (after a change of match or participation) are hidden. Compliance: **met**, **partial**, **not met**, **exception**. In the demo opportunity, `REQ-0001-0885` has a validated Crown answer: \"Two-section 15 kV arc-resistant metal-clad lineup offered.\"",
-        "A validated answer carries its own *Send to knowledge base* link. Until the bid is sent for assessment the column holds only the note *Responses appear once the bid is sent for assessment*; sending happens with the dispatch on the Bid decision page, next.",
+        "A validated answer carries its own *Nominate as a reviewed example* control. Until the bid is sent for assessment the column holds only the note *Responses appear once the bid is sent for assessment*; sending happens with the dispatch on the Bid decision page, next.",
       ],
       fallback: "Select a requirement to see its assignments; until the bid is sent for assessment every row reads: Responses appear once the bid is sent for assessment.",
     },

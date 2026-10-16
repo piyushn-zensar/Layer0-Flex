@@ -28,7 +28,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       body: [
         "**Opportunities** is the portfolio: every bid with its customer, status and progress; it is also where you land from an opportunity's breadcrumb. **My work** is the inbox of the business units: each unit's work packages, the checklist of requirements it must answer, and the bid manager's validation of those answers.",
-        "**Product catalog** lists the business units and the products the matcher can choose from (Crown switchgear, Anord Mardix busway, EP² control buildings and so on), with their offering type: configure-to-order, semi-custom or engineered-to-order. **Knowledge base** is the curator's queue: requirements, validated answers and decision rationales that people send there for reuse in later bids, approved or rejected by the curator.",
+        "**Product catalog** lists the business units and the products the matcher can choose from (Crown switchgear, Anord Mardix busway, EP² control buildings and so on), with their offering type: configure-to-order, semi-custom or engineered-to-order. Knowledge has no page of its own: a requirement, a validated answer or a decision rationale is **nominated as a reviewed example** where it appears, and the right reviewer approves or rejects it in **Knowledge review in My work**; approved examples help later bids.",
         "The highlighted link shows where you are. Inside an opportunity, **Opportunities** stays highlighted because every opportunity page belongs to the portfolio.",
       ],
       fallback: "The four links sit in the top bar next to the Layer 0 mark.",

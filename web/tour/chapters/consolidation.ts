@@ -261,7 +261,7 @@ const chapter: TourChapter = {
       fallback: "'Validated answers (N)' expands to the table of answers the chapter was drafted from.",
       body: [
         "The material behind the draft: one row per validated answer with the **Requirement** ID and its source, the **Unit** and the product it named, the **Compliance** badge and the **Answer** text as the unit wrote it. In the demo: REQ-0001-0885 (p. 55, lines 16-62), Crown Technical Systems, Comply, *Two-section 15 kV arc-resistant metal-clad lineup offered.*",
-        "The last column, **Knowledge base**, sends a good answer to the house knowledge base so later bids can reuse it; the Knowledge chapter shows that flow.",
+        "The last column nominates a good answer as a **reviewed example** so later bids can reuse it; the unit's reviewer approves it in Knowledge review in My work.",
       ],
     },
     {
@@ -314,7 +314,7 @@ const chapter: TourChapter = {
       fallback: "'Back to Final response' returns to the coverage check.",
       body: [
         "The loop is: Inbox validates answers → Final response shows what is still open → the outline drafts what is validated → the Markdown goes into the proposal. When a customer issues an addendum, the Changes page (chapter 11) revises the baseline and returns the affected answers, and both pages here follow automatically.",
-        "Next: the Knowledge base, where validated answers and documents are kept for the next bid.",
+        "Next: the Product catalog, with the long-term index that later bids search.",
       ],
     },
   ],

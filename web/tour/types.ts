@@ -63,7 +63,7 @@ export interface TourStep {
 
 export interface TourChapter {
   /** Stable id, also the step id prefix: "welcome", "portfolio", "navigation", "intake", "requirements", "trace",
-   * "decisions", "inbox", "consolidation", "knowledge", "changes", "catalog", "recap". */
+   * "decisions", "inbox", "consolidation", "catalog", "changes", "recap". */
   id: string;
   /** Order in the walkthrough (1-based). */
   order: number;
