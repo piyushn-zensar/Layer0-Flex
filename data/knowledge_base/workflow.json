@@ -1,0 +1,6 @@
+{
+  "_note": "Who may answer and who validates, per stage (C-07, technical-architecture 16.5). A role here is a field of business_units.json for a unit (product_manager, design_engineer) or bid_manager for the bid desk. Another customer's sequence is a change to this file, not to code. return_with_question: who may return any submitted answer with a note, besides the validators.",
+  "respond": {"unit": ["design_engineer", "product_manager"], "BID": ["bid_manager"]},
+  "validate": {"unit": ["product_manager"], "BID": ["bid_manager"]},
+  "return_with_question": ["bid_manager"]
+}

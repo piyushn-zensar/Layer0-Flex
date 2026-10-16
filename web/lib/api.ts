@@ -12,7 +12,7 @@ export async function api<T = unknown>(path: string, init: RequestInit = {}): Pr
   const headers = new Headers(init.headers);
   if (init.body && !(init.body instanceof FormData)) headers.set("Content-Type", "application/json");
   const res = await fetch(path, { ...init, headers, cache: "no-store", credentials: "same-origin" });
-  if (res.status === 401 && !path.startsWith("/api/auth/login") && typeof location !== "undefined" && location.pathname !== LOGIN) {
+  if (res.status === 401 && !path.startsWith("/api/auth/login") && typeof location !== "undefined" && ![LOGIN, "/signup"].includes(location.pathname)) {
     location.assign(`${LOGIN}?next=${encodeURIComponent(location.pathname + location.search)}`);
   }
   if (!res.ok) throw new Error(await errorText(res));
@@ -28,6 +28,11 @@ export async function signIn(username: string, password: string): Promise<Me> {
   // ponytail: the PoC's one shared demo password, kept per tab so the walkthrough can sign in as another role
   try { sessionStorage.setItem(DEMO_PASSWORD_KEY, password); } catch { /* storage blocked */ }
   return user;
+}
+
+/** POST /api/auth/signup; the API creates the account and sets the cookie, so the person is signed in. bu only for unit roles. */
+export async function signUp(body: { username: string; name: string; password: string; role: string; bu: string | null }): Promise<Me> {
+  return (await post<{ user: Me }>("/api/auth/signup", body)).user;
 }
 
 /** Sign in as another demo account with the password typed on the sign-in page (asks again if it is not known). */

@@ -36,6 +36,7 @@ from sqlalchemy.orm import Session
 
 from app.core import audit
 from app.core.db import utcnow
+from app.core.web import same_unit
 from app.modules.catalog import service as catalog
 from app.modules.decisions import service as decisions
 from app.modules.knowledge.models import EXAMPLE_TYPES, KINDS, KbItem
@@ -46,7 +47,7 @@ from app.modules.requirements import service as requirements
 from app.modules.workpackages import service as workpackages
 
 COMPLIANCE_WORDS = {"met": "Met", "partial": "Partially met", "not_met": "Not met", "exception": "Exception"}
-REVIEWED_BY = "a unit's product manager or design engineer for its answers; the bid manager for bid-level items"
+REVIEWED_BY = "a unit's manager or designer / engineer for its answers; the bid manager for bid-level items"
 
 
 def _source(db: Session, kind: str, ref: str) -> dict:
@@ -131,7 +132,7 @@ def send(db: Session, kind: str, ref: str, note: str, actor: str) -> KbItem:
 def may_review(item: KbItem, user: dict) -> bool:
     if item.bu == "BID":
         return user.get("role") == "bid_manager"
-    return user.get("role") in ("product_manager", "design_engineer") and user.get("bu") == item.bu
+    return same_unit(user, item.bu)
 
 
 def items(db: Session, status: str | None = None, user: dict | None = None) -> list[KbItem]:

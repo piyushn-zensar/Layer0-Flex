@@ -13,7 +13,6 @@ import hashlib
 import json
 import re
 import shutil
-import zipfile
 from concurrent.futures import ThreadPoolExecutor
 from html.parser import HTMLParser
 from pathlib import Path
@@ -22,7 +21,8 @@ import pymupdf
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.core import audit, config, llm
+from app.core import audit, config, fileid, llm
+from app.core.auth import ROLES
 from app.core.db import utcnow
 from app.modules.ingestion import office
 from app.modules.ingestion import service as ingestion
@@ -50,29 +50,6 @@ PASSAGE_CHARS = 900  # references are dense: about two paragraphs per passage
 
 
 # --- identity --------------------------------------------------------------------------------------------------
-
-def identity(path: Path, sha256: str) -> tuple[str, str, str]:
-    """(document_id, instance_id, id_source) as decided for C-27: the IDs embedded in the file (PDF trailer /ID, else
-    XMP DocumentID / InstanceID; Word settings docId), else the file fingerprint for both."""
-    suffix = path.suffix.lower()
-    if suffix == ".pdf":
-        with pymupdf.open(path) as pdf:
-            kind, value = pdf.xref_get_key(-1, "ID")
-            ids = re.findall(r"<([0-9A-Fa-f]+)>", value) if kind == "array" else []
-            if len(ids) == 2:
-                return ids[0].upper(), ids[1].upper(), "embedded"
-            xmp = pdf.get_xml_metadata() or ""
-            doc, inst = (re.search(rf"xmpMM:{t}(?:>|=\")([^<\"]+)", xmp) for t in ("DocumentID", "InstanceID"))
-            if doc and inst:
-                return doc.group(1), inst.group(1), "embedded"
-    if suffix == ".docx":
-        with zipfile.ZipFile(path) as z:
-            settings = z.read("word/settings.xml").decode("utf-8", "replace") if "word/settings.xml" in z.namelist() else ""
-        found = re.search(r"w15:docId w15:val=\"([^\"]+)\"", settings) or re.search(r"w14:docId w14:val=\"([^\"]+)\"", settings)
-        if found:
-            return found.group(1), sha256, "embedded"  # Word keeps no instance ID: the exact file is the instance
-    return sha256, sha256, "fingerprint"
-
 
 # --- reading ---------------------------------------------------------------------------------------------------
 
@@ -218,7 +195,7 @@ def register(db: Session, path: str | Path, actor: str, collection: str, title: 
     if path.suffix.lower() not in SUFFIXES:
         raise ValueError(f"Unsupported file type {path.suffix!r}; use {', '.join(SUFFIXES)}.")
     sha = hashlib.sha256(path.read_bytes()).hexdigest()
-    document_id, instance_id, id_source = identity(path, sha)
+    document_id, instance_id, id_source = fileid.identity(path.read_bytes(), path.suffix)
     same = db.scalar(select(KbSource).where(KbSource.document_id == document_id, KbSource.instance_id == instance_id,
                                             KbSource.status != "rejected"))
     if same:
@@ -279,7 +256,7 @@ def review(db: Session, ks_id: str, approve: bool, note: str, actor: str, role: 
     Publishing retires the earlier published version of the same document."""
     src = get(db, ks_id)
     if role not in REVIEWERS[src.collection]:
-        allowed = ", ".join(r.replace("_", " ") for r in REVIEWERS[src.collection])
+        allowed = " or ".join(ROLES[r].lower() for r in REVIEWERS[src.collection])
         raise PermissionError(f"Only a {allowed} reviews {COLLECTIONS[src.collection].lower()}.")
     if src.status != "draft":
         raise ValueError(f"{ks_id} is {src.status}; only a draft is reviewed.")

@@ -49,7 +49,7 @@ function Register({ meta, onDone }: { meta: SourceList; onDone: (ks: string) => 
           <button disabled={busy || !allowed} title={allowed ? undefined : "Your role cannot register sources."}>Register</button>
           {busy && <Busy label="Reading the file…" />}
         </div>
-        {!allowed && <p className="muted">Your role cannot register sources; ask the bid manager, a product manager or a design engineer.</p>}
+        {!allowed && <p className="muted">Your role cannot register sources; ask the bid manager, a unit manager or a unit designer / engineer.</p>}
         <Alert kind="error">{error}</Alert>
       </form>
     </details>

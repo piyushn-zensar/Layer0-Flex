@@ -30,7 +30,7 @@
     {"page": 55, "category": "technical", "section": "Description",
      "quote": "Metal Clad Switchgear shall be mounted within a fully enclosed Equipment Building (by others).",
      "text": "Switchgear is installed inside an equipment building supplied by others.",
-     "response": {"compliance": "exception", "response": "Building is by others. An EP² control building could be offered as an alternate.", "validated": false}},
+     "response": {"compliance": "not_met", "response": "Building is by others. An EP² control building could be offered as an alternate.", "reason": "The equipment building is supplied by others under this RFP, not by the switchgear supplier.", "workaround": "Offer an EP² control building as an alternate.", "validated": false}},
     {"page": 55, "category": "technical", "section": "Description",
      "quote": "Separate utility incoming Cable termination compartment is required, that allows the utility to lock.",
      "text": "Provide a separate, utility-lockable incoming cable termination compartment."},

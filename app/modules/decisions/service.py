@@ -104,7 +104,8 @@ def summary(db: Session, opp_id: str, ev: dict | None = None) -> dict:
         "compliance": ("unknown", "No validated answer to a product requirement yet.") if not product else
                       (share >= threshold, f"{share:.0%} of {len(product)} product requirement(s) with validated answers are "
                                            f"fully or partially compliant (threshold {threshold:.0%}, placeholder)."),
-        "schedule": _schedule_criterion([r.req_id for r in reqs if r.category == "schedule"], valid),
+        "schedule": _dates_criterion(opportunities.schedule(db, opp_id, participating_units(db, opp_id)))
+                    or _schedule_criterion([r.req_id for r in reqs if r.category == "schedule"], valid),
         "scope_fit": (not checks["units_outside_scope"],
                       "Units outside the RFP's scope: " + ", ".join(checks["units_outside_scope"]) if checks["units_outside_scope"]
                       else f"Suggested units fit the layers in scope {checks['scope']['in_scope']}."),
@@ -137,6 +138,15 @@ def summary(db: Session, opp_id: str, ev: dict | None = None) -> dict:
         "advice": (f"Advice from Layer 0: {met} of {len(assessable)} assessable criteria met; "
                    f"{len(criteria) - len(assessable)} not known yet. The bid manager decides."),
     }
+
+
+def _dates_criterion(s: dict) -> tuple[bool, str] | None:
+    """C-24 (P-33): once the due date and every participating unit's completion date are known, the planned
+    submission date decides; until then None, and the validated schedule answers decide as before."""
+    if not (s["due_date"] and s["planned_submission"]):
+        return None
+    return (not s["after_due"], f"Planned submission {s['planned_submission']:%d %b %Y} (last unit {s['latest_unit_date']:%d %b %Y} "
+                                f"+ {s['consolidation_days']} day(s) to consolidate) against the RFP due date {s['due_date']:%d %b %Y}.")
 
 
 def _schedule_criterion(schedule: list[str], valid: dict) -> tuple[str, str]:

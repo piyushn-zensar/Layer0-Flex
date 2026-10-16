@@ -117,12 +117,12 @@ Each change lists what was asked, today's behaviour, the required change, its in
 - **Today.** Roles are bid manager, product manager, design engineer and administrator. Requirements have seven categories; *technical* and *compliance* are product categories that the matcher routes to units, while *commercial*, *schedule*, *submission*, *legal* and *staffing* go to the bid desk, which is the bid manager. Unit work is assigned to the unit's design engineer. Who may answer is checked by comparing display names from the business-unit file. The workflow configuration planned in iteration 2 (C-07) is not built.
 - **Change.**
   - Unit roles become **Unit manager** and **Unit designer / engineer**. Decided 15 Oct 2026: the unit manager is the unit's product manager (same accounts and stored names); the design engineer becomes unit designer / engineer.
-  - **Routing by category.** A unit's technical requirements (categories technical and compliance) go to its designers and engineers. Non-technical requirements that concern a participating unit (for example delivery, warranty, unit commercial terms) go to that unit's manager. Bid-level administrative items that belong to no unit (for example submission format or a bid bond) stay on the bid desk (open question 2).
+  - **Routing by category** (decided 16 Oct 2026). Technical requirements (categories technical and compliance) go to the unit's designers and engineers. Only high-level, consolidated non-technical requirements, answered once for the whole bid (for example submission format, a bid bond or the overall bid terms), stay on the bid desk. All other non-technical requirements (for example delivery, warranty, staffing or unit commercial terms) go to the unit managers of the participating units.
   - The unit manager **validates** the unit's responses (unit-level compliance) and enters the unit's completion date (C-24).
   - The rights are read from the workflow configuration, so another sequence is a configuration change, not a code change.
 - **Integration feasibility.** Fits with rework. The technical / non-technical split already exists in the category list. New: the role label and value, routing of non-technical items to units (the matcher assigns only product categories to units today, so a non-technical item needs a rule: every participating unit, or a unit chosen by the bid manager), and permission checks moved from display names to role and unit. The seeded demonstration and the walkthrough assume the bid desk owns all non-technical items, so both are refreshed.
 - **Checked by.** A unit designer / engineer cannot validate; a unit manager cannot answer another unit's items; a non-technical item for a unit reaches that unit's manager, not the bid desk.
-- **Open.** Open question 2.
+- **Open.** None.
 
 ### C-26. Sign-up and complete authentication and authorization
 
@@ -276,12 +276,12 @@ No change is blocked technically. The unit manager (C-25), the sign-up role poli
 | # | Question | For |
 |---|---|---|
 | 1 | Settled (15 Oct 2026): the unit manager is the unit's product manager | — |
-| 2 | Which non-technical requirements go to every participating unit's manager, and which stay with the bid desk (bid-level administrative items)? | Zensar point of contact |
+| 2 | Settled (16 Oct 2026): only high-level, consolidated non-technical requirements stay with the bid desk; all other non-technical requirements go to the unit managers; technical requirements go to the designers and engineers | — |
 | 3 | Does the bid manager still record a separate go/no-go call (13 Oct 2026 decision), or do the schedule and compliance approvals replace it? | Zensar point of contact |
 | 4 | How much consolidation time is allowed between the latest unit date and submission, and is the RFP due date read from the RFP or entered? | Zensar point of contact |
 | 5 | Settled (15 Oct 2026): the person chooses a role at sign-up, except administrator, which is seeded by the server | — |
 | 6 | Settled (15 Oct 2026): the Document ID and Instance ID are the IDs embedded in the file; the same instance arriving for a different bid opens the existing bid | — |
-| 7 | After the automatic freeze, is a reasoned re-read of the same instance (snapshot E2) still allowed? | Zensar point of contact |
+| 7 | After the automatic freeze, is a reasoned re-read of the same instance (snapshot E2) still allowed? (Built default, 16 Oct 2026: no; a re-read is possible only while an incomplete read left nothing frozen) | Zensar point of contact |
 | 8 | Settled (15 Oct 2026): flex.com/products and the official pages it links to for the units in scope. Still open: the site owner's permission for automated retrieval before a pilot | Zensar point of contact |
 | 9 | Which engineering references and verified datasheets can be used (and are licensed), who reviews each collection, and who reviews the evaluation set? | Zensar point of contact |
 | 10 | The preliminary-feasibility formula and its weights | Zensar point of contact |

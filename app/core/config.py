@@ -49,3 +49,4 @@ DEMO_PASSWORD = os.getenv("DEMO_PASSWORD", "")
 TESSERACT_CMD = os.getenv(
     "TESSERACT_CMD", str(Path(os.getenv("LOCALAPPDATA", "")) / "Tesseract-OCR" / "tesseract.exe")
 )
+CATALOG_REFRESH_HOURS = float(os.getenv("CATALOG_REFRESH_HOURS", "24"))  # P-34: 0 = never (tests, offline laptop)

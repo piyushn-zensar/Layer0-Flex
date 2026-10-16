@@ -10,6 +10,7 @@ import PageHead from "@/components/shell/PageHead";
 import { STATUS_EVENT } from "@/components/shell/OppSteps"; // the header listens for it after sending
 import { Alert, Busy, Skeleton, StatusBadge, offeringLabel, useToast } from "@/components/ui";
 import SendToKnowledge from "@/components/knowledge/SendToKnowledge";
+import ScheduleCard from "@/components/schedule/ScheduleCard";
 
 type Route = "unit" | "bid_desk" | "capability_gap" | "needs_owner";
 type Data = {
@@ -151,6 +152,8 @@ export default function AssessmentPage() {
                 <td className="num">{p.total}</td><td className="num">{p.submitted}</td><td className="num">{p.validated}</td></tr>))}</tbody></table>
           <p className="muted">When the units have answered, the bid manager decides on the <Link href={`/opportunities/${id}/decisions`}>Bid decision</Link> step.</p></>}
       </section>
+
+      <ScheduleCard oppId={id} />
     </div>
   );
 }

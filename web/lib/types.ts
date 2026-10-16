@@ -142,3 +142,28 @@ export const KB_EXAMPLE_TYPES: Record<KbExampleType, string> = {
   requirement: "Requirement", preference: "Preference", background: "Background information", partial_compliance: "Partial compliance",
   insufficient_evidence: "Insufficient evidence", other: "Other",
 };
+// GET /api/auth/signup-options (P-31): what the sign-up form offers; no sign-in needed. The administrator role is never listed.
+export interface SignupOptions { roles: Record<string, string>; unit_roles: string[]; units: Record<string, string> }
+// GET /api/opportunities/{id}/schedule (P-33, C-24): unit completion dates, planned submission and the two bid-manager approvals. Dates are ISO "YYYY-MM-DD".
+export interface ScheduleUnit { bu: string; estimated_completion: string | null; note: string; entered_by: string | null }
+export interface Approval { id: number; kind: "schedule" | "compliance"; snapshot: unknown; note: string; approved_by: string; approved_at: string; current: boolean }
+export interface ComplianceCounts { met: number; partial: number; not_met: number; open: number }
+export interface Schedule {
+  due_date: string | null; consolidation_days: number; units: ScheduleUnit[]; missing: string[];
+  latest_unit_date: string | null; planned_submission: string | null; after_due: boolean; ready: boolean;
+  compliance: Record<string, ComplianceCounts>;
+  approvals: { schedule: Approval | null; compliance: Approval | null };
+}
+// GET /api/catalog/published (P-34): the catalog read from the official Flex product pages. Not compliance evidence; matching does not use it.
+export interface PublishedProduct {
+  key: string; bu: string | null; category: string; source_url: string; active: boolean; first_seen: string; last_seen: string;
+  name: string; features: string[]; link: string; version: number; earlier_names: string[];
+}
+export interface PublishedRunSource { url: string; status: "ok" | "failed" | "skipped"; sha256: string; products: number; error: string }
+export interface PublishedRun {
+  id: number | string; started_at: string; finished_at: string | null; status: "running" | "ok" | "partial" | "failed"; trigger: string;
+  sources: PublishedRunSource[]; added: number; changed: number; removed: number; error: string;
+}
+export interface PublishedCatalog { products: PublishedProduct[]; runs: PublishedRun[]; catalog_version: number | null }
+// GET /api/catalog/published/versions?key=...
+export interface PublishedVersion { version: number; name: string; features: string[]; link: string; refresh_id: number | string; valid_from: string; valid_to: string | null }

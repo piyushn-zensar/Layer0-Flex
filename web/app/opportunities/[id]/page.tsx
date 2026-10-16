@@ -36,14 +36,21 @@ export default function DocumentsPage() {
     const form = e.currentTarget;
     const file = new FormData(form); // before the inputs are disabled below
     setBusy("Uploading and reading the RFP… (about a minute for a 100-page RFP)"); setMessage(undefined);
-    try { await post(`/api/opportunities/${id}/documents`, file); form.reset(); await reload(); toast.success("Document received and read."); } catch (err) { fail(err); }
+    try {
+      const r = await post<{ existing_bid?: string; message?: string; earlier_instance?: { bid: string; same_instance: boolean } | null }>(`/api/opportunities/${id}/documents`, file);
+      form.reset();
+      if (r.existing_bid) { toast.info(r.message ?? `Already read in bid ${r.existing_bid}.`); router.push(`/opportunities/${r.existing_bid}/trace`); return; } // C-27: read once
+      await reload(); toast.success("Document received and read.");
+      if (r.earlier_instance) toast.info(`An earlier version of this document was read in bid ${r.earlier_instance.bid}; if this one replaces it, add it there as a change document.`);
+    } catch (err) { fail(err); }
     finally { setBusy(""); }
   }
   async function extract(reason?: string) {
     setBusy("Reader agent running… (about a minute for a 100-page RFP)"); setMessage(undefined);
     try {
-      const r = await post<{ proposed: number; problems: string[]; snapshot?: number; exceptions?: number }>(`/api/opportunities/${id}/requirements/extract`, reason ? { reason } : {});
-      const saved = r.snapshot ? ` Saved as extraction snapshot ${snapshotName(r.snapshot)}${r.exceptions !== undefined ? `; ${r.exceptions} exception${r.exceptions === 1 ? "" : "s"}` : ""}.` : "";
+      const r = await post<{ proposed: number; problems: string[]; snapshot?: number; exceptions?: number; frozen?: number | null }>(`/api/opportunities/${id}/requirements/extract`, reason ? { reason } : {});
+      const saved = (r.snapshot ? ` Saved as extraction snapshot ${snapshotName(r.snapshot)}${r.exceptions !== undefined ? `; ${r.exceptions} exception${r.exceptions === 1 ? "" : "s"}` : ""}.` : "")
+        + (r.frozen ? ` Requirements frozen automatically as baseline ${r.frozen}.` : ""); // C-27: no approval step
       if (r.problems.length) setMessage({ text: `${r.proposed} line items proposed.${saved} Some pages were not read:`, problems: r.problems });
       else { if (saved) toast.success(`${r.proposed} line items proposed.${saved}`); router.push(`/opportunities/${id}/requirements`); }
     } catch (e) { fail(e); } finally { setBusy(""); }

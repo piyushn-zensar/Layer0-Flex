@@ -328,9 +328,13 @@ def extract(db: Session, opp_id: str, actor: str, reason: str = "") -> dict:
                  reason=snap.reason, coverage=coverage)
     db.commit()
     opportunities.set_status(db, opp_id, "review", actor)
+    # C-27: a successful extraction (every page read or deliberately skipped, at least one verified requirement) is
+    # frozen at once, with no approval; otherwise nothing is frozen and the read can be repeated with a reason
+    complete = FREEZE_ON_READ and not read.get("pages_failed") and not read.get("chunks_failed") and coverage["admitted"] > 0
+    frozen = freeze(db, opp_id, AUTO_FREEZE).number if complete else None
     return {"proposed": len(proposed), "duplicates": len(dups), "groups": len(made),
             "requirements": len(current(db, opp_id)), "exceptions": coverage["exceptions"], "snapshot": snap.number,
-            "coverage": coverage, "problems": problems + group_problems}
+            "coverage": coverage, "problems": problems + group_problems, "frozen": frozen}
 
 
 def _snapshot_item(r: Requirement) -> dict:
@@ -528,7 +532,15 @@ def review(db: Session, req_id: str, action: str, actor: str, text: str | None =
     db.commit()
 
 
+AUTO_FREEZE = "Layer 0 (automatic freeze)"  # the actor of a freeze made by a successful extraction (C-27)
+FREEZE_ON_READ = True  # C-27; tests of the draft stage (still reached by an incomplete read) switch it off
+
+
 def freeze(db: Session, opp_id: str, actor: str) -> Baseline:
+    """Baseline 1 of the register. Since C-27 a successful extraction calls this itself; a bid already frozen
+    returns its latest baseline (scripts and tests may still call it)."""
+    if (b := baseline(db, opp_id)) is not None:
+        return b
     _writable(db, opp_id)
     _read_main_document(db, opp_id)
     items = [r for r in current(db, opp_id) if r.status == "approved"]

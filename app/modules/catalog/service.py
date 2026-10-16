@@ -22,12 +22,16 @@ Public contract:
     portfolio() -> dict                         standard product ratings and unit capacity (portfolio.json, placeholders)
     people() -> list[str]                       actors for the PoC user picker
     unit_of(actor) -> str | None                business-unit code of a product manager / design engineer
+
+Published catalog (P-34, C-28; scrape.py, re-exported): refresh(db, trigger) -> CatalogRefresh, published(db) -> dict,
+    versions(db, key), refresh_forever() (the start-up and 24-hour job). It never changes the matcher's prompt.
 """
 import json
 from functools import lru_cache
 
 from app.core import config
 from app.core.vectors import Index
+from app.modules.catalog.scrape import published, refresh, versions  # noqa: F401  (public contract)
 
 
 @lru_cache
@@ -176,3 +180,17 @@ if __name__ == "__main__":  # self-check: python -m app.modules.catalog.service
     hit = next(h for h in search("BMR491 quarter brick 1,300 W", k=10) if h["kind"] == "catalog_item")
     assert hit["family"] == "FPM-DCDC" and all(i["family"] == "FPM-DCDC" for i in items("FPM-DCDC"))
     print("catalog ok")
+
+
+def refresh_forever() -> None:
+    """The scheduled job (P-34): refresh now (server start), then every CATALOG_REFRESH_HOURS, in a background thread.
+    A failed run is recorded on the run and the last good catalog stays."""
+    import time
+
+    from app.core.db import SessionLocal
+    trigger = "start"
+    while True:
+        with SessionLocal() as db:
+            refresh(db, trigger)
+        trigger = "schedule"
+        time.sleep(config.CATALOG_REFRESH_HOURS * 3600)

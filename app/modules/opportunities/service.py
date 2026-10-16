@@ -18,15 +18,17 @@ Public contract (other modules call only these):
     sample_file(name, kind) -> (filename, bytes)  ValueError for an unknown name or a sample of another kind
 """
 import hashlib
+from datetime import date, timedelta
 from pathlib import Path
 
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.core import audit, config
+from app.core import audit, config, fileid
 from app.core.audit import AuditEvent
-from app.modules.opportunities.models import STATUSES, Document, Opportunity
+from app.modules.opportunities.models import (STATUSES, BidApproval, BidSchedule, Document, DocumentIdentity,
+                                               Opportunity, UnitSchedule)
 
 FILES = config.STORE / "files"
 READABLE = (".pdf", ".docx", ".xlsx")  # Word and Excel are read through a rendered PDF (ingestion/office.py, P-28)
@@ -150,9 +152,33 @@ def add_document(db: Session, opp_id: str, filename: str, data: bytes, role: str
     doc = Document(id=f"{opp_id}-{sha[:12]}", sha256=sha, opportunity_id=opp_id, filename=filename, role=role, path=str(path),
                    status="uploaded" if path.suffix in READABLE else "unsupported")
     db.add(doc)
-    audit.record(db, actor, "uploaded", "document", doc.id, opp_id, sha256=sha, filename=filename, role=role)
+    ident, instance, source = fileid.identity(data, suffix)
+    db.add(DocumentIdentity(document_id=doc.id, doc_ident=ident, instance_ident=instance, id_source=source))
+    audit.record(db, actor, "uploaded", "document", doc.id, opp_id, sha256=sha, filename=filename, role=role,
+                 document_ident=ident, instance_ident=instance)
     db.commit()
     return doc
+
+
+def known_instance(db: Session, filename: str, data: bytes, opp_id: str) -> dict | None:
+    """C-27: has another bid already read this document? {"bid", "document", "same_instance"} for the most recent
+    such bid (a bid that has been read: status review or later), else None. same_instance False = the same Document ID
+    in a different instance (the document was edited and saved again)."""
+    ident, instance, _ = fileid.identity(data, Path(filename).suffix)
+    rows = db.execute(select(DocumentIdentity, Document, Opportunity)
+                      .join(Document, Document.id == DocumentIdentity.document_id)
+                      .join(Opportunity, Opportunity.id == Document.opportunity_id)
+                      .where(DocumentIdentity.doc_ident == ident, Opportunity.id != opp_id)
+                      .order_by(Document.received_at.desc())).all()
+    read = [(i, d, o) for i, d, o in rows if FORWARD.get(o.status, 0) >= FORWARD["review"]]
+    same = next(((i, d, o) for i, d, o in read if i.instance_ident == instance), None)
+    hit = same or (read[0] if read else None)
+    return None if hit is None else {"bid": hit[2].id, "bid_title": hit[2].title, "document": hit[1].id,
+                                     "filename": hit[1].filename, "same_instance": same is not None}
+
+
+def identity_of(db: Session, doc_id: str) -> DocumentIdentity | None:
+    return db.get(DocumentIdentity, doc_id)
 
 
 def get_document(db: Session, doc_id: str) -> Document | None:
@@ -174,3 +200,76 @@ def set_document_status(db: Session, doc_id: str, status: str, page_count: int |
     if page_count is not None:
         doc.page_count = page_count
     db.commit()
+
+
+READ_ONCE = True  # C-27: a document instance read in one bid is not read into another; tests of other flows switch it off
+
+
+# --- schedule and approvals (C-24, P-33) ----------------------------------------------------------------------
+
+CONSOLIDATION_DAYS = 5  # ponytail: placeholder until the business gives its consolidation time (open question 4)
+
+
+def set_due(db: Session, opp_id: str, due_date: date | None, consolidation_days: int, actor: str) -> BidSchedule:
+    require(db, opp_id)
+    if consolidation_days < 0:
+        raise ValueError("Consolidation days cannot be negative.")
+    bs = db.get(BidSchedule, opp_id) or BidSchedule(opportunity_id=opp_id, updated_by=actor)
+    bs.due_date, bs.consolidation_days, bs.updated_by = due_date, consolidation_days, actor
+    db.add(bs)
+    audit.record(db, actor, "schedule_set", "schedule", opp_id, opp_id, due_date=str(due_date) if due_date else None,
+                 consolidation_days=consolidation_days)
+    db.commit()
+    return bs
+
+
+def set_unit_completion(db: Session, opp_id: str, bu: str, when: date, note: str, actor: str) -> UnitSchedule:
+    require(db, opp_id)
+    row = db.scalar(select(UnitSchedule).where(UnitSchedule.opportunity_id == opp_id, UnitSchedule.bu == bu))
+    before = str(row.estimated_completion) if row else None
+    row = row or UnitSchedule(opportunity_id=opp_id, bu=bu, estimated_completion=when, entered_by=actor)
+    row.estimated_completion, row.note, row.entered_by = when, note.strip(), actor
+    db.add(row)
+    audit.record(db, actor, "completion_estimated", "schedule", opp_id, opp_id, bu=bu, before=before, after=str(when))
+    db.commit()
+    return row
+
+
+def schedule(db: Session, opp_id: str, units: list[str]) -> dict:
+    """The consolidated schedule for the participating `units`: each unit's estimated completion, the latest, the
+    planned submission date (latest + consolidation days) once every unit has a date, and whether it is after the due date."""
+    require(db, opp_id)
+    bs = db.get(BidSchedule, opp_id)
+    dates = {u.bu: u for u in db.scalars(select(UnitSchedule).where(UnitSchedule.opportunity_id == opp_id))}
+    days = bs.consolidation_days if bs else CONSOLIDATION_DAYS
+    missing = [bu for bu in units if bu not in dates]
+    latest = max((dates[bu].estimated_completion for bu in units if bu in dates), default=None)
+    planned = latest + timedelta(days=days) if units and not missing else None
+    due = bs.due_date if bs else None
+    return {"due_date": due, "consolidation_days": days,
+            "units": [{"bu": bu, "estimated_completion": dates[bu].estimated_completion if bu in dates else None,
+                       "note": dates[bu].note if bu in dates else "", "entered_by": dates[bu].entered_by if bu in dates else None}
+                      for bu in units],
+            "missing": missing, "latest_unit_date": latest, "planned_submission": planned,
+            "after_due": bool(planned and due and planned > due), "ready": bool(units) and not missing}
+
+
+def approve(db: Session, opp_id: str, kind: str, snapshot: dict, actor: str, note: str = "") -> BidApproval:
+    """Record the bid manager's approval of `kind` with the figures approved (the caller computes them)."""
+    require(db, opp_id)
+    if kind not in ("schedule", "compliance"):
+        raise ValueError("Approve the schedule or the compliance position.")
+    a = BidApproval(opportunity_id=opp_id, kind=kind, snapshot=snapshot, note=note.strip(), approved_by=actor)
+    db.add(a)
+    audit.record(db, actor, "approved", "bid_" + kind, opp_id, opp_id, snapshot=snapshot, note=note.strip())
+    db.commit()
+    return a
+
+
+def approvals(db: Session, opp_id: str) -> dict[str, BidApproval | None]:
+    """The latest approval of each kind (None when never approved)."""
+    out = {}
+    for kind in ("schedule", "compliance"):
+        out[kind] = db.scalar(select(BidApproval).where(BidApproval.opportunity_id == opp_id, BidApproval.kind == kind)
+                              .order_by(BidApproval.id.desc()).limit(1))
+    return out

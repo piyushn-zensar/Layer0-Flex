@@ -213,7 +213,8 @@ def test_person_changes_match():
 
 def test_workflow_order_and_roles():
     """Fixes from the 8 Oct system test: decide and dispatch only after freeze; only the unit answers and only
-    the Bid Manager validates submitted work; re-dispatch withdraws work that no longer fits.
+    the unit's product manager validates submitted work (A-17; the bid manager may only return it with a note);
+    re-dispatch withdraws work that no longer fits.
     Appended by Atharv (append-only on this shared file)."""
     client = signed_in()
     BM, CROWN = auth("bid.manager"), auth("crown.de")
@@ -228,12 +229,13 @@ def test_workflow_order_and_roles():
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp and i["status"] == "assigned")
     url = f"/api/assignments/{item['id']}"
-    assert client.post(f"{url}/validate", json={"ok": True}, headers=BM).status_code == 409        # nothing submitted
+    assert client.post(f"{url}/validate", json={"ok": True}, headers=auth("crown.pm")).status_code == 409  # nothing submitted
     assert client.post(f"{url}/respond", json={"compliance": "met"}, headers=auth("ep2.de")).status_code == 403
     assert client.post(f"{url}/respond", json={"compliance": "met"}, headers=CROWN).status_code == 200
     assert client.post(f"{url}/respond", json={"compliance": "met"}, headers=CROWN).status_code == 409  # already submitted
     assert client.post(f"{url}/validate", json={"ok": True}, headers=CROWN).status_code == 403      # no self-validation
-    assert client.post(f"{url}/validate", json={"ok": True}, headers=BM).status_code == 200
+    assert client.post(f"{url}/validate", json={"ok": True}, headers=BM).status_code == 403         # A-17: the unit validates
+    assert client.post(f"{url}/validate", json={"ok": True}, headers=auth("crown.pm")).status_code == 200
 
     # the bid manager takes the item away from Crown: re-dispatch withdraws Crown's work; a product item does not
     # fall back to the bid desk, it needs an owner (A-19, C-08; updated by Atharv)
@@ -287,7 +289,8 @@ def test_review_findings_fixed():
     assert client.post(f"/api/opportunities/{opp}/requirements/merge",
                        json={"req_ids": [p55["req_id"], p56["req_id"]], "text": "x"}).status_code == 409  # cross-page
     assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 200
-    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 409  # no empty baseline 2
+    again = client.post(f"/api/opportunities/{opp}/baselines")  # C-27: publishing again returns the existing baseline
+    assert again.status_code == 200 and again.json()["number"] == 1
     assert client.post(f"/api/requirements/{rows[0]['req_id']}/review", json={"action": "approve"}).status_code == 409
     assert len(client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]) == len(first_ids)
 
@@ -545,7 +548,9 @@ def test_bid_and_portfolio_checks():
     assert crit["deviations"]["status"] == "not_met" and "p. 74" in crit["deviations"]["detail"]
     units = {r["bu"]: r for r in load["rows"]}
     assert {"CROWN", "EP2"} <= set(units) and all(r["total"] >= r["open_here"] for r in units.values())
-    assert crit["capacity"]["status"] == "met" and "placeholder" in crit["capacity"]["detail"]
+    # open work counts every bid in the store, so other tests' bids can push a unit over: check the rule, not a fixed outcome
+    over = any(r["over"] for r in units.values())
+    assert crit["capacity"]["status"] == ("not_met" if over else "met") and "placeholder" in crit["capacity"]["detail"]
 
 
 def test_response_outline_agent():
@@ -888,7 +893,8 @@ def test_sign_in():
     # every account in data/accounts.json can sign in, and its name is a person the catalog knows (stored actors stay valid)
     from app.modules.catalog import service as catalog
     names = set(catalog.people()) | {"Administrator"}
-    assert all(a["name"] in names and a["role"] in core_auth.ROLES for a in core_auth.accounts().values())
+    roster = {a["username"] for a in __import__("json").loads(core_auth.ACCOUNTS.read_text(encoding="utf-8"))}  # sign-ups (P-31) aside
+    assert all(a["name"] in names and a["role"] in core_auth.ROLES for u, a in core_auth.accounts().items() if u in roster)
 
 
 def test_register_and_exception_queue():
@@ -1030,7 +1036,7 @@ def test_permissions_in_bids_documents_requirements_and_changes():
     # bid manager only: create a bid, upload and read documents, run the reader, publish, change documents
     r = client.post("/api/opportunities", json={"title": "not mine"}, headers=pm)
     assert r.status_code == 403 and r.json()["detail"] == \
-        "Only a bid manager can do this; you are signed in as Crown Product Manager (product manager)."
+        "Only a bid manager can do this; you are signed in as Crown Product Manager (unit manager)."
     opp = client.post("/api/opportunities", json={"title": "permissions"}).json()["id"]
     assert client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)}, headers=de).status_code == 403
     doc = client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)}).json()["id"]
@@ -1046,7 +1052,7 @@ def test_permissions_in_bids_documents_requirements_and_changes():
     url = f"/api/opportunities/{opp}/requirements/from-lines"
     lines = {"page": 55, "line_start": 52, "line_end": 53, "category": "technical"}
     r = client.post(url, json=lines, headers=admin)
-    assert r.status_code == 403 and r.json()["detail"].startswith("Only a bid manager, product manager or design engineer")
+    assert r.status_code == 403 and r.json()["detail"].startswith("Only a bid manager, unit manager or unit designer / engineer")
     added = client.post(url, json=lines, headers=pm).json()
     assert added["created_by"] == "Crown Product Manager"
     exclude = {"action": "reject", "reason": "duplicate of the reader's item"}
@@ -1226,7 +1232,7 @@ def test_assignment_history():
     client.post(f"{url}/respond", json={"compliance": "partial", "response": "12 positions", "reason": "20 asked"}, headers=crown)
     client.post(f"{url}/validate", json={"ok": False, "note": "Can you reach 20?"}, headers=bm)
     client.post(f"{url}/respond", json={"compliance": "met", "response": "Two lineups"}, headers=crown)
-    client.post(f"{url}/validate", json={"ok": True}, headers=bm)
+    client.post(f"{url}/validate", json={"ok": True}, headers=auth("crown.pm"))  # A-17: the unit's product manager validates
 
     events = client.get(f"{url}/history", headers=crown).json()
     assert [e["action"] for e in events] == ["assigned", "responded", "returned", "responded", "validated"]
@@ -1341,7 +1347,8 @@ def test_permissions_in_atharvs_modules():
         for who in (pm, de, admin):
             assert client.post(url, json=body, headers=who).status_code == 403, url
     item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp and i["status"] == "submitted")
-    assert client.post(f"/api/assignments/{item['id']}/validate", json={"ok": True}, headers=pm).status_code == 403
+    for who in (de, admin):  # A-17: the unit's product manager validates; the design engineer and administrator do not
+        assert client.post(f"/api/assignments/{item['id']}/validate", json={"ok": True}, headers=who).status_code == 403
     for url, body in ((f"/api/assignments/{item['id']}/respond", {"compliance": "met"}),
                       (f"/api/opportunities/{opp}/comments", {"req_id": req_id, "text": "?", "kind": "question"})):
         assert client.post(url, json=body, headers=admin).status_code == 403, url

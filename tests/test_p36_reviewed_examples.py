@@ -48,13 +48,14 @@ def test_reviewed_examples():
     assert (v2["status"], v2["version"], v2["supersedes"], v2["limits"]) == ("queued", 2, item.kb_id, "not for tables or drawings")
     assert client.post(f"/api/knowledge/{item.kb_id}/revise", json={"limits": "again"}).status_code == 409  # one at a time
     with SessionLocal() as db:
-        assert {e["ks_id"] for e in k.evidence(db, ["reviewed_example"])} == {item.kb_id}
+        assert item.kb_id in {e["ks_id"] for e in k.evidence(db, ["reviewed_example"])}  # other tests add their own
     client.post(f"/api/knowledge/{v2['kb_id']}/review", json={"approve": True})
     with SessionLocal() as db:
         assert db.query(KbItem).filter_by(kb_id=item.kb_id).one().status == "retired"
         ex = k.evidence(db, ["reviewed_example"])
-        assert [e["ks_id"] for e in ex] == [v2["kb_id"]] and "Limits: not for tables or drawings" in ex[0]["text"]
-        assert [e["id"] for e in k.learned(db)] == [v2["kb_id"]]  # the index reads the database, no file
+        mine = [e for e in ex if e["ks_id"] in (item.kb_id, v2["kb_id"])]
+        assert [e["ks_id"] for e in mine] == [v2["kb_id"]] and "Limits: not for tables or drawings" in mine[0]["text"]
+        assert v2["kb_id"] in {e["id"] for e in k.learned(db)} and item.kb_id not in {e["id"] for e in k.learned(db)}  # from the database
 
         # illustrative material is never verified evidence, even when approved
         db.add(KbItem(kb_id="KB-9999", kind="response", source_ref="x", opportunity_id=opp, requirement="r",

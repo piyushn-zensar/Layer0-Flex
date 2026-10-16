@@ -1,6 +1,7 @@
 "use client";
 // A business unit's work package: checklist response per requirement, then validation.  Owner: Atharv.
-// The unit's product manager / design engineer answers (bid desk: the Bid Manager); only the Bid Manager validates.
+// The unit's product manager / design engineer answers (bid desk: the Bid Manager); the unit's product manager validates
+// (workflow.json, A-17) and the Bid Manager may return any answer with a question.
 // A-07: links to the main RFP and each line's highlighted source; returned items reopen with the note; "Submit all".
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -9,6 +10,7 @@ import { api, errorMessage, post, useApi, useMe } from "@/lib/api";
 import { complianceLabel, type Assignment, type Requirement, type Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import KnowledgeReview from "@/components/knowledge/KnowledgeReview";
+import UnitCompletion from "@/components/schedule/UnitCompletion";
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
 
 // C-12 response fields (A-18): every assignment row carries them; null until a unit fills them in
@@ -107,7 +109,9 @@ export default function InboxPage() {
   if (!data) return <div className="content"><PageHead title="My work" /><Skeleton lines={4} /></div>;
 
   const canAnswer = data.unit ? [data.unit.product_manager, data.unit.design_engineer].includes(me) : me === BID_MANAGER;
-  const canValidate = me === BID_MANAGER;
+  // A-17: the unit's product manager validates (the bid manager for the bid desk); the bid manager may return any answer
+  const canValidate = data.unit ? me === data.unit.product_manager : me === BID_MANAGER;
+  const canReturn = canValidate || me === BID_MANAGER;
   const opportunities = [...new Set(data.items.map((a) => a.opportunity_id))];
   const openCount = data.items.filter(open).length;
   const toValidate = data.items.filter((a) => a.status === "submitted").length;
@@ -150,6 +154,7 @@ export default function InboxPage() {
         {canAnswer && openCount > 0 && <button disabled={busy !== undefined} onClick={submitAll} data-tour="inbox-submit-all">Submit all answered rows</button>}
         {busy === "all" && <Busy label="Sending…" />}
       </PageHead>
+      <UnitCompletion bu={bu} />
       <KnowledgeReview />
       <nav className="row inbox-links" aria-label="Work packages" data-tour="inbox-units">
         <span>Work package:</span>
@@ -221,7 +226,7 @@ export default function InboxPage() {
               <td data-tour={v("inbox-validate-cell") ?? t("inbox-status-cell")}>
                 <StatusBadge status={a.status} />{a.validated_by && a.status === "validated" && <div className="muted">by {a.validated_by}</div>}
                 <History id={a.id} />
-                {canValidate && a.status === "submitted" && (returning === a.id ? (
+                {canReturn && a.status === "submitted" && (returning === a.id ? (
                   <div className="form compact inbox-return" data-tour={v("inbox-return-form")}>
                     <label><span className="sr-only">Why is it returned?</span>
                       <textarea rows={2} value={note} onChange={(e) => setNote(e.target.value)} placeholder="Why is it returned? The unit sees this note." autoFocus data-tour={v("inbox-return-note")} /></label>
@@ -234,7 +239,7 @@ export default function InboxPage() {
                   </div>
                 ) : (
                   <div className="inline inbox-validate">
-                    <button className="sm" disabled={busy !== undefined} data-tour={v("inbox-validate")} onClick={() => run(a.id, () => post(`/api/assignments/${a.id}/validate`, { ok: true, note: "" }), `${a.req_id} validated.`)}>Validate</button>
+                    {canValidate && <button className="sm" disabled={busy !== undefined} data-tour={v("inbox-validate")} onClick={() => run(a.id, () => post(`/api/assignments/${a.id}/validate`, { ok: true, note: "" }), `${a.req_id} validated.`)}>Validate</button>}
                     <button disabled={busy !== undefined} className="secondary sm" data-tour={v("inbox-return")} onClick={() => { setReturning(a.id); setNote(""); }}>Return</button>
                     {busy === a.id && <Busy label="Saving…" />}
                   </div>

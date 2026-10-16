@@ -81,13 +81,6 @@ export default function RequirementsPage() {
     if (frozen) return correct({ kind: "split", reason, req_id: r.req_id, parts }, r.req_id);
     return act(post(`/api/requirements/${r.req_id}/split`, { parts }), `${r.req_id} split into ${parts.length} line items.`, r.req_id);
   };
-  const freeze = async () => {
-    const ok = await ask({ title: "Publish the register?", confirmLabel: "Publish",
-      message: `The ${activeCount} requirements in the register are published as baseline 1 for assessment. Open exceptions stay listed as open questions. After this, changes are corrections with a reason.` });
-    if (!ok) return;
-    await act(post(`/api/opportunities/${id}/baselines`), "Register published as baseline 1.");
-    window.dispatchEvent(new Event("opp-status-changed")); // the stepper and status badge update at once
-  };
   const flip = (set: Set<string>, reqId: string) => { const n = new Set(set); if (n.has(reqId)) n.delete(reqId); else n.add(reqId); return n; };
   const toggle = (reqId: string) => setSelected((s) => flip(s, reqId));
   const openForm = (next?: { id: string; mode: "edit" | "split" | "exclude" }) => { setFormError(undefined); setEditing(next); };
@@ -183,9 +176,8 @@ export default function RequirementsPage() {
       <PageHead level={2} title="Requirements"
         help={frozen ? <span data-tour="req-baseline">Baseline {data.baseline!.number} published by {data.baseline!.frozen_by} ({data.baseline!.count} items).
             Edits, splits, merges, exclusions and missed requirements are saved as corrections with a reason; customer documents run on the <Link href={`/opportunities/${id}/changes`}>Changes</Link> step.</span>
-          : <span data-tour="req-help">{activeCount} requirements in the register; related line items are grouped (expand a group to see its sub-requirements). Each was verified against its source; exclude anything that is not a requirement, then publish the register.</span>}>
+          : <span data-tour="req-help">{activeCount} requirements in the register; related line items are grouped (expand a group to see its sub-requirements). Each was verified against its source; a complete reading is frozen automatically (C-27); this one was not complete, so read the RFP again with a reason from the RFP step.</span>}>
         {busy && <Busy label="Saving…" />}
-        {!frozen && <button data-tour="req-freeze" disabled={busy || activeCount === 0 || !bm} title={bm ? "" : BID_MANAGER_ONLY} onClick={freeze}>Publish</button>}
       </PageHead>
 
       <div className="filters" role="tablist" aria-label="Requirements view" data-tour="req-tabs">

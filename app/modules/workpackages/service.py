@@ -56,13 +56,14 @@ Public contract:
         their submitted / validated answers are returned with the note (the unit answers again), assigned and
         returned work keeps its status and gets the note. Returns how many assignments were touched
 """
+import json
 from collections import Counter, defaultdict
 
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.core import audit
+from app.core import audit, auth, config
 from app.core.db import utcnow
 from app.modules.catalog import service as catalog
 from app.modules.decisions import service as decisions
@@ -233,11 +234,29 @@ def inbox(db: Session, bu: str) -> list[Assignment]:
                            .order_by(Assignment.opportunity_id, Assignment.req_id)))
 
 
-def _may_answer(actor: str, bu: str) -> bool:
+WORKFLOW = json.loads((config.DATA / "knowledge_base" / "workflow.json").read_text("utf-8"))  # A-17, C-07
+
+
+def _people(stage: str, bu: str) -> list[str]:
+    """The names who may act at `stage` (respond | validate) for a unit's item, from workflow.json: the unit's named
+    people, then every account with a configured role in that unit (signed-up people, P-31)."""
+    roles = WORKFLOW[stage]["BID" if bu == BID_DESK else "unit"]
     if bu == BID_DESK:
-        return actor == BID_MANAGER
-    unit = catalog.unit(bu)
-    return bool(unit) and actor in (unit["product_manager"], unit["design_engineer"])
+        named = [BID_MANAGER] if "bid_manager" in roles else []
+    else:
+        unit = catalog.unit(bu)
+        named = [unit[role] for role in roles] if unit else []
+    return named + [a["name"] for a in auth.accounts().values()
+                    if a["role"] in roles and (a["bu"] == bu or bu == BID_DESK) and a["name"] not in named]
+
+
+def validator(bu: str) -> str:
+    """Who validates a unit's answers (the first configured validator): the seed and scripts act as this person."""
+    return _people("validate", bu)[0]
+
+
+def _may_answer(actor: str, bu: str) -> bool:
+    return actor in _people("respond", bu)
 
 
 def respond(db: Session, assignment_id: int, compliance: str, product_ref: str | None, response: str, actor: str,
@@ -297,9 +316,14 @@ def _get(db: Session, assignment_id: int) -> Assignment:
 
 
 def validate(db: Session, assignment_id: int, ok: bool, note: str, actor: str) -> None:
+    """The unit's configured validator (workflow.json; default its product manager, the bid manager for the bid desk)
+    validates or returns; the bid manager may also return any answer with a question (C-05, C-07)."""
     a = _get(db, assignment_id)
-    if actor != BID_MANAGER:
-        raise PermissionError("Only the Bid Manager validates or returns answers.")
+    returning = not ok and BID_MANAGER == actor and "bid_manager" in WORKFLOW["return_with_question"]
+    if actor not in _people("validate", a.bu) and not returning:
+        who = " or ".join(_people("validate", a.bu)) or "the configured validator"
+        raise PermissionError(f"Only {who} validates {a.bu}'s answers" + ("; the bid manager may return one with a note."
+                                                                          if a.bu != BID_DESK else "."))
     if a.status != "submitted":
         raise ValueError(f"This item is {a.status}; only submitted answers can be validated or returned.")
     if not ok and not note.strip():

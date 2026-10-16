@@ -151,6 +151,6 @@ def history(assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
 
 @router.post("/assignments/{assignment_id}/validate")
 def validate(body: ValidateIn, request: Request, assignment_id: int = AssignmentId, db: Session = Depends(get_db)):
-    require(request, BID_MANAGER)  # ponytail: the bid manager validates until A-17 moves it to the unit's configured role
+    require(request, BID_MANAGER, "product_manager", "design_engineer")  # the service checks the unit's configured validator (A-17)
     _call(service.validate, db, assignment_id, body.ok, body.note, actor(request))
     return {"ok": True}
