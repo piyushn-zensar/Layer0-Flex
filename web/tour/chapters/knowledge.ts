@@ -202,7 +202,7 @@ const chapter: TourChapter = {
       example: {
         label: "Queue a requirement to reject",
         apply: async (ctx) => {
-          const r = await ctx.api<{ requirements: { req_id: string; status: string }[] }>(`/api/opportunities/${ctx.oppId}/requirements`);
+          const r = await ctx.api<{ requirements: { req_id: string; status: string }[] }>(`/api/bids/${ctx.oppId}/requirements`);
           const req = r.requirements.find((q) => q.status === "approved") ?? r.requirements[0];
           if (!req) throw new Error("This opportunity has no requirements yet.");
           const id = await send(ctx, "requirement", req.req_id, "Customer-specific wording; probably not reusable.");

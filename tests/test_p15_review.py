@@ -41,14 +41,14 @@ def test_selection_anchors_exactly_on_every_frozen_page():
 
 def test_blank_short_text_falls_back_to_the_quote():
     client = signed_in()
-    if client.get("/api/opportunities/OPP-0001").status_code == 404:
+    if client.get("/api/bids/OPP-0001").status_code == 404:
         seed_demo.main()  # test_smoke.py expects the demo to be OPP-0001
-    opp = client.post("/api/opportunities", json={"title": "blank text"}).json()["id"]
+    opp = client.post("/api/bids", json={"title": "blank text"}).json()["id"]
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
-    client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
-    lines = client.post(f"/api/opportunities/{opp}/requirements/from-lines",
+    client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    lines = client.post(f"/api/bids/{opp}/requirements/from-lines",
                         json={"page": 55, "line_start": 52, "line_end": 52, "text": "   "}).json()
-    pasted = client.post(f"/api/opportunities/{opp}/requirements",
+    pasted = client.post(f"/api/bids/{opp}/requirements",
                          json={"quote": "Switchgear shall be Arc-resistant Type 2B.", "text": " "}).json()
     assert lines["text"] == lines["quote"].strip() and lines["text"].startswith("Switchgear shall be")
     assert pasted["text"] == "Switchgear shall be Arc-resistant Type 2B."

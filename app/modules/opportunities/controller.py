@@ -21,7 +21,7 @@ def _doc(d) -> dict:
     return {k: v for k, v in row(d).items() if k != "path"}  # never expose the server's file system
 
 
-@router.post("/opportunities")
+@router.post("/bids")
 def create(body: OpportunityIn, request: Request, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)  # section 16.6: the bid manager creates bids and uploads their documents
     try:
@@ -30,7 +30,7 @@ def create(body: OpportunityIn, request: Request, db: Session = Depends(get_db))
         raise HTTPException(422, str(exc))
 
 
-@router.get("/opportunities/{opp_id}")
+@router.get("/bids/{opp_id}")
 def detail(opp_id: str, db: Session = Depends(get_db)):
     opp = service.get(db, opp_id)
     if not opp:
@@ -38,7 +38,7 @@ def detail(opp_id: str, db: Session = Depends(get_db)):
     return {"opportunity": row(opp), "documents": [_doc(d) for d in service.documents(db, opp_id)]}
 
 
-@router.get("/opportunities/{opp_id}/activity")
+@router.get("/bids/{opp_id}/activity")
 def activity(opp_id: str, entity: str | None = None, req_id: str | None = None, bu: str | None = None,
              person: str | None = None, before: int | None = None, limit: int = 200, db: Session = Depends(get_db)):
     """The bid's activity log (C-16): every recorded event, newest first, read-only, open to everyone signed in."""
@@ -69,7 +69,7 @@ def _attach(db: Session, request: Request, background: BackgroundTasks, opp_id: 
     return _doc(doc) | {"existing": doc.id in known}
 
 
-@router.post("/opportunities/{opp_id}/documents")
+@router.post("/bids/{opp_id}/documents")
 async def upload(opp_id: str, request: Request, background: BackgroundTasks, role: str = Form("main"),
                  file: UploadFile = File(...), db: Session = Depends(get_db)):
     data = await file.read()
@@ -86,7 +86,7 @@ def samples():
     return {"samples": service.samples()}
 
 
-@router.post("/opportunities/{opp_id}/documents/from-sample")
+@router.post("/bids/{opp_id}/documents/from-sample")
 def upload_sample(opp_id: str, body: SampleIn, request: Request, background: BackgroundTasks,
                   db: Session = Depends(get_db)):
     """Attach a sample RFP as the main document: the same storing, reading, JSON and status transitions as an upload."""

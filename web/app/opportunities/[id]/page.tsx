@@ -13,8 +13,8 @@ export default function DocumentsPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const toast = useToast();
-  const { data, error, reload } = useApi<{ opportunity: Opportunity; documents: Received[] }>(`/api/opportunities/${id}`);
-  const { data: snapshots } = useApi<Snapshot[]>(`/api/opportunities/${id}/extraction`);
+  const { data, error, reload } = useApi<{ opportunity: Opportunity; documents: Received[] }>(`/api/bids/${id}`);
+  const { data: snapshots } = useApi<Snapshot[]>(`/api/bids/${id}/extraction`);
   const bm = isBidManager(useMe()); // uploading and reading are the bid manager's (section 16.6)
   const readBefore = (snapshots?.length ?? 0) > 0; // a snapshot exists: reading again needs a reason (E2, E3...)
   const [busy, setBusy] = useState("");
@@ -24,7 +24,7 @@ export default function DocumentsPage() {
   const [searching, setSearching] = useState(false);
   const search = (form: FormData) => {
     setSearching(true);
-    return api<{ mode: string; passages: Passage[] }>(`/api/opportunities/${id}/rfp-search?q=${encodeURIComponent(String(form.get("q") ?? ""))}`)
+    return api<{ mode: string; passages: Passage[] }>(`/api/bids/${id}/rfp-search?q=${encodeURIComponent(String(form.get("q") ?? ""))}`)
       .then(setFound, fail).finally(() => setSearching(false));
   };
   const fail = (e: unknown) => setMessage({ text: errorMessage(e) });
@@ -36,13 +36,13 @@ export default function DocumentsPage() {
     const form = e.currentTarget;
     const file = new FormData(form); // before the inputs are disabled below
     setBusy("Uploading and reading the RFP… (about a minute for a 100-page RFP)"); setMessage(undefined);
-    try { await post(`/api/opportunities/${id}/documents`, file); form.reset(); await reload(); toast.success("Document received and read."); } catch (err) { fail(err); }
+    try { await post(`/api/bids/${id}/documents`, file); form.reset(); await reload(); toast.success("Document received and read."); } catch (err) { fail(err); }
     finally { setBusy(""); }
   }
   async function extract(reason?: string) {
     setBusy("Reader agent running… (about a minute for a 100-page RFP)"); setMessage(undefined);
     try {
-      const r = await post<{ proposed: number; problems: string[]; snapshot?: number; exceptions?: number }>(`/api/opportunities/${id}/requirements/extract`, reason ? { reason } : {});
+      const r = await post<{ proposed: number; problems: string[]; snapshot?: number; exceptions?: number }>(`/api/bids/${id}/requirements/extract`, reason ? { reason } : {});
       const saved = r.snapshot ? ` Saved as extraction snapshot ${snapshotName(r.snapshot)}${r.exceptions !== undefined ? `; ${r.exceptions} exception${r.exceptions === 1 ? "" : "s"}` : ""}.` : "";
       if (r.problems.length) setMessage({ text: `${r.proposed} line items proposed.${saved} Some pages were not read:`, problems: r.problems });
       else { if (saved) toast.success(`${r.proposed} line items proposed.${saved}`); router.push(`/opportunities/${id}/requirements`); }

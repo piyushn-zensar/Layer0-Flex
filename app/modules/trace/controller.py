@@ -13,7 +13,7 @@ def portfolio(db: Session = Depends(get_db)):
     return [i | {"opp": row(i["opp"])} for i in service.portfolio(db)]
 
 
-@router.get("/opportunities/{opp_id}/trace")
+@router.get("/bids/{opp_id}/trace")
 def trace(opp_id: str, db: Session = Depends(get_db)):
     try:
         t = service.trace(db, opp_id)

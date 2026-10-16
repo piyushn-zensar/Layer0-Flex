@@ -80,7 +80,7 @@ const chapter: TourChapter = {
       fallback: "Above the table: one \"Open the RFP\" button per opportunity and, for a real unit, one hand-off download per opportunity.",
       body: [
         "**Open the RFP** has one button per opportunity in this package; it opens that opportunity's Traceability page, where the unit reads the requirement next to the highlighted lines of the PDF. The requirement IDs in the first column do the same for a single row (`/trace#REQ-…`).",
-        "**Hand-off for this unit's systems** downloads `GET /api/opportunities/<opp>/handoff/CROWN` as `<opp>-CROWN-handoff.json`: the unit's assignments grouped into three routes for its own tools. It is explained at the end of this chapter, once an answer has been validated. The bid desk has no hand-off (it has no downstream system).",
+        "**Hand-off for this unit's systems** downloads `GET /api/bids/<opp>/handoff/CROWN` as `<opp>-CROWN-handoff.json`: the unit's assignments grouped into three routes for its own tools. It is explained at the end of this chapter, once an answer has been validated. The bid desk has no hand-off (it has no downstream system).",
       ],
     },
     {

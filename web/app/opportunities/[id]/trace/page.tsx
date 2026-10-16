@@ -21,8 +21,8 @@ type TraceView = Trace & { sent_for_assessment?: boolean };
 export default function TracePage() {
   const { id } = useParams<{ id: string }>();
   const toast = useToast();
-  const { data, error, reload } = useApi<TraceView>(`/api/opportunities/${id}/trace`);
-  const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/opportunities/${id}/knowledge`); // A-11
+  const { data, error, reload } = useApi<TraceView>(`/api/bids/${id}/trace`);
+  const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/bids/${id}/knowledge`); // A-11
   const [selected, setSelected] = useState<string>();
   const [pageNo, setPageNo] = useState(1);
   const [docId, setDocId] = useState<string>(); // P-11: the document shown in pane 1 (default the main RFP)
@@ -35,7 +35,7 @@ export default function TracePage() {
   // Runs the matching agent over the requirements that nobody has decided yet (accepted, manual and rejected stay).
   const matchProducts = () => {
     setMatching(true);
-    post<{ matched: number; kept: number }>(`/api/opportunities/${id}/match`)
+    post<{ matched: number; kept: number }>(`/api/bids/${id}/match`)
       .then((r) => { toast.success(`Matching done: ${r.matched} requirement(s) matched, ${r.kept} kept as decided.`); return reload(); },
         (e) => toast.error(errorMessage(e)))
       .finally(() => setMatching(false));

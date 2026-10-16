@@ -1,4 +1,4 @@
-"""J-11 phase 1: GET /api/opportunities/{id}/compliance-matrix, the rows behind the Compliance matrix screen.
+"""J-11 phase 1: GET /api/bids/{id}/compliance-matrix, the rows behind the Compliance matrix screen.
 
 Run:  .venv\\Scripts\\python -m pytest -q tests/test_compliance_matrix.py
 Uses a temporary store, so it never touches your local database (no model call: frozen answers only).
@@ -32,8 +32,8 @@ def _seeded():
 
 def test_matrix_response_shape_and_unknown_bid():
     client, opp = _seeded()
-    assert client.get("/api/opportunities/OPP-9999/compliance-matrix").status_code == 404
-    res = client.get(f"/api/opportunities/{opp}/compliance-matrix")
+    assert client.get("/api/bids/OPP-9999/compliance-matrix").status_code == 404
+    res = client.get(f"/api/bids/{opp}/compliance-matrix")
     assert res.status_code == 200
     data = res.json()
     assert set(data) == {"rows", "total", "answered", "blocking"} and data["total"] == 13
@@ -49,7 +49,7 @@ def test_matrix_response_shape_and_unknown_bid():
 
 def test_a18_fields_are_empty_before_a18_and_read_when_present():
     client, opp = _seeded()
-    for r in client.get(f"/api/opportunities/{opp}/compliance-matrix").json()["rows"]:
+    for r in client.get(f"/api/bids/{opp}/compliance-matrix").json()["rows"]:
         assert all(r[f] is None for f in service.EXTENDED) or r["compliance"] in ("partial", "not_met")  # after A-18
     bare = SimpleNamespace(id=1, status="submitted", compliance="partial", response="Lead time 14 weeks")  # no A-18 fields
     out = service._response_fields(bare)
@@ -65,8 +65,8 @@ def test_a18_fields_are_empty_before_a18_and_read_when_present():
 
 def test_source_metadata_points_at_the_page_and_boxes():
     client, opp = _seeded()
-    main = client.get(f"/api/opportunities/{opp}").json()["documents"][0]["id"]
-    rows = client.get(f"/api/opportunities/{opp}/compliance-matrix").json()["rows"]
+    main = client.get(f"/api/bids/{opp}").json()["documents"][0]["id"]
+    rows = client.get(f"/api/bids/{opp}/compliance-matrix").json()["rows"]
     for r in rows:
         assert r["document_id"] == main and isinstance(r["page"], int) and r["source"].startswith("p. ")
         assert r["spans"] and all(s["document_id"] == main and s["page"] >= 1 and s["bboxes"] for s in r["spans"])
@@ -83,7 +83,7 @@ def test_one_row_per_requirement_and_assignment_keeps_each_units_answer():
         withdrawn = db.query(Assignment).filter_by(opportunity_id=opp, req_id=opp.replace("OPP-", "REQ-") + "-0013").one()
         withdrawn.status = "withdrawn"  # nobody holds this one any more
         db.commit()
-    data = client.get(f"/api/opportunities/{opp}/compliance-matrix").json()
+    data = client.get(f"/api/bids/{opp}/compliance-matrix").json()
     assert len(data["rows"]) == 14 and data["total"] == 13  # 13 requirements, one with two units, one with none
     mine = {r["unit"]: r for r in data["rows"] if r["req_id"] == req}
     assert set(mine) == {"CROWN", "EP2"} and all(r["assignments"] == 2 for r in mine.values())

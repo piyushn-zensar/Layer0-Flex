@@ -18,17 +18,17 @@ def test_sent_for_assessment_follows_the_dispatched_work():
     seed_demo.main()  # the demo bid: dispatched, some answers validated
     client = signed_in()
     dispatched = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    t = client.get(f"/api/opportunities/{dispatched}/trace").json()
+    t = client.get(f"/api/bids/{dispatched}/trace").json()
     assert t["sent_for_assessment"] is True and any(r["assignments"] for r in t["rows"])
 
     # a bid nobody dispatched has no unit work, so nothing to show yet
-    fresh = client.post("/api/opportunities", json={"title": "not sent yet"}).json()["id"]
-    t = client.get(f"/api/opportunities/{fresh}/trace").json()
+    fresh = client.post("/api/bids", json={"title": "not sent yet"}).json()["id"]
+    t = client.get(f"/api/bids/{fresh}/trace").json()
     assert t["sent_for_assessment"] is False and t["progress"] == {}
 
     # a no-go withdraws only the open work: answers already submitted or validated stay, and so does the flag
-    assert client.post(f"/api/opportunities/{dispatched}/go-no-go", json={"outcome": "no_go"}).status_code == 200
-    t = client.get(f"/api/opportunities/{dispatched}/trace").json()
+    assert client.post(f"/api/bids/{dispatched}/go-no-go", json={"outcome": "no_go"}).status_code == 200
+    t = client.get(f"/api/bids/{dispatched}/trace").json()
     assert t["opp"]["status"] == "no_go"
     assert t["sent_for_assessment"] is any(r["assignments"] for r in t["rows"])
     assert t["sent_for_assessment"] is True  # the seed has validated answers

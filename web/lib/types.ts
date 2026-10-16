@@ -105,7 +105,7 @@ export interface ChangeSet {
   items: ChangeItem[];
 }
 export interface Changes { baseline: { number: number; count: number } | null; drastic_threshold: number; sets: ChangeSet[] }
-// GET /api/opportunities/{id}/activity (P-27): the bid's audit log, newest first; query entity, req_id, bu, person,
+// GET /api/bids/{id}/activity (P-27): the bid's audit log, newest first; query entity, req_id, bu, person,
 // before (= next_before of the previous page), limit. Read-only.
 export interface ActivityEvent { id: number; at: string; actor: string; action: string; entity: string; entity_id: string; data: Record<string, unknown> }
 export interface Activity { events: ActivityEvent[]; total: number; next_before: number | null; filters: { entities: string[]; people: string[]; units: string[] } }

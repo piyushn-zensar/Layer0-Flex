@@ -43,7 +43,7 @@ export default function MatchActions({ oppId, reqId, match: m, dispatched, onDon
   };
   const save = () => {
     setBusy(true);
-    post(`/api/opportunities/${oppId}/requirements/${reqId}/match`,
+    post(`/api/bids/${oppId}/requirements/${reqId}/match`,
       { units: draft!.map(({ product_id, offering_type }) => ({ product_id, offering_type })) })
       .then(() => { setBusy(false); setDraft(undefined); onDone(); toast.success(`${reqId}: match saved.`); }, fail);
   };

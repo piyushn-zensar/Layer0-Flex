@@ -23,7 +23,7 @@ const field = (ctx: TourCtx, tourId: string): Field | null => {
   return el.matches("input, select, textarea") ? (el as Field) : el.querySelector<Field>("input, select, textarea");
 };
 const demo = (ctx: TourCtx) => ctx.get<boolean>("demo") === true;
-const detail = async (ctx: TourCtx) => { try { return await ctx.api<Detail>(`/api/opportunities/${ctx.oppId}`); } catch { return null; } };
+const detail = async (ctx: TourCtx) => { try { return await ctx.api<Detail>(`/api/bids/${ctx.oppId}`); } catch { return null; } };
 const mainDoc = async (ctx: TourCtx) => (await detail(ctx))?.documents.find((d) => d.role === "main") ?? null;
 const READ_STATUSES = ["review", "frozen", "go", "no_go", "dispatched", "consolidating", "submitted"];
 /** The page does not poll: when the API says the main RFP is ingested but the table still shows an older status
@@ -52,7 +52,7 @@ const chapter: TourChapter = {
       placement: "right",
       body: [
         "An opportunity is the container for everything about one RFP: its documents, the requirements read out of them, the matches to business units, the bid decision, the units' answers, the final response and later changes. It is kept for the life of the project.",
-        "Creating one is a single form: `POST /api/opportunities` with a title, an optional customer and a customer type. The server allocates the next free ID (`OPP-0003` if two exist), records who created it (the signed-in person, read from the sign-in token) and starts it in status **new**.",
+        "Creating one is a single form: `POST /api/bids` with a title, an optional customer and a customer type. The server allocates the next free ID (`OPP-0003` if two exist), records who created it (the signed-in person, read from the sign-in token) and starts it in status **new**.",
         "On success you land on the opportunity's RFP documents page; nothing is read until a main RFP is attached there.",
       ],
     },
@@ -170,7 +170,7 @@ const chapter: TourChapter = {
       onEnter: openDetails("rfp-upload-form"),
       fallback: "The upload form sits under the table; once review has started it folds into \"Add another document\".",
       body: [
-        "**RFP file (PDF, Word or Excel)** takes one file (Word and Excel are read through a rendered PDF; other types are recorded but not read); **Role** defaults to *main* for a fresh opportunity and to *addendum* once requirement review has started. **Upload and read** posts the file as `multipart/form-data` to `/api/opportunities/{opp}/documents`: the server stores it and answers at once, then reads it in the background.",
+        "**RFP file (PDF, Word or Excel)** takes one file (Word and Excel are read through a rendered PDF; other types are recorded but not read); **Role** defaults to *main* for a fresh opportunity and to *addendum* once requirement review has started. **Upload and read** posts the file as `multipart/form-data` to `/api/bids/{opp}/documents`: the server stores it and answers at once, then reads it in the background.",
         "The page does not poll: press **Refresh status** to see *ingesting* turn into *ingested* (the walkthrough does this for you in the next steps). While an uploaded main RFP is still being read the reader-agent button is disabled with \"Waiting for the main RFP to be read\"; with no document at all, pressing it only returns the API's message \"Upload the main RFP and wait until it has been read.\"",
         "You can upload the Syracuse RFP manually from `data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf`, or let the next step attach the bundled copy through the sample route: same storage, same reading, same JSON.",
       ],
@@ -198,13 +198,13 @@ const chapter: TourChapter = {
       instruction: "Press \"Use example\" to attach the bundled Syracuse RFP as the main document, or upload the PDF yourself with role main.",
       fallback: "The upload form is under the documents table.",
       body: [
-        "**Use example** calls `POST /api/opportunities/{opp}/documents/from-sample` with `{\"name\": \"syracuse_rfp\"}`. The server takes the bundled file (`RFP-2023-20-Switchgear-Procurement-Final.pdf`, 101 pages) from a whitelist (`GET /api/samples` lists the three samples: this RFP, the hyperscale RFP and the Syracuse addendum), stores it as role *main* and starts reading it, exactly as a manual upload would.",
+        "**Use example** calls `POST /api/bids/{opp}/documents/from-sample` with `{\"name\": \"syracuse_rfp\"}`. The server takes the bundled file (`RFP-2023-20-Switchgear-Procurement-Final.pdf`, 101 pages) from a whitelist (`GET /api/samples` lists the three samples: this RFP, the hyperscale RFP and the Syracuse addendum), stores it as role *main* and starts reading it, exactly as a manual upload would.",
         "Only the Syracuse RFP has **frozen reader answers**, so it is the one new RFP that can be read offline. Any other PDF is stored and laid out the same way, but the reader agent then needs the model connection.",
       ],
       example: {
         label: "Use example: syracuse_rfp",
         apply: async (ctx) => {
-          await ctx.post(`/api/opportunities/${ctx.oppId}/documents/from-sample`, { name: "syracuse_rfp" });
+          await ctx.post(`/api/bids/${ctx.oppId}/documents/from-sample`, { name: "syracuse_rfp" });
           ctx.set("rfpRefreshed", false);
           ctx.el("rfp-refresh")?.click();
         },
@@ -255,7 +255,7 @@ const chapter: TourChapter = {
       onEnter: async (ctx) => { await syncDocs(ctx); },
       fallback: "The search card appears once the main RFP is ingested.",
       body: [
-        "Ask in plain words; `GET /api/opportunities/{opp}/rfp-search?q=…` returns the best passages with **page and line range**, so a bid manager can check a question against the source without opening the PDF. \"What short-circuit rating is required?\" brings back p. 63, lines 11-17 (bus bracing for short-circuit currents) and p. 64, lines 3-25 (\"Short-circuit current at rated max kV: (18,000)\", close and latch 62,000 A peak).",
+        "Ask in plain words; `GET /api/bids/{opp}/rfp-search?q=…` returns the best passages with **page and line range**, so a bid manager can check a question against the source without opening the PDF. \"What short-circuit rating is required?\" brings back p. 63, lines 11-17 (bus bracing for short-circuit currents) and p. 64, lines 3-25 (\"Short-circuit current at rated max kV: (18,000)\", close and latch 62,000 A peak).",
         "The small print under the results says how it searched: **Meaning-based search** when embeddings are available (the Syracuse passages' vectors are frozen in `data/vector_cache`, so this works offline), otherwise **Keyword search** as the fallback. Headers and footers are left out of the passages.",
         "This index is short-term and per opportunity: it answers questions about *this* RFP. The long-term knowledge base (products, past responses, approved knowledge) is a different index, shown in chapter 10.",
       ],
@@ -280,7 +280,7 @@ const chapter: TourChapter = {
       instruction: "Press \"Run the reader agent → requirements\" and wait; the page moves to the Requirements step when it is done (about a minute).",
       fallback: "The button is below the search card while the opportunity is new; it disappears once review has started.",
       body: [
-        "`POST /api/opportunities/{opp}/requirements/extract` runs two agents over the layout model, never over raw PDF text. The **reader agent** goes page by page and proposes **line items**: each has a short requirement text, a category, and a **verbatim quote** that is then located on the page. A quote found on its lines is *EXTRACTED* (anchored to page, lines and boxes); one that cannot be located is kept as *UNANCHORED* for a person to check, never dropped.",
+        "`POST /api/bids/{opp}/requirements/extract` runs two agents over the layout model, never over raw PDF text. The **reader agent** goes page by page and proposes **line items**: each has a short requirement text, a category, and a **verbatim quote** that is then located on the page. A quote found on its lines is *EXTRACTED* (anchored to page, lines and boxes); one that cannot be located is kept as *UNANCHORED* for a person to check, never dropped.",
         "Then exact-duplicate quotes are marked **duplicate**, and the **grouping agent** folds related items of a page into **groups** with sub-requirements. For the Syracuse RFP both agents answer from frozen replies (no model call); their proposals are drafts in status *proposed*, created by \"reader agent (Bid Manager)\".",
         "Rules: it needs the main RFP in *ingested*; it only runs while the opportunity is *new* or *review* and before any review action (afterwards re-reading would lose that work, so the API refuses and you add missed items on the Requirements page instead); a re-run replaces only the agents' unreviewed drafts and keeps anything a person added. On success the status becomes **review** and the page opens Requirements; if some pages could not be read, the problems are listed here instead.",
       ],

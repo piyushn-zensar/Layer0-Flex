@@ -22,7 +22,7 @@ def _coverage(db: Session, opp_id: str) -> dict:
         raise HTTPException(404, str(exc))
 
 
-@router.get("/opportunities/{opp_id}/consolidation")
+@router.get("/bids/{opp_id}/consolidation")
 def coverage(opp_id: str, db: Session = Depends(get_db)):
     cov = _coverage(db, opp_id)
     rows = [{"requirement": row(r["req"], "source"), "match": _match(r["match"]),
@@ -30,13 +30,13 @@ def coverage(opp_id: str, db: Session = Depends(get_db)):
     return cov | {"rows": rows}
 
 
-@router.get("/opportunities/{opp_id}/compliance-matrix")
+@router.get("/bids/{opp_id}/compliance-matrix")
 def compliance_matrix_rows(opp_id: str, db: Session = Depends(get_db)):
     _coverage(db, opp_id)  # 404 for an unknown opportunity
     return service.compliance_matrix(db, opp_id)
 
 
-@router.get("/opportunities/{opp_id}/compliance-matrix.csv")
+@router.get("/bids/{opp_id}/compliance-matrix.csv")
 def compliance_matrix(opp_id: str, db: Session = Depends(get_db)):
     _coverage(db, opp_id)  # 404 for an unknown opportunity
     name = re.sub(r"[^A-Za-z0-9-]", "_", opp_id)[:40]  # header-safe file name
@@ -44,7 +44,7 @@ def compliance_matrix(opp_id: str, db: Session = Depends(get_db)):
                     headers={"Content-Disposition": f'attachment; filename="{name}-compliance-matrix.csv"'})
 
 
-@router.get("/opportunities/{opp_id}/compliance-matrix.xlsx")
+@router.get("/bids/{opp_id}/compliance-matrix.xlsx")
 def compliance_matrix_xlsx(opp_id: str, db: Session = Depends(get_db)):
     _coverage(db, opp_id)  # 404 for an unknown opportunity
     name = re.sub(r"[^A-Za-z0-9-]", "_", opp_id)[:40]
@@ -53,13 +53,13 @@ def compliance_matrix_xlsx(opp_id: str, db: Session = Depends(get_db)):
                     headers={"Content-Disposition": f'attachment; filename="{name}-compliance-matrix.xlsx"'})
 
 
-@router.get("/opportunities/{opp_id}/response-outline")
+@router.get("/bids/{opp_id}/response-outline")
 def response_outline(opp_id: str, db: Session = Depends(get_db)):
     _coverage(db, opp_id)  # 404 for an unknown opportunity
     return service.response_outline(db, opp_id)
 
 
-@router.get("/opportunities/{opp_id}/response-outline.md")
+@router.get("/bids/{opp_id}/response-outline.md")
 def response_outline_md(opp_id: str, db: Session = Depends(get_db)):
     _coverage(db, opp_id)
     name = re.sub(r"[^A-Za-z0-9-]", "_", opp_id)[:40]

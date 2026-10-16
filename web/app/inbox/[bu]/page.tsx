@@ -38,7 +38,7 @@ function Questions({ oppId, reqId, assignmentId, open, me, bm, onChanged }:
   const [notes, setNotes] = useState<Note[]>();
   const [error, setError] = useState<string>();
   const [busy, setBusy] = useState(false);
-  const load = () => api<Note[]>(`/api/opportunities/${oppId}/comments?req_id=${encodeURIComponent(reqId)}`).then(setNotes, (e) => setError(errorMessage(e)));
+  const load = () => api<Note[]>(`/api/bids/${oppId}/comments?req_id=${encodeURIComponent(reqId)}`).then(setNotes, (e) => setError(errorMessage(e)));
   const act = (request: Promise<unknown>, done: string) => {
     setBusy(true);
     request.then(() => { toast.success(done); onChanged(); return load(); }, (e) => toast.error(errorMessage(e))).finally(() => setBusy(false));
@@ -58,7 +58,7 @@ function Questions({ oppId, reqId, assignmentId, open, me, bm, onChanged }:
       <form className="form compact" onSubmit={(e) => {
         e.preventDefault();
         const form = e.currentTarget, f = new FormData(form);
-        act(post(`/api/opportunities/${oppId}/comments`, { req_id: reqId, assignment_id: assignmentId, kind: f.get("kind"), text: f.get("text") })
+        act(post(`/api/bids/${oppId}/comments`, { req_id: reqId, assignment_id: assignmentId, kind: f.get("kind"), text: f.get("text") })
           .then(() => form.reset()), f.get("kind") === "question" ? "Question sent." : "Comment added.");
       }}>
         <label><span className="sr-only">Question or comment</span>
@@ -165,7 +165,7 @@ export default function InboxPage() {
           {data.unit && <>
             <span className="inbox-sep" aria-hidden="true" />
             <span>Hand-off for this unit&apos;s systems <span className="muted">(JSON: CPQ seed, basis of design, specialist queue)</span>:</span>
-            {opportunities.map((o) => <a key={o} className="button secondary sm" href={`/api/opportunities/${o}/handoff/${bu}`} data-tour={`inbox-handoff-${o}`}>{o}</a>)}
+            {opportunities.map((o) => <a key={o} className="button secondary sm" href={`/api/bids/${o}/handoff/${bu}`} data-tour={`inbox-handoff-${o}`}>{o}</a>)}
             <span className="muted">Starting points for people, not a configuration or a design.</span>
           </>}
         </div>)}

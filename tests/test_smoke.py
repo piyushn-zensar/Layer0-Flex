@@ -41,26 +41,26 @@ def same_page(rows: list[dict], n: int) -> list[dict]:
 def test_demo_flow_and_api():
     seed_demo.main()
     client = signed_in()
-    for url in ["/api/portfolio", "/api/people", "/api/opportunities/OPP-0001",
-                "/api/opportunities/OPP-0001/requirements", "/api/opportunities/OPP-0001/trace",
-                "/api/opportunities/OPP-0001/decisions", "/api/opportunities/OPP-0001/consolidation",
-                "/api/opportunities/OPP-0001/changes", "/api/inbox/CROWN", "/api/inbox/EP2", "/api/inbox/BID",
+    for url in ["/api/portfolio", "/api/people", "/api/bids/OPP-0001",
+                "/api/bids/OPP-0001/requirements", "/api/bids/OPP-0001/trace",
+                "/api/bids/OPP-0001/decisions", "/api/bids/OPP-0001/consolidation",
+                "/api/bids/OPP-0001/changes", "/api/inbox/CROWN", "/api/inbox/EP2", "/api/inbox/BID",
                 "/api/catalog?q=relay"]:
         assert client.get(url).status_code == 200, url
-    trace = client.get("/api/opportunities/OPP-0001/trace").json()
+    trace = client.get("/api/bids/OPP-0001/trace").json()
     by_id = {r["req"]["req_id"]: r for r in trace["rows"]}
     assert by_id["REQ-0001-0006"]["req"]["source"].startswith("p. 55")
     assert by_id["REQ-0001-0002"]["unit"]["code"] == "EP2"
     assert client.get(f"/api/documents/{trace['doc']['id']}/pages/55.png").headers["content-type"] == "image/png"
-    csv = client.get("/api/opportunities/OPP-0001/compliance-matrix.csv").text
+    csv = client.get("/api/bids/OPP-0001/compliance-matrix.csv").text
     assert "p. 55, lines" in csv
 
     # rule R6: the same file in a second opportunity is that opportunity's own document
-    opp2 = client.post("/api/opportunities", json={"title": "second"}).json()["id"]
+    opp2 = client.post("/api/bids", json={"title": "second"}).json()["id"]
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
-    doc2 = client.post(f"/api/opportunities/{opp2}/documents", files={"file": ("rfp.pdf", pdf)}).json()
+    doc2 = client.post(f"/api/bids/{opp2}/documents", files={"file": ("rfp.pdf", pdf)}).json()
     assert doc2["opportunity_id"] == opp2 and doc2["id"] != trace["doc"]["id"]
-    assert client.get(f"/api/opportunities/{opp2}").json()["documents"][0]["status"] == "ingested"
+    assert client.get(f"/api/bids/{opp2}").json()["documents"][0]["status"] == "ingested"
 
     # actor header is URL-encoded by the web app (EP² is not ASCII)
     a = next(i for i in client.get("/api/inbox/EP2").json()["items"] if not i["responded_by"])
@@ -89,12 +89,12 @@ def test_people_decide_and_dispatch_needs_go():
     seed_demo.main()  # its own opportunity, so this test does not depend on test order
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]  # newest first
-    rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
+    rows = client.get(f"/api/bids/{opp}/trace").json()["rows"]
     rejected, accepted = rows[0]["match"], rows[1]["match"]
     assert client.post(f"/api/matches/{rejected['id']}/decide", json={"action": "reject"}).status_code == 200
     assert client.post(f"/api/matches/{accepted['id']}/decide", json={"action": "accept"}).status_code == 200
-    assert client.post(f"/api/opportunities/{opp}/match").json()["kept"] == 2
-    after = {r["req"]["req_id"]: r["match"] for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"]}
+    assert client.post(f"/api/bids/{opp}/match").json()["kept"] == 2
+    after = {r["req"]["req_id"]: r["match"] for r in client.get(f"/api/bids/{opp}/trace").json()["rows"]}
     assert after[rejected["req_id"]] is None  # stays rejected: no older proposal comes back
     assert after[accepted["req_id"]]["id"] == accepted["id"] and after[accepted["req_id"]]["status"] == "accepted"
 
@@ -103,22 +103,22 @@ def test_people_decide_and_dispatch_needs_go():
     assert client.post("/api/matches/999999/decide", json={"action": "accept"}).status_code == 404
     assert client.post(f"/api/assignments/{a['id']}/respond", json={"compliance": "yes"}).status_code == 422
     assert client.post("/api/assignments/999999/respond", json={"compliance": "met"}).status_code == 404
-    assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "maybe"}).status_code == 422
-    assert client.get(f"/api/opportunities/{opp}/decisions").json()["go_no_go"]["outcome"] == "go"
+    assert client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "maybe"}).status_code == 422
+    assert client.get(f"/api/bids/{opp}/decisions").json()["go_no_go"]["outcome"] == "go"
 
-    client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "no_go"})
-    assert client.post(f"/api/opportunities/{opp}/dispatch").status_code == 409
-    assert client.get(f"/api/opportunities/{opp}").json()["opportunity"]["status"] == "no_go"
+    client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "no_go"})
+    assert client.post(f"/api/bids/{opp}/dispatch").status_code == 409
+    assert client.get(f"/api/bids/{opp}").json()["opportunity"]["status"] == "no_go"
 
 
 def test_requirement_review_actions():
     """P-06: edit, split, merge, add missed; the register freezes as it is (P-22: no approve step); replaced items leave the flow."""
     client = signed_in()
-    opp = client.post("/api/opportunities", json={"title": "review actions"}).json()["id"]
+    opp = client.post("/api/bids", json={"title": "review actions"}).json()["id"]
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
-    client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
-    assert client.post(f"/api/opportunities/{opp}/requirements/extract").json()["proposed"] > 100  # frozen GPT-4o answers
-    reqs = {r["req_id"]: r for r in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
+    client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    assert client.post(f"/api/bids/{opp}/requirements/extract").json()["proposed"] > 100  # frozen GPT-4o answers
+    reqs = {r["req_id"]: r for r in client.get(f"/api/bids/{opp}/requirements").json()["requirements"]}
     p55 = same_page(list(reqs.values()), 4)  # four stand-alone requirements on one page
 
     edited = client.post(f"/api/requirements/{p55[0]['req_id']}/review",
@@ -132,20 +132,20 @@ def test_requirement_review_actions():
                         json={"parts": [{"quote": q[:half]}, {"quote": q[half + 1:]}]}).json()
     assert len(parts) == 2 and all(p["provenance"] == "EXTRACTED" and p["derived_from"] == [p55[1]["req_id"]] for p in parts)
 
-    merged = client.post(f"/api/opportunities/{opp}/requirements/merge",
+    merged = client.post(f"/api/bids/{opp}/requirements/merge",
                          json={"req_ids": [p55[2]["req_id"], p55[3]["req_id"]], "text": "One obligation"}).json()
     assert merged["derived_from"] == [p55[2]["req_id"], p55[3]["req_id"]] and merged["provenance"] == "EXTRACTED"
     assert client.post(f"/api/requirements/{p55[2]['req_id']}/split",
                        json={"parts": [{"quote": "a"}, {"quote": "b"}]}).status_code == 409  # already merged
 
-    missed = client.post(f"/api/opportunities/{opp}/requirements",
+    missed = client.post(f"/api/bids/{opp}/requirements",
                          json={"quote": "Each phase shall have 1 inch diameter ground ball.", "category": "technical", "page": 55}).json()
     assert missed["provenance"] == "EXTRACTED" and missed["page"] == 55
 
-    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 200
-    statuses = {r["req_id"]: r["status"] for r in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
+    assert client.post(f"/api/bids/{opp}/baselines").status_code == 200
+    statuses = {r["req_id"]: r["status"] for r in client.get(f"/api/bids/{opp}/requirements").json()["requirements"]}
     assert statuses[p55[1]["req_id"]] == "split" and statuses[p55[2]["req_id"]] == "merged"
-    trace_ids = {r["req"]["req_id"] for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"]}
+    trace_ids = {r["req"]["req_id"] for r in client.get(f"/api/bids/{opp}/trace").json()["rows"]}
     assert p55[1]["req_id"] not in trace_ids and merged["req_id"] in trace_ids  # replaced items leave the flow
 
 
@@ -189,9 +189,9 @@ def test_person_changes_match():
     seed_demo.main()  # its own opportunity, dispatched
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
+    rows = client.get(f"/api/bids/{opp}/trace").json()["rows"]
     req_id = next(r["req"]["req_id"] for r in rows if r["match"] and r["match"]["bu"] == "CROWN")
-    url = f"/api/opportunities/{opp}/requirements/{req_id}/match"
+    url = f"/api/bids/{opp}/requirements/{req_id}/match"
     body = {"units": [{"product_id": "CROWN-ARMV", "offering_type": "ETO"}, {"product_id": "EP2-RPP", "offering_type": "ETO"}]}
     m = client.post(url, json=body, headers=auth("bid.manager")).json()
     assert (m["status"], m["method"], m["decided_by"], m["bu"]) == ("accepted", "manual", "Bid Manager", "CROWN")
@@ -199,12 +199,12 @@ def test_person_changes_match():
     assert client.post(url, json={"units": [{"product_id": "NOPE", "offering_type": "ETO"}]}).status_code == 422
     assert client.post(url, json={"units": [{"product_id": "EPC-800V", "offering_type": "ETO"}]}).status_code == 422  # pending unit
     assert client.post(url, json={"units": [{"product_id": "EP2-RPP", "offering_type": "NONE"}]}).status_code == 422
-    assert client.post(f"/api/opportunities/{opp}/requirements/REQ-9999-0001/match", json=body).status_code == 404
+    assert client.post(f"/api/bids/{opp}/requirements/REQ-9999-0001/match", json=body).status_code == 404
 
-    client.post(f"/api/opportunities/{opp}/participation", json={"units": ["CROWN", "EP2"]})
-    client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go"})
-    assert client.post(f"/api/opportunities/{opp}/dispatch").json()["created"] >= 1  # the added EP2 work
-    row = next(r for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"] if r["req"]["req_id"] == req_id)
+    client.post(f"/api/bids/{opp}/participation", json={"units": ["CROWN", "EP2"]})
+    client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "go"})
+    assert client.post(f"/api/bids/{opp}/dispatch").json()["created"] >= 1  # the added EP2 work
+    row = next(r for r in client.get(f"/api/bids/{opp}/trace").json()["rows"] if r["req"]["req_id"] == req_id)
     assert sorted({a["bu"] for a in row["assignments"]}) == ["CROWN", "EP2"]
 
     none = client.post(url, json={"units": []}).json()  # a person says: not a product item
@@ -217,12 +217,12 @@ def test_workflow_order_and_roles():
     Appended by Atharv (append-only on this shared file)."""
     client = signed_in()
     BM, CROWN = auth("bid.manager"), auth("crown.de")
-    fresh = client.post("/api/opportunities", json={"title": "not frozen"}).json()["id"]
-    assert client.post(f"/api/opportunities/{fresh}/go-no-go", json={"outcome": "go"}).status_code == 409
-    assert client.post(f"/api/opportunities/{fresh}/dispatch").status_code == 409
-    assert client.post("/api/opportunities/OPP-9999/participation", json={"units": ["CROWN"]}).status_code == 404
+    fresh = client.post("/api/bids", json={"title": "not frozen"}).json()["id"]
+    assert client.post(f"/api/bids/{fresh}/go-no-go", json={"outcome": "go"}).status_code == 409
+    assert client.post(f"/api/bids/{fresh}/dispatch").status_code == 409
+    assert client.post("/api/bids/OPP-9999/participation", json={"units": ["CROWN"]}).status_code == 404
     for bad in ([], ["XYZ"], ["EPC"]):  # empty, unknown, pending
-        assert client.post(f"/api/opportunities/{fresh}/participation", json={"units": bad}).status_code == 422
+        assert client.post(f"/api/bids/{fresh}/participation", json={"units": bad}).status_code == 422
 
     seed_demo.main()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
@@ -237,11 +237,11 @@ def test_workflow_order_and_roles():
 
     # the bid manager takes the item away from Crown: re-dispatch withdraws Crown's work; a product item does not
     # fall back to the bid desk, it needs an owner (A-19, C-08; updated by Atharv)
-    assert client.post(f"/api/opportunities/{opp}/requirements/{item['req_id']}/match", json={"units": []}, headers=BM).status_code == 200
-    assert client.post(f"/api/opportunities/{opp}/dispatch", headers=BM).json()["needs_owner"] >= 1
-    row = next(r for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"] if r["req"]["req_id"] == item["req_id"])
+    assert client.post(f"/api/bids/{opp}/requirements/{item['req_id']}/match", json={"units": []}, headers=BM).status_code == 200
+    assert client.post(f"/api/bids/{opp}/dispatch", headers=BM).json()["needs_owner"] >= 1
+    row = next(r for r in client.get(f"/api/bids/{opp}/trace").json()["rows"] if r["req"]["req_id"] == item["req_id"])
     assert row["assignments"] == []
-    assert item["req_id"] in {o["req_id"] for o in client.get(f"/api/opportunities/{opp}/needs-owner").json()}
+    assert item["req_id"] in {o["req_id"] for o in client.get(f"/api/bids/{opp}/needs-owner").json()}
     assert all(i["id"] != item["id"] for i in client.get("/api/inbox/CROWN").json()["items"])     # gone from Crown's inbox
     assert client.get("/api/catalog/search?q=relay&k=-1").status_code == 422
 
@@ -257,85 +257,85 @@ def test_review_findings_fixed():
     # page endpoint: only real documents and real pages (no file paths, no page 0)
     outside = str(ROOT / "data" / "layout_cache" / sha).replace("/", "\\")
     assert client.get(f"/api/documents/{outside}/pages/1").status_code == 404
-    opp = client.post("/api/opportunities", json={"title": "guards"}).json()["id"]
-    doc = client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)}).json()
+    opp = client.post("/api/bids", json={"title": "guards"}).json()["id"]
+    doc = client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)}).json()
     assert "path" not in doc
     assert client.get(f"/api/documents/{doc['id']}/pages/0").status_code == 404
     assert client.get(f"/api/documents/{doc['id']}/pages/102.png").status_code == 404
-    assert client.post(f"/api/opportunities/{opp}/documents", data={"role": "main"},
+    assert client.post(f"/api/bids/{opp}/documents", data={"role": "main"},
                        files={"file": ("again.pdf", pdf + b"\n")}).status_code == 409  # one main RFP
 
     # unknown opportunity: 404 and nothing stored
-    assert client.post("/api/opportunities/OPP-9996/documents", files={"file": ("x.pdf", pdf)}).status_code == 404
-    assert client.post("/api/opportunities/OPP-9997/baselines").status_code == 404
+    assert client.post("/api/bids/OPP-9996/documents", files={"file": ("x.pdf", pdf)}).status_code == 404
+    assert client.post("/api/bids/OPP-9997/baselines").status_code == 404
 
     # freeze: needs approved items; once only; nothing changes afterwards
-    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 409  # nothing read or approved yet
-    client.post(f"/api/opportunities/{opp}/requirements/extract")
-    everything = client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]
+    assert client.post(f"/api/bids/{opp}/baselines").status_code == 409  # nothing read or approved yet
+    client.post(f"/api/bids/{opp}/requirements/extract")
+    everything = client.get(f"/api/bids/{opp}/requirements").json()["requirements"]
     first_ids = {r["req_id"] for r in everything}
     rows = [r for r in everything if not r["parent_id"] and r["status"] == "approved"]  # the register (P-22)
     assert client.post(f"/api/requirements/{rows[0]['req_id']}/review", json={"action": "reject"}).status_code == 409  # no reason
     client.post(f"/api/requirements/{rows[0]['req_id']}/review", json={"action": "reject", "reason": "not a requirement"})
-    assert client.post(f"/api/opportunities/{opp}/requirements/extract").status_code == 409  # review started
-    assert client.post(f"/api/opportunities/{opp}/requirements", json={"quote": "  ", "category": "technical"}).status_code == 409
-    assert client.post(f"/api/opportunities/{opp}/requirements/merge",
+    assert client.post(f"/api/bids/{opp}/requirements/extract").status_code == 409  # review started
+    assert client.post(f"/api/bids/{opp}/requirements", json={"quote": "  ", "category": "technical"}).status_code == 409
+    assert client.post(f"/api/bids/{opp}/requirements/merge",
                        json={"req_ids": [rows[1]["req_id"], rows[2]["req_id"]], "text": " "}).status_code == 409
     alone = standalone(everything)
     p55 = alone[0]
     p56 = next(r for r in alone if r["page"] != p55["page"])
-    assert client.post(f"/api/opportunities/{opp}/requirements/merge",
+    assert client.post(f"/api/bids/{opp}/requirements/merge",
                        json={"req_ids": [p55["req_id"], p56["req_id"]], "text": "x"}).status_code == 409  # cross-page
-    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 200
-    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 409  # no empty baseline 2
+    assert client.post(f"/api/bids/{opp}/baselines").status_code == 200
+    assert client.post(f"/api/bids/{opp}/baselines").status_code == 409  # no empty baseline 2
     assert client.post(f"/api/requirements/{rows[0]['req_id']}/review", json={"action": "approve"}).status_code == 409
-    assert len(client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]) == len(first_ids)
+    assert len(client.get(f"/api/bids/{opp}/requirements").json()["requirements"]) == len(first_ids)
 
     # status never moves backwards
-    client.post(f"/api/opportunities/{opp}/participation", json={"units": ["CROWN"]})
-    client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go"})
-    client.post(f"/api/opportunities/{opp}/dispatch")
-    client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go"})
-    assert client.get(f"/api/opportunities/{opp}").json()["opportunity"]["status"] == "dispatched"
+    client.post(f"/api/bids/{opp}/participation", json={"units": ["CROWN"]})
+    client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "go"})
+    client.post(f"/api/bids/{opp}/dispatch")
+    client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "go"})
+    assert client.get(f"/api/bids/{opp}").json()["opportunity"]["status"] == "dispatched"
 
     # re-reading drafts never reuses an ID
-    opp2 = client.post("/api/opportunities", json={"title": "reread"}).json()["id"]
-    client.post(f"/api/opportunities/{opp2}/documents", files={"file": ("rfp.pdf", pdf)})
-    one = {r["req_id"] for r in client.get(f"/api/opportunities/{opp2}/requirements").json()["requirements"]} or None
-    client.post(f"/api/opportunities/{opp2}/requirements/extract")
-    a = {r["req_id"] for r in client.get(f"/api/opportunities/{opp2}/requirements").json()["requirements"]}
-    assert client.post(f"/api/opportunities/{opp2}/requirements/extract").status_code == 409  # E1 exists: a reason
-    again = client.post(f"/api/opportunities/{opp2}/requirements/extract", json={"reason": "check a re-read"})
+    opp2 = client.post("/api/bids", json={"title": "reread"}).json()["id"]
+    client.post(f"/api/bids/{opp2}/documents", files={"file": ("rfp.pdf", pdf)})
+    one = {r["req_id"] for r in client.get(f"/api/bids/{opp2}/requirements").json()["requirements"]} or None
+    client.post(f"/api/bids/{opp2}/requirements/extract")
+    a = {r["req_id"] for r in client.get(f"/api/bids/{opp2}/requirements").json()["requirements"]}
+    assert client.post(f"/api/bids/{opp2}/requirements/extract").status_code == 409  # E1 exists: a reason
+    again = client.post(f"/api/bids/{opp2}/requirements/extract", json={"reason": "check a re-read"})
     assert again.status_code == 200 and again.json()["snapshot"] == 2  # nothing corrected yet
-    b = {r["req_id"] for r in client.get(f"/api/opportunities/{opp2}/requirements").json()["requirements"]}
+    b = {r["req_id"] for r in client.get(f"/api/bids/{opp2}/requirements").json()["requirements"]}
     assert len(a) == len(b) and not (a & b) and one is None
 
     # parallel creates all succeed with distinct IDs
     with concurrent.futures.ThreadPoolExecutor(10) as pool:
-        made = list(pool.map(lambda i: client.post("/api/opportunities", json={"title": f"p{i}"}), range(10)))
+        made = list(pool.map(lambda i: client.post("/api/bids", json={"title": f"p{i}"}), range(10)))
     assert all(r.status_code == 200 for r in made) and len({r.json()["id"] for r in made}) == 10
 
     # the actor is the signed-in account; an X-Actor header is ignored (P-20)
-    made = client.post("/api/opportunities", json={"title": "actor"}, headers={"X-Actor": "Someone%20Else"}).json()
+    made = client.post("/api/bids", json={"title": "actor"}, headers={"X-Actor": "Someone%20Else"}).json()
     assert made["created_by"] == "Bid Manager"
 
 
 def test_trace_and_consolidation_findings_fixed():
     """Review of 9 Oct (Janvia's modules): CSV formula cells, unknown opportunity 404, no evidence blob in trace."""
     client = signed_in()
-    assert client.get("/api/opportunities/OPP-9999/trace").status_code == 404
-    assert client.get("/api/opportunities/OPP-9999/consolidation").status_code == 404
-    assert client.get("/api/opportunities/OPP-9999/compliance-matrix.csv").status_code == 404
+    assert client.get("/api/bids/OPP-9999/trace").status_code == 404
+    assert client.get("/api/bids/OPP-9999/consolidation").status_code == 404
+    assert client.get("/api/bids/OPP-9999/compliance-matrix.csv").status_code == 404
 
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
-    opp = client.post("/api/opportunities", json={"title": "csv"}).json()["id"]
-    client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
-    client.post(f"/api/opportunities/{opp}/requirements", json={
+    opp = client.post("/api/bids", json={"title": "csv"}).json()["id"]
+    client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    client.post(f"/api/bids/{opp}/requirements", json={
         "quote": "Switchgear shall be Arc-resistant Type 2B.", "text": "=HYPERLINK(\"http://x\")", "category": "technical", "page": 55})
-    csv = client.get(f"/api/opportunities/{opp}/compliance-matrix.csv")
+    csv = client.get(f"/api/bids/{opp}/compliance-matrix.csv")
     assert "'=HYPERLINK" in csv.text and ',=HYPERLINK' not in csv.text
     assert csv.headers["content-disposition"] == f'attachment; filename="{opp}-compliance-matrix.csv"'
-    rows = client.get(f"/api/opportunities/OPP-0001/trace").json()["rows"]
+    rows = client.get(f"/api/bids/OPP-0001/trace").json()["rows"]
     assert rows and all(r["match"] is None or "evidence" not in r["match"] for r in rows)
 
 
@@ -343,10 +343,10 @@ def test_requirement_history():
     """P-13: every version (who, when, wording) and every event is shown; merged originals point to the merge."""
     client = signed_in()
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
-    opp = client.post("/api/opportunities", json={"title": "history"}).json()["id"]
-    client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
-    client.post(f"/api/opportunities/{opp}/requirements/extract")
-    rows = same_page(client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"], 3)
+    opp = client.post("/api/bids", json={"title": "history"}).json()["id"]
+    client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    client.post(f"/api/bids/{opp}/requirements/extract")
+    rows = same_page(client.get(f"/api/bids/{opp}/requirements").json()["requirements"], 3)
     a, b, c = (r["req_id"] for r in rows[:3])
     original = rows[0]["text"]
     new_cat = "legal" if rows[0]["category"] != "legal" else "staffing"
@@ -359,7 +359,7 @@ def test_requirement_history():
         ("original", original, rows[0]["category"]), ("edited", "Edited once", rows[0]["category"]), ("edited", "Edited once", new_cat)]
     assert h["versions"][1]["by"] == "Crown Design Engineer" and h["versions"][1]["reason"] == "clearer"
     assert [e["action"] for e in h["events"]] == ["proposed", "edit", "edit", "reject"]
-    merged = client.post(f"/api/opportunities/{opp}/requirements/merge", json={"req_ids": [b, c], "text": "one"}).json()["req_id"]
+    merged = client.post(f"/api/bids/{opp}/requirements/merge", json={"req_ids": [b, c], "text": "one"}).json()["req_id"]
     assert client.get(f"/api/requirements/{b}/history").json()["events"][-1]["details"]["into"] == merged
     assert client.get(f"/api/requirements/{merged}/history").json()["derived_from"] == [b, c]
     assert client.get("/api/requirements/REQ-9999-0001/history").status_code == 404
@@ -369,11 +369,11 @@ def test_grouping_and_duplicates():
     """P-16: related line items become one requirement with sub-requirements; duplicates point to the first one."""
     client = signed_in()
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
-    opp = client.post("/api/opportunities", json={"title": "grouping"}).json()["id"]
-    client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
-    r = client.post(f"/api/opportunities/{opp}/requirements/extract").json()  # frozen reader + grouping answers
+    opp = client.post("/api/bids", json={"title": "grouping"}).json()["id"]
+    client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    r = client.post(f"/api/bids/{opp}/requirements/extract").json()  # frozen reader + grouping answers
     assert r["proposed"] == 818 and r["duplicates"] == 27 and r["groups"] > 100 and r["requirements"] < 400, r
-    rows = client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]
+    rows = client.get(f"/api/bids/{opp}/requirements").json()["requirements"]
     by_id = {x["req_id"]: x for x in rows}
     group = next(x for x in rows if x["kind"] == "group")
     kids = [x for x in rows if x["parent_id"] == group["req_id"]]
@@ -383,14 +383,14 @@ def test_grouping_and_duplicates():
     assert by_id[dup["derived_from"][0]]["status"] != "duplicate"
 
     # the workflow sees requirements, not sub-requirements
-    trace = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
+    trace = client.get(f"/api/bids/{opp}/trace").json()["rows"]
     assert len(trace) == r["requirements"] and all(t["req"]["parent_id"] is None for t in trace)
     assert next(t for t in trace if t["req"]["req_id"] == group["req_id"])["children"]
 
     # excluding a sub-requirement leaves the rest of its group in the register; ungroup releases them
     client.post(f"/api/requirements/{kids[0]['req_id']}/review", json={"action": "reject", "reason": "not a requirement"})
     client.post(f"/api/requirements/{group['req_id']}/review", json={"action": "approve"})
-    after = {x["req_id"]: x["status"] for x in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
+    after = {x["req_id"]: x["status"] for x in client.get(f"/api/bids/{opp}/requirements").json()["requirements"]}
     assert after[kids[0]["req_id"]] == "rejected" and all(after[k["req_id"]] == "approved" for k in kids[1:])
     other = next(x for x in rows if x["kind"] == "group" and x["req_id"] != group["req_id"])
     released = client.post(f"/api/requirements/{other['req_id']}/ungroup").json()
@@ -428,7 +428,7 @@ def test_go_no_go_summary_and_structured_criteria():
     seed_demo.main()
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    s = client.get(f"/api/opportunities/{opp}/decisions").json()["summary"]
+    s = client.get(f"/api/bids/{opp}/decisions").json()["summary"]
     assert s["advice"].startswith("Advice from Layer 0") and s["advice"].endswith("The bid manager decides.")
     status = {c["id"]: c["status"] for c in s["criteria"]}
     assert not {"cost_budget", "competitors", "delivery", "coverage", "matches_reviewed"} & set(status)
@@ -438,10 +438,10 @@ def test_go_no_go_summary_and_structured_criteria():
     assert status["open_questions"] == "not_met"  # Syracuse states no redundancy class (R-003 warn)
     assert {r["level"] for r in s["rows"]} <= {"fully", "partly", "not", "bid_desk"} and len(s["rows"]) == 13
     crit = [{"id": "compliance", "status": "met", "note": "checked"}, {"id": "schedule", "status": "unknown"}]
-    assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": crit}, headers=auth("crown.pm")).status_code == 403
-    d = client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": crit}, headers=auth("bid.manager")).json()
+    assert client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "go", "criteria": crit}, headers=auth("crown.pm")).status_code == 403
+    d = client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "go", "criteria": crit}, headers=auth("bid.manager")).json()
     assert d["criteria"][0] == {"id": "compliance", "status": "met", "note": "checked"} and "summary" in d["evidence"]
-    assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": [{"id": "cost_budget", "status": "unknown"}]}).status_code == 422
+    assert client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "go", "criteria": [{"id": "cost_budget", "status": "unknown"}]}).status_code == 422
 
     # schedule: met only when every schedule requirement is validated and none is non-compliant
     ans = lambda c: [SimpleNamespace(compliance=c)]  # noqa: E731
@@ -449,7 +449,7 @@ def test_go_no_go_summary_and_structured_criteria():
     assert decisions._schedule_criterion(["R1", "R2"], {"R1": ans("met"), "R2": []})[0] == "unknown"
     assert decisions._schedule_criterion(["R1", "R2"], {"R1": ans("met"), "R2": ans("not_met")})[0] == "not_met"
     assert decisions._schedule_criterion(["R1", "R2"], {"R1": ans("met"), "R2": ans("partial")})[0] == "met"
-    assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go", "criteria": [{"id": "x", "status": "met"}]}).status_code == 422
+    assert client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "go", "criteria": [{"id": "x", "status": "met"}]}).status_code == 422
 
 
 def test_unit_handoff_payload():
@@ -458,7 +458,7 @@ def test_unit_handoff_payload():
     seed_demo.main()
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    r = client.get(f"/api/opportunities/{opp}/handoff/CROWN")
+    r = client.get(f"/api/bids/{opp}/handoff/CROWN")
     assert r.status_code == 200 and "attachment" in r.headers["content-disposition"]
     p = r.json()
     assert p["requires_human_completion"] is True and p["unit"]["code"] == "CROWN"
@@ -469,8 +469,8 @@ def test_unit_handoff_payload():
     for i in p["routes"].get("cpq_seed", {}).get("items", []):
         assert i["offering_type"] == "CTO" and "bom_lines" in i["configuration_seed"]
     assert {i["offering_type"] for i in items} >= {"CTO", "ETO"}  # Crown accessories (CTO) and switchgear (ETO)
-    assert client.get(f"/api/opportunities/{opp}/handoff/BID").status_code == 409
-    assert client.get("/api/opportunities/OPP-9999/handoff/CROWN").status_code == 404
+    assert client.get(f"/api/bids/{opp}/handoff/BID").status_code == 409
+    assert client.get("/api/bids/OPP-9999/handoff/CROWN").status_code == 404
 
 
 def test_compliance_matrix_new_columns_and_bom():
@@ -482,7 +482,7 @@ def test_compliance_matrix_new_columns_and_bom():
     seed_demo.main()
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    r = client.get(f"/api/opportunities/{opp}/compliance-matrix.csv")
+    r = client.get(f"/api/bids/{opp}/compliance-matrix.csv")
     assert r.status_code == 200 and r.content.startswith(b"\xef\xbb\xbf")
     rows = list(csv.reader(io.StringIO(r.content.decode("utf-8-sig"))))
     head = rows[0]
@@ -498,14 +498,14 @@ def test_rfp_search_short_term_index():
     """The opportunity's RFP is indexed when it is loaded (short-term RAG) and searchable with exact sources."""
     client = signed_in()
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
-    opp = client.post("/api/opportunities", json={"title": "rfp search"}).json()["id"]
-    assert client.get(f"/api/opportunities/{opp}/rfp-search", params={"q": "insurance"}).status_code == 404  # not read yet
-    doc = client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)}).json()
-    found = client.get(f"/api/opportunities/{opp}/rfp-search", params={"q": "general liability insurance limits", "k": 3}).json()
+    opp = client.post("/api/bids", json={"title": "rfp search"}).json()["id"]
+    assert client.get(f"/api/bids/{opp}/rfp-search", params={"q": "insurance"}).status_code == 404  # not read yet
+    doc = client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)}).json()
+    found = client.get(f"/api/bids/{opp}/rfp-search", params={"q": "general liability insurance limits", "k": 3}).json()
     assert found["passages"] and found["passages"][0]["page"] == 13, found  # the insurance requirements
     p = found["passages"][0]
     assert p["line_start"] <= p["line_end"] and "insurance" in p["text"].lower()
-    assert client.get("/api/opportunities/OPP-9999/rfp-search", params={"q": "x"}).status_code == 404
+    assert client.get("/api/bids/OPP-9999/rfp-search", params={"q": "x"}).status_code == 404
 
 
 def test_compliance_matrix_excel():
@@ -517,7 +517,7 @@ def test_compliance_matrix_excel():
     seed_demo.main()  # its own opportunity: 13 line items, some answers validated
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    r = client.get(f"/api/opportunities/{opp}/compliance-matrix.xlsx")
+    r = client.get(f"/api/bids/{opp}/compliance-matrix.xlsx")
     assert r.status_code == 200 and r.headers["content-disposition"].endswith('-compliance-matrix.xlsx"')
     wb = load_workbook(io.BytesIO(r.content))
     assert wb.sheetnames == ["Compliance matrix", "Tracking"]
@@ -526,8 +526,8 @@ def test_compliance_matrix_excel():
     words = {row[4] for row in ws.iter_rows(min_row=5, values_only=True)}
     assert "Fully" in words and words <= {"Fully", "Partially", "Non-compliant", "Exception", "Open"}  # J-11 wording
     assert all(cell.data_type != "f" for sheet in wb for row in sheet.iter_rows() for cell in row)  # never a formula
-    assert wb["Tracking"].max_row - 1 == len(client.get(f"/api/opportunities/{opp}/compliance-matrix.csv").text.strip().splitlines()) - 1
-    assert client.get("/api/opportunities/OPP-9999/compliance-matrix.xlsx").status_code == 404
+    assert wb["Tracking"].max_row - 1 == len(client.get(f"/api/bids/{opp}/compliance-matrix.csv").text.strip().splitlines()) - 1
+    assert client.get("/api/bids/OPP-9999/compliance-matrix.xlsx").status_code == 404
 
 
 def test_bid_and_portfolio_checks():
@@ -535,7 +535,7 @@ def test_bid_and_portfolio_checks():
     seed_demo.main()  # its own opportunity: matched to CROWN and EP2 products, dispatched
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    d = client.get(f"/api/opportunities/{opp}/decisions").json()
+    d = client.get(f"/api/bids/{opp}/decisions").json()
     dev, load = d["evidence"]["deviations"], d["evidence"]["workload"]
     assert dev["placeholder"] and load["placeholder"]  # never presented as confirmed figures
     assert "CROWN-ARMV" in dev["products"] and dev["checked"] >= 1
@@ -554,7 +554,7 @@ def test_response_outline_agent():
     seed_demo.main()  # its own opportunity: 13 line items, 4 validated answers
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    o = client.get(f"/api/opportunities/{opp}/response-outline").json()
+    o = client.get(f"/api/bids/{opp}/response-outline").json()
     validated = {a["req_id"] for c in o["chapters"] for a in c["material"]}
     assert o["validated_answers"] == len(validated) > 0 and o["summary"]["drafted"]
     for d in [o["summary"]] + [c["draft"] for c in o["chapters"]]:
@@ -563,9 +563,9 @@ def test_response_outline_agent():
     assert by_id["technical"]["draft"]["drafted"] and sum(c["total"] for c in o["chapters"]) == o["total"]
     assert all(not c["draft"]["drafted"] for c in o["chapters"] if not c["material"])  # nothing drafted without answers
     assert all(r["req_id"] not in validated or r["state"] != "answered" for c in o["chapters"] for r in c["open"])
-    md = client.get(f"/api/opportunities/{opp}/response-outline.md")
+    md = client.get(f"/api/bids/{opp}/response-outline.md")
     assert md.status_code == 200 and md.text.startswith("# Response outline:") and "## 1. Technical response" in md.text
-    assert client.get("/api/opportunities/OPP-9999/response-outline").status_code == 404
+    assert client.get("/api/bids/OPP-9999/response-outline").status_code == 404
 
 
 def test_knowledge_base_queue():
@@ -588,7 +588,7 @@ def test_knowledge_base_queue():
     assert client.post("/api/knowledge", json={"kind": "response", "ref": str(done["id"])}).status_code == 409  # already queued
     assert client.post("/api/knowledge", json={"kind": "response", "ref": str(open_["id"])}).status_code == 409  # not validated
     assert client.post("/api/knowledge", json={"kind": "requirement", "ref": "REQ-9999-0001"}).status_code == 404
-    go = client.get(f"/api/opportunities/{opp}/decisions").json()["go_no_go"]
+    go = client.get(f"/api/bids/{opp}/decisions").json()["go_no_go"]
     dec = client.post("/api/knowledge", json={"kind": "decision", "ref": str(go["id"])}).json()
     assert dec["response"].startswith("go:")
 
@@ -603,7 +603,7 @@ def test_knowledge_base_queue():
     hits = client.get("/api/catalog", params={"q": "Two-section lineup reusable wording"}).json()["results"]
     assert hits[0]["id"] == kb["kb_id"] and hits[0]["learned"]  # found by the long-term index
     assert catalog.past_responses() == past_before  # the matcher's fixed prompt part is unchanged
-    sent = client.get(f"/api/opportunities/{opp}/knowledge").json()
+    sent = client.get(f"/api/bids/{opp}/knowledge").json()
     assert sent[f"response:{done['id']}"] == "approved" and sent[f"decision:{go['id']}"] == "rejected"
     queue = client.get("/api/knowledge", params={"status": "approved"}).json()
     assert queue["learned"] >= 1 and all(i["status"] == "approved" for i in queue["items"])
@@ -622,7 +622,7 @@ def test_change_document_against_baseline(monkeypatch, tmp_path):
     client = signed_in()
     BM, CROWN = auth("bid.manager"), auth("crown.de")
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
+    rows = client.get(f"/api/bids/{opp}/trace").json()["rows"]
     by_quote = lambda start: next(r for r in rows if r["req"]["quote"].startswith(start))
     arc, ball = by_quote("Switchgear shall be Arc-resistant Type 2B"), by_quote("Each phase shall have 1 inch")
     done = next(a for a in arc["assignments"] if a["status"] == "validated")
@@ -636,11 +636,11 @@ def test_change_document_against_baseline(monkeypatch, tmp_path):
              "Q1: Is the Equipment Building by others? A1: Yes, no change."]
     (tmp_path / "addendum-1.txt").write_text("\n".join(lines), "utf-8")
     pdf = convert(tmp_path / "addendum-1.txt").read_bytes()
-    upload = lambda: client.post(f"/api/opportunities/{opp}/changes", files={"file": ("addendum-1.pdf", pdf)})
+    upload = lambda: client.post(f"/api/bids/{opp}/changes", files={"file": ("addendum-1.pdf", pdf)})
 
     r = upload()  # mock mode, no frozen answer: refused, no change set
     assert r.status_code == 409 and "frozen answers" in r.json()["detail"]
-    assert client.get(f"/api/opportunities/{opp}/changes").json()["sets"] == []
+    assert client.get(f"/api/bids/{opp}/changes").json()["sets"] == []
 
     said = [("info", "submission", lines[1], "Acknowledge the addendum."),
             ("modify", "compliance", "L3: " + lines[2], "Switchgear shall be arc-resistant Type 2C."),
@@ -700,7 +700,7 @@ def test_change_document_against_baseline(monkeypatch, tmp_path):
     assert client.post(f"{url}/apply", headers=BM).status_code == 409
     assert client.post(f"{url}/discard", headers=BM).status_code == 409
 
-    reqs = client.get(f"/api/opportunities/{opp}/requirements").json()
+    reqs = client.get(f"/api/bids/{opp}/requirements").json()
     assert reqs["baseline"]["number"] == 2 and reqs["baseline"]["count"] == 13  # one removed, one added
     by_id = {r["req_id"]: r for r in reqs["requirements"]}
     new_arc, new = by_id[arc["req"]["req_id"]], by_id[res["added"][0]]
@@ -720,14 +720,14 @@ def test_change_document_against_baseline(monkeypatch, tmp_path):
         assert back.status == "returned" and back.validation_note.startswith("Changed by addendum-1.pdf: now reads:")
         assert all(workpackages.get(db, i).status == "withdrawn" for i in ball_work)
         assert workpackages.by_requirement(db, opp)[new["req_id"]]  # the added requirement is dispatched
-    trace = client.get(f"/api/opportunities/{opp}/trace").json()
+    trace = client.get(f"/api/bids/{opp}/trace").json()
     assert [d["role"] for d in trace["docs"]] == ["main", "change"] and trace["docs"][1]["id"] == s["document_id"]
     assert trace["doc"]["id"] == trace["docs"][0]["id"]
     assert ball["req"]["req_id"] not in {r["req"]["req_id"] for r in trace["rows"]}
-    view = client.get(f"/api/opportunities/{opp}/changes").json()
+    view = client.get(f"/api/bids/{opp}/changes").json()
     assert view["baseline"] == {"number": 2, "count": 13} and view["sets"][0]["status"] == "applied"
     assert view["sets"][0]["result"] == res and view["drastic_threshold"] == 0.25
-    assert client.get("/api/opportunities/OPP-9999/changes").status_code == 404
+    assert client.get("/api/bids/OPP-9999/changes").status_code == 404
 
 
 def test_illustrative_addendum_frozen_answers():
@@ -742,7 +742,7 @@ def test_illustrative_addendum_frozen_answers():
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     oracle = _json.loads((ROOT / "data/seed/syracuse_addendum_1_expected.json").read_text("utf-8"))
     pdf = ROOT / oracle["document"]
-    s = client.post(f"/api/opportunities/{opp}/changes", files={"file": (pdf.name, pdf.read_bytes(), "application/pdf")}).json()
+    s = client.post(f"/api/bids/{opp}/changes", files={"file": (pdf.name, pdf.read_bytes(), "application/pdf")}).json()
     assert s["status"] == "review" and s["total"] == len(oracle["items"])
     for it in s["items"]:
         want = next(o for o in oracle["items"] if normalise(o["quote"])[:50] in normalise(it["quote"]))
@@ -750,12 +750,12 @@ def test_illustrative_addendum_frozen_answers():
         if want["baseline_quote"]:  # the right baseline requirement, by its RFP wording
             target = client.get(f"/api/requirements/{it['proposed_target']}/history").json()
             assert normalise(want["baseline_quote"])[:40] in normalise(target["quote"]), (it["quote"], target["quote"])
-    before = {r["req"]["req_id"]: r["match"] for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"]}
+    before = {r["req"]["req_id"]: r["match"] for r in client.get(f"/api/bids/{opp}/trace").json()["rows"]}
     client.post(f"/api/changes/{s['id']}/confirm-all")
     done = client.post(f"/api/changes/{s['id']}/apply").json()
     assert done["status"] == "applied" and done["result"]["baseline"] == 2
     assert len(done["result"]["added"]) == 2 and len(done["result"]["modified"]) == 2 and len(done["result"]["removed"]) == 1
-    after = {r["req"]["req_id"]: r["match"] for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"]}
+    after = {r["req"]["req_id"]: r["match"] for r in client.get(f"/api/bids/{opp}/trace").json()["rows"]}
     touched = set(done["result"]["added"] + done["result"]["modified"])
     assert all(after[k]["units"] == m["units"] for k, m in before.items() if k in after and k not in touched and m)
 
@@ -774,7 +774,7 @@ def test_change_set_review_findings_fixed(monkeypatch, tmp_path):
     seed_demo.main()  # its own opportunity: 13 frozen line items, go, dispatched, some answers validated
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
+    rows = client.get(f"/api/bids/{opp}/trace").json()["rows"]
     breakers = next(r["req"] for r in rows if r["req"]["quote"].startswith("Metal Clad Switchgear shall have eighteen"))
 
     def stub(said):  # the reader returns these statements; the classifier says added or not_a_requirement
@@ -791,7 +791,7 @@ def test_change_set_review_findings_fixed(monkeypatch, tmp_path):
     one = ["ADDENDUM ONE", "Add: provide spare part number 0A.", "Replace 18 with 20 breaker positions.",
            "Replace two revenue meter positions with three."]
     stub([("add", one[1], "Spare part 0A."), ("modify", one[2], "20 breakers"), ("modify", one[3], "3 meters")])
-    s = client.post(f"/api/opportunities/{opp}/changes", files={"file": ("o0.pdf", pdf("o0", one))}).json()
+    s = client.post(f"/api/bids/{opp}/changes", files={"file": ("o0.pdf", pdf("o0", one))}).json()
     url, items = f"/api/changes/{s['id']}", s["items"]
     client.post(f"{url}/items/{items[0]['id']}", json={"kind": "added"})
     client.post(f"{url}/items/{items[1]['id']}", json={"kind": "modified", "target": breakers["req_id"],
@@ -813,7 +813,7 @@ def test_change_set_review_findings_fixed(monkeypatch, tmp_path):
     assert "follow-up stopped" in res["note"] and res["returned"] >= 1  # the returned answer is counted
     mod = next(i for i in r.json()["items"] if i["id"] == items[1]["id"])
     assert (mod["target_text"], mod["target_source"]) == (breakers["text"], breakers["source"])  # baseline 1 wording
-    crown = client.get(f"/api/opportunities/{opp}/handoff/CROWN").json()
+    crown = client.get(f"/api/bids/{opp}/handoff/CROWN").json()
     hand = next(i for route in crown["routes"].values() for i in route["items"] if i["req_id"] == breakers["req_id"])
     assert hand["document"] == s["document_id"] and hand["source"].startswith("p. 1")  # the addendum's page, not the RFP's
 
@@ -828,9 +828,9 @@ def test_change_set_review_findings_fixed(monkeypatch, tmp_path):
         return agent.read(layout)
 
     monkeypatch.setattr(agent, "read", read_while_another_uploads)
-    r = client.post(f"/api/opportunities/{opp}/changes", files={"file": ("r0.pdf", pdf("r0", ["RACE", "Add: x."]))})
+    r = client.post(f"/api/bids/{opp}/changes", files={"file": ("r0.pdf", pdf("r0", ["RACE", "Add: x."]))})
     assert r.status_code == 409 and "still in review" in r.json()["detail"]
-    pending = [x for x in client.get(f"/api/opportunities/{opp}/changes").json()["sets"] if x["status"] == "review"]
+    pending = [x for x in client.get(f"/api/bids/{opp}/changes").json()["sets"] if x["status"] == "review"]
     assert [x["filename"] for x in pending] == ["t0.pdf"]
 
     client.post(f"/api/changes/{pending[0]['id']}/confirm-all")
@@ -840,18 +840,18 @@ def test_change_set_review_findings_fixed(monkeypatch, tmp_path):
         assert client.post(f"/api/changes/{pending[0]['id']}/discard").json()["status"] == "discarded"
         with pytest.raises(ValueError, match="meanwhile"):
             changes.apply(stale, pending[0]["id"], "Bid Manager")
-    assert client.get(f"/api/opportunities/{opp}/changes").json()["baseline"]["number"] == 2
+    assert client.get(f"/api/bids/{opp}/changes").json()["baseline"]["number"] == 2
 
     stub([("add", two[1], "Spare part 0B.")])
-    s3 = client.post(f"/api/opportunities/{opp}/changes", files={"file": ("t0.pdf", later)}).json()
+    s3 = client.post(f"/api/bids/{opp}/changes", files={"file": ("t0.pdf", later)}).json()
     client.post(f"/api/changes/{s3['id']}/confirm-all")
     with SessionLocal() as stale:  # a person's decision read the set before the Bid Manager applied it
         held = changes.get(stale, s3["id"])
         assert client.post(f"/api/changes/{s3['id']}/apply").json()["baseline_to"] == 3
         with pytest.raises(ValueError, match="meanwhile"):  # the record keeps what was applied
             changes.decide(stale, s3["id"], s3["items"][0]["id"], "not_a_requirement", None, None, "Crown Design Engineer")
-    assert client.get(f"/api/opportunities/{opp}/changes").json()["sets"][0]["items"][0]["kind"] == "added"
-    trace = client.get(f"/api/opportunities/{opp}/trace").json()
+    assert client.get(f"/api/bids/{opp}/changes").json()["sets"][0]["items"][0]["kind"] == "added"
+    trace = client.get(f"/api/bids/{opp}/trace").json()
     order = [d["id"] for d in trace["docs"]]
     assert order[1:] == [s["document_id"], s3["document_id"]]
     seen = [order.index(r["req"]["document_id"]) for r in trace["rows"] if r["req"]["page"] is not None]
@@ -896,9 +896,9 @@ def test_register_and_exception_queue():
     until linked to their lines or dismissed with a reason."""
     client = signed_in()
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
-    opp = client.post("/api/opportunities", json={"title": "exception queue"}).json()["id"]
-    client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
-    url = f"/api/opportunities/{opp}/requirements"
+    opp = client.post("/api/bids", json={"title": "exception queue"}).json()["id"]
+    client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    url = f"/api/bids/{opp}/requirements"
     found = client.post(url, json={"quote": "Each phase shall have 1 inch diameter ground ball.", "page": 55}).json()
     assert (found["status"], found["provenance"]) == ("approved", "EXTRACTED")
     lost, other = (client.post(url, json={"quote": f"The vendor shall paint the switchgear {c}.", "page": 55}).json()
@@ -916,8 +916,8 @@ def test_register_and_exception_queue():
     hint = next(q for q in client.get(f"{url}/exceptions").json() if q["req_id"] == near["req_id"])
     assert hint["location_hint"]["page"] == 55 and hint["location_hint"]["share"] >= 0.8 and "Probably" not in hint["reason"]
     client.post(f"/api/requirements/{near['req_id']}/dismiss", json={"reason": "test row"})
-    assert client.get(f"/api/opportunities/{opp}/trace").json()["rows"][0]["req"]["req_id"] == found["req_id"]
-    assert len(client.get(f"/api/opportunities/{opp}/trace").json()["rows"]) == 1  # exceptions are not in the flow
+    assert client.get(f"/api/bids/{opp}/trace").json()["rows"][0]["req"]["req_id"] == found["req_id"]
+    assert len(client.get(f"/api/bids/{opp}/trace").json()["rows"]) == 1  # exceptions are not in the flow
 
     # never into the register without a verified source
     review = f"/api/requirements/{lost['req_id']}/review"
@@ -943,7 +943,7 @@ def test_register_and_exception_queue():
 
     # open exceptions never block the baseline; nothing in it lacks a source
     client.post(url, json={"quote": "The vendor shall paint the switchgear green.", "page": 55})
-    assert client.post(f"/api/opportunities/{opp}/baselines").json()["count"] == 2
+    assert client.post(f"/api/bids/{opp}/baselines").json()["count"] == 2
     assert client.post(dismiss.replace(other["req_id"], lost["req_id"]), json={"reason": "x"}).status_code == 409  # frozen
 
 
@@ -952,35 +952,35 @@ def test_extraction_snapshot_and_corrections():
     per item; after publishing, every correction is a new version (origin correction) in the next baseline."""
     client = signed_in()
     pdf = (ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
-    opp = client.post("/api/opportunities", json={"title": "snapshot"}).json()["id"]
-    client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
-    read = client.post(f"/api/opportunities/{opp}/requirements/extract").json()
+    opp = client.post("/api/bids", json={"title": "snapshot"}).json()["id"]
+    client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)})
+    read = client.post(f"/api/bids/{opp}/requirements/extract").json()
     assert read["snapshot"] == 1 and read["coverage"]["candidates"] == 818 and read["coverage"]["exceptions"] == read["exceptions"]
     # P-24 (C-03): the coverage adds up; anchored to the reader's lines, fewer exceptions than the 33 before
     c = read["coverage"]
     assert c["pages"] == c["pages_read"] + c["pages_failed"] + c["pages_skipped"] + c["pages_unreadable"] == 101, c
     assert c["candidates"] == c["admitted"] + c["exceptions"] + c["duplicates"] and c["exceptions"] < 33, c
-    rows = client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]
+    rows = client.get(f"/api/bids/{opp}/requirements").json()["requirements"]
     items_ = [r for r in rows if r["kind"] == "item" and r["page"] is not None]  # exceptions have no source
     assert all(r["spans"][0] | {"document_id": None} == {"document_id": None, "page": r["page"], "line_start": r["line_start"],
                "line_end": r["line_end"], "bboxes": r["bboxes"]} for r in items_)  # the first span is the row's source
     several = [r for r in items_ if len(r["spans"]) > 1]
     assert several and all(r["source"].count("p. ") == len(r["spans"]) for r in several)  # "p. 20, lines 12-13; p. ..."
-    (e1,) = client.get(f"/api/opportunities/{opp}/extraction").json()
+    (e1,) = client.get(f"/api/bids/{opp}/extraction").json()
     assert (e1["number"], e1["reason"], e1["created_by"]) == (1, "", "Bid Manager") and e1["pipeline_version"]
-    items = client.get(f"/api/opportunities/{opp}/extraction/1").json()["items"]
+    items = client.get(f"/api/bids/{opp}/extraction/1").json()["items"]
     assert {i["status"] for i in items} == {"approved", "exception", "duplicate"} and any(i["kind"] == "group" for i in items)
-    assert client.get(f"/api/opportunities/{opp}/extraction/9").status_code == 404
+    assert client.get(f"/api/bids/{opp}/extraction/9").status_code == 404
     with engine.begin() as conn, pytest.raises(Exception, match="append-only"):  # the snapshot itself never changes
         conn.execute(text("UPDATE extraction_snapshot SET reason = 'x' WHERE opportunity_id = :o"), {"o": opp})
-    rows = client.get(f"/api/opportunities/{opp}/requirements").json()
+    rows = client.get(f"/api/bids/{opp}/requirements").json()
     assert rows["coverage"] == read["coverage"] and {r["origin"] for r in rows["requirements"]} == {"extraction"}
 
     # corrections need a published register; publishing needs no decision per item and ignores open exceptions
     p55 = same_page(rows["requirements"], 4)
-    url = f"/api/opportunities/{opp}/corrections"
+    url = f"/api/bids/{opp}/corrections"
     assert client.post(url, json={"kind": "exclude", "req_id": p55[0]["req_id"], "reason": "x"}).status_code == 409
-    assert client.post(f"/api/opportunities/{opp}/baselines").json()["number"] == 1
+    assert client.post(f"/api/bids/{opp}/baselines").json()["number"] == 1
     assert client.post(url, json={"kind": "exclude", "req_id": p55[0]["req_id"], "reason": " "}).status_code == 409
     assert client.post(url, json={"kind": "edit", "req_id": p55[0]["req_id"], "reason": "same"}).status_code == 409  # no change
 
@@ -1002,12 +1002,12 @@ def test_extraction_snapshot_and_corrections():
     assert [r["baseline"] for r in (added, split, merged, resolved, excluded)] == [3, 4, 5, 6, 7]
     assert len(split["added"]) == 2 and split["removed"] == [p55[1]["req_id"]] and merged["removed"] == [p55[2]["req_id"], p55[3]["req_id"]]
 
-    now = {r["req_id"]: r for r in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
+    now = {r["req_id"]: r for r in client.get(f"/api/bids/{opp}/requirements").json()["requirements"]}
     assert now[p55[0]["req_id"]]["text"] == "Corrected text" and now[p55[0]["req_id"]]["origin"] == "correction"
     assert now[p55[1]["req_id"]]["status"] == "split" and now[added["added"][0]]["status"] == "rejected"
     assert all(now[i]["origin"] == "correction" and now[i]["status"] == "approved" for i in split["added"] + merged["added"])
     assert (now[exception["req_id"]]["status"], now[exception["req_id"]]["provenance"]) == ("approved", "EXTRACTED")
-    assert client.get(f"/api/opportunities/{opp}/requirements").json()["baseline"]["number"] == 7
+    assert client.get(f"/api/bids/{opp}/requirements").json()["baseline"]["number"] == 7
     # the history tells the reading from its correction; baseline 1 still holds the original wording
     h = client.get(f"/api/requirements/{p55[0]['req_id']}/history").json()["versions"]
     assert [(v["label"], v["origin"]) for v in h] == [("original", "extraction"), ("corrected", "correction")]
@@ -1016,8 +1016,8 @@ def test_extraction_snapshot_and_corrections():
     other = next(r for r in rows["requirements"] if r["status"] == "exception" and r["req_id"] != exception["req_id"])
     assert client.post(f"/api/requirements/{other['req_id']}/dismiss", json={"reason": "not in scope"}).status_code == 200
     assert client.post(f"/api/requirements/{p55[0]['req_id']}/review", json={"action": "edit", "text": "x"}).status_code == 409
-    assert client.post(f"/api/opportunities/{opp}/requirements/extract", json={"reason": "again"}).status_code == 409
-    assert client.get(f"/api/opportunities/{opp}/extraction/1").json()["items"] == items  # E1 unchanged
+    assert client.post(f"/api/bids/{opp}/requirements/extract", json={"reason": "again"}).status_code == 409
+    assert client.get(f"/api/bids/{opp}/extraction/1").json()["items"] == items  # E1 unchanged
 
 
 def test_permissions_in_bids_documents_requirements_and_changes():
@@ -1028,22 +1028,22 @@ def test_permissions_in_bids_documents_requirements_and_changes():
     pm, de, admin = auth("crown.pm"), auth("crown.de"), auth("admin")
 
     # bid manager only: create a bid, upload and read documents, run the reader, publish, change documents
-    r = client.post("/api/opportunities", json={"title": "not mine"}, headers=pm)
+    r = client.post("/api/bids", json={"title": "not mine"}, headers=pm)
     assert r.status_code == 403 and r.json()["detail"] == \
         "Only a bid manager can do this; you are signed in as Crown Product Manager (product manager)."
-    opp = client.post("/api/opportunities", json={"title": "permissions"}).json()["id"]
-    assert client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)}, headers=de).status_code == 403
-    doc = client.post(f"/api/opportunities/{opp}/documents", files={"file": ("rfp.pdf", pdf)}).json()["id"]
+    opp = client.post("/api/bids", json={"title": "permissions"}).json()["id"]
+    assert client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)}, headers=de).status_code == 403
+    doc = client.post(f"/api/bids/{opp}/documents", files={"file": ("rfp.pdf", pdf)}).json()["id"]
     assert client.post(f"/api/documents/{doc}/ingest", headers=pm).status_code == 403
-    assert client.post(f"/api/opportunities/{opp}/requirements/extract", headers=admin).status_code == 403
-    client.post(f"/api/opportunities/{opp}/requirements/extract")
+    assert client.post(f"/api/bids/{opp}/requirements/extract", headers=admin).status_code == 403
+    client.post(f"/api/bids/{opp}/requirements/extract")
 
     # reading is open to everyone signed in
     for who in (pm, de, admin):
-        assert client.get(f"/api/opportunities/{opp}/requirements", headers=who).status_code == 200
+        assert client.get(f"/api/bids/{opp}/requirements", headers=who).status_code == 200
 
     # corrections and exceptions: bid manager, product managers and design engineers, not the administrator
-    url = f"/api/opportunities/{opp}/requirements/from-lines"
+    url = f"/api/bids/{opp}/requirements/from-lines"
     lines = {"page": 55, "line_start": 52, "line_end": 53, "category": "technical"}
     r = client.post(url, json=lines, headers=admin)
     assert r.status_code == 403 and r.json()["detail"].startswith("Only a bid manager, product manager or design engineer")
@@ -1052,23 +1052,23 @@ def test_permissions_in_bids_documents_requirements_and_changes():
     exclude = {"action": "reject", "reason": "duplicate of the reader's item"}
     assert client.post(f"/api/requirements/{added['req_id']}/review", json=exclude, headers=admin).status_code == 403
     assert client.post(f"/api/requirements/{added['req_id']}/review", json=exclude, headers=de).status_code == 200
-    exception = next(r for r in client.get(f"/api/opportunities/{opp}/requirements/exceptions").json())
+    exception = next(r for r in client.get(f"/api/bids/{opp}/requirements/exceptions").json())
     assert client.post(f"/api/requirements/{exception['req_id']}/dismiss", json={"reason": "x"}, headers=admin).status_code == 403
 
-    assert client.post(f"/api/opportunities/{opp}/baselines", headers=pm).status_code == 403
-    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 200
+    assert client.post(f"/api/bids/{opp}/baselines", headers=pm).status_code == 403
+    assert client.post(f"/api/bids/{opp}/baselines").status_code == 200
     corr = {"kind": "edit", "req_id": added["req_id"], "text": "x", "reason": "y"}
-    assert client.post(f"/api/opportunities/{opp}/corrections", json=corr, headers=admin).status_code == 403
-    assert client.post(f"/api/opportunities/{opp}/changes", data={"role": "addendum"},
+    assert client.post(f"/api/bids/{opp}/corrections", json=corr, headers=admin).status_code == 403
+    assert client.post(f"/api/bids/{opp}/changes", data={"role": "addendum"},
                        files={"file": ("a.pdf", pdf)}, headers=de).status_code == 403
 
 
 def test_bid_activity_log():
     """P-27 (C-16): the bid's audit log, newest first, read-only, filtered by entity, requirement, unit and person."""
     client = signed_in()
-    if client.get("/api/opportunities/OPP-0001").status_code == 404:
+    if client.get("/api/bids/OPP-0001").status_code == 404:
         seed_demo.main()
-    url = "/api/opportunities/OPP-0001/activity"
+    url = "/api/bids/OPP-0001/activity"
     everything = client.get(url, headers=auth("ep2.de")).json()  # everyone signed in reads it
     events, filters = everything["events"], everything["filters"]
     assert everything["total"] >= len(events) > 10 and [e["id"] for e in events] == sorted((e["id"] for e in events), reverse=True)
@@ -1086,7 +1086,7 @@ def test_bid_activity_log():
     page1 = client.get(url, params={"limit": 5}).json()
     page2 = client.get(url, params={"limit": 5, "before": page1["next_before"]}).json()
     assert [e["id"] for e in page1["events"] + page2["events"]] == [e["id"] for e in events[:10]]
-    assert client.get("/api/opportunities/OPP-9999/activity").status_code == 404
+    assert client.get("/api/bids/OPP-9999/activity").status_code == 404
     assert client.post(url).status_code == 405  # read-only
 
 
@@ -1118,12 +1118,12 @@ def test_dispatch_without_go_and_no_go_withdraws():
         matching.match(db, fresh, "test")
         units = list(matching.suggested_units(db, fresh))
     assert units
-    assert client.post(f"/api/opportunities/{fresh}/dispatch").status_code == 409  # no participation yet
-    client.post(f"/api/opportunities/{fresh}/participation", json={"units": units})
-    assert client.post(f"/api/opportunities/{fresh}/dispatch").json()["created"] >= 1
-    assert client.get(f"/api/opportunities/{fresh}/decisions").json()["go_no_go"] is None
+    assert client.post(f"/api/bids/{fresh}/dispatch").status_code == 409  # no participation yet
+    client.post(f"/api/bids/{fresh}/participation", json={"units": units})
+    assert client.post(f"/api/bids/{fresh}/dispatch").json()["created"] >= 1
+    assert client.get(f"/api/bids/{fresh}/decisions").json()["go_no_go"] is None
     # a change applied before any go decision still dispatches its new work (the changes follow-up after A-14)
-    r = client.post(f"/api/opportunities/{fresh}/corrections", json={
+    r = client.post(f"/api/bids/{fresh}/corrections", json={
         "kind": "add", "page": 56, "line_start": 5, "line_end": 7, "category": "technical", "reason": "missed"}).json()
     assert r["added"] and r["dispatched"] >= 1 and r["note"] == "", r
 
@@ -1138,12 +1138,12 @@ def test_dispatch_without_go_and_no_go_withdraws():
     open_ids = {i for i, s in before.items() if s in ("assigned", "returned")}
     kept = {i: s for i, s in before.items() if s in ("submitted", "validated")}
     assert open_ids and kept
-    assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "no_go"}).json()["withdrawn"] == len(open_ids)
+    assert client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "no_go"}).json()["withdrawn"] == len(open_ids)
     after = states()
     assert all(after[i] == "withdrawn" for i in open_ids) and all(after[i] == s for i, s in kept.items())
-    assert client.post(f"/api/opportunities/{opp}/dispatch").status_code == 409  # a no-go stops dispatch
-    assert client.post(f"/api/opportunities/{opp}/go-no-go", json={"outcome": "go"}).json()["withdrawn"] == 0
-    assert client.post(f"/api/opportunities/{opp}/dispatch").status_code == 200
+    assert client.post(f"/api/bids/{opp}/dispatch").status_code == 409  # a no-go stops dispatch
+    assert client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "go"}).json()["withdrawn"] == 0
+    assert client.post(f"/api/bids/{opp}/dispatch").status_code == 200
     assert all(states()[i] == "assigned" for i in open_ids)  # the go resumes the withdrawn work
 
 
@@ -1172,11 +1172,11 @@ def test_response_fields_and_reason():
     fields = {k: answer[k] for k in ("reason", "conditions", "workaround", "next_steps")}
     row = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["id"] == item["id"])
     assert {k: row[k] for k in fields} == fields
-    trace = next(r for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"] if r["req"]["req_id"] == item["req_id"])
+    trace = next(r for r in client.get(f"/api/bids/{opp}/trace").json()["rows"] if r["req"]["req_id"] == item["req_id"])
     assert any({k: a[k] for k in fields} == fields for a in trace["assignments"])
-    matrix = [r for r in client.get(f"/api/opportunities/{opp}/compliance-matrix").json()["rows"] if r["assignment_id"] == item["id"]]
+    matrix = [r for r in client.get(f"/api/bids/{opp}/compliance-matrix").json()["rows"] if r["assignment_id"] == item["id"]]
     assert matrix and {k: matrix[0][k] for k in fields} == fields
-    handoff = client.get(f"/api/opportunities/{opp}/handoff/CROWN").json()
+    handoff = client.get(f"/api/bids/{opp}/handoff/CROWN").json()
     answers = [i["unit_answer"] for r in handoff["routes"].values() for i in r["items"] if i["req_id"] == item["req_id"]]
     assert answers and answers[0]["reason"] == fields["reason"]
 
@@ -1188,30 +1188,30 @@ def test_needs_an_owner_and_capability_gap():
     seed_demo.main()
     client, bm = signed_in(), auth("bid.manager")
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    rows = client.get(f"/api/opportunities/{opp}/trace").json()["rows"]
+    rows = client.get(f"/api/bids/{opp}/trace").json()["rows"]
     desk = [r for r in rows if any(a["bu"] == "BID" for a in r["assignments"])]
     assert desk and all(r["req"]["category"] not in ("technical", "compliance") for r in desk)  # no silent fallback
     held = next(r for r in rows if r["req"]["category"] == "technical" and r["assignments"])
-    req_id, url = held["req"]["req_id"], f"/api/opportunities/{opp}/requirements/{held['req']['req_id']}/capability-gap"
+    req_id, url = held["req"]["req_id"], f"/api/bids/{opp}/requirements/{held['req']['req_id']}/capability-gap"
     assert client.post(url, json={"reason": "No unit"}, headers=bm).status_code == 409  # a unit holds it
 
-    client.post(f"/api/opportunities/{opp}/requirements/{req_id}/match", json={"units": []}, headers=bm)
-    client.post(f"/api/opportunities/{opp}/dispatch", headers=bm)
-    assert req_id in {o["req_id"] for o in client.get(f"/api/opportunities/{opp}/needs-owner").json()}
-    summary = client.get(f"/api/opportunities/{opp}/decisions").json()["summary"]
+    client.post(f"/api/bids/{opp}/requirements/{req_id}/match", json={"units": []}, headers=bm)
+    client.post(f"/api/bids/{opp}/dispatch", headers=bm)
+    assert req_id in {o["req_id"] for o in client.get(f"/api/bids/{opp}/needs-owner").json()}
+    summary = client.get(f"/api/bids/{opp}/decisions").json()["summary"]
     assert req_id in {o["req_id"] for o in summary["needs_owner"]}
     assert next(c for c in summary["criteria"] if c["id"] == "all_matched")["status"] == "not_met"
 
     assert client.post(url, json={"reason": "No unit"}, headers=auth("crown.pm")).status_code == 403
     assert client.post(url, json={"reason": "  "}, headers=bm).status_code == 409
-    assert client.post(f"/api/opportunities/{opp}/requirements/REQ-9999-0001/capability-gap", json={"reason": "x"}, headers=bm).status_code == 404
+    assert client.post(f"/api/bids/{opp}/requirements/REQ-9999-0001/capability-gap", json={"reason": "x"}, headers=bm).status_code == 404
     gap = client.post(url, json={"reason": "No unit offers a 4000 A bus"}, headers=bm).json()
     assert (gap["bu"], gap["status"], gap["compliance"], gap["reason"]) == ("BID", "validated", "not_met", "No unit offers a 4000 A bus")
-    assert req_id not in {o["req_id"] for o in client.get(f"/api/opportunities/{opp}/needs-owner").json()}
-    client.post(f"/api/opportunities/{opp}/dispatch", headers=bm)  # the gap stays: not withdrawn, not reopened
-    row = next(r for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"] if r["req"]["req_id"] == req_id)
+    assert req_id not in {o["req_id"] for o in client.get(f"/api/bids/{opp}/needs-owner").json()}
+    client.post(f"/api/bids/{opp}/dispatch", headers=bm)  # the gap stays: not withdrawn, not reopened
+    row = next(r for r in client.get(f"/api/bids/{opp}/trace").json()["rows"] if r["req"]["req_id"] == req_id)
     assert [(a["bu"], a["status"]) for a in row["assignments"]] == [("BID", "validated")]
-    matrix = [r for r in client.get(f"/api/opportunities/{opp}/compliance-matrix").json()["rows"] if r["req_id"] == req_id]
+    matrix = [r for r in client.get(f"/api/bids/{opp}/compliance-matrix").json()["rows"] if r["req_id"] == req_id]
     assert [(r["compliance_label"], r["reason"]) for r in matrix] == [("Non-compliant", "No unit offers a 4000 A bus")]
 
 
@@ -1249,7 +1249,7 @@ def test_questions_and_comments():
     client, bm, crown, ep2 = signed_in(), auth("bid.manager"), auth("crown.de"), auth("ep2.de")
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp)
-    url = f"/api/opportunities/{opp}/comments"
+    url = f"/api/bids/{opp}/comments"
     body = {"req_id": item["req_id"], "assignment_id": item["id"], "kind": "question", "text": "Indoor or outdoor enclosure?"}
     q = client.post(url, json=body, headers=crown).json()
     assert (q["author"], q["kind"], q["status"]) == ("Crown Design Engineer", "question", "open")
@@ -1262,7 +1262,7 @@ def test_questions_and_comments():
     thread = client.get(url, params={"req_id": item["req_id"]}).json()
     assert [c["kind"] for c in thread] == ["question", "comment"]
     assert next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["id"] == item["id"])["open_questions"] == 1
-    summary = client.get(f"/api/opportunities/{opp}/decisions").json()["summary"]
+    summary = client.get(f"/api/bids/{opp}/decisions").json()["summary"]
     assert summary["open_questions"] == 1
     assert "open questions: 1" in next(c for c in summary["criteria"] if c["id"] == "open_questions")["detail"]
     with SessionLocal() as db:
@@ -1273,7 +1273,7 @@ def test_questions_and_comments():
     assert client.post(f"/api/comments/{q['id']}/close", headers=crown).status_code == 409  # already closed
     assert client.get(url, params={"status": "open"}).json() == [c for c in thread if c["kind"] == "comment"]
     assert client.post("/api/comments/999999/close").status_code == 404
-    assert client.get("/api/opportunities/OPP-9999/comments").status_code == 404
+    assert client.get("/api/bids/OPP-9999/comments").status_code == 404
 
 
 def test_assessment_step():
@@ -1298,7 +1298,7 @@ def test_assessment_step():
             requirements.add(db, opp, doc.id, i["quote"], i["text"], i["category"], "test", i["section"], i["page"])
         matching.match(db, opp, "test")
 
-    a = client.get(f"/api/opportunities/{opp}/assessment").json()
+    a = client.get(f"/api/bids/{opp}/assessment").json()
     assert not a["published"] and not a["sent"] and a["participation"] is None
     assert a["summary"]["requirements"] == len(seed["requirements"]) == len(a["routing"])  # a preview before publishing
     assert a["summary"]["sections"] and sum(a["summary"]["by_category"].values()) == a["summary"]["requirements"]
@@ -1311,13 +1311,13 @@ def test_assessment_step():
     assert {"exceptions", "rule_warnings", "questions"} <= set(a["open_questions"])
 
     # Send for assessment, as the screen does it: participation, publish, dispatch
-    client.post(f"/api/opportunities/{opp}/participation", json={"units": list(a["summary"]["suggested_units"])})
-    assert client.post(f"/api/opportunities/{opp}/baselines").status_code == 200
-    assert client.post(f"/api/opportunities/{opp}/dispatch").json()["created"] >= 1
-    after = client.get(f"/api/opportunities/{opp}/assessment").json()
+    client.post(f"/api/bids/{opp}/participation", json={"units": list(a["summary"]["suggested_units"])})
+    assert client.post(f"/api/bids/{opp}/baselines").status_code == 200
+    assert client.post(f"/api/bids/{opp}/dispatch").json()["created"] >= 1
+    after = client.get(f"/api/bids/{opp}/assessment").json()
     assert after["published"] and after["baseline"] == 1 and after["sent"] and after["participation"]["decided_by"] == bm
     assert sum(p["total"] for p in after["progress"].values()) == sum(len(r["units"]) for r in after["routing"] if r["route"] != "needs_owner")
-    assert client.get("/api/opportunities/OPP-9999/assessment").status_code == 404
+    assert client.get("/api/bids/OPP-9999/assessment").status_code == 404
 
 
 def test_permissions_in_atharvs_modules():
@@ -1326,16 +1326,16 @@ def test_permissions_in_atharvs_modules():
     seed_demo.main()
     client, pm, de, admin = signed_in(), auth("crown.pm"), auth("crown.de"), auth("admin")
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    row = next(r for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"] if r["match"] and r["assignments"])
+    row = next(r for r in client.get(f"/api/bids/{opp}/trace").json()["rows"] if r["match"] and r["assignments"])
     req_id, match_id = row["req"]["req_id"], row["match"]["id"]
     bid_manager_only = [
-        (f"/api/opportunities/{opp}/match", None),
+        (f"/api/bids/{opp}/match", None),
         (f"/api/matches/{match_id}/decide", {"action": "accept"}),
-        (f"/api/opportunities/{opp}/requirements/{req_id}/match", {"units": []}),
-        (f"/api/opportunities/{opp}/participation", {"units": ["CROWN"]}),
-        (f"/api/opportunities/{opp}/dispatch", None),
-        (f"/api/opportunities/{opp}/go-no-go", {"outcome": "go"}),
-        (f"/api/opportunities/{opp}/requirements/{req_id}/capability-gap", {"reason": "x"}),
+        (f"/api/bids/{opp}/requirements/{req_id}/match", {"units": []}),
+        (f"/api/bids/{opp}/participation", {"units": ["CROWN"]}),
+        (f"/api/bids/{opp}/dispatch", None),
+        (f"/api/bids/{opp}/go-no-go", {"outcome": "go"}),
+        (f"/api/bids/{opp}/requirements/{req_id}/capability-gap", {"reason": "x"}),
     ]
     for url, body in bid_manager_only:
         for who in (pm, de, admin):
@@ -1343,9 +1343,9 @@ def test_permissions_in_atharvs_modules():
     item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp and i["status"] == "submitted")
     assert client.post(f"/api/assignments/{item['id']}/validate", json={"ok": True}, headers=pm).status_code == 403
     for url, body in ((f"/api/assignments/{item['id']}/respond", {"compliance": "met"}),
-                      (f"/api/opportunities/{opp}/comments", {"req_id": req_id, "text": "?", "kind": "question"})):
+                      (f"/api/bids/{opp}/comments", {"req_id": req_id, "text": "?", "kind": "question"})):
         assert client.post(url, json=body, headers=admin).status_code == 403, url
-    for url in (f"/api/opportunities/{opp}/assessment", f"/api/opportunities/{opp}/decisions", "/api/inbox/CROWN",
-                f"/api/assignments/{item['id']}/history", f"/api/opportunities/{opp}/comments"):
+    for url in (f"/api/bids/{opp}/assessment", f"/api/bids/{opp}/decisions", "/api/inbox/CROWN",
+                f"/api/assignments/{item['id']}/history", f"/api/bids/{opp}/comments"):
         assert client.get(url, headers=admin).status_code == 200, url  # everyone signed in reads
-    assert client.post(f"/api/opportunities/{opp}/participation", json={"units": ["CROWN", "EP2"]}).status_code == 200
+    assert client.post(f"/api/bids/{opp}/participation", json={"units": ["CROWN", "EP2"]}).status_code == 200

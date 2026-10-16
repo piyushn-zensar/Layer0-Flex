@@ -67,32 +67,32 @@ def _call(fn, *args):
         raise HTTPException(409, str(exc))
 
 
-@router.post("/opportunities/{opp_id}/dispatch")
+@router.post("/bids/{opp_id}/dispatch")
 def dispatch(opp_id: str, request: Request, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)  # sending for assessment is the bid manager's (technical-architecture 16.6)
     created = _call(service.dispatch, db, opp_id, actor(request))
     return {"created": created, "needs_owner": len(service.needs_owner(db, opp_id))}
 
 
-@router.get("/opportunities/{opp_id}/assessment")
+@router.get("/bids/{opp_id}/assessment")
 def assessment(opp_id: str, db: Session = Depends(get_db)):
     """The Assessment step (technical-architecture 16.5): bid summary, open questions, participation, routing, progress."""
     return _call(service.assessment, db, opp_id)
 
 
-@router.get("/opportunities/{opp_id}/needs-owner")
+@router.get("/bids/{opp_id}/needs-owner")
 def needs_owner(opp_id: str, db: Session = Depends(get_db)):
     """Product requirements no participating unit holds: not dispatched until a unit or a capability gap (C-08)."""
     return _call(service.needs_owner, db, opp_id)
 
 
-@router.post("/opportunities/{opp_id}/requirements/{req_id}/capability-gap")
+@router.post("/bids/{opp_id}/requirements/{req_id}/capability-gap")
 def capability_gap(opp_id: str, req_id: str, body: GapIn, request: Request, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)  # owned by the bid manager (technical-architecture 16.5)
     return row(_call(service.record_gap, db, opp_id, req_id, body.reason, actor(request)))
 
 
-@router.get("/opportunities/{opp_id}/handoff/{bu}")
+@router.get("/bids/{opp_id}/handoff/{bu}")
 def handoff(opp_id: str, bu: str, db: Session = Depends(get_db)):
     """The unit's hand-off payload (A-09, M8) as a JSON download."""
     payload = _call(service.handoff, db, opp_id, bu)
@@ -120,13 +120,13 @@ def respond(body: RespondIn, request: Request, assignment_id: int = AssignmentId
     return {"ok": True}
 
 
-@router.get("/opportunities/{opp_id}/comments")
+@router.get("/bids/{opp_id}/comments")
 def comments(opp_id: str, req_id: str | None = None, status: Literal["open", "closed"] | None = None, db: Session = Depends(get_db)):
     """The bid's questions and comments (C-17), oldest first; filter by requirement and status."""
     return [row(c) for c in _call(service.comments, db, opp_id, req_id, status)]
 
 
-@router.post("/opportunities/{opp_id}/comments")
+@router.post("/bids/{opp_id}/comments")
 def add_comment(opp_id: str, body: CommentIn, request: Request, db: Session = Depends(get_db)):
     require(request, *CORRECTORS)  # the administrator reads only
     try:

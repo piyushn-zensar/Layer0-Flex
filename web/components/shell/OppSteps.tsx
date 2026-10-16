@@ -29,7 +29,7 @@ export const STATUS_EVENT = "opp-status-changed";
 export default function OppSteps() {
   const { id } = useParams<{ id: string }>();
   const path = usePathname();
-  const { data, reload } = useApi<{ opportunity: Opportunity }>(`/api/opportunities/${id}`);
+  const { data, reload } = useApi<{ opportunity: Opportunity }>(`/api/bids/${id}`);
   // Status changes when a page acts (freeze, go, dispatch): refresh on every step change, on the page's event, and every few seconds.
   useEffect(() => { reload(); }, [path, reload]);
   useEffect(() => { const t = setInterval(reload, 5000); return () => clearInterval(t); }, [reload]);

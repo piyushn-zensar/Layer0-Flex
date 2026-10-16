@@ -30,25 +30,25 @@ def test_exports_name_the_addendum():
     seed_demo.main()  # its own opportunity: frozen, go, dispatched, some answers validated
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
-    assert client.post(f"/api/opportunities/{opp}/changes", data={"role": "main"},
+    assert client.post(f"/api/bids/{opp}/changes", data={"role": "main"},
                        files={"file": (ADDENDUM.name, ADDENDUM.read_bytes(), "application/pdf")}).status_code == 409
-    s = client.post(f"/api/opportunities/{opp}/changes", data={"role": "addendum"},
+    s = client.post(f"/api/bids/{opp}/changes", data={"role": "addendum"},
                     files={"file": (ADDENDUM.name, ADDENDUM.read_bytes(), "application/pdf")}).json()
     client.post(f"/api/changes/{s['id']}/confirm-all")
     res = client.post(f"/api/changes/{s['id']}/apply").json()["result"]
     breaker = opp.replace("OPP-", "REQ-") + "-0005"
     assert breaker in res["modified"]
-    docs = {d["id"]: d["role"] for d in client.get(f"/api/opportunities/{opp}").json()["documents"]}
+    docs = {d["id"]: d["role"] for d in client.get(f"/api/bids/{opp}").json()["documents"]}
     assert docs[s["document_id"]] == "addendum"  # P-23: the person states the document type
-    reqs = {r["req_id"]: r for r in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
+    reqs = {r["req_id"]: r for r in client.get(f"/api/bids/{opp}/requirements").json()["requirements"]}
     assert reqs[breaker]["origin"] == "customer_change"
     # P-23: a correction after publishing returns the corrected requirement's answers, like a customer change
-    fixed = client.post(f"/api/opportunities/{opp}/corrections",
+    fixed = client.post(f"/api/bids/{opp}/corrections",
                         json={"kind": "edit", "req_id": breaker, "text": "Breakers per the addendum", "reason": "clearer"}).json()
     assert fixed["baseline"] == res["baseline"] + 1 and fixed["affected"] == [breaker] and fixed["returned"] >= 1
     versions = client.get(f"/api/requirements/{breaker}/history").json()["versions"]
     assert [(v["label"], v["origin"]) for v in versions][-2:] == [("revised", "customer_change"), ("corrected", "correction")]
-    rows = {r["req"]["req_id"]: r["req"] for r in client.get(f"/api/opportunities/{opp}/trace").json()["rows"]}
+    rows = {r["req"]["req_id"]: r["req"] for r in client.get(f"/api/bids/{opp}/trace").json()["rows"]}
     assert rows[breaker]["document_id"] == s["document_id"] and rows[breaker]["source"] == "p. 1, lines 14-15"
     named = f"{ADDENDUM.name}, p. 1, lines 14-15"
     changed = {k: f"{ADDENDUM.name}, {rows[k]['source']}" for k in res["modified"] + res["added"]}
@@ -57,7 +57,7 @@ def test_exports_name_the_addendum():
 
     # CSV: same columns, the Source names the addendum
     import csv as _csv
-    text = client.get(f"/api/opportunities/{opp}/compliance-matrix.csv").text.lstrip("﻿")
+    text = client.get(f"/api/bids/{opp}/compliance-matrix.csv").text.lstrip("﻿")
     table = list(_csv.reader(io.StringIO(text)))
     head, body = table[0], table[1:]
     assert head[:2] == ["Requirement ID", "Source"] and len(head) == 18  # 14 columns + J-11's Reason, Conditions, Workaround, Next Steps
@@ -67,7 +67,7 @@ def test_exports_name_the_addendum():
     assert "p. 55, line 16" in sources.values()
 
     # Excel: the customer sheet's RFP reference and the Tracking sheet's Source
-    wb = load_workbook(io.BytesIO(client.get(f"/api/opportunities/{opp}/compliance-matrix.xlsx").content))
+    wb = load_workbook(io.BytesIO(client.get(f"/api/bids/{opp}/compliance-matrix.xlsx").content))
     customer = {r[0]: r[1] for r in wb["Compliance matrix"].iter_rows(min_row=5, values_only=True) if r[0]}
     tracking = {r[0]: r[1] for r in wb["Tracking"].iter_rows(min_row=2, values_only=True)}
     for got in (customer, tracking):
@@ -75,11 +75,11 @@ def test_exports_name_the_addendum():
         assert all(got[k] == v for k, v in main.items())
 
     # response outline: JSON "source" fields and the Markdown
-    outline = client.get(f"/api/opportunities/{opp}/response-outline").json()
+    outline = client.get(f"/api/bids/{opp}/response-outline").json()
     refs = {x["req_id"]: x["source"] for c in outline["chapters"] for x in c["open"] + c["material"]}
     assert refs[breaker] == named and all(refs[k] == v for k, v in changed.items() if k in refs)
     assert all(refs[k] == v for k, v in main.items() if k in refs)
-    md = client.get(f"/api/opportunities/{opp}/response-outline.md").text
+    md = client.get(f"/api/bids/{opp}/response-outline.md").text
     assert f"{breaker} ({named})" in md
 
 
@@ -122,7 +122,7 @@ def test_group_highlight_follows_current_sub_requirements():
         assert out["modified"] == [ids["breaker"]] and out["removed"] == [ids["autocad"]] and out["affected"] == [ids["group"]]
 
     client = signed_in()
-    trace = client.get(f"/api/opportunities/{opp}/trace").json()
+    trace = client.get(f"/api/bids/{opp}/trace").json()
     rows = {r["req"]["req_id"]: r for r in trace["rows"]}
     g = rows[ids["group"]]
     boxes = {tuple(b) for b in g["req"]["bboxes"]}
@@ -132,11 +132,11 @@ def test_group_highlight_follows_current_sub_requirements():
     assert next(k for k in g["children"] if k["req_id"] == ids["breaker"])["document_id"] == change.id
     assert g["req"]["page"] == 55 and "bboxes" not in g  # the field keeps its place and name
     item = next(r for r in trace["rows"] if r["req"]["kind"] == "item")
-    stored = {r["req_id"]: r for r in client.get(f"/api/opportunities/{opp}/requirements").json()["requirements"]}
+    stored = {r["req_id"]: r for r in client.get(f"/api/bids/{opp}/requirements").json()["requirements"]}
     assert item["req"]["bboxes"] == stored[item["req"]["req_id"]]["bboxes"]  # items as stored
     assert {tuple(b) for b in stored[ids["group"]]["bboxes"]} >= set(old["breaker"]) | set(old["autocad"])  # immutable
 
-    wb = load_workbook(io.BytesIO(client.get(f"/api/opportunities/{opp}/compliance-matrix.xlsx").content))
+    wb = load_workbook(io.BytesIO(client.get(f"/api/bids/{opp}/compliance-matrix.xlsx").content))
     customer = {r[0]: r[1] for r in wb["Compliance matrix"].iter_rows(min_row=5, values_only=True) if r[0]}
     assert customer[ids["breaker"]] == f"{ADDENDUM.name}, p. 1, lines 14-15"
     assert customer[ids["arc"]] == "p. 55, lines 52-53" and ids["autocad"] not in customer

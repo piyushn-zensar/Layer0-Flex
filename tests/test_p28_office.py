@@ -43,8 +43,8 @@ def docx() -> bytes:
 
 def test_word_and_excel_are_read_like_a_pdf():
     client = signed_in()
-    opp = client.post("/api/opportunities", json={"title": "office"}).json()["id"]
-    url = f"/api/opportunities/{opp}"
+    opp = client.post("/api/bids", json={"title": "office"}).json()["id"]
+    url = f"/api/bids/{opp}"
     sheet = client.post(f"{url}/documents", files={"file": ("datasheet.xlsx", xlsx())}).json()
     word = client.post(f"{url}/documents", files={"file": ("spec.docx", docx())}, data={"role": "other"}).json()
     cad = client.post(f"{url}/documents", files={"file": ("plan.dwg", b"AC1027")}, data={"role": "other"}).json()
