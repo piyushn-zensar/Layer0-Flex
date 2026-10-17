@@ -27,7 +27,7 @@ export default function PaneFrame({ pane, children }: { pane: Pane; children: Re
       onDrop={droppable ? (e) => { e.preventDefault(); ws.dropPane(pane); } : undefined}>
       <div className="pane-head">
         {main && (
-          <div className="pane-arrange" role="group" aria-label={`Arrange pane ${pane}: ${name}`}>
+          <div className="pane-arrange" role="group" aria-label={`Arrange pane ${pane}: ${name}`} data-tour={`trace-arrange-${pane}`}>
             <button type="button" className="pane-grip" draggable data-grip
               aria-label={`Drag pane ${pane}: ${name} to a new place. With the keyboard, press the left or right arrow key.`}
               title="Drag to reorder. Left and right arrow keys also move it."

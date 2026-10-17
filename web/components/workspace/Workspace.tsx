@@ -33,7 +33,7 @@ function Splitter({ left, right, hidden }: { left: Pane; right: Pane; hidden: bo
   const apply = (dx: number, fromStart?: { l: number; r: number; w: Record<Pane, number> }, persist = true) =>
     ws.setLayout({ ...ws.layout, widths: resizePair(fromStart?.w ?? ws.layout.widths, left, right, fromStart?.l ?? px(left), fromStart?.r ?? px(right), dx) }, persist);
   return (
-    <div className={`ws-split${active ? " active" : ""}`} role="separator" aria-orientation="vertical" tabIndex={hidden ? -1 : 0} hidden={hidden}
+    <div className={`ws-split${active ? " active" : ""}`} data-tour={`trace-split-${left}`} role="separator" aria-orientation="vertical" tabIndex={hidden ? -1 : 0} hidden={hidden}
       aria-label={`Resize: pane ${left}: ${PANE_NAMES[left]} and pane ${right}: ${PANE_NAMES[right]}`}
       aria-valuemin={minPct} aria-valuemax={100 - minPct} aria-valuenow={share.pair ? Math.round((share.l / share.pair) * 100) : 50}
       aria-valuetext={`Pane ${left} is ${pct(share.l)} percent wide, pane ${right} is ${pct(share.r)} percent wide`}

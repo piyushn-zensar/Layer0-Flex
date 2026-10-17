@@ -7,9 +7,9 @@ import { CHAPTERS, STEPS } from "@/tour";
 import { useTour } from "./TourProvider";
 
 const ABOUT = [
-  "Layer 0 takes one bid opportunity from the moment an RFP arrives to the final response: it reads the RFP into requirement line items with exact page and line sources.",
-  "Each line item is matched to a business unit's product; participation and the go/no-go decision are recorded with their rationale.",
-  "Every participating unit gets one work package, answers it as a checklist, and the bid manager validates and consolidates the answers.",
+  "Layer 0 takes one bid from the moment an RFP arrives to the compliance matrix: it reads the RFP into requirements with exact page and line sources.",
+  "Each requirement is matched to a business unit's product; the participating units, the routing and the go/no-go decision are recorded with their rationale.",
+  "Every participating unit gets one work package and answers it as a checklist; the unit manager validates the answers and the bid manager consolidates them.",
   "Agents propose, people decide: every proposal is reviewed by a named person and every action is written to an append-only audit trail.",
 ];
 
@@ -54,7 +54,7 @@ export default function TourLauncher() {
         </div>
         <ul className="tour-launch-about">{ABOUT.map((l, i) => <li key={i}>{l}</li>)}</ul>
         <p className="tour-launch-time">
-          The walkthrough explains every screen, component and action, and lets you run a bid end to end on a sample RFP.
+          The walkthrough explains every screen, component and action on the seeded Syracuse bid.
           It takes about <strong>25 to 30 minutes</strong>; you can leave at any time (Esc) and continue later from the <strong>Walkthrough</strong> button in the top bar.
           {t.status === "done" && " You completed it in this session; start again or jump to a chapter."}
         </p>

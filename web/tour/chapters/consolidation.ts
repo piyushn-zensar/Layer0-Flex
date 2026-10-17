@@ -1,11 +1,11 @@
-// Walkthrough chapter 9: Final response (coverage check, compliance matrix exports) and the Response outline.
-// Runs on the walkthrough opportunity ({opp}); every step reads the page as it is, so it works at any stage
-// (nothing frozen, open requirements, or every requirement answered).  Owner: consolidation/changes page group.
+// Walkthrough chapter 9: Compliance matrix (coverage, filters, detail, exports), the Response outline and the Activity log.
+// Runs on the walkthrough bid ({opp}); every step reads the page as it is, so it works at any stage.  Owner: Janvia (J-15).
 import type { TourChapter, TourCtx } from "../types";
 import { onRoute, openDetails, present } from "../helpers";
 
 const CONS = "/opportunities/{opp}/consolidation";
 const OUTLINE = "/opportunities/{opp}/consolidation/outline";
+const ACT = "/opportunities/{opp}/consolidation/activity";
 const missing = (id: string) => (ctx: TourCtx) => ctx.el(id) === null;
 const pressed = (tourId: string, nth: number) => (ctx: TourCtx) =>
   ctx.el(tourId)?.querySelectorAll(".chip")[nth]?.getAttribute("aria-pressed") === "true";
@@ -13,18 +13,18 @@ const pressed = (tourId: string, nth: number) => (ctx: TourCtx) =>
 const chapter: TourChapter = {
   id: "consolidation",
   order: 9,
-  title: "Final response, exports and the outline",
-  summary: "The coverage check that says which requirements are answered and why the rest are not, the compliance matrix as Excel and CSV, and the drafting agent's response outline with its citations.",
+  title: "Compliance matrix, outline and Activity",
+  summary: "The compliance matrix and its blockers, filters, row detail and history, the Excel and CSV exports, the response outline with its citations, and the Activity log.",
   entryRoute: CONS,
   steps: [
     {
       id: "consolidation-intro",
-      title: "Final response: is every requirement answered?",
+      title: "Compliance matrix: is every requirement answered?",
       route: CONS,
       body: [
-        "This screen is the **coverage check** for the final response. It runs against the frozen baseline (the requirements approved on the Requirements page) and against the unit answers that came back through the Inbox.",
-        "The rule is strict and simple: a requirement is **answered** only when every assignment for it is **validated** by the Bid Manager. An answer that is still with the unit, submitted but not validated, or returned, blocks completion. Nothing is estimated: the page counts states, it does not judge content.",
-        "From here you download the compliance matrix (Excel for the customer, CSV for tracking) and open the Response outline, the drafting agent's first draft. Before leaving, know how many requirements are still open and who holds them: that is the work left before submission.",
+        "The **Compliance matrix** is the fourth step and the bid manager's consolidation: every requirement with the answer of the unit that owns it. It runs against the frozen baseline and the answers that came back through My work.",
+        "The rule is strict: a requirement is **answered** only when every item for it is **validated** (by the unit manager, or by the bid manager for the bid desk's items). An item still with the unit, submitted but not validated, or returned blocks completion. Nothing is estimated: the page counts states, it does not judge content.",
+        "From here you open the Response outline (the drafting agent's first draft), the Activity log, and download the matrix as Excel for the customer or CSV for tracking.",
       ],
     },
     {
@@ -33,10 +33,9 @@ const chapter: TourChapter = {
       route: CONS,
       target: "cons-summary",
       placement: "bottom",
-      fallback: "The summary line reads 'answered / total requirements answered' and, in red, how many still need an answer. It is not shown until the baseline is frozen.",
+      fallback: "The summary line reads 'answered / total requirements answered' and, in red, how many still need an answer.",
       body: [
-        "**answered / total**: the total is the number of requirements in the frozen baseline (312 for the Syracuse RFP); answered counts the rows whose assignments are all validated. In the seeded demo that is **1 / 312**, with **311 still need an answer** in red. When nothing is left, the line turns green: *Every requirement is answered.*",
-        "The same numbers feed the opportunity header, the portfolio and the Response outline, so they always agree. The count changes only through the Inbox (a unit submits, the Bid Manager validates) or through Changes (an addendum returns answers for review).",
+        "**answered / total**: the total is the number of requirements in the baseline (312 for the Syracuse RFP); answered counts requirements whose items are all validated. In the seeded demo that is **1 / 312**, with **311 still need an answer** in red. When nothing is left, the line turns green. The count changes through My work (a unit submits, the unit manager validates) or through Changes (an addendum returns answers for review).",
       ],
     },
     {
@@ -48,117 +47,91 @@ const chapter: TourChapter = {
       skipIf: missing("cons-blockers"),
       fallback: "The 'Needs an answer' panel only appears while some requirement is open.",
       body: [
-        "Every open requirement is grouped by **why** it is open, derived from its assignments: **Waiting for validation** (a unit submitted, the Bid Manager has not validated), **Waiting for the unit** (still assigned), **Returned** (sent back to the unit with a note) and **Not assigned** (no work package yet: dispatch has not run, or the requirement was added after it).",
-        "A requirement with several units takes the most urgent reason: returned outranks waiting for the unit, which outranks waiting for validation. Each group lists up to 10 requirement IDs; a **'N more'** toggle shows the rest.",
-        "Every ID is a link into **Traceability** (`/trace#REQ-…`), which opens the requirement on its RFP page with its units and answers: the quickest way from 'what is missing' to 'who do I ask'.",
+        "Every open requirement is grouped by **why** it is open: **Waiting for validation** (1 on the demo), **Waiting for the unit** (195, still assigned), **Returned** (sent back with a note) and **Not assigned** (115 product requirements no participating unit holds; assign a unit in Traceability or record a capability gap on the Assessment page). A requirement with several units takes the most urgent reason.",
+        "Each group lists up to ten requirement IDs, with a toggle for the rest. Every ID links into **Requirement Traceability**: the quickest way from \"what is missing\" to \"who do I ask\".",
       ],
     },
     {
       id: "consolidation-filter",
-      title: "All or Open",
+      title: "Search and filters",
       route: CONS,
       target: "cons-filter",
       placement: "bottom",
-      kind: "action",
-      skipIf: missing("cons-filter"),
-      instruction: "Click Open to show only the requirements that still need an answer.",
-      done: pressed("cons-filter", 1),
-      fallback: "The All / Open filter sits above the table once the baseline is frozen.",
       body: [
-        "Two chips with their counts: **All** (every requirement of the baseline, in RFP order) and **Open** (only the rows that still block completion). The pressed chip is the active one; the filter is per visit and changes nothing on the server.",
-        "Use Open when preparing the chase list before a deadline; use All when checking a finished response end to end.",
+        "Search by requirement text, ID, unit, product or response, and filter by **unit**, **compliance** (Fully, Partially, Non-compliant), **state** and **category**. **Open only** (311) shows what still needs an answer; **Clear filters** resets everything. The count beside it says how many rows match and that the table shows the first 100.",
       ],
     },
     {
       id: "consolidation-table",
-      title: "The coverage table",
+      title: "The matrix: one row per requirement and unit answer",
       route: CONS,
       target: "cons-table",
       placement: "top",
-      skipIf: missing("cons-table"),
-      fallback: "The table lists one row per requirement of the frozen baseline.",
       body: [
-        "One row per requirement of the frozen baseline, in RFP order. **ID** links to Traceability and shows the source underneath (*p. 55, lines 7-65*: the page and lines the requirement is anchored to; a requirement revised by an addendum names that file first). **Requirement** is the short text the reader agent wrote and a person approved.",
-        "Rows that still block completion carry a light warning background, so the open ones stand out even in the All view. Sub-requirements of a group are not separate rows here: the group is answered as one.",
+        "Each row is a requirement and one unit's answer to it, with the requirement's **category**, the **unit**, the **response** state, the **compliance** and the **source** page and lines. A requirement owned by two units appears twice: the schedule, commercial and staffing items go to the unit managers of both Crown and EP², so the 312 requirements make 337 rows. The ID links to the requirement in Traceability.",
+        "**Click a row** to open its detail panel: the unit's **Reason**, **Conditions**, **Workaround** and **Next steps** (*Not provided* when blank), the source page with the highlighted lines, a link to Traceability and the answer's history. Hovering a *Partially compliant* or *Non-compliant* badge shows the reason.",
       ],
     },
     {
       id: "consolidation-units",
-      title: "Units and responses",
+      title: "Unit",
       route: CONS,
       target: "cons-col-units",
       placement: "bottom",
-      skipIf: missing("cons-col-units"),
-      fallback: "The 'Units and responses' column shows each unit's answer and status.",
       body: [
-        "One line per assignment: the **unit code** (CROWN, for example), the **compliance** the unit chose (*met*, *partial*, *not met*, *exception*; grey *no compliance yet* until it answers), the **product** it offers when it named one, and the assignment **status** badge: *assigned*, *submitted*, *validated*, *returned* or *withdrawn*.",
-        "A requirement dispatched to two units shows two lines and is answered only when both are validated. *not assigned* in grey means no work package exists for it yet.",
+        "The unit column gives the code (**BID** for the bid desk, **CROWN**, **EP2**) and the unit's name. A requirement nobody holds reads *not assigned*.",
       ],
     },
     {
       id: "consolidation-state",
-      title: "State and reason",
+      title: "Response state and History",
       route: CONS,
       target: "cons-col-state",
-      placement: "left",
-      skipIf: missing("cons-col-state"),
-      fallback: "The State column holds the computed state: answered, pending or not assigned.",
+      placement: "bottom",
       body: [
-        "The computed state: **answered** (green) when every assignment is validated, **pending** (amber) while any is not, **not assigned** when there is none. Under a pending state the reason label repeats the group from the blockers panel (*Waiting for validation*, *Waiting for the unit*, *Returned*).",
-        "This state is what the exports write in their *State* column and what the Response outline uses to decide which requirements may be drafted and which are listed as still open.",
+        "The state is *assigned*, *submitted*, *validated* or *returned*, or *not assigned*. Rows with an assignment have a **History** link: every change to that answer with who, when, the note and the before-and-after, read from the audit log.",
       ],
     },
     {
       id: "consolidation-xlsx",
-      allowInteraction: true, // the point of this step is a link or download inside the spotlight
-      title: "Download compliance matrix (Excel)",
+      allowInteraction: true,
+      title: "Download the compliance matrix (Excel)",
       route: CONS,
       target: "cons-xlsx",
       placement: "bottom",
-      fallback: "The Excel download is the primary button in the page header.",
       body: [
-        "The workbook `OPP-xxxx-compliance-matrix.xlsx` is written by code from the stored answers, never by a model. It has two sheets.",
-        "**Compliance matrix** is for the customer: one row per requirement in RFP order, a group's sub-requirements listed under it with their own RFP reference, and the compliance in customer words: *Comply*, *Partially comply*, *Does not comply*, *Exception*, or **Open** until every unit's answer is validated. When two units answered, the worst word wins. Only validated responses are written; open rows have no response text.",
-        "**Tracking** is internal: the same columns as the CSV, one row per unit answer, including who responded and who validated. Every cell is plain text, so a value that starts like a formula (`=`, `+`, `-`, `@`) cannot run when the file is opened.",
+        "The Excel workbook has two sheets. The **customer sheet** has a title block, a frozen header row, filters and wrapped text, and carries only **validated** answers: Fully, Partially or Non-compliant, with Reason, Conditions, Workaround and Next steps, the source page and lines and the offering type colours; everything else reads *Open*. The **Tracking sheet** is the internal view with the CSV columns. It is built deterministically, with no model call.",
       ],
     },
     {
       id: "consolidation-csv",
-      allowInteraction: true, // the point of this step is a link or download inside the spotlight
-      title: "CSV export",
+      allowInteraction: true,
+      title: "Download the CSV",
       route: CONS,
       target: "cons-csv",
       placement: "bottom",
-      fallback: "The CSV download sits next to the Excel button.",
       body: [
-        "`OPP-xxxx-compliance-matrix.csv`: one row per assignment (a requirement without one still gets a row) with the columns *Requirement ID, Source, Category, Requirement, Quote, Business unit, Product, Offering type, Compliance, Response, Validated by, State, Assignment status, Responded by*. The last two were appended later, so earlier column positions never moved.",
-        "The file starts with a UTF-8 byte order mark so Excel reads accents correctly, and cells that start like a formula are quoted. Use it for pivot tables and progress tracking; the Excel workbook is the one to send.",
+        "The CSV is the same rows for tracking and analysis, with the assignment status and who responded, and a byte order mark so Excel reads non-ASCII text correctly. Cells that could be read as formulas are quoted.",
       ],
     },
     {
-      id: "consolidation-empty",
-      title: "Nothing frozen yet",
+      id: "consolidation-activity-link",
+      title: "Activity log",
       route: CONS,
-      target: "cons-empty",
+      target: "cons-activity-link",
       placement: "bottom",
-      skipIf: missing("cons-empty"),
-      fallback: "When the baseline is not frozen the page shows 'No requirements in the baseline yet'.",
       body: [
-        "This opportunity has no frozen baseline, so there is nothing to check coverage against. Approve the requirements and **Freeze baseline** on the Requirements page; the coverage check, the exports and the outline all read the frozen baseline, never the proposed list.",
+        "**Activity log** opens the bid's audit log; the last steps of this chapter look at it. The same page is linked as **Activity** in the bid header.",
       ],
     },
     {
       id: "consolidation-to-outline",
-      title: "Open the Response outline",
+      title: "Response outline (draft)",
       route: CONS,
       target: "cons-outline-link",
       placement: "bottom",
-      kind: "action",
-      instruction: "Click 'Response outline (draft)'.",
-      done: onRoute(OUTLINE),
-      fallback: "The 'Response outline (draft)' button is in the page header.",
       body: [
-        "The outline is the drafting agent's first draft of the response, chapter by chapter, written **only from validated answers**. It is marked *draft* on purpose: writing the final response stays a human task, and the outline gives the bid manager a sourced starting point rather than a blank page.",
+        "**Response outline (draft)** opens the drafting agent's first outline of the response, built only from **validated** answers, each paragraph citing the requirements behind it. Nothing is invented: requirements without a validated answer are listed as open, never drafted.",
       ],
     },
     {
@@ -221,7 +194,7 @@ const chapter: TourChapter = {
       skipIf: missing("outline-not-drafted"),
       fallback: "A chapter without validated answers, or without a model answer, reads 'Not drafted: …'.",
       body: [
-        "A chapter reads **Not drafted** with its reason in two cases: it has no validated answer yet (most chapters of the demo, where 347 requirements are still open), or the model service has no answer for this exact material (offline mock mode with an answer that was never frozen). In both cases the validated answers are still listed below as they are.",
+        "A chapter reads **Not drafted** with its reason in two cases: it has no validated answer yet (most chapters of the demo, where most requirements are still open), or the model service has no answer for this exact material (offline mock mode with an answer that was never frozen). In both cases the validated answers are still listed below as they are.",
         "This is deliberate: a draft that invents content to fill a chapter would be worse than an empty one. Validate more answers in the Inbox and the chapter fills in.",
       ],
     },
@@ -232,7 +205,7 @@ const chapter: TourChapter = {
       target: "outline-chapter-1",
       placement: "top",
       skipIf: missing("outline-chapter-1"),
-      fallback: "Chapters appear once the baseline is frozen; each one covers one category group.",
+      fallback: "Chapters appear once the register has been read; each one covers one category group.",
       body: [
         "The chapters are fixed by category, not by the model: **Technical response** (technical), **Compliance, legal and contract terms** (compliance, legal), **Commercial terms and schedule** (commercial, schedule), **Project team and staffing** (staffing), **Submission requirements** (submission) and **Other requirements**. A chapter appears only when the baseline has requirements in it; the heading shows *answered of total* for that chapter (the demo's technical chapter: 1 of 146).",
         "Under the draft, each chapter has the same expandable blocks: the validated answers it rests on, what is still open, and related passages from both retrieval indexes.",
@@ -274,7 +247,7 @@ const chapter: TourChapter = {
       onEnter: openDetails("outline-open"),
       fallback: "'Still open (N)' lists the chapter's requirements that have no validated answer yet.",
       body: [
-        "The chapter's requirements without a validated answer, with ID, source and short text: the first 8, then *and N more: see Final response*. These are exactly the pending and not-assigned rows of the coverage table for this category.",
+        "The chapter's requirements without a validated answer, with ID, source and short text: the first 8, then *and N more: see Compliance matrix*. These are exactly the pending and not-assigned rows of the coverage table for this category.",
         "Nothing is drafted for them, so the chapter's draft is only as complete as this list is short.",
       ],
     },
@@ -311,10 +284,41 @@ const chapter: TourChapter = {
       route: OUTLINE,
       target: "outline-back",
       placement: "bottom",
-      fallback: "'Back to Final response' returns to the coverage check.",
+      fallback: "'Back to Compliance matrix' returns to the matrix.",
       body: [
-        "The loop is: Inbox validates answers → Final response shows what is still open → the outline drafts what is validated → the Markdown goes into the proposal. When a customer issues an addendum, the Changes page (chapter 11) revises the baseline and returns the affected answers, and both pages here follow automatically.",
-        "Next: the Product catalog, with the long-term index that later bids search.",
+        "The loop is: the unit manager validates answers in My work → the Compliance matrix shows what is still open → the outline drafts what is validated → the Markdown goes into the proposal. When a customer issues an addendum, the Changes page (chapter 11) revises the baseline and returns the affected answers, and both pages here follow automatically.",
+        "Next: the Activity log of this bid, then the Product catalog.",
+      ],
+    },
+    {
+      id: "activity-intro",
+      title: "Activity: the audit log of the bid",
+      route: ACT,
+      target: "act-count",
+      placement: "bottom",
+      fallback: "The Activity page lists the bid's events, newest first.",
+      body: [
+        "**Activity** (also reached from the matrix and the bid header) lists everything done on the bid, newest first: reads, corrections, matches, participation, sends, answers, validations, returns, decisions and changes, each with the person and the time. It is read-only and comes from the append-only audit log, so it cannot be edited.",
+      ],
+    },
+    {
+      id: "activity-filters",
+      title: "Filters",
+      route: ACT,
+      target: "act-filters",
+      placement: "bottom",
+      body: [
+        "Filter by **type** of event, **requirement**, **unit** and **person**. The filters are kept in the page address, so a filtered view can be shared. *Show older events* pages back without repeating rows.",
+      ],
+    },
+    {
+      id: "activity-table",
+      title: "Events and answer history",
+      route: ACT,
+      target: "act-table",
+      placement: "top",
+      body: [
+        "Each row names the event, the requirement it concerns, who did it and when. The same facts appear as **History** on a requirement (pane 2 of Traceability) and on an answer in the matrix, where a row's detail panel also links to *All activity for REQ-…*.",
       ],
     },
   ],

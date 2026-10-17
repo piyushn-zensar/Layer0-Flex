@@ -22,7 +22,7 @@ const chapter: TourChapter = {
   id: "catalog",
   order: 10,
   title: "Product catalog",
-  summary: "The business units, their products and offering types, and the searchable long-term index of products, illustrative past responses and approved reviewed examples.",
+  summary: "The business units and their products with offering types, the search over the long-term index, the reference documents (Sources) and the catalog read from the Flex web pages (Published catalog).",
   entryRoute: "/catalog",
   steps: [
     {
@@ -34,6 +34,16 @@ const chapter: TourChapter = {
       body: [
         "The **Product catalog** is the knowledge the matcher and the units work from: the business units, their product families with offering types and their published models, and the illustrative past responses, all read from `data/knowledge_base/*.json` (rules as data). The line at the top says it plainly: families and models come from **public Flex web pages (retrieved 12 Oct 2026), to be confirmed with each unit**.",
         "At the top, a search box over the long-term index; below, one card per unit. Nothing on this page writes; it is the reference the other screens link to (product names in Traceability, BOM lines in the hand-off, people who can sign in).",
+      ],
+    },
+    {
+      id: "catalog-tabs",
+      title: "Three views of the catalog",
+      route: "/catalog",
+      target: "catalog-tabs",
+      placement: "bottom",
+      body: [
+        "**Products** is the business units and their products, with the search below. **Sources** is the reference documents behind the evidence (engineering references, vendor and market context), registered and reviewed. **Published catalog** is what the official Flex product pages say today, read automatically. The next steps look at the first, then the other two.",
       ],
     },
     {
@@ -57,12 +67,12 @@ const chapter: TourChapter = {
       fallback: "Under each unit, its products: id, name and an offering-type badge (CTO, Semi-custom, ETO).",
       body: [
         "Each product line: its **id** (`CROWN-ARMV`, used as the product reference in matches, inboxes and hand-off items), its name, and the **offering type** badge: **CTO** (green, configure-to-order: hand-off route A, a CPQ configuration seed with the product's BOM lines), **Semi-custom** (amber: route B, basis of design) and **ETO** (red, engineer-to-order: route B, or route C when the unit's tier asks for a specialist first).",
-        "The seed holds 16 products across the six active units; Crown's are the ARMV arc-resistant metal-clad switchgear (ETO), ACC accessories (CTO) and the E-house (ETO). A product's description and keywords are what the index embeds, so the search below finds products by meaning, not only by name.",
+        "Crown's are the ARMV arc-resistant metal-clad switchgear (ETO), ACC accessories (CTO) and the E-house (ETO). A product's description and keywords are what the index embeds, so the search below finds products by meaning, not only by name.",
       ],
     },
     {
       id: "catalog-search",
-      title: "Search the knowledge base",
+      title: "Search products and past responses",
       route: "/catalog",
       target: "catalog-search",
       placement: "bottom",
@@ -93,7 +103,33 @@ const chapter: TourChapter = {
       body: [
         "**Score** is the ranking number (higher is closer). **Kind** is *product* or *past_response*: an approved reviewed example (nominated where it arose, approved in Knowledge review in My work) appears as a past response of its unit. **Unit** and **ID** tell you where it comes from; **Text** is the beginning of what was indexed.",
         "A result is evidence, not a decision: in matching, the agent sees these hits and proposes a unit and product with a confidence and a rationale, and a person accepts or rejects the match. Remember the data is illustrative: the real product list, descriptions and past answers are to be confirmed with each unit before the scores mean anything commercially.",
-        "**Clear** empties the query and brings the plain catalog back. This closes the catalog chapter; chapter 11 shows what happens when the customer issues an addendum.",
+        "**Clear** empties the query and brings the plain catalog back.",
+      ],
+    },
+    {
+      id: "catalog-sources",
+      title: "Sources: the reference documents",
+      route: "/catalog",
+      target: "sources-filters",
+      placement: "bottom",
+      onEnter: (ctx) => { const t = ctx.el("catalog-tab-sources"); if (t && t.getAttribute("aria-selected") !== "true") t.click(); },
+      fallback: "The Sources tab lists the registered reference documents with collection, status, pages, passages and version.",
+      body: [
+        "Filter the list by **collection** and **status**. Each source is a document with its **collection** (engineering references, past responses, market and vendor context and others), status, pages, **passages** and **version**. Documents are read through the same layout model as an RFP, so every passage keeps its page and lines, and a model annotates each passage once (frozen). Embedded Document and Instance IDs mean the same file is never registered twice, and a newer version retires the earlier one.",
+        "A source becomes **evidence only after review** by the collection's reviewers (the ten public references here are still *Draft*), and market and vendor context is **never used as verified evidence**. Evidence for one bid is never visible to another.",
+      ],
+    },
+    {
+      id: "catalog-published",
+      title: "Published catalog: read from flex.com",
+      route: "/catalog",
+      target: "published-refresh",
+      placement: "bottom",
+      onEnter: (ctx) => { const t = ctx.el("catalog-tab-published"); if (t && t.getAttribute("aria-selected") !== "true") t.click(); },
+      fallback: "The Published catalog tab shows the last refresh and the products read from the Flex pages.",
+      body: [
+        "On server start and every 24 hours Layer 0 reads the official Flex product pages (power and cooling, power modules, Anord Mardix, Crown, EP², JetCool) respecting `robots.txt`, and keeps each product's name, category, key features and link. A **renamed product keeps every earlier name** in its history, and a failed page keeps the last good catalog. **Refresh now** (bid manager) runs it on demand.",
+        "This view shows what is published; it is **not compliance evidence** and does not change the matching. Each assessment run records the catalog version it used, so a later change of the pages never rewrites an earlier assessment.",
       ],
     },
   ],

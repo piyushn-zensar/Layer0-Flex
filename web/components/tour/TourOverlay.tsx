@@ -1,5 +1,7 @@
 "use client";
 // Walkthrough overlay: dimmed backdrop with a spotlight around the step's target, and the step bubble.  Owner: tour engine.
+// J-15: the bubble can be minimised to a small tab (kept for the session, the page is then fully usable), and on a phone the
+// docked bubble scrolls the highlighted part above itself so it never covers its target.
 //
 // The backdrop is four fixed rectangles around the spotlight (top, bottom, left, right), so the hole itself has no
 // element over it: clicks there reach the page when the step allows interaction (action steps by default). When
@@ -17,6 +19,7 @@ const PAD = 6;          // spotlight padding around the target
 const GAP = 12;         // bubble distance from the spotlight
 const EDGE = 8;         // bubble distance from the viewport edge
 const MOBILE_MAX = 700; // docked bubble under this width
+const MIN_KEY = "layer0.tour.min"; // sessionStorage: the bubble is minimised
 
 /** Inline markup: **bold** and `code`. */
 function inline(s: string): React.ReactNode[] {
@@ -49,6 +52,8 @@ function Overlay() {
   const [size, setSize] = useState({ w: 0, h: 0 });
   const [vp, setVp] = useState({ w: 1024, h: 768 });
   const [menu, setMenu] = useState(false);
+  const [min, setMinState] = useState(() => { try { return sessionStorage.getItem(MIN_KEY) === "1"; } catch { return false; } });
+  const setMin = (v: boolean) => { setMinState(v); try { sessionStorage.setItem(MIN_KEY, v ? "1" : "0"); } catch { /* storage blocked */ } };
   const allow = step.allowInteraction ?? step.kind === "action";
   const waiting = (step.kind === "action" || step.kind === "wait") && !t.done;
 
@@ -99,10 +104,18 @@ function Overlay() {
 
   // ---- bubble position ----
   const docked = vp.w < MOBILE_MAX;
+  // A highlighted part taller than the room left for the bubble (and with no room beside it) is highlighted from its top
+  // down to the room there is: the bubble then sits underneath (or, on a phone, docked below) and never covers what is lit.
+  const view = useMemo<Rect | null>(() => {
+    if (!rect || size.h === 0) return rect;
+    const room = vp.h - size.h - GAP - 2 * EDGE - 2 * PAD;
+    const beside = !docked && (rect.left - PAD - GAP - size.w >= EDGE || rect.left + rect.width + PAD + GAP + size.w <= vp.w - EDGE);
+    return rect.height > room && !beside && room > 80 ? { ...rect, height: room } : rect;
+  }, [rect, size, vp, docked]);
   const style = useMemo<React.CSSProperties>(() => {
     if (docked) return {};
-    if (!rect || size.w === 0) return { top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
-    const hole = { top: rect.top - PAD, left: rect.left - PAD, width: rect.width + 2 * PAD, height: rect.height + 2 * PAD };
+    if (!view || size.w === 0) return { top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
+    const hole = { top: view.top - PAD, left: view.left - PAD, width: view.width + 2 * PAD, height: view.height + 2 * PAD };
     const bw = size.w, bh = size.h;
     const clampX = (x: number) => Math.min(Math.max(x, EDGE), Math.max(EDGE, vp.w - bw - EDGE));
     const clampY = (y: number) => Math.min(Math.max(y, EDGE), Math.max(EDGE, vp.h - bh - EDGE));
@@ -119,15 +132,56 @@ function Overlay() {
       default: // nothing fits beside the spotlight (a huge target): bottom-right corner, over the dim
         return { top: clampY(vp.h - bh - EDGE), left: clampX(vp.w - bw - EDGE) };
     }
-  }, [rect, size, vp, docked, step.placement]);
+  }, [view, size, vp, docked, step.placement]);
 
-  const hole = rect ? { top: rect.top - PAD, left: rect.left - PAD, width: rect.width + 2 * PAD, height: rect.height + 2 * PAD } : null;
+  // ---- room to scroll: while the bubble is up the page gets bottom padding as tall as the bubble, so even on a short page any
+  // lit part can be scrolled clear of it (the padding is set on <html data-tour-room>, styled in globals.css) ----
+  useEffect(() => {
+    if (min || size.h === 0) return;
+    const root = document.documentElement;
+    root.style.setProperty("--tour-room", `${size.h + 3 * EDGE}px`);
+    root.setAttribute("data-tour-room", "");
+    return () => { root.removeAttribute("data-tour-room"); root.style.removeProperty("--tour-room"); };
+  }, [min, size.h]);
+
+  // ---- make room: when the bubble fits beside, above or below the lit part on no side (wide screens), or the lit part
+  // is not wholly above the docked bubble (phones), scroll the page so the part sits at the top of the screen ----
+  useEffect(() => {
+    if (min || !step.target || size.h === 0 || !rect || !view) return;
+    const beside = !docked && (view.left - PAD - GAP - size.w >= EDGE || view.left + view.width + PAD + GAP + size.w <= vp.w - EDGE);
+    const under = view.top + view.height + PAD + GAP + size.h <= vp.h - EDGE;
+    const over = !docked && view.top - PAD - GAP - size.h >= EDGE;
+    const inView = view.top - PAD >= 0 && view.top + view.height + PAD <= vp.h;     // the lit part is wholly on the screen
+    const seen = view.top < vp.h && view.top + view.height > 0;                      // at least some of it is
+    const ok = docked ? under && view.top - PAD >= EDGE : (beside && seen) || ((under || over) && inView);
+    if (ok) return;
+    const timer = setTimeout(() => {
+      const el = t.ctx.el(step.target!);
+      if (!el) return;
+      const d = el.getBoundingClientRect().top - (EDGE + PAD);
+      if (Math.abs(d) > 2) window.scrollBy({ top: d, behavior: "smooth" });
+    }, 700); // after the engine's own scrollIntoView has settled
+    return () => clearTimeout(timer);
+  }, [docked, min, step.target, size.w, size.h, vp.w, vp.h, rect, view, t.ctx]);
+
+  const hole = view ? { top: view.top - PAD, left: view.left - PAD, width: view.width + 2 * PAD, height: view.height + 2 * PAD } : null;
   const finished = (step.kind === "action" || step.kind === "wait") && t.done;
   const showFallback = step.target && !finished && (t.target === "missing" || (t.target !== "searching" && !rect));
   const stop = useCallback((e: React.SyntheticEvent) => e.stopPropagation(), []);
   // Action steps let the person use the whole page (the spotlight only points): an action often continues outside
   // the target (a form that opens in the row, a bulk bar, a confirmation dialog). Explain steps keep the page blocked.
   const dim = `tour-dim ${allow ? "tour-dim-pass" : ""}`;
+
+  if (min) {
+    return (
+      <div className={`tour-pill ${docked ? "docked" : ""}`} role="dialog" aria-label="Walkthrough, minimised" data-step={step.id} data-minimised="true">
+        <button type="button" className="tour-pill-open" onClick={() => setMin(false)} aria-label="Expand the walkthrough" title="Expand the walkthrough">
+          <span aria-hidden>▲</span> {t.chapter?.order}. {t.chapter?.title} · step {t.stepInChapter} of {t.chapterSteps}
+        </button>
+        <button type="button" className="tour-x" onClick={t.exit} aria-label="Exit walkthrough (Esc)">×</button>
+      </div>
+    );
+  }
 
   return (
     <div className="tour-root" data-tour-open>
@@ -151,7 +205,10 @@ function Overlay() {
             <span className="tour-chapter">{t.chapter?.order}. {t.chapter?.title}</span>
             <span className="tour-pos">Step {t.stepInChapter} of {t.chapterSteps} (chapter) · {t.index + 1} of {t.total} overall</span>
           </div>
-          <button type="button" className="tour-x" onClick={t.exit} aria-label="Exit walkthrough (Esc)">×</button>
+          <div className="tour-head-tools">
+            <button type="button" className="tour-x tour-min" onClick={() => setMin(true)} aria-label="Minimise the walkthrough" title="Minimise: shrink this to a small tab">–</button>
+            <button type="button" className="tour-x" onClick={t.exit} aria-label="Exit walkthrough (Esc)">×</button>
+          </div>
         </div>
         <div className="sr-only" aria-live="polite">{`${t.chapter?.title}: ${step.title}. Step ${t.stepInChapter} of ${t.chapterSteps}.`}</div>
         <h2 id="tour-title" className="tour-title">{step.title}</h2>

@@ -409,3 +409,13 @@ tr.blocking td:first-child { box-shadow: inset 3px 0 0 #d97706; }
 .lp-quote { margin: var(--s1) 0 0; max-height: 240px; overflow: auto; padding: var(--s2) var(--s3); background: var(--bg);
   border-left: 3px solid var(--accent); border-radius: 4px; font-size: var(--fs-md); line-height: 1.5; color: var(--ink); overflow-wrap: anywhere; }
 @media (max-width: 1000px) { .lp { grid-template-columns: 1fr; } .lp-side { position: static; } }
+
+/* Walkthrough bubble minimised to a small tab (J-15): the page is fully usable; the tab brings the bubble back. */
+.tour-head-tools { display: flex; align-items: flex-start; gap: 2px; flex-shrink: 0; }
+.tour-pill { position: fixed; z-index: 45; right: 12px; bottom: 12px; max-width: calc(100vw - 24px); display: flex; align-items: center; gap: var(--s1);
+  background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; box-shadow: var(--shadow-2); padding: 2px var(--s2) 2px var(--s1); }
+.tour-pill.docked { left: 8px; right: 8px; bottom: 8px; max-width: none; }
+.tour-pill-open { background: none; border: 0; color: var(--ink); font-size: var(--fs-sm); font-weight: 600; min-height: 32px; padding: 0 var(--s2); text-align: left;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1 1 auto; min-width: 0; }
+.tour-pill-open:hover { background: var(--surface-2); }
+html[data-tour-room] body { padding-bottom: var(--tour-room); } /* walkthrough: room to scroll a lit part clear of the bubble */
