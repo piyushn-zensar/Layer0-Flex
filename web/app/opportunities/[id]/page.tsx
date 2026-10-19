@@ -129,7 +129,7 @@ export default function DocumentsPage() {
         ) : <button disabled={!!busy || !!unread || !bm} title={bm ? "" : BID_MANAGER_ONLY} onClick={() => extract()} data-tour="rfp-extract">Run the reader agent → requirements</button>}
         {!bm && <span className="muted">Only the bid manager uploads documents and runs the reader.</span>}
         {busy ? <Busy label={busy} /> : unread && <span className="muted" role="status">Waiting for the main RFP to be read; use Refresh status.</span>}</div>)
-        : <p className="muted" data-tour="rfp-started-note">Requirement review has started, so the RFP is not re-read. Missed items can be added on the Requirements page.</p>)}
+        : <p className="muted" data-tour="rfp-started-note">Requirement review has started, so the RFP is not re-read. Missed items can be added in pane 2 of Requirement Traceability.</p>)}
     </>
   );
 }

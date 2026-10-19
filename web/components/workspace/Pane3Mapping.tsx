@@ -29,7 +29,8 @@ export default function Pane3Mapping() {
                 {bom.length > 0 && <details className="trace-bom" data-tour={sel(req.req_id, "trace-sel-bom")}><summary>Bill of materials ({bom.length} lines)</summary>
                   <ul>{bom.map((b) => <li key={b.item}>{b.item} — {b.qty}</li>)}</ul></details>}
               </>) : <span className="muted" data-tour={sel(req.req_id, "trace-sel-unit")}>{m?.status === "rejected" ? "rejected: choose a unit with Change" // QA-11, once the API sends rejected matches
-                : m ? "Bid manager (not a product item)" : "not matched yet"}</span>}
+                : m ? (assignments.some((a) => a.bu !== "BID") ? `Not a product item: answered by the unit managers (${assignments.filter((a) => a.bu !== "BID").map((a) => a.bu).join(", ")})`
+                  : "Bid desk (not a product item)") : "not matched yet"}</span>}
               <MatchActions oppId={ws.bidId} reqId={req.req_id} match={m} dispatched={assignments.length > 0} onDone={ws.afterWrite} tour={req.req_id === selected} canChange={ws.bm} />
             </td>
             <td data-tour={sel(req.req_id, "trace-sel-response")}>

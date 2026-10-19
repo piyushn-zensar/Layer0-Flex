@@ -60,7 +60,7 @@ export default function ChangesPage() {
           <Alert kind="error" onClose={() => setMessage(undefined)}>{message}</Alert>
         </form>)}
       {data.sets.length === 0 ? (
-        <div data-tour="chg-empty"><EmptyState title="No change documents read yet" hint={data.baseline ? "Read an addendum, Q&A answers or a change request above; each change statement is compared with the frozen baseline." : "Publish the register first."} /></div>
+        <div data-tour="chg-empty"><EmptyState title="No change documents read yet" hint={data.baseline ? "Read an addendum, Q&A answers or a change request above; each change statement is compared with the frozen baseline." : "Read the RFP first: its register is frozen when it is read."} /></div>
       ) : data.sets.map((s, i) => <ChangeSetCard key={s.id} set={s} oppId={id} threshold={data.drastic_threshold} onChanged={changed} tour={i === 0} />)}
     </>
   );

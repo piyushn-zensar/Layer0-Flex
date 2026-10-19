@@ -160,7 +160,7 @@ export default function DecisionsPage() {
           <p className="muted mono">{ev.unanchored.join(", ")}</p></details>}
         {ev.unmatched.length > 0 && <p className="muted" data-tour="dec-unmatched">Not yet matched: {ev.unmatched.length}</p>}
         {ev.not_reviewed > 0 && <p className="muted" data-tour="dec-not-reviewed">Product matches nobody has accepted or changed yet: {ev.not_reviewed} (Traceability, pane 3)</p>}
-        {!ev.frozen && <div data-tour="dec-not-frozen"><Alert kind="warn">The requirement register is not published yet: publish it on the Requirements step before deciding go or no-go.</Alert></div>}
+        {!ev.frozen && <div data-tour="dec-not-frozen"><Alert kind="warn">The requirement register is not frozen yet: read the RFP on the RFP step (the register freezes when the read is complete) before deciding go or no-go.</Alert></div>}
       </section>
 
       {ev.frozen && <EngineeringChecks c={ev.checks} oppId={id} />}
@@ -200,7 +200,7 @@ export default function DecisionsPage() {
             <button type="button" disabled={!ev.frozen || !!busy || !bm} onClick={(e) => decide("go", e.currentTarget.form!)} data-tour="dec-go">Go</button>
             <button type="button" disabled={!ev.frozen || !!busy || !bm} className="danger secondary" onClick={(e) => decide("no_go", e.currentTarget.form!)} data-tour="dec-no-go">No-go</button>
             {busy === "decision" && <Busy label="Recording…" />}
-            {!ev.frozen && <span className="muted">Publish the requirement register first.</span>}
+            {!ev.frozen && <span className="muted">Read the RFP first.</span>}
             {ev.frozen && !bm && <span className="muted">Only the bid manager records go or no-go.</span>}
           </div>
         </form>

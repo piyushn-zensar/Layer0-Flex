@@ -28,7 +28,7 @@ function TraceMain() {
       <PageHead level={2} title="Requirement Traceability"
         help="Original RFP, the requirement register and product mapping side by side. Select a requirement in any linked pane to follow it across the panes; correct the register in pane 2 (enlarge it to work there). Drag a pane by its grip, or use the arrows, to change the order; drag the bars between panes to resize them; open a pane in a window of its own for another screen.">
         {ws.matching && <Busy label="Matching…" />}
-        <button className="secondary" disabled={ws.matching} onClick={ws.matchProducts} data-tour="trace-match-button">Match products</button>
+        <button className="secondary" disabled={ws.matching || !ws.bm} title={ws.bm ? undefined : "Only the bid manager runs matching."} onClick={ws.matchProducts} data-tour="trace-match-button">Match products</button>
       </PageHead>
       {ws.known && <Alert kind="info" onClose={ws.dismissKnown}>{ws.known} was read before in this bid, so it was not read again: these are its stored, frozen requirements.</Alert>}
       <div className="toolbar">

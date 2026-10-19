@@ -34,7 +34,7 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour =
 
   const trace = (reqId: string) => <Link key={reqId} className="mono" href={`/opportunities/${oppId}/trace#${reqId}`} title="Open in Traceability">{reqId}</Link>;
   // A removed requirement is no longer on the Traceability page: its ID only, its history is on the Requirements page.
-  const gone = (reqId: string) => <span key={reqId} className="mono" title={`Removed in baseline ${set.baseline_to}: see its history on the Requirements page`}>{reqId}</span>;
+  const gone = (reqId: string) => <span key={reqId} className="mono" title={`Removed in baseline ${set.baseline_to}: see its history in pane 2 of Requirement Traceability`}>{reqId}</span>;
   const ids = (list: string[], link = trace) => list.length ? list.map((x, i) => <span key={x}>{i > 0 && ", "}{link(x)}</span>) : <span className="muted">none</span>;
   const run = (action: string, label: string, done: string) => {
     setBusy(label); setError(undefined);
@@ -124,7 +124,7 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour =
                 <td><KindBadge kind={i.proposed_kind} />
                   <div className="muted">{pct(i.confidence)} confidence</div></td>
                 <td>{target ? (<>{applied && kind === "removed" ? gone(target) : trace(target)}
-                  {revised ? <div className="muted">Revised in baseline {set.baseline_to}; the earlier wording is in its history (Requirements page).</div> : (<>
+                  {revised ? <div className="muted">Revised in baseline {set.baseline_to}; the earlier wording is in its history (Requirement Traceability, pane 2).</div> : (<>
                     {i.target_text && <div>{i.target_text}</div>}
                     {i.target_source && <div className="muted">{i.target_source}</div>}</>)}</>)
                   : <span className="muted">{kind === "added" ? "new requirement" : "—"}</span>}</td>

@@ -27,7 +27,7 @@ const TONES: Record<string, Tone> = {
   added: "ok", modified: "pending", removed: "bad", unchanged: "neutral", not_a_requirement: "neutral",
 };
 const OPP: Partial<Record<string, Tone>> = { submitted: "ok" }; // the final response went out
-const OFFERING: Record<string, string> = { SEMI_CUSTOM: "Semi-custom" }; // shown as the trace legend names it; the value stays SEMI_CUSTOM
+const OFFERING: Record<string, string> = { SEMI_CUSTOM: "Semi-custom", NONE: "Bid desk" }; // shown as the trace legend names it; the value stays SEMI_CUSTOM
 
 /** The offering type as shown on screen (CTO, Semi-custom, ETO). */
 export const offeringLabel = (status: string | null | undefined) => OFFERING[String(status ?? "NONE")] ?? String(status ?? "NONE");
