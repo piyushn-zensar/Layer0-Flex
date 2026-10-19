@@ -1,6 +1,6 @@
 // Runnable check for filters.ts (A-27): node web/components/requirements/filters.check.mjs (Node 22.18+ runs .ts files).
 import assert from "node:assert/strict";
-import { applyFilters, filtersUrl, isFiltered, readFilters } from "./filters.ts";
+import { applyFilters, facets, filtersUrl, isFiltered, readFilters } from "./filters.ts";
 
 const row = (id, category, page, { offering = "ETO", bu = "CROWN", status, compliance, provenance = "EXTRACTED", origin, at } = {}) => ({
   req: { req_id: id, text: `text ${id}`, quote: "", category, page, provenance, origin, created_at: at },
@@ -33,4 +33,9 @@ assert.deepEqual(readFilters("?category=technical&offering=ETO&nope=1"), { categ
 assert.equal(filtersUrl("/opportunities/OPP-0001/trace", { category: "technical", q: "" }, "#REQ-1"), "/opportunities/OPP-0001/trace?category=technical#REQ-1");
 assert.equal(isFiltered({ sort: "rfp" }), false);
 assert.equal(isFiltered({ sort: "id" }) && isFiltered({ unit: "CROWN" }), true);
+// facets: only values the rows have, narrowed by the other filters
+const fc = facets(rows, { category: "technical" });
+assert.deepEqual([...fc.offering.keys()].sort(), ["CTO", "ETO"]);
+assert.deepEqual([...fc.category.entries()].sort(), [["schedule", 1], ["submission", 1], ["technical", 2]]);
+assert.equal(fc.origin.has("customer_change"), false);
 console.log("filters.ts: ok");

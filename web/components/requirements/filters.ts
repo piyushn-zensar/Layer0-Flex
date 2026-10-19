@@ -68,3 +68,31 @@ export function applyFilters(rows: TraceRow[], f: Filters): TraceRow[] {
 }
 
 export const isFiltered = (f: Filters) => FILTER_KEYS.some((k) => k !== "sort" && f[k]) || (!!f.sort && f.sort !== "rfp");
+
+// 19 Oct client review: a dropdown offers only what the bid has, and the other filters narrow it (faceted search).
+export const FACETS = ["category", "offering", "unit", "response", "compliance", "source", "origin"] as const;
+export type Facet = (typeof FACETS)[number];
+
+function valuesOf(r: TraceRow, k: Facet): string[] {
+  switch (k) {
+    case "category": return [r.req.category];
+    case "offering": return [r.match?.offering_type ?? "unmatched"];
+    case "unit": return [...unitsOf(r)];
+    case "response": return r.assignments.length ? [...new Set(r.assignments.map((a) => a.status))] : ["not_sent"];
+    case "compliance": return [...new Set(r.assignments.map((a) => a.compliance).filter((c): c is string => !!c))];
+    case "source": return [r.req.provenance === "EXTRACTED" ? "verified" : "not_verified"];
+    case "origin": return [r.req.origin ?? "extraction"];
+  }
+}
+
+/** For each facet, the values present among the rows that pass every other filter, with how many rows have each. */
+export function facets(rows: TraceRow[], f: Filters): Record<Facet, Map<string, number>> {
+  const out = {} as Record<Facet, Map<string, number>>;
+  for (const k of FACETS) {
+    const others: Filters = { ...f, [k]: undefined };
+    const m = new Map<string, number>();
+    for (const r of rows) if (matches(r, others)) for (const v of valuesOf(r, k)) m.set(v, (m.get(v) ?? 0) + 1);
+    out[k] = m;
+  }
+  return out;
+}
