@@ -1,5 +1,5 @@
 {
- "_note": "Who answers and who validates unit work (C-07, C-25; technical-architecture 16.5). Roles are the stored values: product_manager is shown as Unit manager, design_engineer as Unit designer / engineer. Technical items are the matcher's product categories (technical, compliance) and go to the unit's designers / engineers. Routing decided 16 Oct 2026 (open question 2 of changes-iteration3.md): only high-level, consolidated non-technical requirements stay on the bid desk (here: submission and legal, answered once for the whole bid); the non-technical categories in unit_manager_categories go to every participating unit's manager. Changing the sequence is a change to this file, not to code.",
+ "_note": "Who answers and who validates unit work (C-07, C-25; technical-architecture 16.5). Roles are the stored values: product_manager is shown as Unit manager, design_engineer as Unit designer / engineer. Technical items are the matcher's product categories (technical, compliance) and go to the unit's designers / engineers. Routing decided 16 Oct 2026 (open question 2 of changes-iteration3.md): only high-level, consolidated non-technical requirements stay on the bid desk (here: submission and legal, answered once for the whole bid); the non-technical categories in unit_manager_categories go to every participating unit's manager. Changing the sequence is a change to this file, not to code. Validation (decided 19 Oct 2026): the unit manager validates the unit's technical answers; the bid manager validates non-technical unit answers, which the unit manager gives, so no one validates their own answer.",
  "unit_manager_categories": [
   "commercial",
   "schedule",
@@ -17,8 +17,11 @@
   ]
  },
  "validate": {
-  "unit": [
+  "technical": [
    "product_manager"
+  ],
+  "non_technical": [
+   "bid_manager"
   ],
   "BID": [
    "bid_manager"

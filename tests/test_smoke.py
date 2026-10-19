@@ -1409,9 +1409,9 @@ def test_workflow_roles(monkeypatch):
         assert client.post(f"{url}/validate", json={"ok": False, "note": "Which delivery week?"}, headers=bm).status_code == 200
     assert client.post(f"{url}/respond", json={"compliance": "met"}, headers=de).status_code == 403  # not the engineer's
     assert client.post(f"{url}/respond", json={"compliance": "met", "response": "Week 30"}, headers=pm).status_code == 200
-    for who in (de, bm, ep2_pm):  # the engineer, the bid manager (ok) and another unit's manager do not validate
+    for who in (de, pm, ep2_pm):  # 19 Oct: a non-technical answer is validated by the bid manager, not its own unit manager
         assert client.post(f"{url}/validate", json={"ok": True}, headers=who).status_code == 403
-    assert client.post(f"{url}/validate", json={"ok": True}, headers=pm).status_code == 200
+    assert client.post(f"{url}/validate", json={"ok": True}, headers=bm).status_code == 200
     assert client.post(f"{url}/validate", json={"ok": False, "note": "Confirm with the factory."}, headers=bm).status_code == 200
 
     tech = next(i for i in client.get("/api/inbox/CROWN", headers=de).json()["items"]

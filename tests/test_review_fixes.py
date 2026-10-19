@@ -73,3 +73,54 @@ def test_a_read_interrupted_by_a_restart_is_retried():
         opportunities.set_document_status(db, doc.id, "ingesting")  # the API stopped while reading it
         assert opportunities.reset_interrupted_reads(db) >= 1
         assert opportunities.get_document(db, doc.id).status == "uploaded"  # the next upload or start reads it again
+
+
+def _held(client, opp, test):
+    return next(a for r in client.get(f"/api/bids/{opp}/trace").json()["rows"] for a in r["assignments"] if test(r, a))
+
+
+def test_reopened_work_does_not_show_the_old_answer_as_current(opp):
+    client, bm = signed_in(), auth("bid.manager")
+    a = _held(client, opp, lambda r, a: a["bu"] == "CROWN" and a["status"] == "assigned" and r["req"]["category"] == "technical")
+    client.post(f"/api/assignments/{a['id']}/respond", json={"compliance": "met", "response": "ok"}, headers=auth("crown.de"))
+    client.post(f"/api/assignments/{a['id']}/validate", json={"ok": True}, headers=auth("crown.pm"))
+    units = client.get(f"/api/bids/{opp}/decisions").json()["participation"]["units"]
+    client.post(f"/api/bids/{opp}/participation", json={"units": [u for u in units if u != "CROWN"]}, headers=bm)
+    client.post(f"/api/bids/{opp}/dispatch", headers=bm)  # CROWN's work withdrawn
+    client.post(f"/api/bids/{opp}/participation", json={"units": units}, headers=bm)
+    client.post(f"/api/bids/{opp}/dispatch", headers=bm)  # reopened
+    again = next(x for x in client.get("/api/inbox/CROWN").json()["items"] if x["id"] == a["id"])
+    assert (again["status"], again["compliance"], again["validated_by"]) == ("assigned", None, None)
+
+
+def test_needs_an_owner_counts_agree_before_participation():
+    from app.modules.matching import service as matching
+    from app.modules.workpackages import service as workpackages
+    seed_demo.independent()  # Logan: frozen, no participation yet
+    client = signed_in()
+    logan = client.get("/api/portfolio").json()[0]["opp"]["id"]
+    with SessionLocal() as db:
+        matching.match(db, logan, "test")
+        owners = {o["req_id"] for o in workpackages.needs_owner(db, logan)}
+    shown = {o["req_id"] for o in client.get(f"/api/bids/{logan}/assessment").json()["open_questions"]["needs_owner"]}
+    assert owners == shown
+
+
+def test_a_returned_capability_gap_survives_the_next_dispatch(opp):
+    client, bm = signed_in(), auth("bid.manager")
+    gap = next(o for o in client.get(f"/api/bids/{opp}/needs-owner").json())
+    client.post(f"/api/bids/{opp}/requirements/{gap['req_id']}/capability-gap", json={"reason": "no unit"}, headers=bm)
+    a = _held(client, opp, lambda r, a: r["req"]["req_id"] == gap["req_id"])
+    assert client.post(f"/api/assignments/{a['id']}/validate", json={"ok": False, "note": "Really none?"}, headers=bm).status_code == 200
+    client.post(f"/api/bids/{opp}/dispatch", headers=bm)
+    after = _held(client, opp, lambda r, x: x["id"] == a["id"])
+    assert after["status"] == "returned"
+
+
+def test_non_technical_unit_answers_are_validated_by_the_bid_manager(opp):
+    client = signed_in()
+    a = _held(client, opp, lambda r, a: a["bu"] == "CROWN" and a["status"] == "assigned" and r["req"]["category"] in ("commercial", "schedule", "staffing"))
+    pm = auth("crown.pm")
+    assert client.post(f"/api/assignments/{a['id']}/respond", json={"compliance": "met", "response": "week 30"}, headers=pm).status_code == 200
+    assert client.post(f"/api/assignments/{a['id']}/validate", json={"ok": True}, headers=pm).status_code == 403  # not their own answer
+    assert client.post(f"/api/assignments/{a['id']}/validate", json={"ok": True}, headers=auth("bid.manager")).status_code == 200

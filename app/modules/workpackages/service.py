@@ -99,11 +99,12 @@ def _roles(bu: str, category: str | None) -> tuple[list[str], list[str]]:
     wf = workflow()
     if bu == BID_DESK:
         return wf["respond"]["BID"], wf["validate"]["BID"]
-    return wf["respond"][_kind(category)], wf["validate"]["unit"]
+    kind = _kind(category)
+    return wf["respond"][kind], wf["validate"].get(kind, wf["validate"].get("unit", []))
 
 
 def _staff(bu: str, role: str) -> dict:
-    if bu == BID_DESK:
+    if bu == BID_DESK or role == "bid_manager":  # the bid manager is no unit's person
         return {"name": BID_MANAGER, "role": role, "bu": None}
     return {"name": catalog.unit(bu)[role], "role": role, "bu": bu}
 
@@ -120,7 +121,7 @@ def people(db: Session, a: Assignment) -> dict:
 
 def _holds(user: dict, a: Assignment, roles: list[str]) -> bool:
     """The user has one of `roles`, in the assignment's own unit (bid desk items: no unit)."""
-    return user["role"] in roles and (a.bu == BID_DESK or same_unit(user, a.bu))
+    return user["role"] in roles and (a.bu == BID_DESK or user["role"] == "bid_manager" or same_unit(user, a.bu))
 
 
 def actions(db: Session, a: Assignment, user: dict) -> dict:
@@ -151,7 +152,7 @@ def dispatch(db: Session, opp_id: str, actor: str) -> int:
     for (req_id, bu), product_ref in wanted.items():
         a = existing.get((req_id, bu))
         if a and a.status == "withdrawn":  # fits again: back to the unit, its earlier answer kept for reference
-            a.status = "assigned"
+            a.status, a.compliance, a.validated_by, a.validation_note = "assigned", None, None, ""
             audit.record(db, actor, "reopened", "assignment", req_id, opp_id, bu=bu)
         elif not a:
             owner = _staff(bu, _roles(bu, categories[req_id])[0][0])["name"]  # the first answering role
@@ -177,7 +178,7 @@ def _existing(db: Session, opp_id: str) -> dict:
 
 def _is_gap(a: Assignment | None) -> bool:
     """A recorded capability gap: the bid desk's answered non-compliant item with a reason (record_gap)."""
-    return bool(a) and a.status in ("submitted", "validated") and a.compliance == "not_met" and bool(a.reason)
+    return bool(a) and a.status in ("submitted", "validated", "returned") and a.compliance == "not_met" and bool(a.reason)
 
 
 def _routing(db: Session, opp_id: str, units: set[str], existing: dict, preview: bool = False):
@@ -204,7 +205,8 @@ def _routing(db: Session, opp_id: str, units: set[str], existing: dict, preview:
 
 
 def needs_owner(db: Session, opp_id: str) -> list[dict]:
-    units, matches = set(decisions.participating_units(db, opp_id)), matching.for_opportunity(db, opp_id)
+    units = set(decisions.participating_units(db, opp_id)) or set(matching.suggested_units(db, opp_id))
+    matches = matching.for_opportunity(db, opp_id)
     return [{"req_id": req.req_id, "text": req.text, "category": req.category,
              "suggested": [u["bu"] for u in (matches[req.req_id].units if req.req_id in matches else [])]}
             for req, targets in _routing(db, opp_id, units, _existing(db, opp_id)) if targets is None]
