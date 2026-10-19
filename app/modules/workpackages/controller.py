@@ -3,7 +3,7 @@ from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Request
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, Field, model_validator
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
@@ -37,7 +37,7 @@ class CommentIn(BaseModel):
     req_id: str
     text: str
     kind: Literal["question", "comment"] = "comment"   # = models.COMMENT_KINDS
-    assignment_id: int | None = None
+    assignment_id: int | None = Field(None, ge=1, le=2**31 - 1)
 
 
 class GapIn(BaseModel):

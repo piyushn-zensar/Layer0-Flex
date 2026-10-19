@@ -32,3 +32,5 @@ for name in MODULES:
                        dependencies=[Depends(auth.authenticated)])
 db.init_db()
 auth.init()
+with db.SessionLocal() as _s:  # a background read stopped by a restart is read again on the next upload (19 Oct review)
+    importlib.import_module("app.modules.opportunities.service").reset_interrupted_reads(_s)

@@ -751,7 +751,7 @@ def apply_correction(db: Session, opp_id: str, kind: str, body: dict, actor: str
             old = published(body.get("req_id"))
             if old.kind == "group" or old.parent_id:
                 raise ValueError(f"{old.req_id} is a group or a sub-requirement; exclude it and add its parts from lines.")
-            parts = [p for p in body.get("parts") or [] if (p.get("quote") or "").strip()]
+            parts = [p for p in body.get("parts") or [] if isinstance(p.get("quote"), str) and p["quote"].strip()]
             if len(parts) < 2:
                 raise ValueError("A split needs at least two parts.")
             pages = ingestion.layout(old.document_id)["pages"]

@@ -58,6 +58,11 @@ COMPLIANCE_WORDS = {"met": "Met", "partial": "Partially met", "not_met": "Not me
 REVIEWED_BY = "a unit's manager or designer / engineer for its answers; the bid manager for bid-level items"
 
 
+def _row_id(ref: str) -> bool:
+    """A database row number: ASCII digits that fit an integer column ("²" or 30 digits are not)."""
+    return ref.isascii() and ref.isdigit() and len(ref) <= 9
+
+
 def _source(db: Session, kind: str, ref: str) -> dict:
     """What the item says, read from the module that owns it."""
     if kind == "requirement":
@@ -67,7 +72,7 @@ def _source(db: Session, kind: str, ref: str) -> dict:
         return {"opportunity_id": req.opportunity_id, "bu": "BID", "requirement": req.text,
                 "response": "", "source": f"{req.req_id}, {req.source}"}
     if kind == "response":
-        a = workpackages.get(db, int(ref)) if ref.isdigit() else None
+        a = workpackages.get(db, int(ref)) if _row_id(ref) else None
         if a is None:
             raise LookupError(f"Answer {ref} not found.")
         if a.status != "validated":
@@ -78,7 +83,7 @@ def _source(db: Session, kind: str, ref: str) -> dict:
                 "response": f"{COMPLIANCE_WORDS.get(a.compliance, a.compliance)}. {a.response.strip()}{product}",
                 "source": f"{a.req_id}, {req.source if req else ''}".rstrip(", ")}
     if kind == "decision":
-        d = decisions.get(db, int(ref)) if ref.isdigit() else None
+        d = decisions.get(db, int(ref)) if _row_id(ref) else None
         if d is None:
             raise LookupError(f"Decision {ref} not found.")
         if not d.rationale.strip():

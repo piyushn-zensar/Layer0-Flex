@@ -16,6 +16,8 @@ Public contract (other modules call only these):
                                                  instance: add this one there as a change document), bid, title,
                                                  document, filename}
     get_document(db, doc_id) -> Document | None
+    remove_document(db, doc_id, actor, reason)    a document whose reading failed before it was used (a change
+                                                 upload the change agent could not read): removed with its identity, audited
     documents(db, opp_id) -> list[Document]
     main_document(db, opp_id) -> Document | None
     set_document_status(db, doc_id, status, page_count=None)
@@ -129,6 +131,8 @@ def set_status(db: Session, opp_id: str, status: str, actor: str) -> bool:
     opp = require(db, opp_id)
     stop_or_resume = {opp.status, status} == {"go", "no_go"} or (status == "no_go" and opp.status != "submitted")
     if status == opp.status or (FORWARD[status] < FORWARD[opp.status] and not stop_or_resume):
+        return False
+    if opp.status == "no_go" and status != "go":  # a stopped bid moves on only after a go decision
         return False
     if status == "go" and opp.status == "no_go":
         status = _resumed_status(db, opp_id)
@@ -260,6 +264,28 @@ def known(db: Session, opp_id: str, filename: str, data: bytes) -> dict | None:
     d = hit[1]
     return {"kind": "instance" if same else "document", "bid": d.opportunity_id, "title": require(db, d.opportunity_id).title,
             "document": d.id, "filename": d.filename}
+
+
+def remove_document(db: Session, doc_id: str, actor: str, reason: str) -> None:
+    doc = db.get(Document, doc_id)
+    if doc is None:
+        return
+    ident = db.get(DocumentIdentity, doc_id)
+    if ident is not None:
+        db.delete(ident)
+    audit.record(db, actor, "removed", "document", doc_id, doc.opportunity_id, filename=doc.filename, reason=reason)
+    db.delete(doc)
+    db.commit()
+
+
+def reset_interrupted_reads(db: Session) -> int:
+    """On start: a background read cannot survive an API restart, so a document left "ingesting" goes back to
+    "uploaded" and the next upload or ingest reads it again (19 Oct review)."""
+    stuck = list(db.scalars(select(Document).where(Document.status == "ingesting")))
+    for d in stuck:
+        d.status = "uploaded"
+    db.commit()
+    return len(stuck)
 
 
 def get_document(db: Session, doc_id: str) -> Document | None:

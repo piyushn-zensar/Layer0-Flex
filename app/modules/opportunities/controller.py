@@ -79,7 +79,8 @@ def _attach(db: Session, request: Request, background: BackgroundTasks, opp_id: 
 
 
 @router.post("/bids/{opp_id}/documents")
-async def upload(opp_id: str, request: Request, background: BackgroundTasks, role: str = Form("main"),
+async def upload(opp_id: str, request: Request, background: BackgroundTasks,
+                 role: Literal["main", "addendum", "qa", "change", "other"] = Form("main"),
                  file: UploadFile = File(...), db: Session = Depends(get_db)):
     data = await file.read()
     return _attach(db, request, background, opp_id, file.filename, data, role)
@@ -175,6 +176,7 @@ def set_completion(opp_id: str, bu: str, body: CompletionIn, request: Request, d
     u = require(request, UNIT_MANAGER)
     if not same_unit(u, bu):
         raise HTTPException(403, f"Only {bu}'s unit manager gives its completion date.")
+    _guard(lambda: service.require(db, opp_id))  # an unknown bid is a 404 before any participation check
     if bu not in decisions.participating_units(db, opp_id):
         raise HTTPException(409, f"{bu} does not take part in this bid.")
     return row(_guard(lambda: service.set_unit_completion(db, opp_id, bu, body.estimated_completion, body.note, u["name"])))

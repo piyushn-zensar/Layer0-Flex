@@ -119,57 +119,64 @@ def upload(db: Session, opp_id: str, filename: str, data: bytes, actor: str, rol
     _no_set_in_review(db, opp_id)
     if not filename.lower().endswith(".pdf"):
         raise ValueError("Upload the change document as a PDF.")
+    before = {d.id for d in opportunities.documents(db, opp_id)}
     doc = opportunities.add_document(db, opp_id, filename, data, role, actor)
-    if doc.role == "main":  # the same file uploaded earlier as an addendum or Q&A is fine: it keeps that role
-        raise ValueError(f"This file is the main RFP of {opp_id}, not a change document.")
-    done = db.scalar(select(ChangeSet).where(ChangeSet.document_id == doc.id, ChangeSet.status == "applied"))
-    if done:
-        raise ValueError(f"{doc.filename} was already applied (change set {done.id}, baseline {done.baseline_to}).")
-    if doc.status != "ingested":
-        read = ingestion.ingest(db, doc.id)
-        if "error" in read:
-            raise ValueError(f"{doc.filename} could not be read: {read['error']}")
-    layout = ingestion.layout(doc.id)
     try:
-        statements = agent.read(layout)
-    except agent.LLMUnavailable:
-        raise _unavailable(doc.filename)
-    if not statements:
-        raise ValueError(f"The change agent found no statements in {doc.filename}.")
-    items = _baseline_items(db, opp_id)
-    for s, idx in zip(statements, rank(statements, items)):
-        s["found"] = [items[i] for i in idx]
-    try:
-        answers = agent.classify([s | {"candidates": [{"text": r.text, "quote": r.quote} for r in s["found"]]}
-                                  for s in statements])
-    except agent.LLMUnavailable:
-        raise _unavailable(doc.filename)
+        if doc.role == "main":  # the same file uploaded earlier as an addendum or Q&A is fine: it keeps that role
+            raise ValueError(f"This file is the main RFP of {opp_id}, not a change document.")
+        done = db.scalar(select(ChangeSet).where(ChangeSet.document_id == doc.id, ChangeSet.status == "applied"))
+        if done:
+            raise ValueError(f"{doc.filename} was already applied (change set {done.id}, baseline {done.baseline_to}).")
+        if doc.status != "ingested":
+            read = ingestion.ingest(db, doc.id)
+            if "error" in read:
+                raise ValueError(f"{doc.filename} could not be read: {read['error']}")
+        layout = ingestion.layout(doc.id)
+        try:
+            statements = agent.read(layout)
+        except agent.LLMUnavailable:
+            raise _unavailable(doc.filename)
+        if not statements:
+            raise ValueError(f"The change agent found no statements in {doc.filename}.")
+        items = _baseline_items(db, opp_id)
+        for s, idx in zip(statements, rank(statements, items)):
+            s["found"] = [items[i] for i in idx]
+        try:
+            answers = agent.classify([s | {"candidates": [{"text": r.text, "quote": r.quote} for r in s["found"]]}
+                                      for s in statements])
+        except agent.LLMUnavailable:
+            raise _unavailable(doc.filename)
 
-    change = ChangeSet(opportunity_id=opp_id, document_id=doc.id, filename=doc.filename, baseline_from=b.number,
-                       baseline_count=b.count, created_by=actor)
-    db.add(change)
-    db.flush()  # holds the database write lock from here, so a set uploaded meanwhile (reading takes long) is seen
-    try:
-        _no_set_in_review(db, opp_id, change.id)
+        change = ChangeSet(opportunity_id=opp_id, document_id=doc.id, filename=doc.filename, baseline_from=b.number,
+                           baseline_count=b.count, created_by=actor)
+        db.add(change)
+        db.flush()  # holds the database write lock from here, so a set uploaded meanwhile (reading takes long) is seen
+        try:
+            _no_set_in_review(db, opp_id, change.id)
+        except ValueError:
+            db.rollback()
+            raise
+        for n, (s, a) in enumerate(zip(statements, answers), 1):
+            hit = requirements.locate(s["quote"], layout["pages"], s["page"]) or {}  # never the model's own page claim
+            target = s["found"][a["target"]].req_id if a["target"] is not None else None
+            db.add(ChangeItem(
+                set_id=change.id, n=n, page=hit.get("page"), line_start=hit.get("line_start"), line_end=hit.get("line_end"),
+                bboxes=hit.get("bboxes", []), quote=s["quote"], text=a["new_text"],
+                category=s["category"] if s["category"] in requirements.CATEGORIES else "technical", action=s["action"],
+                candidates=[{"req_id": r.req_id, "text": r.text, "source": r.source} for r in s["found"]],
+                proposed_kind=a["change"], proposed_target=target, rationale=a["rationale"], confidence=a["confidence"]))
+        counts = defaultdict(int)
+        for a in answers:
+            counts[a["change"]] += 1
+        audit.record(db, actor, "read", "change", str(change.id), opp_id, document=doc.id, filename=doc.filename,
+                     baseline=b.number, statements=len(statements), proposed=dict(counts))
+        db.commit()
+        return change
     except ValueError:
-        db.rollback()
+        if doc.id not in before:  # a failed upload leaves nothing behind (19 Oct review)
+            db.rollback()
+            opportunities.remove_document(db, doc.id, actor, "the change document could not be read")
         raise
-    for n, (s, a) in enumerate(zip(statements, answers), 1):
-        hit = requirements.locate(s["quote"], layout["pages"], s["page"]) or {}  # never the model's own page claim
-        target = s["found"][a["target"]].req_id if a["target"] is not None else None
-        db.add(ChangeItem(
-            set_id=change.id, n=n, page=hit.get("page"), line_start=hit.get("line_start"), line_end=hit.get("line_end"),
-            bboxes=hit.get("bboxes", []), quote=s["quote"], text=a["new_text"],
-            category=s["category"] if s["category"] in requirements.CATEGORIES else "technical", action=s["action"],
-            candidates=[{"req_id": r.req_id, "text": r.text, "source": r.source} for r in s["found"]],
-            proposed_kind=a["change"], proposed_target=target, rationale=a["rationale"], confidence=a["confidence"]))
-    counts = defaultdict(int)
-    for a in answers:
-        counts[a["change"]] += 1
-    audit.record(db, actor, "read", "change", str(change.id), opp_id, document=doc.id, filename=doc.filename,
-                 baseline=b.number, statements=len(statements), proposed=dict(counts))
-    db.commit()
-    return change
 
 
 def sets(db: Session, opp_id: str) -> list[ChangeSet]:

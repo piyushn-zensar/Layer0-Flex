@@ -2,7 +2,7 @@ import tempfile
 from pathlib import Path
 from typing import Literal
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, Request, UploadFile
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
@@ -11,6 +11,13 @@ from app.core import llm
 from app.core.web import BID_MANAGER, CORRECTORS, actor, require, row, user
 from app.modules.catalog import service as catalog
 from app.modules.knowledge import service
+from app.modules.opportunities import service as opportunities
+
+
+def _bid(db: Session, opp_id: str) -> None:
+    """An unknown bid is a 404, as on every other bid route."""
+    if not opportunities.get(db, opp_id):
+        raise HTTPException(404, f"Bid {opp_id} not found.")
 
 router = APIRouter(tags=["knowledge"])
 
@@ -75,6 +82,7 @@ def items(request: Request, status: Literal["queued", "approved", "rejected", "r
 @router.get("/bids/{opp_id}/knowledge")
 def sent(opp_id: str, db: Session = Depends(get_db)):
     """What was already nominated from this bid: "<kind>:<ref>" -> status (for the buttons)."""
+    _bid(db, opp_id)
     return service.for_opportunity(db, opp_id)
 
 
@@ -166,7 +174,9 @@ def reassess(opp_id: str, body: ReassessIn, request: Request, db: Session = Depe
 
 
 @router.get("/bids/{opp_id}/assessments")
-def assessments(opp_id: str, run: int | None = None, req_id: str | None = None, db: Session = Depends(get_db)):
+def assessments(opp_id: str, run: int | None = Query(None, ge=1, le=2**31 - 1), req_id: str | None = None,
+                db: Session = Depends(get_db)):
+    _bid(db, opp_id)
     out = service.assessments(db, opp_id, run, req_id)
     return out | {"records": [row(r) for r in out["records"]]}
 

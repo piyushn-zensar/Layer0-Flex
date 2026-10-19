@@ -132,6 +132,7 @@ def actions(db: Session, a: Assignment, user: dict) -> dict:
 
 
 def dispatch(db: Session, opp_id: str, actor: str) -> int:
+    opportunities.require(db, opp_id)  # an unknown bid is a 404, not "not frozen"
     if not requirements.baseline(db, opp_id):
         raise ValueError("The requirement register is not frozen yet: read the RFP first (RFP step).")
     go = decisions.latest(db, opp_id, "go_no_go")
