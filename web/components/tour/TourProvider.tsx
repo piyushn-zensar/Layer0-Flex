@@ -165,6 +165,7 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
       try { id = (await (await fetch("/tour-session", { cache: "no-store" })).json()).id as string; } catch { id = "no-session"; }
       if (cancelled) return;
       const stored = readStored();
+      if (stored && id === "no-session") id = stored.session; // the id could not be read: keep the progress, never reset it
       if (!stored || stored.session !== id) { // a new server run: reset and offer the walkthrough
         setSession(id); setIndex(0); setData({}); setStatus("offered");
       } else {

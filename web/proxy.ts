@@ -12,4 +12,5 @@ export function proxy(request: NextRequest) {
 }
 
 // Everything except the API (proxied to FastAPI), Next's own files, the sign-in and sign-up pages and static files.
-export const config = { matcher: ["/((?!api|_next|login|signup|favicon\\.ico|.*\\..*).*)"] };
+// tour-session is the walkthrough's server-run id: never redirected, or signing out would reset the walkthrough (19 Oct review)
+export const config = { matcher: ["/((?!api|_next|login|signup|tour-session|favicon\\.ico|.*\\..*).*)"] };
