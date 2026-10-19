@@ -1,54 +1,243 @@
 {
-  "_note": "Demo seed for the public Syracuse switchgear RFP. Quotes are verbatim from the PDF; page, lines and highlight boxes are computed by the anchoring code. Unit responses are ILLUSTRATIVE, not real SpinCo answers.",
-  "opportunity": {"title": "Switchgear procurement (RFP 2023-20)", "customer": "Syracuse Regional Airport Authority",
-                  "customer_type": "public sector"},
-  "document": "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf",
-  "requirements": [
-    {"page": 55, "category": "technical", "section": "Work included",
-     "quote": "One (1) 15kV two (2) section Metal Clad Switchgear lineup.",
-     "text": "Supply one 15 kV, two-section metal-clad switchgear lineup.",
-     "response": {"compliance": "met", "response": "Two-section 15 kV arc-resistant metal-clad lineup offered.", "validated": true}},
-    {"page": 55, "category": "technical", "section": "Work included",
-     "quote": "Protective Relays and Controls.",
-     "text": "Supply the protective relays and controls.",
-     "response": {"compliance": "met", "response": "Relay and protection panels engineered to the one-line diagram; relay schedule confirmed at design review.", "validated": false}},
-    {"page": 55, "category": "schedule", "section": "Bidding requirement",
-     "quote": "BIDDER shall provide a schedule for the project with the bid. This shall indicate, at a minimum, the schedule for drawings, shipment from factory, delivery at site, overall lead time to site ARO, and schedule for field works.",
-     "text": "Submit a project schedule with the bid: drawings, factory shipment, site delivery, lead time ARO, field works.",
-     "response": {"compliance": "met", "response": "Consolidated schedule from unit inputs attached to the bid.", "validated": true}},
-    {"page": 55, "category": "submission", "section": "Bidding requirement",
-     "quote": "In addition to other Submittal requirements, final drawings shall be submitted as AutoCAD format files.",
-     "text": "Final drawings must be submitted as AutoCAD files."},
-    {"page": 55, "category": "technical", "section": "Description",
-     "quote": "Metal Clad Switchgear shall have eighteen (18) 15kV vacuum circuit breaker positions with protective relay and controls, two (2) revenue meter positions, two sets of (2) 15kV isolation switches, bus VT's, and multi-ratio CT's as shown in Contract Documents.",
-     "text": "18 x 15 kV vacuum breaker positions with relays, 2 revenue meter positions, 2 sets of isolation switches, bus VTs and multi-ratio CTs.",
-     "response": {"compliance": "met", "response": "Lineup configured with 18 breaker positions, 2 revenue metering compartments and isolation switches.", "validated": true}},
-    {"page": 55, "category": "compliance", "section": "Description",
-     "quote": "Switchgear shall be Arc-resistant Type 2B. The switchgear shall meet or exceed the most conservative interpretation of standard IEEE C37.20.7.",
-     "text": "Arc-resistant Type 2B switchgear meeting IEEE C37.20.7 (most conservative interpretation).",
-     "response": {"compliance": "met", "response": "Type 2B arc-resistant construction, tested to IEEE C37.20.7.", "validated": true}},
-    {"page": 55, "category": "technical", "section": "Description",
-     "quote": "Metal Clad Switchgear shall be mounted within a fully enclosed Equipment Building (by others).",
-     "text": "Switchgear is installed inside an equipment building supplied by others.",
-     "response": {"compliance": "not_met", "response": "Building is by others. An EP² control building could be offered as an alternate.", "reason": "The equipment building is supplied by others under this RFP, not by the switchgear supplier.", "workaround": "Offer an EP² control building as an alternate.", "validated": false}},
-    {"page": 55, "category": "technical", "section": "Description",
-     "quote": "Separate utility incoming Cable termination compartment is required, that allows the utility to lock.",
-     "text": "Provide a separate, utility-lockable incoming cable termination compartment."},
-    {"page": 55, "category": "technical", "section": "Description",
-     "quote": "Each phase shall have 1 inch diameter ground ball.",
-     "text": "1-inch ground ball on each phase."},
-    {"page": 56, "category": "technical", "section": "Description",
-     "quote": "The MANUFACTURER shall provide a NEMA four-hole pad and insulating boots for incoming and outgoing cable connection of up to two (2) 750 MCM 15kV cables, per phase.",
-     "text": "NEMA four-hole pads and insulating boots for up to two 750 MCM 15 kV cables per phase.",
-     "response": {"compliance": "met", "response": "Standard catalog termination kit.", "validated": false}},
-    {"page": 56, "category": "technical", "section": "Description",
-     "quote": "Furnish two (2) bus Sections with tie breaker to contain the equipment specified in Contract Documents.",
-     "text": "Two bus sections with a tie breaker."},
-    {"page": 56, "category": "technical", "section": "Description",
-     "quote": "Furnish relays, controls and associated accessories and hardware as required for a complete functional and operational system.",
-     "text": "Furnish all relays, controls and hardware for a complete, working system."},
-    {"page": 5, "category": "submission", "section": "1.9 Submission due date",
-     "quote": "Proposals must be received via email no later than 09/15/2023 by 4:00PM at:",
-     "text": "Proposal due by email by 15 Sep 2023, 4:00 PM."}
-  ]
+ "_note": "Demo seed for the public Syracuse switchgear RFP. Quotes are verbatim from the PDF; page, lines and highlight boxes are computed by the anchoring code. Unit responses are ILLUSTRATIVE, not real SpinCo answers.",
+ "opportunity": {
+  "title": "Switchgear procurement (RFP 2023-20)",
+  "customer": "Syracuse Regional Airport Authority",
+  "customer_type": "public sector"
+ },
+ "document": "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf",
+ "requirements": [
+  {
+   "page": 55,
+   "category": "technical",
+   "section": "Work included",
+   "quote": "One (1) 15kV two (2) section Metal Clad Switchgear lineup.",
+   "text": "Supply one 15 kV, two-section metal-clad switchgear lineup.",
+   "response": {
+    "compliance": "met",
+    "response": "Two-section 15 kV arc-resistant metal-clad lineup offered.",
+    "validated": true
+   }
+  },
+  {
+   "page": 55,
+   "category": "technical",
+   "section": "Work included",
+   "quote": "Protective Relays and Controls.",
+   "text": "Supply the protective relays and controls.",
+   "response": {
+    "compliance": "met",
+    "response": "Relay and protection panels engineered to the one-line diagram; relay schedule confirmed at design review.",
+    "validated": false
+   }
+  },
+  {
+   "page": 55,
+   "category": "schedule",
+   "section": "Bidding requirement",
+   "quote": "BIDDER shall provide a schedule for the project with the bid. This shall indicate, at a minimum, the schedule for drawings, shipment from factory, delivery at site, overall lead time to site ARO, and schedule for field works.",
+   "text": "Submit a project schedule with the bid: drawings, factory shipment, site delivery, lead time ARO, field works.",
+   "response": {
+    "compliance": "met",
+    "response": "Consolidated schedule from unit inputs attached to the bid.",
+    "validated": true
+   }
+  },
+  {
+   "page": 55,
+   "category": "submission",
+   "section": "Bidding requirement",
+   "quote": "In addition to other Submittal requirements, final drawings shall be submitted as AutoCAD format files.",
+   "text": "Final drawings must be submitted as AutoCAD files."
+  },
+  {
+   "page": 55,
+   "category": "technical",
+   "section": "Description",
+   "quote": "Metal Clad Switchgear shall have eighteen (18) 15kV vacuum circuit breaker positions with protective relay and controls, two (2) revenue meter positions, two sets of (2) 15kV isolation switches, bus VT's, and multi-ratio CT's as shown in Contract Documents.",
+   "text": "18 x 15 kV vacuum breaker positions with relays, 2 revenue meter positions, 2 sets of isolation switches, bus VTs and multi-ratio CTs.",
+   "response": {
+    "compliance": "met",
+    "response": "Lineup configured with 18 breaker positions, 2 revenue metering compartments and isolation switches.",
+    "validated": true
+   }
+  },
+  {
+   "page": 55,
+   "category": "compliance",
+   "section": "Description",
+   "quote": "Switchgear shall be Arc-resistant Type 2B. The switchgear shall meet or exceed the most conservative interpretation of standard IEEE C37.20.7.",
+   "text": "Arc-resistant Type 2B switchgear meeting IEEE C37.20.7 (most conservative interpretation).",
+   "response": {
+    "compliance": "met",
+    "response": "Type 2B arc-resistant construction, tested to IEEE C37.20.7.",
+    "validated": true
+   }
+  },
+  {
+   "page": 55,
+   "category": "technical",
+   "section": "Description",
+   "quote": "Metal Clad Switchgear shall be mounted within a fully enclosed Equipment Building (by others).",
+   "text": "Switchgear is installed inside an equipment building supplied by others.",
+   "response": {
+    "compliance": "not_met",
+    "response": "Building is by others. An EP² control building could be offered as an alternate.",
+    "reason": "The equipment building is supplied by others under this RFP, not by the switchgear supplier.",
+    "workaround": "Offer an EP² control building as an alternate.",
+    "validated": false
+   }
+  },
+  {
+   "page": 55,
+   "category": "technical",
+   "section": "Description",
+   "quote": "Separate utility incoming Cable termination compartment is required, that allows the utility to lock.",
+   "text": "Provide a separate, utility-lockable incoming cable termination compartment."
+  },
+  {
+   "page": 55,
+   "category": "technical",
+   "section": "Description",
+   "quote": "Each phase shall have 1 inch diameter ground ball.",
+   "text": "1-inch ground ball on each phase."
+  },
+  {
+   "page": 56,
+   "category": "technical",
+   "section": "Description",
+   "quote": "The MANUFACTURER shall provide a NEMA four-hole pad and insulating boots for incoming and outgoing cable connection of up to two (2) 750 MCM 15kV cables, per phase.",
+   "text": "NEMA four-hole pads and insulating boots for up to two 750 MCM 15 kV cables per phase.",
+   "response": {
+    "compliance": "met",
+    "response": "Standard catalog termination kit.",
+    "validated": false
+   }
+  },
+  {
+   "page": 56,
+   "category": "technical",
+   "section": "Description",
+   "quote": "Furnish two (2) bus Sections with tie breaker to contain the equipment specified in Contract Documents.",
+   "text": "Two bus sections with a tie breaker."
+  },
+  {
+   "page": 56,
+   "category": "technical",
+   "section": "Description",
+   "quote": "Furnish relays, controls and associated accessories and hardware as required for a complete functional and operational system.",
+   "text": "Furnish all relays, controls and hardware for a complete, working system."
+  },
+  {
+   "page": 5,
+   "category": "submission",
+   "section": "1.9 Submission due date",
+   "quote": "Proposals must be received via email no later than 09/15/2023 by 4:00PM at:",
+   "text": "Proposal due by email by 15 Sep 2023, 4:00 PM."
+  }
+ ],
+ "real_answers_note": "ILLUSTRATIVE sample answers for the seeded real reading (19 Oct 2026 review): attached to distinct requirements of the real extraction so the demo shows answered, validated and partly compliant work across units. Not real unit positions.",
+ "real_answers": [
+  {
+   "page": 57,
+   "quote": "NEMA SG 4 - Alternating-Current High Voltage Circuit Breaker.",
+   "response": {
+    "compliance": "met",
+    "response": "Breakers are tested and rated to NEMA SG 4.",
+    "validated": true
+   }
+  },
+  {
+   "page": 60,
+   "quote": "Factory Tests conducted.",
+   "response": {
+    "compliance": "met",
+    "response": "Standard factory test report supplied with each lineup.",
+    "validated": true
+   }
+  },
+  {
+   "page": 60,
+   "quote": "Shop primers.",
+   "response": {
+    "compliance": "met",
+    "response": "Shop primer per our standard paint system.",
+    "validated": false
+   }
+  },
+  {
+   "page": 60,
+   "quote": "No welding shall be required for field assembly.",
+   "response": {
+    "compliance": "partial",
+    "response": "Bolted shipping splits; bus duct transition needs one field weld.",
+    "validated": true,
+    "reason": "One field weld at the bus duct transition."
+   }
+  },
+  {
+   "page": 84,
+   "quote": "PROVIDE BATTERY CHARGER FOR BATTERY BANK.",
+   "response": {
+    "compliance": "met",
+    "response": "Battery charger supplied and wired to LP-1.",
+    "validated": true
+   }
+  },
+  {
+   "page": 1,
+   "quote": "Submission Deadline: September 15, 2023 by 4pm",
+   "response": {
+    "compliance": "met",
+    "response": "Our input reaches the bid manager by 8 September.",
+    "validated": true
+   }
+  },
+  {
+   "page": 4,
+   "quote": "If awarded the contract, the proposer shall not be entitled to additional compensation,",
+   "response": {
+    "compliance": "partial",
+    "response": "Accepted for RFP errors we could reasonably have found.",
+    "validated": false,
+    "reason": "Latent errors in the RFP drawings are excluded."
+   }
+  },
+  {
+   "page": 5,
+   "quote": "In addition, interviews may be requested at the discretion of any RFP review or ad hoc",
+   "response": {
+    "compliance": "met",
+    "response": "Our engineering lead is available for interviews.",
+    "validated": true
+   }
+  },
+  {
+   "page": 3,
+   "quote": "The Syracuse Regional Airport Authority reserves the right to amend, cancel or postpone",
+   "response": {
+    "compliance": "met",
+    "response": "Accepted.",
+    "validated": true
+   }
+  },
+  {
+   "page": 1,
+   "quote": "All contacts/inquiries shall be made by email only to the following address:",
+   "response": {
+    "compliance": "met",
+    "response": "All questions go through bids@syrairport.org.",
+    "validated": true
+   }
+  },
+  {
+   "page": 4,
+   "quote": "Proposer will bear any, and all travel and other costs and expenses related to its",
+   "response": {
+    "compliance": "met",
+    "response": "Accepted.",
+    "validated": false
+   }
+  }
+ ]
 }

@@ -76,8 +76,8 @@ def main(seed_file: str = "demo_syracuse.json", real: bool = False) -> None:
 
 def independent(seed_file: str = "demo_logan.json") -> None:
     """C-11: the independent validation RFP (another issuer, public), read from its own frozen answers into the
-    register and the exception queue; the complete read freezes the register (P-32). Matching and dispatch are not
-    seeded for it."""
+    register and the exception queue; the complete read freezes the register (P-32), then its products are matched
+    from frozen answers (19 Oct review: the assessment showed no matches). Dispatch is not seeded for it."""
     seed = json.loads((config.SEED / seed_file).read_text("utf-8"))
     with SessionLocal() as db:
         o = seed["opportunity"]
@@ -87,7 +87,8 @@ def independent(seed_file: str = "demo_logan.json") -> None:
         print("ingested:", ingestion.ingest(db, doc.id))
         result = requirements.extract(db, opp.id, BM)
         print("read:", {k: v for k, v in result.items() if k != "problems"}, "problems:", len(result["problems"]))
-        print(f"done: open http://localhost:3000/opportunities/{opp.id}/requirements (web) - API on :8000")
+        print("matching:", matching.match(db, opp.id, "matching agent (seed)"))
+        print(f"done: open http://localhost:3000/opportunities/{opp.id}/trace (web) - API on :8000")
 
 
 def _read_and_review(db, opp_id: str, doc_id: str, seed: dict) -> dict:
@@ -99,7 +100,7 @@ def _read_and_review(db, opp_id: str, doc_id: str, seed: dict) -> dict:
     # attach each sample answer to the real requirement that covers the same lines (first one wins)
     pages = ingestion.layout(doc_id)["pages"]
     responses = {}
-    for item in seed["requirements"]:
+    for item in seed["requirements"] + seed.get("real_answers", []):  # real_answers: illustrative, for the real reading
         if "response" not in item:
             continue
         hit = anchoring.find(item["quote"], pages, item["page"])
