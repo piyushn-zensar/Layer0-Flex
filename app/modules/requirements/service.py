@@ -11,6 +11,8 @@ document). Before publishing, corrections change the working rows; after publish
 version in the next baseline, like a customer change but without a change document (apply_correction).
 
 Public contract:
+    freeze_incomplete(db, opp_id, reason, actor) -> Baseline   an incomplete read (re-reads did not complete it):
+                                                 the bid manager freezes the register with a reason (19 Oct 2026)
     extract(db, opp_id, actor, reason="") -> dict   reader agent on the main RFP, then duplicates marked and related
                                                  items grouped into requirements with sub-requirements; anchored
                                                  items enter the register, the others the exception queue; writes
@@ -244,9 +246,13 @@ def add_from_lines(db: Session, opp_id: str, page: int, line_start: int, line_en
                pages=[{"page": page, "lines": chosen}], origin="correction")
 
 
-def _selected_lines(db: Session, opp_id: str, page: int, line_start: int, line_end: int):
-    """The main RFP and the lines a person selected on one page (headers and footers left out), or ValueError."""
+def _selected_lines(db: Session, opp_id: str, page: int, line_start: int, line_end: int, document_id: str | None = None):
+    """The main RFP (or `document_id`, another read document of the bid, e.g. the addendum an exception came from) and
+    the lines a person selected on one page (headers and footers left out), or ValueError."""
     doc = _read_main_document(db, opp_id)
+    other = opportunities.get_document(db, document_id) if document_id and document_id != doc.id else None
+    if other is not None and other.opportunity_id == opp_id and other.status == "ingested":
+        doc = other
     pages = ingestion.layout(doc.id)["pages"]
     if not 1 <= page <= len(pages):
         raise ValueError(f"Page {page} not found; the RFP has {len(pages)} pages.")
@@ -263,6 +269,11 @@ def _selected_lines(db: Session, opp_id: str, page: int, line_start: int, line_e
               and not line.get("furniture") and anchoring.normalise(line["text"])]
     if not chosen:
         raise ValueError("Only header or footer lines are selected; select the requirement's own lines.")
+    # 4.2 (19 Oct review): lines already in the register are not added a second time
+    for r in current(db, opp_id, include_children=True):
+        if (r.status == "approved" and r.document_id == doc.id and r.page == page and r.line_start is not None
+                and r.line_start <= chosen[0]["n"] and chosen[-1]["n"] <= r.line_end and r.kind == "item"):
+            raise ValueError(f"These lines are already {r.req_id} ({r.source}); correct that requirement instead.")
     return doc, chosen
 
 
@@ -284,7 +295,11 @@ def extract(db: Session, opp_id: str, actor: str, reason: str = "") -> dict:
     reviewed = db.scalar(select(func.count()).select_from(AuditEvent).where(
         AuditEvent.opportunity_id == opp_id, AuditEvent.entity == "requirement",
         AuditEvent.action.in_(["approve", "reject", "edit", "split", "merged", "resolved", "dismissed"])))
-    if reviewed:
+    incomplete = bool(earlier) and not read_complete(earlier[0].coverage or {})
+    if incomplete and len(earlier) > MAX_REREADS:
+        raise ValueError(f"The RFP was read {len(earlier)} times and is still not read completely; "
+                         "freeze it with a reason instead (the parts not read stay open questions).")
+    if reviewed and not incomplete:
         raise ValueError(f"Corrections were made ({reviewed}); reading again would lose them. "
                          "Add what is missing with 'Add a requirement' instead.")
     layout = ingestion.layout(doc.id)
@@ -545,6 +560,28 @@ def review(db: Session, req_id: str, action: str, actor: str, text: str | None =
     db.commit()
 
 
+MAX_REREADS = 2  # after an incomplete read (decided 19 Oct 2026): two more reads, then a freeze with a reason
+
+
+def freeze_incomplete(db: Session, opp_id: str, reason: str, actor: str) -> Baseline:
+    """An incomplete read that re-reads could not complete: the bid manager freezes it with a reason; what was not read
+    (failed or unreadable pages and chunks) is kept with the reason in the audit event and shown as an open question."""
+    opportunities.require(db, opp_id)
+    if not reason.strip():
+        raise ValueError("Say why the register is frozen although the RFP was not read completely.")
+    earlier = snapshots(db, opp_id)
+    if not earlier:
+        raise ValueError("Read the RFP first.")
+    coverage = earlier[0].coverage or {}
+    if read_complete(coverage):
+        raise ValueError("The RFP was read completely; it was frozen when it was read.")
+    b = freeze(db, opp_id, actor)
+    audit.record(db, actor, "frozen_incomplete", "baseline", str(b.number), opp_id, reason=reason.strip(),
+                 not_read={k: coverage.get(k, 0) for k in ("pages_failed", "pages_unreadable", "chunks_failed")})
+    db.commit()
+    return b
+
+
 def freeze(db: Session, opp_id: str, actor: str) -> Baseline:
     _writable(db, opp_id)
     _read_main_document(db, opp_id)
@@ -690,9 +727,9 @@ def apply_correction(db: Session, opp_id: str, kind: str, body: dict, actor: str
                 raise ValueError(f"{req_id} is not a requirement of baseline {b.number}.")
             return r
 
-        def lines() -> tuple:
+        def lines(document_id: str | None = None) -> tuple:
             doc, chosen = _selected_lines(db, opp_id, int(body.get("page") or 0), int(body.get("line_start") or 0),
-                                          int(body.get("line_end") or 0))
+                                          int(body.get("line_end") or 0), document_id)
             quote = " ".join(line["text"] for line in chosen)
             return doc, quote, [{"page": body["page"], "lines": chosen}]
 
@@ -715,7 +752,7 @@ def apply_correction(db: Session, opp_id: str, kind: str, body: dict, actor: str
             req = get(db, body.get("req_id") or "")
             if req is None or req.opportunity_id != opp_id or req.status != "exception":
                 raise ValueError(f"{body.get('req_id')} is not in the exception queue.")
-            doc, quote, pages = lines()
+            doc, quote, pages = lines(req.document_id)  # an exception from an addendum links to the addendum's lines
             hit = _anchor(anchoring.find(quote, pages, body["page"]), doc.id)
             if not hit:
                 raise ValueError("The selected lines have no text to link; select the requirement's own lines.")

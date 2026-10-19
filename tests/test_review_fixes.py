@@ -130,3 +130,21 @@ def test_a_non_compliant_schedule_answer_beats_the_dates():
     from app.modules.decisions import service as decisions
     ok = [type("A", (), {"compliance": "not_met"})()]
     assert decisions._schedule_criterion(["R1"], {"R1": ok})[0] == "not_met"  # and _schedule returns it before the dates
+
+
+def test_lines_already_in_the_register_are_not_added_twice_and_an_incomplete_read_can_be_frozen(monkeypatch):
+    from app.modules.requirements import service as requirements
+    client, bm = signed_in(), auth("bid.manager")
+    pdf = (seed_demo.config.ROOT / "data/RFP/RFP-2023-20-Switchgear-Procurement-Final.pdf").read_bytes()
+    monkeypatch.setattr(requirements, "read_complete", lambda coverage: False)  # as if a chunk had failed
+    o = client.post("/api/bids", json={"title": "incomplete"}).json()["id"]
+    client.post(f"/api/bids/{o}/documents", files={"file": ("rfp.pdf", pdf)})
+    assert client.post(f"/api/bids/{o}/requirements/extract").json()["frozen"] is None
+    lines = {"page": 55, "line_start": 14, "line_end": 14, "category": "technical"}
+    assert client.post(f"/api/bids/{o}/requirements/from-lines", json=lines).status_code == 200
+    assert client.post(f"/api/bids/{o}/requirements/from-lines", json=lines).status_code == 409  # already in the register
+    for _ in range(requirements.MAX_REREADS):  # re-reads are allowed although a correction was made
+        assert client.post(f"/api/bids/{o}/requirements/extract", json={"reason": "retry"}).status_code == 200
+    assert client.post(f"/api/bids/{o}/requirements/extract", json={"reason": "again"}).status_code == 409
+    assert client.post(f"/api/bids/{o}/requirements/freeze", json={"reason": "x"}, headers=auth("crown.pm")).status_code == 403
+    assert client.post(f"/api/bids/{o}/requirements/freeze", json={"reason": "page 12 is a scan"}, headers=bm).json()["number"] == 1

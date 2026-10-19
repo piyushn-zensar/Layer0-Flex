@@ -1000,7 +1000,7 @@ def test_extraction_snapshot_and_corrections():
     edit = client.post(url, json={"kind": "edit", "req_id": p55[0]["req_id"], "text": "Corrected text", "reason": "misread"},
                        headers=auth("crown.pm")).json()
     assert (edit["baseline"], edit["modified"], edit["affected"]) == (2, [p55[0]["req_id"]], [p55[0]["req_id"]])
-    added = client.post(url, json={"kind": "add", "page": 55, "line_start": 52, "line_end": 53, "category": "technical",
+    added = client.post(url, json={"kind": "add", "page": 55, "line_start": 14, "line_end": 14, "category": "technical",
                                    "reason": "missed on p. 55"}).json()
     q = p55[1]["quote"]
     half = q.rfind(" ", 0, len(q) // 2)
@@ -1009,8 +1009,8 @@ def test_extraction_snapshot_and_corrections():
     merged = client.post(url, json={"kind": "merge", "req_ids": [p55[2]["req_id"], p55[3]["req_id"]], "text": "One",
                                     "reason": "one obligation"}).json()
     exception = next(r for r in rows["requirements"] if r["status"] == "exception")
-    resolved = client.post(url, json={"kind": "resolve", "req_id": exception["req_id"], "page": 55, "line_start": 52,
-                                      "line_end": 53, "reason": "found it"}).json()
+    resolved = client.post(url, json={"kind": "resolve", "req_id": exception["req_id"], "page": 55, "line_start": 3,
+                                      "line_end": 5, "reason": "found it"}).json()
     excluded = client.post(url, json={"kind": "exclude", "req_id": added["added"][0], "reason": "not a requirement"}).json()
     assert [r["baseline"] for r in (added, split, merged, resolved, excluded)] == [3, 4, 5, 6, 7]
     assert len(split["added"]) == 2 and split["removed"] == [p55[1]["req_id"]] and merged["removed"] == [p55[2]["req_id"], p55[3]["req_id"]]
@@ -1057,7 +1057,7 @@ def test_permissions_in_bids_documents_requirements_and_changes(incomplete_read)
 
     # corrections and exceptions: bid manager, product managers and design engineers, not the administrator
     url = f"/api/bids/{opp}/requirements/from-lines"
-    lines = {"page": 55, "line_start": 52, "line_end": 53, "category": "technical"}
+    lines = {"page": 55, "line_start": 14, "line_end": 14, "category": "technical"}
     r = client.post(url, json=lines, headers=admin)
     assert r.status_code == 403 and r.json()["detail"].startswith("The administrator reads only")  # P-31: one rule for every write
     added = client.post(url, json=lines, headers=pm).json()
@@ -1482,7 +1482,7 @@ def test_every_write_route_by_role():
     roles = {"bid_manager": auth("bid.manager"), "product_manager": auth("crown.pm"), "design_engineer": auth("crown.de"), "admin": auth("admin")}
     bid_manager_only = {
         "/api/bids", "/api/bids/{opp_id}/documents", "/api/bids/{opp_id}/documents/from-sample", "/api/documents/{doc_id}/ingest",
-        "/api/bids/{opp_id}/requirements/extract", "/api/bids/{opp_id}/changes",
+        "/api/bids/{opp_id}/requirements/extract", "/api/bids/{opp_id}/requirements/freeze", "/api/bids/{opp_id}/changes",
         "/api/bids/{opp_id}/changes/from-sample", "/api/changes/{set_id}/apply", "/api/changes/{set_id}/discard",
         "/api/bids/{opp_id}/match", "/api/matches/{match_id}/decide", "/api/bids/{opp_id}/requirements/{req_id}/match",
         "/api/bids/{opp_id}/participation", "/api/bids/{opp_id}/go-no-go", "/api/bids/{opp_id}/dispatch",

@@ -278,7 +278,8 @@ def apply(db: Session, set_id: int, actor: str) -> ChangeSet:
     else:
         out = {"baseline": s.baseline_from, "added": [], "modified": [], "removed": [], "affected": []}
     s.status, s.applied_by, s.applied_at, s.baseline_to = "applied", actor, utcnow(), out["baseline"]
-    result = {k: out[k] for k in ("baseline", "added", "modified", "removed")} | {"returned": 0, "dispatched": 0, "note": ""}
+    result = {k: out[k] for k in ("baseline", "added", "modified", "removed")} | {
+        "exceptions": out.get("exceptions", []), "returned": 0, "dispatched": 0, "note": ""}  # unverified statements: in the queue
     s.result = dict(result)  # a copy, so the update below is seen as a change of the JSON column
     audit.record(db, actor, "applied", "change", str(s.id), opp_id, document=s.document_id, **result)
     db.commit()

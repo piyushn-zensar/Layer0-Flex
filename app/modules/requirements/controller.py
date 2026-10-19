@@ -110,6 +110,17 @@ def exceptions(opp_id: str, db: Session = Depends(get_db)):
     return service.exceptions(db, opp_id)
 
 
+class FreezeIn(BaseModel):
+    reason: str = Field(min_length=1, max_length=2000)
+
+
+@router.post("/bids/{opp_id}/requirements/freeze")
+def freeze_incomplete(opp_id: str, body: FreezeIn, request: Request, db: Session = Depends(get_db)):
+    """An RFP that could not be read completely: the bid manager freezes the register with a reason (19 Oct 2026)."""
+    require(request, BID_MANAGER)
+    return row(_guard(lambda: service.freeze_incomplete(db, opp_id, body.reason, actor(request))))
+
+
 @router.post("/bids/{opp_id}/requirements/extract")
 def extract(opp_id: str, request: Request, body: ExtractIn | None = None, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)
