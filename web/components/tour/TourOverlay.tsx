@@ -87,6 +87,7 @@ function Overlay() {
 
   // ---- focus the bubble when the step changes (the Overlay is keyed by step id) ----
   useEffect(() => { bubble.current?.focus({ preventScroll: true }); }, []);
+  const nudged = useRef(false); // the step's target was scrolled into place once
 
   // ---- keyboard: Esc exits, arrows move (not while typing in a form field) ----
   useEffect(() => {
@@ -94,7 +95,9 @@ function Overlay() {
       const tag = (e.target as HTMLElement | null)?.tagName ?? "";
       const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(tag) || (e.target as HTMLElement | null)?.isContentEditable;
       if (e.key === "Escape") { if (menu) { setMenu(false); return; } if (!typing) { e.preventDefault(); t.exit(); } return; }
-      if (typing) return;
+      // 19 Oct review: a key a control already used (a pane grip resized, a slider moved) does not also turn the page
+      const control = (e.target as HTMLElement | null)?.closest?.('[role="separator"],[role="slider"],[role="tab"],[role="listbox"]');
+      if (typing || e.defaultPrevented || control) return;
       if (e.key === "ArrowRight" && !waiting) { e.preventDefault(); t.next(); }
       if (e.key === "ArrowLeft") { e.preventDefault(); t.prev(); }
     };
@@ -154,10 +157,11 @@ function Overlay() {
     const inView = view.top - PAD >= 0 && view.top + view.height + PAD <= vp.h;     // the lit part is wholly on the screen
     const seen = view.top < vp.h && view.top + view.height > 0;                      // at least some of it is
     const ok = docked ? under && view.top - PAD >= EDGE : (beside && seen) || ((under || over) && inView);
-    if (ok) return;
+    if (ok || nudged.current) return; // once per step: a person who scrolls away is not pulled back (19 Oct review)
     const timer = setTimeout(() => {
       const el = t.ctx.el(step.target!);
       if (!el) return;
+      nudged.current = true;
       const d = el.getBoundingClientRect().top - (EDGE + PAD);
       if (Math.abs(d) > 2) window.scrollBy({ top: d, behavior: "smooth" });
     }, 700); // after the engine's own scrollIntoView has settled

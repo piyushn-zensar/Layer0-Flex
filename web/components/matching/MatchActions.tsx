@@ -41,7 +41,8 @@ export default function MatchActions({ oppId, reqId, match: m, dispatched, onDon
   const openChange = () => {
     setDraft(m?.units ?? []);
     if (!catalog) api<{ units: Unit[]; products: Product[] }>("/api/catalog").then(
-      (c) => setCatalog({ ...c, units: c.units.filter((u) => u.status === "active") }), fail); // pending units can't be offered
+      (c) => setCatalog({ ...c, units: c.units.filter((u) => u.status === "active") }),
+      (e) => { setDraft(undefined); fail(e); }); // pending units can't be offered; a failed load closes the form (19 Oct review)
   };
   const save = () => {
     setBusy(true);

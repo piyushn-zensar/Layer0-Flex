@@ -30,13 +30,16 @@ export default function OppSteps() {
   const path = usePathname();
   const { data, reload } = useApi<{ opportunity: Opportunity }>(`/api/bids/${id}`);
   // Status changes when a page acts (freeze, go, dispatch): refresh on every step change, on the page's event, and every few seconds.
-  useEffect(() => { reload(); }, [path, reload]);
+  // 19 Oct review: no screen sets the status to submitted, so the last two steps tick once the go/no-go is recorded
+  // (the bid decision follows the compliance matrix); read on step changes and page events only, not every 5 s
+  const { data: decided, reload: reloadDecision } = useApi<{ go_no_go: unknown }>(`/api/bids/${id}/decisions`);
+  useEffect(() => { reload(); reloadDecision(); }, [path, reload, reloadDecision]);
   useEffect(() => { const t = setInterval(reload, 5000); return () => clearInterval(t); }, [reload]);
   useEffect(() => {
-    const h = () => reload();
+    const h = () => { reload(); reloadDecision(); };
     window.addEventListener(STATUS_EVENT, h);
     return () => window.removeEventListener(STATUS_EVENT, h);
-  }, [reload]);
+  }, [reload, reloadDecision]);
   const base = `/opportunities/${id}`;
   const status = data?.opportunity.status ?? "new";
   const onChanges = path === base + "/changes";
@@ -52,7 +55,7 @@ export default function OppSteps() {
         <ol className="stepper" data-tour="stepper">
           {STEPS.map((s, i) => {
             const current = !(s.suffix === "/consolidation" && onActivity) && (path === base + s.suffix || (s.suffix !== "" && path.startsWith(base + s.suffix + "/"))); // sub-pages too
-            const done = rank(status) >= rank(s.doneFrom);
+            const done = rank(status) >= rank(s.doneFrom) || (s.doneFrom === "submitted" && !!decided?.go_no_go);
             return (
               <li key={s.label} className={`${current ? "current" : ""} ${done ? "done" : ""}`} data-tour={s.tour}>
                 <Link href={base + s.suffix} aria-current={current ? "step" : undefined} title={done ? `${s.label}: done` : undefined}>

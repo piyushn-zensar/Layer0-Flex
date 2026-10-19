@@ -284,6 +284,8 @@ export default function TraceWorkspace({ bidId, mode, pane, children }: { bidId:
       case "state":
         stateSeen.current.add(m.to);
         if (m.to !== chRef.current?.id) break;
+        // a state message carries its seqs inside: move the clock past them, or this window's next change could lose to old state
+        clock.current = Math.max(clock.current, m.select?.seq ?? 0, m.filters?.seq ?? 0, ...Object.values(m.links).map((l) => l.seq));
         if (m.select && accept("select", m.select.seq)) applySelect(m.select.req, true);
         PANES.forEach((p) => { const l = m.links[p]; if (l && accept(`link${p}`, l.seq)) applyLink(p, l.on); });
         if (m.filters && accept("filters", m.filters.seq)) applyFilterState(m.filters.filters);

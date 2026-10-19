@@ -45,6 +45,7 @@ function Register({ meta, onDone }: { meta: SourceList; onDone: (ks: string) => 
         <label>Scope <input name="scope" /></label>
         <label className="narrow">Permissions <input name="permissions" defaultValue="public" /></label>
         <label className="grow">Source URL <input type="url" name="url" placeholder="https://" /></label>
+        <label className="narrow">Bid <span className="field-hint">(Current bid evidence only)</span> <input name="bid" placeholder="OPP-0001" pattern="OPP-[0-9]+" /></label>
         <div className="inline">
           <button disabled={busy || !allowed} title={allowed ? undefined : "Your role cannot register sources."}>Register</button>
           {busy && <Busy label="Reading the file…" />}
