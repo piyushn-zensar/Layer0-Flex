@@ -24,6 +24,7 @@ type Data = {
     needs_owner: { req_id: string; text: string; category: string; suggested: string[] }[];
     rule_warnings: { id: string; status: string; note: string }[];
     questions: { id: number; req_id: string; author: string; text: string }[];
+    not_read?: string[]; // what the latest read did not cover (R5)
   };
   participation: { id: number; units: string[]; rationale: string; decided_by: string } | null;
   routing: { req_id: string; text: string; category: string; section: string; route: Route;
@@ -44,7 +45,8 @@ export default function AssessmentPage() {
   if (error) return <Alert kind="error" title="Could not load the assessment.">{error}</Alert>;
   if (!data) return <Skeleton lines={5} />;
   const { summary: s, open_questions: q, participation: part } = data;
-  const open = q.exceptions.length + q.needs_owner.length + q.rule_warnings.length + q.questions.length;
+  const notRead = q.not_read ?? [];
+  const open = q.exceptions.length + q.needs_owner.length + q.rule_warnings.length + q.questions.length + notRead.length;
   const count = (route: Route) => data.routing.filter((r) => r.route === route).length;
 
   const run = <T,>(label: string, request: Promise<T>, done: (r: T) => void) => {
@@ -99,6 +101,9 @@ export default function AssessmentPage() {
           </li>)}</ul></div>}
         {q.rule_warnings.length > 0 && <><h3>Engineering rule warnings ({q.rule_warnings.length})</h3>
           <ul className="per-req">{q.rule_warnings.map((r) => <li key={r.id}><span className="mono">{r.id}</span> <StatusBadge status={r.status} /> {r.note}</li>)}</ul></>}
+        {notRead.length > 0 && <><h3>Not read from the RFP ({notRead.length})</h3>
+          <ul className="per-req">{notRead.map((t) => <li key={t}>{t}</li>)}</ul>
+          <p className="muted">The RFP step shows which pages; the register was frozen without them.</p></>}
         {q.questions.length > 0 && <><h3>Questions not yet closed ({q.questions.length})</h3>
           <ul className="per-req">{q.questions.map((c) => <li key={c.id}><Link className="mono" href={`/opportunities/${id}/trace#${c.req_id}`}>{c.req_id}</Link> <strong>{c.author}</strong>: {c.text}</li>)}</ul></>}
       </section>

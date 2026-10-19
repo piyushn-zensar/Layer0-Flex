@@ -31,6 +31,7 @@ from app.modules.knowledge import service as knowledge
 from app.modules.matching import service as matching
 from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service as requirements
+from app.modules.trace import service as trace
 from app.modules.workpackages import service as workpackages
 
 
@@ -55,12 +56,18 @@ COMPLIANCE_LABELS = {"met": "Fully compliant", "partial": "Partially compliant",
 EXTENDED = ("reason", "conditions", "workaround", "next_steps")
 
 
-def _spans(req) -> list[dict]:
-    """Every source span of a requirement for the page preview; an older requirement without `spans` gets its one."""
+def _spans(req, boxes: list | None = None) -> list[dict]:
+    """Every source span of a requirement for the page preview; an older requirement without `spans` gets its one.
+    `boxes`: the Traceability highlight (a group's comes from its current sub-requirements, so after an addendum it
+    does not mark the old lines): it replaces the stored boxes of the span on the requirement's own page."""
     spans = [{k: s.get(k) for k in ("document_id", "page", "line_start", "line_end", "bboxes")} for s in req.spans or []]
     if not spans and req.page is not None:
         spans = [{"document_id": req.document_id, "page": req.page, "line_start": req.line_start,
                   "line_end": req.line_end, "bboxes": req.bboxes or []}]
+    if boxes is not None and boxes != req.bboxes:
+        for s in spans:
+            if s["document_id"] == req.document_id and s["page"] == req.page:
+                s["bboxes"] = boxes
     return spans
 
 
@@ -83,12 +90,13 @@ def compliance_matrix(db: Session, opp_id: str) -> dict:
     workaround, next_steps. The last four are None until A-18 stores them. The history count waits for A-21."""
     cov = coverage(db, opp_id)
     source = _sources(db, opp_id)
+    boxes = trace.highlights(db, opp_id)
     rows = []
     for r in cov["rows"]:
         req, m = r["req"], r["match"]
         base = {"req_id": req.req_id, "requirement": req.text, "quote": req.quote, "category": req.category,
                 "state": r["state"], "source": source(req), "document_id": req.document_id, "page": req.page,
-                "line_start": req.line_start, "line_end": req.line_end, "spans": _spans(req),
+                "line_start": req.line_start, "line_end": req.line_end, "spans": _spans(req, boxes.get(req.req_id)),
                 "assignments": len(r["assignments"])}
         for a in r["assignments"] or [None]:
             rows.append(base | {"unit": a.bu if a else None, "unit_name": _unit_name(a.bu) if a else "",
@@ -293,7 +301,7 @@ if __name__ == "__main__":  # self-check: python -m app.modules.consolidation.se
     from types import SimpleNamespace as NS
     assert COLUMNS[:12] == ["Requirement ID", "Source", "Category", "Requirement", "Quote", "Business unit", "Product",
                             "Offering type", "Compliance", "Response", "Validated by", "State"]  # earlier positions stay put
-    assert COLUMNS[12:] == ["Assignment status", "Responded by"] and BOM.encode("utf-8") == b"\xef\xbb\xbf"
+    assert COLUMNS[12:14] == ["Assignment status", "Responded by"] and COLUMNS[14:] == ["Reason", "Conditions", "Workaround", "Next Steps"] and BOM.encode("utf-8") == b"\xef\xbb\xbf"
     req = NS(req_id="REQ-0001-0001", source="p. 55, line 16", category="technical", text="15 kV \u2013 EP\u00b2", quote="\u201cx\u201d")
     m = NS(product_id="EP2-RPP", offering_type="ETO", units=[])
     a = NS(bu="EP2", product_ref=None, compliance="met", response="=cmd", validated_by="Bid Manager", status="submitted",

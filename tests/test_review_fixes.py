@@ -108,9 +108,14 @@ def test_needs_an_owner_counts_agree_before_participation():
 
 def test_a_returned_capability_gap_survives_the_next_dispatch(opp):
     client, bm = signed_in(), auth("bid.manager")
-    gap = next(o for o in client.get(f"/api/bids/{opp}/needs-owner").json())
+    # the test makes its own product item without a unit (a person's "no unit"): what matching leaves unowned
+    # depends on the knowledge earlier tests approved
+    req = next(r for r in client.get(f"/api/bids/{opp}/requirements").json()["requirements"]
+               if r["category"] == "technical" and r["status"] == "approved" and not r.get("parent_id"))
+    assert client.post(f"/api/bids/{opp}/requirements/{req['req_id']}/match", json={"units": []}, headers=bm).status_code == 200
+    gap = next(o for o in client.get(f"/api/bids/{opp}/needs-owner").json() if o["req_id"] == req["req_id"])
     client.post(f"/api/bids/{opp}/requirements/{gap['req_id']}/capability-gap", json={"reason": "no unit"}, headers=bm)
-    a = _held(client, opp, lambda r, a: r["req"]["req_id"] == gap["req_id"])
+    a = _held(client, opp, lambda r, a: r["req"]["req_id"] == gap["req_id"] and a["bu"] == "BID")
     assert client.post(f"/api/assignments/{a['id']}/validate", json={"ok": False, "note": "Really none?"}, headers=bm).status_code == 200
     client.post(f"/api/bids/{opp}/dispatch", headers=bm)
     after = _held(client, opp, lambda r, x: x["id"] == a["id"])

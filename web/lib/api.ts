@@ -82,8 +82,18 @@ export const isReader = (me?: Me) => me?.role === "admin";
 export const BID_MANAGER_ONLY = "Only the bid manager can do this.";
 
 /** The signed-in user (undefined while loading). */
+// One lookup per page load, shared by every component that asks (a role check per table row costs no request);
+// signing in and out reload the page, so it never shows the previous person.
+let signedIn: Promise<Me> | undefined;
 export function useMe(): Me | undefined {
-  return useApi<Me>("/api/auth/me").data;
+  const [me, setMe] = useState<Me>();
+  useEffect(() => {
+    let live = true;
+    (signedIn ??= api<Me>("/api/auth/me").catch((e) => { signedIn = undefined; throw e; }))
+      .then((m) => { if (live) setMe(m); }, () => { /* not signed in: the page guard and the API handle it */ });
+    return () => { live = false; };
+  }, []);
+  return me;
 }
 
 /** Fetch on mount; call reload() after an action. */

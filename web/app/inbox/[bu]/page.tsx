@@ -6,7 +6,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { api, errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
+import { api, errorMessage, isBidManager, isReader, post, useApi, useMe } from "@/lib/api";
 import { complianceLabel, type Assignment, type Requirement, type Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import KnowledgeReview from "@/components/knowledge/KnowledgeReview";
@@ -40,6 +40,7 @@ function Questions({ oppId, reqId, assignmentId, open, me, bm, onChanged }:
   const [notes, setNotes] = useState<Note[]>();
   const [error, setError] = useState<string>();
   const [busy, setBusy] = useState(false);
+  const readOnly = isReader(useMe()); // the administrator reads only
   const load = () => api<Note[]>(`/api/bids/${oppId}/comments?req_id=${encodeURIComponent(reqId)}`).then(setNotes, (e) => setError(errorMessage(e)));
   const act = (request: Promise<unknown>, done: string) => {
     setBusy(true);
@@ -66,7 +67,7 @@ function Questions({ oppId, reqId, assignmentId, open, me, bm, onChanged }:
         <label><span className="sr-only">Question or comment</span>
           <select name="kind" defaultValue="question"><option value="question">Question (open until closed)</option><option value="comment">Comment</option></select></label>
         <label><span className="sr-only">Text</span><textarea name="text" rows={2} required placeholder="Ask a question or add a comment" /></label>
-        <button className="secondary sm" disabled={busy}>Send</button>
+        <button className="secondary sm" disabled={busy || readOnly} title={readOnly ? "The administrator reads only." : undefined}>Send</button>
       </form>
     </details>
   );

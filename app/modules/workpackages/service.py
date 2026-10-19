@@ -22,7 +22,7 @@ Public contract:
         LookupError: not in the published register; ValueError: no reason, or a participating unit holds it
     assessment(db, opp_id) -> dict                        the Assessment step (16.5): published, baseline, summary
         {requirements, by_category, by_offering, sections, suggested_units}, open_questions {exceptions, needs_owner,
-        rule_warnings, questions}, participation {id, units, rationale, decided_by} | None, no_go, units (catalog),
+        rule_warnings, questions, not_read [str]: what the latest read did not cover}, participation {id, units, rationale, decided_by} | None, no_go, units (catalog),
         routing [{req_id, text, category, section, route: unit | bid_desk |
         capability_gap | needs_owner, units [{bu, product_id, specialists}]}] (before publishing: a preview of the
         register; without a participation: with the suggested units), sent, progress. LookupError: unknown bid
@@ -218,6 +218,17 @@ def _specialists(bu: str, category: str | None) -> list[str]:
     return list(dict.fromkeys(_staff(bu, r)["name"] for r in answer + check))
 
 
+NOT_READ = {"pages_failed": "page(s) the reader failed on", "pages_unreadable": "page(s) without readable text (need OCR)",
+            "chunks_failed": "part(s) of the RFP the reader failed on"}
+
+
+def _not_read(db: Session, opp_id: str) -> list[str]:
+    """R5 (19 Oct review): what the latest read of the RFP did not cover, e.g. after a freeze with a reason."""
+    latest = next(iter(requirements.snapshots(db, opp_id)), None)
+    coverage = (latest.coverage or {}) if latest else {}
+    return [f"{coverage[k]} {label}: check them by hand." for k, label in NOT_READ.items() if coverage.get(k)]
+
+
 def assessment(db: Session, opp_id: str) -> dict:
     opportunities.require(db, opp_id)
     ev, base = decisions.evidence(db, opp_id), requirements.baseline(db, opp_id)
@@ -250,6 +261,7 @@ def assessment(db: Session, opp_id: str) -> dict:
                              "suggested": [u["bu"] for u in r["units"]]} for r in routing if r["route"] == "needs_owner"],
             "rule_warnings": rules,
             "questions": [{"id": c.id, "req_id": c.req_id, "author": c.author, "text": c.text} for c in open_questions(db, opp_id)],
+            "not_read": _not_read(db, opp_id),
         },
         "participation": {"id": p.id, "units": p.units, "rationale": p.rationale, "decided_by": p.decided_by} if p else None,
         "no_go": bool(go and go.outcome == "no_go"), "units": catalog.units(), "routing": routing,

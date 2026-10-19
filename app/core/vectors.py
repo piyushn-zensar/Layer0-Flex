@@ -31,9 +31,13 @@ class Index:
         self.mode = "embeddings" if self.vectors is not None else "keywords"
         self._tfidf = None
 
-    def search(self, query: str, k: int = 5, where=None) -> list[dict]:
-        """Top-k items as {**item, "score"}; `where` filters items (e.g. one business unit)."""
-        return self.search_many([query], k, where)[0]
+    def search(self, query: str, k: int = 5, where=None, vector=None) -> list[dict]:
+        """Top-k items as {**item, "score"}; `where` filters items (e.g. one business unit). `vector`: the query's
+        embedding when the caller already made it (one embedding call for many indexes)."""
+        if vector is None or self.vectors is None or not self.items or not query.strip():
+            return self.search_many([query], k, where)[0]
+        v = np.asarray(vector, dtype=np.float32)
+        return self._top(self.vectors @ (v / (np.linalg.norm(v) or 1.0)), k, where)
 
     def search_many(self, queries: list[str], k: int = 5, where=None) -> list[list[dict]]:
         """search() for many queries with one embedding call (one request instead of one per requirement)."""

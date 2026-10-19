@@ -18,7 +18,7 @@ from functools import lru_cache
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.core import audit, config
+from app.core import audit, config, llm
 from app.core.vectors import Index
 from app.modules.catalog import service as catalog
 from app.modules.ingestion import service as ingestion
@@ -87,13 +87,18 @@ def retrieve(db: Session, task: str, query: str, opp_id: str | None = None, k: i
     groups: dict[tuple, list[dict]] = {}
     for e in every:  # each source's index covers all its passages, so its frozen vectors fit every profile
         groups.setdefault((e["ks_id"], e["version"]), []).append(e)
+    made: list = []  # the query's embedding, made once for every source's index (19 Oct review)
+    def vector():
+        if not made:
+            made.append((llm.embed([query]) or [None])[0])
+        return made[0]
     for (ks, version), group in groups.items() if semantic else ():
         idx = _index((ks, version, len(group), sum(bool(e.get("annotations")) for e in group)), group)  # annotations refresh it
         complete = complete and idx.vectors is not None
-        found += idx.search(query, depth, where=keep) if idx.vectors is not None else []
+        found += idx.search(query, depth, where=keep, vector=vector()) if idx.vectors is not None else []
     if rfp and semantic:
         complete = complete and rfp[1].vectors is not None
-        found += [p | {"ks_id": rfp[0].id, "passage_id": None} for p in rfp[1].search(query, depth)] if rfp[1].vectors is not None else []
+        found += [p | {"ks_id": rfp[0].id, "passage_id": None} for p in rfp[1].search(query, depth, vector=vector())] if rfp[1].vectors is not None else []
     # a semantic hit below the floor is no evidence (cosine is never 0: an unrelated question would always "find"
     # something); semantic ranking only when every candidate has vectors: otherwise the embedded ones would be favoured
     found = [h for h in found if h["score"] >= MIN_SEMANTIC]

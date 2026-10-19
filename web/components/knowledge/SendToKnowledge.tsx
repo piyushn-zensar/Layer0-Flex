@@ -3,7 +3,7 @@
 // as a reviewed example, with its type, when it holds, when it does not apply and why it is worth keeping. The person who may
 // review it decides (My work, "Knowledge review"). Shows the state once nominated.  Owner: Atharv.
 import { useState } from "react";
-import { errorMessage, post } from "@/lib/api";
+import { errorMessage, isReader, post, useMe } from "@/lib/api";
 import { KB_EXAMPLE_TYPES, type KbItem } from "@/lib/types";
 import { StatusBadge, useToast } from "@/components/ui";
 
@@ -17,9 +17,10 @@ export default function SendToKnowledge({ kind, refId, status, onSent, short }:
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
+  const readOnly = isReader(useMe()); // the administrator reads only: nothing to nominate
   if (status && status !== "rejected") return <StatusBadge status={status} label={STATE[status] ?? status} className="kb-sent" />;
   if (!open)
-    return <button type="button" className="link" data-tour="kb-send-button" title={FULL} onClick={(e) => { e.stopPropagation(); setOpen(true); }}>{short ? "Nominate" : FULL}</button>;
+    return <button type="button" className="link" data-tour="kb-send-button" title={readOnly ? "The administrator reads only." : FULL} disabled={readOnly} onClick={(e) => { e.stopPropagation(); setOpen(true); }}>{short ? "Nominate" : FULL}</button>;
 
   async function send(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

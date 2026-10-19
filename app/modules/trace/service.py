@@ -10,6 +10,8 @@ Public contract:
                                       Each row's "bboxes": its highlight boxes, see _highlights.
                                       "sent_for_assessment": true once any active unit work exists (J-12): the
                                       Traceability screen shows unit responses only then
+    highlights(db, opp_id) -> dict    {req_id: highlight boxes} for every current requirement, by the same rule
+                                      (the Compliance matrix source preview, 19 Oct review)
 """
 from sqlalchemy.orm import Session
 
@@ -38,6 +40,21 @@ def _highlights(req, children: list, grouped: bool) -> list:
     if req.kind != "group" or req.version > 1 or not grouped:
         return req.bboxes
     return [b for k in children if k.document_id == req.document_id and k.page == req.page for b in k.bboxes]
+
+
+def _kids(db: Session, opp_id: str) -> tuple[dict[str, list], set]:
+    """A group's active sub-requirements, and the groups that have any sub-requirement on record."""
+    kids: dict[str, list] = {}
+    for r in requirements.current(db, opp_id, include_children=True):
+        if r.parent_id:
+            kids.setdefault(r.parent_id, []).append(r)
+    return kids, {r.parent_id for r in requirements.current(db, opp_id, include_inactive=True, include_children=True)}
+
+
+def highlights(db: Session, opp_id: str) -> dict[str, list]:
+    kids, grouped = _kids(db, opp_id)
+    return {req.req_id: _highlights(req, kids.get(req.req_id, []), req.req_id in grouped)
+            for req in requirements.current(db, opp_id)}
 
 
 def trace(db: Session, opp_id: str) -> dict:
