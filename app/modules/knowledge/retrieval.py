@@ -31,6 +31,7 @@ from app.modules.requirements import service as requirements
 # ponytail: placeholder floor for text-embedding-3-small at 256 dimensions (relevant passages scored about 0.6, unrelated
 # questions well below); calibrate it on the reviewed evaluation set (scripts/eval_rag.py)
 MIN_SEMANTIC = 0.35
+MIN_KEYWORD = 0.1  # TF-IDF cosine; one shared common word (e.g. "shall", about 0.02) is no evidence (19 Oct review)
 _indexes: dict[tuple, Index] = {}  # (source id, version, passages) -> its index; versions never change their text
 
 
@@ -81,13 +82,13 @@ def retrieve(db: Session, task: str, query: str, opp_id: str | None = None, k: i
         return []
     where = {(e["ks_id"], e.get("page"), e.get("line_start"), e.get("passage_id")): i for i, e in enumerate(items)}
     pos = lambda e: where[(e["ks_id"], e.get("page"), e.get("line_start"), e.get("passage_id"))]
-    rankings = [_index(("keywords", tuple(where)), items, embed=False).hybrid(query, depth)]
+    rankings = [_index(("keywords", tuple(where)), items, embed=False).hybrid(query, depth, min_keyword=MIN_KEYWORD)]
     found, complete = [], semantic
     groups: dict[tuple, list[dict]] = {}
     for e in every:  # each source's index covers all its passages, so its frozen vectors fit every profile
         groups.setdefault((e["ks_id"], e["version"]), []).append(e)
     for (ks, version), group in groups.items() if semantic else ():
-        idx = _index((ks, version, len(group)), group)
+        idx = _index((ks, version, len(group), sum(bool(e.get("annotations")) for e in group)), group)  # annotations refresh it
         complete = complete and idx.vectors is not None
         found += idx.search(query, depth, where=keep) if idx.vectors is not None else []
     if rfp and semantic:
@@ -115,6 +116,8 @@ def reassess(db: Session, opp_id: str, reason: str, actor: str) -> dict:
     version = catalog.published(db)["catalog_version"]
     missing = 0
     reqs = requirements.current(db, opp_id)
+    if not reqs:
+        raise ValueError("The register is empty: read the RFP before assessing the bid.")
     for req in reqs:
         task = "product_matching" if req.category in matching.PRODUCT_CATEGORIES else "requirement_interpretation"
         hits = retrieve(db, task, req.text, opp_id)

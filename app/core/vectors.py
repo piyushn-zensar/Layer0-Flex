@@ -53,13 +53,15 @@ class Index:
             out.append(self._top(scores, k, where))
         return out
 
-    def hybrid(self, query: str, k: int = 5, where=None, depth: int = 50) -> list[dict]:
+    def hybrid(self, query: str, k: int = 5, where=None, depth: int = 50, min_keyword: float = 0.0) -> list[dict]:
         """Semantic and keyword results combined by reciprocal rank fusion (P-37, C-29 point 5): an exact term (a
         standard number, a rating) and a paraphrase both rank. Offline (no vectors) it is the keyword ranking.
         score = sum of 1 / (60 + rank) over the two rankings; it orders results and is never a probability."""
         if not query.strip() or not self.items:
             return []
-        rankings = [self._ranked(self._keyword_scores(query), depth, where)]
+        keyword = self._keyword_scores(query)
+        keyword[keyword < min_keyword] = 0  # min_keyword: below it a shared word is no evidence (e.g. only "shall")
+        rankings = [self._ranked(keyword, depth, where)]
         if self.vectors is not None and (qv := llm.embed([query])) is not None:
             v = np.asarray(qv[0], dtype=np.float32)
             rankings.append(self._ranked(self.vectors @ (v / (np.linalg.norm(v) or 1.0)), depth, where))

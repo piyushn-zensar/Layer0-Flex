@@ -94,6 +94,9 @@ def review(kb_id: str, body: ReviewIn, request: Request, db: Session = Depends(g
 @router.post("/knowledge/{kb_id}/revise")
 def revise(kb_id: str, body: ReviseIn, request: Request, db: Session = Depends(get_db)):
     require(request, *CORRECTORS)
+    item = _call(service._get, db, kb_id)
+    if not service.may_review(item, user(request)):  # only the item's own unit (bid desk: bid manager) revises it
+        raise HTTPException(403, f"Only the reviewers of {kb_id} revise it.")
     fields = {k: v for k, v in body.model_dump().items() if v is not None}
     return _item(_call(service.revise, db, kb_id, actor(request), **fields), request)
 
@@ -122,14 +125,15 @@ def source(ks_id: str, db: Session = Depends(get_db)):
 @router.post("/knowledge/sources")
 async def register(request: Request, file: UploadFile = File(...), collection: str = Form(...), title: str = Form(""),
                    publisher: str = Form(""), revision: str = Form(""), scope: str = Form(""),
-                   permissions: str = Form("public"), url: str = Form(""), db: Session = Depends(get_db)):
-    require(request, *CORRECTORS)
+                   permissions: str = Form("public"), url: str = Form(""), bid: str | None = Form(None),
+                   db: Session = Depends(get_db)):
+    require(request, *CORRECTORS)  # bid: the bid a "Current bid evidence" source belongs to (19 Oct review)
     name = Path(file.filename or "source").name
     with tempfile.TemporaryDirectory() as tmp:
         path = Path(tmp) / f"upload{Path(name).suffix.lower()}"
         path.write_bytes(await file.read())
         src, existing = _call(service.register, db, path, actor(request), collection, title or Path(name).stem,
-                              publisher, revision, scope, permissions, url, None, name)
+                              publisher, revision, scope, permissions, url, bid or None, name)
     return _source(src, service.counts(db)) | {"existing": existing}
 
 
@@ -157,7 +161,7 @@ def annotate(ks_id: str, request: Request, db: Session = Depends(get_db)):
 # --- retrieval and assessment records (P-37 part 1) -----------------------------------------------------------
 
 @router.get("/knowledge/retrieve")
-def retrieve(task: str, q: str, bid: str | None = None, k: int | None = None, db: Session = Depends(get_db)):
+def retrieve(task: str, q: str, bid: str | None = None, k: int | None = Query(None, ge=1, le=50), db: Session = Depends(get_db)):
     """The evidence a task would use for a question (each hit with its citation); see retrieval.json."""
     return {"task": task, "hits": _call(service.retrieve, db, task, q, bid, k)}
 

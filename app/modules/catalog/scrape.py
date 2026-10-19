@@ -152,8 +152,10 @@ def refresh(db: Session, trigger: str = "schedule", pages: list[tuple] | None = 
         db.add(run)
         db.commit()
         now, seen, ok_pages = utcnow(), set(), set()
+        # every page is fetched before anything is written, so no database write waits on the network (19 Oct review)
+        fetched = []
         for url, kind, bu in pages or PAGES:
-            entry = {"url": url, "status": "ok", "sha256": None, "products": 0, "error": ""}
+            entry, products = {"url": url, "status": "ok", "sha256": None, "products": 0, "error": ""}, []
             try:
                 if not allowed(url):
                     entry |= {"status": "skipped", "error": "robots.txt does not allow this page"}
@@ -162,13 +164,19 @@ def refresh(db: Session, trigger: str = "schedule", pages: list[tuple] | None = 
                     entry["sha256"] = hashlib.sha256(html.encode()).hexdigest()
                     products = parse(html, url, kind, bu)
                     entry["products"] = len(products)
-                    for p in products:
-                        if p["key"] not in seen:  # a product listed on two pages: the first page read wins
-                            _store(db, run, p, url, now)
-                            seen.add(p["key"])
-                    ok_pages.add(url)
             except (httpx.HTTPError, ssl.SSLError, OSError) as exc:  # network, TLS or HTTP status: keep the last good data
                 entry |= {"status": "failed", "error": f"{type(exc).__name__}: {exc}"[:300]}
+            except Exception as exc:  # noqa: BLE001 - a changed page layout fails loudly on the run, never the refresh
+                entry |= {"status": "failed", "error": f"parser: {type(exc).__name__}: {exc}"[:300]}
+                products = []
+            fetched.append((url, entry, products))
+        for url, entry, products in fetched:
+            for p in products:
+                if p["key"] not in seen:  # a product listed on two pages: the first page read wins
+                    _store(db, run, p, url, now)
+                    seen.add(p["key"])
+            if entry["status"] == "ok":
+                ok_pages.add(url)
             run.sources = run.sources + [entry]
         for gone in db.scalars(select(CatalogProduct).where(CatalogProduct.active.is_(True),
                                                             CatalogProduct.source_url.in_(ok_pages))):

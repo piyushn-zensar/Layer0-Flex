@@ -189,8 +189,12 @@ def refresh_forever() -> None:
 
     from app.core.db import SessionLocal
     trigger = "start"
+    import logging
     while True:
-        with SessionLocal() as db:
-            refresh(db, trigger)
+        try:
+            with SessionLocal() as db:
+                refresh(db, trigger)
+        except Exception:  # noqa: BLE001 - one failed run never stops the 24-hour schedule (19 Oct review)
+            logging.getLogger(__name__).exception("catalog refresh failed; the last good catalog stays")
         trigger = "schedule"
         time.sleep(config.CATALOG_REFRESH_HOURS * 3600)
