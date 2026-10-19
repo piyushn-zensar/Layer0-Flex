@@ -124,3 +124,9 @@ def test_non_technical_unit_answers_are_validated_by_the_bid_manager(opp):
     assert client.post(f"/api/assignments/{a['id']}/respond", json={"compliance": "met", "response": "week 30"}, headers=pm).status_code == 200
     assert client.post(f"/api/assignments/{a['id']}/validate", json={"ok": True}, headers=pm).status_code == 403  # not their own answer
     assert client.post(f"/api/assignments/{a['id']}/validate", json={"ok": True}, headers=auth("bid.manager")).status_code == 200
+
+
+def test_a_non_compliant_schedule_answer_beats_the_dates():
+    from app.modules.decisions import service as decisions
+    ok = [type("A", (), {"compliance": "not_met"})()]
+    assert decisions._schedule_criterion(["R1"], {"R1": ok})[0] == "not_met"  # and _schedule returns it before the dates

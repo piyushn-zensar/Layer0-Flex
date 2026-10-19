@@ -104,8 +104,7 @@ def summary(db: Session, opp_id: str, ev: dict | None = None) -> dict:
         "compliance": ("unknown", "No validated answer to a product requirement yet.") if not product else
                       (share >= threshold, f"{share:.0%} of {len(product)} product requirement(s) with validated answers are "
                                            f"fully or partially compliant (threshold {threshold:.0%}, placeholder)."),
-        "schedule": _dates_criterion(opportunities.schedule(db, opp_id, participating_units(db, opp_id)))
-                    or _schedule_criterion([r.req_id for r in reqs if r.category == "schedule"], valid),
+        "schedule": _schedule(db, opp_id, [r.req_id for r in reqs if r.category == "schedule"], valid),
         "scope_fit": (not checks["units_outside_scope"],
                       "Units outside the RFP's scope: " + ", ".join(checks["units_outside_scope"]) if checks["units_outside_scope"]
                       else f"Suggested units fit the layers in scope {checks['scope']['in_scope']}."),
@@ -138,6 +137,15 @@ def summary(db: Session, opp_id: str, ev: dict | None = None) -> dict:
         "advice": (f"Advice from Layer 0: {met} of {len(assessable)} assessable criteria met; "
                    f"{len(criteria) - len(assessable)} not known yet. The bid manager decides."),
     }
+
+
+def _schedule(db: Session, opp_id: str, schedule: list[str], valid: dict) -> tuple:
+    """A validated non-compliant schedule answer always decides (a unit says it cannot meet a date); otherwise the
+    dates decide once they are all known, else the validated schedule answers (19 Oct review)."""
+    answers = _schedule_criterion(schedule, valid)
+    if answers[0] == "not_met":
+        return answers
+    return _dates_criterion(opportunities.schedule(db, opp_id, participating_units(db, opp_id))) or answers
 
 
 def _dates_criterion(s: dict) -> tuple[bool, str] | None:
@@ -231,7 +239,8 @@ def assessment_score(db: Session, opp_id: str) -> dict:
     reqs = [r for r in requirements.current(db, opp_id) if r.status == "approved"]
     tech = [r for r in reqs if r.category in matching.PRODUCT_CATEGORIES]
     matches, work = matching.for_opportunity(db, opp_id), workpackages.by_requirement(db, opp_id)
-    in_domain = [r.req_id for r in tech if (m := matches.get(r.req_id)) and m.units]
+    units = set(participating_units(db, opp_id))  # before a participation is recorded: any matched unit (a preview)
+    in_domain = [r.req_id for r in tech if (m := matches.get(r.req_id)) and any(not units or u["bu"] in units for u in m.units)]
     run = knowledge.assessments(db, opp_id)
     records = {rec.subject: rec for rec in run["records"]}
     evidenced = None if run["run"] is None else [
@@ -254,7 +263,7 @@ def assessment_score(db: Session, opp_id: str) -> dict:
         ("not_in_domain", "Technical requirements matched to no unit's product", [r.req_id for r in tech if r.req_id not in in_domain]),
         ("exception", "Text with source not verified (exception queue)", [e["req_id"] for e in requirements.exceptions(db, opp_id)]),
         ("needs_owner", "Product requirements that need an owner", [o["req_id"] for o in workpackages.needs_owner(db, opp_id)]),
-        ("non_compliant", "Validated non-compliant answers", [r.req_id for r in tech if any(a.compliance == "not_met" for a in validated[r.req_id])]),
+        ("non_compliant", "Validated non-compliant answers", [r.req_id for r in tech if any(a.compliance in ("not_met", "exception") for a in validated[r.req_id])]),
     ]
     first = run["records"][0] if run["records"] else None
     return {
