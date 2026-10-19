@@ -77,6 +77,8 @@ export function post<T = unknown>(path: string, body?: unknown): Promise<T> {
 
 /** Bid-manager-only actions (technical-architecture section 16.6); the API checks too, this only greys the button. */
 export const isBidManager = (me?: Me) => me?.role === "bid_manager";
+/** The administrator reads only (the API answers 403 to its writes): write buttons are greyed for it (19 Oct review). */
+export const isReader = (me?: Me) => me?.role === "admin";
 export const BID_MANAGER_ONLY = "Only the bid manager can do this.";
 
 /** The signed-in user (undefined while loading). */

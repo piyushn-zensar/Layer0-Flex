@@ -40,6 +40,7 @@ export default function AssessmentPage() {
   const { data, error, reload } = useApi<Data>(`/api/bids/${id}/assessment`);
   const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/bids/${id}/knowledge`); // A-11
   const [busy, setBusy] = useState<string>(); // one action at a time: no double participation or dispatch
+  const [version, setVersion] = useState(0); // the score panel loads again after each action here (19 Oct review)
   if (error) return <Alert kind="error" title="Could not load the assessment.">{error}</Alert>;
   if (!data) return <Skeleton lines={5} />;
   const { summary: s, open_questions: q, participation: part } = data;
@@ -48,7 +49,7 @@ export default function AssessmentPage() {
 
   const run = <T,>(label: string, request: Promise<T>, done: (r: T) => void) => {
     setBusy(label);
-    request.then((r) => { done(r); return reload(); }, (e) => toast.error(errorMessage(e))).finally(() => setBusy(undefined));
+    request.then((r) => { done(r); setVersion((v) => v + 1); return reload(); }, (e) => toast.error(errorMessage(e))).finally(() => setBusy(undefined));
   };
   const statusChanged = () => window.dispatchEvent(new Event(STATUS_EVENT));
   const recordParticipation = (form: FormData) =>
@@ -80,7 +81,7 @@ export default function AssessmentPage() {
           {Object.keys(s.suggested_units).length === 0 && "none yet: run matching in Traceability"}</p>
       </section>
 
-      <AssessmentPanel oppId={id} />
+      <AssessmentPanel key={version} oppId={id} />
 
       <section className="card" data-tour="asm-open-questions">
         <div className="card-head"><h2>Open questions</h2><span className="muted">{open === 0 ? "None." : `${open} to look at`}</span></div>

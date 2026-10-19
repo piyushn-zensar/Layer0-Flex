@@ -9,7 +9,7 @@ import Link from "next/link";
 import { Fragment, useMemo, useState } from "react";
 import LinePicker from "@/components/requirements/LinePicker"; // P-15
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
-import { errorMessage, post, useApi } from "@/lib/api";
+import { errorMessage, isReader, post, useApi, useMe } from "@/lib/api";
 import { coverageLabel, originLabel, snapshotName, sourceLabel, statusLabel, type Baseline, type Coverage, type CorrectionResult, type Requirement, type RequirementException, type RequirementHistory, type Snapshot, type SnapshotDetail } from "@/lib/types";
 
 const CATEGORIES = ["technical", "compliance", "commercial", "schedule", "submission", "legal", "staffing"];
@@ -45,6 +45,7 @@ export default function Register({ bidId: id, onChanged, rowProps, extra, order 
   const toast = useToast();
   const [chosen, setFilter] = useState<FilterKey>();
   const [busy, setBusy] = useState(false);
+  const readOnly = isReader(useMe()); // the administrator reads only
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [editing, setEditing] = useState<{ id: string; mode: "edit" | "split" | "exclude" }>();
@@ -171,11 +172,11 @@ export default function Register({ bidId: id, onChanged, rowProps, extra, order 
           {/* an excluded item or a duplicate keeps Restore: it goes back in the register (service contract) */}
           <td>{(active || (!frozen && (r.status === "duplicate" || r.status === "rejected"))) && !isEditing && (
             <div className="row-actions" data-tour={at("req-row-actions")}>
-              {!frozen && (r.status === "duplicate" || r.status === "rejected") && <button data-tour={at("req-action-restore")} disabled={busy} onClick={() => review(r.req_id, { action: "approve" }, `${r.req_id} restored to the register.`)}>Restore</button>}
-              {active && <button className="secondary" data-tour={at("req-action-exclude")} disabled={busy} onClick={() => openForm({ id: r.req_id, mode: "exclude" })}>Exclude: not a requirement</button>}
-              {active && <button className="secondary" data-tour={at("req-action-edit")} disabled={busy} onClick={() => openForm({ id: r.req_id, mode: "edit" })}>Edit</button>}
-              {active && !group && !child && <button className="secondary" data-tour={first("req-action-split")} disabled={busy} onClick={() => openForm({ id: r.req_id, mode: "split" })}>Split</button>}
-              {!frozen && active && group && <button className="secondary" data-tour={first("req-action-ungroup")} disabled={busy}
+              {!frozen && (r.status === "duplicate" || r.status === "rejected") && <button data-tour={at("req-action-restore")} disabled={busy || readOnly} onClick={() => review(r.req_id, { action: "approve" }, `${r.req_id} restored to the register.`)}>Restore</button>}
+              {active && <button className="secondary" data-tour={at("req-action-exclude")} disabled={busy || readOnly} onClick={() => openForm({ id: r.req_id, mode: "exclude" })}>Exclude: not a requirement</button>}
+              {active && <button className="secondary" data-tour={at("req-action-edit")} disabled={busy || readOnly} onClick={() => openForm({ id: r.req_id, mode: "edit" })}>Edit</button>}
+              {active && !group && !child && <button className="secondary" data-tour={first("req-action-split")} disabled={busy || readOnly} onClick={() => openForm({ id: r.req_id, mode: "split" })}>Split</button>}
+              {!frozen && active && group && <button className="secondary" data-tour={first("req-action-ungroup")} disabled={busy || readOnly}
                 onClick={() => act(post(`/api/requirements/${r.req_id}/ungroup`), `${r.req_id} ungrouped: its ${kids.length} sub-requirements stand on their own.`)}>Ungroup</button>}
             </div>)}</td>
         </tr>
@@ -221,7 +222,7 @@ export default function Register({ bidId: id, onChanged, rowProps, extra, order 
         {selected.size > 0 && (
           <div className="bulkbar" role="region" aria-label="Selected line items" data-tour="req-bulkbar">
             <strong>{selected.size} selected</strong>
-            <button className="secondary" data-tour="req-bulk-merge" disabled={busy || selected.size < 2 || merging} onClick={() => { setFormError(undefined); setMerging(true); }}>Merge into one</button>
+            <button className="secondary" data-tour="req-bulk-merge" disabled={busy || readOnly || selected.size < 2 || merging} onClick={() => { setFormError(undefined); setMerging(true); }}>Merge into one</button>
             <button className="secondary" data-tour="req-bulk-clear" disabled={busy} onClick={() => { setSelected(new Set()); setMerging(false); }}>Clear</button>
             {merging && selected.size >= 2 && (
               <form className="form bulk-merge" data-tour="req-merge-form" aria-label="Merge the selected line items" action={(f) => merge(String(f.get("text")), String(f.get("reason") ?? "").trim())}>
@@ -253,11 +254,11 @@ export default function Register({ bidId: id, onChanged, rowProps, extra, order 
         </table>
       </>)}
 
-      {tab === "register" && (
+      {tab === "register" && !readOnly && ( // the administrator reads only
         <details className="card" data-tour="req-add" onToggle={(e) => setAdding(e.currentTarget.open)}>
           <summary data-tour="req-add-summary"><strong>Add a requirement the agent missed</strong> <span className="muted">{frozen ? "select its lines on the RFP page; saved as a correction" : "select its lines on the RFP page, or paste the quote"}</span></summary>
           <h3 className="lp-heading">Select its lines on the RFP page</h3>
-          {adding && <LinePicker oppId={id} startPage={startPage} categories={CATEGORIES} onAdded={reload} published={frozen}
+          {adding && <LinePicker oppId={id} startPage={startPage} categories={CATEGORIES} onAdded={() => done()} published={frozen}
             requirements={(data.requirements ?? []).filter((r) => !INACTIVE.has(r.status))} />}
           {!frozen && <>
           <h3 className="lp-heading">Or paste the quote</h3>
@@ -334,6 +335,7 @@ function Exceptions({ bidId, rows, error, frozen, busy, act, done, requirements 
   act: (p: Promise<unknown>, msg?: string, at?: string) => unknown; done: (msg?: string) => unknown; requirements: Requirement[];
 }) {
   const [mode, setMode] = useState<{ id: string; kind: "link" | "dismiss" }>();
+  const readOnly = isReader(useMe()); // the administrator reads only
   if (error) return <Alert kind="error" title="Exceptions could not be loaded.">{error}</Alert>;
   if (!rows) return <Skeleton lines={4} />;
   if (rows.length === 0) return <EmptyState title="No exceptions" hint="No exceptions: every proposed requirement has a verified source." />;
@@ -348,8 +350,8 @@ function Exceptions({ bidId, rows, error, frozen, busy, act, done, requirements 
           <div className="muted" data-tour="req-exception-where">{where(r)} · {r.reason}</div>
           {mode?.id !== r.req_id && (
             <div className="row-actions">
-              <button data-tour="req-exception-link" disabled={busy} onClick={() => setMode({ id: r.req_id, kind: "link" })}>Link to lines</button>
-              <button className="secondary" data-tour="req-exception-dismiss" disabled={busy} onClick={() => setMode({ id: r.req_id, kind: "dismiss" })}>Dismiss</button>
+              <button data-tour="req-exception-link" disabled={busy || readOnly} onClick={() => setMode({ id: r.req_id, kind: "link" })}>Link to lines</button>
+              <button className="secondary" data-tour="req-exception-dismiss" disabled={busy || readOnly} onClick={() => setMode({ id: r.req_id, kind: "dismiss" })}>Dismiss</button>
             </div>)}
           {mode?.id === r.req_id && mode.kind === "link" && (<>
             <LinePicker oppId={bidId} startPage={r.location_hint?.page ?? r.suggested_page ?? 1} categories={CATEGORIES} requirements={active}

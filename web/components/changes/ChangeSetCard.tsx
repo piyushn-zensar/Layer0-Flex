@@ -3,7 +3,7 @@
 // person's decision, the change document with highlights, then apply or discard; after apply, what it did.  Owner: Piyush.
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { errorMessage, isBidManager, post, useMe } from "@/lib/api";
+import { errorMessage, isBidManager, isReader, post, useMe } from "@/lib/api";
 import type { ChangeItem, ChangeKind, ChangeSet } from "@/lib/types";
 import { Alert, Busy, StatusBadge, useConfirm, useToast } from "@/components/ui";
 import ChangeDecision, { KINDS, KindBadge } from "@/components/changes/ChangeDecision";
@@ -22,6 +22,7 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour =
   const [selected, setSelected] = useState<number>();
   const [pageNo, setPageNo] = useState(set.items.find((i) => i.page)?.page ?? 1);
   const [busy, setBusy] = useState("");
+  const readOnly = isReader(useMe()); // the administrator reads only
   const [error, setError] = useState<string>();
   const [ask, confirmDialog] = useConfirm();
   const toast = useToast();
@@ -141,7 +142,7 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour =
 
       {review && (
         <div className="chg-actions" aria-busy={!!busy} data-tour={t("chg-actions")}>
-          <button type="button" className="secondary" disabled={!!busy || set.confirmed === set.total} data-tour={t("chg-confirm-all")} onClick={() => run("confirm-all", "Confirming…", "Every proposal confirmed.")}>Confirm all proposals</button>
+          <button type="button" className="secondary" disabled={!!busy || set.confirmed === set.total || readOnly} data-tour={t("chg-confirm-all")} onClick={() => run("confirm-all", "Confirming…", "Every proposal confirmed.")}>Confirm all proposals</button>
           <button type="button" disabled={!!busy || !bidManager || set.confirmed < set.total} data-tour={t("chg-apply")}
             onClick={() => run("apply", "Applying: new versions, matching and dispatch…", "Changes applied: a new baseline is frozen and the affected answers are back with the units.")}>Apply to requirements</button>
           <button type="button" className="danger secondary" disabled={!!busy || !bidManager} data-tour={t("chg-discard")} onClick={discard}>Discard</button>

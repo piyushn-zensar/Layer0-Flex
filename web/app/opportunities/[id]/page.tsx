@@ -2,7 +2,7 @@
 // Documents: upload the RFP, see ingestion status, run the reader agent.  Owner: Piyush.
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BID_MANAGER_ONLY, api, errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
 import { DOC_TYPES, coverageLabel, docTypeLabel, snapshotName, type Coverage, type Doc, type Opportunity, type Snapshot } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
@@ -41,13 +41,16 @@ export default function DocumentsPage() {
     const file = new FormData(form); // before the inputs are disabled below
     setBusy("Uploading and reading the RFP… (about a minute for a 100-page RFP)"); setMessage(undefined);
     try {
-      const r = await post<Received | { known: Known }>(`/api/bids/${id}/documents`, file);
+      const r = await post<(Received & { existing?: boolean }) | { known: Known }>(`/api/bids/${id}/documents`, file);
       if ("known" in r && r.known.kind === "instance") {  // read before: its bid and stored requirements, not a new read
         location.assign(`/opportunities/${r.known.bid}/trace?known=${encodeURIComponent(r.known.filename)}`);
         return;
       }
       if ("known" in r) { setEarlier(r.known); return; }
-      form.reset(); await reload(); toast.success("Document received and read.");
+      form.reset(); await reload();
+      // the file is read in the background (the table follows it below); the same file attached again adds nothing
+      toast.success(r.existing ? "This file is already attached to the bid; nothing new was added."
+        : r.status === "ingested" ? "Document received and read." : "Document received; it is being read (the status below updates).");
     } catch (err) { fail(err); }
     finally { setBusy(""); }
   }
@@ -65,6 +68,20 @@ export default function DocumentsPage() {
   const status = data?.opportunity.status;
   const canRead = status === "new" || status === "review";
   const unread = data?.documents.find((d) => d.role === "main" && d.status !== "ingested");
+  const reading = data?.documents.some((d) => d.status === "uploaded" || d.status === "ingesting");
+  useEffect(() => { // 19 Oct review: follow the background read until every document is read or failed
+    if (!reading) return;
+    const t = setInterval(reload, 3000);
+    return () => clearInterval(t);
+  }, [reading, reload]);
+  async function freezeAnyway(reason: string) { // an incomplete read the re-reads could not complete (19 Oct decision)
+    setBusy("Freezing the register…"); setMessage(undefined);
+    try {
+      const b = await post<{ number: number }>(`/api/bids/${id}/requirements/freeze`, { reason });
+      window.dispatchEvent(new Event("opp-status-changed"));
+      toast.success(`Frozen as baseline ${b.number}; the pages not read stay open questions.`); router.push(`/opportunities/${id}/trace`);
+    } catch (e) { fail(e); } finally { setBusy(""); }
+  }
   const started = !!data && !canRead; // UX-17: once review has started the upload form is secondary
   const received = (d: Received) => d.received_at ? new Date(d.received_at).toLocaleDateString() : "";
 
@@ -127,6 +144,11 @@ export default function DocumentsPage() {
             <button disabled={!!busy || !!unread || !bm} title={bm ? "" : BID_MANAGER_ONLY} data-tour="rfp-extract">Read again</button>
           </form>
         ) : <button disabled={!!busy || !!unread || !bm} title={bm ? "" : BID_MANAGER_ONLY} onClick={() => extract()} data-tour="rfp-extract">Run the reader agent → requirements</button>}
+        {status === "review" && readBefore && bm && (
+          <form className="form" data-tour="rfp-freeze-form" onSubmit={(e) => { e.preventDefault(); const reason = String(new FormData(e.currentTarget).get("reason")).trim(); if (reason) freezeAnyway(reason); }}>
+            <label>The read is incomplete. Freeze anyway: why? <span className="field-hint">(after the re-reads; the pages not read are kept as open questions)</span> <input name="reason" required maxLength={500} disabled={!!busy} /></label>
+            <button className="secondary" disabled={!!busy}>Freeze anyway</button>
+          </form>)}
         {!bm && <span className="muted">Only the bid manager uploads documents and runs the reader.</span>}
         {busy ? <Busy label={busy} /> : unread && <span className="muted" role="status">Waiting for the main RFP to be read; use Refresh status.</span>}</div>)
         : <p className="muted" data-tour="rfp-started-note">Requirement review has started, so the RFP is not re-read. Missed items can be added in pane 2 of Requirement Traceability.</p>)}
