@@ -1,0 +1,176 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 3,
+            "last": 4,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "The ToT activity and manufacturing shall start in parallel just after issue of LoI by ITI.",
+        "section": "xi",
+        "text": "Manufacturing and ToT activities must start after LoI issuance."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 6,
+            "last": 8,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "The TP, should support in leveraging its resources to streamline the production of SEMs at ITI and also shall supply the initial lot of SEMs for the customer tender, as per ITI’s need to service its customer.",
+        "section": "xi",
+        "text": "TP must streamline SEM production and supply initial SEM lot for customer tender."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 10,
+            "last": 14,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "In case any TP ’s statement is found false and misleading, the barring process against such defaulting TP shall be initiated by ITI and the next eligible TP shall be selected to go ahead in the process of proving technical compliance and competence to the required Indian smart metering standards and specifications.",
+        "section": "xii",
+        "text": "False statements by TP lead to barring and selection of next eligible TP."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 16,
+            "last": 17,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "The TP should liaison with REC, EESL and other potential Agencies and customers for resolution of issues.",
+        "section": "xiii",
+        "text": "TP must liaise with REC, EESL, and other agencies for issue resolution."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 19,
+            "last": 21,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "Till the time ITI manufacturing setup gets ready ITI may procure the initial quantity in Completely Built unit (CBU) or Semi Knocked Down (SKD) form.",
+        "section": "xiv",
+        "text": "ITI may procure initial quantity in CBU or SKD form until setup is ready."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 23,
+            "last": 23,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "Royalty will be applicable only under CKD phase.",
+        "section": "xv",
+        "text": "Royalty applies only under CKD phase."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 27,
+            "last": 28,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "The Financial Proposal shall be opened only for technically qualified proposals as per eligibility criteria.",
+        "section": "i",
+        "text": "Only technically qualified proposals will have their financial proposals opened."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 30,
+            "last": 31,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "The TP shall quote their best Royalty figure as per the format given in the Financial Bid at Annexure-VII.",
+        "section": "ii",
+        "text": "TP must quote best royalty figure in Annexure-VII format."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 35,
+            "last": 36,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "The profile of the TP as per Annexure-I and Certificate of Incorporation of the TP company.",
+        "section": "i",
+        "text": "Submit TP profile and Certificate of Incorporation as per Annexure-I."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 38,
+            "last": 39,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "Audited financial statements for past three years 2021-22, 2022-23, 2023-24.",
+        "section": "ii",
+        "text": "Submit audited financial statements for 2021-22, 2022-23, and 2023-24."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 41,
+            "last": 42,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "Auditors Net worth certificate & Turnover certificate signed by the company’s Auditors/ CA for last 3 financial years.",
+        "section": "iii",
+        "text": "Provide net worth and turnover certificates signed by auditors for last 3 years."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 44,
+            "last": 47,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "Certificate copies to be provided. Documentary evidence (Customer POs and performance certificate) to prove experience to be submitted. Contact details (Mail Id & Contact Number) of Customer to be provided to verify the correctness of Customer POs and Performance Certificate.",
+        "section": "iv",
+        "text": "Provide certificates, customer POs, performance certificates, and customer contact details for verification."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

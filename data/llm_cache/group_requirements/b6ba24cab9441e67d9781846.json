@@ -1,0 +1,27 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "title": "Consequences and conditions for violating Section 2"
+      },
+      {
+        "category": "legal",
+        "members": [
+          4,
+          6,
+          7
+        ],
+        "title": "Legal stipulations regarding sanctions and decisions"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

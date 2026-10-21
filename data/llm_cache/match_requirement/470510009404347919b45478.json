@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement involves designing a power supply module, manufacturing, assembling the device, and sourcing components. EMS-PCBA covers advanced PCBA and microelectronics assembly, which aligns with the need for PCB population and assembly.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-PCBA"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement specifies PCB population with SMDs, a quantity of 10 custom-designed PCBs, and handling of Gerber and drill files under NDA. EMS-PCBA provides the necessary capabilities for advanced PCBA and microelectronics assembly, including handling custom designs and SMDs.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-PCBA"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement specifies IPC Class II compliance for PCB manufacturing and quality assurance. EMS-PCBA includes capabilities for high-quality PCB assembly and compliance with industry standards like IPC Class II.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-PCBA"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

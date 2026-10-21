@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to support services such as installation, commissioning, and servicing, which are not directly tied to a specific product from the catalog. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement for technology transfer, including detailed design and manufacturing information, aligns with the EMS-DESIGN product, which offers comprehensive design and engineering services, including system architecture and hardware design.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-DESIGN"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement for providing BOM/BOQ and sourcing details aligns with the EMS-SCM product, which includes global sourcing and supplier management services.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "EMS-SCM"
+          }
+        ]
+      },
+      {
+        "confidence": 0.85,
+        "n": 4,
+        "rationale": "This requirement involves providing sample products for testing and verification, which is not a direct product requirement but rather a commercial or contractual obligation. The bid manager should address this.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

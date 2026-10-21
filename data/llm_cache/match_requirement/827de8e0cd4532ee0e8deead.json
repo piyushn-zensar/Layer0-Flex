@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1.0,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance and commercial terms, not a product or service from the catalog. The bid manager should address it.",
+        "units": []
+      },
+      {
+        "confidence": 1.0,
+        "n": 2,
+        "rationale": "This requirement involves compliance and verification of bidder credentials, which is not related to any specific product or service from the catalog. The bid manager should handle this.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

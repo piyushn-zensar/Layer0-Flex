@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement is about the design of the meter PCB and NIC card, which is a specific design and manufacturing task. This does not directly map to any product in the catalog, as it is a highly specific technical requirement for the meter design.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement specifies a communication module with advanced features like IPV4/IPV6 support, 4G fallback, and pluggable compatibility. This is a highly specific technical requirement for the communication module design and does not directly map to any product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement specifies a polycarbonate meter casing with specific standards and features. This is a specific design and manufacturing task for the meter casing and does not directly map to any product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement is about compliance and testing standards for the smart energy meter, which is a compliance and certification task. This does not directly map to any product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "The requirement specifies a single-phase smart energy meter with specific features and standards. This is a specific product design and manufacturing task for the smart energy meter and does not directly map to any product in the catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,35 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.95,
+        "n": 1,
+        "rationale": "The requirement involves manufacturing a Fingerprint Recognition Device, including PCB manufacturing, assembly, and enclosure printing, as well as designing and manufacturing a power supply module. EMS-PCBA is suitable for PCB manufacturing and assembly, EMS-BOX for system integration, EMS-METAL for precision metal parts, and EMS-PLASTIC for 3D enclosure printing. These products collectively meet the requirement.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-PCBA"
+          },
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-BOX"
+          },
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-METAL"
+          },
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-PLASTIC"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

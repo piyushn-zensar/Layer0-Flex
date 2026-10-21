@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 3,
+            "last": 3,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Proposals are hereby invited for the supply of Manufacturing of the Fingerprint Recognition Device to the CSIR’s.",
+        "section": "INVITATION FOR PROPOSAL",
+        "text": "Submit a proposal for manufacturing the Fingerprint Recognition Device."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 6,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "The full scope of work will at first include quoting the design of the power supply module for the Device, manufacturing and assembling the Device from existing designs and sourcing and procuring the components required.",
+        "section": "INVITATION FOR PROPOSAL",
+        "text": "Include quoting the design of the power supply module, manufacturing, assembling, and sourcing components."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 7,
+            "last": 11,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "The CSIR requires service to manufacture the Fingerprint Recognition Device in accordance to the provided specifications (Procurement and Sourcing of components, PCB manufacturing and assemblies, 3D enclosure printing, and Device acceptance testing) and also to design and manufacture the power supply module (power path switching, battery charging and battery level monitoring) for the Device.",
+        "section": "INVITATION FOR PROPOSAL",
+        "text": "Manufacture the device per specifications, including PCB, 3D printing, and power module design."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 14,
+            "last": 14,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "All proposals are to be submitted in a format specified in this enquiry (if applicable).",
+        "section": "PROPOSAL SPECIFICATION",
+        "text": "Submit proposals in the specified format."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 21,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "4.1.1. Sub-requirement 1: PCB population must be of Surface Mount Devices (SMD)",
+        "section": "4.1 Fingerprint Recognition Device: PCB Manufacturing and Procurement of Components",
+        "text": "Ensure PCB population uses Surface Mount Devices (SMD)."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 24,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "4.1.2. Sub-requirement 2: PCB Quantity must be 10 per each custom-designed PCB",
+        "section": "4.1 Fingerprint Recognition Device: PCB Manufacturing and Procurement of Components",
+        "text": "Provide 10 units for each custom-designed PCB."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 26,
+            "last": 27,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "4.1.3. Sub-requirement 3: PCB Manufacturing compliant must be compliant with IPC Class II specification",
+        "section": "4.1 Fingerprint Recognition Device: PCB Manufacturing and Procurement of Components",
+        "text": "Ensure PCB manufacturing complies with IPC Class II specification."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 29,
+            "last": 32,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "4.1.4. Sub-requirement 4: PCB Complexity: As per the binary files (Gerber and drill files) of the four (4) custom-designed Printed Circuit Boards (PCB’s) subjected to Non-Disclosure Agreement (NDA). – The briefing session will be used to present the technical specifications of the PCB designs of the Device.",
+        "section": "4.1 Fingerprint Recognition Device: PCB Manufacturing and Procurement of Components",
+        "text": "Adhere to PCB complexity as per provided binary files under NDA."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 34,
+            "last": 34,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "4.1.5. Sub-requirement 5: Quality Assurance on PCB’s (IPC Class II specification)",
+        "section": "4.1 Fingerprint Recognition Device: PCB Manufacturing and Procurement of Components",
+        "text": "Perform quality assurance on PCBs per IPC Class II specification."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 37,
+            "last": 39,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "4.1.6. Sub-requirement 6: Source, procure and inspect components as per the provided Bill of Material (BOM). The BOM file will be shared to attendees during the briefing session.",
+        "section": "4.1 Fingerprint Recognition Device: PCB Manufacturing and Procurement of Components",
+        "text": "Source, procure, and inspect components as per the BOM."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

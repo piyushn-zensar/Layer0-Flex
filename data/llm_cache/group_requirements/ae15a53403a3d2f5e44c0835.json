@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          4
+        ],
+        "title": "Technical requirements for AMI Solution"
+      },
+      {
+        "category": "submission",
+        "members": [
+          2,
+          5
+        ],
+        "title": "Submission requirements for proposals and presentations"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

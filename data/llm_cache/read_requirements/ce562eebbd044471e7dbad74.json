@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 3,
+            "last": 5,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "10.2 The actions stipulated in this Pact are without prejudice to any other legal action that may follow in accordance with the provisions of the extent law in force relating to any civil or criminal proceedings.",
+        "section": "10.2",
+        "text": "Actions in the pact do not limit other legal actions under applicable laws."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 6,
+            "last": 9,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "SECTION 11 – PACT DURATION This Pact begins when both the parties have legally signed it. It expires after 12 months on completion of the warranty/ guarantee period of the project /work awarded, to the fullest satisfaction of the Principal.",
+        "section": "11",
+        "text": "The pact starts upon signing and ends 12 months after warranty/guarantee period completion."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 10,
+            "last": 12,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "If the TP (s)/Contractor(s) are unsuccessful, the Pact will automatically become invalid after three months on evidence of failure on the part of the TP (s)/Contractor(s).",
+        "section": "11",
+        "text": "The pact becomes invalid three months after contractor failure evidence."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 13,
+            "last": 15,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "If any claim is lodged/made during the validity of the Pact, the same shall be binding and continue to be valid despite the lapse of the Pact unless it is discharged/determined by the Chairman and Managing Director of the Principal.",
+        "section": "11",
+        "text": "Claims made during the pact's validity remain binding until resolved."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "12.1 This pact is subject to Indian Law, place of performance and jurisdiction is the Registered & Corporate office of the Principal at Bengaluru.",
+        "section": "12.1",
+        "text": "The pact is governed by Indian law and jurisdiction is Bengaluru."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 20,
+            "last": 21,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "12.2 Changes and supplements as well as termination notices need to be made in writing by both the parties. Side agreements have not been made.",
+        "section": "12.2",
+        "text": "Changes or termination must be in writing by both parties."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 22,
+            "last": 23,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "12.3 If the TP (s)/Contractor(s) or a partnership, the pact must be signed by all consortium members and partners.",
+        "section": "12.3",
+        "text": "All consortium members must sign the pact."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 24,
+            "last": 26,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "12.4 Should one or several provisions of this pact turn out to be invalid, the remainder of this pact remains valid. In this case, the parties will strive to come to an agreement to their original intentions.",
+        "section": "12.4",
+        "text": "Invalid provisions do not affect the rest of the pact."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 27,
+            "last": 29,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "12.5 Any disputes/ differences arising between the parties with regard to term of this Pact, any action taken by the Principal in accordance with interpretation thereof shall not be subject to any Arbitration.",
+        "section": "12.5",
+        "text": "Disputes regarding the pact are not subject to arbitration."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 30,
+            "last": 32,
+            "page": 31
+          }
+        ],
+        "page": 31,
+        "quote": "12.6 The action stipulates in this Integrity Pact are without prejudice to any other legal action that may follow in accordance with the provisions of the extant law in force relating to any civil or criminal proceedings.",
+        "section": "12.6",
+        "text": "Actions in the pact do not limit other legal actions under applicable laws."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

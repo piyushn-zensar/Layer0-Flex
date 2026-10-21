@@ -1,0 +1,27 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "title": "Device operational features"
+      },
+      {
+        "category": "technical",
+        "members": [
+          5,
+          6,
+          7
+        ],
+        "title": "Device assembly and setup"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

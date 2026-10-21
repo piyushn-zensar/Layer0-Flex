@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 4,
+            "last": 6,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "The Technology Partner(TP) shall ensure compliance, in totality, of his product to applicable Indian Standard specifications or any other standard, as referred in the customer requirement.",
+        "section": "4.3",
+        "text": "Ensure product compliance with Indian Standard specifications or other referred standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 8,
+            "last": 20,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "The TP should be responsible to provide free software/firmware/patches/ upgrades to ITI for the product as per customer order conditions during the pre-sales and post sales phases of the product to ascertain the compliance of the product with the standards and specifications.",
+        "section": "4.4",
+        "text": "Provide free software/firmware/patches/upgrades during pre-sales and post-sales phases."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 35,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "The TP at their cost shall support ITI for field trial/proof of concept(PoC) by providing free samples as per customer requirement towards the pre-supply qualification for the customer orders. The TP has to undertake the responsibility of integrating the meter with the back end system of Head-end System (HES)/Meter Data Management System (MDMS) etc. during the PoC.",
+        "section": "4.5",
+        "text": "Support ITI for field trials/PoC by providing free samples and integrating the meter with backend systems."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 37,
+            "last": 40,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "The TP shall ensure the compliance of the solution on cellular (4G fall back to 3G/2G/NB-IoT/RF Mesh/other future communications) technologies for various frequency bands as prescribed by Central Electric Authority (CEA) or any other regulatory authority.",
+        "section": "4.6",
+        "text": "Ensure solution compliance with cellular technologies and frequency bands as prescribed by authorities."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 42,
+            "last": 44,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "The TP should meet the eligibility criteria as per clause 5(A). TP shall provide clause-by-clause compliance as per Annexure-II and conform to the requirements, by providing undertaking as per Annexure-III.",
+        "section": "4.7",
+        "text": "Meet eligibility criteria and provide clause-by-clause compliance and undertaking."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 46,
+            "last": 52,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "The TP shall be responsible on behalf of ITI to obtain all necessary certifications and approvals as required such as Type Approval from NABL/International accredited agencies & BIS Certification for ITI make product. However, Certification & Testing Fees will be paid/reimbursed by ITI. TP must provide full-fledged back end support, if any BIS or other Certification is required for the components to be procured as SKD/CKD kit or as per BOM.",
+        "section": "4.8",
+        "text": "Obtain necessary certifications and approvals for ITI products, with ITI covering fees."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 54,
+            "last": 56,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "After/During successful TOT process, the TP shall also support ITI for the Tenders / Purchase orders of Government, PSUs, Defence and Private customers for the products / services.",
+        "section": "4.9",
+        "text": "Support ITI for tenders and purchase orders post successful TOT process."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 57,
+            "last": 64,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "ITI shall be solely responsible for procuring the materials as per BOM requirement for manufacturing, while the selected TP may support sourcing of the materials from their vendors at a competitive rate. TP has to provide the detailed technical specifications, drawings etc for all the components being sourced from their approved vendor or from open market. TP shall also extend the technical support for using the equivalent items compatible to the BOM items. ITI shall be free to procure components as per BOM following its own procurement procedure.",
+        "section": "4.10",
+        "text": "Support ITI in sourcing materials and provide technical specifications and support for BOM items."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

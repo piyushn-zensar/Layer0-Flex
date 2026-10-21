@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "Requirement 1 pertains to compliance and qualification criteria for startups, which is a commercial and legal aspect of the RFP. It does not specify a product or service requirement, so no catalog product is applicable.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "Requirement 2 outlines qualification criteria for bidders, which is a compliance and eligibility requirement. It does not involve any specific product or service from the catalog, so no catalog product is applicable.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

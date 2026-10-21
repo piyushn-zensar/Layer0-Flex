@@ -1,0 +1,33 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          6,
+          8
+        ],
+        "title": "PCB manufacturing and quality assurance requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          4,
+          5,
+          7
+        ],
+        "title": "PCB design and production requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          2,
+          9
+        ],
+        "title": "Component sourcing and inspection requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

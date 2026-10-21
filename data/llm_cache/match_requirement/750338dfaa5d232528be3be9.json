@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance and legal documentation related to the formation of a consortium and the designation of a lead bidder. It does not specify a product or service requirement, so no product from the catalog is applicable.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

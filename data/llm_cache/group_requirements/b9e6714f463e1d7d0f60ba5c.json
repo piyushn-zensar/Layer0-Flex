@@ -1,0 +1,35 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          3,
+          5,
+          8
+        ],
+        "title": "Pre-delivery and acceptance tests requirements"
+      },
+      {
+        "category": "schedule",
+        "members": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "title": "Submission of project and delivery plans"
+      },
+      {
+        "category": "commercial",
+        "members": [
+          21,
+          22
+        ],
+        "title": "Pricing and cost breakdown"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

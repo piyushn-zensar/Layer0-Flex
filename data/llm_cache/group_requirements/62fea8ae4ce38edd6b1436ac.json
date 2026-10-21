@@ -1,0 +1,27 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "legal",
+        "members": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "title": "Conditions for returning confidential information"
+      },
+      {
+        "category": "legal",
+        "members": [
+          2,
+          3
+        ],
+        "title": "Obligations regarding disclosure of confidential information"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

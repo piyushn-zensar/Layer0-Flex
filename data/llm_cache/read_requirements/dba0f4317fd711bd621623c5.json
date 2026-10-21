@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 26,
+            "last": 30,
+            "page": 50
+          }
+        ],
+        "page": 50,
+        "quote": "I/We certify that we/our Collaborator/Assignee are/is not from such a country or, if from such a country, have/has been registered with the Competent Authority and we will not sub-contract any work to a contractor from such countries unless such contractor is registered with the Competent Authority.",
+        "section": "ANNEXURE-X",
+        "text": "Bidder must certify compliance with restrictions on procurement from countries sharing a land border with India."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 31,
+            "last": 32,
+            "page": 50
+          }
+        ],
+        "page": 50,
+        "quote": "We here by certify that we fulfill all requirements in this regard and are eligible to be considered.",
+        "section": "ANNEXURE-X",
+        "text": "Bidder must certify eligibility based on compliance with procurement restrictions."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 33,
+            "last": 35,
+            "page": 50
+          }
+        ],
+        "page": 50,
+        "quote": "We further confirm that evidence of valid registration by the Competent Authority for us/our Collaborator/JV Partner / Consortium member/Assignee, as applicable, is enclosed as Annexure…",
+        "section": "ANNEXURE-X",
+        "text": "Bidder must provide evidence of valid registration with the Competent Authority if applicable."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

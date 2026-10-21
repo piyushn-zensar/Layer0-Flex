@@ -1,0 +1,42 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Procurement and inspection of components according to the BOM"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          5,
+          7,
+          10
+        ],
+        "title": "Device enclosure requirements and specifications"
+      },
+      {
+        "category": "technical",
+        "members": [
+          6,
+          8
+        ],
+        "title": "Verification and quality assurance of 3D printed structures"
+      },
+      {
+        "category": "submission",
+        "members": [
+          4,
+          9
+        ],
+        "title": "Submission of documentation for SLS specifications and quality assurance"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

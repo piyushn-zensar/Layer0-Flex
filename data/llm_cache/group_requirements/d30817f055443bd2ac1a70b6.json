@@ -1,0 +1,55 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "title": "Technical specifications of the system's performance and components"
+      },
+      {
+        "category": "technical",
+        "members": [
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "title": "Power system specifications and performance"
+      },
+      {
+        "category": "technical",
+        "members": [
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26
+        ],
+        "title": "Cooling system specifications and performance"
+      },
+      {
+        "category": "submission",
+        "members": [
+          1,
+          5
+        ],
+        "title": "Required documents for submission"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

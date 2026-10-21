@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          3,
+          7
+        ],
+        "title": "Proposal submission requirements"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          4,
+          6,
+          8
+        ],
+        "title": "Compliance with CSIR's tendering process"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

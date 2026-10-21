@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          3
+        ],
+        "title": "Consortium formation and lead bidder designation"
+      },
+      {
+        "category": "staffing",
+        "members": [
+          2,
+          4
+        ],
+        "title": "Lead bidder responsibilities and obligations"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 4,
+            "last": 13,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "\"All the smart meter makes shall have all the valid test certificates (issued within the last 5 years) and BIS certificate, compliant to IS 16444 Part-1 as on the date of application.\"",
+        "section": "Smart Energy Meter Manufacturer",
+        "text": "Smart meters must have valid test certificates and BIS certification compliant with IS 16444 Part-1."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 14,
+            "last": 21,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "\"Meter manufacturer / supplier should have a valid ISO 9001:2015 certification as on the date of application.\"",
+        "section": "Smart Energy Meter Manufacturer",
+        "text": "Meter manufacturers must have ISO 9001:2015 certification."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 32,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "\"The TP should have experience in manufacturing and supply of 50000 Nos of Smart Energy Meters/Pre-Paid Meters to Indian or Global company in last 3 Years.\"",
+        "section": "Smart Energy Meter Manufacturer",
+        "text": "The bidder must have experience in manufacturing and supplying 50,000 smart/pre-paid meters in the last 3 years."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 49,
+            "last": 51,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "\"Proposed HES should have been integrated with at least one MDMS/ other utility IT solutions in Indian/ Global Utility(ies) as on the date of application.\"",
+        "section": "Head End System (HES)",
+        "text": "The proposed HES must be integrated with at least one MDMS or utility IT solution."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 57,
+            "last": 59,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "\"Proposed MDMS should have been integrated with at least One HES solutions in Indian/ Global Utility(ies) as on the date of application.\"",
+        "section": "Meter Data Management System (MDMS)",
+        "text": "The proposed MDMS must be integrated with at least one HES solution."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 71,
+            "last": 75,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "\"Proposed MDMS should have been integrated with at least one Billing systems in Indian/ Global Utility(ies) or with Billing/ other IT systems of at least one Indian/Global Utility(ies) as on the date of application.\"",
+        "section": "Meter Data Management System (MDMS)",
+        "text": "The proposed MDMS must integrate with at least one billing system or IT system."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 77,
+            "last": 78,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "\"MDMS solution provider should have a valid CMMI Level-3 or IEC/ISO27001.\"",
+        "section": "Meter Data Management System (MDMS)",
+        "text": "The MDMS provider must have CMMI Level-3 or IEC/ISO27001 certification."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

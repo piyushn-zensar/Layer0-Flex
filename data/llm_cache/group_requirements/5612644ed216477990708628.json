@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          2,
+          3
+        ],
+        "title": "Submission requirements for the financial bid"
+      },
+      {
+        "category": "commercial",
+        "members": [
+          1,
+          4
+        ],
+        "title": "Commercial requirements for royalty model and selection criteria"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

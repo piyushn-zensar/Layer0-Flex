@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance and subcontracting rules, not a product or service offering. It is a commercial/legal requirement that the bid manager should address.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

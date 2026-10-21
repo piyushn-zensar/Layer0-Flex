@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 12,
+            "last": 14,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "A Compliance Statement is needed",
+        "section": "xi",
+        "text": "A compliance statement must be provided."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 21,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "The offered product of the TP must meet the Technical Specifications given at Annexure-VI.",
+        "section": "xi",
+        "text": "The product must meet the technical specifications in Annexure-VI."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 22,
+            "last": 28,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "Orders issued by the Government of India restricting procurement from countries which shares a land border with India shall apply to this procurement.",
+        "section": "xi",
+        "text": "Government of India restrictions on procurement from bordering countries apply."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 30,
+            "last": 36,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "TP or their OEM sharing land border with india, which are not part of restricted countries shall provide the certificates of registration in this regard from DPIIT",
+        "section": "xii",
+        "text": "TPs or OEMs from non-restricted bordering countries must provide DPIIT registration certificates."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 37,
+            "last": 49,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "Any TP or their OEM, from a country which shares a land border with India (excluding countries as listed in the website of Ministry of External Affairs, to which the Government of India has extended lines of credit or in which the Government of India is engaged in development projects – hereinafter called ‘Restricted Countries’), shall be eligible to bid in this tender only if they are registered with the Registration Committee constituted by the Department for Promotion of Industry and Internal Trade (DPIIT).",
+        "section": "xii",
+        "text": "TPs or OEMs from restricted bordering countries must register with DPIIT to be eligible."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 50,
+            "last": 57,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "The TP (or the group it is affiliated to) A Compliance Statement is needed must have capability to produce the offered product in accordance with IS, IEC and ANSI Standards catering to different regions along the globe and relevant standards",
+        "section": "xii",
+        "text": "TP must produce products meeting IS, IEC, and ANSI standards globally."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 59,
+            "last": 65,
+            "page": 11
+          }
+        ],
+        "page": 11,
+        "quote": "The TP has to provide free software /firmware/patches/software upgrades to ITI for the product as per customer order conditions during the pre-sales and post sales phases of the product to ascertain the compliance of the product",
+        "section": "xiii",
+        "text": "TP must provide free software updates to ITI during pre-sales and post-sales phases."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

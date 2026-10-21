@@ -1,0 +1,372 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 1,
+            "last": 2,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "RF-03 | A tender comprises the completed technical specification, the technical tender, the financial offer model, the data summary sheet in Appendix A and a security self-assessment | S15 §2.16.3, §2.16.10",
+        "section": "S15 §2.16.3, §2.16.10",
+        "text": "The tender must include the technical specification, technical tender, financial offer, data summary sheet, and security self-assessment."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 3,
+            "last": 4,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "RF-04 | Questions go in writing through the Owner's portal by the stated deadline, and answers are published anonymously to all bidders | S15 §2.8",
+        "section": "S15 §2.8",
+        "text": "Questions must be submitted in writing via the Owner's portal by the deadline, and answers will be shared anonymously."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 5,
+            "last": 6,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "RF-05 | Bidders shall use a single point of contact, and soliciting information from anyone else can lead to exclusion | S15 §2.4",
+        "section": "S15 §2.4",
+        "text": "Bidders must use a single point of contact; contacting others may result in exclusion."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 7,
+            "last": 9,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "RF-06 | The procedure is a competitive dialogue in three steps: qualification, dialogue with at least two sessions per candidate and one mandatory site visit, and final tender. Up to three candidates advance, and only invited candidates may submit a final tender | S15 §2.1, §2.14.6, §2.15",
+        "section": "S15 §2.1, §2.14.6, §2.15",
+        "text": "The process includes qualification, dialogue sessions, a site visit, and a final tender; only invited candidates may submit the final tender."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 10,
+            "last": 12,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Appendix A: Data summary sheet Every tender includes this sheet, completed in total and per partition. The fields mirror the summary sheets used in S14 and S15.",
+        "section": "Appendix A",
+        "text": "The tender must include a completed data summary sheet, reflecting fields from S14 and S15."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 14,
+            "last": 14,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Compute | Number of nodes, in total and by type | count | S15 Annex 10C",
+        "section": "S15 Annex 10C",
+        "text": "Provide the total number of nodes and their types."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Compute | Peak performance, in total and per partition | PFlop/s | S15 Annex 10C",
+        "section": "S15 Annex 10C",
+        "text": "Specify the peak performance in total and per partition."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 16,
+            "last": 16,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Compute | Memory bandwidth and byte-addressable capacity, in total and per node type | TiB/s; TB | S15 Annex 10C",
+        "section": "S15 Annex 10C",
+        "text": "Detail memory bandwidth and byte-addressable capacity, total and per node type."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Compute | Accelerator and processor types | text | S15 Annex 10C",
+        "section": "S15 Annex 10C",
+        "text": "List the types of accelerators and processors."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 19,
+            "last": 19,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Compute | Network type, topology, latency and bisection bandwidth | text; µs; Tb/s | S15 Annex 10C",
+        "section": "S15 Annex 10C",
+        "text": "Provide details on network type, topology, latency, and bisection bandwidth."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 20,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Storage | Bandwidth, IOPS and usable capacity per tier | GB/s; IOPS; GB | S15 Annex 10C",
+        "section": "S15 Annex 10C",
+        "text": "Specify storage bandwidth, IOPS, and usable capacity per tier."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 21,
+            "last": 21,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Site | Total floor size including service area | m² | S15 Annex 10C",
+        "section": "S15 Annex 10C",
+        "text": "Indicate the total floor size, including service area."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 22,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Site | Maximum power under any workload, in total and per partition | kW | S15 Annex 10C",
+        "section": "S15 Annex 10C",
+        "text": "Provide the maximum power under any workload, total and per partition."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 23,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Site | Number of racks, rack TDP and maximum weight per rack | count; kW; t/m² | S15 Annex 10C; S6",
+        "section": "S15 Annex 10C; S6",
+        "text": "Detail the number of racks, rack TDP, and maximum weight per rack."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 24,
+            "last": 24,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Power chain | Rated DC output of each power block | MW | L2.02",
+        "section": "L2.02",
+        "text": "Specify the rated DC output of each power block."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 25,
+            "last": 25,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Power chain | Efficiency at 50% and 100% load | % | S2 §4.3",
+        "section": "S2 §4.3",
+        "text": "Provide efficiency at 50% and 100% load."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 26,
+            "last": 26,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Power chain | Output regulation, static and dynamic, and ripple | % | S2 §4.3",
+        "section": "S2 §4.3",
+        "text": "Detail output regulation, static and dynamic, and ripple."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 27,
+            "last": 27,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Power chain | Short-circuit rating | kA for 1 s | S14",
+        "section": "S14",
+        "text": "Specify the short-circuit rating."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 28,
+            "last": 28,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Power chain | Breaker clearing time and the holdup that covers it | ms | S5",
+        "section": "S5",
+        "text": "Provide breaker clearing time and holdup duration."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 29,
+            "last": 29,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Power chain | Ingress protection and lead time delivered duty paid | IP rating; weeks | S14",
+        "section": "S14",
+        "text": "Specify ingress protection and lead time delivered duty paid."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 30,
+            "last": 30,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Cooling | CDU rated capacity and secondary flow | kW; L/min | S14",
+        "section": "S14",
+        "text": "Provide CDU rated capacity and secondary flow."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 31,
+            "last": 31,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Cooling | Primary and secondary supply and return temperatures | °C | S14",
+        "section": "S14",
+        "text": "Specify primary and secondary supply and return temperatures."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 32,
+            "last": 32,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Cooling | Maximum water inlet and expected outlet temperatures | °C | S15 Annex 10C",
+        "section": "S15 Annex 10C",
+        "text": "Provide maximum water inlet and expected outlet temperatures."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 33,
+            "last": 33,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Cooling | Liquid-captured fraction of rack heat | % | L5.07; PA",
+        "section": "L5.07; PA",
+        "text": "Specify the liquid-captured fraction of rack heat."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 34,
+            "last": 34,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Cooling | Thermal ride-through at full load without cooling power | minutes | L5.10; PA",
+        "section": "L5.10; PA",
+        "text": "Provide thermal ride-through duration at full load without cooling power."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 35,
+            "last": 35,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Cooling | Annual water use | m³ | L5.01; PA",
+        "section": "L5.01; PA",
+        "text": "Specify annual water use."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

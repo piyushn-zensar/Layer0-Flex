@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Declaration submission requirements"
+      },
+      {
+        "category": "legal",
+        "members": [
+          2,
+          3
+        ],
+        "title": "Legal compliance and additional information"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

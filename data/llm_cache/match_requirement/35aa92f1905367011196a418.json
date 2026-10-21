@@ -1,0 +1,128 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies isolation and grounding compatibility for MV AC to 800 VDC systems, which aligns with the capabilities of the ANORD-POD product offering. This product includes transformers and switchgear integration, meeting the isolation and grounding needs.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "ANORD-POD"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "Facility storage with buffering and grid dispatchability aligns with the FPM-CESS product, which provides capacitive energy storage for power transients and buffering.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-CESS"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "Compliance requirements are not product-specific but pertain to standards and certifications. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The bus load profile tolerance aligns with the capabilities of the FPM-CESS product, which buffers power transients effectively.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-CESS"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 5,
+        "rationale": "System-level simulation and studies are typically part of engineering services, not specific product offerings. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "Telemetry and control integration with power management systems aligns with the ANORD-PMS product, which provides power management and monitoring systems.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "ANORD-PMS"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "The requirement for 800 VDC power whips and connectors aligns with the FPM-DCPDU product, which includes high-power DC distribution and safety features.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "FPM-DCPDU"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 8,
+        "rationale": "The requirement for 800 VDC to 54 VDC power shelves and rack designs aligns with the FPM-DCPDU product, which supports high-power DC distribution and rack integration.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "FPM-DCPDU"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 9,
+        "rationale": "The phase 1 variant with AC input and 800 VDC output aligns with the FPM-DCPDU product, which supports high-power DC distribution and optional battery backup.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "FPM-DCPDU"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 10,
+        "rationale": "The ±400 VDC variant aligns with the FPM-DCPDU product, which supports high-power DC distribution and conversion to 800 VDC.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "FPM-DCPDU"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 11,
+        "rationale": "The ±400 VDC variant with specific efficiency and power shelf requirements aligns with the FPM-DCPDU product, which supports high-power DC distribution and efficiency standards.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "FPM-DCPDU"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

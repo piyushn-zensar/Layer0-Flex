@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance and ethical conduct during the tender process and contract execution. It does not specify a product or service requirement, so it is not applicable to the product catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,19 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "schedule",
+        "members": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "title": "Key dates and deadlines for the RFP process"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

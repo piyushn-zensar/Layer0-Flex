@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          4,
+          7,
+          9
+        ],
+        "title": "Self-declaration submissions"
+      },
+      {
+        "category": "commercial",
+        "members": [
+          5,
+          6
+        ],
+        "title": "Commercial obligations for ITI"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

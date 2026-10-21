@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          4,
+          5
+        ],
+        "title": "Technology transfer requirements"
+      },
+      {
+        "category": "legal",
+        "members": [
+          1,
+          8,
+          10
+        ],
+        "title": "Legal agreements and authorizations"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

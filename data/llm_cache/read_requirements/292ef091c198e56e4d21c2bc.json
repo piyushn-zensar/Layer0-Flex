@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 8,
+            "last": 14,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "If the vendor fails to adhere to the quality norms, delivery schedules and other terms and conditions contained in this Tender after acceptance of purchase order and if no agreement is reached on the revised delivery schedule maximum up to 15 (Fifteen) Business Days, then buyer shall have the liberty to procure the material from an alternate source at the Vendor’s risk and cost, and the Vendor shall be liable to make good the loss incurred by Buyer in this process.",
+        "section": "9.5",
+        "text": "Vendor must adhere to quality norms and delivery schedules or compensate buyer for losses due to alternate sourcing."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 17,
+            "last": 23,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "In case amicable settlement is not reached in the event of any dispute of difference arising out of the execution of the contract or the respective rights and liabilities of the parties or in relation to interpretation of any provision by the bidder in any manner touching upon the contract, such dispute or difference shall (Except as to any matters, the decision of which is specifically provided for therein) be referred to the sole arbitration of the arbitrator appointed by ITI LTD.",
+        "section": "9.6.1",
+        "text": "Disputes must be referred to arbitration by an ITI LTD-appointed arbitrator."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 24,
+            "last": 25,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "The award of the arbitrator shall be binding upon the parties to the dispute.",
+        "section": "9.6.2",
+        "text": "Arbitrator's decision is binding."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 26,
+            "last": 30,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Subject as aforesaid, the provisions of Arbitration and Conciliation Act 1996 or statutory modifications or re-enactments thereof and the rules made there under and for the time being in force shall apply to arbitration proceedings under this clause. The cost of arbitration shall be borne equally by both the parties.",
+        "section": "9.6.3",
+        "text": "Arbitration follows the Arbitration and Conciliation Act 1996, with costs shared equally."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 31,
+            "last": 32,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Work under the contract shall be continued during the arbitration proceedings.",
+        "section": "9.6.4",
+        "text": "Contract work must continue during arbitration."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 33,
+            "last": 35,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Failure to comply with any of the above conditions can result in termination of the contract, forfeiture of the security deposit, penalty as may be decided by ITI LTD and future blacklisting of the bidder.",
+        "section": "9.6.5",
+        "text": "Non-compliance may lead to contract termination, deposit forfeiture, penalties, and blacklisting."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 36,
+            "last": 36,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "The arbitration location will be at Bengaluru",
+        "section": "9.6.6",
+        "text": "Arbitration will take place in Bengaluru."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 38,
+            "last": 43,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "Any Sum of money due and payable to the bidder under this customer PO may be appropriated by the ITI LTD or any other person contracting through the ITI LTD and set off the same against any claim of the ITI LTD for payment of a sum of money arising out of this RFP or under any other RFP/contract made by the bidder with the customer.",
+        "section": "9.7",
+        "text": "ITI LTD may offset payments due to the bidder against claims under this or other contracts."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

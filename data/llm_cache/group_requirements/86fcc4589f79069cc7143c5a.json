@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Compliance certifications for smart meters and manufacturers"
+      },
+      {
+        "category": "technical",
+        "members": [
+          4,
+          5,
+          6
+        ],
+        "title": "Integration requirements for HES and MDMS"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

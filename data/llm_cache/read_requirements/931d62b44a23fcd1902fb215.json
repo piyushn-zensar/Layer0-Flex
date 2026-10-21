@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 7,
+            "last": 9,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The TP shall enter into Technology Collaboration Agreement (TCA) with ITI for transferring the complete technology for the manufacturing and servicing of the product.",
+        "section": "General Commercial Conditions",
+        "text": "The bidder must sign a Technology Collaboration Agreement with ITI for technology transfer."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 11,
+            "last": 12,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The TP shall provide comprehensive support to ITI for the installation, commissioning, warranty and post warranty servicing of the product.",
+        "section": "General Commercial Conditions",
+        "text": "The bidder must support ITI in installation, commissioning, and servicing."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 14,
+            "last": 15,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The royalty payment to the TP towards its deliverables shall be made on receipt of payment from the customer.",
+        "section": "General Commercial Conditions",
+        "text": "Royalty payments to the bidder are contingent on customer payments."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 17,
+            "last": 23,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The details of Technology Transfer (ToT) for the Advanced Metering Infrastructure Solution (Smart Energy Meters, Head End Systems etc.) manufacturing along with Gerber data, PCB layouts, schematic diagrams, component sourcing details including arrangement with the TP suppliers, as applicable, through-hole details, software and mechanical assembly details etc., are to be provided by the TP to ensure smooth transfer of technology and delivery of finished product.",
+        "section": "General Commercial Conditions",
+        "text": "The bidder must provide detailed technology transfer documentation for Advanced Metering Infrastructure."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 25,
+            "last": 26,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The process of Technology transfer as mentioned in clause 5.A.x should be completed within four months after signing the agreement.",
+        "section": "General Commercial Conditions",
+        "text": "Technology transfer must be completed within four months of agreement signing."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 28,
+            "last": 29,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The BOM/BOQ is to be provided by TP as per the requirement received for new opportunities from time to time",
+        "section": "General Commercial Conditions",
+        "text": "The bidder must provide BOM/BOQ as required for new opportunities."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 31,
+            "last": 34,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The TP shall impart necessary training to ITI Engineers for undertaking manufacturing, testing, calibration, troubleshooting, installation acceptance testing including Pre- Despatch Inspection for successful commissioning at the premises designated by the customer.",
+        "section": "General Commercial Conditions",
+        "text": "The bidder must train ITI engineers in various technical and operational aspects."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 38,
+            "last": 40,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The Contract Agreement between ITI and TP shall be signed by authorized signatories of ITI and the TP, duly supported by Power of Attorney issued by respective parties in the name of these signatories.",
+        "section": "General Commercial Conditions",
+        "text": "The contract must be signed by authorized signatories with Power of Attorney."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 42,
+            "last": 46,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "TP should be willing to provide 10 numbers of type approved smart energy meters or One Head End System or One Meter Data Management (MDM) System at the time of finalization of new order/contract for ITI free of cost for testing and verification purpose to match the requirement of potential customer if the need arises.",
+        "section": "General Commercial Conditions",
+        "text": "The bidder must provide testing units free of cost if required."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 48,
+            "last": 56,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The TP shall sign an agreement of Transfer of Technology (ToT) for manufacturing of the offered product in all categories or any one or more of the categories of its technology and provide full support in planning, manufacturing, implementation, upgrading of manufacturing facilities and rehabilitation of the manufacturing lines so that ITI is fully equipped and capacitated to service the potential",
+        "section": "General Commercial Conditions",
+        "text": "The bidder must sign a ToT agreement and support ITI in manufacturing and facility upgrades."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

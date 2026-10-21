@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirements in item 1 are related to software development, system integration, and data exchange, which are not directly tied to any specific product in the catalog. These tasks are typically handled by the bid manager or a specialized software development team.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirements in item 2 pertain to ensuring interoperability, high standards of engineering, and periodic updates, which are responsibilities of the system integrator and not directly related to any specific product in the catalog. These tasks are also typically managed by the bid manager or a project management team.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement in item 3 is a compliance and partnership requirement, which is not a product requirement. This is a matter for the bid manager to address.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement in item 4 involves providing a model facility for testing interoperability, which is not a product requirement. This is a service or infrastructure provision that the bid manager or system integrator would handle.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

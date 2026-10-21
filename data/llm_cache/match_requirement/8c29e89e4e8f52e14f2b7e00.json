@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement is about setting up production lines, providing technical support, and assisting in manufacturing infrastructure for smart energy meters. It does not directly specify a product from the catalog, but rather a service or partnership agreement. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "This requirement pertains to providing upgrades and ensuring compliance with technical specifications during the contract period. It is not a product requirement but rather a contractual and technical support obligation. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "This requirement discusses compliance and competitiveness of the product specifications and pricing. It is a compliance and commercial requirement, not a product-specific requirement. The bid manager should address this.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

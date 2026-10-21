@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 25,
+            "last": 29,
+            "page": 51
+          }
+        ],
+        "page": 51,
+        "quote": "I, hereby, further certify that our Company is not from such a country which shares a land border with India and in light of conditions & restrictions imposed vide cited OMs, we fulfil all the requirements in this regard to become eligible to be considered in the subject Tender Enquiry by ITI.",
+        "section": "ANNEXURE-XI",
+        "text": "The bidder must certify that their company is not from a country sharing a land border with India and meets all related eligibility requirements."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          5,
+          6
+        ],
+        "title": "Ensure compliance with standards and certifications"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          8
+        ],
+        "title": "Provide technical support and integration for ITI"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

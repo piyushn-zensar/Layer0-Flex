@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "legal",
+        "members": [
+          1,
+          4
+        ],
+        "title": "Ownership and legal compliance for SEM/AMI solution"
+      },
+      {
+        "category": "submission",
+        "members": [
+          2,
+          5,
+          6
+        ],
+        "title": "Submission of ownership and authorization documents"
+      },
+      {
+        "category": "technical",
+        "members": [
+          8,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        "title": "Manufacturing process requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

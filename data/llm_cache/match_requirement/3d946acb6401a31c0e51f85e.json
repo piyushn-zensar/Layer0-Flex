@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "Requirement 1 is a technical specification for system performance and security, and does not directly map to a specific product in the catalog. It is likely a requirement for the software or system design, which is outside the scope of the provided catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The Head End System (HES) described in requirement 2 aligns with the capabilities of the EMS-IOT product, which includes IoT platforms and system integration for monitoring and control.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "EMS-IOT"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 3,
+        "rationale": "The Meter Data Management System (MDM) described in requirement 3 aligns with the capabilities of the ANORD-PMS product, which provides power management and monitoring systems, including data storage, analysis, and integration with other systems.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "ANORD-PMS"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "Requirement 4 involves system integration, installation, and deployment of a comprehensive AMI solution, which aligns with the EMS-BOX product that covers system integration and complex assembly, including software preloads and configuration.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-BOX"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

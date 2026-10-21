@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 3,
+            "last": 4,
+            "page": 45
+          }
+        ],
+        "page": 45,
+        "quote": "Notwithstanding the above, the provisions of this Agreement, as they relate to Proprietary Information, shall remain in full force indefinitely unless expressly agreed otherwise in writing by the parties.",
+        "section": "Proprietary Information",
+        "text": "Proprietary Information provisions remain indefinitely unless agreed otherwise in writing."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 5,
+            "last": 9,
+            "page": 45
+          }
+        ],
+        "page": 45,
+        "quote": "Furthermore, the receiving party agrees to promptly return or destroy, as instructed by the disclosing party, any Proprietary Information received from the disclosing party, together with all copies thereof, upon request by the disclosing party, termination of the Agreement or expiry or termination of the Purpose, whichever is earlier.",
+        "section": "Proprietary Information",
+        "text": "Receiving party must return or destroy Proprietary Information upon request, agreement termination, or purpose expiry."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 31,
+            "last": 32,
+            "page": 45
+          }
+        ],
+        "page": 45,
+        "quote": "Each Party shall designate in writing one or more individuals within its organization as the only persons authorized to receive Confidential Information exchanged hereunder.",
+        "section": "Contact",
+        "text": "Parties must designate authorized individuals to receive Confidential Information."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

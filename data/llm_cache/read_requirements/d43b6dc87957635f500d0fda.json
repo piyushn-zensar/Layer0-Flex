@@ -1,0 +1,288 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 1,
+            "last": 1,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "and shall meet EMC Class A to CISPR 32 and 35",
+        "section": "S1 §11; S5",
+        "text": "Equipment must comply with EMC Class A to CISPR 32 and 35."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 2,
+            "last": 2,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "Rack power equipment shall report telemetry over Redfish, PMBus, Modbus or CANbus",
+        "section": "S1 §9",
+        "text": "Rack power equipment must support telemetry reporting via specified protocols."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 7,
+            "last": 8,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "Heat rejection shall use closed-circuit dry coolers, with no cooling-tower blowdown in the base design. Bidders proposing adiabatic assist for peak ambient shall state annual water use",
+        "section": "S6; S14 §2.4.1; PA",
+        "text": "Heat rejection must use closed-circuit dry coolers, and adiabatic assist proposals must include annual water use."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 9,
+            "last": 10,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "Central utility buildings shall house chillers, pumps and facility water distribution serving the CDUs and room air handlers. Chillers may run on a decoupled 4.16 kV bus, with pumps, coolers and controls on 480 V",
+        "section": "S6",
+        "text": "Central utility buildings must house chillers, pumps, and water distribution, with specified electrical configurations."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 11,
+            "last": 12,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "The liquid cooling design point shall be facility water up to 45 °C, and bidders shall state maximum water inlet and expected outlet temperatures",
+        "section": "S6; S15 Annex 10C",
+        "text": "Liquid cooling must handle facility water up to 45 °C, with stated inlet and outlet temperatures."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 13,
+            "last": 15,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "CDUs shall be liquid-to-liquid, modular and placed in mechanical galleries with N+1 group redundancy. They take facility water on the primary side and cool a separate technical-grade secondary loop that serves GPU cold plates at a design flow of at least 1.5 LPM per kW",
+        "section": "S6; S14",
+        "text": "CDUs must be modular, redundant, and meet specified cooling flow requirements."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 16,
+            "last": 17,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "CDU data shall state rated kW, pump type and count, primary and secondary supply and return temperatures, secondary flow in L/min, available lift in kPa, filter mesh, pipe routing and power supply",
+        "section": "S14",
+        "text": "CDU data must include detailed specifications and parameters."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "The heat-rejection and water loops shall be concurrently maintainable in a ring with N+1 redundancy",
+        "section": "S14 §2.4.1",
+        "text": "Heat-rejection and water loops must be maintainable with N+1 redundancy."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 22,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "Room air handlers on medium-temperature facility water shall cool air-cooled equipment and occupied spaces. Air-side capacity shall be at least 15% of room load, and bidders shall state the liquid-captured fraction, with 90% as the target",
+        "section": "S6; S14 §2.4.1; S15 §1.14.2.10",
+        "text": "Room air handlers must meet cooling and capacity requirements, with specified liquid-captured fraction."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 24,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "The plant shall reject the full heat load at 35 °C ambient for extended periods and at 40 °C on peak days, and bidders shall show approach temperatures for both cases",
+        "section": "S15 §1.14.2.10; PA",
+        "text": "The plant must handle specified heat loads at given ambient temperatures, with approach temperatures stated."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 25,
+            "last": 26,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "Air-cooled equipment shall operate with ASHRAE A2 supply air, and operation at A3 is preferred. Auxiliary racks above 20 kW sustained may need additional liquid cooling",
+        "section": "S8 §C.7",
+        "text": "Air-cooled equipment must meet ASHRAE A2 standards, with A3 preferred, and auxiliary racks may need extra cooling."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 27,
+            "last": 29,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "The GPU-side cooling plant is not UPS-backed in the reference design and relies on loop thermal mass until backup generation restarts it. Bidders shall state the thermal ride-through time at full load and the automatic restart sequence",
+        "section": "S6; PA",
+        "text": "GPU-side cooling plant must have specified thermal ride-through and restart sequence details."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 30,
+            "last": 31,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "The Contractor shall deliver a chemical management plan covering additives and cooling-water properties, including transport, storage, filling, draining and disposal, nine months before delivery",
+        "section": "S7 App B.5",
+        "text": "A chemical management plan must be delivered nine months before delivery."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 32,
+            "last": 33,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "Cooling shall be measured per node and per loop, with sampling frequency, accuracy and timestamps stated",
+        "section": "S7 §5.5.2; S15 §1.14.2.10",
+        "text": "Cooling measurements must include per-node and per-loop data with specified details."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 34,
+            "last": 34,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "Piping routes, floor loading and weight per rack in t/m² shall be stated for each hall",
+        "section": "S15 Annex 10C",
+        "text": "Piping routes, floor loading, and rack weight must be specified for each hall."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 35,
+            "last": 36,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "Prefabricated cooling equipment shall suit outdoor use at ·20 to +45 °C, or the local 20-year extreme if more stringent, with corrosion protection tested to ISO 12944-6 or equivalent",
+        "section": "S14",
+        "text": "Prefabricated cooling equipment must meet outdoor use and corrosion protection standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 43,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "The compute system shall comprise a control plane of at least five servers, a GPU accelerator partition in direct-liquid-cooled cabinets, a CPU data-preparation partition, a high-speed interconnect, multi-tier storage and cloud-like services (virtual machines, Kubernetes and Slurm)",
+        "section": "S15 §1.14.2.1 to §1.14.2.4",
+        "text": "Compute system must include specified components and services."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 44,
+            "last": 45,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "Each accelerator shall have at least 192 GB of high-bandwidth memory, each node shall have local NVMe, and each GPU shall have a direct high-speed network connection",
+        "section": "S15 §1.14.2.3",
+        "text": "Accelerators, nodes, and GPUs must meet memory, storage, and network requirements."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 46,
+            "last": 47,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "Compute racks shall accept 800 VDC input, and bidders shall state rack TDP. Racks with an AC input option shall list it separately",
+        "section": "S5; S6",
+        "text": "Compute racks must accept 800 VDC input, with TDP and AC input options specified."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 48,
+            "last": 49,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "The maximum power of each deployment unit under any workload, including storage and network, shall not exceed 20 MW, and bidders shall state it in total and per partition",
+        "section": "S7 §8.3.1; S15 Annex 10C; PA",
+        "text": "Deployment units must not exceed 20 MW power, with total and partitioned power stated."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

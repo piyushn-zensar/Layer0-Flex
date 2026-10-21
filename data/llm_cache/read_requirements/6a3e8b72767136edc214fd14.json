@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 3,
+            "last": 4,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "ITI along with the selected System Integrator shall bid as a Consortium and jointly prepare the tender bid documents for the technical and commercial compliances.",
+        "section": "19",
+        "text": "ITI and the System Integrator must bid as a consortium and prepare tender documents."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 5,
+            "last": 6,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "Both ITI LTD and the selected partner shall mutually discuss and work out the best bidding strategy for winning the tender.",
+        "section": "19",
+        "text": "ITI and the partner must collaborate on the bidding strategy."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 6,
+            "last": 9,
+            "page": 39
+          }
+        ],
+        "page": 39,
+        "quote": "Also in the case of counter offers given by customer, both ITI LTD and partner shall make all efforts to match the prices for providing supply and services as per the terms and conditions of the purchase order.",
+        "section": "19",
+        "text": "ITI and the partner must address customer counter offers to match prices."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 5,
+            "last": 6,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "Technology enablement for manufacturing Advance metering Infrastructure Solution shall be on the Royalty Model.",
+        "section": "ANNEXURE-VII",
+        "text": "Manufacturing technology enablement will follow a royalty model."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 37,
+            "last": 38,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "The values filled at the prescribed place in the Price Bid shall be a numerical value to be considered up to two decimal points for calculation.",
+        "section": "ANNEXURE-VII",
+        "text": "Price bid values must be numerical and precise to two decimal points."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 39,
+            "last": 40,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "Financial Bid duly filled & signed in Excel format as per attached bid sheet to be uploaded in ITI Tender Portal.",
+        "section": "ANNEXURE-VII",
+        "text": "Submit the financial bid in Excel format via the ITI Tender Portal."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 41,
+            "last": 42,
+            "page": 40
+          }
+        ],
+        "page": 40,
+        "quote": "Bidders will be Selected on the basis of Lowest Percentage Royalty quoted in their respective category.",
+        "section": "ANNEXURE-VII",
+        "text": "Selection is based on the lowest percentage royalty quoted."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

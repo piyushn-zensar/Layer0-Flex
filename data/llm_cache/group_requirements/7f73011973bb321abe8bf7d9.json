@@ -1,0 +1,41 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          4,
+          5
+        ],
+        "title": "Develop and implement the AMI system architecture and ensure interoperability"
+      },
+      {
+        "category": "technical",
+        "members": [
+          2,
+          10
+        ],
+        "title": "Ensure compliance and updates to hardware and software"
+      },
+      {
+        "category": "staffing",
+        "members": [
+          3,
+          11
+        ],
+        "title": "Provide support and training for facility management"
+      },
+      {
+        "category": "submission",
+        "members": [
+          6,
+          9
+        ],
+        "title": "Submit technical documentation and conduct field trials"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

@@ -1,0 +1,190 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 7,
+            "last": 11,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Source, procure and inspect components as per the provide Bill of Material (BOM).",
+        "section": "4.1.6",
+        "text": "Ensure components are sourced, procured, and inspected according to the BOM."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 16,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Go through the BOM list and check that each component is procured",
+        "section": "4.1.6",
+        "text": "Verify procurement of all components listed in the BOM."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 29,
+            "last": 30,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The enclosure must be of SLS prototype.",
+        "section": "4.2.1",
+        "text": "The device enclosure must be an SLS prototype."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 32,
+            "last": 38,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Supplier must provide the manufacturing report or certification indicating the SLS specifications",
+        "section": "4.2.1",
+        "text": "Supplier must provide documentation verifying SLS specifications."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 44,
+            "last": 48,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The enclosure material type must be of minimum quality SLS Polyamide (e.g., Nylon 11 powder).",
+        "section": "4.2.2",
+        "text": "Enclosure material must be SLS Polyamide, minimum quality (e.g., Nylon 11 powder)."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 49,
+            "last": 55,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Supplier must provide the manufacturing report or certification indicating the SLS specifications",
+        "section": "4.2.2",
+        "text": "Supplier must provide documentation verifying SLS specifications."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 58,
+            "last": 62,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Check the 3D printed structures according to the provided files and their respective quantities",
+        "section": "4.2.3",
+        "text": "Verify 3D printed structures match provided files and quantities."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 66,
+            "last": 70,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The Device enclosure must be printed according to the provided STEP files and their respective quantities.",
+        "section": "4.2.3",
+        "text": "Device enclosure must be printed as per provided STEP files and quantities."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 77,
+            "last": 80,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The enclosure must have a quality assurance on the printed 3D structures.",
+        "section": "4.2.4",
+        "text": "Ensure quality assurance for printed 3D structures of the enclosure."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 82,
+            "last": 88,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Supplier must provide the manufacturing report or certification indicating the quality assurance",
+        "section": "4.2.4",
+        "text": "Supplier must provide documentation verifying quality assurance."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 91,
+            "last": 93,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Signing of the NDA and the Declaration Form",
+        "section": "4.2.5",
+        "text": "Sign the NDA and Declaration Form."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 96,
+            "last": 101,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "Device enclosure complexity: As per supplied enclosure specification subjected to Non-Disclosure Agreement (NDA)",
+        "section": "4.2.5",
+        "text": "Device enclosure complexity must follow supplied specifications under NDA."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 103,
+            "last": 106,
+            "page": 12
+          }
+        ],
+        "page": 12,
+        "quote": "The briefing session will be used to present Device enclosure",
+        "section": "4.2.5",
+        "text": "Attend briefing session to present the device enclosure."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "Requirement 8.19 is a compliance-related clause about bid rejection criteria, which does not pertain to any specific product or business unit.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 2,
+        "rationale": "Requirement 8.20 is a compliance-related clause about discretionary rejection of offers, which does not pertain to any specific product or business unit.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 3,
+        "rationale": "Requirement 9.2 is a compliance-related clause about ensuring transparency and fairness in the bidding process, which does not pertain to any specific product or business unit.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

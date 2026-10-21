@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement is primarily commercial and collaborative in nature, focusing on the provision of technological details and collaboration agreements for Advanced Metering Infrastructure (AMI) solutions. It does not specify a product or service from the catalog, and thus, the bid manager would address this requirement.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

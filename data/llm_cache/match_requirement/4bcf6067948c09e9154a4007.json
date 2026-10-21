@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "Requirement 1 is a compliance and certification requirement, not directly tied to a specific product offering. It involves legal and procedural aspects, which are typically handled by the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "Requirement 2 pertains to software and firmware support, which is not directly linked to a specific product from the catalog. It is a technical service responsibility of the Technology Partner.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "Requirement 3 involves field trials, proof of concept, and integration with backend systems, which are technical services and not directly related to a specific product offering from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "Requirement 4 specifies compliance with communication technologies such as NB-IoT and RF Mesh. EMS-IOT provides IoT, sensor, and HMI platforms with connectivity options including NB-IoT, LTE-CatM, LoRa, and SigFox, making it suitable for this requirement.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "EMS-IOT"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

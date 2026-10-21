@@ -1,0 +1,134 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 14,
+            "last": 19,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "The TP/the member of Consortium should be a company registered in India having its office in India and incorporated under the Indian Companies Act, 1956/2013 and should be at least five years (from the date of releasing this RFP) old company.",
+        "section": "Eligibility Conditions",
+        "text": "The bidder must be a company registered in India under the Indian Companies Act, 1956/2013, and at least five years old."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 20,
+            "last": 20,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "Copy of PAN card",
+        "section": "Eligibility Conditions",
+        "text": "The bidder must provide a copy of their PAN card."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 21,
+            "last": 24,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "Copy of GST Registration",
+        "section": "Eligibility Conditions",
+        "text": "The bidder must provide a copy of their GST registration."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 25,
+            "last": 32,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "Proof of Consortium should be submitted (Consortium agreement as per Annexure-XII)",
+        "section": "Eligibility Conditions",
+        "text": "The bidder must submit proof of consortium agreement as per Annexure-XII."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 33,
+            "last": 55,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "Consortium can be formed between Categories (for example: Smart Meter Manufacturers with HES Solution Providers/ HES Solution Providers with MDMS Solution Providers). In case of Consortium, the number of bidders including Lead Bidder can be maximum two.",
+        "section": "Eligibility Conditions",
+        "text": "Consortiums can be formed between specified categories, with a maximum of two bidders including the lead bidder."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 56,
+            "last": 68,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "Bidders who have relevant experience in the following fields can submit the proposal in all categories or any one or more of the categories: Category 1: Smart Energy Meter Category 2: Head End System (HES), Meter Data Management System (MDMS) & Communication module Category 4: System Integrator",
+        "section": "Eligibility Conditions",
+        "text": "Bidders with relevant experience can submit proposals for specified categories."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 70,
+            "last": 71,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "A Self-Declaration of Technology Transfer consent to be provided.",
+        "section": "Eligibility Conditions",
+        "text": "The bidder must provide a self-declaration of technology transfer consent."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 73,
+            "last": 88,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "TP shall be willing to transfer the technology of offered Product/Solutions in all categories or any one or more of the categories to enable ITI to design, engineer, integrate, manufacture, Market, Sale & Service, provide maintenance of the Product/Solutions.",
+        "section": "Eligibility Conditions",
+        "text": "The bidder must agree to transfer technology to enable ITI to manage the product/solutions."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 89,
+            "last": 92,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "The TP would take responsibility on behalf of ITI to obtain the required Type Approval Certificate as well as all required BIS Certificate if required.",
+        "section": "Eligibility Conditions",
+        "text": "The bidder must obtain required Type Approval and BIS Certificates on behalf of ITI."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

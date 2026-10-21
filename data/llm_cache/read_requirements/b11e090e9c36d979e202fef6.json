@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 1,
+            "last": 4,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "provide a power switchover between the battery and charger to the Device.",
+        "section": "Power Management",
+        "text": "The system must provide a power switchover between the battery and charger."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 11,
+            "last": 13,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "The Device from OFF state, MUST switch ON when Button 1 is pressed.",
+        "section": "Button 1 Functionality",
+        "text": "Button 1 must turn the device on from an off state."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 20,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "To switch the Device OFF from ON state, when Button 1 is pressed and hold for about 3 seconds, the Device must switch OFF.",
+        "section": "Button 1 Functionality",
+        "text": "Button 1 must turn the device off when held for 3 seconds."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 36,
+            "last": 39,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "When pressed, the bottom left block from the screen must be highlighted",
+        "section": "Button 2 Functionality",
+        "text": "Button 2 must highlight the bottom left block on the screen when pressed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 43,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "When pressed, the bottom middle block from the screen must be highlighted",
+        "section": "Button 3 Functionality",
+        "text": "Button 3 must highlight the bottom middle block on the screen when pressed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 46,
+            "last": 48,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "When pressed, the bottom right block from the screen must be highlighted",
+        "section": "Button 4 Functionality",
+        "text": "Button 4 must highlight the bottom right block on the screen when pressed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 51,
+            "last": 53,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "When pressed, the bottom right block from the screen must be highlighted",
+        "section": "Button 5 Functionality",
+        "text": "Button 5 must highlight the bottom right block on the screen when pressed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 56,
+            "last": 57,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Device IP address will be displayed on the screen",
+        "section": "Ethernet Connectivity",
+        "text": "The device must display its IP address on the screen."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "This requirement pertains to compliance and procurement policies for MSE vendors and does not specify a product or service requirement. It is a commercial or legal requirement.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 2,
+        "rationale": "This requirement involves the evaluation of bids based on turnover, experience, and compliance, which is a procedural aspect of the RFP process and not related to any specific product or service.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

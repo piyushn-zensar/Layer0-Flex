@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "Requirement 1 pertains to compliance and scoring criteria for tenders. It does not specify a product or service requirement, so no units are applicable.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 2,
+        "rationale": "Requirement 2 discusses the award criteria and responsiveness of tenders. It is a compliance-related requirement, not a product or service specification, so no units are applicable.",
+        "units": []
+      },
+      {
+        "confidence": 1,
+        "n": 3,
+        "rationale": "Requirement 3 involves energy cost calculations and performance metrics for AI workloads. It does not specify a product or service requirement directly, so no units are applicable.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,17 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Compliance with National Treasury and B-BBEE requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

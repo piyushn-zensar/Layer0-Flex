@@ -1,0 +1,30 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "title": "Evaluation process and criteria"
+      },
+      {
+        "category": "submission",
+        "members": [
+          10,
+          11,
+          12
+        ],
+        "title": "Pricing proposal submission requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

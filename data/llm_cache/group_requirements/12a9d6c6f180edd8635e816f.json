@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          4,
+          5
+        ],
+        "title": "Obtain necessary certificates and approvals"
+      },
+      {
+        "category": "legal",
+        "members": [
+          6,
+          7
+        ],
+        "title": "Sign legal agreements and indemnify ITI"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

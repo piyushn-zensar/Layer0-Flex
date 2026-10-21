@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 6,
+            "last": 7,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "Name and address of the company",
+        "section": "TP’s Profile",
+        "text": "Provide the name and address of the company."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 9,
+            "last": 14,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "Contact Details of the TP (Contact person name with designation, Telephone Number, FAX, E- mail and Web site)",
+        "section": "TP’s Profile",
+        "text": "Provide contact details including name, designation, phone, fax, email, and website."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 19,
+            "last": 19,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "Area of business",
+        "section": "TP’s Profile",
+        "text": "Specify the area of business."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 21,
+            "last": 26,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "Annual Turnover for 3 financial years (₹ in Cr )",
+        "section": "TP’s Profile",
+        "text": "Provide annual turnover for the last three financial years in crores."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 28,
+            "last": 28,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "Net worth",
+        "section": "TP’s Profile",
+        "text": "Provide the net worth of the company."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 30,
+            "last": 30,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "Date of Incorporation",
+        "section": "TP’s Profile",
+        "text": "Provide the date of incorporation of the company."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 32,
+            "last": 32,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "GST Registration number",
+        "section": "TP’s Profile",
+        "text": "Provide the GST registration number."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 34,
+            "last": 34,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "PAN Number",
+        "section": "TP’s Profile",
+        "text": "Provide the PAN number."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 36,
+            "last": 36,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "CIN Number, if applicable",
+        "section": "TP’s Profile",
+        "text": "Provide the CIN number if applicable."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 37,
+            "last": 40,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "Number of technical manpower in company’s rolls",
+        "section": "TP’s Profile",
+        "text": "Provide the number of technical manpower on the company's rolls."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

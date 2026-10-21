@@ -1,0 +1,162 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 3,
+            "last": 5,
+            "page": 44
+          }
+        ],
+        "page": 44,
+        "quote": "and marked in accordance with Article 4(a), and such tangible form shall be delivered to the Party identified above within twenty (20) working days after the date of first disclosure.",
+        "section": "Article 4(a)",
+        "text": "Confidential information must be marked and delivered within 20 working days."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 5,
+            "last": 6,
+            "page": 44
+          }
+        ],
+        "page": 44,
+        "quote": "During the above stated 20-day period, such Confidential Information shall be protected in accordance with the terms of this Agreement.",
+        "section": "Article 4(a)",
+        "text": "Confidential information must be protected during the 20-day delivery period."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 9,
+            "last": 11,
+            "page": 44
+          }
+        ],
+        "page": 44,
+        "quote": "Confidential Information that is disclosed pursuant to this Agreement shall not be used other than for the purposes submitted, or disclosed to any third party, unless authorized in writing by the disclosing Party.",
+        "section": "Article 4(c)",
+        "text": "Confidential information must only be used for agreed purposes and not disclosed without authorization."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 13,
+            "last": 15,
+            "page": 44
+          }
+        ],
+        "page": 44,
+        "quote": "Upon receiving Confidential Information from the disclosing Party, recipient shall use at least the same degree of care that it uses in protecting its own information of like kind, but not less than reasonable care to safeguard such Confidential Information from an unauthorized use or disclosure.",
+        "section": "Article 4(d)",
+        "text": "Recipients must protect confidential information with at least reasonable care."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 17,
+            "last": 19,
+            "page": 44
+          }
+        ],
+        "page": 44,
+        "quote": "Recipient agrees that each employee having access to Confidential Information of the other Party to this Agreement, shall be in a “need-to-know” basis and shall be informed of the existence of this Agreement.",
+        "section": "Article 4(d)",
+        "text": "Employees accessing confidential information must be on a need-to-know basis and informed of the agreement."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 20,
+            "last": 22,
+            "page": 44
+          }
+        ],
+        "page": 44,
+        "quote": "If the Receiving Party makes any copies, extracts, summaries, or digests of the Confidential Information (including computer entries), the Receiving Party shall ensure that appropriate legends are affixed thereto.",
+        "section": "Article 4(d)",
+        "text": "Copies or summaries of confidential information must have appropriate legends affixed."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 22,
+            "last": 25,
+            "page": 44
+          }
+        ],
+        "page": 44,
+        "quote": "Copies made by a reproduction service contractor, for the exclusive use of a Party to this Agreement is permitted, provided the service contractor has executed a non-disclosure agreement, which is sufficient to protect the Confidential Information required under this Agreement.",
+        "section": "Article 4(d)",
+        "text": "Reproduction service contractors must sign a sufficient non-disclosure agreement."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 28,
+            "last": 30,
+            "page": 44
+          }
+        ],
+        "page": 44,
+        "quote": "Receiving Party undertakes to observe all requirements of security regulations of the Government of India to the extent they apply to Proprietary / Confidentiality Information disclosed pursuant to hereinto.",
+        "section": "Article 4(f)",
+        "text": "Recipients must comply with Indian government security regulations for confidential information."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 32,
+            "last": 34,
+            "page": 44
+          }
+        ],
+        "page": 44,
+        "quote": "This Agreement shall terminate after the period of time specified below, from the date of last execution of this Agreement by the Parties, except that either Party, upon thirty (30) days written notice to the other Party, may terminate this Agreement.",
+        "section": "Article 5",
+        "text": "Agreement terminates after specified time or with 30 days written notice."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 35,
+            "last": 36,
+            "page": 44
+          }
+        ],
+        "page": 44,
+        "quote": "All obligations to maintain confidentiality shall survive termination under this Article 5 and Article 9.",
+        "section": "Article 5",
+        "text": "Confidentiality obligations survive agreement termination."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 37,
+            "last": 38,
+            "page": 44
+          }
+        ],
+        "page": 44,
+        "quote": "The Term of this Agreement shall be Two (2) years from the effective date hereof, as determined by the last date of execution.",
+        "section": "Article 5",
+        "text": "Agreement term is two years from the effective date."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

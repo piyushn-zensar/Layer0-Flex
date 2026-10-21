@@ -1,0 +1,274 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 2,
+            "last": 4,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Isolation shall be provided where MV AC connects to the 800 VDC system through a converter or dedicated transformer, and each separately derived system shall state its grounding compatibility on the nameplate",
+        "section": "S3 §6.2.1.1, §5.5.2",
+        "text": "Provide isolation and grounding compatibility for MV AC connections to 800 VDC systems."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 5,
+            "last": 7,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Clearance and creepage shall follow IEC 60664-1 for the working voltage, using overvoltage category III in the power room, category II in the data room, pollution degree 2 in racks and pollution degree 3 in ancillary zones",
+        "section": "S3 §6.3",
+        "text": "Ensure clearance and creepage per IEC 60664-1 for specified zones and categories."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 8,
+            "last": 9,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Overcurrent protection shall cover all ungrounded poles unless the authority having jurisdiction accepts otherwise",
+        "section": "S3 §6.3",
+        "text": "Provide overcurrent protection for all ungrounded poles unless exempted by authority."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 10,
+            "last": 12,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Facility storage shall provide a buffer, abnormal-event response, bridge power and grid dispatchability. It may be AC-coupled at the MV bus or DC-coupled on the 800 VDC backbone, and it shall connect through a converter, not directly",
+        "section": "S6; S4; S3 §3.2",
+        "text": "Facility storage must support various functions and connect via a converter."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level",
+        "section": "S1 §11.1",
+        "text": "Storage must comply with specified standards and undergo fire propagation tests."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 16,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "The bus shall tolerate this reference load profile: steps up to 175% of rack TDP in under 2 ms, 180% in under 0.5 ms and 150% in under 50 ms, holding ±3% with 3 ms settling",
+        "section": "S1 §7.3.2, §7.3.3; S2 §4.3; PA",
+        "text": "Bus must handle specified load profiles with defined tolerances and settling times."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 17,
+            "last": 19,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "The Contractor shall deliver a system-level simulation covering dynamic response, source output impedance and module sharing, distribution inductance and ripple, and shall support DC arc-flash and fault-current studies",
+        "section": "S5",
+        "text": "Provide system-level simulation and support DC arc-flash and fault-current studies."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 21,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Telemetry and control shall use open standards with Redfish recommended, and signals shall integrate with the Owner's electrical power management system",
+        "section": "S1 §9; S14",
+        "text": "Use open standards for telemetry and control, integrating with the Owner's system."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 26,
+            "last": 28,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "The Contractor shall supply 125 A 800 VDC power whips hardwired to the tap can behind a normally open contactor that closes only when the rack-side connector is mechanically locked and opens before the connector unlocks",
+        "section": "S5",
+        "text": "Provide 125 A 800 VDC power whips with specific contactor and connector requirements."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 29,
+            "last": 30,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Connectors shall latch with an integrated switch so a cable cannot be removed until source and load are off, shall de-energise when unplugged, and shall carry short pins to prevent arcing",
+        "section": "S1 §8.4; S5",
+        "text": "Ensure connectors have integrated switches, de-energize when unplugged, and prevent arcing."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 31,
+            "last": 32,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Each compute rack shall hold an 800 VDC to 54 VDC power shelf. The baseline is six 15 kW converters, and bidders shall state the shelf output voltage and converter count",
+        "section": "S5",
+        "text": "Provide compute racks with specified power shelves and state output voltage and converter count."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 33,
+            "last": 34,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Rack designs shall accommodate cabinets of 198 to 330 kW, growth to 570 kW per rack position with liquid-cooled power shelves, and native 800 VDC distribution inside the rack",
+        "section": "S6; S5",
+        "text": "Design racks for specified power capacities and native 800 VDC distribution."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 35,
+            "last": 36,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Rack input power shall be smooth: localized peak shaving, power smoothing and slew-rate control using minimal storage, such as electrolytic capacitors, in or near the rack",
+        "section": "S5",
+        "text": "Ensure smooth rack input power with localized peak shaving and minimal storage."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 37,
+            "last": 37,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Branch protection for in-rack shelves shall target 125 A air-cooled solid-state breakers",
+        "section": "S5",
+        "text": "Provide branch protection for in-rack shelves using specified breakers."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 38,
+            "last": 40,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Phase 1 variant: where DC busway is not yet in place, 800 VDC power racks may feed adjacent compute racks. Each takes 415 to 480 VAC true three-phase without neutral through 12 whips of 100 A, supports about 660 kW, and uses shelves of six 18.3 kW converters",
+        "section": "S5 Option A",
+        "text": "Provide Phase 1 variant racks with specified power and connection requirements."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 42,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Each power-rack converter shall hold 1,200 J of energy storage to smooth AC input current. Optional battery backup is four 20 kW units giving 80 kW for 60 s, tied to a 125 A 800 VDC cross cable",
+        "section": "S5 Option A",
+        "text": "Provide power-rack converters with energy storage and optional battery backup."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 44,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "±400 VDC variant: a bidder proposing ±400 VDC sidecar racks shall name the rack input that accepts ±400 VDC three-wire, or the conversion to 800 VDC. The Owner accepts ±400 VDC only on that evidence",
+        "section": "S1; S4; PA",
+        "text": "Provide evidence for ±400 VDC sidecar racks or conversion to 800 VDC."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 45,
+            "last": 48,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "An accepted ±400 VDC variant shall deliver 410 V at no load and 400 V at full load, ±0.5%, with 10 V built-in droop, using 1OU power shelf modules of 25 to 30 kW, a three-conductor vertical busbar of up to 1.1 MW and cables of 50 kW (63 A) or 100 kW (125 A). End-to-end efficiency shall exceed 95% at 20% load, 98% (480 V) or 97% (415 or 400 V) at 50%, and 97% or 96.5% at 100%",
+        "section": "S1 §7.3, §8",
+        "text": "Ensure ±400 VDC variant meets specified performance and efficiency standards."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 49,
+            "last": 49,
+            "page": 4
+          }
+        ],
+        "page": 4,
+        "quote": "Rack power equipment shall use UL 62368-1 methods, with leakage of at most 3.5 mA AC and 10 mA DC",
+        "section": "",
+        "text": "Ensure rack power equipment complies with UL 62368-1 and leakage limits."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

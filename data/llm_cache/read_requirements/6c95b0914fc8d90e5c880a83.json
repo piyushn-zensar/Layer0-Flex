@@ -1,0 +1,134 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 6,
+            "last": 7,
+            "page": 46
+          }
+        ],
+        "page": 46,
+        "quote": "Designated authorized recipients may be changed at any time upon written notice.",
+        "section": "General",
+        "text": "Authorized recipients can be changed with written notice."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 9,
+            "last": 15,
+            "page": 46
+          }
+        ],
+        "page": 46,
+        "quote": "Notwithstanding the foregoing, nothing in this Agreement shall restrict the right of either Party to this Agreement, from disclosing such Confidential Information pursuant to a judicial order issued by a court of competent jurisdiction, or other valid and binding court ordered discovery, but only to the extent so ordered, provided, however, that the Party so ordered shall notify the other Party to this Agreement, in writing, of such pending action to compel disclosure or such order in sufficient time to permit adequate time for response by the affected Party.",
+        "section": "Judicial Order",
+        "text": "Confidential information may be disclosed under judicial order, with prior written notice to the other party."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 16,
+            "last": 18,
+            "page": 46
+          }
+        ],
+        "page": 46,
+        "quote": "The receiving Party shall provide all reasonable assistance, at the disclosing Party's expense and direction, in opposing such disclosure order.",
+        "section": "Judicial Order",
+        "text": "Receiving party must assist in opposing disclosure orders at the disclosing party's expense."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 20,
+            "last": 21,
+            "page": 46
+          }
+        ],
+        "page": 46,
+        "quote": "All such Confidential Information and copies, extracts, summaries, or digests (including computer retained format) thereof shall remain the property of the disclosing Party.",
+        "section": "Termination Provisions",
+        "text": "Confidential information remains the property of the disclosing party."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 22,
+            "last": 23,
+            "page": 46
+          }
+        ],
+        "page": 46,
+        "quote": "All such Confidential Information shall be returned to the disclosing Party upon the first of the following events shall occur:",
+        "section": "Termination Provisions",
+        "text": "Confidential information must be returned upon specified events."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 25,
+            "last": 26,
+            "page": 46
+          }
+        ],
+        "page": 46,
+        "quote": "Within thirty (30) days after the termination of this Agreement under Article 5;",
+        "section": "Termination Provisions",
+        "text": "Confidential information must be returned within 30 days after agreement termination."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 28,
+            "last": 29,
+            "page": 46
+          }
+        ],
+        "page": 46,
+        "quote": "At the request of a Party upon completion of the purpose(s) for which it was submitted;",
+        "section": "Termination Provisions",
+        "text": "Confidential information must be returned upon request after purpose completion."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 31,
+            "last": 32,
+            "page": 46
+          }
+        ],
+        "page": 46,
+        "quote": "Upon the determination by a Party that received the information that it no longer desires to possess such Confidential Information;",
+        "section": "Termination Provisions",
+        "text": "Confidential information must be returned if the receiving party no longer desires to possess it."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 34,
+            "last": 36,
+            "page": 46
+          }
+        ],
+        "page": 46,
+        "quote": "Upon breach of any of the obligations of this Agreement, wherein such Confidential Information, and all copies thereof, shall be returned to the Party that owns or controls the Information within thirty (30) days of written demand by such Party.",
+        "section": "Termination Provisions",
+        "text": "Confidential information must be returned within 30 days of written demand after a breach."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

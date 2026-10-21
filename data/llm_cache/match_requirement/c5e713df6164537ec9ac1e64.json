@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement is about the device's ability to perform acceptance tests, which is a functional requirement specific to the device being developed. It does not directly map to any product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "This requirement describes the device's power-on behavior and interaction with its components, which is specific to the device being developed. It does not directly map to any product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "This requirement involves the device's battery charging functionality and user interface, which are specific to the device being developed. It does not directly map to any product in the catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

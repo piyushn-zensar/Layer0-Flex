@@ -1,0 +1,55 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          3
+        ],
+        "title": "Provide quality certifications and compliance documentation"
+      },
+      {
+        "category": "legal",
+        "members": [
+          4,
+          6,
+          7,
+          12,
+          15
+        ],
+        "title": "Submit legal authorizations and agreements"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          5,
+          8,
+          11,
+          13,
+          14,
+          17
+        ],
+        "title": "Provide compliance declarations and undertakings"
+      },
+      {
+        "category": "technical",
+        "members": [
+          2,
+          9
+        ],
+        "title": "Submit technical specifications and compliance"
+      },
+      {
+        "category": "submission",
+        "members": [
+          10,
+          16
+        ],
+        "title": "Submit financial bid and consortium documents"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

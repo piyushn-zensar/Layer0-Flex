@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 15,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "The selected Partner, should be willing to provide ITI with technological details (Hardware/ Software) for manufacturing and servicing of Complete AMI Solution on exclusive basis to enable ITI as Complete Solution Provider of AMI Solution.",
+        "section": "3. PURPOSE",
+        "text": "Partner must provide exclusive technological details for AMI Solution."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 16,
+            "last": 21,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Bidders who have relevant experience in the following Categories can submit the proposal in all categories or any one or more of the categories: Category 1: Smart Energy Meter Category 2: Head End System (HES), Meter Data Management System (MDMS) & Communication module Category 3: System Integrator",
+        "section": "3. PURPOSE",
+        "text": "Bidders must have experience in specified categories and can submit proposals for one or more."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 24,
+            "last": 28,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "The strategic alliance between ITI and the Technology Partner (TP) shall be for a period of minimum five years with the scope to extend the arrangement further on mutual consent. The TP shall provide all the assistance in setting up/upgrading the manufacturing facilities at ITI units.",
+        "section": "4. SCOPE",
+        "text": "Alliance with TP must last at least five years, extendable by mutual consent, with assistance in manufacturing setup."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 30,
+            "last": 36,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "The Technology Collaboration Agreement (TCA) of Advanced Metering Infrastructure (AMI) Solution includes the hardware/software design, manufacturing, assembly, inspection, testing, quality assurance methods, troubleshooting, supply, Installation, Commissioning, servicing/ maintenance during the warranty/post warranty period, training, documentation, design upgrades, system integration with AMI solution provider etc as per various tendered customer requirements.",
+        "section": "4. SCOPE",
+        "text": "TCA must cover all aspects of AMI Solution lifecycle and integration."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 37,
+            "last": 39,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Technology partner(TP) is required to share a detail technical presentation for implementation of TOT for ITI to ascertain the suitability of the technical qualification of the bidder.",
+        "section": "4. SCOPE",
+        "text": "TP must provide a detailed technical presentation for TOT implementation."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

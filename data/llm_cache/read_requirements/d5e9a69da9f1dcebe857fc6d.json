@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 5,
+            "last": 7,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "(To be typed and submitted in the Letter Head of the Company/Firm of Bidder failing which the offer of Bidder is liable to be summarily rejected)",
+        "section": "ANNEXURE-VIII",
+        "text": "The declaration must be typed and submitted on the bidder's letterhead."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 21,
+            "last": 22,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "The Proprietor, Partner(s), Director(s) of our Company/Firm DO NOT have any relation or relatives employed in ITI",
+        "section": "ANNEXURE-VIII",
+        "text": "Declare if no relations of the bidder's proprietors, partners, or directors are employed in ITI."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 25,
+            "last": 27,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "The Proprietor, Partner(s), or Director(s) of our Company/Firm have relation/relatives employed in ITI and their particulars are as below:",
+        "section": "ANNEXURE-VIII",
+        "text": "Declare if any relations of the bidder's proprietors, partners, or directors are employed in ITI, providing details."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 33,
+            "last": 36,
+            "page": 41
+          }
+        ],
+        "page": 41,
+        "quote": "Attach separate sheet, if necessary. If ITI Management comes to know at a later date that the information furnished by the Bidder is false, ITI reserves the right to take suitable action against the Bidder/Contractor.",
+        "section": "ANNEXURE-VIII",
+        "text": "Provide additional sheets if needed; false information may lead to action by ITI."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

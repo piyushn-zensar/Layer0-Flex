@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 7,
+            "last": 8,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "The Principal will disqualify from the tender process all  TP s who do not sign this Integrity Pact or violate its provisions.",
+        "section": "6.3",
+        "text": "Bidders must sign the Integrity Pact and comply with its provisions."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 11,
+            "last": 19,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "If the Principal receives any information of conduct of a  TP (s)/Contractor(s) or sub-contractor/sub-vendor/associates of the TP (s)/Contractor(s) which constitutes corruption or if the principal has substantive suspicion in this regard, the principal will inform the same to the Chief Vigilance Officer of the Principal for appropriate action.",
+        "section": "7.1",
+        "text": "The Principal will report any corruption-related conduct to the Chief Vigilance Officer."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 22,
+            "last": 24,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "The Principal appoints competent and credible Independent External Monitor(s) for this Pact. The task of the Monitor is to review independently and objectively, whether and to what extend the parties comply with the obligations under this pact.",
+        "section": "8.1",
+        "text": "An Independent External Monitor will oversee compliance with the Integrity Pact."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 34,
+            "last": 36,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "The Monitor is not subject to any instructions by the representatives of the parties and performs his functions neutrally and independently. He will report to the Chairman and Managing Director of the Principal.",
+        "section": "8.2",
+        "text": "The Monitor operates independently and reports to the Chairman and Managing Director."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 37,
+            "last": 40,
+            "page": 29
+          }
+        ],
+        "page": 29,
+        "quote": "The  TP (s)/Contractor(s) accepts that the Monitor has the right to access without restriction to all product documentation of the Principal including that provided by the  TP (s)/Contractor(s). The  TP (s)/Contractor(s) will also grant the Monitor, upon his request and demonstration of a valid interest, unrestricted and unconditional access to his project documentation.",
+        "section": "8.3",
+        "text": "The Monitor has unrestricted access to all relevant documentation from the Principal and the Contractor."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

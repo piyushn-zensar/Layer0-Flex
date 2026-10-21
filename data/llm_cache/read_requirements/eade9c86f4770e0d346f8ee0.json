@@ -1,0 +1,316 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 2,
+            "last": 2,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "All documentation submitted in response to this RFP must be in English.",
+        "section": "18 MEDIUM OF COMMUNICATION",
+        "text": "All RFP documentation must be in English."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 4,
+            "last": 4,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Tenderers are expected to fully acquaint themselves with the conditions, requirements and specifications of this RFP before submitting proposals.",
+        "section": "19 COST OF PROPOSAL",
+        "text": "Tenderers must understand all RFP conditions, requirements, and specifications before submission."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 5,
+            "last": 6,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Each tenderer assumes all risks for resource commitment and expenses, direct or indirect, of proposal preparation and participation throughout the RFP process.",
+        "section": "19 COST OF PROPOSAL",
+        "text": "Tenderers bear all risks and costs of proposal preparation and participation."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 7,
+            "last": 7,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "The CSIR is not responsible directly or indirectly for any costs incurred by tenderers.",
+        "section": "19 COST OF PROPOSAL",
+        "text": "CSIR is not liable for any costs incurred by tenderers."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 10,
+            "last": 11,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "The tenderer must confirm satisfaction regarding the correctness and validity of their proposal and that all prices and rates quoted cover all the work/items specified in the RFP.",
+        "section": "20 CORRECTNESS OF RESPONSES",
+        "text": "Tenderers must ensure their proposal's correctness and that prices cover all specified work/items."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 12,
+            "last": 12,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "The prices and rates quoted must cover all obligations under any resulting contract.",
+        "section": "20 CORRECTNESS OF RESPONSES",
+        "text": "Quoted prices must cover all contract obligations."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 13,
+            "last": 13,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "The tenderer accepts that any mistakes regarding prices and calculations will be at their own risk.",
+        "section": "20 CORRECTNESS OF RESPONSES",
+        "text": "Tenderers bear the risk of pricing and calculation errors."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 16,
+            "last": 16,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "No liability will be accepted by the CSIR in regard to anything arising from the fact that pages are missing or duplicated.",
+        "section": "21 VERIFICATION OF DOCUMENTS",
+        "text": "CSIR is not liable for missing or duplicated pages."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "Pricing schedule and B-BBEE credentials should be submitted with the proposal, but as a separate document and no such information should be available in the technical proposal.",
+        "section": "21 VERIFICATION OF DOCUMENTS",
+        "text": "Pricing and B-BBEE credentials must be separate from the technical proposal."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 21,
+            "last": 23,
+            "page": 22
+          }
+        ],
+        "page": 22,
+        "quote": "A tenderer will not be awarded points for B-BBEE status level if it is indicated in the tender documents that such a tenderer intends sub-contracting more than 25% of the value of the contract to any other enterprise that does not qualify for at least the points that such a",
+        "section": "22 SUB-CONTRACTING",
+        "text": "Tenderers lose B-BBEE points if subcontracting over 25% to enterprises with lower B-BBEE status."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 1,
+            "last": 2,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "tenderer qualifies for, unless the intended sub-contractor is an exempted micro enterprise that has the capability and ability to execute the sub-contract.",
+        "section": "22 SUB-CONTRACTING",
+        "text": "Exempted micro enterprises can be subcontracted over 25% if capable."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 3,
+            "last": 6,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "A tenderer awarded a contract may not sub-contract more than 25% of the value of the contract to any other enterprise that does not have an equal or higher B-BBEE status level than the person concerned, unless the contract is sub-contracted to an exempted micro enterprise that has the capability and ability to execute the sub-contract.",
+        "section": "22 SUB-CONTRACTING",
+        "text": "Contracts cannot subcontract over 25% to lower B-BBEE status enterprises unless exempted micro enterprises."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 8,
+            "last": 8,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "The consultants will only be remunerated at the rates:",
+        "section": "23 ENGAGEMENT OF CONSULTANTS",
+        "text": "Consultants' remuneration is limited to specific rates."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 9,
+            "last": 9,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Determined in the \"Guideline for fees\", issued by the South African Institute of Chartered Accountants (SAICA); or",
+        "section": "23 ENGAGEMENT OF CONSULTANTS",
+        "text": "Consultants' rates follow SAICA's \"Guideline for fees\"."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 11,
+            "last": 11,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Set out in the \"Guide on Hourly Fee Rates for Consultants\", by the Department of Public Service and Administration (DPSA); or",
+        "section": "23 ENGAGEMENT OF CONSULTANTS",
+        "text": "Consultants' rates follow DPSA's \"Guide on Hourly Fee Rates\"."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 13,
+            "last": 13,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Prescribed by the body - regulating the profession of the consultant.",
+        "section": "23 ENGAGEMENT OF CONSULTANTS",
+        "text": "Consultants' rates follow their professional body's guidelines."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "All travel expenses for the CSIR’s account, be it directly via the CSIR’s travel agent or indirectly via re-imbursements, must be in line with the CSIR’s travel policy.",
+        "section": "24 TRAVEL EXPENSES",
+        "text": "Travel expenses must align with CSIR's travel policy."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Only economy class tickets will be used.",
+        "section": "24 TRAVEL EXPENSES",
+        "text": "Only economy class tickets are allowed."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 19,
+            "last": 19,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "A maximum of R1400 per night for accommodation, dinner, breakfast and parking will be allowed.",
+        "section": "24 TRAVEL EXPENSES",
+        "text": "Accommodation and meals are capped at R1400 per night."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 21,
+            "last": 21,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "No car rentals of more than a Group B will be accommodated.",
+        "section": "24 TRAVEL EXPENSES",
+        "text": "Car rentals are limited to Group B or lower."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 23,
+            "last": 24,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "A tenderer shall not assume that information and/or documents supplied to CSIR, at any time prior to this request, are still available to CSIR, and shall consequently not make any reference to such information document in its response to this request.",
+        "section": "25 ADDITIONAL TERMS AND CONDITIONS",
+        "text": "Tenderers must not reference prior submissions to CSIR."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 26,
+            "last": 26,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "Copies of any affiliations, memberships and/or accreditations that support your submission must be included in the tender.",
+        "section": "25 ADDITIONAL TERMS AND CONDITIONS",
+        "text": "Include affiliations, memberships, and accreditations in the tender."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

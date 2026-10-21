@@ -1,0 +1,28 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          2,
+          3,
+          4,
+          6,
+          8
+        ],
+        "title": "Confidential information handling and protection requirements"
+      },
+      {
+        "category": "legal",
+        "members": [
+          9,
+          10,
+          11
+        ],
+        "title": "Legal terms of the agreement"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

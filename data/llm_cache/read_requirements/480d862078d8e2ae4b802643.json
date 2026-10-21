@@ -1,0 +1,232 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 2,
+            "last": 2,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "An in-house designer accredited by the Uptime Institute as a Tier Designer is preferred",
+        "section": "S14",
+        "text": "The bidder should have an in-house designer accredited by the Uptime Institute as a Tier Designer."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 3,
+            "last": 4,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "A group's composition shall not change between submission and award, and the group leader shall supply at least one reference",
+        "section": "S15 §2.3, §2.14.5.3",
+        "text": "The bidder's team composition must remain unchanged between submission and award, and the group leader must provide a reference."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 6,
+            "last": 6,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Tenders are scored on technical value, cost performance, delivery quality and safety readiness, with a minimum required in every criterion.",
+        "section": "S15 §2.16.4",
+        "text": "Tenders are evaluated on technical value, cost performance, delivery quality, and safety readiness, with minimum scores required."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 20,
+            "last": 21,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Award goes to the tender with the best price-quality ratio, after legal and technical responsiveness is confirmed",
+        "section": "S15 §2.16.2; S12",
+        "text": "The award is given to the tender with the best price-quality ratio, subject to legal and technical compliance."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 22,
+            "last": 23,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Each category is scored from 0 (requirements insufficiently met) to 60 (met to fullest satisfaction) and then weighted",
+        "section": "S15 §2.16.5; PA",
+        "text": "Each evaluation category is scored from 0 to 60 and then weighted."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 24,
+            "last": 24,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "A tender needs at least the minimum in every criterion and at least 66 points overall",
+        "section": "S15 §2.16.4; PA",
+        "text": "A tender must meet the minimum score in each criterion and achieve at least 66 points overall."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 25,
+            "last": 25,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Ties are broken by the higher mark in criterion 1, then 2, 3 and 4",
+        "section": "S15 §2.16.9",
+        "text": "Ties are resolved by comparing scores in criteria 1, 2, 3, and 4 sequentially."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 26,
+            "last": 27,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Repeating a mandatory requirement without detail scores low, and anything offered beyond the minimum becomes binding",
+        "section": "S15 §2.16.4",
+        "text": "Repeating mandatory requirements without detail scores low, and exceeding minimum requirements becomes binding."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 28,
+            "last": 30,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Cost performance sums capital cost (system acquisition, infrastructure preparation such as floor, cooling and power, and maintenance and licences) and operating cost (energy, complementary staff, user support and maintenance beyond five years)",
+        "section": "S15 §2.16.6",
+        "text": "Cost performance includes capital and operating costs, covering acquisition, infrastructure, energy, and long-term maintenance."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 31,
+            "last": 33,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Energy cost uses the Owner's PUE per cooling technique and energy price. Bidders commit energy-to-solution and time-to-solution on the Owner's workload, which yields an AI-performance-per-watt metric",
+        "section": "S15 §2.16.6",
+        "text": "Energy cost evaluation uses the Owner's PUE and energy price, with bidders committing to energy and time-to-solution metrics."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 34,
+            "last": 35,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Guaranteed delivery dates enter the evaluation, and the Owner may adjust the project schedule to fit them",
+        "section": "S12",
+        "text": "Guaranteed delivery dates are evaluated, and the Owner may adjust the schedule accordingly."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 36,
+            "last": 36,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "The Owner compares each lump-sum price with its own engineer's estimate",
+        "section": "S12; S13",
+        "text": "The Owner compares lump-sum prices with its engineer's estimate."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 37,
+            "last": 37,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Bids with no price, or a refusal of liquidated damages, are non-responsive",
+        "section": "S13",
+        "text": "Bids lacking a price or refusing liquidated damages are deemed non-responsive."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 38,
+            "last": 39,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "During dialogue the Owner may discard or reduce the solutions under discussion by applying the award criteria",
+        "section": "S15 §2.15.1",
+        "text": "The Owner may modify or discard solutions during dialogue based on award criteria."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 45,
+            "last": 47,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "The technical tender shall not exceed 300 pages, on A4 with 10 pt body text and margins of at least 15 mm, written concisely with no brochure summaries, no generic diagrams and no cross-references between documents. Material beyond the limits is not considered",
+        "section": "S15 §2.7, §2.16.10",
+        "text": "The technical tender must be concise, under 300 pages, and follow strict formatting rules."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 48,
+            "last": 49,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "All technical assumptions go in the assumptions section of the technical tender, and pricing assumptions go in the financial model",
+        "section": "S15 §2.16.10",
+        "text": "Technical and pricing assumptions must be clearly separated into their respective sections."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

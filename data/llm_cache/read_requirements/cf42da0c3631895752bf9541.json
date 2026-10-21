@@ -1,0 +1,302 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 2,
+            "last": 3,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Prices shall be unconditional. Statements such as 'to be discussed', or references to a separate contract, disqualify an offer",
+        "section": "S15 §2.9",
+        "text": "Prices must be unconditional, and certain statements or references can disqualify an offer."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 4,
+            "last": 4,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Offers shall stay valid for at least four months after the submission deadline",
+        "section": "S15 §1.13",
+        "text": "Offers must remain valid for at least four months post submission deadline."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 5,
+            "last": 6,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "The successful bidder shall provide a performance guarantee of 10% of contract value at signature. A pre-financing guarantee shall cover up to 30% of the price if pre-financing is requested",
+        "section": "S15 §1.8",
+        "text": "Performance and pre-financing guarantees are required from the successful bidder."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 7,
+            "last": 7,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "The successful bidder shall also provide performance and payment bonds in a form the Owner approves",
+        "section": "S12; S13",
+        "text": "Performance and payment bonds must be provided in an approved form."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 9,
+            "last": 12,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Liquidated damages shall reduce prices when service level requirements are missed, capped by an at-risk amount: a percentage of monthly recurring prices for continuous services and a per-service cap for discrete services. Delay penalties scale with the length of the delay and the seriousness of the breach",
+        "section": "S15 §1.1, §1.6",
+        "text": "Liquidated damages and delay penalties apply for service level failures."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Commercial exceptions shall be listed in a separate schedule. Exceptions on payment, cancellation charges, warranty or liquidated damages are assessed for economic risk and can make a bid non-responsive",
+        "section": "S12; S13; PA",
+        "text": "Commercial exceptions must be listed separately and may affect bid responsiveness."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 16,
+            "last": 16,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Warranty is included within the five-year maintenance period, and component warranties run inside it",
+        "section": "S7 App B.9",
+        "text": "Warranty is included in the five-year maintenance period."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Failures caused by disturbances that are foreseeable within the interface limits of Section 9 are the Contractor's responsibility",
+        "section": "S7 App B.9; PA",
+        "text": "Contractor is responsible for foreseeable failures within interface limits."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 21,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "The Contractor shall guarantee supply-chain security for each component for the expected lifetime of the system, with a risk plan and mitigation for sensitive components",
+        "section": "S15 §1.6",
+        "text": "Supply-chain security must be guaranteed for the system's lifetime."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 22,
+            "last": 24,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Bidders shall state the share of work they subcontract. Subcontractors above 15% of price, or whose capacity is needed to qualify, shall sign the confidentiality agreement and give a written undertaking to make their resources available",
+        "section": "S15 §2.14.3, §2.14.5",
+        "text": "Bidders must disclose subcontracting details and ensure subcontractor compliance."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 25,
+            "last": 25,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Entities subject to applicable sanctions or restrictive measures shall not take part in any capacity",
+        "section": "S15 §1.5; PA",
+        "text": "Sanctioned entities are prohibited from participation."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 27,
+            "last": 28,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "The bidder bears all costs of bidding. The Owner may abandon the procurement before signature without compensation",
+        "section": "S15 §1.9",
+        "text": "Bidders bear bidding costs, and the Owner may cancel without compensation."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 29,
+            "last": 29,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Information exchanged is confidential and used only to prepare the bid",
+        "section": "S15 §2.3; S14",
+        "text": "Bid information is confidential and for bid preparation only."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 34,
+            "last": 34,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Annual turnover over the last two closed financial years shall exceed one-third of the lot value, combined across a group, supported by profit and loss accounts",
+        "section": "S15 §2.14.5.2; PA",
+        "text": "Annual turnover must exceed one-third of the lot value over two years."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 36,
+            "last": 36,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Manufacturers shall have at least five years designing, building and testing the offered equipment for data centers, and shall supply a reference list of installed units",
+        "section": "S14",
+        "text": "Manufacturers need five years of experience and a reference list."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 38,
+            "last": 38,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Each bidder shall provide three reference forms for work executed in the previous four years, at least one from the bidder itself rather than another entity",
+        "section": "S15 §2.14.5.3",
+        "text": "Three references are required, with at least one from the bidder."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 40,
+            "last": 40,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Lot 6 references shall be AI installations with at least 500 AI-optimised GPUs tightly interconnected on a low-latency network, with storage suited to AI workloads",
+        "section": "S15 §2.14.5.3",
+        "text": "Lot 6 references must involve specific AI installations."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 42,
+            "last": 42,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Lot 2 and Lot 3 references shall be data center or utility installations of comparable power-conversion or distribution scale at the offered voltage class",
+        "section": "PA",
+        "text": "Lot 2 and 3 references must match specific installation criteria."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 44,
+            "last": 45,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "The bidder shall run a support centre in the site's region for more than two years, serving at least two similar clients with at least six English-speaking staff",
+        "section": "S15 §2.14.5.3; PA",
+        "text": "A regional support center with specific capabilities is required."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 46,
+            "last": 46,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "The bidder shall hold relevant certifications, such as ISO 9001 quality, ISO 27001 security, ISO 14001 environmental management and ISO 45001 safety",
+        "section": "S15 §2.14.5.4; S14",
+        "text": "Relevant certifications are required for the bidder."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 48,
+            "last": 49,
+            "page": 8
+          }
+        ],
+        "page": 8,
+        "quote": "Experts with at least three years in role, each a different person, shall cover systems architect, systems engineer, data center infrastructure specialist, application and benchmarking specialist, and project manager",
+        "section": "N/A",
+        "text": "Specific expert roles with three years of experience are required."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

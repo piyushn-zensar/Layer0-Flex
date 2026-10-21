@@ -1,0 +1,34 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "title": "Communication module requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          6,
+          7
+        ],
+        "title": "Meter casing and box specifications"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          8,
+          9
+        ],
+        "title": "Compliance with IS 16444 and testing standards"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

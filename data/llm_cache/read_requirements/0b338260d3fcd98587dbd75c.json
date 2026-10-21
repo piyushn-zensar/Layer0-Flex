@@ -1,0 +1,232 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 10,
+            "last": 10,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "Each bidder shall state the revision it designs to.",
+        "section": "Notice and reading guide",
+        "text": "Bidders must specify the revision of industry documents they design to."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 24,
+            "last": 24,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "PM-01 | Bids may cover one or more lots, and each lot's qualification rules apply separately | PA",
+        "section": "Procurement model",
+        "text": "Bids can cover one or more lots, with separate qualification rules for each."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 25,
+            "last": 25,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "PM-02 | The Owner furnishes major equipment for the Contractor to install, and the equipment is integrated into the overall data center design | S14",
+        "section": "Procurement model",
+        "text": "The Owner provides major equipment for installation and integration."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 27,
+            "last": 27,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "PM-03 | An independent design consultant owns the overall campus design | S14",
+        "section": "Procurement model",
+        "text": "An independent design consultant is responsible for the campus design."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 28,
+            "last": 28,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "PM-04 | Contractors shall provide training with their lot | S15 §1.6",
+        "section": "Procurement model",
+        "text": "Contractors must provide training for their lot."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 33,
+            "last": 33,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "DB-01 | Critical IT load of 120 MW for AI training, in six deployment units of about 20 MW each | PA; S5 Option C",
+        "section": "Design basis",
+        "text": "The critical IT load is 120 MW, divided into six 20 MW units."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 34,
+            "last": 35,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "DB-02 | Utility service above 100 kV is stepped down to a 13.8 kV site bus with two buses, one for core network and mechanical loads and one for GPU compute loads | PA; S6; S13",
+        "section": "Design basis",
+        "text": "Utility service above 100 kV is stepped down to a 13.8 kV site bus with two buses."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 36,
+            "last": 36,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "DB-03 | All medium-voltage equipment is 15 kV class | S2 §4.2; S10; S13",
+        "section": "Design basis",
+        "text": "All medium-voltage equipment must be 15 kV class."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 37,
+            "last": 37,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "DB-04 | Distribution to the rack is 800 VDC nominal, two-wire, inside the 1500 VDC low-voltage limit | S5; S3 §5.2.1",
+        "section": "Design basis",
+        "text": "Rack distribution is 800 VDC nominal, two-wire, within the 1500 VDC low-voltage limit."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 39,
+            "last": 39,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "DB-05 | Baseline rack cabinets are 198 to 330 kW TDP, and designs shall allow growth to 570 kW per rack position and to native 800 VDC racks | S6; S5",
+        "section": "Design basis",
+        "text": "Rack cabinets are 198-330 kW TDP, with growth to 570 kW per rack and native 800 VDC racks."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 41,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "DB-06 | The availability target is 99.9% for a training campus, with concurrent maintainability as the design intent | S3 §4.2; S14",
+        "section": "Design basis",
+        "text": "The availability target is 99.9% with concurrent maintainability."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "DB-07 | Each deployment unit uses block redundancy with a catcher: four power blocks of about 4.8 MW plus one catcher | S5 Option C",
+        "section": "Design basis",
+        "text": "Deployment units use block redundancy with a catcher: four 4.8 MW blocks plus one catcher."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 45,
+            "last": 45,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "DB-08 | The liquid cooling design point is facility water at 45 °C | S6",
+        "section": "Design basis",
+        "text": "The liquid cooling design point is facility water at 45 °C."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 46,
+            "last": 46,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "DB-09 | Design ambient is 35 °C for extended periods, with peaks of 38 to 40 °C on single days | S15 §1.14.2.10; PA",
+        "section": "Design basis",
+        "text": "Design ambient is 35 °C, with peaks of 38-40 °C on single days."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 47,
+            "last": 48,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "DB-10 | Outdoor equipment is rated ·30 to 40 °C with derating stated above 40 °C, up to 1,000 m with derating above, corrosion class C5, seismic design category D and 120 mph wind | S2 §6; PA",
+        "section": "Design basis",
+        "text": "Outdoor equipment is rated -30 to 40 °C, with derating above 40 °C and 1,000 m, corrosion class C5, seismic category D, and 120 mph wind."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 49,
+            "last": 49,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "DB-11 | The Owner holds the utility interconnection agreements and secures permits for the campus | S9; PA",
+        "section": "Design basis",
+        "text": "The Owner manages utility interconnection agreements and campus permits."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

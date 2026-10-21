@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          2,
+          3
+        ],
+        "title": "Device power-on and functionality requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          4,
+          5
+        ],
+        "title": "Battery charging status display requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

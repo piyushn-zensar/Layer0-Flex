@@ -1,0 +1,116 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement is about compliance and the role of an independent design consultant. It does not specify a product or service from the catalog, so no units are listed.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The critical IT load of 120 MW distributed in six units of 20 MW each aligns with the FPM-DCPDU product, which is designed for high-power DC distribution in AI racks.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "FPM-DCPDU"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 3,
+        "rationale": "The requirement for 15 kV class medium-voltage equipment matches the CROWN-ARMV product, which is arc-resistant metal-clad MV switchgear suitable for such applications.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 4,
+        "rationale": "The distribution to the rack at 800 VDC nominal aligns with the FPM-800V product, which is designed for 800 VDC rack power distribution.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-800V"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 5,
+        "rationale": "The baseline rack cabinets and their power requirements align with the CLOUD-RACK product, which provides data-center racks and enclosures capable of supporting high TDP and power densities.",
+        "units": [
+          {
+            "bu": "CLOUD",
+            "offering_type": "CTO",
+            "product_id": "CLOUD-RACK"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "This requirement is about availability targets and design intent, which are not directly tied to a specific product from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 7,
+        "rationale": "The block redundancy with a catcher aligns with the FPM-DCPDU product, which supports high-power distribution and redundancy configurations.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "FPM-DCPDU"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 8,
+        "rationale": "The liquid cooling design point of 45 °C facility water matches the JETCOOL-CDU product, which is designed for high-density liquid cooling.",
+        "units": [
+          {
+            "bu": "JETCOOL",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "JETCOOL-CDU"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 9,
+        "rationale": "This requirement specifies environmental conditions for the design but does not directly specify a product from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 10,
+        "rationale": "The outdoor equipment requirements, including environmental and seismic ratings, align with the CROWN-EHOUSE product, which is designed for robust outdoor applications.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-EHOUSE"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 11,
+        "rationale": "This compliance requirement about utility interconnection agreements and permits does not specify a product or service from the catalog.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

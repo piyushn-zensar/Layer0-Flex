@@ -1,0 +1,80 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement describes a service substation integrating HV-to-MV transformers and MV buses. The ANORD-PSS product, a packaged substation, fits this description as it includes transformers and MV switchgear, and can be customized to meet the specific integration needs.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "ANORD-PSS"
+          }
+        ]
+      },
+      {
+        "confidence": 0.95,
+        "n": 2,
+        "rationale": "The requirement specifies 15 kV-class metal-clad switchgear with arc-rated construction (Type 2B). The CROWN-ARMV product matches this description as it is arc-resistant metal-clad MV switchgear built to IEEE C37.20.7 Type 2B standards.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.85,
+        "n": 3,
+        "rationale": "The requirement involves MV control power with a 110 VDC battery-backed system. The EP2-AUX product, an auxiliary power system, is suitable for providing DC control power for MV systems.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "EP2-AUX"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement specifies relays with communication and event recording capabilities. The EP2-RPP product, which includes protective relays and SCADA interfaces, meets this need.",
+        "units": [
+          {
+            "bu": "EP2",
+            "offering_type": "ETO",
+            "product_id": "EP2-RPP"
+          }
+        ]
+      },
+      {
+        "confidence": 0.7,
+        "n": 5,
+        "rationale": "The requirement involves backup generation, which is not covered by the listed products in the catalog. This is likely a responsibility for the bid manager to address.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 6,
+        "rationale": "The requirement involves interconnection studies and protection-coordination data, which are services rather than product requirements. This is likely a responsibility for the bid manager to address.",
+        "units": []
+      },
+      {
+        "confidence": 0.6,
+        "n": 7,
+        "rationale": "The requirement specifies power blocks converting MV AC to 800 VDC, which does not match any product in the catalog. This may require a custom solution or further clarification from the customer.",
+        "units": []
+      },
+      {
+        "confidence": 0.7,
+        "n": 8,
+        "rationale": "The requirement specifies short-circuit withstand and grounding details, which are design parameters rather than specific product requirements. This is likely a responsibility for the bid manager to address.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

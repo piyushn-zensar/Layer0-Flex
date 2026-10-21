@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          2,
+          4
+        ],
+        "title": "Compliance with RFP terms and conditions"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          5,
+          3
+        ],
+        "title": "Consequences for violations of compliance"
+      },
+      {
+        "category": "legal",
+        "members": [
+          6,
+          7
+        ],
+        "title": "Legal obligations and penalties for violations"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          3,
+          5,
+          7
+        ],
+        "title": "PCB manufacturing and design requirements"
+      },
+      {
+        "category": "submission",
+        "members": [
+          2,
+          9
+        ],
+        "title": "Submission of manufacturing and quality assurance reports"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

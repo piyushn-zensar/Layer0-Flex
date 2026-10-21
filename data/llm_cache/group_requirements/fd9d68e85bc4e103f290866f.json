@@ -1,0 +1,33 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          6,
+          7
+        ],
+        "title": "Integrity Pact compliance requirements"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Contractor compliance declarations and consequences"
+      },
+      {
+        "category": "commercial",
+        "members": [
+          4,
+          5
+        ],
+        "title": "Commercial consequences of disqualification or default"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

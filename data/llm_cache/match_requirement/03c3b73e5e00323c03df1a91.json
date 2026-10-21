@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies integration with the Owner's electrical power management system using PMBus, Modbus, or CANbus. ANORD-PMS provides power management and monitoring systems, including SCADA and modular circuit monitoring systems, which align with this requirement.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "ANORD-PMS"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "This requirement pertains to testing and commissioning procedures, which are typically part of the manufacturer's service offerings rather than specific products. The bid manager should address this requirement.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "This compliance requirement relates to operational conditions during testing and does not specify a product. The bid manager should address this requirement.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement specifies system-level simulation and dynamic response testing. EMS-TEST provides test, reliability, and failure analysis services, including simulation and modeling, which align with this requirement.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-TEST"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

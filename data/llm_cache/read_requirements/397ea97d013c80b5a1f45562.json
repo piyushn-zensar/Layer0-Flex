@@ -1,0 +1,176 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 3,
+            "last": 4,
+            "page": 47
+          }
+        ],
+        "page": 47,
+        "quote": "This Agreement shall be binding upon and inure to the benefit of the respective successors and assigns of both Parties respectively.",
+        "section": "ARTICLE 11. ASSIGNMENT",
+        "text": "Agreement binds successors and assigns of both parties."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 6,
+            "last": 9,
+            "page": 47
+          }
+        ],
+        "page": 47,
+        "quote": "Neither Party shall assign or otherwise transfer any of its rights nor shall obligations under this Agreement to any third Party inure without the prior written consent of the other Party and any attempted assignment or transfer without such prior written consent shall be null and void.",
+        "section": "ARTICLE 11. ASSIGNMENT",
+        "text": "Assignment or transfer of rights requires prior written consent."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 11,
+            "last": 13,
+            "page": 47
+          }
+        ],
+        "page": 47,
+        "quote": "No license, right, title, or interest in, or to any patent, trademark, mask work, copyright, service mark, or any other intellectual property rights, is granted or implied by disclosure of, or access to such Confidential Information disclosed hereunder.",
+        "section": "ARTICLE 12. GENERAL PROVISIONS",
+        "text": "No intellectual property rights are granted by disclosure of confidential information."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 14,
+            "last": 15,
+            "page": 47
+          }
+        ],
+        "page": 47,
+        "quote": "Each Party warrants that it has the lawful, unqualified right to transfer, use, or otherwise disclose the information transmitted hereunder.",
+        "section": "ARTICLE 12. GENERAL PROVISIONS",
+        "text": "Parties must have lawful rights to disclose transmitted information."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 16,
+            "last": 18,
+            "page": 47
+          }
+        ],
+        "page": 47,
+        "quote": "No other warranties, express, or implied at law, or in equity, are intended or deemed to arise by virtue of entering into this Agreement or performing hereunder.",
+        "section": "ARTICLE 12. GENERAL PROVISIONS",
+        "text": "No additional warranties arise from entering or performing the agreement."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 19,
+            "last": 20,
+            "page": 47
+          }
+        ],
+        "page": 47,
+        "quote": "In the event of breach of the terms of this Agreement, the failure of a Party to enforce any right under this Agreement, shall not be deemed a waiver of any right hereunder.",
+        "section": "ARTICLE 12. GENERAL PROVISIONS",
+        "text": "Failure to enforce rights does not waive them."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 21,
+            "last": 22,
+            "page": 47
+          }
+        ],
+        "page": 47,
+        "quote": "The invalidity in whole, or in part, of any condition of this Agreement shall not affect the validity of any other condition hereof.",
+        "section": "ARTICLE 12. GENERAL PROVISIONS",
+        "text": "Invalidity of one condition does not affect others."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 23,
+            "last": 24,
+            "page": 47
+          }
+        ],
+        "page": 47,
+        "quote": "At all times, both Parties shall remain independent contractors, with each responsible for its own employees and representatives.",
+        "section": "ARTICLE 12. GENERAL PROVISIONS",
+        "text": "Parties remain independent contractors, responsible for their own employees."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 25,
+            "last": 27,
+            "page": 47
+          }
+        ],
+        "page": 47,
+        "quote": "This Agreement is not intended to be, nor shall it be construed as, a joint venture, Partnership or other formal business organization, and neither party shall have the right or obligation to share any of the profits, or bear any losses, risks or liabilities of the other Party by virtue of this Agreement.",
+        "section": "ARTICLE 12. GENERAL PROVISIONS",
+        "text": "Agreement does not create a joint venture or partnership."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 28,
+            "last": 30,
+            "page": 47
+          }
+        ],
+        "page": 47,
+        "quote": "Neither Party is authorized to act for, or on behalf, of the other Party, nor to bind or, otherwise commit the other Party to any contract, or other matter.",
+        "section": "ARTICLE 12. GENERAL PROVISIONS",
+        "text": "Parties cannot act or bind each other."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 31,
+            "last": 32,
+            "page": 47
+          }
+        ],
+        "page": 47,
+        "quote": "This Agreement is deemed to be made under, and shall be construed in accordance with the laws of India.",
+        "section": "ARTICLE 12. GENERAL PROVISIONS",
+        "text": "Agreement is governed by Indian law."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 33,
+            "last": 34,
+            "page": 47
+          }
+        ],
+        "page": 47,
+        "quote": "No amendment or modification of this Agreement shall be valid, or binding on the Parties, unless made in writing and signed on behalf of the Parties, their",
+        "section": "ARTICLE 12. GENERAL PROVISIONS",
+        "text": "Amendments must be written and signed."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

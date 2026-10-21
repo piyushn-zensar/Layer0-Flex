@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 5,
+            "last": 6,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "8.19 ITI LTD will not consider any or all of the bids if they are not meeting RFP requirements.",
+        "section": "8.19",
+        "text": "Bids not meeting RFP requirements will not be considered."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 7,
+            "last": 8,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "8.20 ITI LTD may at its discretion reject any offers received for selection without assigning any reasons.",
+        "section": "8.20",
+        "text": "ITI LTD can reject offers without providing reasons."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 11,
+            "last": 16,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "9.1 Confidentiality  All documents, drawings, samples, data, associated correspondence or other information furnished by or on behalf of the customer to the bidder, in connection with the customer PO, whether such information has been furnished before, during or following completion or termination of the customer PO are confidential.",
+        "section": "9.1",
+        "text": "All information provided by the customer to the bidder is confidential."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 17,
+            "last": 18,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": " If advised by the Customer, all copies of such information in original shall be returned on completion of the bidder’s performance and obligations under this customer PO.",
+        "section": "9.1",
+        "text": "Original copies of information must be returned upon completion of obligations if advised by the customer."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 21,
+            "last": 24,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "9.2 Transparency All customers are responsible and accountable to ensure transparency, fairness, equality, competition and appeal rights.",
+        "section": "9.2",
+        "text": "Customers must ensure transparency, fairness, equality, competition, and appeal rights."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 29,
+            "last": 35,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "This involves simultaneous, symmetric and unrestricted dissemination of information to all likely bidders, sufficient for them to know and understand the availability of bidding opportunities and actual means, processes and time limits prescribed for completion of registration of bidders, bidding, evaluation, grievance redressal, award and management of contracts.",
+        "section": "9.2",
+        "text": "Information must be disseminated equally to all bidders for understanding bidding opportunities and processes."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 36,
+            "last": 37,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "It implies that such officers must ensure that there is consistency, predictability, clarity, openness, equal opportunities in processes.",
+        "section": "9.2",
+        "text": "Officers must ensure consistent, predictable, and clear processes with equal opportunities."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 39,
+            "last": 40,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "9.3 Indemnity: Bidder to indemnify ITI LTD from any claims / penalties / statutory charges, liquidated damages, with legal expenses etc. as charged by the customer.",
+        "section": "9.3",
+        "text": "Bidder must indemnify ITI LTD from claims, penalties, and legal expenses."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 42,
+            "last": 43,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "LD/ Penalties incurred on account of delay in supply, product failure during warranty if any and deficiency in Warranty and AMC services shall be borne by the bidder.",
+        "section": "9.3",
+        "text": "Bidder bears penalties for delays, product failures, and warranty deficiencies."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 46,
+            "last": 49,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "9.4 INTELLECTUAL PROPERTY: Each Party will retain its right, title and interest in its respective trademarks, service marks and trade names as well as rights in respect of any patent, copyright, trade secrets or other intellectual property used during the performance of this Agreement.",
+        "section": "9.4",
+        "text": "Each party retains rights to its intellectual property."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

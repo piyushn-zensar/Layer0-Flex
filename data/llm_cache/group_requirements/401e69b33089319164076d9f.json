@@ -1,0 +1,54 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Submission requirements for joint venture documentation"
+      },
+      {
+        "category": "submission",
+        "members": [
+          4,
+          5
+        ],
+        "title": "Submission of company ownership and registration documents"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          6,
+          7,
+          9
+        ],
+        "title": "Compliance with RFP terms and conditions"
+      },
+      {
+        "category": "legal",
+        "members": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "title": "Legal disclaimers and implications of the RFP"
+      },
+      {
+        "category": "commercial",
+        "members": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "title": "Commercial considerations for awarding the RFP"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

@@ -1,0 +1,20 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies a color for an enclosure, which is a detail typically determined during the manufacturing or customization process. It does not directly map to a specific product in the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement pertains to quality assurance and certification, which is a general manufacturing standard and not tied to a specific product in the catalog. The bid manager should address this.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

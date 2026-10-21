@@ -1,0 +1,16 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          2,
+          3
+        ],
+        "title": "Button 1 functionality requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

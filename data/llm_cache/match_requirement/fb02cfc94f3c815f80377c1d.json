@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies the production of a prototype enclosure using SLS technology and specific materials, which aligns with EMS-NPI's capabilities in rapid prototyping and additive manufacturing.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-NPI"
+          }
+        ]
+      },
+      {
+        "confidence": 0.85,
+        "n": 2,
+        "rationale": "The requirement involves the production of various components for a device, which matches EMS-BOX's expertise in electro-mechanical assembly and system integration.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-BOX"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement involves the assembly of device sub-modules into a complete system, which is a core capability of EMS-BOX in system integration and assembly.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-BOX"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

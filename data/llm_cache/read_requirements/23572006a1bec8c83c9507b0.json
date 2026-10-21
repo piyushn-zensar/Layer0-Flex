@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 24,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "The fully assemble Device must be able to perform recognition of fingerprints",
+        "section": "Functional Evaluation Criteria",
+        "text": "Device must perform fingerprint recognition."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 31,
+            "last": 34,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Power – The Device must switch ON and OFF",
+        "section": "Functional Evaluation Criteria",
+        "text": "Device must switch ON and OFF."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 37,
+            "last": 40,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Buttons – All buttons are functional when pressed",
+        "section": "Functional Evaluation Criteria",
+        "text": "All buttons must function when pressed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 50,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Camera – When button 4 or Gun triggered button is pressed, the camera must open, and the illumination LED must switch ON.",
+        "section": "Functional Evaluation Criteria",
+        "text": "Camera and LED must activate when specific buttons are pressed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 57,
+            "last": 68,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Assemble all the Device sub-modules (requirement 4.1, requirement 4.2 and requirement 4.4) inside the enclosure (requirement 4.3) to have a fully assembled Fingerprint Recognition Device.",
+        "section": "Functional Evaluation Criteria",
+        "text": "Assemble all sub-modules into the enclosure for a complete device."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 71,
+            "last": 73,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Load the executable Test application.",
+        "section": "Functional Evaluation Criteria",
+        "text": "Load the executable test application."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 74,
+            "last": 78,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Fully assembled Device must be connected to a network port via an ethernet cable.",
+        "section": "Functional Evaluation Criteria",
+        "text": "Connect the device to a network port using an ethernet cable."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 79,
+            "last": 85,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "GPS - Device GPS coordinates (GPS fix) must display on the screen or stored locally on the database.",
+        "section": "Functional Evaluation Criteria",
+        "text": "Device GPS coordinates must display or be stored locally."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

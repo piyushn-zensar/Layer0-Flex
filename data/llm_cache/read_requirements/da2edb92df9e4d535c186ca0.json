@@ -1,0 +1,134 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 3,
+            "last": 4,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "Monitor is under contractual obligation to treat the information and documents TP (s)/Contractor(s) with confidentiality.",
+        "section": "8.4",
+        "text": "Monitor must maintain confidentiality of information and documents."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 5,
+            "last": 7,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "The Principal will provide to the Monitor sufficient information about all meetings among the parties related to the project provided such meeting could have an impact on the contractual relations between the Principal and the TP (s)/Contractor(s).",
+        "section": "8.4",
+        "text": "Principal must inform Monitor about relevant meetings."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 8,
+            "last": 10,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "As soon as the Monitor notices, or believes to notice, a violation of this agreement, he will so inform the Management of the Principal and request the Management to discontinue or take corrective action, or to take other relevant action.",
+        "section": "8.4",
+        "text": "Monitor must report violations to Principal's management."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 11,
+            "last": 11,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "The monitor can in this regard submit non-binding recommendations.",
+        "section": "8.4",
+        "text": "Monitor may provide non-binding recommendations."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 14,
+            "last": 16,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "The Monitor will submit a written report to the Chairman & Managing Director of the Principal within ………….. to ……….. Weeks from the date of reference or intimation to him by the principal and, should the occasion arise, submit proposals for correcting problematic situations.",
+        "section": "8.5",
+        "text": "Monitor must submit a report within a specified timeframe."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 18,
+            "last": 23,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "If the Monitor has reported to the Chairman & Managing Director of the Principal a substantiated suspicion of an offence under relevant IPC/PC Act, and the Chairman & Managing Director of the principal has not, within the reasonable time taken visible action to proceed against such offence or reported it to the Chief Vigilance Officer, the Monitor may also transmit this information directly to the Central Vigilance Commissioner.",
+        "section": "8.6",
+        "text": "Monitor may report offences to the Central Vigilance Commissioner if no action is taken."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 24,
+            "last": 24,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "The word 'Monitor' would include both singular and plural.",
+        "section": "8.7",
+        "text": "'Monitor' applies to both singular and plural forms."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 26,
+            "last": 31,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "In case of any allegation of violation of any provisions of this Pact or payment of commission, the Principal or its agencies shall be entitled to examine all the documents including the Books of Accounts of the TP (s)/Contractor(s) and the TP (s)/Contractor(s) shall provide necessary information and documents in English and shall extend aII help to the Principal for the purpose of verification of the documents.",
+        "section": "9.1",
+        "text": "Contractors must provide documents and assistance for verification."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 33,
+            "last": 34,
+            "page": 30
+          }
+        ],
+        "page": 30,
+        "quote": "The Pact is subject to the Law as applicable in Indian Territory. The place of performance and jurisdiction shall be the seat of the Principal.",
+        "section": "10.1",
+        "text": "The agreement is governed by Indian law and jurisdiction."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

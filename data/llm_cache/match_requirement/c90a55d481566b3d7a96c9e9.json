@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies a power switchover functionality, which aligns with the capabilities of the ANORD-STS product, a static transfer switch designed to protect critical loads against supply-source interruptions.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "CTO",
+            "product_id": "ANORD-STS"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "This requirement pertains to the operational behavior of the Device, specifically its response to user input via Button 1. It does not directly specify a product requirement, as it likely involves firmware or software logic within the Device itself.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "Highlighting a screen element based on user input is a software functionality related to the Device's user interface. This does not correspond to a specific product from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 4,
+        "rationale": "Displaying the Device's IP address on the screen is a software feature related to the Device's network configuration and user interface, not a hardware product requirement.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

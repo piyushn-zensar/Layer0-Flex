@@ -1,0 +1,14 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement describes software and hardware functionality for a Raspberry Pi device, including GPS detection and camera triggering. These are not related to any specific product in the catalog, as they pertain to the customer's device and software development. The bid manager should address this requirement.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

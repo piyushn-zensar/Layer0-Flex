@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies a power module with I2C communication, which aligns with the FPM-DCDC product offering. This product includes DC-DC converters with digital interfaces like PMBus, which is compatible with I2C.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-DCDC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "The requirement for a power supply module with battery charging capability aligns with the FPM-DCDC product, as it includes DC-DC converters that can be configured for various power management tasks, including battery charging.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-DCDC"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

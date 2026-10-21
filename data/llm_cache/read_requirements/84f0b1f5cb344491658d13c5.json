@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 21,
+            "last": 22,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "The Principal commits itself to take all measures necessary to prevent corruption and to observe the following principles:",
+        "section": "SECTION 1 – COMMITMENTS OF THE PRINCIPAL",
+        "text": "The Principal must take measures to prevent corruption."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 23,
+            "last": 26,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "No employee of the Principal, personally or through family members, will in connection with the tender for or the execution of the contract, demand, take a promise for or accept, for self or third person, any material or immaterial benefit which the personal is not legally entitled to.",
+        "section": "SECTION 1 – COMMITMENTS OF THE PRINCIPAL",
+        "text": "Principal's employees must not accept unauthorized benefits related to the tender or contract."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 28,
+            "last": 32,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "The Principal will, during the tender process treat all  TP (s) with equity and reason. The Principal will in particular, before and during the tender process, provide to all  TP (s) the same information and will not provide to any  TP (s) confidential/ additional information through which the  TP (s) could obtain an advantage in relation to the tender process or the contract execution.",
+        "section": "SECTION 1 – COMMITMENTS OF THE PRINCIPAL",
+        "text": "The Principal must treat all tender participants equally and provide the same information."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 34,
+            "last": 34,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "The Principal will exclude from the process all known prejudiced persons.",
+        "section": "SECTION 1 – COMMITMENTS OF THE PRINCIPAL",
+        "text": "The Principal must exclude prejudiced individuals from the process."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 36,
+            "last": 40,
+            "page": 25
+          }
+        ],
+        "page": 25,
+        "quote": "If the principal obtains information on the conduct of any of its employee, which is a criminal offence under IPC/PC Actor if there be a substantive suspicion in this regard, the Principal will inform the Chief Vigilance Officer and in addition can initiate disciplinary action as per its internal laid down Rules/ Regulations.",
+        "section": "SECTION 1 – COMMITMENTS OF THE PRINCIPAL",
+        "text": "The Principal must report and act on employee misconduct related to criminal offenses."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 5,
+            "last": 9,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "If the TP (s)/Contractor(s), during tender process or before the award of the contract or during execution has committed a transgression in violation of Section 2, above or in any other form such as to put his reliability or credibility in question the Principal is entitled to disqualify TP (s)/Contractor(s) from the tender process.",
+        "section": "3",
+        "text": "Contractors violating Section 2 or compromising reliability may be disqualified."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 10,
+            "last": 12,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "If the TP (s)/Contractor(s), has committed a transgression through a violation of Section 2 of the above, such as to put his reliability or credibility into question, the Principal shall be entitled exclude including blacklisting for future tender/contract award process.",
+        "section": "3",
+        "text": "Contractors violating Section 2 may be blacklisted from future tenders."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "The exclusion will be imposed for a period of minimum one year.",
+        "section": "3",
+        "text": "Exclusion period is at least one year."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 20,
+            "last": 24,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "The TP (s)/Contractor(s) with its free consent and without any influence agrees and undertakes to respect and uphold the Principal's absolute right to resort to and impose such exclusion and further accepts and undertakes not to challenge or question such exclusion on any ground including the lack of any hearing before the decision to resort to such exclusion is taken.",
+        "section": "3",
+        "text": "Contractors agree not to challenge exclusions imposed by the Principal."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 26,
+            "last": 28,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "A transgression is considered to have occurred if the Principal after due consideration of the available evidence concludes that on the basis of facts available there are no material doubts.",
+        "section": "3",
+        "text": "Transgressions are determined based on evidence and lack of material doubts."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 29,
+            "last": 32,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "The decision of the Principal to the effect that breach of the provisions of this Integrity Pact has been committed by the TP @)/ Contractor(s) shall be final and binding on the TP (s)/ Contractor(s), however the TP (s)/Contractor(s) can approach IEM(s) appointed for the purpose of this Pact.",
+        "section": "3",
+        "text": "Principal's decision on breaches is final, but contractors can approach IEMs."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 33,
+            "last": 35,
+            "page": 27
+          }
+        ],
+        "page": 27,
+        "quote": "On occurrence of any sanctions/ disqualifications etc arising out from violation of integrity pact TP (s)/ Contractor(s) shall not entitled for any compensation on this account.",
+        "section": "3",
+        "text": "No compensation is provided for sanctions due to integrity pact violations."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

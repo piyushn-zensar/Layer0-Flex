@@ -1,0 +1,134 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 6,
+            "last": 11,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "MSE vendors (Micro and Small Enterprises) who are registered under Ministry of Micro and Small Enterprises, Government of India are exempted from submitting EMD. However, exemption shall be provided only to those MSE vendor who submit all the relevant documents to prove their claim as MSE and their MSE registration has to be for the relevant area pertaining to the terms of the RFP.",
+        "section": "7.2",
+        "text": "MSE vendors registered under the Ministry of Micro and Small Enterprises are exempt from submitting EMD if they provide relevant documentation."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 12,
+            "last": 13,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "All the existing procurement policies issued by Govt. of India related to MSE will be applicable.",
+        "section": "7.3",
+        "text": "Government of India procurement policies for MSEs apply."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 16,
+            "last": 41,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "The Bidding would be subjected to an On-line / e-Tendering process. The prospective Bidders are requested to go through https://itilimited.ewizard.in/to understand the entire e-Tendering Process and follow the Registration and Bidding Process on https://itilimited.ewizard.in/as defined in the document. In case of any clarifications on e-tender portal, bidders may contact the portal helpdesk of https://itilimited.ewizard.in/",
+        "section": "8.1",
+        "text": "Bidding will be conducted online; bidders must follow the e-Tendering process on the specified portal."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 43,
+            "last": 45,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "The Technical Bid and financial bid shall be uploaded in e-procurement site of ITI Limited (https://itilimited.ewizard.in/). For submission of online bid and procedure to be followed, visit https://itilimited.ewizard.in.",
+        "section": "8.2",
+        "text": "Technical and financial bids must be uploaded to the ITI Limited e-procurement site."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 47,
+            "last": 58,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "ITI’s Tender document can be downloaded from ITI web site www.itiltd.in or CPP portal www.eprocure.gov.in. For uploading the bid proposal, all bidders have to register in our eProcurement portal (https://itilimited.ewizard.in/.When submitting the bid please state the tender ID.",
+        "section": "8.3",
+        "text": "Tender documents can be downloaded from ITI or CPP portals; bidders must register and include the tender ID in their submission."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 60,
+            "last": 68,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "Any clarifications regarding the tender can be obtained from GM- Products and Technology, ITI Bhavan, ITI Limited, Corporate Office, Dooravaninagar, Bengaluru– 560016 email: pp_crp@itiltd.co.in, girishsuri_crp@itiltd.co, santoshsinha_crp@itiltd.co.in Mob: 9225653254 / 9463167237",
+        "section": "8.4",
+        "text": "Clarifications can be obtained from the specified contacts at ITI Limited Corporate Office."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 70,
+            "last": 70,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "Technical bids will be opened at 03.00 PM on 31-10-2024.",
+        "section": "8.5",
+        "text": "Technical bids will be opened at 3:00 PM on October 31, 2024."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 72,
+            "last": 73,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "All the bids will be scrutinized for turnover, experience and compliance to the RFP terms & conditions.",
+        "section": "8.6",
+        "text": "Bids will be reviewed for turnover, experience, and compliance with RFP terms."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 75,
+            "last": 76,
+            "page": 15
+          }
+        ],
+        "page": 15,
+        "quote": "Financial Bid of Technically Qualified Partners will be opened after technical evaluation.",
+        "section": "8.7",
+        "text": "Financial bids of technically qualified partners will be opened post technical evaluation."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

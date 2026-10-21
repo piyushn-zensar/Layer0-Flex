@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 5,
+            "last": 14,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "TP should have experience of Installation & commissioning of at least 2000 Smart Energy Meters from any OEM and TP should have experience of HES and MDMS system Integration from any OEM.",
+        "section": "System Integrator",
+        "text": "The bidder must have experience installing and commissioning at least 2000 Smart Energy Meters and integrating HES and MDMS systems."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 16,
+            "last": 37,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Experience certificate and Documentary evidence (Customer POs and performance certificate) to prove experience to be submitted along with the name of contact person, email id and telephone numbers of HES/ MDMS/etc., with at least 2 (two) Billing/ other utility IT systems in Indian/ Global Utility (power/ water/ natural gas/ telecom).",
+        "section": "System Integrator",
+        "text": "The bidder must provide experience certificates and documentary evidence, including contact details, for at least two utility IT systems."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 42,
+            "last": 49,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "TP should have a valid ISO 9001:2015 certification as on the date of application.",
+        "section": "System Integrator",
+        "text": "The bidder must hold a valid ISO 9001:2015 certification at the time of application."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 51,
+            "last": 53,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "A Self-Declaration of Buy Back consent to be provided.",
+        "section": "System Integrator",
+        "text": "The bidder must provide a self-declaration of buy-back consent."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 54,
+            "last": 61,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "TP should explore new business opportunities and should offer the same to ITI for manufacturing and ITI will have the first right of refusal in case it is not able to manufacture within required time frame.",
+        "section": "System Integrator",
+        "text": "The bidder must explore new business opportunities and offer them to ITI, granting ITI the first right of refusal."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 63,
+            "last": 66,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "The product so offered for manufacturing to ITI Limited should have cost of purchase within reasonable limit of at least 20% above the cost price to ITI.",
+        "section": "System Integrator",
+        "text": "Products offered to ITI for manufacturing must have a purchase cost at least 20% above ITI's cost price."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 68,
+            "last": 69,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "A Self-Declaration consent to be provided.",
+        "section": "System Integrator",
+        "text": "The bidder must provide a self-declaration consent."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 70,
+            "last": 80,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "The TP should commit to provide any software/hardware upgrade required on the designed product to keep it updated and also work on optimizing the design to make it market competitive and meet customer requirements as well as prevailing standards.",
+        "section": "System Integrator",
+        "text": "The bidder must commit to providing updates and optimizations for the product to meet market and customer requirements."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 82,
+            "last": 84,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "A Self-Declaration of not being under any black list or Barring.",
+        "section": "System Integrator",
+        "text": "The bidder must provide a self-declaration of not being blacklisted or barred."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 85,
+            "last": 101,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "TP shall submit self-declaration(s) that the Partner or any of the promoters/directors/Partner or member not blacklisted/banned/debarred/suspended by the Central/ any other States/ Union Territories Government/ Quasi- Govt/ Govt. undertaking/Banks/Financial",
+        "section": "System Integrator",
+        "text": "The bidder must submit a self-declaration that they or their associates are not blacklisted or banned by any government or financial entity."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

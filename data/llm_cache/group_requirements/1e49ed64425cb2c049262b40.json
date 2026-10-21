@@ -1,0 +1,16 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Consortium bidding and strategy preparation"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

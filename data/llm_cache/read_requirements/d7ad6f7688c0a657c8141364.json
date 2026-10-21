@@ -1,0 +1,330 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 1,
+            "last": 2,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.05 | Power controls shall exist at system, rack, board, node, component and sub-component level, with reaction times stated | S7 §8.3.2",
+        "section": "S7 §8.3.2",
+        "text": "Power controls must exist at all levels with stated reaction times."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 3,
+            "last": 4,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.06 | The system shall give advance warning of power-draw changes above 1 MW over 15 minutes, or a similar criterion the bidder proposes | S7 §8.3.3",
+        "section": "S7 §8.3.3",
+        "text": "System must warn of power-draw changes above 1 MW over 15 minutes or propose a similar criterion."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 5,
+            "last": 7,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.07 | Energy shall be measured per node and made available to users for their jobs. Power, voltage, cooling and temperature shall be measured across the system, with sampling frequency, accuracy and timestamps stated | S15 §1.14.2.10; S7 §5.5.2",
+        "section": "S15 §1.14.2.10; S7 §5.5.2",
+        "text": "Energy and other metrics must be measured and made available with specified details."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 8,
+            "last": 9,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.08 | The system shall support sequenced full-system power up and power down, with timings described | S7 §5.1.2, §8.1.4",
+        "section": "S7 §5.1.2, §8.1.4",
+        "text": "System must support sequenced power up/down with described timings."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 10,
+            "last": 12,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.09 | No single point of failure shall cause an outage. The system shall stay operational or degraded after the failure of any single field-replaceable unit, server or switch, and shall support rolling upgrades while at least half stays in production | S7 §5.3.2, §5.4.1",
+        "section": "S7 §5.3.2, §5.4.1",
+        "text": "System must tolerate single failures and support rolling upgrades."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.10 | Bidders shall propose system availability, mean time between interrupts and job mean time to interrupt, and explain how they derived them | S7 §8.1",
+        "section": "S7 §8.1",
+        "text": "Bidders must propose and explain system availability and reliability metrics."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 15,
+            "last": 17,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.11 | Security shall be compatible with ISO/IEC 27001, with strict isolation of tenants, including their network traffic. Firmware, drivers and software shall be patched, and high or critical vulnerabilities shall be fixed under the Owner's policy | S15 §1.14.2.9",
+        "section": "S15 §1.14.2.9",
+        "text": "System security must comply with ISO/IEC 27001 and address vulnerabilities per policy."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.12 | Storage shall be multi-tier, with a POSIX parallel file system and capacity object storage, expandable without interruption and using POSIX, NFS and S3 standards | S15 §1.14.2.5",
+        "section": "S15 §1.14.2.5",
+        "text": "Storage must be multi-tier, expandable, and support specified standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 21,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.13 | The control-plane network shall be separate from the compute and storage network, with secure partitioning of tenants. Links between halls shall stay within 500 m | S15 §1.14.2.7; S6",
+        "section": "S15 §1.14.2.7; S6",
+        "text": "Control-plane network must be separate and secure, with links within 500 m."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 23,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.14 | Software shall offer Slurm and Kubernetes with GPU passthrough, a self-service portal and APIs, monitoring and accounting | S15 §1.14.2.8",
+        "section": "S15 §1.14.2.8",
+        "text": "Software must include specified features like Slurm, Kubernetes, and monitoring."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 24,
+            "last": 26,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.15 | Maintenance and support shall run five years from acceptance, 24 by 7, with a four-hour response and concurrent maintenance. Cabinet-level concurrent repairs get 6 hours and other repairs 2 hours | S7 §8.4.1, App B.9",
+        "section": "S7 §8.4.1, App B.9",
+        "text": "Maintenance must be 24/7 for five years with specified response times."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 27,
+            "last": 28,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.16 | The Contractor shall hold an on-site parts cache covering two weeks of normal repairs, and spare nodes of at least 1% of each node type | S7 App B.9",
+        "section": "S7 App B.9",
+        "text": "Contractor must maintain an on-site parts cache and spare nodes."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 29,
+            "last": 30,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.17 | Bidders shall run these benchmarks: MLPerf Storage, IOR, BigDataBench, Ray Train, Horovod, MLPerf Training and MLPerf Inference. The Owner may extend the list | S15 Annex 13",
+        "section": "S15 Annex 13",
+        "text": "Bidders must run specified benchmarks and accommodate extensions."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 31,
+            "last": 33,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "L6.18 | The system shall be delivered in phases. Core components, such as control plane, storage and network with a minimal number of compute nodes, may come first, and a test system with a minimal management stack shall follow contract signing as fast as possible | S15 §1.16",
+        "section": "S15 §1.16",
+        "text": "System delivery must be phased, starting with core components."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 38,
+            "last": 38,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "IF-01 | Utility to Lot 1 | Service above 100 kV. The Owner holds the interconnection agreement | S9; PA",
+        "section": "S9; PA",
+        "text": "Utility service to Lot 1 must be above 100 kV."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 39,
+            "last": 39,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "IF-02 | Lot 1 to Lot 2 | 13.8 kV ±10%, three-phase three-wire plus PE, 57 to 63 Hz, with low-resistance or solid MV grounding | S2 §4.2",
+        "section": "S2 §4.2",
+        "text": "Lot 1 to Lot 2 interface must meet specified electrical standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 40,
+            "last": 41,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "IF-03 | Lot 2 to Lot 3 | 800 VDC nominal, unipolar, with ripple ±0.5%, static regulation ±1%, dynamic regulation ±3% and IT grounding | S2 §4.3",
+        "section": "S2 §4.3",
+        "text": "Lot 2 to Lot 3 interface must meet specified DC standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 42,
+            "last": 42,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "IF-04 | Inside Lot 3 | 6000 A-class busduct, 1250 A row busway and 125 A tap cans | S5",
+        "section": "S5",
+        "text": "Inside Lot 3 must use specified busduct and busway standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "IF-05 | Lot 3 to Lot 4 | 125 A 800 VDC interlocked whip behind a normally open contactor | S5",
+        "section": "S5",
+        "text": "Lot 3 to Lot 4 interface must meet specified whip and contactor standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 44,
+            "last": 44,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "IF-06 | Lot 4 to Lot 6 | 54 VDC in-rack bus from the 800 to 54 VDC shelf | S5",
+        "section": "S5",
+        "text": "Lot 4 to Lot 6 interface must use specified in-rack bus standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 45,
+            "last": 46,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "IF-07 | Lot 5 to Lot 6 | Facility water up to 45 °C to the CDU primary side, and a technical-grade secondary loop to cold plates at 1.5 LPM per kW or more | S6",
+        "section": "S6",
+        "text": "Lot 5 to Lot 6 interface must meet specified water and cooling standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 47,
+            "last": 47,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "IF-08 | Lot 1 to Lot 5 | Cooling plant supply at 480 V, with chillers optionally on a 4.16 kV bus | S6",
+        "section": "S6",
+        "text": "Lot 1 to Lot 5 interface must meet specified cooling plant standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 48,
+            "last": 48,
+            "page": 6
+          }
+        ],
+        "page": 6,
+        "quote": "IF-09 | Lots 2, 3 and 5 to Lot 6 | Telemetry and control over Modbus TCP/IP from power blocks and Redfish,",
+        "section": "N/A",
+        "text": "Lots 2, 3, and 5 to Lot 6 interface must use specified telemetry and control standards."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

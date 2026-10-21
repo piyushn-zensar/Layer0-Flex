@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 17,
+            "last": 23,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "proposal is invited under e-tender mode(2 bid system) from the Intending Technology Partner(TP) having proven technological capabilities in Advance Metering Infrastructure Solution (AMI) including necessary certifications for “Smart Energy Meters (Single Phase, Three Phase & LT-CT Operated three phase) meeting IS 16444 Standard” and ready to transfer the technology (ToT) for manufacturing by ITI as per terms & conditions enumerated below, may submit their proposal.",
+        "section": "1. INTRODUCTION",
+        "text": "The bidder must have proven technological capabilities in AMI solutions, certifications for Smart Energy Meters meeting IS 16444, and readiness for technology transfer."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 23,
+            "last": 25,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Technical bid and Financial bid is to be submitted separately in the allotted sections in the Tender portal. Otherwise, the bids will be likely to be rejected.",
+        "section": "1. INTRODUCTION",
+        "text": "The bidder must submit technical and financial bids separately in the designated sections of the tender portal."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 30,
+            "last": 31,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "RFP Issue Date 10.10.2024",
+        "section": "2. IMPORTANT DATES",
+        "text": "The RFP is issued on October 10, 2024."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 33,
+            "last": 34,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Bidders Query last Date 17.10.2024: 15:00Hrs",
+        "section": "2. IMPORTANT DATES",
+        "text": "The last date for bidders to submit queries is October 17, 2024, at 15:00 Hrs."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 36,
+            "last": 37,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Upload of Reply to Bidder’s query 24.10.2024: 15:00Hrs",
+        "section": "2. IMPORTANT DATES",
+        "text": "Replies to bidders' queries will be uploaded by October 24, 2024, at 15:00 Hrs."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 39,
+            "last": 41,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Due Date & Time for Submission of Proposal through Uni Wizard 30.10.2024: 17:00 Hrs",
+        "section": "2. IMPORTANT DATES",
+        "text": "Proposals must be submitted through Uni Wizard by October 30, 2024, at 17:00 Hrs."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 43,
+            "last": 44,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Date & Time of opening of Proposals 31.10.2024: 15:00Hrs",
+        "section": "2. IMPORTANT DATES",
+        "text": "Proposals will be opened on October 31, 2024, at 15:00 Hrs."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

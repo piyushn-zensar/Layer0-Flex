@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 6,
+            "last": 8,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Language of offers: The offers prepared by the Company and all the\ncorrespondences and documents relating to the offers exchanged by\nthe companies shall be written in English language.",
+        "section": "9.9",
+        "text": "All offers and related documents must be in English."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 9,
+            "last": 11,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Liquidated Damage (LD) may be included, i.e if any imposed on ITI for\nthe reasons related to the bidder consortium shall be carry forwarded\nto bidder consortium",
+        "section": "9.10",
+        "text": "Liquidated damages imposed on ITI due to bidder consortium reasons will be passed to the consortium."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 14,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "In the event that ITI LTD is required to provide demonstration or\nworking of the product to their buyers, the same shall be arranged by\nthe bidder at latter’s cost and expenditure.",
+        "section": "9.11",
+        "text": "Bidder must arrange product demonstrations for ITI's buyers at their own cost."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 15,
+            "last": 25,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Any of the following events shall constitute an event of default by the\nbidder entitling the Competent Authority to terminate the contract.\n If the bidder fails to perform any obligation(s) under the Contract\n If bidder, does not remedy his failure within a period of 30 days (or such\nlonger period as the ITI LTD may authorize in writing) after receipt of the\ndefault notice from the ITI LTD\n If selected bidder fails to fulfill its part of the work to the satisfaction of\nITI LTD, then ITI LTD shall have the right to terminate the contract.\nThe contract shall not be terminated for failure to discharge responsibilities\ndue to force majeure situations or failure by ITI LTD to meet conditions\nprecedent.",
+        "section": "9.12",
+        "text": "Contract may be terminated for bidder's default unless due to force majeure or ITI's failure to meet conditions."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 27,
+            "last": 42,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "If at any time, during the continuance of this contract, the performance in\nwhole or in part by either party of any obligations under this contract shall\nbe prevented or delayed by reason of any war, or hostility, acts of the public\nenemy, civil commotion, sabotage, fires, floods, explosions, epidemics,\nquarantine restriction, strikes, lockouts or act of God(Hereinafter referred to\nas events) provided notice of happenings, of any such eventuality is given by\nthe either party to the other within 21 days from the date of occurrence\nthereof, neither party shall by reason of such event be entitled to terminate\nthis and contract shall be resumed as soon as practicable after such event\nmay come to an end or cease to exist, and the decision of the ITI LTD as to\nwhether the deliveries have been so resumed or not shall be final and\nconclusive, provided further that if the performance in whole or part of any\nobligation under this contract is prevented or delayed by reason of any such\nevent for a period exceeding 60 days either party may, at its option\nterminate the contract.",
+        "section": "9.13",
+        "text": "Contract performance delays due to force majeure are excused; contract may be terminated if delay exceeds 60 days."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 3,
+            "last": 5,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "ITI LTD may at any time terminate the contract by giving written notice to\nthe bidder, without compensation if the bidder becomes unwilling, bankrupt\nor otherwise insolvent",
+        "section": "9.14",
+        "text": "ITI may terminate the contract without compensation if the bidder becomes unwilling, bankrupt, or insolvent."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 6,
+            "last": 10,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "ITI LTD reserves the right to accept or reject any bid,\nand to annul the bidding process and reject all bids, at any time prior\nto award of contract without assigning any reason whatsoever and\nwithout thereby incurring any liability to the affected bidder or\nbidders on the grounds of ITI’s action.",
+        "section": "9.15",
+        "text": "ITI reserves the right to accept, reject, or annul bids without liability or explanation."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 13,
+            "last": 19,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "ITI LTD and/or its officers, employees disclaim all liability\nfrom any loss or damage, whether foreseeable or not, suffered by any person\nacting on or refraining from acting because of any information including\nstatements, information, forecasts, estimates or projections contained in\nthis document or conduct ancillary to it whether or not the loss or damage\narises in connection with any omission, negligence, default, lack of care or\nmisrepresentation on the part of ITI LTD and/or any of its officers,\nemployees.",
+        "section": "10",
+        "text": "ITI and its employees disclaim liability for any loss or damage from information in the document."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,36 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          3,
+          5,
+          6,
+          7
+        ],
+        "title": "Evaluation criteria and scoring details"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          4,
+          8,
+          13,
+          14
+        ],
+        "title": "Award criteria and compliance requirements"
+      },
+      {
+        "category": "submission",
+        "members": [
+          15,
+          16
+        ],
+        "title": "Submission formatting and structure"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

@@ -1,0 +1,288 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 1,
+            "last": 2,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "12.1 Awarding of tenders will be published on the National Treasury e-tender portal or the CSIR’s tender website. No regret letters will be sent out.",
+        "section": "12.1",
+        "text": "Tender awards will be published online; no regret letters will be issued."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 4,
+            "last": 5,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "13.1 Evaluation of proposals All proposals will be evaluated by an evaluation team for functionality, price and B-BBEE.",
+        "section": "13.1",
+        "text": "Proposals will be evaluated for functionality, price, and B-BBEE."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 8,
+            "last": 8,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "A two-phase evaluation process will be followed.",
+        "section": "13.1",
+        "text": "Evaluation will occur in two phases."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 10,
+            "last": 10,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "The first phase includes evaluation of elimination and functionality criteria.",
+        "section": "13.1",
+        "text": "Phase one evaluates elimination and functionality criteria."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 12,
+            "last": 12,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "The second phase includes the evaluation of price and B-BBEE status.",
+        "section": "13.1",
+        "text": "Phase two evaluates price and B-BBEE status."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "Pricing Proposals will only be considered after functionality phase has been adjudicated and accepted.",
+        "section": "13.1",
+        "text": "Pricing proposals are considered only after functionality phase approval."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 14,
+            "last": 15,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "Only proposals that achieved the specified minimum qualification scores for functionality will be evaluated further using the preference points system.",
+        "section": "13.1",
+        "text": "Proposals must meet minimum functionality scores to proceed."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 16,
+            "last": 17,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "13.2 Preference points system The 80/20 preference point system will be used where 80 points will be dedicated to price and 20 points to B-BBEE status.",
+        "section": "13.2",
+        "text": "The 80/20 preference point system will be applied."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "If all tenders received are more than R50m, the proposal will be cancelled and re-issued.",
+        "section": "13.2",
+        "text": "Proposals exceeding R50m will be cancelled and re-issued."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 21,
+            "last": 23,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "14.1 Pricing proposal must be cross-referenced to the sections in the Technical Proposal. Any options offered must be clearly labelled. Separate pricing must be provided for each option offered to ensure that pricing comparisons are clear and unambiguous.",
+        "section": "14.1",
+        "text": "Pricing proposals must reference technical sections and clearly label options."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 24,
+            "last": 24,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "14.2 Price needs to be provided in South African Rand (excl. VAT), with details on price elements that are subject to escalation and exchange rate fluctuations clearly indicated.",
+        "section": "14.2",
+        "text": "Prices must be in ZAR (excl. VAT) with escalation details."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 26,
+            "last": 26,
+            "page": 20
+          }
+        ],
+        "page": 20,
+        "quote": "14.3 Price should include additional cost elements such as freight, insurance until acceptance, duty where applicable.",
+        "section": "14.3",
+        "text": "Prices must include freight, insurance, and applicable duties."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 1,
+            "last": 2,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "14.4 Only firm prices* will be accepted during the tender validity period. Non–firm prices** (including prices subject to rates of exchange variations) will not be considered.",
+        "section": "14.4",
+        "text": "Only firm prices are accepted; non-firm prices are excluded."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 9,
+            "last": 9,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "14.5 Payment will be according to the CSIR Payment Terms and Conditions.",
+        "section": "14.5",
+        "text": "Payments follow CSIR terms and conditions."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 10,
+            "last": 11,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "15 VALIDITY PERIOD OF PROPOSAL Each proposal shall be valid for a minimum period of three (3) months calculated from the closing date.",
+        "section": "15",
+        "text": "Proposals must be valid for at least 3 months from the closing date."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 14,
+            "last": 14,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "16.1 The contract will be awarded to the tenderer who scores the highest total number of points during the evaluation process, except where the law permits otherwise.",
+        "section": "16.1",
+        "text": "Contracts are awarded to the highest scoring tenderer unless law dictates otherwise."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 16,
+            "last": 18,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "16.2 Appointment as a successful service provider shall be subject to the parties agreeing to mutually acceptable contractual terms and conditions. In the event of the parties failing to reach such agreement CSIR reserves the right to appoint an alternative supplier.",
+        "section": "16.2",
+        "text": "Appointments depend on mutual agreement on terms; otherwise, CSIR may choose another supplier."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 19,
+            "last": 19,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "16.3 Awarding of contracts will be announced on the National Treasury website and no regret letters will be sent to unsuccessful bidders.",
+        "section": "16.3",
+        "text": "Contract awards are announced online; no regret letters are issued."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 22,
+            "last": 23,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "17 ENQUIRIES AND CONTACT WITH THE CSIR Any enquiry regarding this RFP shall be submitted in writing to CSIR at tender@csir.co.za with “RFP No 1028/16/09/2022 - The provision or supply of Manufacturing of the Fingerprint Recognition Device to CSIR” as the subject.",
+        "section": "17",
+        "text": "Enquiries must be emailed to CSIR with the specified subject line."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 25,
+            "last": 26,
+            "page": 21
+          }
+        ],
+        "page": 21,
+        "quote": "Any other contact with CSIR personnel involved in this tender is not permitted during the RFP process other than as required through existing service arrangements or as requested by the CSIR as part of the RFP process.",
+        "section": "17",
+        "text": "Contact with CSIR personnel is restricted during the RFP process."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

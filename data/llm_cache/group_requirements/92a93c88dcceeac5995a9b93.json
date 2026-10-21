@@ -1,0 +1,33 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          3,
+          4,
+          5
+        ],
+        "title": "Requirements for online submission of bids"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Compliance requirements for MSE vendors"
+      },
+      {
+        "category": "schedule",
+        "members": [
+          7,
+          9
+        ],
+        "title": "Schedule for bid opening and evaluation"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

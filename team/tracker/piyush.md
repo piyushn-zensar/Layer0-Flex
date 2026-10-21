@@ -47,6 +47,21 @@ Task details and dependencies: [team/PLAN.md](../PLAN.md).
 | P-39 | RAG R5: independently reviewed evaluation set and `scripts/eval_rag.py` | It3 (C-29) | review | built 16 Oct: draft set `data/golden/rag_eval.json` (6 retrieval cases whose expectation is a phrase in the expected source, independent of the ranking; 2 numerical; 2 unknowns; isolation; extraction coverage via `score_reader`; interpretation accuracy not measured yet) and `scripts/eval_rag.py` (own throwaway store, `--json`, `--report`); results in `team/rag-eval-report.md`: 10 of 13 offline, 11 of 13 with semantic ranking (R-02, R-05 fail in both); the evaluation found and fixed two defects: the reader scorer switched the gateway to mock (semantic ranking silently off), and semantic search had no relevance floor (now `MIN_SEMANTIC` 0.35, placeholder); regression test runs it in a subprocess. Waits for an independent review of the set (open question 9) |
 | P-41 | Remove the Knowledge base page (moved from J-17 on 16 Oct: RAG is entirely Piyush's), its top-bar link and walkthrough chapter; the knowledge API stays | It3 (C-33) | done | done 16 Oct (built here; Janvia had prepared the same change as a patch that was not on this machine): `web/app/knowledge/page.tsx` and the top-bar link removed (top bar: Bids, My work, Product catalog; /knowledge is a 404), walkthrough chapter `knowledge.ts` removed and its five Product catalog steps kept in a new `catalog.ts` (order 10), walkthrough wording now Nominate as a reviewed example and Knowledge review in My work (navigation, trace, decisions, consolidation, welcome, recap), knowledge APIs unchanged; production build clean |
 | P-40 | Docs: mark built parts in `changes-iteration3.md` and technical-architecture section 17; refresh `Documents/current-system/` (with P-29) | It3 (all) | todo | depends on: everything |
+| P-42 | Headings and plain terms: Assessment Summary, Technical Requirement Match, one glossary of visible labels applied on every screen | It4 (C-36, C-44) | todo |  |
+| P-43 | Assessment Summary measures: technical requirement match over technical requirements only, reviewed by design engineers, specialist review progress | It4 (C-36, C-38, C-39) | todo | default: `technical` only (PLAN 11.2 decision 1) |
+| P-44 | Bid manager's first stage = business relevance and routing; technical match accept / reject / correct moves to the unit's designer / engineer | It4 (C-41) | todo |  |
+| P-45 | Compliance outcomes: Compliant, Partially compliant, Compliant with changes (`deviation`), Non-compliant; go/no-go counts each | It4 (C-43) | todo |  |
+| P-46 | Solution-level wording: proposed solution per unit and solution area, products as examples | It4 (C-40) | todo |  |
+| P-47 | Delivery feasibility from the teams (`unit_feasibility`: people, skills, manufacturing capacity, materials, cost); bid manager accepts the estimates | It4 (C-42) | todo |  |
+| P-48 | Demo scenarios: RC-1 Grid-to-Chip (.docx) read, matched and frozen, tables and images checked; Syracuse power electronics filter link | It4 (C-35, C-37) | todo | RFP: `data/RFP/samples/RC-1_Grid-to-Chip_RFP_Synthetic.docx` |
+| P-49 | Full workflow run on RC-1 as the demo accounts (`scripts/run_demo_workflow.py`): placeholder responses, all approvals, go/no-go | It4 (C-45) | todo | depends on: P-48 |
+| P-50 | Walkthrough and screenshots for the iteration-4 changes | It4 (C-36, C-41..C-44) | todo |  |
+| P-51 | Final HTML `demo/layer0-demo.html` (internal JS and CSS) from the system's last view after P-49 | It4 (C-45, C-46) | todo | built last |
+| P-52 | Docs: `Documents/changes-iteration4.md` (C-35 to C-51), built parts marked; P-40 and P-29 folded in | It4 (all) | todo | depends on: everything |
+
+## Iteration 4: start here
+
+Plan, order and defaults: [team/PLAN.md](../PLAN.md) section 11 (C-35 to C-51). All iteration-4 changes are made here in one go (not divided across the team), P-42 to P-52 in order. The HTML demo (P-51) is built last, from the RC-1 bid after the full workflow run (P-49). Target: corrected UI and HTML demo together, Wed 21 Oct 2026 before the morning meeting.
 
 ## Iteration 3: start here
 

@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 31,
+            "last": 32,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Proposals with functionality/technical points of less than the pre-determined minimum overall percentage of 100% on any of the individual criteria will be eliminated from further evaluation.",
+        "section": "5.2",
+        "text": "Proposals must meet 100% of individual criteria to avoid elimination."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 33,
+            "last": 33,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "It is critical for all the components of the Device mentioned above to function in order to meet our minimum requirements.",
+        "section": "5.2",
+        "text": "All device components must function to meet minimum requirements."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 35,
+            "last": 35,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Refer to Annexure A for the scoring sheet that will be used to evaluate functionality.",
+        "section": "5.2",
+        "text": "Refer to Annexure A for the functionality scoring sheet."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 39,
+            "last": 39,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Proposals will be eliminated under the following conditions:",
+        "section": "6",
+        "text": "Proposals will be eliminated if they meet certain conditions."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 40,
+            "last": 41,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Submission after the deadline;",
+        "section": "6",
+        "text": "Proposals submitted after the deadline will be eliminated."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 42,
+            "last": 43,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Proposals submitted at the incorrect email address",
+        "section": "6",
+        "text": "Proposals sent to the wrong email address will be eliminated."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 44,
+            "last": 45,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Incomplete proposal submission",
+        "section": "6",
+        "text": "Incomplete proposals will be eliminated."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 46,
+            "last": 47,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "National Treasury Restricted suppliers",
+        "section": "6",
+        "text": "Suppliers restricted by National Treasury will be eliminated."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 48,
+            "last": 49,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Failure to submit fully completed and signed SBD 4 and SBD 1.",
+        "section": "6",
+        "text": "Failure to submit completed and signed SBD 4 and SBD 1 will result in elimination."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 50,
+            "last": 51,
+            "page": 17
+          }
+        ],
+        "page": 17,
+        "quote": "Non-attendance of the compulsory briefing session",
+        "section": "6",
+        "text": "Not attending the compulsory briefing session will result in elimination."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

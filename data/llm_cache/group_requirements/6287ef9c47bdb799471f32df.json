@@ -1,0 +1,39 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          4
+        ],
+        "title": "Power management and control requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          5,
+          6
+        ],
+        "title": "System reliability and upgrade requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "title": "Interface and standard compliance for lots"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

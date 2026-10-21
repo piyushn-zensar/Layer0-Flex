@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          2,
+          3,
+          4
+        ],
+        "title": "Compliance with procurement restrictions and DPIIT registration requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          1,
+          5
+        ],
+        "title": "Technical standards and specifications compliance"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

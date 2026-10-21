@@ -1,0 +1,17 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Load and configure the Device Test application on Raspberry PI"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

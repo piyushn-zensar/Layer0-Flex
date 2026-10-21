@@ -1,0 +1,302 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 1,
+            "last": 2,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "The Owner publishes PUE per cooling technique and the energy price during dialogue, for total cost of ownership",
+        "section": "S15 §2.16.6",
+        "text": "Owner provides PUE and energy price for cost analysis."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 7,
+            "last": 8,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "The Contractor shall deliver a service substation that lands the utility lines above 100 kV and steps them down through HV-to-13.8 kV transformers to the site MV backbone",
+        "section": "PA; S6",
+        "text": "Contractor must provide a substation for utility connection and voltage transformation."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 9,
+            "last": 10,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "The substation shall provide two MV buses so that core network and mechanical loads and GPU compute loads take separate paths",
+        "section": "S6",
+        "text": "Substation must have two MV buses for load separation."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 11,
+            "last": 12,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "On-site generation, if used, and energy storage shall connect to the MV bus, making the substation the integration point for flexible power and grid services",
+        "section": "S6",
+        "text": "On-site generation and storage must connect to MV bus for integration."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 13,
+            "last": 15,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "MV switchgear shall be 15 kV-class metal-clad with arc-rated construction (Type 2B), draw-out breakers, protective relays, instrument transformers, a control power transformer and battery-backed DC control power, housed in a walk-in enclosure with 2-hour fire-rated walls",
+        "section": "S10; S14 §2.1",
+        "text": "MV switchgear must meet specified construction and safety standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 16,
+            "last": 17,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Main and feeder ratings shall be stated by the bidder from the Owner's load schedule. As a size reference, one public lineup uses a 2,000 A main, four 1,200 A feeders and five 1,200 A transfer bus switches",
+        "section": "S10; PA",
+        "text": "Bidder must specify main and feeder ratings based on load schedule."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 18,
+            "last": 18,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Bidders shall state the switchgear short-circuit rating in kA for 1 s, subject to calculation",
+        "section": "S14",
+        "text": "Bidder must provide switchgear short-circuit rating."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 19,
+            "last": 20,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "The campus shall take dual concurrently maintainable MV feeds, run below ground on diverse paths with concrete encasement",
+        "section": "S14 §2.1, §2.3",
+        "text": "Campus must have dual maintainable MV feeds underground."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 21,
+            "last": 21,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "MV control power shall be 110 VDC backed by a battery unit",
+        "section": "S14; S10",
+        "text": "MV control power must be 110 VDC with battery backup."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 23,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Relays shall support communications and event recording, with a relay acting as a remote terminal unit where the Owner specifies",
+        "section": "S11",
+        "text": "Relays must support communication and event recording."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 24,
+            "last": 27,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Backup generation shall be proposed by the bidder. The reference arrangement is central standby generators in N+2 at the MV switchgear, supporting 99.999% for critical core network and mechanical loads. An alternative is prefabricated generators in distributed redundancy. Fuel autonomy shall meet Tier III intent under EN 50600 Class 3",
+        "section": "S6; S14 §2.2",
+        "text": "Bidder must propose backup generation meeting specified standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 28,
+            "last": 29,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "The Contractor shall support the Owner's interconnection studies and supply protection-coordination data for the serving utility",
+        "section": "S9; PA",
+        "text": "Contractor must assist with interconnection studies and data."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 34,
+            "last": 35,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "The Contractor shall supply power blocks that convert MV AC to 800 VDC. Transformer-rectifier units and solid-state transformers are both accepted",
+        "section": "S2 §3; S5",
+        "text": "Contractor must provide power blocks for MV AC to 800 VDC conversion."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 36,
+            "last": 37,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Each block shall deliver 4.8 to 5 MW at the DC output from an input of 13.8 kVac ±10%, three-phase three-wire plus PE",
+        "section": "S2 §4.2; S5",
+        "text": "Power blocks must deliver specified output from MV AC input."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 38,
+            "last": 39,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Input frequency shall be 57 to 63 Hz with a rate of change up to 5 Hz/s. Power factor shall exceed 0.99 at full load, 0.98 from 20% load and 0.95 below 20%",
+        "section": "S2 §4.2",
+        "text": "Input frequency and power factor must meet specified ranges."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 40,
+            "last": 40,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Harmonics shall meet IEEE 519, IEC 61800-3 Category C4, and IEC 61000-6-2 and -6-4",
+        "section": "S2 §4.2",
+        "text": "Harmonics must comply with specified standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 41,
+            "last": 42,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Short-circuit withstand shall be 18 to 40 kA symmetrical at 13.8 kV, with duration stated by the bidder, and the basic impulse level shall be at least 110 kV",
+        "section": "S2 §4.2",
+        "text": "Short-circuit withstand and impulse level must meet specifications."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "MV system grounding is low-resistance or solid, as set by the utility design",
+        "section": "S2 §4.2, §5.1.1",
+        "text": "MV system grounding must follow utility design specifications."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 44,
+            "last": 44,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Blocks shall suit load acceptance and rejection of about 20 to 50 MW/min on utility supply",
+        "section": "S2 §4.2, §5.3",
+        "text": "Blocks must handle specified load acceptance and rejection rates."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 45,
+            "last": 48,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Voltage ride-through: full output at 0.9 to 1.2 pu. In the first low-voltage range the block draws no more than nominal input current while supplying 100% of load. In the second it draws none, and storage carries 100% of load. Operation restores without state changes. Frequency ride-through is continuous at 58.8 to 61.2 Hz and lasts 299 s at 57.0 to 58.8 Hz and 61.2 to 61.8 Hz",
+        "section": "S2 §5.1.2, §5.1.3",
+        "text": "Voltage and frequency ride-through must meet specified ranges and durations."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 49,
+            "last": 49,
+            "page": 2
+          }
+        ],
+        "page": 2,
+        "quote": "Output shall be 800 VDC nominal, unipolar, with ripple ±0.5%, static regulation ±1% and dynamic regulation",
+        "section": "",
+        "text": "Output must meet specified voltage and regulation standards."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

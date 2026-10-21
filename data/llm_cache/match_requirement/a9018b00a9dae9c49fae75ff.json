@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies a custom PCB design with specific dimensions, mounting, and quality standards. EMS-PCBA offers advanced PCBA and microelectronics assembly, which aligns with the need for a custom PCB meeting IPC Class II specifications.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-PCBA"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "The micro-USB connector positioning is a detail of the PCB design. EMS-PCBA can handle such specific requirements as part of their custom PCB assembly services.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-PCBA"
+          }
+        ]
+      },
+      {
+        "confidence": 0.85,
+        "n": 3,
+        "rationale": "The power supply module's requirements, including power source compatibility, status indicators, and powerpath controller, suggest a custom PCB design. EMS-PCBA is suitable for this level of customization.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-PCBA"
+          }
+        ]
+      },
+      {
+        "confidence": 0.85,
+        "n": 4,
+        "rationale": "The power supply module's functionality, including power-on behavior and charging capabilities, requires a custom PCB design. EMS-PCBA can provide the necessary design and assembly services.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-PCBA"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 6,
+            "last": 8,
+            "page": 52
+          }
+        ],
+        "page": 52,
+        "quote": "In compliance to Clause No – 5A-ii, a consortium has been formed on <Date> between Company A and Company B to meet various eligibility conditions and experience criteria specified in the ITI/COR/P&T/RFP/AMI/2024/01dated xx/xx/2024",
+        "section": "ANNEXURE-XII",
+        "text": "Consortium must be formed to meet eligibility and experience criteria."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 9,
+            "last": 10,
+            "page": 52
+          }
+        ],
+        "page": 52,
+        "quote": "It has been agreed among the consortium partner(s) that Company A is designated to submit the Bid on behalf of this consortium and henceforth called as Bidder.",
+        "section": "ANNEXURE-XII",
+        "text": "Lead bidder must be designated to submit the bid."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 11,
+            "last": 14,
+            "page": 52
+          }
+        ],
+        "page": 52,
+        "quote": "It is also confirmed that all the members of the said consortium meet the eligibility conditions jointly as specified in the above referred EoI and have authorized the “Lead bidder” by way of duly executed power of attorney in his favor to act on their behalf.",
+        "section": "ANNEXURE-XII",
+        "text": "Consortium members must meet eligibility conditions jointly and authorize lead bidder via power of attorney."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 15,
+            "last": 16,
+            "page": 52
+          }
+        ],
+        "page": 52,
+        "quote": "It has also been agreed that in its capacity as lead Bidder, Company A will interact with ITI Limited for all obligations of the consortium.",
+        "section": "ANNEXURE-XII",
+        "text": "Lead bidder must interact with ITI Limited for consortium obligations."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 17,
+            "last": 18,
+            "page": 52
+          }
+        ],
+        "page": 52,
+        "quote": "The Lead bidder and consortium partner(s) shall be liable for due performance of the contract jointly and severally, in accordance with this EoI requirements.",
+        "section": "ANNEXURE-XII",
+        "text": "Lead bidder and partners are jointly and severally liable for contract performance."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

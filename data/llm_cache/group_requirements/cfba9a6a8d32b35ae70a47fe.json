@@ -1,0 +1,31 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Smart meter technical specifications"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "title": "Compliance with standards and regulations"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

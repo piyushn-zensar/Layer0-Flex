@@ -1,0 +1,51 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3
+        ],
+        "title": "Ensure compatibility and safety for MV AC to 800 VDC connections"
+      },
+      {
+        "category": "technical",
+        "members": [
+          9,
+          10
+        ],
+        "title": "Provide and ensure functionality of power whips and connectors"
+      },
+      {
+        "category": "technical",
+        "members": [
+          11,
+          12,
+          13,
+          14
+        ],
+        "title": "Design and provide compute racks with specified features and protections"
+      },
+      {
+        "category": "technical",
+        "members": [
+          15,
+          16
+        ],
+        "title": "Provide Phase 1 variant racks and power-rack converters"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          5,
+          19
+        ],
+        "title": "Ensure compliance of storage and rack power equipment with standards"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

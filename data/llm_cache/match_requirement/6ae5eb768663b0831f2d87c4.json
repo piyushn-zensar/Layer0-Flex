@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement describes the functional specifications of a device, including its ability to recognize fingerprints, power on/off, and operate buttons and a camera. It does not directly map to any specific product in the catalog, as it appears to be a high-level product requirement.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "This requirement involves the assembly of a device and loading of software, which is not directly related to any specific product in the catalog. It seems to be a procedural or assembly instruction rather than a product specification.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "This requirement specifies a functional feature of a device (GPS functionality), which does not directly map to any specific product in the catalog. It appears to be a feature requirement for the device being developed.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

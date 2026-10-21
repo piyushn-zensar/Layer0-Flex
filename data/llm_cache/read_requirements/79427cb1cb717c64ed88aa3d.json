@@ -1,0 +1,134 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 6,
+            "last": 8,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "We are not blacklisted by Central Government / any State or UT Governments / PSU/ organized sector in India to work with ITI as per this RFP and Customer Tender terms and conditions.",
+        "section": "Annexure-III",
+        "text": "The bidder must not be blacklisted by any government or PSU."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "We undertake to submit Bid Security declaration, as per format Annexure-V, in lieu of Earnest Money Deposit.",
+        "section": "Annexure-III",
+        "text": "The bidder must submit a Bid Security declaration as per Annexure-V."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 15,
+            "last": 17,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "That we have adequate manpower with qualifications, certifications and experience as may be required to provide TOT to ITI as well as to provide services/support to the customer as per their tender/PO requirement.",
+        "section": "Annexure-III",
+        "text": "The bidder must have qualified and experienced manpower for TOT and customer support."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "We will obtain all the required certificates/approvals as per customer tender requirement.",
+        "section": "Annexure-III",
+        "text": "The bidder must obtain all required certificates and approvals."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 20,
+            "last": 20,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "We undertake to obtain relevant statutory approvals for the product.",
+        "section": "Annexure-III",
+        "text": "The bidder must obtain statutory approvals for the product."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 21,
+            "last": 23,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "We are willing to sign MoU/TOT Agreement, Integrity Pact with ITI for addressing the customer requirements as per customer’s tender terms and conditions.",
+        "section": "Annexure-III",
+        "text": "The bidder must agree to sign MoU/TOT Agreement and Integrity Pact with ITI."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 24,
+            "last": 26,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "We undertake to indemnify ITI from any claims / penalties / statuary charges, liquidated damages, with legal expenses etc. as charged by the customer.",
+        "section": "Annexure-III",
+        "text": "The bidder must indemnify ITI against claims, penalties, and damages."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 27,
+            "last": 30,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "To support the offered equipment for warranty and Post warranty comprehensive AMC as per the requirement of Customer tender terms and conditions. All software upgrades, patches and Licenses to be provided free of cost, as and when they are released by OEMs.",
+        "section": "Annexure-III",
+        "text": "The bidder must support equipment for warranty and AMC, and provide free software updates."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 31,
+            "last": 34,
+            "page": 23
+          }
+        ],
+        "page": 23,
+        "quote": "The TP should give certificate/undertaking stating that all the hardware / software supplied under the contract shall not contain any embedded malicious codes that could inhibit the desired functions of the equipment or cause malfunction of equipment in any manner.",
+        "section": "Annexure-III",
+        "text": "The bidder must certify that supplied hardware/software is free of malicious code."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

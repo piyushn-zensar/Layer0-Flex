@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "Requirement 1 is a compliance statement regarding the bidder's eligibility and does not pertain to any specific product or business unit. It is addressed by the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "Requirement 2 is a compliance statement about obtaining necessary certificates and approvals, which is not specific to any product or business unit. It is addressed by the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "Requirement 3 pertains to post-warranty support and software updates, which is a service commitment rather than a product-specific requirement. It is addressed by the bid manager.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "Requirement 4 is a compliance statement about the integrity of supplied hardware/software, which is not specific to any product or business unit. It is addressed by the bid manager.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

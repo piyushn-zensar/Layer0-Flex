@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to the experience and capabilities of the technology partner in terms of installation, commissioning, and integration of systems. It does not directly specify a product from the catalog, so it is not mapped to any product.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "This requirement is about compliance with ISO 9001:2015 certification, which is a general qualification requirement for the technology partner. It does not relate to a specific product from the catalog.",
+        "units": []
+      },
+      {
+        "confidence": 0.95,
+        "n": 3,
+        "rationale": "The requirement for software/hardware upgrades and design optimization aligns with the EMS-DESIGN service, which covers user-centred design and engineering, including hardware and software design, to meet customer requirements and standards.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-DESIGN"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

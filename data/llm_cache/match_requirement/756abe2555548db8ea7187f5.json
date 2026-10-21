@@ -1,0 +1,50 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 1,
+        "n": 1,
+        "rationale": "This is a compliance requirement related to communication protocols during the bidding process. It does not pertain to any specific product or business unit.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement involves compute nodes, performance, memory, accelerators, and network specifications. The CLOUD-INT product from the CLOUD business unit provides rack-scale integration, which includes compute, power, and cooling, making it suitable for this requirement.",
+        "units": [
+          {
+            "bu": "CLOUD",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "CLOUD-INT"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The requirement specifies details about the power chain, including DC output, efficiency, regulation, and short-circuit ratings. The FPM-DCPDU product from the FPM business unit is a DC power distribution unit designed for high-power applications, aligning with these specifications.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "FPM-DCPDU"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The requirement focuses on cooling specifications, including CDU capacity, temperatures, and water usage. The JETCOOL-CDU product from the JETCOOL business unit is a coolant distribution unit designed to manage liquid cooling for high-density racks, meeting these needs.",
+        "units": [
+          {
+            "bu": "JETCOOL",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "JETCOOL-CDU"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 18,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Device Test application to be loaded on the Device Raspberry PI CaseID4 GPS Hardware triggering a) Device GPS Detecting Device GPS location coordinates (GPS fix) displayed on the screen.",
+        "section": "Device Test",
+        "text": "Load the Device Test application on Raspberry PI for GPS hardware triggering and location display."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 22,
+            "last": 45,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Device Test application to be loaded on the Device Raspberry PI CaseID5 Camera triggering a) Button 4 (Right Button): Triggering Device Camera and illumination LED Fully Assembled Device Device Test application to be loaded on the Device Raspberry PI When pressed, a message will display on LCD to open the camera.",
+        "section": "Device Test",
+        "text": "Load the Device Test application on Raspberry PI for camera triggering and LED illumination via Button 4."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 47,
+            "last": 51,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "a.1) When pressed again, the camera must open, and the illumination LED must switch ON.",
+        "section": "Device Test",
+        "text": "Ensure the camera opens and LED switches on when Button 4 is pressed again."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 53,
+            "last": 69,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "Expected Deliverables Table 2: Expected deliverables Device Description Quantity a) Fully Assembled, Fingerprint Recognition Functional and Devices 10 Tested Fingerprint Recognition Devices",
+        "section": "Expected Deliverables",
+        "text": "Provide 10 fully assembled and tested fingerprint recognition devices."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 70,
+            "last": 76,
+            "page": 9
+          }
+        ],
+        "page": 9,
+        "quote": "b) Power Supply Module Documentation for the Set documentation design of the power supply module",
+        "section": "Expected Deliverables",
+        "text": "Provide documentation for the design of the power supply module."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

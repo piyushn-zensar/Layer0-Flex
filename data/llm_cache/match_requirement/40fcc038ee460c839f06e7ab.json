@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "This requirement pertains to warranty and maintenance terms, which are commercial and contractual in nature. It does not specify a product or technical solution.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "This requirement addresses supply-chain security and risk management, which are operational and contractual aspects. It does not directly specify a product or technical solution.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "This compliance requirement pertains to legal and ethical standards regarding sanctions and restrictive measures. It does not specify a product or technical solution.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "This compliance requirement pertains to certifications and standards that the bidder must hold. It does not specify a product or technical solution.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

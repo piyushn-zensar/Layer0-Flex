@@ -1,0 +1,330 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 1,
+            "last": 1,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "±3%. Sources shall not produce 800 VDC plus 10%, and setpoints shall stay below 1500 VDC",
+        "section": "S2 §4.3; S3 §5.7",
+        "text": "Sources must not exceed 800 VDC plus 10%, and setpoints must stay below 1500 VDC."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 2,
+            "last": 3,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "DC grounding shall be IT, floating or high-resistance, with detection and protection coordinated across the 800 VDC system",
+        "section": "S2 §4.3",
+        "text": "DC grounding must be IT, floating, or high-resistance, with coordinated detection and protection."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 4,
+            "last": 5,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Overload shall be 150% for 150 ms in constant-current mode and 120% for 5 s in constant-voltage mode, with output DC link capacitance of at most 10 mF per 4 MW",
+        "section": "S2 §4.3",
+        "text": "Overload specifications and DC link capacitance limits are defined."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 6,
+            "last": 6,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Efficiency shall be at least 98% between 50% and 100% utilization, counting power train loss only",
+        "section": "S2 §4.3",
+        "text": "Efficiency must be at least 98% between 50% and 100% utilization."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 7,
+            "last": 8,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Blocks shall support fast shutdown by shunt trip and internal disconnect, and shall limit DC fault current with a current-limiting stage",
+        "section": "S5",
+        "text": "Blocks must support fast shutdown and limit DC fault current."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 9,
+            "last": 11,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Outdoor enclosures shall be NEMA 3R, rated ·30 to 40 °C with derating stated above 40 °C, corrosion class C5, seismic design category D and 120 mph wind, with a design life of 15 years or more within a 10 to 20 ft by 8 ft by 8.5 ft envelope",
+        "section": "S2 §4.3, §6",
+        "text": "Outdoor enclosures must meet specific environmental and design standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 13,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Each block shall report a state machine of off, standby, precharged, on, fault and warning over Modbus TCP/IP. A permanent failure shall require manual validation, service and reset before the block returns to on",
+        "section": "S2 §4.3, §7.1",
+        "text": "Blocks must report state machine statuses and require manual validation after permanent failure."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 15,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Auxiliary power shall come from 480 Vac backed by the data center UPS, plus an internal source",
+        "section": "S2 §4.3",
+        "text": "Auxiliary power must be sourced from 480 Vac backed by UPS and an internal source."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 16,
+            "last": 16,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Major blocks shall be built from sub-blocks that can be swapped live",
+        "section": "S3 §4.2",
+        "text": "Major blocks must be constructed from live-swappable sub-blocks."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 17,
+            "last": 18,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Equipment shall comply with NFPA 70 and 70E, UL 347A, UL 508C, UL 840, UL 1741, IEEE 519, IEEE 1547 and IEEE 1584",
+        "section": "S2 §8",
+        "text": "Equipment must comply with specified standards."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 19,
+            "last": 20,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Bidders shall state product maturity and field references for the offered input class. Commercial SSTs are mostly 15 kV-class, so an SST proposal for a higher class shall show type-test evidence",
+        "section": "S5; PA",
+        "text": "Bidders must provide product maturity and field references, and type-test evidence for higher-class SSTs."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 21,
+            "last": 22,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Lot 2 includes the 15 kV-class switchgear lineups at each deployment unit that feed the power blocks, built to L1.04 to L1.06",
+        "section": "PA; S10",
+        "text": "Lot 2 includes 15 kV-class switchgear lineups built to specified standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 27,
+            "last": 28,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "800 VDC two-wire distribution shall run from the power-block output through DC switchboards and 6000 A-class busduct to parallel 1250 A row busways with 125 A tap cans",
+        "section": "S5 Option C",
+        "text": "800 VDC distribution must follow specified routing and capacity standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 29,
+            "last": 30,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Each deployment unit shall use a 4+1 block-redundant arrangement with a DC static transfer switch, built from semiconductor OR-ing or adjustable DC/DC catcher paths",
+        "section": "S5; S3 §4.2",
+        "text": "Deployment units must use a 4+1 block-redundant arrangement with specified DC static transfer switch."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 31,
+            "last": 33,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "The design shall reach 99.9% availability. Because DC distribution allows no UPS-style maintenance bypass, redundancy shall sit at power-block level and, where needed, at distribution level, and a catcher shall protect the conversion block from single points of failure",
+        "section": "S3 §4.2",
+        "text": "Design must achieve 99.9% availability with redundancy and protection against single points of failure."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 34,
+            "last": 35,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Operation shall stay inside the voltage band: no setpoint above 1500 VDC, no average above 1500 VDC, no extended excursion above it, and 840 VDC as the overvoltage disconnect hinge",
+        "section": "S3 §5.6, §5.7",
+        "text": "Operation must stay within specified voltage band limits."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 36,
+            "last": 37,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Earthing shall be TN-S or IT. Bidders shall propose high-resistance midpoint, high-resistance return, floating or solid grounding, with fault-current, detection and personnel-safety analysis",
+        "section": "S3 §6.2; S5",
+        "text": "Earthing must be TN-S or IT, with specified grounding proposals and safety analysis."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 38,
+            "last": 39,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Multiple solid earth points shall be avoided, and the potential drop between housings and the central earth point shall stay below 200 mV",
+        "section": "S3 §6.2.2.2, §6.2.4",
+        "text": "Avoid multiple solid earth points; potential drop must stay below 200 mV."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 40,
+            "last": 41,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "IT systems shall have insulation monitoring that detects a first ground fault, with impedance typically above 100 ohm per volt DC",
+        "section": "S3 §6.2.3",
+        "text": "IT systems must have insulation monitoring for first ground fault detection."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 42,
+            "last": 44,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Protection shall use two zones: facility distribution, from source output to tap-can input, with insulation monitoring and fast source shutdown on overcurrent, and the rack interface, from tap can to rack, with residual current monitoring",
+        "section": "S5",
+        "text": "Protection must use two zones with specified monitoring and shutdown features."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 45,
+            "last": 46,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Tap-can branch protection shall be an MCCB or a solid-state breaker. Bidders shall state clearing times and the redundancy or holdup that covers a clearing time of up to about 20 ms",
+        "section": "S5",
+        "text": "Tap-can branch protection must use MCCB or solid-state breakers, with clearing times and redundancy stated."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 47,
+            "last": 48,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Solid-state breakers shall target 125 A air-cooled ratings for 800 V to 54 V shelves and 1250 A liquid-cooled ratings for native 800 VDC racks",
+        "section": "S5",
+        "text": "Solid-state breakers must meet specified ratings for air-cooled and liquid-cooled applications."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 49,
+            "last": 49,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "Series arcing shall be mitigated with connector temperature monitoring and high-frequency sensing at the",
+        "section": "S5",
+        "text": "Series arcing must be mitigated using specified monitoring and sensing methods."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

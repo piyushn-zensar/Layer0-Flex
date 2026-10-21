@@ -1,0 +1,316 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 1,
+            "last": 1,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "PMBus, Modbus or CANbus elsewhere, integrated with the Owner's electrical power management system",
+        "section": "S2",
+        "text": "The equipment must support PMBus, Modbus, or CANbus and integrate with the Owner's power management system."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 4,
+            "last": 5,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Acceptance runs from factory tests through a 30-day availability test, and deliverables are timed against award and first delivery.",
+        "section": "S1 §9; S14",
+        "text": "Acceptance includes factory tests, a 30-day availability test, and deliverables are scheduled based on award and first delivery."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 8,
+            "last": 9,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "TA-01 | Equipment shall pass a witnessed factory test for the first unit of each type and factory acceptance tests for repeat units, followed by site acceptance and commissioning procedures that the manufacturer offers",
+        "section": "S14",
+        "text": "Equipment must pass witnessed factory tests for the first unit and acceptance tests for repeat units, followed by site acceptance and commissioning."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 10,
+            "last": 12,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "TA-02 | A pre-delivery assembly, quality assurance and factory test plan shall be agreed at least 30 days before the factory test. It covers burn-in, benchmarks and fault injection, such as disconnecting cables, powering down subsystems and installing known bad parts",
+        "section": "S7 App A.2",
+        "text": "A pre-delivery test plan must be agreed 30 days before the factory test, including burn-in, benchmarks, and fault injection."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "TA-03 | Pre-delivery tests shall cover power up, power down, monitoring, reset, power cycling from the console, failover and resilience, benchmarks, and a 72-hour test under constant load",
+        "section": "S7 App A.2",
+        "text": "Pre-delivery tests must include power cycling, failover, resilience, benchmarks, and a 72-hour constant load test."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 15,
+            "last": 17,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "TA-04 | The acceptance period shall target 60 days and shall include a functionality demonstration, a system test with two cold boots, a resilience test with fault injection, a performance test running each benchmark at least five times, and an availability test of 30 contiguous days",
+        "section": "S7 App A.4",
+        "text": "Acceptance period targets 60 days, including functionality, system, resilience, performance, and availability tests."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "TA-05 | During the availability test no upgrades are allowed in the last seven days, no critical bugs may be open in the last seven days, and any repair that causes downtime counts as an outage",
+        "section": "S7 App A.4.5",
+        "text": "During the availability test, no upgrades or critical bugs are allowed in the last seven days, and downtime repairs count as outages."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 22,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "TA-06 | Power-chain tests shall cover block step-load and pulse profiles at the reference load profile in L3.17, voltage and frequency ride-through events, protection coordination, ground-fault detection and end-to-end validation from MV input to the GPU",
+        "section": "S1 §7.3.3; S2 §5.1.2; S5",
+        "text": "Power-chain tests must include step-load, pulse profiles, ride-through events, protection coordination, and end-to-end validation."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 23,
+            "last": 24,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "TA-07 | A system-level simulation shall be accepted before delivery, covering dynamic response, source output impedance, distribution inductance and ripple",
+        "section": "S5",
+        "text": "System-level simulation must be accepted before delivery, covering dynamic response, impedance, inductance, and ripple."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 25,
+            "last": 26,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "TA-08 | Delivery shall run in three phases: integration, validation and operational readiness. Operational readiness is declared when the integrated system can serve users while meeting the offer's specifications",
+        "section": "S15 §1.16",
+        "text": "Delivery occurs in three phases: integration, validation, and operational readiness, with readiness declared when specifications are met."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 30,
+            "last": 30,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "DL-01 | Kickoff meeting | Within 45 days of award",
+        "section": "S7 §13.0.4",
+        "text": "A kickoff meeting must occur within 45 days of award."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 31,
+            "last": 31,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "DL-02 | Risk management plan and risk register | Within 30 days of award, with the register updated monthly",
+        "section": "S7 App B.3",
+        "text": "Submit a risk management plan and register within 30 days of award, updating the register monthly."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 33,
+            "last": 33,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "DL-03 | Project plan | Within 90 days of award, updated quarterly",
+        "section": "S7 App B.1",
+        "text": "Submit a project plan within 90 days of award, updating it quarterly."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 34,
+            "last": 35,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "DL-04 | Technical decision point to fix the final configuration and turn performance targets into requirements | 9 to 12 months before delivery",
+        "section": "S7 §13.0.1",
+        "text": "Establish a technical decision point to finalize configuration and performance targets 9-12 months before delivery."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 36,
+            "last": 36,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "DL-05 | Facilities and site preparation plan | Preliminary one year before first delivery, final nine months before",
+        "section": "S7 App B.4",
+        "text": "Submit a preliminary facilities and site preparation plan one year before delivery, final version nine months before."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 38,
+            "last": 38,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "DL-06 | Acceptance test plan | One year before first delivery",
+        "section": "S7 App B.8",
+        "text": "Submit an acceptance test plan one year before first delivery."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 39,
+            "last": 40,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "DL-07 | Delivery and installation plan | Preliminary one year before first delivery, final 90 days before each delivery",
+        "section": "S7 App B.7",
+        "text": "Submit a preliminary delivery and installation plan one year before delivery, final version 90 days before each delivery."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 41,
+            "last": 41,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "DL-08 | Network plan | Draft six months and final four months before installation",
+        "section": "S7 App B.6",
+        "text": "Submit a draft network plan six months before installation, final version four months before."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 42,
+            "last": 42,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "DL-09 | Chemical management plan | Nine months before delivery",
+        "section": "S7 App B.5",
+        "text": "Submit a chemical management plan nine months before delivery."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "DL-10 | Guaranteed delivery dates, which the Owner may fit the project schedule around | With the tender",
+        "section": "S12",
+        "text": "Provide guaranteed delivery dates with the tender for project scheduling."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 47,
+            "last": 47,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "CT-01 | Prices shall be firm, all-inclusive and quoted in US dollars, free of taxes, and shall cover delivery to site, installation, commissioning and training",
+        "section": "S15 §2.9; S12; PA",
+        "text": "Prices must be firm, all-inclusive, in USD, tax-free, and cover delivery, installation, commissioning, and training."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 48,
+            "last": 48,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "CT-02 | The price schedule shall separate equipment, freight, installation, commissioning, spares and five years",
+        "section": "S15 §2.9; S12; PA",
+        "text": "Price schedule must itemize equipment, freight, installation, commissioning, spares, and five years of service."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

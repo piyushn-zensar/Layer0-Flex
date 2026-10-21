@@ -1,0 +1,260 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 4,
+            "last": 5,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "Details of possession of Quality certifications – ISO 9001, IS 16444 and Type approval certificates /BIS /International accreditations if any",
+        "section": "vi",
+        "text": "Provide details of quality certifications and type approval certificates."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 7,
+            "last": 8,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "Technical presentation and Technical literature/Brochures of the offered Smart Energy Meter along with AMI Solutions.",
+        "section": "vii",
+        "text": "Submit technical presentation and literature for the offered Smart Energy Meter and AMI solutions."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 10,
+            "last": 17,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "Clause-by-Clause compliance of RFP terms (Pre-qualification requirements, Eligibility criteria & General Requirements) and all corrigendum with supporting documents as per Annexure-II.",
+        "section": "viii",
+        "text": "Provide clause-by-clause compliance of RFP terms with supporting documents."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 19,
+            "last": 20,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "Valid Power of Attorney along with resolution of Board for authorizing the person signing the bid for this RFP.",
+        "section": "ix",
+        "text": "Submit a valid Power of Attorney and Board resolution for bid signing authorization."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 22,
+            "last": 22,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "Undertaking by the TP shall be submitted as per Annexure-III.",
+        "section": "x",
+        "text": "Submit an undertaking as per Annexure-III."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 24,
+            "last": 24,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "An undertaking of owning IPR (Intellectual Property Right) or Copyright/License for the design to be submitted.",
+        "section": "xi",
+        "text": "Provide an undertaking of owning IPR or copyright/license for the design."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 27,
+            "last": 29,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "An undertaking to have understood and ready to sign a contract agreement by the appropriate authority immediately after being selected.",
+        "section": "xii",
+        "text": "Submit an undertaking to sign a contract agreement upon selection."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 31,
+            "last": 31,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "A Pre-Contract Integrity Pact as per the format given in Annexure-IV.",
+        "section": "xiii",
+        "text": "Submit a Pre-Contract Integrity Pact as per Annexure-IV."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 33,
+            "last": 33,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "A Bid Security declaration in lieu of the Earnest Money Deposit (EMD) as per format given in Annexure-V.",
+        "section": "xiv",
+        "text": "Provide a Bid Security declaration as per Annexure-V."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 36,
+            "last": 36,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "Compliance in Generic Specification provided in Annexure-VI",
+        "section": "xv",
+        "text": "Ensure compliance with the Generic Specification in Annexure-VI."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 38,
+            "last": 39,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "Financial Bid duly filled & signed both in PDF and Excel format as per Annexure-VII to be uploaded in ITI Tender Portal.",
+        "section": "xvi",
+        "text": "Submit the financial bid in PDF and Excel format as per Annexure-VII."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 41,
+            "last": 41,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "Declaration of Relation as per Annexure-VIII.",
+        "section": "xvii",
+        "text": "Provide a Declaration of Relation as per Annexure-VIII."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "NDA as per Annexure-IX",
+        "section": "xviii",
+        "text": "Submit an NDA as per Annexure-IX."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 45,
+            "last": 45,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "Land border declaration as per Annexure-X",
+        "section": "xix",
+        "text": "Provide a land border declaration as per Annexure-X."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 47,
+            "last": 49,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "Certificate to be submitted by Bidders on Rule 144(xi) of the General Financial Rules (GFRs) 2017 on grounds of Defence of India and National Security as per Annexure-XI",
+        "section": "xx",
+        "text": "Submit a certificate on Rule 144(xi) of GFRs 2017 as per Annexure-XI."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 51,
+            "last": 51,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "Consortium agreement as per Annexure-XII",
+        "section": "xxi",
+        "text": "Provide a consortium agreement as per Annexure-XII."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 52,
+            "last": 53,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "In case of Consortium, all members of Consortium have to separately submit the documents as per the check list above.",
+        "section": "xxi",
+        "text": "All consortium members must submit the required documents separately."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 56,
+            "last": 57,
+            "page": 14
+          }
+        ],
+        "page": 14,
+        "quote": "MSE vendors who are registered under Ministry of Micro and Small Enterprises, Government of India shall submit all the relevant documents for claim of benefit extended to MSE.",
+        "section": "7.1",
+        "text": "MSE vendors must submit documents to claim benefits."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

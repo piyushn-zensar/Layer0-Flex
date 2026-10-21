@@ -1,0 +1,35 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          1,
+          2,
+          5,
+          9
+        ],
+        "title": "Proposal submission requirements"
+      },
+      {
+        "category": "commercial",
+        "members": [
+          3,
+          6,
+          7
+        ],
+        "title": "Tenderers' commercial responsibilities"
+      },
+      {
+        "category": "legal",
+        "members": [
+          4,
+          8
+        ],
+        "title": "CSIR liability disclaimers"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

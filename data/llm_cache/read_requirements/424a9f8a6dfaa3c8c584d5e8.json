@@ -1,0 +1,232 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "The IPR or copyright/License of the SEM / AMI solution to be owned by the TP.",
+        "section": "Ownership",
+        "text": "The bidder must own the IPR or copyright/license of the SEM/AMI solution."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 20,
+            "last": 22,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Relevant documents to the ownership to be submitted",
+        "section": "Ownership",
+        "text": "Submit relevant documents proving ownership of the SEM/AMI solution."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 24,
+            "last": 32,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "TP should have designed, engineered, integrated, manufactured/ assembled the offered product and obtained the required Type Approval Certificate from any NABL/International accredited agencies.",
+        "section": "Product Certification",
+        "text": "Bidder must have designed, engineered, and certified the product with NABL/International accredited agencies."
+      },
+      {
+        "category": "legal",
+        "lines": [
+          {
+            "first": 33,
+            "last": 35,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "TP must confirm that there are no Patent / legal issues that might become hindrance as per scope of RFP at any stage.",
+        "section": "Legal Compliance",
+        "text": "Bidder must confirm no patent or legal issues hindering the RFP scope."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 36,
+            "last": 40,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "An undertaking of owning IPR (Intellectual Property Right) or Copyright/License for the SEM design needs to be submitted.",
+        "section": "Ownership",
+        "text": "Submit an undertaking of owning IPR or copyright/license for SEM design."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 42,
+            "last": 48,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "If Principal Designer is different, authorization letter in original in the name of TP must be provided for Transfer of Technology to ITI.",
+        "section": "Authorization",
+        "text": "Provide authorization letter for technology transfer if the principal designer is different."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 50,
+            "last": 52,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "The TP shall provide the design of the offered product vide Transfer of Technology enabling ITI to manufacture with following steps.",
+        "section": "Technology Transfer",
+        "text": "Provide product design for technology transfer to ITI for manufacturing."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 54,
+            "last": 58,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "SMT assembling using components supplied by suppliers",
+        "section": "Manufacturing Process",
+        "text": "Include SMT assembling using supplier-provided components in the manufacturing process."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 59,
+            "last": 61,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Bill of materials list along with technical specifications, part nos. and the OEM details",
+        "section": "Documentation",
+        "text": "Provide a bill of materials with specifications, part numbers, and OEM details."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 62,
+            "last": 64,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "A Compliance Statement is needed",
+        "section": "Compliance",
+        "text": "Submit a compliance statement."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 65,
+            "last": 66,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "THT and manual assembling using component supplied by suppliers",
+        "section": "Manufacturing Process",
+        "text": "Include THT and manual assembling using supplier-provided components in the manufacturing process."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 67,
+            "last": 71,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Mechanical part assembling using component supplied by suppliers",
+        "section": "Manufacturing Process",
+        "text": "Include mechanical part assembling using supplier-provided components in the manufacturing process."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 72,
+            "last": 72,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "PCBA testing",
+        "section": "Manufacturing Process",
+        "text": "Include PCBA testing in the manufacturing process."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 73,
+            "last": 77,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Plastic injection using materials supplied by suppliers",
+        "section": "Manufacturing Process",
+        "text": "Include plastic injection using supplier-provided materials in the manufacturing process."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 78,
+            "last": 78,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Meter assembly",
+        "section": "Manufacturing Process",
+        "text": "Include meter assembly in the manufacturing process."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 79,
+            "last": 79,
+            "page": 10
+          }
+        ],
+        "page": 10,
+        "quote": "Meter Calibration",
+        "section": "Manufacturing Process",
+        "text": "Include meter calibration in the manufacturing process."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

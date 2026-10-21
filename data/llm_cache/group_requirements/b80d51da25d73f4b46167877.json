@@ -1,0 +1,34 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "commercial",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Performance guarantees and bonds requirements"
+      },
+      {
+        "category": "submission",
+        "members": [
+          15,
+          16,
+          17,
+          18
+        ],
+        "title": "References and experience requirements for submission"
+      },
+      {
+        "category": "technical",
+        "members": [
+          7,
+          8
+        ],
+        "title": "Warranty and responsibility for technical failures"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

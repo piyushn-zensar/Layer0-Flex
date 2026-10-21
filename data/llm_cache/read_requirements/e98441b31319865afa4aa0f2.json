@@ -1,0 +1,134 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 6,
+            "last": 14,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "TP must assist ITI in setting up the production lines and give necessary Technical Support including Specification, process diagrams & training to ITI personnel for the smooth and efficient functioning of the Production of Smart Energy Meters / AMI solution.",
+        "section": "4.11",
+        "text": "TP must assist ITI in setting up production lines and provide technical support."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 15,
+            "last": 17,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "ITI desires that TP shall assist in supply of all the necessary Infra required for Manufacturing & Testing of the product except High End SMT facility & Test Bench (available with ITI).",
+        "section": "4.11",
+        "text": "TP shall assist in supplying necessary infrastructure for manufacturing and testing, excluding high-end SMT facility and test bench."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "ToT shall be on the Royalty Model on the sales of the product as a percentage excluding taxes.",
+        "section": "4.12",
+        "text": "ToT will be based on a royalty model calculated as a percentage of sales excluding taxes."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 25,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "TP shall provide all the upgrades developed for the offered product (including ITI product based on TOT) during the contract period, without any commercial implication. They should also ensure to develop the upgraded SEM / AMI solution to meet upgraded Technical Specification as per prevailing standard, if any, to overcome any obsolescence.",
+        "section": "4.13",
+        "text": "TP must provide upgrades for the product during the contract period without additional cost and ensure compliance with updated standards."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 26,
+            "last": 28,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "TP must agree to supply kit of the proposed product in Completely built Units(CBU), Semi Knock Down (SKD) & Complete Knock down (CKD) mode to ITI as per ITI requirement.",
+        "section": "4.14",
+        "text": "TP must supply product kits in CBU, SKD, and CKD modes as per ITI requirements."
+      },
+      {
+        "category": "staffing",
+        "lines": [
+          {
+            "first": 29,
+            "last": 32,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "TP shall depute experienced technical personnel to support manufacturing at ITI and after that as and when required to resolve the technical issues for Certification or during bulk production free of cost.",
+        "section": "4.15",
+        "text": "TP must provide experienced technical personnel for manufacturing support and issue resolution at no cost."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 33,
+            "last": 37,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "TP must be willing to provide Contract Manufacturing job work for the manufacturing of the offered product, if Customer agrees to accept TP 's product & if ITI desires to supply TP ’s product. Payment Terms and conditions will be mutually agreed upon case to case basis.",
+        "section": "4.16",
+        "text": "TP must offer contract manufacturing services if agreed by the customer and ITI, with mutually agreed payment terms."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 38,
+            "last": 42,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "ITI LTD is in the process of manufacturing Smart Energy Meter and it is in the prototype stage. The smart meter manufacturer should be ready to offer ITI LTD make or their product based on the compliance and competitiveness of the specification and price requirement of the customer RFE/Tender.",
+        "section": "4.17",
+        "text": "Smart meter manufacturer must offer ITI or their product based on compliance and price competitiveness."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 43,
+            "last": 46,
+            "page": 5
+          }
+        ],
+        "page": 5,
+        "quote": "ITI intends to build manufacturing capacity of 1,00,000 (One Lakh) numbers of the said meters alongside AMI solution per month. TP must agree to provide all technical support for development of required Infrastructure.",
+        "section": "4.18",
+        "text": "TP must support ITI in developing infrastructure for manufacturing 100,000 meters and AMI solutions monthly."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

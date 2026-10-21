@@ -1,0 +1,134 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies 800 VDC systems with specific grounding and protection features. The FPM-800V product provides DC/DC modules and intermediate bus converters for 800 VDC systems, aligning with the voltage and grounding requirements.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-800V"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The overload and capacitance requirements align with the capabilities of the FPM-800V product, which is designed for high-power DC systems.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-800V"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 3,
+        "rationale": "The efficiency requirement of at least 98% matches the high-efficiency design of the FPM-800V modules.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-800V"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "The protection and fast shutdown features, including current-limiting stages and solid-state breakers, are consistent with the FPM-800V product's design for high-power DC systems.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-800V"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 5,
+        "rationale": "This requirement pertains to outdoor enclosures, which are not directly related to the listed products. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 6,
+        "rationale": "The state machine reporting over Modbus TCP/IP aligns with the monitoring and communication capabilities of the FPM-800V modules.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-800V"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 7,
+        "rationale": "This requirement pertains to auxiliary power sources, which are not directly related to the listed products. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 8,
+        "rationale": "The modular design of the FPM-800V product supports live swapping of sub-blocks, meeting this requirement.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-800V"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 9,
+        "rationale": "This compliance requirement pertains to standards and certifications, which are not directly related to the listed products. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 10,
+        "rationale": "The 15 kV-class switchgear lineups align with the CROWN-ARMV product, which is designed for such applications.",
+        "units": [
+          {
+            "bu": "CROWN",
+            "offering_type": "ETO",
+            "product_id": "CROWN-ARMV"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 11,
+        "rationale": "The 800 VDC distribution system with busways and tap cans aligns with the ANORD-BUSWAY product, which provides busway solutions for such applications.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "CTO",
+            "product_id": "ANORD-BUSWAY"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 12,
+        "rationale": "The 4+1 block-redundant arrangement with DC static transfer switches aligns with the FPM-DCPDU product, which is designed for high-redundancy DC power systems.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "FPM-DCPDU"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

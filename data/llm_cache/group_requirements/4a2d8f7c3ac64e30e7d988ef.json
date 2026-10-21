@@ -1,0 +1,53 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "title": "Compliance with relevant IS standards"
+      },
+      {
+        "category": "technical",
+        "members": [
+          5,
+          6
+        ],
+        "title": "Anti-tamper and sealing features for meters"
+      },
+      {
+        "category": "technical",
+        "members": [
+          7,
+          8
+        ],
+        "title": "Customer-specific technical requirements for meters"
+      },
+      {
+        "category": "technical",
+        "members": [
+          11,
+          12
+        ],
+        "title": "Communication capabilities for meters and network"
+      },
+      {
+        "category": "technical",
+        "members": [
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "title": "Network management system requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

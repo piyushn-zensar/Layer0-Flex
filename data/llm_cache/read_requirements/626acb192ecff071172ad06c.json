@@ -1,0 +1,134 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 3,
+            "last": 5,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Bidder should have to meet the following turnover criteria in any Categories they want to bid individually.",
+        "section": "Turnover Criteria",
+        "text": "Bidder must meet turnover criteria for individual categories."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 6,
+            "last": 30,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Auditors Net worth Category Average Annual Turnover for last 3 Years (2021-22,2022-23,2023-24) 50 Cr Smart Energy Meter Manufacturer 30 Cr certificate & Turnover certificate signed by the company’s Auditors/ CA for last 3 financial years.",
+        "section": "Turnover Documentation",
+        "text": "Provide turnover certificate signed by auditors for last 3 years."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 43,
+            "last": 47,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Audited account statements for the years specified to be provided.",
+        "section": "Financial Documentation",
+        "text": "Submit audited account statements for specified years."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 50,
+            "last": 53,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "In case of Consortium of Categories individual members has to meet the turnover pertaining to corresponding Categories.",
+        "section": "Consortium Turnover",
+        "text": "Consortium members must meet turnover for their respective categories."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 54,
+            "last": 60,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "A Single bidder having complete Solution (all category) should have average annual turnover of 60Cr for the last 3 years.",
+        "section": "Single Bidder Turnover",
+        "text": "Single bidder for all categories must have 60Cr average annual turnover for last 3 years."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 62,
+            "last": 67,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Certification/relevant documents to be provided.",
+        "section": "Documentation",
+        "text": "Provide certification and relevant documents."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 68,
+            "last": 76,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "Relaxation in prior turnover and prior experience to all Startups (whether MSEs or otherwise) will be provided subject to meeting of quality and technical specifications in accordance with the relevant provisions of GFR 2005.",
+        "section": "Startup Relaxation",
+        "text": "Startups may receive relaxation in turnover and experience if quality and technical specifications are met."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 81,
+            "last": 94,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "However, there may be circumstances like procurement of items related to public safety, health, critical security operations &equipment etc. Wherever adequate justification exists, this relaxation need not to be exercised.",
+        "section": "Relaxation Exceptions",
+        "text": "Relaxation may not apply for public safety, health, or critical security items."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 100,
+            "last": 101,
+            "page": 7
+          }
+        ],
+        "page": 7,
+        "quote": "The Bidder must meet the below-mentioned qualification requirements/ criteria.",
+        "section": "Qualification Criteria",
+        "text": "Bidder must meet specified qualification requirements."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

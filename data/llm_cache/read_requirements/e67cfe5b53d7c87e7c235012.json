@@ -1,0 +1,148 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 8,
+            "last": 9,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "Meter design may be incorporated in a single PCB (Main board, Power supply and Display) and NIC Card separately.",
+        "section": "Physical Design",
+        "text": "Meter design should use a single PCB for main board, power supply, and display, with a separate NIC card."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 13,
+            "last": 19,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "Module should support IPV4 and IPV6 communication, according to the availability of the network it should work in 4G fall back to 2G/NB-IoT/RF/other Future Networks.",
+        "section": "Communication Module",
+        "text": "Communication module must support IPV4 and IPV6 and work with 4G fallback to 2G/NB-IoT/RF."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 22,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "Communication Module Type: Pluggable and universally compatible one, and easily switchable between communication technology with in a single module (Ex: GPRS / NB-IoT/RF Mesh).",
+        "section": "Communication Module",
+        "text": "Communication module must be pluggable, universally compatible, and switchable between technologies like GPRS, NB-IoT, and RF Mesh."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 30,
+            "last": 32,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "the communication module should be able to set to NB-IoT / RF in the areas wherever the other technology is not suitable.",
+        "section": "Communication Technology",
+        "text": "Communication module must support switching to NB-IoT or RF where other technologies are unsuitable."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 33,
+            "last": 33,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "The antenna used in the communication module should be with minimum 5-db gain.",
+        "section": "Antenna Gain",
+        "text": "Communication module antenna must have a minimum 5-db gain."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 35,
+            "last": 35,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "Polycarbonate meter casing suitable for IS 16444 type test, ultrasonic welding with ingress protection to IP 51/55 standards.",
+        "section": "Meter Casing",
+        "text": "Meter casing must be polycarbonate, IS 16444 compliant, ultrasonically welded, and meet IP 51/55 standards."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 37,
+            "last": 39,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "Polycarbonate meter box, type tested as per IS standards (Input / Output gland size suitable for 20mm round / flat cable), box top cover may be book open type / as per customer requirements.",
+        "section": "Meter Box",
+        "text": "Meter box must be polycarbonate, IS standard tested, with 20mm gland size and customizable top cover."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 40,
+            "last": 41,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "Smart Energy Meter should be type tested as per IS 16444 standards with latest amendments in an NABL approved and accredited laboratory.",
+        "section": "Type Test",
+        "text": "Smart Energy Meter must be IS 16444 type tested in an NABL accredited lab."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 43,
+            "last": 43,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "Meter manufacturer / supplier should have in-house NABL or ISO/ IEC - 17025 accredited Laboratory as on the date of application.",
+        "section": "Laboratory Accreditation",
+        "text": "Manufacturer/supplier must have an in-house NABL or ISO/IEC 17025 accredited lab."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 47,
+            "last": 50,
+            "page": 34
+          }
+        ],
+        "page": 34,
+        "quote": "Single Phase 2 Wire, whole current Smart Energy Meter including pluggable GPRS communication module as per IS :16444 Part-1, Accuracy Class 1.0, Current Rating 5-30 A / 5-60A / 10-60 A and 10-100A with Backlit LCD Display, Net metering facility, default postpaid facility with prepaid facility built-in.",
+        "section": "Smart Meters",
+        "text": "Single-phase smart meter must meet IS 16444 Part-1, Accuracy Class 1.0, and specified current ratings."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

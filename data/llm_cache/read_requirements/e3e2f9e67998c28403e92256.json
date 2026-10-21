@@ -1,0 +1,190 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 6,
+            "last": 7,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "be registered on National Treasury’s Central Supplier Database (CSD). Registrations can be completed online at: www.csd.gov.za;",
+        "section": "NATIONAL TREASURY CENTRAL SUPPLIER DATABASE REGISTRATION",
+        "text": "Winning bidder must be registered on the National Treasury’s Central Supplier Database."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 8,
+            "last": 9,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "provide the CSIR of their CSD registration number; and",
+        "section": "NATIONAL TREASURY CENTRAL SUPPLIER DATABASE REGISTRATION",
+        "text": "Winning bidder must provide their CSD registration number to the CSIR."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 10,
+            "last": 13,
+            "page": 18
+          }
+        ],
+        "page": 18,
+        "quote": "provide the CSIR with a certified copy of their B-BBEE certificate. If no certificate can be provided, no points will be scored during the evaluation process. (RSA suppliers only)",
+        "section": "NATIONAL TREASURY CENTRAL SUPPLIER DATABASE REGISTRATION",
+        "text": "Winning bidder must provide a certified copy of their B-BBEE certificate to the CSIR."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 4,
+            "last": 5,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "All proposals must be submitted at the following email address: tender@csir.co.za",
+        "section": "VENUE FOR PROPOSAL SUBMISSION",
+        "text": "Proposals must be submitted to the specified email address."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 10,
+            "last": 11,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Issue of tender documents: 01 September 2022",
+        "section": "TENDER PROGRAMME",
+        "text": "Tender documents will be issued on 01 September 2022."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 13,
+            "last": 14,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Compulsory briefing session / site inspection etc: 05 September 2022",
+        "section": "TENDER PROGRAMME",
+        "text": "Compulsory briefing session or site inspection is on 05 September 2022."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 16,
+            "last": 17,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Last date for submission of queries: 09 September 2022",
+        "section": "TENDER PROGRAMME",
+        "text": "Queries must be submitted by 09 September 2022."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 19,
+            "last": 20,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Closing / submission Date: 16 September 2022",
+        "section": "TENDER PROGRAMME",
+        "text": "Proposals must be submitted by 16 September 2022."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 22,
+            "last": 26,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Proposals must consist of two parts, each of which is placed in a separate sealed package clearly marked: PART 1: Technical Proposal: RFP No-1028-16-09-2022 PART 2: Pricing Proposal, B-BBEE and other Mandatory Documentation: RFP No -1028-16-09-2022",
+        "section": "SUBMISSION OF PROPOSALS",
+        "text": "Proposals must be submitted in two separately sealed and clearly marked packages."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 27,
+            "last": 27,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Proposals submitted by companies must be signed by a person or persons duly authorised.",
+        "section": "SUBMISSION OF PROPOSALS",
+        "text": "Proposals must be signed by an authorized representative."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 28,
+            "last": 30,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "The CSIR will award the contract to qualified tenderer(s)’ whose proposal is determined to be the most advantageous to the CSIR, taking into consideration the technical (functional) solution, price and B-BBEE.",
+        "section": "SUBMISSION OF PROPOSALS",
+        "text": "The contract will be awarded to the most advantageous proposal considering technical solution, price, and B-BBEE."
+      },
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 32,
+            "last": 34,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Proposals shall be submitted at the address mentioned above no later than the closing date of Friday, 16 September 2022 during CSIR’s business hours. The CSIR business hours are between 08h00 and 16h30.",
+        "section": "DEADLINE FOR SUBMISSION",
+        "text": "Proposals must be submitted by 16 September 2022 during CSIR business hours (08h00 to 16h30)."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 35,
+            "last": 36,
+            "page": 19
+          }
+        ],
+        "page": 19,
+        "quote": "Where a proposal is not received by the CSIR by the due date and stipulated place, it will be regarded as a late tender. Late tenders will not be considered.",
+        "section": "DEADLINE FOR SUBMISSION",
+        "text": "Late proposals will not be considered."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

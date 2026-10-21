@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies the manufacturing of smart energy meters with specific technical features and standards compliance. EMS-IND covers the design and manufacturing of industrial devices, including metering and instrumentation, which aligns with the described smart energy meter requirements.",
+        "units": [
+          {
+            "bu": "EMS",
+            "offering_type": "ETO",
+            "product_id": "EMS-IND"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 2,
+        "rationale": "This requirement pertains to compliance with BIS licensing for ISI marking, which is a regulatory and certification aspect. It does not directly specify a product or manufacturing requirement, so no product is mapped.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "This requirement specifies compliance with various standards for performance and testing. It is a compliance requirement and does not directly specify a product or manufacturing need, so no product is mapped.",
+        "units": []
+      },
+      {
+        "confidence": 0.8,
+        "n": 4,
+        "rationale": "This requirement lists standards and regulations for smart meters. It is a compliance requirement and does not directly specify a product or manufacturing need, so no product is mapped.",
+        "units": []
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

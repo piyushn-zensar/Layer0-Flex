@@ -1,0 +1,30 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "title": "Technical specifications for the IT load and power distribution"
+      },
+      {
+        "category": "technical",
+        "members": [
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "title": "Technical requirements for redundancy, cooling, and environmental conditions"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

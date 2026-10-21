@@ -1,0 +1,7 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": []
+  },
+  "task": "group_requirements"
+}

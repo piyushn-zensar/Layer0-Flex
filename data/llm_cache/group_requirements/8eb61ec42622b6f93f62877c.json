@@ -1,0 +1,26 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          9
+        ],
+        "title": "Technical support and infrastructure setup for production"
+      },
+      {
+        "category": "commercial",
+        "members": [
+          3,
+          5,
+          7
+        ],
+        "title": "Commercial terms for product supply and manufacturing"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

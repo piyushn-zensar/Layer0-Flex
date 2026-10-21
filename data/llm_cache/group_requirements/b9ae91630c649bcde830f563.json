@@ -1,0 +1,25 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "compliance",
+        "members": [
+          1,
+          2,
+          5
+        ],
+        "title": "Anti-corruption and ethical conduct requirements"
+      },
+      {
+        "category": "compliance",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Fair treatment and impartiality in the tender process"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

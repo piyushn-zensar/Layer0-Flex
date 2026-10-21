@@ -1,0 +1,49 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          6,
+          7
+        ],
+        "title": "Requirements for CDUs"
+      },
+      {
+        "category": "technical",
+        "members": [
+          3,
+          8
+        ],
+        "title": "Heat rejection and cooling system requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          9,
+          10
+        ],
+        "title": "Room air handler specifications"
+      },
+      {
+        "category": "technical",
+        "members": [
+          17,
+          18,
+          19
+        ],
+        "title": "Compute system and rack requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          14,
+          15
+        ],
+        "title": "Cooling measurement and piping specifications"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

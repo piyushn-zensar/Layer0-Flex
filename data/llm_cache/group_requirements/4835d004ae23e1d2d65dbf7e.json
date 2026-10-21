@@ -1,0 +1,33 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "submission",
+        "members": [
+          9,
+          10,
+          11
+        ],
+        "title": "Submission of financial and company information"
+      },
+      {
+        "category": "submission",
+        "members": [
+          12
+        ],
+        "title": "Submission of customer and performance verification documents"
+      },
+      {
+        "category": "commercial",
+        "members": [
+          5,
+          6,
+          8
+        ],
+        "title": "Royalty and procurement terms"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

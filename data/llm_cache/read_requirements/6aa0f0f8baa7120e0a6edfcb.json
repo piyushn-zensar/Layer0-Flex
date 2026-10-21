@@ -1,0 +1,78 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "schedule",
+        "lines": [
+          {
+            "first": 14,
+            "last": 15,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "Closing Date\nFriday, 16 September 2022 at 16:30",
+        "section": "General Information",
+        "text": "Proposals must be submitted by 16 September 2022 at 16:30."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 16,
+            "last": 17,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "Place\nElectronic submission: tender@csir.co.za",
+        "section": "General Information",
+        "text": "Proposals must be submitted electronically to tender@csir.co.za."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 18,
+            "last": 19,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "Mail size is limited to 25MB, if the document exceeds this\nlimit, please send multiple emails.",
+        "section": "General Information",
+        "text": "Email submissions must not exceed 25MB; use multiple emails if necessary."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 20,
+            "last": 20,
+            "page": 1
+          }
+        ],
+        "page": 1,
+        "quote": "Cloud submissions will not be accepted",
+        "section": "General Information",
+        "text": "Cloud submissions are not allowed."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 24,
+            "page": 3
+          }
+        ],
+        "page": 3,
+        "quote": "The CSIR requires service to manufacture the Fingerprint Recognition Device in accordance\nto the provided specifications (Procurement and Sourcing of components, PCB manufacturing\nand assemblies, 3D enclosure printing, assembling the complete Device and Device\nacceptance testing) and also to design and manufacture the power supply module (power path\nswitching, battery charging and battery level monitoring) to power the Device.",
+        "section": "Background",
+        "text": "The bidder must manufacture the Fingerprint Recognition Device and design and manufacture the power supply module."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

@@ -1,0 +1,86 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies power controls at various levels and reaction times, which aligns with the capabilities of the FPM-DCPDU product. This product provides advanced power distribution and control features suitable for high-power systems.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "FPM-DCPDU"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement for energy measurement and system monitoring aligns with the capabilities of the ANORD-PMS product, which provides power management and monitoring systems with real-time data collection and analysis.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "ANORD-PMS"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "The requirement for system resilience and rolling upgrades aligns with the capabilities of the CLOUD-INT product, which supports integrated and tested rack-scale systems with high availability and reliability.",
+        "units": [
+          {
+            "bu": "CLOUD",
+            "offering_type": "SEMI_CUSTOM",
+            "product_id": "CLOUD-INT"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 4,
+        "rationale": "This is a compliance requirement related to security standards and policies, which does not directly map to a product. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.7,
+        "n": 5,
+        "rationale": "The requirement for storage systems does not directly map to any listed product in the catalog. The bid manager should propose a solution or clarify further.",
+        "units": []
+      },
+      {
+        "confidence": 0.7,
+        "n": 6,
+        "rationale": "The requirement for control-plane network separation and secure partitioning does not directly map to any listed product in the catalog. The bid manager should propose a solution or clarify further.",
+        "units": []
+      },
+      {
+        "confidence": 0.7,
+        "n": 7,
+        "rationale": "The requirement for software features does not directly map to any listed product in the catalog. The bid manager should propose a solution or clarify further.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 8,
+        "rationale": "This is a technical requirement related to utility interconnection, which does not directly map to a product. The bid manager should address this.",
+        "units": []
+      },
+      {
+        "confidence": 0.9,
+        "n": 9,
+        "rationale": "The requirement for busduct and busway aligns with the capabilities of the ANORD-BUSWAY product, which provides enclosed busway systems suitable for high-current distribution.",
+        "units": [
+          {
+            "bu": "ANORD",
+            "offering_type": "CTO",
+            "product_id": "ANORD-BUSWAY"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

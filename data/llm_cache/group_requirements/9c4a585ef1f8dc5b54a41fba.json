@@ -1,0 +1,40 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "title": "PCB design and specifications"
+      },
+      {
+        "category": "technical",
+        "members": [
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "title": "Power supply module requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          13,
+          14,
+          15
+        ],
+        "title": "Device power functionality"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

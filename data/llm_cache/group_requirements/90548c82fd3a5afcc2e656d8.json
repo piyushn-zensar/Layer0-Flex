@@ -1,0 +1,41 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "legal",
+        "members": [
+          1,
+          2
+        ],
+        "title": "Provisions related to assignment and successors"
+      },
+      {
+        "category": "legal",
+        "members": [
+          3,
+          4
+        ],
+        "title": "Provisions related to confidentiality and intellectual property"
+      },
+      {
+        "category": "legal",
+        "members": [
+          8,
+          9,
+          10
+        ],
+        "title": "Provisions related to the nature of the relationship between parties"
+      },
+      {
+        "category": "legal",
+        "members": [
+          11,
+          12
+        ],
+        "title": "Provisions related to the agreement's governance and amendments"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}

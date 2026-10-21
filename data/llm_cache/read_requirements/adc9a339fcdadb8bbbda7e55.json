@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 3,
+            "last": 3,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "The TP (s)/Contractor(s) Commits himself to take all measures necessary to prevent corruption.",
+        "section": "2.1",
+        "text": "The bidder must take all measures to prevent corruption."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 7,
+            "last": 12,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "The TP (s)/contractor(s) will not, directly or through any other person or firm offer, promise or give to any of the Principal's employees involved in the tender process or the execution of the contract or to any third person any material or other benefit which he/ she is not legally entitled to, in order to obtain in exchange any advantage of any kind whatsoever (during the tender process or during the execution of the contract.",
+        "section": "2.1.a",
+        "text": "The bidder must not offer or give unauthorized benefits to influence the tender process or contract execution."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 13,
+            "last": 17,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "The TP (s)/contractor(s) will not enter with other TP s/ contractors into any undisclosed agreement or understanding, whether formal or informal. This applies in particular to prices, specifications, certifications, subsidiary contracts, submission or non-submission of bids or any other actions to restrict competitiveness or to introduce cartelization in the bidding process.",
+        "section": "2.1.b",
+        "text": "The bidder must not engage in undisclosed agreements that restrict competition."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 18,
+            "last": 23,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "The TP (s)/contractor(s) will not commit any offence under IPC/PC Act, further the TP (s)/contractor(s) will not use improperly, for purposes of competition of personal gain, or pass onto others, any information or document provided by the Principal as part of the business relationship, regarding plans, technical proposals and business details, including information contained or transmitted electronically.",
+        "section": "2.1.c",
+        "text": "The bidder must not commit legal offences or misuse confidential information."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 24,
+            "last": 27,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "The TP (s)/Contractor(s) of foreign original shall disclose the name and address of the agents/representatives in India, if any. Similarly, the TP (s)/Contractor(s) of Indian Nationality shall furnish the name and address of the foreign principals, if any.",
+        "section": "2.1.d",
+        "text": "The bidder must disclose the details of agents or principals involved."
+      },
+      {
+        "category": "submission",
+        "lines": [
+          {
+            "first": 28,
+            "last": 30,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "The TP (s)/Contractor(s) will, when presenting the bid, disclose any and all payments made, are committed to or intend to make to agents, brokers or any other intermediaries in connection with the award of the contract.",
+        "section": "2.1.e",
+        "text": "The bidder must disclose all payments to intermediaries related to the contract."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 31,
+            "last": 33,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "The TP (s)/Contractor(s) will not bring any outside influence and Govt. bodies directly or indirectly on the bidding process in furtherance to his bid.",
+        "section": "2.1.f",
+        "text": "The bidder must not use external influence on the bidding process."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 34,
+            "last": 35,
+            "page": 26
+          }
+        ],
+        "page": 26,
+        "quote": "The TP (s)/Contractor(s) will not instigate third persons to commit offences outlined above or to be an accessory to such offences.",
+        "section": "2.1.g",
+        "text": "The bidder must not encourage others to commit prohibited actions."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

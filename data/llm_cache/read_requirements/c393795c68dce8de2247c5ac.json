@@ -1,0 +1,106 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 3,
+            "last": 6,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "Subject to full satisfaction of the Principal, the exclusion of the TP (s)/Contractor(s) could be revoked by the Principal if the TP ($)/ Contractor(s) can prove that he has restored/ recouped the damage caused by him and has installed a suitable corruption preventative system in his organization.",
+        "section": "SECTION 4 – PREVIOUS TRANSGRESSION",
+        "text": "Contractor must prove damage restoration and corruption prevention system to revoke exclusion."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 8,
+            "last": 13,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "The TP (s)/ Contractor(s) declares that no previous transgression occurred in the last 3 years immediately before signing of this Integrity Pact with any other company in any country conforming to the anti-corruption/ transparency International (TI) approach or with any other Public Sector Enterprises/ Undertaking in India of any Government Department in India that could justify his exclusion from the tender process.",
+        "section": "SECTION 4 – PREVIOUS TRANSGRESSION",
+        "text": "Contractor must declare no transgressions in the last 3 years."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 15,
+            "last": 19,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "If the TP (s)/ Contractor(s) make incorrect statement on this subject, he can be disqualified from the tender process or action for his exclusion can be taken as mentioned under Section-3 of the above for transgressions of Section-2 of the above and shall be liable for compensation for damages as per Section-5 of this Pact.",
+        "section": "SECTION 4 – PREVIOUS TRANSGRESSION",
+        "text": "Incorrect statements can lead to disqualification and liability for damages."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 21,
+            "last": 25,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "If the Principal has disqualified the TP (s)/Contractor(s) from the tender process prior to the award of contract according to Section 3 the Principal is entitled to forfeit the Earnest Money Deposit/Bid Security/ or demand and recover the damages equitant to Earnest Money Deposit/Bid Security apart from any other legal that may have accrued to the Principal.",
+        "section": "SECTION 5 – COMPENSATION FOR DAMAGE",
+        "text": "Principal can forfeit Earnest Money Deposit or recover equivalent damages upon disqualification."
+      },
+      {
+        "category": "commercial",
+        "lines": [
+          {
+            "first": 26,
+            "last": 34,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "In addition to 5.1 above the Principal shall be entitled to take recourse to the relevant provision of the contract related to termination of Contract due to Contractor default. In such case, the Principal shall be entitled to forfeit the Performance Bank Guarantee of the Contractor or demand and recover liquidate and all damages as per the provisions of the contract agreement against termination.",
+        "section": "SECTION 5 – COMPENSATION FOR DAMAGE",
+        "text": "Principal can forfeit Performance Bank Guarantee and recover damages upon contract termination due to default."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 36,
+            "last": 37,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "The Principal will enter into Integrity Pact on all identical terms with all TP s and contractors for identical cases.",
+        "section": "SECTION 6 – EQUAL TREATEMENT OF ALL TP S/CONTRACTORS",
+        "text": "Principal will ensure identical terms in Integrity Pact for all contractors."
+      },
+      {
+        "category": "compliance",
+        "lines": [
+          {
+            "first": 38,
+            "last": 39,
+            "page": 28
+          }
+        ],
+        "page": 28,
+        "quote": "The TP (s)/Contractor(s) undertakes to get this Pact signed by its subcontractor(s)/sub-vendor(s)/ associate(s), if spy, and to submit the same to",
+        "section": "SECTION 6 – EQUAL TREATEMENT OF ALL TP S/CONTRACTORS",
+        "text": "Contractor must ensure subcontractors sign and submit the Integrity Pact."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

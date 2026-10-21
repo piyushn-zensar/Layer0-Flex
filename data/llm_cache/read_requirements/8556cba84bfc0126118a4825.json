@@ -1,0 +1,120 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "requirements": [
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 12,
+            "last": 14,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "The enclosure color must be black.",
+        "section": "4.2.6",
+        "text": "The enclosure must be black."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 20,
+            "last": 22,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "The power supply module (PCB) must be of surface mount technology and be able to fit in the dimensions of the Device bottom handle part",
+        "section": "4.4.1",
+        "text": "The PCB must be surface mount and fit the device bottom handle."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 36,
+            "last": 40,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "Power Supply Module PCB is of Surface mount with minimum of double-layer PCB type.",
+        "section": "4.4.1.1",
+        "text": "The PCB must be surface mount and at least double-layer."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 46,
+            "last": 48,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "PCB Dimensions: 33mm x 33mm x 5mm(LxWxH)",
+        "section": "4.4.1.2",
+        "text": "The PCB dimensions must be 33mm x 33mm x 5mm."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 62,
+            "last": 68,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "PCB Mounting: Corner mounted with (6mm x 3mm) head screws measured 28mm from the centre of the screw holes.",
+        "section": "4.4.1.3",
+        "text": "The PCB must be corner mounted with specified screws and measurements."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 76,
+            "last": 80,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "PCB Complexity: Solder Masking, minimum of double-layer and silk screening",
+        "section": "4.4.1.4",
+        "text": "The PCB must have solder masking, at least double-layer, and silk screening."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 85,
+            "last": 91,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "Quality: IPC Class II specification. Supplier must provide a manufacturing report or certificate for quality assurance",
+        "section": "4.4.1.5",
+        "text": "The PCB must meet IPC Class II and include a quality assurance report."
+      },
+      {
+        "category": "technical",
+        "lines": [
+          {
+            "first": 97,
+            "last": 101,
+            "page": 13
+          }
+        ],
+        "page": 13,
+        "quote": "micro-USB connector positioned to fit as described in the Step file (body fingerprint scanner Bottom Step file).",
+        "section": "4.4.1.6",
+        "text": "The micro-USB connector must fit as per the Step file."
+      }
+    ]
+  },
+  "task": "read_requirements"
+}

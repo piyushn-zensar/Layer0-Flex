@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "groups": [
+      {
+        "category": "technical",
+        "members": [
+          1,
+          2,
+          16,
+          17,
+          18,
+          19
+        ],
+        "title": "Voltage and grounding requirements"
+      },
+      {
+        "category": "technical",
+        "members": [
+          5,
+          20,
+          21,
+          22,
+          23
+        ],
+        "title": "Protection and fault management"
+      },
+      {
+        "category": "technical",
+        "members": [
+          14,
+          15
+        ],
+        "title": "Redundancy and availability"
+      },
+      {
+        "category": "submission",
+        "members": [
+          11
+        ],
+        "title": "Submission requirements"
+      }
+    ]
+  },
+  "task": "group_requirements"
+}
