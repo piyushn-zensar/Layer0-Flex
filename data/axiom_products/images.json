@@ -1,0 +1,191 @@
+[
+  {
+    "file": "images/anord-busway-databar-dx-1.jpg",
+    "family_key": "ANORD-BUSWAY/DATABAR DX",
+    "part_numbers": [],
+    "source_file": "Databar_UL_Brochure_2026.pdf",
+    "page": 3,
+    "kind": "photo",
+    "verified": true
+  },
+  {
+    "file": "images/anord-busway-databar-dx-plus-1.jpg",
+    "family_key": "ANORD-BUSWAY/DATABAR DX+",
+    "part_numbers": [],
+    "source_file": "Databar_IEC_Brochure_2026.pdf",
+    "page": 3,
+    "kind": "photo",
+    "verified": true
+  },
+  {
+    "file": "images/anord-busway-ibar-hxa-1.jpg",
+    "family_key": "ANORD-BUSWAY/IBAR HXA",
+    "part_numbers": [],
+    "source_file": "IBAR-HXA-Brochure-2023.pdf",
+    "page": 16,
+    "kind": "photo",
+    "verified": true
+  },
+  {
+    "file": "images/anord-busway-ibar-hxa-2.jpg",
+    "family_key": "ANORD-BUSWAY/IBAR HXA",
+    "part_numbers": [],
+    "source_file": "IBAR-HXA-Brochure-2023.pdf",
+    "page": 11,
+    "kind": "illustration",
+    "verified": true
+  },
+  {
+    "file": "images/anord-busway-ibar-hxc-1.jpg",
+    "family_key": "ANORD-BUSWAY/IBAR HXC",
+    "part_numbers": [],
+    "source_file": "IBAR-HXC-CATALOGUE-2025.pdf",
+    "page": 1,
+    "kind": "illustration",
+    "verified": true
+  },
+  {
+    "file": "images/anord-busway-ibar-hxc-2.jpg",
+    "family_key": "ANORD-BUSWAY/IBAR HXC",
+    "part_numbers": [],
+    "source_file": "IBAR-HXC-CATALOGUE-2025.pdf",
+    "page": 16,
+    "kind": "illustration",
+    "verified": true
+  },
+  {
+    "file": "images/anord-busway-resinbar-cxa-1.jpg",
+    "family_key": "ANORD-BUSWAY/RESINBAR CXA",
+    "part_numbers": [],
+    "source_file": "2025-WEB-RESINBAR.pdf",
+    "page": 2,
+    "kind": "photo",
+    "verified": false
+  },
+  {
+    "file": "images/anord-busway-resinbar-cxc-1.jpg",
+    "family_key": "ANORD-BUSWAY/RESINBAR CXC",
+    "part_numbers": [],
+    "source_file": "2025-WEB-RESINBAR.pdf",
+    "page": 2,
+    "kind": "photo",
+    "verified": true
+  },
+  {
+    "file": "images/anord-lvsb-amx-1.png",
+    "family_key": "ANORD-LVSB/AMX",
+    "part_numbers": [],
+    "source_file": "AMX-Switchboards-Catalog_2026.pdf",
+    "page": 1,
+    "kind": "illustration",
+    "verified": true
+  },
+  {
+    "file": "images/anord-lvsb-amx-2.png",
+    "family_key": "ANORD-LVSB/AMX",
+    "part_numbers": [],
+    "source_file": "AMX-Switchboards-Catalog_2026.pdf",
+    "page": 3,
+    "kind": "illustration",
+    "verified": true
+  },
+  {
+    "file": "images/anord-lvsb-mdx-1.png",
+    "family_key": "ANORD-LVSB/MDX",
+    "part_numbers": [],
+    "source_file": "MDX-Switchgear-Catalog_2026.pdf",
+    "page": 1,
+    "kind": "illustration",
+    "verified": true
+  },
+  {
+    "file": "images/anord-lvsb-mdx-2.jpg",
+    "family_key": "ANORD-LVSB/MDX",
+    "part_numbers": [],
+    "source_file": "MDX-Switchgear-Catalog_2026.pdf",
+    "page": 3,
+    "kind": "photo",
+    "verified": true
+  },
+  {
+    "file": "images/anord-lvsb-sen-plus-1.png",
+    "family_key": "ANORD-LVSB/SEN Plus",
+    "part_numbers": [],
+    "source_file": "Anord_Mardix_SEN_Plus_Brochure_English.pdf",
+    "page": 1,
+    "kind": "illustration",
+    "verified": true
+  },
+  {
+    "file": "images/anord-lvsb-sen-plus-2.png",
+    "family_key": "ANORD-LVSB/SEN Plus",
+    "part_numbers": [],
+    "source_file": "Anord_Mardix_SEN_Plus_Brochure_English.pdf",
+    "page": 4,
+    "kind": "photo",
+    "verified": true
+  },
+  {
+    "file": "images/anord-pdu-rpp-1.jpg",
+    "family_key": "ANORD-PDU/RPP",
+    "part_numbers": [],
+    "source_file": "Remote_Power-Panel_Datasheet.pdf",
+    "page": 1,
+    "kind": "illustration",
+    "verified": false
+  },
+  {
+    "file": "images/anord-pms-mcms-1.png",
+    "family_key": "ANORD-PMS/MCMS",
+    "part_numbers": [],
+    "source_file": "MCMS-BROCHURE-2023.pdf",
+    "page": 2,
+    "kind": "photo",
+    "verified": true
+  },
+  {
+    "file": "images/anord-pms-mcms-2.png",
+    "family_key": "ANORD-PMS/MCMS",
+    "part_numbers": [],
+    "source_file": "MCMS-BROCHURE-2023.pdf",
+    "page": 2,
+    "kind": "photo",
+    "verified": true
+  },
+  {
+    "file": "images/crown-armv-arc-resistant-switchgear-1.jpg",
+    "family_key": "CROWN-ARMV/Arc-Resistant Switchgear",
+    "part_numbers": [],
+    "source_file": "Crown-Enclosures_MV-Switchgear-and-Control-Ehouse-one-pager.pdf",
+    "page": 2,
+    "kind": "photo",
+    "verified": false
+  },
+  {
+    "file": "images/crown-ehouse-e-house-1.jpg",
+    "family_key": "CROWN-EHOUSE/E-House",
+    "part_numbers": [],
+    "source_file": "Crown-Enclosures_MV-Switchgear-and-Control-Ehouse-one-pager.pdf",
+    "page": 1,
+    "kind": "photo",
+    "verified": true
+  },
+  {
+    "file": "images/jetcool-cdu-modular-cdu-1.png",
+    "family_key": "JETCOOL-CDU/Modular CDU",
+    "part_numbers": [],
+    "source_file": "Modular CDU Datasheet.pdf",
+    "page": 1,
+    "kind": "illustration",
+    "verified": true
+  },
+  {
+    "file": "images/jetcool-cdu-smartsense-cdu-1.png",
+    "family_key": "JETCOOL-CDU/SmartSense CDU",
+    "part_numbers": [],
+    "source_file": "In-Rack CDU300 Datasheet (SmartSense CDU).pdf",
+    "page": 1,
+    "kind": "illustration",
+    "verified": true
+  }
+]

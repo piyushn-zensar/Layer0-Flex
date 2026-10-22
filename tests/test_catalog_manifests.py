@@ -1,4 +1,7 @@
-"""J-21 (C-63): the documents manifest `data/axiom_products/documents.json` ties each supplied PDF to the catalog.
+"""J-21 (C-63) and J-22 (C-65): the manifests in `data/axiom_products/` tie the supplied PDFs and their images to the
+catalog. J-21 tests come first; the images manifest (J-22) follows the last J-21 test.
+
+J-21: the documents manifest `data/axiom_products/documents.json` ties each supplied PDF to the catalog.
 
 Shape (PLAN 12.3): a list of {file, title, doc_type, family_keys, part_numbers, applies, pages, publisher, note}.
 
@@ -138,3 +141,88 @@ def test_general_documents_are_marked_in_the_note(docs):
     for d in docs:
         if d["applies"] == "general":
             assert len(d["note"]) >= 40, f"{d['file']}: a general document needs a note saying why it is not tied to one product"
+
+
+# ---- J-22: images.json and scripts/extract_product_images.py -------------------------------------------------------
+
+IMAGES = FOLDER / "images.json"
+IMAGE_FIELDS = {"file": str, "family_key": str, "part_numbers": list, "source_file": str, "page": int, "kind": str,
+                "verified": bool}
+
+
+@pytest.fixture(scope="module")
+def images():
+    assert IMAGES.exists(), f"{IMAGES} is missing: run .venv/Scripts/python -m scripts.extract_product_images"
+    data = json.loads(IMAGES.read_text(encoding="utf-8"))
+    assert isinstance(data, list) and data, "images.json must be a non-empty list of image entries"
+    return data
+
+
+def test_images_manifest_fields(images):
+    for n, e in enumerate(images):
+        label = e.get("file", f"entry {n}") if isinstance(e, dict) else f"entry {n}"
+        assert isinstance(e, dict), f"{label} is not an object"
+        assert set(e) == set(IMAGE_FIELDS), f"{label}: fields must be exactly {sorted(IMAGE_FIELDS)}, got {sorted(e)}"
+        for k, kind in IMAGE_FIELDS.items():
+            assert isinstance(e[k], kind) and not (kind is int and isinstance(e[k], bool)),                 f"{label}: {k} must be a {kind.__name__}, not {type(e[k]).__name__}"
+        assert e["kind"] in {"photo", "illustration"}, f"{label}: kind {e['kind']!r} must be photo or illustration"
+
+
+def test_every_image_file_exists_and_is_listed_once(images):
+    files = [e["file"] for e in images]
+    assert len(files) == len(set(files)), f"image files listed twice: {sorted({f for f in files if files.count(f) > 1})}"
+    for e in images:
+        assert e["file"].startswith("images/"), f"{e['file']}: image files live under data/axiom_products/images/"
+        assert (FOLDER / e["file"]).is_file(), f"{e['file']}: image file not found (re-run the extraction script)"
+    on_disk = {p.relative_to(FOLDER).as_posix() for p in (FOLDER / "images").glob("*") if p.is_file()}
+    assert on_disk == set(files), f"images/ and images.json differ: only on disk {sorted(on_disk - set(files))}, only listed {sorted(set(files) - on_disk)}"
+
+
+def test_image_family_keys_are_real_catalog_ids(images):
+    ids = _catalog_ids()
+    for e in images:
+        assert e["family_key"] in ids, f"{e['file']}: family_key {e['family_key']!r} is not a catalog ID (catalog_items.json)"
+
+
+def test_image_sources_exist_and_point_at_a_page_the_documents_manifest_gives_the_family(images):
+    docs = {d["file"]: d for d in _load()}
+    for e in images:
+        assert e["source_file"] in docs, f"{e['file']}: source {e['source_file']} is not in documents.json"
+        listed = docs[e["source_file"]]["pages"].get(e["family_key"])
+        assert listed is not None, f"{e['file']}: documents.json does not link {e['source_file']} to {e['family_key']}"
+        assert e["page"] in listed, f"{e['file']}: page {e['page']} is not among the pages {listed} documents.json lists for {e['family_key']}"
+        assert 1 <= e["page"] <= _page_count(e["source_file"]), f"{e['file']}: page {e['page']} is outside {e['source_file']}"
+
+
+def test_placeholder_rule_in_the_manifest(images):
+    """A family keeps up to two verified images, or one unverified image when none is verified (shown as a placeholder)."""
+    from scripts.extract_product_images import PER_FAMILY
+    by_family = {}
+    for e in images:
+        by_family.setdefault(e["family_key"], []).append(e)
+    for fam, entries in by_family.items():
+        verified = [e for e in entries if e["verified"]]
+        if verified:
+            assert len(verified) == len(entries) <= PER_FAMILY,                 f"{fam}: a family with a verified image keeps only verified ones, at most {PER_FAMILY}: {[e['file'] for e in entries]}"
+        else:
+            assert len(entries) == 1, f"{fam}: with no verified image keep one unverified image, found {len(entries)}"
+
+
+def test_image_manifest_passes_the_script_check_and_catches_a_broken_entry(images):
+    from scripts.extract_product_images import check
+    assert check(images) == [], check(images)
+    broken = [dict(images[0], file="images/missing.jpg", family_key="NOPE/X", page=999)]
+    problems = " | ".join(check(broken))
+    assert "image file missing" in problems and "not a catalog ID" in problems and "outside 1.." in problems, problems
+
+
+def test_family_names_in_page_text_are_read_longest_first():
+    """DX and DX+ must not be mixed up, and a brand word alone names no family."""
+    from scripts.extract_product_images import _catalog_names, _families_named, _name_pattern
+    pattern, owner = _name_pattern(_catalog_names())
+    dx, dxp = "ANORD-BUSWAY/DATABAR DX", "ANORD-BUSWAY/DATABAR DX+"
+    assert _families_named("DX 160A, 250A", pattern, owner) == {dx}
+    assert _families_named("DX+ 800A and the DX Plus range", pattern, owner) == {dxp}
+    assert _families_named("DX and DX+ side by side", pattern, owner) == {dx, dxp}
+    assert _families_named("DATABAR busway, IBAR and RESINBAR", pattern, owner) == set()
+    assert _families_named("Crown MV E‑houses", pattern, owner) == {"CROWN-EHOUSE/E-House"}
