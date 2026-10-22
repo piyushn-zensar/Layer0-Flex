@@ -18,11 +18,15 @@ const field = (ctx: TourCtx, tourId: string): Field | null => {
   return el.matches("input, select, textarea") ? (el as Field) : el.querySelector<Field>("input, select, textarea");
 };
 
+// The page opens on All products (J-19); the steps below that describe the business units open their own tab first.
+const showTab = (ctx: TourCtx, tab: string) => { const t = ctx.el(`catalog-tab-${tab}`); if (t && t.getAttribute("aria-selected") !== "true") t.click(); };
+const onUnits = (ctx: TourCtx) => showTab(ctx, "products");
+
 const chapter: TourChapter = {
   id: "catalog",
   order: 10,
   title: "Product catalog",
-  summary: "The business units and their products with their types of offer, the search over the long-term index, the reference documents (Sources) and the catalog read from the Flex web pages (Published catalog).",
+  summary: "Every product in one table, then the business units and their products with their types of offer, the search over the long-term index, the reference documents (Sources) and the catalog read from the Flex web pages (Published catalog).",
   entryRoute: "/catalog",
   steps: [
     {
@@ -31,6 +35,7 @@ const chapter: TourChapter = {
       route: "/catalog",
       target: "catalog-search",
       placement: "bottom",
+      onEnter: onUnits,
       body: [
         "The **Product catalog** is the knowledge the matcher and the units work from: the business units, their product families with their types of offer and their published models, and the illustrative past responses, all read from `data/knowledge_base/*.json` (rules as data). The line at the top says it plainly: families and models come from **public Flex web pages (retrieved 12 Oct 2026), to be confirmed with each unit**.",
         "At the top, a search box over the long-term index; below, one card per unit. Nothing on this page writes; it is the reference the other screens link to (solution areas in Traceability, BOM lines in the hand-off, people who can sign in).",
@@ -38,12 +43,12 @@ const chapter: TourChapter = {
     },
     {
       id: "catalog-tabs",
-      title: "Three views of the catalog",
+      title: "Four views of the catalog",
       route: "/catalog",
       target: "catalog-tabs",
       placement: "bottom",
       body: [
-        "**Products** is the business units and their products, with the search below. **Sources** is the reference documents behind the evidence (engineering references, vendor and market context), registered and reviewed. **Published catalog** is what the official Flex product pages say today, read automatically. The next steps look at the first, then the other two.",
+        "**All products** is one table of every product (the Flex power modules spreadsheet and the web catalog) with search, filters, sort and a column picker. **Business units** is the units and their products, with the search below. **Sources** is the reference documents behind the evidence (engineering references, vendor and market context), registered and reviewed. **Published catalog** is what the official Flex product pages say today, read automatically. The next steps look at the business units, then Sources and the Published catalog.",
       ],
     },
     {
@@ -52,6 +57,7 @@ const chapter: TourChapter = {
       route: "/catalog",
       target: "catalog-unit-head-CROWN",
       placement: "bottom",
+      onEnter: onUnits,
       fallback: "Each card names a unit with its code, pillar and status, its focus, and its unit manager and unit designer / engineer.",
       body: [
         "Each card: the unit's name and **code** (`CROWN` is what requirement rows, inboxes and hand-off files use), its **pillar** (Critical Power, Embedded Power, Thermal Management, Cloud) and a **status** badge. *Active* units take part in matching, sending the work and the people picker; a *pending* unit such as EPC Power is listed for completeness but excluded until confirmed.",
@@ -64,6 +70,7 @@ const chapter: TourChapter = {
       route: "/catalog",
       target: "catalog-products-CROWN",
       placement: "top",
+      onEnter: onUnits,
       fallback: "Under each unit, its products: id, name and a type-of-offer badge (CTO, Semi-custom, ETO).",
       body: [
         "Each product line: its **id** (`CROWN-ARMV`, kept as the reference in matches and hand-off items), its name (shown as the **solution area** of a proposed solution; published models are examples), and the **type of offer** badge: **CTO** (green, configure-to-order: hand-off route A, a CPQ configuration seed with the product's BOM lines), **Semi-custom** (amber: route B, basis of design) and **ETO** (red, engineer-to-order: route B, or route C when the unit's usual type of offer asks for a specialist first).",
@@ -76,6 +83,7 @@ const chapter: TourChapter = {
       route: "/catalog",
       target: "catalog-search",
       placement: "bottom",
+      onEnter: onUnits,
       kind: "action",
       instruction: "Type a requirement in your own words and press Search, or press Use example.",
       fallback: "The search box is at the top of the catalog page.",
@@ -99,6 +107,7 @@ const chapter: TourChapter = {
       route: "/catalog",
       target: "catalog-results",
       placement: "bottom",
+      onEnter: onUnits,
       fallback: "After a search, a card lists the matches best first: score, kind, unit, id and the first 160 characters of the text.",
       body: [
         "**Score** is the ranking number (higher is closer). **Kind** is *product* or *past_response*: an approved reviewed example (nominated where it arose, approved in Knowledge review in My work) appears as a past response of its unit. **Unit** and **ID** tell you where it comes from; **Text** is the beginning of what was indexed.",

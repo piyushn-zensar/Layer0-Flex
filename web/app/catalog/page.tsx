@@ -1,5 +1,6 @@
 "use client";
-// Business units, product families with their published models, and knowledge-base search.  Owner: Atharv.
+// All products (J-19), business units with their product families and published models, knowledge-base search, sources and the
+// published catalog.  Owner: Janvia (moved from Atharv in iteration 5).
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useApi } from "@/lib/api";
@@ -8,6 +9,7 @@ import PageHead from "@/components/shell/PageHead";
 import { Alert, EmptyState, Skeleton, StatusBadge } from "@/components/ui";
 import SourcesTab from "./SourcesTab";
 import PublishedTab from "./PublishedTab";
+import AllProducts from "@/components/catalog/AllProducts";
 
 type Hit = { kind: string; id: string; bu: string; score: number; text: string; family?: string };
 type Item = { id: string; family: string; bu: string; model: string; name: string; specs: string; source_url: string };
@@ -75,21 +77,21 @@ function ProductsTab() {
   );
 }
 
-const TABS = { products: "Products", sources: "Sources", published: "Published catalog" } as const;
+const TABS = { all: "All products", products: "Business units", sources: "Sources", published: "Published catalog" } as const;
 
 function CatalogPage() {
   const router = useRouter();
   const t0 = useSearchParams().get("tab");
-  const tab = t0 === "sources" || t0 === "published" ? t0 : "products";
+  const tab = t0 === "products" || t0 === "sources" || t0 === "published" ? t0 : "all";
   return (
     <div className="content">
-      <PageHead title="Product catalog" help="Business units, their product families and models, the past responses used for matching, and the reference documents (sources) that back them." />
+      <PageHead title="Product catalog" help="Every product in one table, the business units with their product families and models, the past responses used for matching, and the reference documents (sources) that back them." />
       <div className="filters" role="tablist" aria-label="Catalog view" data-tour="catalog-tabs">
-        {(["products", "sources", "published"] as const).map((t) => (
+        {(["all", "products", "sources", "published"] as const).map((t) => (
           <button key={t} role="tab" aria-selected={tab === t} className={`chip ${tab === t ? "on" : ""}`} data-tour={`catalog-tab-${t}`}
-            onClick={() => router.replace(t === "products" ? "/catalog" : `/catalog?tab=${t}`)}>{TABS[t]}</button>))}
+            onClick={() => router.replace(t === "all" ? "/catalog" : `/catalog?tab=${t}`)}>{TABS[t]}</button>))}
       </div>
-      {tab === "products" ? <ProductsTab /> : tab === "sources" ? <SourcesTab /> : <PublishedTab />}
+      {tab === "all" ? <AllProducts /> : tab === "products" ? <ProductsTab /> : tab === "sources" ? <SourcesTab /> : <PublishedTab />}
     </div>
   );
 }

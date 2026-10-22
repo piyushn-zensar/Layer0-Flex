@@ -457,3 +457,28 @@ html[data-tour-room] body { padding-bottom: var(--tour-room); } /* walkthrough: 
   table.stack-sm .inline { flex-wrap: wrap; }
   table.stack-sm td:has(> .form, > div > .form)::before { display: block; margin-bottom: var(--s1); }
 }
+
+/* ---------- Product catalog: All products table (J-19) ---------- */
+.catalog-controls { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: flex-end; margin-bottom: var(--s3); }
+.catalog-controls .catalog-search { margin-bottom: 0; flex: 1 1 300px; min-width: 240px; } .catalog-controls .catalog-search label { flex: 1; min-width: 0; } .catalog-controls .catalog-search input { width: 100%; min-width: 0; }
+.filter-field { display: flex; flex-direction: column; gap: var(--s1); font-size: var(--fs-sm); font-weight: 600; color: var(--ink-2); min-width: 0; }
+.filter-field select { max-width: 220px; font-weight: 400; }
+.catalog-table-wrap { max-height: 70vh; overflow: auto; border: 1px solid var(--line); border-radius: var(--radius); }
+.catalog-table-wrap:focus-visible { outline-offset: -2px; }
+.catalog-table { border: 0; border-radius: 0; min-width: 760px; }
+.catalog-table thead th { position: sticky; top: 0; z-index: 2; }
+.catalog-table th, .catalog-table td { vertical-align: middle; }
+.catalog-table td.sticky-col, .catalog-table th.sticky-col { position: sticky; left: 0; z-index: 1; background: var(--card); box-shadow: 1px 0 0 var(--line); }
+.catalog-table thead th.sticky-col { z-index: 3; background: var(--surface-2); }
+.catalog-table tbody tr:hover td.sticky-col { background: var(--bg); }
+.th-sort { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; gap: var(--s1); cursor: pointer; font: inherit; color: inherit; white-space: nowrap; padding: 2px 4px; margin: -2px -4px; border-radius: var(--radius-sm); }
+.th-sort:hover { color: var(--ink); } .th-sort:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+th.num .th-sort { flex-direction: row-reverse; }
+.th-arrow { font-size: 9px; min-width: 9px; color: var(--accent); }
+.thumb { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: var(--radius-sm); object-fit: contain; background: #fff; border: 1px solid var(--line); vertical-align: middle; }
+.thumb.ph { background: var(--surface-2); color: var(--muted-2); }
+.col-picker { position: relative; }
+.col-panel { position: absolute; z-index: 20; right: 0; top: calc(100% + 4px); width: 260px; max-width: calc(100vw - 2 * var(--s4)); display: flex; flex-direction: column; gap: var(--s2); box-shadow: var(--shadow-2); margin: 0; }
+.col-panel .check { margin: 0; } .col-actions { display: flex; flex-wrap: wrap; gap: var(--s2); border-top: 1px solid var(--line); padding-top: var(--s2); }
+.catalog-controls > button { align-self: flex-end; }
+@media (max-width: 700px) { .filter-field select { max-width: none; } .catalog-controls .filter-field { flex: 1 1 140px; } .col-panel { right: auto; left: 0; } }
