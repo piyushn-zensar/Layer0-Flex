@@ -421,3 +421,120 @@ Size: S hours, M one to two days, L several days (rough, for comparison only).
 | C-49 | Dependencies between teams: some requirements need input or approval from several teams before the assessment is final | Today one assignment per unit, each judged alone; needs an "all of" rule per requirement |
 | C-50 | Enterprise identity and access management for production | The current JWT sign-in stays for the PoC |
 | C-51 | Evaluate established workflow frameworks (cloud or open-source) that can be configured and integrated | Guidance only, no replacement now; candidates go in `team/investigations.md` |
+
+## 12. Iteration 5: real product selection from the spreadsheet and the configurator
+
+Source: written direction from the Zensar point of contact, added to the plan on 22 Oct 2026, with the supplied files: the Flex Power Modules export `PowerModules-1791937030.xlsx` (721 parts, all Active, exported 14 Oct 2026), the configurator `rfp_configurator.py`, and 15 datasheets / brochures (Anord Mardix, Crown, JetCool CDUs, IBAR, Databar, MCMS, the 2026 power brochure). All copied unchanged to `data/axiom_products/`. Request items are numbered C-52 to C-66.
+
+**Priority:** the spreadsheet and the supplied script must drive real product selection in the demo (C-52 to C-62). Catalog merging and the all-products table are part of that. Document linking, RAG and images support it; full image extraction and a visual redesign come after the working demo.
+
+**Two people, two lanes (decided 22 Oct 2026):** Piyush = data, configurator, matching, assessment (P-53 to P-59). Janvia = Product Catalog page, documents, images (J-19 to J-23). Atharv has no tasks this iteration. The lanes meet only through the contract in 12.3, committed **before** either starts; after that neither waits for the other (Janvia builds against the sample file; Piyush reads Janvia's manifests when they exist). Neither edits the other's paths (12.4); a contract change is agreed in chat first and committed by Piyush with `[contract]`.
+
+### 12.1 What was asked
+
+| ID | Ask | Today | Task |
+|---|---|---|---|
+| C-52 | Merge the spreadsheet into the catalog: exact part numbers, enrich, add missing, keep web data / images / links, variants separate, evaluation boards apart from power modules | Catalog = web pages (`catalog_items.json`, scraped versions); FPM has 32 entries at **series** level (BMR491 …), the spreadsheet is at **part** level (BMR3141011/001 …): **0 exact part matches** | P-53 |
+| C-53 | Normalise and validate: resolve the two Series columns; numeric voltage, power, current, efficiency, dimensions in one unit each; empty = unknown; keep interfaces, isolation, regulation, mounting, paralleling, multiple outputs | Free-text `specs` string per item | P-53 |
+| C-54 | Sources and conflicts: source and import date per value; flag spreadsheet / web disagreements; an empty import never overwrites; repeat imports create no duplicates | Web versions only | P-53 |
+| C-55 | RFP requirements → the configurator's input (keep requirement text and document reference, normalise units, list missing inputs); match on the merged catalog | The matcher picks a unit / product by model judgement | P-54 |
+| C-56 | Group requirements by component or subsystem; evaluate related constraints together; one search per component; system-level checks separate | One requirement at a time | P-55 |
+| C-57 | Real recommendations: part numbers with relevant specs, linked to the catalog, module quantities where the configurator supports it, with assumptions and review flags | Solution area per requirement (P-46) | P-56 |
+| C-58 | Explain outcomes: satisfied / failed / cannot assess per requirement; match, near match, insufficient information; explain no-match; never relax silently | — | P-56 |
+| C-59 | Screens: "Assessment Summary" (done in P-42); "Domain Alignment" → **Technical Requirement Matching** (P-42 said "Technical requirement match"); requirement-to-product comparison in the technical view; coverage, gaps, assumptions, pending reviews in the summary; a script run is not proof of feasibility | Three measures (P-43) | P-57 |
+| C-60 | Product Catalog: table of **all** products (part number, family, type, status, input / output voltage, power, current, efficiency, interface, source); search, filter, sort, pages; a row opens full specs, images, documents; extra spreadsheet fields by column picker or details view | Product cards by unit, Published tab | J-19, J-20 |
+| C-61 | Assumptions and limits visible: RFP-stated vs defaults (redundancy, design margin, module count); unverified specs and open checks flagged; fixed-ratio output, paralleling, thermal derating, peak power, certification checked before suitability; unsupported checks named (multiple outputs) | — | P-56 |
+| C-62 | Validate the whole flow on a power and a cloud RFP: extraction → configurator → products → catalog details; one match and one no-match / missing-information case; recommendations checked against the supplied data | RC-1 and Syracuse seeded | P-59 |
+| C-63 | Link datasheets, brochures and other documents to the right part or family, applicability clear | The Sources tab lists reference documents, not per product | J-21 |
+| C-64 | Index the supporting documents into RAG with document / page references (operating conditions, compatibility, certifications); numeric filtering stays the basis of matching | RAG over `data/references/` (P-35, P-37) | P-58 |
+| C-65 | Verified product images per product or family, source kept, placeholder when uncertain | None | J-22 |
+| C-66 | Catalog presentation: specs, match explanations, datasheet access, navigation; image and layout polish after the core works | — | J-23 |
+
+### 12.2 Decisions and proposed defaults
+
+Use the default unless an answer arrives first; note it in the tracker.
+
+1. **The two Series columns (C-53):** column C "Series" is the same for all 721 rows ("Power Modules") → `product_line`. Column E "Series" is the series code for modules (BMR314) and an ordering code for evaluation boards (ROA170259) → `series`; for boards, "Compatibility" (BMR314) → `evaluates`. To confirm with the Zensar point of contact.
+2. **Matching to the web catalog (C-52):** exact part number first (0 hits today). A part whose `series` equals a web FPM model (BMR316, BMR491 …) becomes a **variant** under that web entry (`family_key`, for example `FPM/BMR316`); the web entry stays as it is. Parts with no web series are added as new products. The 25 evaluation boards are `product_type = evaluation_board` and are never recommended as a power module.
+3. **Units (C-53):** V, W, A, %, mm, as in the spreadsheet headers; `null` = unknown, never 0. A spreadsheet value's source is `{source: "spreadsheet", row, imported: "<date>"}`.
+4. **Conflicts (C-54):** compared only where the web text gives a number for the same field and series (voltage range, power, current, efficiency); a disagreement is stored on the product for review and both values are kept. The spreadsheet does not replace web text.
+5. **Configurator (C-55):** vendored as `app/modules/configurator/rfp_configurator.py` with the smallest changes (load from the merged catalog instead of the .xlsx; return data, not files). Its own defaults (redundancy, design margin, Axiom limits, CDU table, certifications found) are shown as **assumptions / unverified**, as the script itself marks them. `pandas` goes into `requirements.txt` (the script needs it; `numpy` comes with it).
+6. **Requirement input for the script:** the bid's frozen requirements are mapped to the script's `system` / `board` fields by one model call per component group (frozen in `data/llm_cache/configurator_inputs/`), each value kept with its requirement ID and verbatim text; the script's own `parse_requirements` validates it. No regex extraction.
+7. **Outcome words (C-58):** Match (every stated constraint met), Near match (fails one constraint, from the script's relaxation table; **never presented as a match**), Insufficient information (a needed input is missing), No match (with the reason). Per requirement: Satisfied / Not satisfied / Cannot assess yet.
+8. **Feasibility wording (C-59):** the summary always says "configurator result, pending engineering review"; the go/no-go never treats a run as proof.
+9. **Scope of numeric matching:** board-level DC/DC modules (FPM) from the spreadsheet; system level (Axiom module, cooling, certifications) from the script's `configure_system` checks, shown separately. Switchgear, busbar and CDU documents are evidence only (no numeric table was supplied for them).
+
+### 12.3 Contract between the two lanes (committed first, P-53a)
+
+**`data/knowledge_base/power_modules.json`** (written by `scripts/import_power_modules.py`, Piyush), and `data/knowledge_base/power_modules.sample.json` (20 real rows: modules with and without a web family, multiple outputs, evaluation boards, one conflict):
+
+```json
+{"_note": "...", "imported": "2026-10-22", "source_file": "data/axiom_products/PowerModules-1791937030.xlsx",
+ "items": [{
+  "part_number": "BMR3141011/001", "component_id": 3, "product_line": "Power Modules", "series": "BMR314",
+  "evaluates": null, "product_type": "power_module", "family_key": "FPM/BMR314", "status": "Active",
+  "application": ["Data Center and Cloud"], "interfaces": ["PMBus"], "attributes": ["Unregulated", "PMBus", "Peak Power"],
+  "isolation": "Non-Isolated", "isolation_v": null, "regulation": "Unregulated/Fixed Ratio",
+  "mounting": "LGA", "package_type": "Baseplate", "footprint": "Other", "paralleling": "None", "multi_output": null,
+  "vin_min_v": 38, "vin_max_v": 60, "vout_min_v": 9.5, "vout_max_v": 15, "vout_typ_v": null,
+  "power_w": 800, "power_peak_w": 1500, "current_a": 62, "current_peak_a": null, "efficiency_pct": 97.5,
+  "length_mm": 28, "width_mm": 17.8, "height_mm": 9.65,
+  "outputs": [{"n": 2, "v_min": null, "v_nom": null, "v_max": null, "power_w": null, "current_a": null}],
+  "sources": {"power_w": {"source": "spreadsheet", "row": 3, "imported": "2026-10-22"}},
+  "web": {"source_url": "https://...", "specs": "..."},
+  "conflicts": [{"field": "power_w", "spreadsheet": 800, "web": 750, "web_url": "https://..."}],
+  "verified": false}]}
+```
+
+**API (Piyush, in `app/modules/catalog/`):**
+- `GET /api/catalog/products?q=&type=&family=&status=&interface=&application=&sort=&dir=asc|desc&page=1&size=50` → `{total, page, size, items: [row]}`; a row = part_number, family_key, product_type, status, vin_min_v, vin_max_v, vout_min_v, vout_max_v, power_w, current_a, efficiency_pct, interfaces, source ("spreadsheet", "web", "both"), has_conflict. Web-only catalog items are rows too (numbers null).
+- `GET /api/catalog/product?part=<part number>` (query parameter: part numbers contain "/") → the full item plus `documents` and `images` joined from Janvia's manifests (empty lists while the files are missing).
+
+**Manifests (Janvia):**
+- `data/axiom_products/documents.json`: `[{file, title, doc_type: datasheet|brochure|catalogue|one_pager, family_keys: [], part_numbers: [], applies: part|family|general, pages: {"<family_key or part>": [page, …]}, publisher, note}]`; `family_keys` use the existing catalog IDs (`ANORD-LVSB/MDX`, `FPM/BMR316`, …).
+- `data/axiom_products/images.json` and `data/axiom_products/images/`: `[{file, family_key, part_numbers: [], source_file, page, kind: photo|illustration, verified: true|false}]`; `verified: false` → the page shows a placeholder.
+
+### 12.4 Paths per lane (iteration 5 only; also in `.claude/rules/ownership.md`)
+
+| Piyush | Janvia |
+|---|---|
+| `scripts/import_power_modules.py`, `data/knowledge_base/power_modules*.json` | `data/axiom_products/documents.json`, `images.json`, `images/**` |
+| `app/modules/configurator/**` (new), `app/modules/catalog/**` (product API), `matching/**`, `decisions/**` | `scripts/extract_product_images.py` |
+| `web/components/assessment/**`, Traceability pane 3 technical comparison (`.../trace/`, this iteration only), `web/lib/**` (contract types) | `web/app/catalog/**` (moves from Piyush to Janvia), `web/components/catalog/**` (new) |
+| `data/llm_cache/configurator_inputs/`, RAG index of `data/axiom_products/*.pdf`, `requirements.txt`, `tests/test_configurator*.py`, `tests/test_power_modules*.py` | `tests/test_catalog_manifests.py` |
+| `Documents/changes-iteration5.md`, walkthrough assessment chapters | `web/tour/chapters/catalog.ts`, walkthrough catalog chapter |
+
+`data/axiom_products/` (the supplied files) is read-only for both.
+
+### 12.5 Tasks
+
+Size: S hours, M one to two days, L several days.
+
+**Piyush (top to bottom)**
+
+| ID | Task | Changes | Size | Depends on |
+|---|---|---|---|---|
+| P-53a | Contract first: the 12.3 shapes as `power_modules.sample.json` (20 real rows) and TypeScript types in `web/lib/types.ts`; tell Janvia | C-52, C-60 | S | — |
+| P-53 | Spreadsheet import `scripts/import_power_modules.py` → `power_modules.json`: two Series columns split (decision 1), numbers and units (3), empty = unknown, evaluation boards typed, variants under the web series (2), per-value sources and import date, conflicts against web numbers (4), empty never overwrites, re-run gives the same file (keyed by part number); the catalog product API (12.3); tests: idempotent re-run, empty cell, board vs module, a conflict | C-52, C-53, C-54 | M | P-53a |
+| P-54 | Configurator in the app: vendor the script (decision 5), `pandas` in requirements, `load_catalog` reads the merged catalog (power modules only), map frozen requirements to its `system` / `board` input with requirement ID, verbatim text and document reference (decision 6), units normalised, missing inputs listed; its self-test passes on the merged catalog | C-55 | M | P-53 |
+| P-55 | Component groups: requirements grouped by requested component / subsystem (one model call per bid, frozen, with the requirement IDs); one configurator search per board-level group; system-level checks (`configure_system`) run once and shown apart | C-56 | M | P-54 |
+| P-56 | Recommendations and explanations: per group, candidate parts with their relevant specs and links to the catalog row (`/catalog/product?part=…`); module quantity and redundancy where the script computes them, each default marked "assumption, not in the RFP"; per requirement Satisfied / Not satisfied / Cannot assess yet; Match / Near match / Insufficient information / No match with reason (decision 7); unverified specs, conflicts and the checks the script cannot do (fixed-ratio output, paralleling, thermal derating, peak power conditions, certification applicability, multiple outputs) listed as open engineering checks; stored per bid (new table `component_match`) | C-57, C-58, C-61 | L | P-55 |
+| P-57 | Assessment screens: "Technical requirement match" → **Technical Requirement Matching** (`web/lib/types.ts`, panel, tour, walkthrough); Traceability pane 3 shows the requirement ↔ product comparison; the Assessment Summary shows coverage, gaps, assumptions and pending engineering reviews with decision 8's wording; the go/no-go reads none of it as proof | C-59 | M | P-56 |
+| P-58 | RAG over the supplied documents: the 15 PDFs as a new collection `product_documents` (page references), tagged with families / parts from Janvia's `documents.json` when present (untagged otherwise, re-tagged on the next index run); evidence for operating conditions, compatibility and certifications in the explanations; numeric filtering unchanged | C-64 | M | P-53 (soft: J-21) |
+| P-59 | Validate end to end on RC-1 (cloud, 800 V) and Syracuse (power): extraction → groups → configurator → recommendations → catalog details; at least one match and one no-match or missing-information case, written down with the parts checked by hand against the spreadsheet; seed and frozen answers refreshed; `Documents/changes-iteration5.md` (C-52 to C-66, neutral voice); HTML demo re-exported if still used | C-62 | M | P-57, P-58 |
+
+**Janvia (top to bottom; Sonnet; no live model calls needed)**
+
+| ID | Task | Changes | Size | Depends on |
+|---|---|---|---|---|
+| J-19 | All-products table on the Product Catalog page (new tab "All products", the default): the C-60 columns, search, filters (type, family, status, interface, application), sort on every column, pages of 50, column picker for the extra spreadsheet fields (dimensions, isolation, regulation, mounting, paralleling, peak values, outputs 2 and 3), source and conflict badges; reads `GET /api/catalog/products`; until P-53 lands, a small local loader serves `power_modules.sample.json` (removed afterwards) | C-60 | M | P-53a only |
+| J-20 | Product details (row → side panel, deep link `/catalog/product?part=`): all fields grouped (input, output, mechanical, interfaces, isolation, multiple outputs), each value with its source and date, conflicts with both values, "Unknown" for nulls, evaluation board ↔ module links, family link to the web entry, documents (open at the right page) and images from the manifests | C-60, C-66 | M | J-19 |
+| J-21 | Documents manifest `data/axiom_products/documents.json`: each of the 15 PDFs read and tied to family / part with applicability and the pages per product (12.3); unclear ones `general` with a note; `tests/test_catalog_manifests.py` checks every file exists and every key is a real catalog ID or part number | C-63 | M | — |
+| J-22 | Images: `scripts/extract_product_images.py` (PyMuPDF, already installed) pulls images from the PDFs into `data/axiom_products/images/`; `images.json` with source file and page; `verified: true` only when the page names the product beside the image, else `false` (placeholder) | C-65 | M | — |
+| J-23 | Catalog presentation and guidance: polish of table and details, navigation family ↔ variants ↔ boards, catalog tour chapter and walkthrough catalog chapter; screenshots after P-59 | C-66 | S–M | J-20 (screenshots after P-59) |
+
+### 12.6 How the lanes meet
+
+- First: P-53a (contract and sample) is committed before anything else. From then on J-19 to J-22 need nothing from Piyush, and P-53 to P-57 need nothing from Janvia.
+- Soft links, no waiting: the product API returns empty `documents` / `images` until J-21 / J-22 land; P-58 tags documents once `documents.json` exists; P-56 links to `/catalog/product?part=…`, which J-20 serves; J-23's screenshots come after P-59.
+- Ask early: decisions 1 and 2 (Series meaning, series-level linking) with the Zensar point of contact.
