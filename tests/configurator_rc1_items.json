@@ -1,0 +1,62 @@
+{
+ "system": [
+  {
+   "req_id": "REQ-0003-0006",
+   "text": "The critical IT load is 120 MW, divided into six 20 MW units.",
+   "quote": "DB-01 | Critical IT load of 120 MW for AI training, in six deployment units of about 20 MW each | PA; S5 Option C",
+   "category": "technical",
+   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+   "page": 1
+  },
+  {
+   "req_id": "REQ-0003-0009",
+   "text": "Rack distribution is 800 VDC nominal, two-wire, within the 1500 VDC low-voltage limit.",
+   "quote": "DB-04 | Distribution to the rack is 800 VDC nominal, two-wire, inside the 1500 VDC low-voltage limit | S5; S3 §5.2.1",
+   "category": "technical",
+   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+   "page": 1
+  },
+  {
+   "req_id": "REQ-0003-0010",
+   "text": "Rack cabinets are 198-330 kW TDP, with growth to 570 kW per rack and native 800 VDC racks.",
+   "quote": "DB-05 | Baseline rack cabinets are 198 to 330 kW TDP, and designs shall allow growth to 570 kW per rack position and to native 800 VDC racks | S6; S5",
+   "category": "technical",
+   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+   "page": 1
+  },
+  {
+   "req_id": "REQ-0003-0012",
+   "text": "Deployment units use block redundancy with a catcher: four 4.8 MW blocks plus one catcher.",
+   "quote": "DB-07 | Each deployment unit uses block redundancy with a catcher: four power blocks of about 4.8 MW plus one catcher | S5 Option C",
+   "category": "technical",
+   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+   "page": 1
+  },
+  {
+   "req_id": "REQ-0003-0085",
+   "text": "CDUs must be modular, redundant, and meet specified cooling flow requirements.",
+   "quote": "CDUs shall be liquid-to-liquid, modular and placed in mechanical galleries with N+1 group redundancy. They take facility water on the primary side and cool a separate technical-grade secondary loop that serves GPU cold plates at a design flow of at least 1.5 LPM per kW",
+   "category": "technical",
+   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+   "page": 5
+  }
+ ],
+ "board": [
+  {
+   "req_id": "REQ-0003-0071",
+   "text": "Provide compute racks with specified power shelves and state output voltage and converter count.",
+   "quote": "Each compute rack shall hold an 800 VDC to 54 VDC power shelf. The baseline is six 15 kW converters, and bidders shall state the shelf output voltage and converter count",
+   "category": "technical",
+   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+   "page": 4
+  },
+  {
+   "req_id": "REQ-0003-0098",
+   "text": "Compute racks must accept 800 VDC input, with TDP and AC input options specified.",
+   "quote": "Compute racks shall accept 800 VDC input, and bidders shall state rack TDP. Racks with an AC input option shall list it separately",
+   "category": "technical",
+   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+   "page": 5
+  }
+ ]
+}

@@ -1,0 +1,64 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "board": {
+      "applications": null,
+      "design_margin_pct": null,
+      "digital": null,
+      "footprints": null,
+      "input_v_max": null,
+      "input_v_min": {
+        "as_written": "800 VDC",
+        "req_ids": [
+          "REQ-0003-0098"
+        ],
+        "source": "Compute racks shall accept 800 VDC input, and bidders shall state rack TDP."
+      },
+      "isolation": null,
+      "isolation_v_min": null,
+      "max_height_mm": null,
+      "max_length_mm": null,
+      "max_width_mm": null,
+      "min_efficiency_pct": null,
+      "mountings": null,
+      "output_current_a": null,
+      "output_power_w": {
+        "as_written": "15 kW",
+        "req_ids": [
+          "REQ-0003-0071"
+        ],
+        "source": "The baseline is six 15 kW converters, and bidders shall state the shelf output voltage and converter count"
+      },
+      "output_v_max": null,
+      "output_v_min": {
+        "as_written": "54 VDC",
+        "req_ids": [
+          "REQ-0003-0071"
+        ],
+        "source": "Each compute rack shall hold an 800 VDC to 54 VDC power shelf."
+      },
+      "package_types": null,
+      "peak_power_w": null,
+      "redundancy": null,
+      "regulation": null
+    },
+    "system": {
+      "certifications": null,
+      "coolant_supply_temp_c": null,
+      "cooling_mode": null,
+      "deployment": null,
+      "distribution_voltage": {
+        "req_ids": [
+          "REQ-0003-0098"
+        ],
+        "source": "Compute racks shall accept 800 VDC input, and bidders shall state rack TDP.",
+        "value": "800 VDC"
+      },
+      "liquid_capture_fraction": null,
+      "rack_density_kw": null,
+      "redundancy": null,
+      "total_it_load_mw": null
+    }
+  },
+  "task": "configurator_inputs"
+}
