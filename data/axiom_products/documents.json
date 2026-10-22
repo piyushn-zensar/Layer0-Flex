@@ -1,0 +1,240 @@
+[
+  {
+    "file": "2025-WEB-RESINBAR.pdf",
+    "title": "RESINBAR cast-resin busbar range",
+    "doc_type": "catalogue",
+    "family_keys": ["ANORD-BUSWAY/RESINBAR CXC", "ANORD-BUSWAY/RESINBAR CXA"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {
+      "ANORD-BUSWAY/RESINBAR CXC": [2, 3, 4, 5, 6],
+      "ANORD-BUSWAY/RESINBAR CXA": [2, 3, 4, 5, 6]
+    },
+    "publisher": "Anord Mardix",
+    "note": "One catalogue for both conductors: copper (CXC) and aluminium (CXA). Page 3 is the technical overview with a CXC and a CXA table; pages 4 to 6 are lengths, offsets, tap-offs. Page 1 is contact and company text."
+  },
+  {
+    "file": "2026-Power-Brochure_web.pdf",
+    "title": "Powering data centers from grid to chip (Flex power portfolio)",
+    "doc_type": "brochure",
+    "family_keys": [
+      "CROWN-EHOUSE/E-House",
+      "ANORD-POD/Power Pod",
+      "ANORD-POD/Power SKID",
+      "ANORD-PDU/PDU",
+      "ANORD-PDU/RPP",
+      "ANORD-PMS/MCMS",
+      "ANORD-PMS/EMS",
+      "ANORD-PMS/SCADA",
+      "ANORD-PMS/ims DCIM",
+      "FPM-SHELF/GB200 NVL72 shelf",
+      "FPM-SHELF/GB300 NVL72 shelf",
+      "FPM-CESS/CESS N",
+      "FPM-DCDC/BMR316",
+      "FPM-DCDC/BMR320",
+      "FPM-DCDC/BMR323",
+      "FPM-DCDC/BMR350",
+      "FPM-DCDC/BMR352",
+      "FPM-DCDC/BMR491",
+      "FPM-DCDC/BMR492",
+      "FPM-VRM/BMR510"
+    ],
+    "part_numbers": [],
+    "applies": "general",
+    "pages": {
+      "CROWN-EHOUSE/E-House": [8, 9],
+      "ANORD-POD/Power Pod": [9],
+      "ANORD-POD/Power SKID": [9],
+      "ANORD-PDU/PDU": [10],
+      "ANORD-PDU/RPP": [10],
+      "ANORD-PMS/MCMS": [11],
+      "ANORD-PMS/EMS": [11],
+      "ANORD-PMS/SCADA": [11],
+      "ANORD-PMS/ims DCIM": [11],
+      "FPM-SHELF/GB200 NVL72 shelf": [13],
+      "FPM-SHELF/GB300 NVL72 shelf": [13],
+      "FPM-CESS/CESS N": [13],
+      "FPM-DCDC/BMR316": [16],
+      "FPM-DCDC/BMR320": [16],
+      "FPM-DCDC/BMR323": [16],
+      "FPM-DCDC/BMR350": [16],
+      "FPM-DCDC/BMR352": [16],
+      "FPM-DCDC/BMR491": [17],
+      "FPM-DCDC/BMR492": [17],
+      "FPM-VRM/BMR510": [17]
+    },
+    "publisher": "Flex",
+    "note": "Portfolio overview, so general; each product is linked only where the page names it. Busways (DATABAR, IBAR, RESINBAR), LV and MV switchgear and vertical power delivery appear as brand or category text without a model, so they are not linked. Page 16 and 17 tables also list BMR314, BMR317, BMR321, BMR351 and RRV series that are not in the web catalog; the spreadsheet holds them under their series. The page-15 and page-18 vertical power delivery text names no BMR515."
+  },
+  {
+    "file": "AMX-Switchboards-Catalog_2026.pdf",
+    "title": "AMX low-voltage switchboard catalog",
+    "doc_type": "catalogue",
+    "family_keys": ["ANORD-LVSB/AMX"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {"ANORD-LVSB/AMX": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]},
+    "publisher": "Anord Mardix",
+    "note": "Page 11 is the company back page. BMS / EMS platforms are named only as integration options, so no EMS link."
+  },
+  {
+    "file": "AM_Services_Brochure_EMEA.pdf",
+    "title": "Anord Mardix services: project and lifecycle services (EMEA)",
+    "doc_type": "brochure",
+    "family_keys": ["ANORD-PMS/EMS", "ANORD-PMS/SCADA"],
+    "part_numbers": [],
+    "applies": "general",
+    "pages": {
+      "ANORD-PMS/EMS": [3, 10],
+      "ANORD-PMS/SCADA": [3, 5, 10]
+    },
+    "publisher": "Anord Mardix",
+    "note": "Services, not a product: commissioning, maintenance, emergency response, spares, training, with four case studies (pages 11 to 14). Linked to EMS and SCADA only where it lists servicing of them. DATABAR and IBAR are mentioned once each as maintenance targets and are not linked. No catalog item represents services."
+  },
+  {
+    "file": "Anord_Mardix_SEN_Plus_Brochure_English.pdf",
+    "title": "SEN Plus low-voltage switchgear solutions",
+    "doc_type": "brochure",
+    "family_keys": ["ANORD-LVSB/SEN Plus"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {"ANORD-LVSB/SEN Plus": [1, 2, 3, 4, 5, 6, 7, 8]},
+    "publisher": "Anord Mardix",
+    "note": "Page 7 is the technical data table. Page 9 is the company back page."
+  },
+  {
+    "file": "Crown-Enclosures_MV-Switchgear-and-Control-Ehouse-one-pager.pdf",
+    "title": "Medium voltage switchgear and control e-house (Crown)",
+    "doc_type": "one_pager",
+    "family_keys": ["CROWN-EHOUSE/E-House", "CROWN-ARMV/Arc-Resistant Switchgear"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {
+      "CROWN-EHOUSE/E-House": [1, 2],
+      "CROWN-ARMV/Arc-Resistant Switchgear": [2]
+    },
+    "publisher": "Crown Technical Systems",
+    "note": "Page 1 is the e-house pitch; page 2 lists the switchgear ratings (4.16 to 38 kV, up to 4000 A, 50 kA) and the arc-resistant types 2B and 2C. The page does not say which of the two catalog items a given figure belongs to."
+  },
+  {
+    "file": "Databar-DXC-DXC-Plus-Product-Brochure-IEC-2024.pdf",
+    "title": "DATABAR DX and DX Plus product brochure (IEC)",
+    "doc_type": "brochure",
+    "family_keys": ["ANORD-BUSWAY/DATABAR DX", "ANORD-BUSWAY/DATABAR DX+"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {
+      "ANORD-BUSWAY/DATABAR DX": [2, 3, 4, 5, 6, 8],
+      "ANORD-BUSWAY/DATABAR DX+": [2, 3, 4, 5, 6, 8]
+    },
+    "publisher": "Anord Mardix",
+    "note": "The file name says DXC and DXC Plus, the text says DX and DX Plus; read as the same IEC 61439 busway. Overlaps Databar_IEC_Brochure_2026.pdf (same IEC edition, 2026 current); where figures differ, use the 2026 file. Page 4 holds the DX table (160 to 630 A) and the DX Plus overview; page 8 is wireless metering."
+  },
+  {
+    "file": "Databar_IEC_Brochure_2026.pdf",
+    "title": "DATABAR intelligent data hall busway system, IEC 61439-1/6",
+    "doc_type": "brochure",
+    "family_keys": ["ANORD-BUSWAY/DATABAR DX", "ANORD-BUSWAY/DATABAR DX+", "ANORD-PMS/MCMS"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {
+      "ANORD-BUSWAY/DATABAR DX": [2, 3, 4, 5, 6, 8, 9],
+      "ANORD-BUSWAY/DATABAR DX+": [2, 3, 4, 5, 6, 8, 9],
+      "ANORD-PMS/MCMS": [7]
+    },
+    "publisher": "Anord Mardix",
+    "note": "IEC edition: DX 160 to 630 A, DX+ 800 to 1250 A, 1000 V. The UL 857 edition is Databar_UL_Brochure_2026.pdf; the standard decides which applies. Page 4 is the specification table; page 7 is the MCMS metering page; page 9 is the ordering code."
+  },
+  {
+    "file": "Databar_UL_Brochure_2026.pdf",
+    "title": "DATABAR intelligent data hall busway system, UL 857",
+    "doc_type": "brochure",
+    "family_keys": ["ANORD-BUSWAY/DATABAR DX", "ANORD-BUSWAY/DATABAR DX+", "ANORD-PMS/MCMS"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {
+      "ANORD-BUSWAY/DATABAR DX": [2, 3, 4, 5, 6, 8, 9],
+      "ANORD-BUSWAY/DATABAR DX+": [2, 3, 4, 5, 6, 8, 9],
+      "ANORD-PMS/MCMS": [7]
+    },
+    "publisher": "Anord Mardix",
+    "note": "UL 857 edition: DX 160 to 400 A, DX+ 600 to 1000 A, up to 600 V. The IEC 61439 edition is Databar_IEC_Brochure_2026.pdf. The catalog has one DX and one DX+ item for both standards."
+  },
+  {
+    "file": "IBAR-HXA-Brochure-2023.pdf",
+    "title": "IBAR HXA range catalogue",
+    "doc_type": "catalogue",
+    "family_keys": ["ANORD-BUSWAY/IBAR HXA"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {"ANORD-BUSWAY/IBAR HXA": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]},
+    "publisher": "Anord Mardix",
+    "note": "File name says brochure, the cover says catalogue. Page 4 describes the HX range as copper (HXC) or aluminium (HXA) but the technical overview and parts are the HXA ones, so the HXC item is not linked. Pages 1 to 3 are cover, contents and company text."
+  },
+  {
+    "file": "IBAR-HXC-CATALOGUE-2025.pdf",
+    "title": "IBAR HXC range catalogue",
+    "doc_type": "catalogue",
+    "family_keys": ["ANORD-BUSWAY/IBAR HXC"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {"ANORD-BUSWAY/IBAR HXC": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]},
+    "publisher": "Anord Mardix",
+    "note": "Copper conductor range. Page 12 is the HXC technical overview; the rest is parts, accessories and a visual reference guide."
+  },
+  {
+    "file": "In-Rack CDU300 Datasheet (SmartSense CDU).pdf",
+    "title": "SmartSense CDU300 in-rack coolant distribution unit datasheet",
+    "doc_type": "datasheet",
+    "family_keys": ["JETCOOL-CDU/SmartSense CDU"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {"JETCOOL-CDU/SmartSense CDU": [1, 2]},
+    "publisher": "JetCool",
+    "note": "Page 1 holds the performance and product specification tables (160 kW redundant, 300 kW boost)."
+  },
+  {
+    "file": "MCMS-BROCHURE-2023.pdf",
+    "title": "Modular Circuit Monitoring System (MCMS) brochure",
+    "doc_type": "brochure",
+    "family_keys": ["ANORD-PMS/MCMS"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {"ANORD-PMS/MCMS": [2, 3, 4, 5, 6]},
+    "publisher": "Anord Mardix",
+    "note": "Page 4 lists the Core Module variants (CM01, CM02); page 6 the input and electrical data. Page 1 is the cover with contact text."
+  },
+  {
+    "file": "MDX-Switchgear-Catalog_2026.pdf",
+    "title": "MDX low-voltage switchgear catalogue, IEC 61439-2",
+    "doc_type": "catalogue",
+    "family_keys": ["ANORD-LVSB/MDX"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {"ANORD-LVSB/MDX": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]},
+    "publisher": "Anord Mardix",
+    "note": "Page 12 is the company back page. BMS / EMS platforms are named only as integration options, so no EMS link."
+  },
+  {
+    "file": "Modular CDU Datasheet.pdf",
+    "title": "Flex Modular Rack-Level CDU datasheet",
+    "doc_type": "datasheet",
+    "family_keys": ["JETCOOL-CDU/Modular CDU"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {"JETCOOL-CDU/Modular CDU": [1, 2]},
+    "publisher": "JetCool",
+    "note": "Page 1 holds the six-unit specification and performance tables; page 2 the features and the 2 to 6 units per rack options."
+  },
+  {
+    "file": "Remote_Power-Panel_Datasheet.pdf",
+    "title": "Remote Power Panel (RPP) datasheet",
+    "doc_type": "datasheet",
+    "family_keys": ["ANORD-PDU/RPP"],
+    "part_numbers": [],
+    "applies": "family",
+    "pages": {"ANORD-PDU/RPP": [1, 2]},
+    "publisher": "Anord Mardix",
+    "note": "North American (UL 67, 60 Hz, 208 to 480 V, up to 168 circuits) edition; the catalog RPP entry quotes 400 VAC, 84 circuits (EMEA), so the two do not describe the same variant. MCMS monitoring is a feature bullet only, not linked."
+  }
+]
