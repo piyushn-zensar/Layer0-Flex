@@ -455,7 +455,7 @@ Source: written direction from the Zensar point of contact, added to the plan on
 Use the default unless an answer arrives first; note it in the tracker.
 
 1. **The two Series columns (C-53):** column C "Series" is the same for all 721 rows ("Power Modules") → `product_line`. Column E "Series" is the series code for modules (BMR314) and an ordering code for evaluation boards (ROA170259) → `series`; for boards, "Compatibility" (BMR314) → `evaluates`. To confirm with the Zensar point of contact.
-2. **Matching to the web catalog (C-52):** exact part number first (0 hits today). A part whose `series` equals a web FPM model (BMR316, BMR491 …) becomes a **variant** under that web entry (`family_key`, for example `FPM/BMR316`); the web entry stays as it is. Parts with no web series are added as new products. The 25 evaluation boards are `product_type = evaluation_board` and are never recommended as a power module.
+2. **Matching to the web catalog (C-52):** exact part number first (0 hits today). A part whose `series` equals a web FPM model (BMR316, BMR491 …) becomes a **variant** under that web entry (`family_key` = its catalog ID, for example `FPM-DCDC/BMR316`); the web entry stays as it is. Parts with no web series are added as new products. The 27 evaluation and test boards are `product_type = evaluation_board` and are never recommended as a power module.
 3. **Units (C-53):** V, W, A, %, mm, as in the spreadsheet headers; `null` = unknown, never 0. A spreadsheet value's source is `{source: "spreadsheet", row, imported: "<date>"}`.
 4. **Conflicts (C-54):** compared only where the web text gives a number for the same field and series (voltage range, power, current, efficiency); a disagreement is stored on the product for review and both values are kept. The spreadsheet does not replace web text.
 5. **Configurator (C-55):** vendored as `app/modules/configurator/rfp_configurator.py` with the smallest changes (load from the merged catalog instead of the .xlsx; return data, not files). Its own defaults (redundancy, design margin, Axiom limits, CDU table, certifications found) are shown as **assumptions / unverified**, as the script itself marks them. `pandas` goes into `requirements.txt` (the script needs it; `numpy` comes with it).
@@ -466,32 +466,31 @@ Use the default unless an answer arrives first; note it in the tracker.
 
 ### 12.3 Contract between the two lanes (committed first, P-53a)
 
-**`data/knowledge_base/power_modules.json`** (written by `scripts/import_power_modules.py`, Piyush), and `data/knowledge_base/power_modules.sample.json` (20 real rows: modules with and without a web family, multiple outputs, evaluation boards, one conflict):
+**`data/knowledge_base/power_modules.json`** (written by `scripts/import_power_modules.py`, Piyush), and `data/knowledge_base/power_modules.sample.json` (21 real rows: modules with and without a web series, three with conflicts, extra outputs, evaluation and test boards). TypeScript: `PowerModule`, `ProductRow`, `ProductPage`, `ProductDetail`, `ProductDocument`, `ProductImage` in `web/lib/types.ts` (the source of truth for field names). One item:
 
 ```json
-{"_note": "...", "imported": "2026-10-22", "source_file": "data/axiom_products/PowerModules-1791937030.xlsx",
- "items": [{
-  "part_number": "BMR3141011/001", "component_id": 3, "product_line": "Power Modules", "series": "BMR314",
-  "evaluates": null, "product_type": "power_module", "family_key": "FPM/BMR314", "status": "Active",
-  "application": ["Data Center and Cloud"], "interfaces": ["PMBus"], "attributes": ["Unregulated", "PMBus", "Peak Power"],
-  "isolation": "Non-Isolated", "isolation_v": null, "regulation": "Unregulated/Fixed Ratio",
-  "mounting": "LGA", "package_type": "Baseplate", "footprint": "Other", "paralleling": "None", "multi_output": null,
-  "vin_min_v": 38, "vin_max_v": 60, "vout_min_v": 9.5, "vout_max_v": 15, "vout_typ_v": null,
-  "power_w": 800, "power_peak_w": 1500, "current_a": 62, "current_peak_a": null, "efficiency_pct": 97.5,
-  "length_mm": 28, "width_mm": 17.8, "height_mm": 9.65,
-  "outputs": [{"n": 2, "v_min": null, "v_nom": null, "v_max": null, "power_w": null, "current_a": null}],
-  "sources": {"power_w": {"source": "spreadsheet", "row": 3, "imported": "2026-10-22"}},
-  "web": {"source_url": "https://...", "specs": "..."},
-  "conflicts": [{"field": "power_w", "spreadsheet": 800, "web": 750, "web_url": "https://..."}],
-  "verified": false}]}
+{"part_number": "BMR3161011/021", "component_id": 4, "product_line": "Power Modules", "series": "BMR316",
+ "evaluates": [], "product_type": "power_module", "family_key": "FPM-DCDC/BMR316", "status": "Active",
+ "application": ["Data Center and Cloud"], "interfaces": ["PMBus"], "attributes": ["Unregulated", "PMBus", "Peak Power", "..."],
+ "isolation": "Non-Isolated", "isolation_v": null, "regulation": "Unregulated/Fixed Ratio", "mounting": "LGA",
+ "package_type": "Baseplate", "footprint": "Other", "paralleling": "None", "multi_output": null,
+ "vin_min_v": 38, "vin_max_v": 60, "vout_min_v": 9.5, "vout_max_v": 15, "vout_typ_v": null, "power_w": 1000,
+ "power_peak_w": 2800, "current_a": 80, "current_peak_a": null, "efficiency_pct": 97.7,
+ "length_mm": 23.4, "width_mm": 17.8, "height_mm": 7.65, "outputs": [],
+ "imported": {"power_w": "2026-10-22", "...": "date of the import that last set each field"},
+ "sheet": {"file": "data/axiom_products/PowerModules-1791937030.xlsx", "row": 5},
+ "web": {"id": "FPM-DCDC/BMR316", "source_url": "https://flex.com/products/power-modules/series/bmr316", "specs": "...", "retrieved": "2026-10-12"},
+ "conflicts": [], "verified": false, "in_last_import": true}
 ```
 
+(a real row, shortened). `family_key` is the existing catalog ID of the web series (`FPM-DCDC/BMR316`), null when the series is not on the web pages (551 of 721 parts). Evaluation and test boards (27) have `product_type: "evaluation_board"`, no ratings and `evaluates` = the series they support. A conflict = `{field, spreadsheet, web, web_url}` (12 parts today: BMR492 input range, PKM-D power, one BMR350 efficiency). A part missing from a later spreadsheet stays, with `in_last_import: false`.
+
 **API (Piyush, in `app/modules/catalog/`):**
-- `GET /api/catalog/products?q=&type=&family=&status=&interface=&application=&sort=&dir=asc|desc&page=1&size=50` → `{total, page, size, items: [row]}`; a row = part_number, family_key, product_type, status, vin_min_v, vin_max_v, vout_min_v, vout_max_v, power_w, current_a, efficiency_pct, interfaces, source ("spreadsheet", "web", "both"), has_conflict. Web-only catalog items are rows too (numbers null).
-- `GET /api/catalog/product?part=<part number>` (query parameter: part numbers contain "/") → the full item plus `documents` and `images` joined from Janvia's manifests (empty lists while the files are missing).
+- `GET /api/catalog/products?q=&type=&family=&status=&interface=&application=&sort=&dir=asc|desc&page=1&size=50` → `ProductPage` `{total, page, size, items: [ProductRow]}`: key, part_number, family_key, family (readable family name), series, product_type, status, vin_min_v, vin_max_v, vout_min_v, vout_max_v, power_w, current_a, efficiency_pct, interfaces, source ("spreadsheet", "web", "both"), has_conflict. Web catalog items are rows too (`product_type: "web_listing"`, `key` = catalog ID, numbers null).
+- `GET /api/catalog/product?part=<part number or catalog ID>` (query parameter: part numbers contain "/") → `ProductDetail`: the full item, `variants` (for a web series its parts; for a part its evaluation boards), and `documents` / `images` joined from Janvia's manifests by `family_key` or part number (empty lists while missing).
 
 **Manifests (Janvia):**
-- `data/axiom_products/documents.json`: `[{file, title, doc_type: datasheet|brochure|catalogue|one_pager, family_keys: [], part_numbers: [], applies: part|family|general, pages: {"<family_key or part>": [page, …]}, publisher, note}]`; `family_keys` use the existing catalog IDs (`ANORD-LVSB/MDX`, `FPM/BMR316`, …).
+- `data/axiom_products/documents.json`: `[{file, title, doc_type: datasheet|brochure|catalogue|one_pager, family_keys: [], part_numbers: [], applies: part|family|general, pages: {"<family_key or part>": [page, …]}, publisher, note}]`; `family_keys` use the existing catalog IDs (`ANORD-LVSB/MDX`, `FPM-DCDC/BMR316`, …).
 - `data/axiom_products/images.json` and `data/axiom_products/images/`: `[{file, family_key, part_numbers: [], source_file, page, kind: photo|illustration, verified: true|false}]`; `verified: false` → the page shows a placeholder.
 
 ### 12.4 Paths per lane (iteration 5 only; also in `.claude/rules/ownership.md`)
@@ -514,7 +513,7 @@ Size: S hours, M one to two days, L several days.
 
 | ID | Task | Changes | Size | Depends on |
 |---|---|---|---|---|
-| P-53a | Contract first: the 12.3 shapes as `power_modules.sample.json` (20 real rows) and TypeScript types in `web/lib/types.ts`; tell Janvia | C-52, C-60 | S | — |
+| P-53a | Contract first: the 12.3 shapes as `power_modules.sample.json` (21 real rows) and TypeScript types in `web/lib/types.ts`; tell Janvia | C-52, C-60 | S | — |
 | P-53 | Spreadsheet import `scripts/import_power_modules.py` → `power_modules.json`: two Series columns split (decision 1), numbers and units (3), empty = unknown, evaluation boards typed, variants under the web series (2), per-value sources and import date, conflicts against web numbers (4), empty never overwrites, re-run gives the same file (keyed by part number); the catalog product API (12.3); tests: idempotent re-run, empty cell, board vs module, a conflict | C-52, C-53, C-54 | M | P-53a |
 | P-54 | Configurator in the app: vendor the script (decision 5), `pandas` in requirements, `load_catalog` reads the merged catalog (power modules only), map frozen requirements to its `system` / `board` input with requirement ID, verbatim text and document reference (decision 6), units normalised, missing inputs listed; its self-test passes on the merged catalog | C-55 | M | P-53 |
 | P-55 | Component groups: requirements grouped by requested component / subsystem (one model call per bid, frozen, with the requirement IDs); one configurator search per board-level group; system-level checks (`configure_system`) run once and shown apart | C-56 | M | P-54 |

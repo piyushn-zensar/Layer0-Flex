@@ -243,3 +243,42 @@ export interface AssessmentScore {
   gaps: { kind: AssessmentGapKind; label: string; req_ids: string[] }[];
   note: string;
 }
+// Product catalog (P-53a contract, team/PLAN.md 12.3): data/knowledge_base/power_modules.json merged with the web catalog.
+// Units are in the field name (V, W, A, %, mm); null = unknown, never 0.
+export type ProductType = "power_module" | "evaluation_board" | "web_listing";
+export interface ProductOutput { n: number; v_min: number | null; v_nom: number | null; v_max: number | null; power_w: number | null; current_a: number | null }
+export interface ProductConflict { field: string; spreadsheet: number; web: number; web_url: string | null }
+export interface PowerModule {
+  part_number: string; component_id: number | null; product_line: string | null; series: string | null; evaluates: string[];
+  product_type: ProductType; family_key: string | null; status: string | null;
+  application: string[]; interfaces: string[]; attributes: string[];
+  isolation: string | null; isolation_v: number | null; regulation: string | null; mounting: string | null; package_type: string | null;
+  footprint: string | null; paralleling: string | null; multi_output: boolean | null;
+  vin_min_v: number | null; vin_max_v: number | null; vout_min_v: number | null; vout_max_v: number | null; vout_typ_v: number | null;
+  power_w: number | null; power_peak_w: number | null; current_a: number | null; current_peak_a: number | null; efficiency_pct: number | null;
+  length_mm: number | null; width_mm: number | null; height_mm: number | null; outputs: ProductOutput[];
+  imported: Record<string, string>;            // field -> date of the import that last set it
+  sheet: { file: string; row: number };        // spreadsheet file and row
+  web: { id: string; source_url: string | null; specs: string; retrieved: string } | null;
+  conflicts: ProductConflict[]; verified: boolean; in_last_import: boolean;
+}
+// GET /api/catalog/products?q=&type=&family=&status=&interface=&application=&sort=&dir=&page=&size=
+export interface ProductRow {
+  key: string;                                 // part number, or the catalog ID of a web-only listing
+  part_number: string; family_key: string | null; family: string | null; series: string | null; product_type: ProductType; status: string | null;
+  vin_min_v: number | null; vin_max_v: number | null; vout_min_v: number | null; vout_max_v: number | null;
+  power_w: number | null; current_a: number | null; efficiency_pct: number | null; interfaces: string[];
+  source: "spreadsheet" | "web" | "both"; has_conflict: boolean;
+}
+export interface ProductPage { total: number; page: number; size: number; items: ProductRow[] }
+export interface ProductDocument { file: string; title: string; doc_type: string; family_keys: string[]; part_numbers: string[];
+  applies: "part" | "family" | "general"; pages: Record<string, number[]>; publisher: string; note: string }
+export interface ProductImage { file: string; family_key: string; part_numbers: string[]; source_file: string; page: number;
+  kind: "photo" | "illustration"; verified: boolean }
+// GET /api/catalog/product?part=<part number or catalog ID>: a spreadsheet part (PowerModule fields) or a web-only listing
+// (key, name, specs, source_url, family_key; numbers absent), with the manifests joined.
+export interface ProductDetail extends Partial<PowerModule> {
+  key: string; name: string; family: string | null; source: ProductRow["source"];
+  variants: ProductRow[];                      // a web series: its spreadsheet parts; a part: its evaluation boards
+  documents: ProductDocument[]; images: ProductImage[];
+}
