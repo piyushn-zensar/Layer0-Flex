@@ -158,6 +158,8 @@ def main(argv: list[str] | None = None) -> dict:
     old = {i["part_number"]: i for i in json.loads(a.out.read_text("utf-8"))["items"]} if a.out.exists() else {}
     web = json.loads(WEB.read_text("utf-8"))["items"]
     out = build([r for r in rows[1:] if r[1]], old, web, a.date)
+    if old and out["items"] == json.loads(a.out.read_text("utf-8"))["items"]:   # nothing changed: same file
+        out["last_import"] = json.loads(a.out.read_text("utf-8"))["last_import"]
     a.out.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n", "utf-8")
     n = out["items"]
     print(f"{len(n)} parts ({sum(i['product_type'] == 'evaluation_board' for i in n)} boards), "

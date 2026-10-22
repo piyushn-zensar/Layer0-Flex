@@ -1,3 +1,5 @@
+from typing import Literal
+
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from sqlalchemy.orm import Session
 
@@ -18,6 +20,26 @@ def catalog(q: str = ""):
 @router.get("/catalog/search")
 def search(q: str, k: int = Query(5, ge=1, le=50)):
     return service.search(q, k)
+
+
+@router.get("/catalog/products")
+def products(q: str = "", type: str | None = None, family: str | None = None, status: str | None = None,
+             interface: str | None = None, application: str | None = None, sort: str = "part_number",
+             dir: Literal["asc", "desc"] = "asc", page: int = Query(1, ge=1), size: int = Query(50, ge=1, le=200)):
+    """All products (P-53, C-60): spreadsheet parts and the web catalog, one row each; contract in PLAN 12.3."""
+    try:
+        return service.product_rows(q, type, family, status, interface, application, sort, dir, page, size)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc))
+
+
+@router.get("/catalog/product")
+def product(part: str):
+    """One product by part number or catalog ID (a query parameter: part numbers contain "/")."""
+    p = service.product_detail(part)
+    if p is None:
+        raise HTTPException(404, f"no product {part!r}")
+    return p
 
 
 @router.get("/people")

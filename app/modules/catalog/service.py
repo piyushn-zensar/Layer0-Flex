@@ -23,6 +23,10 @@ Public contract:
     portfolio() -> dict                         standard product ratings and unit capacity (portfolio.json, placeholders)
     people() -> list[str]                       actors for the PoC user picker
     unit_of(actor) -> str | None                business-unit code of a product manager / design engineer
+    power_modules() -> list[dict]               the spreadsheet parts merged into the catalog (P-53, power_modules.json)
+    product_rows(q, type, family, status, interface, application, sort, dir, page, size) -> dict
+                                                all products as table rows, spreadsheet parts and web items (C-60)
+    product_detail(key) -> dict | None          one product by part number or catalog ID, with variants, documents, images
 
 Published catalog (P-34, C-28; scrape.py, re-exported): refresh(db, trigger) -> CatalogRefresh, published(db) -> dict,
     versions(db, key), refresh_forever() (the start-up and 24-hour job). It never changes the matcher's prompt.
@@ -154,6 +158,87 @@ def people() -> list[str]:
 
 def unit_of(actor: str) -> str | None:
     return next((u["code"] for u in units() if actor in (u["product_manager"], u["design_engineer"])), None)
+
+
+ROW = ("key", "part_number", "family_key", "family", "series", "product_type", "status", "vin_min_v", "vin_max_v",
+       "vout_min_v", "vout_max_v", "power_w", "current_a", "efficiency_pct", "interfaces", "source", "has_conflict")
+
+
+def power_modules() -> list[dict]:
+    """The Flex Power Modules spreadsheet merged into the catalog (P-53; scripts/import_power_modules.py)."""
+    return _load("power_modules")["items"]
+
+
+def _manifest(name: str) -> list[dict]:
+    """Janvia's documents / images manifests (J-21, J-22); empty while a file is missing."""
+    path = config.DATA / "axiom_products" / name
+    return json.loads(path.read_text("utf-8")) if path.exists() else []
+
+
+@lru_cache
+def _catalog() -> tuple[dict, dict]:
+    """key -> full entry, key -> table row: spreadsheet parts and every web catalog item (web_listing)."""
+    names = {p["id"]: p["name"] for p in _load("products")["products"]}
+    web = {i["id"]: i for i in _load("catalog_items")["items"]}
+    full, rows = {}, {}
+    for p in power_modules():
+        w = web.get(p["family_key"] or "")
+        full[p["part_number"]] = p | {"key": p["part_number"], "name": p["part_number"],
+                                      "family": names.get(w["family"]) if w else p["product_line"],
+                                      "source": "both" if p["web"] else "spreadsheet"}
+    for i in web.values():
+        full[i["id"]] = {"key": i["id"], "part_number": i["model"], "name": i["name"], "family_key": i["id"],
+                         "family": names.get(i["family"]), "series": i["model"], "product_type": "web_listing",
+                         "status": "Published", "interfaces": [], "application": [], "specs": i["specs"],
+                         "source_url": i.get("source_url"), "bu": i["bu"], "conflicts": [], "source": "web"}
+    for k, f in full.items():
+        rows[k] = {c: f.get(c) for c in ROW} | {"has_conflict": bool(f["conflicts"])}
+    return full, rows
+
+
+def product_rows(q: str = "", type: str | None = None, family: str | None = None, status: str | None = None,
+                 interface: str | None = None, application: str | None = None, sort: str = "part_number",
+                 dir: str = "asc", page: int = 1, size: int = 50) -> dict:
+    """All products as table rows (C-60): search, filters, sort (unknown values last either way), pages."""
+    full, rows = _catalog()
+    q = q.strip().lower()
+
+    def keep(k: str) -> bool:
+        f, r = full[k], rows[k]
+        text = " ".join(str(x) for x in (r["part_number"], r["series"], r["family"], r["family_key"], f.get("name"))).lower()
+        return ((not q or q in text) and (not type or r["product_type"] == type)
+                and (not family or family in (r["family_key"], r["family"])) and (not status or r["status"] == status)
+                and (not interface or interface in r["interfaces"]) and (not application or application in f["application"]))
+
+    hits = [rows[k] for k in rows if keep(k)]
+    if sort not in ROW:
+        raise ValueError(f"cannot sort by {sort!r}")
+    known = sorted((r for r in hits if r[sort] not in (None, [])), key=lambda r: (r[sort], r["key"]) if not isinstance(r[sort], list)
+                   else (", ".join(r[sort]), r["key"]), reverse=dir == "desc")
+    ordered = known + [r for r in hits if r[sort] in (None, [])]
+    return {"total": len(hits), "page": page, "size": size, "items": ordered[(page - 1) * size: page * size]}
+
+
+def product_detail(key: str) -> dict | None:
+    """One product (part number or catalog ID) with its variants and the documents / images that apply (C-60, C-63)."""
+    full, rows = _catalog()
+    f = full.get(key)
+    if f is None:
+        return None
+    if f["product_type"] == "web_listing":           # a web series: its spreadsheet parts
+        variants = [rows[p["part_number"]] for p in power_modules() if p["family_key"] == key]
+    elif f["product_type"] == "power_module":         # a part: the boards that evaluate its series
+        variants = [rows[p["part_number"]] for p in power_modules() if f["series"] in p["evaluates"]]
+    else:                                             # a board: the parts of the series it evaluates
+        variants = [rows[p["part_number"]] for p in power_modules()
+                    if p["product_type"] == "power_module" and p["series"] in f["evaluates"]]
+    keys = ({f["family_key"]} | ({f["part_number"]} if f["product_type"] != "web_listing" else set())) - {None}
+
+    def applies(m: dict) -> bool:
+        return bool(keys & {*m.get("family_keys", []), m.get("family_key"), *m.get("part_numbers", [])})
+
+    return f | {"variants": variants, "documents": [d for d in _manifest("documents.json") if applies(d)],
+                "images": [i for i in _manifest("images.json") if applies(i)]}
 
 
 if __name__ == "__main__":  # self-check: python -m app.modules.catalog.service
