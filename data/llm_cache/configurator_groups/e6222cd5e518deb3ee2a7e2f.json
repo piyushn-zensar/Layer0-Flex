@@ -1,0 +1,58 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "components": [
+      {
+        "id": "G1",
+        "kind": "other",
+        "name": "Metal Clad Switchgear"
+      },
+      {
+        "id": "G2",
+        "kind": "other",
+        "name": "Protective Relays and Controls"
+      },
+      {
+        "id": "G3",
+        "kind": "other",
+        "name": "Special Tools for Installation, Testing, and Maintenance"
+      },
+      {
+        "id": "G4",
+        "kind": "other",
+        "name": "Maintenance Equipment and Spare Parts"
+      },
+      {
+        "id": "G5",
+        "kind": "other",
+        "name": "Circuit Breakers"
+      },
+      {
+        "id": "G6",
+        "kind": "other",
+        "name": "Voltage Transformers"
+      },
+      {
+        "id": "G7",
+        "kind": "other",
+        "name": "Current Transformers"
+      },
+      {
+        "id": "G8",
+        "kind": "other",
+        "name": "Metering and Billing Equipment"
+      },
+      {
+        "id": "G9",
+        "kind": "other",
+        "name": "Switchgear Accessories"
+      },
+      {
+        "id": "G10",
+        "kind": "other",
+        "name": "Switchgear Enclosure"
+      }
+    ]
+  },
+  "task": "configurator_groups"
+}

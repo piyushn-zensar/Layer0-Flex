@@ -26,8 +26,20 @@
     },
     "system": {
       "certifications": null,
-      "coolant_supply_temp_c": null,
-      "cooling_mode": null,
+      "coolant_supply_temp_c": {
+        "as_written": "45 °C",
+        "req_ids": [
+          "REQ-0003-0013"
+        ],
+        "source": "DB-08 | The liquid cooling design point is facility water at 45 °C | S6"
+      },
+      "cooling_mode": {
+        "req_ids": [
+          "REQ-0003-0013"
+        ],
+        "source": "DB-08 | The liquid cooling design point is facility water at 45 °C | S6",
+        "value": "liquid"
+      },
       "deployment": null,
       "distribution_voltage": {
         "req_ids": [
@@ -37,18 +49,12 @@
         "value": "800 VDC"
       },
       "liquid_capture_fraction": null,
-      "rack_density_kw": {
-        "as_written": "330 kW",
-        "req_ids": [
-          "REQ-0003-0010"
-        ],
-        "source": "DB-05 | Baseline rack cabinets are 198 to 330 kW TDP, and designs shall allow growth to 570 kW per rack position and to native 800 VDC racks | S6; S5"
-      },
+      "rack_density_kw": null,
       "redundancy": {
         "req_ids": [
-          "REQ-0003-0012"
+          "REQ-0003-0104"
         ],
-        "source": "DB-07 | Each deployment unit uses block redundancy with a catcher: four power blocks of about 4.8 MW plus one catcher | S5 Option C",
+        "source": "L6.09 | No single point of failure shall cause an outage. The system shall stay operational or degraded after the failure of any single field-replaceable unit, server or switch, and shall support rolling upgrades while at least half stays in production | S7 §5.3.2, §5.4.1",
         "value": "N+1"
       },
       "total_it_load_mw": {

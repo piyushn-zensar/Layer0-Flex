@@ -1,62 +1,1343 @@
-{
- "system": [
-  {
-   "req_id": "REQ-0003-0006",
-   "text": "The critical IT load is 120 MW, divided into six 20 MW units.",
-   "quote": "DB-01 | Critical IT load of 120 MW for AI training, in six deployment units of about 20 MW each | PA; S5 Option C",
-   "category": "technical",
-   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
-   "page": 1
-  },
-  {
-   "req_id": "REQ-0003-0009",
-   "text": "Rack distribution is 800 VDC nominal, two-wire, within the 1500 VDC low-voltage limit.",
-   "quote": "DB-04 | Distribution to the rack is 800 VDC nominal, two-wire, inside the 1500 VDC low-voltage limit | S5; S3 §5.2.1",
-   "category": "technical",
-   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
-   "page": 1
-  },
-  {
-   "req_id": "REQ-0003-0010",
-   "text": "Rack cabinets are 198-330 kW TDP, with growth to 570 kW per rack and native 800 VDC racks.",
-   "quote": "DB-05 | Baseline rack cabinets are 198 to 330 kW TDP, and designs shall allow growth to 570 kW per rack position and to native 800 VDC racks | S6; S5",
-   "category": "technical",
-   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
-   "page": 1
-  },
-  {
-   "req_id": "REQ-0003-0012",
-   "text": "Deployment units use block redundancy with a catcher: four 4.8 MW blocks plus one catcher.",
-   "quote": "DB-07 | Each deployment unit uses block redundancy with a catcher: four power blocks of about 4.8 MW plus one catcher | S5 Option C",
-   "category": "technical",
-   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
-   "page": 1
-  },
-  {
-   "req_id": "REQ-0003-0085",
-   "text": "CDUs must be modular, redundant, and meet specified cooling flow requirements.",
-   "quote": "CDUs shall be liquid-to-liquid, modular and placed in mechanical galleries with N+1 group redundancy. They take facility water on the primary side and cool a separate technical-grade secondary loop that serves GPU cold plates at a design flow of at least 1.5 LPM per kW",
-   "category": "technical",
-   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
-   "page": 5
-  }
- ],
- "board": [
-  {
-   "req_id": "REQ-0003-0071",
-   "text": "Provide compute racks with specified power shelves and state output voltage and converter count.",
-   "quote": "Each compute rack shall hold an 800 VDC to 54 VDC power shelf. The baseline is six 15 kW converters, and bidders shall state the shelf output voltage and converter count",
-   "category": "technical",
-   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
-   "page": 4
-  },
-  {
-   "req_id": "REQ-0003-0098",
-   "text": "Compute racks must accept 800 VDC input, with TDP and AC input options specified.",
-   "quote": "Compute racks shall accept 800 VDC input, and bidders shall state rack TDP. Racks with an AC input option shall list it separately",
-   "category": "technical",
-   "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
-   "page": 5
-  }
- ]
-}
+[
+ {
+  "req_id": "REQ-0003-0006",
+  "text": "The critical IT load is 120 MW, divided into six 20 MW units.",
+  "quote": "DB-01 | Critical IT load of 120 MW for AI training, in six deployment units of about 20 MW each | PA; S5 Option C",
+  "section": "Design basis",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 1
+ },
+ {
+  "req_id": "REQ-0003-0007",
+  "text": "Utility service above 100 kV is stepped down to a 13.8 kV site bus with two buses.",
+  "quote": "DB-02 | Utility service above 100 kV is stepped down to a 13.8 kV site bus with two buses, one for core network and mechanical loads and one for GPU compute loads | PA; S6; S13",
+  "section": "Design basis",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 1
+ },
+ {
+  "req_id": "REQ-0003-0008",
+  "text": "All medium-voltage equipment must be 15 kV class.",
+  "quote": "DB-03 | All medium-voltage equipment is 15 kV class | S2 §4.2; S10; S13",
+  "section": "Design basis",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 1
+ },
+ {
+  "req_id": "REQ-0003-0009",
+  "text": "Rack distribution is 800 VDC nominal, two-wire, within the 1500 VDC low-voltage limit.",
+  "quote": "DB-04 | Distribution to the rack is 800 VDC nominal, two-wire, inside the 1500 VDC low-voltage limit | S5; S3 §5.2.1",
+  "section": "Design basis",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 1
+ },
+ {
+  "req_id": "REQ-0003-0010",
+  "text": "Rack cabinets are 198-330 kW TDP, with growth to 570 kW per rack and native 800 VDC racks.",
+  "quote": "DB-05 | Baseline rack cabinets are 198 to 330 kW TDP, and designs shall allow growth to 570 kW per rack position and to native 800 VDC racks | S6; S5",
+  "section": "Design basis",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 1
+ },
+ {
+  "req_id": "REQ-0003-0011",
+  "text": "The availability target is 99.9% with concurrent maintainability.",
+  "quote": "DB-06 | The availability target is 99.9% for a training campus, with concurrent maintainability as the design intent | S3 §4.2; S14",
+  "section": "Design basis",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 1
+ },
+ {
+  "req_id": "REQ-0003-0012",
+  "text": "Deployment units use block redundancy with a catcher: four 4.8 MW blocks plus one catcher.",
+  "quote": "DB-07 | Each deployment unit uses block redundancy with a catcher: four power blocks of about 4.8 MW plus one catcher | S5 Option C",
+  "section": "Design basis",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 1
+ },
+ {
+  "req_id": "REQ-0003-0013",
+  "text": "The liquid cooling design point is facility water at 45 °C.",
+  "quote": "DB-08 | The liquid cooling design point is facility water at 45 °C | S6",
+  "section": "Design basis",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 1
+ },
+ {
+  "req_id": "REQ-0003-0014",
+  "text": "Design ambient is 35 °C, with peaks of 38-40 °C on single days.",
+  "quote": "DB-09 | Design ambient is 35 °C for extended periods, with peaks of 38 to 40 °C on single days | S15 §1.14.2.10; PA",
+  "section": "Design basis",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 1
+ },
+ {
+  "req_id": "REQ-0003-0015",
+  "text": "Outdoor equipment is rated -30 to 40 °C, with derating above 40 °C and 1,000 m, corrosion class C5, seismic category D, and 120 mph wind.",
+  "quote": "DB-10 | Outdoor equipment is rated ·30 to 40 °C with derating stated above 40 °C, up to 1,000 m with derating above, corrosion class C5, seismic design category D and 120 mph wind | S2 §6; PA",
+  "section": "Design basis",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 1
+ },
+ {
+  "req_id": "REQ-0003-0018",
+  "text": "Contractor must provide a substation for utility connection and voltage transformation.",
+  "quote": "The Contractor shall deliver a service substation that lands the utility lines above 100 kV and steps them down through HV-to-13.8 kV transformers to the site MV backbone",
+  "section": "PA; S6",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0019",
+  "text": "Substation must have two MV buses for load separation.",
+  "quote": "The substation shall provide two MV buses so that core network and mechanical loads and GPU compute loads take separate paths",
+  "section": "S6",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0020",
+  "text": "On-site generation and storage must connect to MV bus for integration.",
+  "quote": "On-site generation, if used, and energy storage shall connect to the MV bus, making the substation the integration point for flexible power and grid services",
+  "section": "S6",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0021",
+  "text": "MV switchgear must meet specified construction and safety standards.",
+  "quote": "MV switchgear shall be 15 kV-class metal-clad with arc-rated construction (Type 2B), draw-out breakers, protective relays, instrument transformers, a control power transformer and battery-backed DC control power, housed in a walk-in enclosure with 2-hour fire-rated walls",
+  "section": "S10; S14 §2.1",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0022",
+  "text": "Bidder must specify main and feeder ratings based on load schedule.",
+  "quote": "Main and feeder ratings shall be stated by the bidder from the Owner's load schedule. As a size reference, one public lineup uses a 2,000 A main, four 1,200 A feeders and five 1,200 A transfer bus switches",
+  "section": "S10; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0023",
+  "text": "Bidder must provide switchgear short-circuit rating.",
+  "quote": "Bidders shall state the switchgear short-circuit rating in kA for 1 s, subject to calculation",
+  "section": "S14",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0024",
+  "text": "Campus must have dual maintainable MV feeds underground.",
+  "quote": "The campus shall take dual concurrently maintainable MV feeds, run below ground on diverse paths with concrete encasement",
+  "section": "S14 §2.1, §2.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0025",
+  "text": "MV control power must be 110 VDC with battery backup.",
+  "quote": "MV control power shall be 110 VDC backed by a battery unit",
+  "section": "S14; S10",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0026",
+  "text": "Relays must support communication and event recording.",
+  "quote": "Relays shall support communications and event recording, with a relay acting as a remote terminal unit where the Owner specifies",
+  "section": "S11",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0027",
+  "text": "Bidder must propose backup generation meeting specified standards.",
+  "quote": "Backup generation shall be proposed by the bidder. The reference arrangement is central standby generators in N+2 at the MV switchgear, supporting 99.999% for critical core network and mechanical loads. An alternative is prefabricated generators in distributed redundancy. Fuel autonomy shall meet Tier III intent under EN 50600 Class 3",
+  "section": "S6; S14 §2.2",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0028",
+  "text": "Contractor must assist with interconnection studies and data.",
+  "quote": "The Contractor shall support the Owner's interconnection studies and supply protection-coordination data for the serving utility",
+  "section": "S9; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0029",
+  "text": "Contractor must provide power blocks for MV AC to 800 VDC conversion.",
+  "quote": "The Contractor shall supply power blocks that convert MV AC to 800 VDC. Transformer-rectifier units and solid-state transformers are both accepted",
+  "section": "S2 §3; S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0030",
+  "text": "Power blocks must deliver specified output from MV AC input.",
+  "quote": "Each block shall deliver 4.8 to 5 MW at the DC output from an input of 13.8 kVac ±10%, three-phase three-wire plus PE",
+  "section": "S2 §4.2; S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0031",
+  "text": "Input frequency and power factor must meet specified ranges.",
+  "quote": "Input frequency shall be 57 to 63 Hz with a rate of change up to 5 Hz/s. Power factor shall exceed 0.99 at full load, 0.98 from 20% load and 0.95 below 20%",
+  "section": "S2 §4.2",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0032",
+  "text": "Harmonics must comply with specified standards.",
+  "quote": "Harmonics shall meet IEEE 519, IEC 61800-3 Category C4, and IEC 61000-6-2 and -6-4",
+  "section": "S2 §4.2",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0033",
+  "text": "Short-circuit withstand and impulse level must meet specifications.",
+  "quote": "Short-circuit withstand shall be 18 to 40 kA symmetrical at 13.8 kV, with duration stated by the bidder, and the basic impulse level shall be at least 110 kV",
+  "section": "S2 §4.2",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0034",
+  "text": "MV system grounding must follow utility design specifications.",
+  "quote": "MV system grounding is low-resistance or solid, as set by the utility design",
+  "section": "S2 §4.2, §5.1.1",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0035",
+  "text": "Blocks must handle specified load acceptance and rejection rates.",
+  "quote": "Blocks shall suit load acceptance and rejection of about 20 to 50 MW/min on utility supply",
+  "section": "S2 §4.2, §5.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0036",
+  "text": "Voltage and frequency ride-through must meet specified ranges and durations.",
+  "quote": "Voltage ride-through: full output at 0.9 to 1.2 pu. In the first low-voltage range the block draws no more than nominal input current while supplying 100% of load. In the second it draws none, and storage carries 100% of load. Operation restores without state changes. Frequency ride-through is continuous at 58.8 to 61.2 Hz and lasts 299 s at 57.0 to 58.8 Hz and 61.2 to 61.8 Hz",
+  "section": "S2 §5.1.2, §5.1.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0037",
+  "text": "Output shall be 800 VDC nominal, unipolar, with ripple ±0.5%, static regulation ±1% and dynamic regulation ±3%. Sources shall not produce 800 VDC plus 10%, and setpoints shall stay below 1500 VDC.",
+  "quote": "Output shall be 800 VDC nominal, unipolar, with ripple ±0.5%, static regulation ±1% and dynamic regulation",
+  "section": "",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 2
+ },
+ {
+  "req_id": "REQ-0003-0039",
+  "text": "DC grounding must be IT, floating, or high-resistance, with coordinated detection and protection.",
+  "quote": "DC grounding shall be IT, floating or high-resistance, with detection and protection coordinated across the 800 VDC system",
+  "section": "S2 §4.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0040",
+  "text": "Overload specifications and DC link capacitance limits are defined.",
+  "quote": "Overload shall be 150% for 150 ms in constant-current mode and 120% for 5 s in constant-voltage mode, with output DC link capacitance of at most 10 mF per 4 MW",
+  "section": "S2 §4.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0041",
+  "text": "Efficiency must be at least 98% between 50% and 100% utilization.",
+  "quote": "Efficiency shall be at least 98% between 50% and 100% utilization, counting power train loss only",
+  "section": "S2 §4.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0042",
+  "text": "Blocks must support fast shutdown and limit DC fault current.",
+  "quote": "Blocks shall support fast shutdown by shunt trip and internal disconnect, and shall limit DC fault current with a current-limiting stage",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0043",
+  "text": "Outdoor enclosures must meet specific environmental and design standards.",
+  "quote": "Outdoor enclosures shall be NEMA 3R, rated ·30 to 40 °C with derating stated above 40 °C, corrosion class C5, seismic design category D and 120 mph wind, with a design life of 15 years or more within a 10 to 20 ft by 8 ft by 8.5 ft envelope",
+  "section": "S2 §4.3, §6",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0044",
+  "text": "Blocks must report state machine statuses and require manual validation after permanent failure.",
+  "quote": "Each block shall report a state machine of off, standby, precharged, on, fault and warning over Modbus TCP/IP. A permanent failure shall require manual validation, service and reset before the block returns to on",
+  "section": "S2 §4.3, §7.1",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0045",
+  "text": "Auxiliary power must be sourced from 480 Vac backed by UPS and an internal source.",
+  "quote": "Auxiliary power shall come from 480 Vac backed by the data center UPS, plus an internal source",
+  "section": "S2 §4.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0046",
+  "text": "Major blocks must be constructed from live-swappable sub-blocks.",
+  "quote": "Major blocks shall be built from sub-blocks that can be swapped live",
+  "section": "S3 §4.2",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0047",
+  "text": "Equipment must comply with specified standards.",
+  "quote": "Equipment shall comply with NFPA 70 and 70E, UL 347A, UL 508C, UL 840, UL 1741, IEEE 519, IEEE 1547 and IEEE 1584",
+  "section": "S2 §8",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0048",
+  "text": "Bidders must provide product maturity and field references, and type-test evidence for higher-class SSTs.",
+  "quote": "Bidders shall state product maturity and field references for the offered input class. Commercial SSTs are mostly 15 kV-class, so an SST proposal for a higher class shall show type-test evidence",
+  "section": "S5; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0049",
+  "text": "Lot 2 includes 15 kV-class switchgear lineups built to specified standards.",
+  "quote": "Lot 2 includes the 15 kV-class switchgear lineups at each deployment unit that feed the power blocks, built to L1.04 to L1.06",
+  "section": "PA; S10",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0050",
+  "text": "800 VDC distribution must follow specified routing and capacity standards.",
+  "quote": "800 VDC two-wire distribution shall run from the power-block output through DC switchboards and 6000 A-class busduct to parallel 1250 A row busways with 125 A tap cans",
+  "section": "S5 Option C",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0051",
+  "text": "Deployment units must use a 4+1 block-redundant arrangement with specified DC static transfer switch.",
+  "quote": "Each deployment unit shall use a 4+1 block-redundant arrangement with a DC static transfer switch, built from semiconductor OR-ing or adjustable DC/DC catcher paths",
+  "section": "S5; S3 §4.2",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0052",
+  "text": "Design must achieve 99.9% availability with redundancy and protection against single points of failure.",
+  "quote": "The design shall reach 99.9% availability. Because DC distribution allows no UPS-style maintenance bypass, redundancy shall sit at power-block level and, where needed, at distribution level, and a catcher shall protect the conversion block from single points of failure",
+  "section": "S3 §4.2",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0053",
+  "text": "Operation must stay within specified voltage band limits.",
+  "quote": "Operation shall stay inside the voltage band: no setpoint above 1500 VDC, no average above 1500 VDC, no extended excursion above it, and 840 VDC as the overvoltage disconnect hinge",
+  "section": "S3 §5.6, §5.7",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0054",
+  "text": "Earthing must be TN-S or IT, with specified grounding proposals and safety analysis.",
+  "quote": "Earthing shall be TN-S or IT. Bidders shall propose high-resistance midpoint, high-resistance return, floating or solid grounding, with fault-current, detection and personnel-safety analysis",
+  "section": "S3 §6.2; S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0055",
+  "text": "Avoid multiple solid earth points; potential drop must stay below 200 mV.",
+  "quote": "Multiple solid earth points shall be avoided, and the potential drop between housings and the central earth point shall stay below 200 mV",
+  "section": "S3 §6.2.2.2, §6.2.4",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0056",
+  "text": "IT systems must have insulation monitoring for first ground fault detection.",
+  "quote": "IT systems shall have insulation monitoring that detects a first ground fault, with impedance typically above 100 ohm per volt DC",
+  "section": "S3 §6.2.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0057",
+  "text": "Protection must use two zones with specified monitoring and shutdown features.",
+  "quote": "Protection shall use two zones: facility distribution, from source output to tap-can input, with insulation monitoring and fast source shutdown on overcurrent, and the rack interface, from tap can to rack, with residual current monitoring",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0058",
+  "text": "Tap-can branch protection must use MCCB or solid-state breakers, with clearing times and redundancy stated.",
+  "quote": "Tap-can branch protection shall be an MCCB or a solid-state breaker. Bidders shall state clearing times and the redundancy or holdup that covers a clearing time of up to about 20 ms",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0059",
+  "text": "Solid-state breakers must meet specified ratings for air-cooled and liquid-cooled applications.",
+  "quote": "Solid-state breakers shall target 125 A air-cooled ratings for 800 V to 54 V shelves and 1250 A liquid-cooled ratings for native 800 VDC racks",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0060",
+  "text": "Series arcing shall be mitigated with connector temperature monitoring and high-frequency sensing at the rack interface and at converter outputs.",
+  "quote": "Series arcing shall be mitigated with connector temperature monitoring and high-frequency sensing at the",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 3
+ },
+ {
+  "req_id": "REQ-0003-0061",
+  "text": "Provide isolation and grounding compatibility for MV AC connections to 800 VDC systems.",
+  "quote": "Isolation shall be provided where MV AC connects to the 800 VDC system through a converter or dedicated transformer, and each separately derived system shall state its grounding compatibility on the nameplate",
+  "section": "S3 §6.2.1.1, §5.5.2",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0062",
+  "text": "Ensure clearance and creepage per IEC 60664-1 for specified zones and categories.",
+  "quote": "Clearance and creepage shall follow IEC 60664-1 for the working voltage, using overvoltage category III in the power room, category II in the data room, pollution degree 2 in racks and pollution degree 3 in ancillary zones",
+  "section": "S3 §6.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0063",
+  "text": "Provide overcurrent protection for all ungrounded poles unless exempted by authority.",
+  "quote": "Overcurrent protection shall cover all ungrounded poles unless the authority having jurisdiction accepts otherwise",
+  "section": "S3 §6.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0064",
+  "text": "Facility storage must support various functions and connect via a converter.",
+  "quote": "Facility storage shall provide a buffer, abnormal-event response, bridge power and grid dispatchability. It may be AC-coupled at the MV bus or DC-coupled on the 800 VDC backbone, and it shall connect through a converter, not directly",
+  "section": "S6; S4; S3 §3.2",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0065",
+  "text": "Storage must comply with specified standards and undergo fire propagation tests.",
+  "quote": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level",
+  "section": "S1 §11.1",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0066",
+  "text": "Bus must handle specified load profiles with defined tolerances and settling times.",
+  "quote": "The bus shall tolerate this reference load profile: steps up to 175% of rack TDP in under 2 ms, 180% in under 0.5 ms and 150% in under 50 ms, holding ±3% with 3 ms settling",
+  "section": "S1 §7.3.2, §7.3.3; S2 §4.3; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0067",
+  "text": "Provide system-level simulation and support DC arc-flash and fault-current studies.",
+  "quote": "The Contractor shall deliver a system-level simulation covering dynamic response, source output impedance and module sharing, distribution inductance and ripple, and shall support DC arc-flash and fault-current studies",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0068",
+  "text": "Use open standards for telemetry and control, integrating with the Owner's system.",
+  "quote": "Telemetry and control shall use open standards with Redfish recommended, and signals shall integrate with the Owner's electrical power management system",
+  "section": "S1 §9; S14",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0069",
+  "text": "Provide 125 A 800 VDC power whips with specific contactor and connector requirements.",
+  "quote": "The Contractor shall supply 125 A 800 VDC power whips hardwired to the tap can behind a normally open contactor that closes only when the rack-side connector is mechanically locked and opens before the connector unlocks",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0070",
+  "text": "Ensure connectors have integrated switches, de-energize when unplugged, and prevent arcing.",
+  "quote": "Connectors shall latch with an integrated switch so a cable cannot be removed until source and load are off, shall de-energise when unplugged, and shall carry short pins to prevent arcing",
+  "section": "S1 §8.4; S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0071",
+  "text": "Provide compute racks with specified power shelves and state output voltage and converter count.",
+  "quote": "Each compute rack shall hold an 800 VDC to 54 VDC power shelf. The baseline is six 15 kW converters, and bidders shall state the shelf output voltage and converter count",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0072",
+  "text": "Design racks for specified power capacities and native 800 VDC distribution.",
+  "quote": "Rack designs shall accommodate cabinets of 198 to 330 kW, growth to 570 kW per rack position with liquid-cooled power shelves, and native 800 VDC distribution inside the rack",
+  "section": "S6; S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0073",
+  "text": "Ensure smooth rack input power with localized peak shaving and minimal storage.",
+  "quote": "Rack input power shall be smooth: localized peak shaving, power smoothing and slew-rate control using minimal storage, such as electrolytic capacitors, in or near the rack",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0074",
+  "text": "Provide branch protection for in-rack shelves using specified breakers.",
+  "quote": "Branch protection for in-rack shelves shall target 125 A air-cooled solid-state breakers",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0075",
+  "text": "Provide Phase 1 variant racks with specified power and connection requirements.",
+  "quote": "Phase 1 variant: where DC busway is not yet in place, 800 VDC power racks may feed adjacent compute racks. Each takes 415 to 480 VAC true three-phase without neutral through 12 whips of 100 A, supports about 660 kW, and uses shelves of six 18.3 kW converters",
+  "section": "S5 Option A",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0076",
+  "text": "Provide power-rack converters with energy storage and optional battery backup.",
+  "quote": "Each power-rack converter shall hold 1,200 J of energy storage to smooth AC input current. Optional battery backup is four 20 kW units giving 80 kW for 60 s, tied to a 125 A 800 VDC cross cable",
+  "section": "S5 Option A",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0077",
+  "text": "Provide evidence for ±400 VDC sidecar racks or conversion to 800 VDC.",
+  "quote": "±400 VDC variant: a bidder proposing ±400 VDC sidecar racks shall name the rack input that accepts ±400 VDC three-wire, or the conversion to 800 VDC. The Owner accepts ±400 VDC only on that evidence",
+  "section": "S1; S4; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0078",
+  "text": "Ensure ±400 VDC variant meets specified performance and efficiency standards.",
+  "quote": "An accepted ±400 VDC variant shall deliver 410 V at no load and 400 V at full load, ±0.5%, with 10 V built-in droop, using 1OU power shelf modules of 25 to 30 kW, a three-conductor vertical busbar of up to 1.1 MW and cables of 50 kW (63 A) or 100 kW (125 A). End-to-end efficiency shall exceed 95% at 20% load, 98% (480 V) or 97% (415 or 400 V) at 50%, and 97% or 96.5% at 100%",
+  "section": "S1 §7.3, §8",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0079",
+  "text": "Rack power equipment shall use UL 62368-1 methods, with leakage of at most 3.5 mA AC and 10 mA DC, and shall meet EMC Class A to CISPR 32 and 35.",
+  "quote": "Rack power equipment shall use UL 62368-1 methods, with leakage of at most 3.5 mA AC and 10 mA DC",
+  "section": "",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 4
+ },
+ {
+  "req_id": "REQ-0003-0081",
+  "text": "Rack power equipment must support telemetry reporting via specified protocols.",
+  "quote": "Rack power equipment shall report telemetry over Redfish, PMBus, Modbus or CANbus",
+  "section": "S1 §9",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0082",
+  "text": "Heat rejection must use closed-circuit dry coolers, and adiabatic assist proposals must include annual water use.",
+  "quote": "Heat rejection shall use closed-circuit dry coolers, with no cooling-tower blowdown in the base design. Bidders proposing adiabatic assist for peak ambient shall state annual water use",
+  "section": "S6; S14 §2.4.1; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0083",
+  "text": "Central utility buildings must house chillers, pumps, and water distribution, with specified electrical configurations.",
+  "quote": "Central utility buildings shall house chillers, pumps and facility water distribution serving the CDUs and room air handlers. Chillers may run on a decoupled 4.16 kV bus, with pumps, coolers and controls on 480 V",
+  "section": "S6",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0084",
+  "text": "Liquid cooling must handle facility water up to 45 °C, with stated inlet and outlet temperatures.",
+  "quote": "The liquid cooling design point shall be facility water up to 45 °C, and bidders shall state maximum water inlet and expected outlet temperatures",
+  "section": "S6; S15 Annex 10C",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0085",
+  "text": "CDUs must be modular, redundant, and meet specified cooling flow requirements.",
+  "quote": "CDUs shall be liquid-to-liquid, modular and placed in mechanical galleries with N+1 group redundancy. They take facility water on the primary side and cool a separate technical-grade secondary loop that serves GPU cold plates at a design flow of at least 1.5 LPM per kW",
+  "section": "S6; S14",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0086",
+  "text": "CDU data must include detailed specifications and parameters.",
+  "quote": "CDU data shall state rated kW, pump type and count, primary and secondary supply and return temperatures, secondary flow in L/min, available lift in kPa, filter mesh, pipe routing and power supply",
+  "section": "S14",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0087",
+  "text": "Heat-rejection and water loops must be maintainable with N+1 redundancy.",
+  "quote": "The heat-rejection and water loops shall be concurrently maintainable in a ring with N+1 redundancy",
+  "section": "S14 §2.4.1",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0088",
+  "text": "Room air handlers must meet cooling and capacity requirements, with specified liquid-captured fraction.",
+  "quote": "Room air handlers on medium-temperature facility water shall cool air-cooled equipment and occupied spaces. Air-side capacity shall be at least 15% of room load, and bidders shall state the liquid-captured fraction, with 90% as the target",
+  "section": "S6; S14 §2.4.1; S15 §1.14.2.10",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0089",
+  "text": "The plant must handle specified heat loads at given ambient temperatures, with approach temperatures stated.",
+  "quote": "The plant shall reject the full heat load at 35 °C ambient for extended periods and at 40 °C on peak days, and bidders shall show approach temperatures for both cases",
+  "section": "S15 §1.14.2.10; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0090",
+  "text": "Air-cooled equipment must meet ASHRAE A2 standards, with A3 preferred, and auxiliary racks may need extra cooling.",
+  "quote": "Air-cooled equipment shall operate with ASHRAE A2 supply air, and operation at A3 is preferred. Auxiliary racks above 20 kW sustained may need additional liquid cooling",
+  "section": "S8 §C.7",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0091",
+  "text": "GPU-side cooling plant must have specified thermal ride-through and restart sequence details.",
+  "quote": "The GPU-side cooling plant is not UPS-backed in the reference design and relies on loop thermal mass until backup generation restarts it. Bidders shall state the thermal ride-through time at full load and the automatic restart sequence",
+  "section": "S6; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0092",
+  "text": "A chemical management plan must be delivered nine months before delivery.",
+  "quote": "The Contractor shall deliver a chemical management plan covering additives and cooling-water properties, including transport, storage, filling, draining and disposal, nine months before delivery",
+  "section": "S7 App B.5",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0093",
+  "text": "Cooling measurements must include per-node and per-loop data with specified details.",
+  "quote": "Cooling shall be measured per node and per loop, with sampling frequency, accuracy and timestamps stated",
+  "section": "S7 §5.5.2; S15 §1.14.2.10",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0094",
+  "text": "Piping routes, floor loading, and rack weight must be specified for each hall.",
+  "quote": "Piping routes, floor loading and weight per rack in t/m² shall be stated for each hall",
+  "section": "S15 Annex 10C",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0095",
+  "text": "Prefabricated cooling equipment must meet outdoor use and corrosion protection standards.",
+  "quote": "Prefabricated cooling equipment shall suit outdoor use at ·20 to +45 °C, or the local 20-year extreme if more stringent, with corrosion protection tested to ISO 12944-6 or equivalent",
+  "section": "S14",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0096",
+  "text": "Compute system must include specified components and services.",
+  "quote": "The compute system shall comprise a control plane of at least five servers, a GPU accelerator partition in direct-liquid-cooled cabinets, a CPU data-preparation partition, a high-speed interconnect, multi-tier storage and cloud-like services (virtual machines, Kubernetes and Slurm)",
+  "section": "S15 §1.14.2.1 to §1.14.2.4",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0097",
+  "text": "Accelerators, nodes, and GPUs must meet memory, storage, and network requirements.",
+  "quote": "Each accelerator shall have at least 192 GB of high-bandwidth memory, each node shall have local NVMe, and each GPU shall have a direct high-speed network connection",
+  "section": "S15 §1.14.2.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0098",
+  "text": "Compute racks must accept 800 VDC input, with TDP and AC input options specified.",
+  "quote": "Compute racks shall accept 800 VDC input, and bidders shall state rack TDP. Racks with an AC input option shall list it separately",
+  "section": "S5; S6",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0099",
+  "text": "Deployment units must not exceed 20 MW power, with total and partitioned power stated.",
+  "quote": "The maximum power of each deployment unit under any workload, including storage and network, shall not exceed 20 MW, and bidders shall state it in total and per partition",
+  "section": "S7 §8.3.1; S15 Annex 10C; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 5
+ },
+ {
+  "req_id": "REQ-0003-0100",
+  "text": "Power controls must exist at all levels with stated reaction times.",
+  "quote": "L6.05 | Power controls shall exist at system, rack, board, node, component and sub-component level, with reaction times stated | S7 §8.3.2",
+  "section": "S7 §8.3.2",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0101",
+  "text": "System must warn of power-draw changes above 1 MW over 15 minutes or propose a similar criterion.",
+  "quote": "L6.06 | The system shall give advance warning of power-draw changes above 1 MW over 15 minutes, or a similar criterion the bidder proposes | S7 §8.3.3",
+  "section": "S7 §8.3.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0102",
+  "text": "Energy and other metrics must be measured and made available with specified details.",
+  "quote": "L6.07 | Energy shall be measured per node and made available to users for their jobs. Power, voltage, cooling and temperature shall be measured across the system, with sampling frequency, accuracy and timestamps stated | S15 §1.14.2.10; S7 §5.5.2",
+  "section": "S15 §1.14.2.10; S7 §5.5.2",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0103",
+  "text": "System must support sequenced power up/down with described timings.",
+  "quote": "L6.08 | The system shall support sequenced full-system power up and power down, with timings described | S7 §5.1.2, §8.1.4",
+  "section": "S7 §5.1.2, §8.1.4",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0104",
+  "text": "System must tolerate single failures and support rolling upgrades.",
+  "quote": "L6.09 | No single point of failure shall cause an outage. The system shall stay operational or degraded after the failure of any single field-replaceable unit, server or switch, and shall support rolling upgrades while at least half stays in production | S7 §5.3.2, §5.4.1",
+  "section": "S7 §5.3.2, §5.4.1",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0105",
+  "text": "Bidders must propose and explain system availability and reliability metrics.",
+  "quote": "L6.10 | Bidders shall propose system availability, mean time between interrupts and job mean time to interrupt, and explain how they derived them | S7 §8.1",
+  "section": "S7 §8.1",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0106",
+  "text": "System security must comply with ISO/IEC 27001 and address vulnerabilities per policy.",
+  "quote": "L6.11 | Security shall be compatible with ISO/IEC 27001, with strict isolation of tenants, including their network traffic. Firmware, drivers and software shall be patched, and high or critical vulnerabilities shall be fixed under the Owner's policy | S15 §1.14.2.9",
+  "section": "S15 §1.14.2.9",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0107",
+  "text": "Storage must be multi-tier, expandable, and support specified standards.",
+  "quote": "L6.12 | Storage shall be multi-tier, with a POSIX parallel file system and capacity object storage, expandable without interruption and using POSIX, NFS and S3 standards | S15 §1.14.2.5",
+  "section": "S15 §1.14.2.5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0108",
+  "text": "Control-plane network must be separate and secure, with links within 500 m.",
+  "quote": "L6.13 | The control-plane network shall be separate from the compute and storage network, with secure partitioning of tenants. Links between halls shall stay within 500 m | S15 §1.14.2.7; S6",
+  "section": "S15 §1.14.2.7; S6",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0109",
+  "text": "Software must include specified features like Slurm, Kubernetes, and monitoring.",
+  "quote": "L6.14 | Software shall offer Slurm and Kubernetes with GPU passthrough, a self-service portal and APIs, monitoring and accounting | S15 §1.14.2.8",
+  "section": "S15 §1.14.2.8",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0111",
+  "text": "Contractor must maintain an on-site parts cache and spare nodes.",
+  "quote": "L6.16 | The Contractor shall hold an on-site parts cache covering two weeks of normal repairs, and spare nodes of at least 1% of each node type | S7 App B.9",
+  "section": "S7 App B.9",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0112",
+  "text": "Bidders must run specified benchmarks and accommodate extensions.",
+  "quote": "L6.17 | Bidders shall run these benchmarks: MLPerf Storage, IOR, BigDataBench, Ray Train, Horovod, MLPerf Training and MLPerf Inference. The Owner may extend the list | S15 Annex 13",
+  "section": "S15 Annex 13",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0244",
+  "text": "Each lot's equipment shall tolerate any disturbance foreseeable within the Section 9 interface limits.",
+  "quote": "These interfaces fix what each lot hands to the next. A Contractor's equipment shall tolerate any disturbance that is foreseeable within these limits.",
+  "section": "",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0114",
+  "text": "Utility service to Lot 1 must be above 100 kV.",
+  "quote": "IF-01 | Utility to Lot 1 | Service above 100 kV. The Owner holds the interconnection agreement | S9; PA",
+  "section": "S9; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0115",
+  "text": "Lot 1 to Lot 2 interface must meet specified electrical standards.",
+  "quote": "IF-02 | Lot 1 to Lot 2 | 13.8 kV ±10%, three-phase three-wire plus PE, 57 to 63 Hz, with low-resistance or solid MV grounding | S2 §4.2",
+  "section": "S2 §4.2",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0116",
+  "text": "Lot 2 to Lot 3 interface must meet specified DC standards.",
+  "quote": "IF-03 | Lot 2 to Lot 3 | 800 VDC nominal, unipolar, with ripple ±0.5%, static regulation ±1%, dynamic regulation ±3% and IT grounding | S2 §4.3",
+  "section": "S2 §4.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0117",
+  "text": "Inside Lot 3 must use specified busduct and busway standards.",
+  "quote": "IF-04 | Inside Lot 3 | 6000 A-class busduct, 1250 A row busway and 125 A tap cans | S5",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0118",
+  "text": "Lot 3 to Lot 4 interface must meet specified whip and contactor standards.",
+  "quote": "IF-05 | Lot 3 to Lot 4 | 125 A 800 VDC interlocked whip behind a normally open contactor | S5",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0119",
+  "text": "Lot 4 to Lot 6 interface must use specified in-rack bus standards.",
+  "quote": "IF-06 | Lot 4 to Lot 6 | 54 VDC in-rack bus from the 800 to 54 VDC shelf | S5",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0120",
+  "text": "Lot 5 to Lot 6 interface must meet specified water and cooling standards.",
+  "quote": "IF-07 | Lot 5 to Lot 6 | Facility water up to 45 °C to the CDU primary side, and a technical-grade secondary loop to cold plates at 1.5 LPM per kW or more | S6",
+  "section": "S6",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0121",
+  "text": "Lot 1 to Lot 5 interface must meet specified cooling plant standards.",
+  "quote": "IF-08 | Lot 1 to Lot 5 | Cooling plant supply at 480 V, with chillers optionally on a 4.16 kV bus | S6",
+  "section": "S6",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0122",
+  "text": "Lots 2, 3 and 5 to Lot 6: telemetry and control over Modbus TCP/IP from power blocks and Redfish, PMBus, Modbus or CANbus elsewhere, integrated with the Owner's electrical power management system.",
+  "quote": "IF-09 | Lots 2, 3 and 5 to Lot 6 | Telemetry and control over Modbus TCP/IP from power blocks and Redfish,",
+  "section": "N/A",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 6
+ },
+ {
+  "req_id": "REQ-0003-0125",
+  "text": "Equipment must pass witnessed factory tests for the first unit and acceptance tests for repeat units, followed by site acceptance and commissioning.",
+  "quote": "TA-01 | Equipment shall pass a witnessed factory test for the first unit of each type and factory acceptance tests for repeat units, followed by site acceptance and commissioning procedures that the manufacturer offers",
+  "section": "S14",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 7
+ },
+ {
+  "req_id": "REQ-0003-0127",
+  "text": "Pre-delivery tests must include power cycling, failover, resilience, benchmarks, and a 72-hour constant load test.",
+  "quote": "TA-03 | Pre-delivery tests shall cover power up, power down, monitoring, reset, power cycling from the console, failover and resilience, benchmarks, and a 72-hour test under constant load",
+  "section": "S7 App A.2",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 7
+ },
+ {
+  "req_id": "REQ-0003-0129",
+  "text": "During the availability test, no upgrades or critical bugs are allowed in the last seven days, and downtime repairs count as outages.",
+  "quote": "TA-05 | During the availability test no upgrades are allowed in the last seven days, no critical bugs may be open in the last seven days, and any repair that causes downtime counts as an outage",
+  "section": "S7 App A.4.5",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 7
+ },
+ {
+  "req_id": "REQ-0003-0130",
+  "text": "Power-chain tests must include step-load, pulse profiles, ride-through events, protection coordination, and end-to-end validation.",
+  "quote": "TA-06 | Power-chain tests shall cover block step-load and pulse profiles at the reference load profile in L3.17, voltage and frequency ride-through events, protection coordination, ground-fault detection and end-to-end validation from MV input to the GPU",
+  "section": "S1 §7.3.3; S2 §5.1.2; S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 7
+ },
+ {
+  "req_id": "REQ-0003-0131",
+  "text": "System-level simulation must be accepted before delivery, covering dynamic response, impedance, inductance, and ripple.",
+  "quote": "TA-07 | A system-level simulation shall be accepted before delivery, covering dynamic response, source output impedance, distribution inductance and ripple",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 7
+ },
+ {
+  "req_id": "REQ-0003-0151",
+  "text": "Warranty is included in the five-year maintenance period.",
+  "quote": "Warranty is included within the five-year maintenance period, and component warranties run inside it",
+  "section": "S7 App B.9",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 8
+ },
+ {
+  "req_id": "REQ-0003-0152",
+  "text": "Contractor is responsible for foreseeable failures within interface limits.",
+  "quote": "Failures caused by disturbances that are foreseeable within the interface limits of Section 9 are the Contractor's responsibility",
+  "section": "S7 App B.9; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 8
+ },
+ {
+  "req_id": "REQ-0003-0168",
+  "text": "Tenders are evaluated on technical value, cost performance, delivery quality, and safety readiness, with minimum scores required.",
+  "quote": "Tenders are scored on technical value, cost performance, delivery quality and safety readiness, with a minimum required in every criterion.",
+  "section": "S15 §2.16.4",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 9
+ },
+ {
+  "req_id": "REQ-0003-0169",
+  "text": "The award is given to the tender with the best price-quality ratio, subject to legal and technical compliance.",
+  "quote": "Award goes to the tender with the best price-quality ratio, after legal and technical responsiveness is confirmed",
+  "section": "S15 §2.16.2; S12",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 9
+ },
+ {
+  "req_id": "REQ-0003-0170",
+  "text": "Each evaluation category is scored from 0 to 60 and then weighted.",
+  "quote": "Each category is scored from 0 (requirements insufficiently met) to 60 (met to fullest satisfaction) and then weighted",
+  "section": "S15 §2.16.5; PA",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 9
+ },
+ {
+  "req_id": "REQ-0003-0171",
+  "text": "A tender must meet the minimum score in each criterion and achieve at least 66 points overall.",
+  "quote": "A tender needs at least the minimum in every criterion and at least 66 points overall",
+  "section": "S15 §2.16.4; PA",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 9
+ },
+ {
+  "req_id": "REQ-0003-0172",
+  "text": "Ties are resolved by comparing scores in criteria 1, 2, 3, and 4 sequentially.",
+  "quote": "Ties are broken by the higher mark in criterion 1, then 2, 3 and 4",
+  "section": "S15 §2.16.9",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 9
+ },
+ {
+  "req_id": "REQ-0003-0173",
+  "text": "Repeating mandatory requirements without detail scores low, and exceeding minimum requirements becomes binding.",
+  "quote": "Repeating a mandatory requirement without detail scores low, and anything offered beyond the minimum becomes binding",
+  "section": "S15 §2.16.4",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 9
+ },
+ {
+  "req_id": "REQ-0003-0175",
+  "text": "Energy cost evaluation uses the Owner's PUE and energy price, with bidders committing to energy and time-to-solution metrics.",
+  "quote": "Energy cost uses the Owner's PUE per cooling technique and energy price. Bidders commit energy-to-solution and time-to-solution on the Owner's workload, which yields an AI-performance-per-watt metric",
+  "section": "S15 §2.16.6",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 9
+ },
+ {
+  "req_id": "REQ-0003-0178",
+  "text": "Bids lacking a price or refusing liquidated damages are deemed non-responsive.",
+  "quote": "Bids with no price, or a refusal of liquidated damages, are non-responsive",
+  "section": "S13",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 9
+ },
+ {
+  "req_id": "REQ-0003-0179",
+  "text": "The Owner may modify or discard solutions during dialogue based on award criteria.",
+  "quote": "During dialogue the Owner may discard or reduce the solutions under discussion by applying the award criteria",
+  "section": "S15 §2.15.1",
+  "category": "compliance",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 9
+ },
+ {
+  "req_id": "REQ-0003-0187",
+  "text": "Provide the total number of nodes and their types.",
+  "quote": "Compute | Number of nodes, in total and by type | count | S15 Annex 10C",
+  "section": "S15 Annex 10C",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0188",
+  "text": "Specify the peak performance in total and per partition.",
+  "quote": "Compute | Peak performance, in total and per partition | PFlop/s | S15 Annex 10C",
+  "section": "S15 Annex 10C",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0189",
+  "text": "Detail memory bandwidth and byte-addressable capacity, total and per node type.",
+  "quote": "Compute | Memory bandwidth and byte-addressable capacity, in total and per node type | TiB/s; TB | S15 Annex 10C",
+  "section": "S15 Annex 10C",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0190",
+  "text": "List the types of accelerators and processors.",
+  "quote": "Compute | Accelerator and processor types | text | S15 Annex 10C",
+  "section": "S15 Annex 10C",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0191",
+  "text": "Provide details on network type, topology, latency, and bisection bandwidth.",
+  "quote": "Compute | Network type, topology, latency and bisection bandwidth | text; µs; Tb/s | S15 Annex 10C",
+  "section": "S15 Annex 10C",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0192",
+  "text": "Specify storage bandwidth, IOPS, and usable capacity per tier.",
+  "quote": "Storage | Bandwidth, IOPS and usable capacity per tier | GB/s; IOPS; GB | S15 Annex 10C",
+  "section": "S15 Annex 10C",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0193",
+  "text": "Indicate the total floor size, including service area.",
+  "quote": "Site | Total floor size including service area | m² | S15 Annex 10C",
+  "section": "S15 Annex 10C",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0194",
+  "text": "Provide the maximum power under any workload, total and per partition.",
+  "quote": "Site | Maximum power under any workload, in total and per partition | kW | S15 Annex 10C",
+  "section": "S15 Annex 10C",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0195",
+  "text": "Detail the number of racks, rack TDP, and maximum weight per rack.",
+  "quote": "Site | Number of racks, rack TDP and maximum weight per rack | count; kW; t/m² | S15 Annex 10C; S6",
+  "section": "S15 Annex 10C; S6",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0196",
+  "text": "Specify the rated DC output of each power block.",
+  "quote": "Power chain | Rated DC output of each power block | MW | L2.02",
+  "section": "L2.02",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0197",
+  "text": "Provide efficiency at 50% and 100% load.",
+  "quote": "Power chain | Efficiency at 50% and 100% load | % | S2 §4.3",
+  "section": "S2 §4.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0198",
+  "text": "Detail output regulation, static and dynamic, and ripple.",
+  "quote": "Power chain | Output regulation, static and dynamic, and ripple | % | S2 §4.3",
+  "section": "S2 §4.3",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0199",
+  "text": "Specify the short-circuit rating.",
+  "quote": "Power chain | Short-circuit rating | kA for 1 s | S14",
+  "section": "S14",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0200",
+  "text": "Provide breaker clearing time and holdup duration.",
+  "quote": "Power chain | Breaker clearing time and the holdup that covers it | ms | S5",
+  "section": "S5",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0201",
+  "text": "Specify ingress protection and lead time delivered duty paid.",
+  "quote": "Power chain | Ingress protection and lead time delivered duty paid | IP rating; weeks | S14",
+  "section": "S14",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0202",
+  "text": "Provide CDU rated capacity and secondary flow.",
+  "quote": "Cooling | CDU rated capacity and secondary flow | kW; L/min | S14",
+  "section": "S14",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0203",
+  "text": "Specify primary and secondary supply and return temperatures.",
+  "quote": "Cooling | Primary and secondary supply and return temperatures | °C | S14",
+  "section": "S14",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0204",
+  "text": "Provide maximum water inlet and expected outlet temperatures.",
+  "quote": "Cooling | Maximum water inlet and expected outlet temperatures | °C | S15 Annex 10C",
+  "section": "S15 Annex 10C",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0205",
+  "text": "Specify the liquid-captured fraction of rack heat.",
+  "quote": "Cooling | Liquid-captured fraction of rack heat | % | L5.07; PA",
+  "section": "L5.07; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0206",
+  "text": "Provide thermal ride-through duration at full load without cooling power.",
+  "quote": "Cooling | Thermal ride-through at full load without cooling power | minutes | L5.10; PA",
+  "section": "L5.10; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ },
+ {
+  "req_id": "REQ-0003-0207",
+  "text": "Specify annual water use.",
+  "quote": "Cooling | Annual water use | m³ | L5.01; PA",
+  "section": "L5.01; PA",
+  "category": "technical",
+  "document": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+  "page": 10
+ }
+]

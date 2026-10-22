@@ -500,7 +500,7 @@ Use the default unless an answer arrives first; note it in the tracker.
 | `scripts/import_power_modules.py`, `data/knowledge_base/power_modules*.json` | `data/axiom_products/documents.json`, `images.json`, `images/**` |
 | `app/modules/configurator/**` (new), `app/modules/catalog/**` (product API), `matching/**`, `decisions/**` | `scripts/extract_product_images.py` |
 | `web/components/assessment/**`, Traceability pane 3 technical comparison (`.../trace/`, this iteration only), `web/lib/**` (contract types) | `web/app/catalog/**` (moves from Piyush to Janvia), `web/components/catalog/**` (new) |
-| `data/llm_cache/configurator_inputs/`, RAG index of `data/axiom_products/*.pdf`, `requirements.txt`, `tests/test_configurator*.py`, `tests/test_power_modules*.py` | `tests/test_catalog_manifests.py` |
+| `data/llm_cache/configurator_{inputs,groups,assign}/`, RAG index of `data/axiom_products/*.pdf`, `requirements.txt`, `tests/test_configurator*.py`, `tests/test_power_modules*.py` | `tests/test_catalog_manifests.py` |
 | `Documents/changes-iteration5.md`, walkthrough assessment chapters | `web/tour/chapters/catalog.ts`, walkthrough catalog chapter |
 
 `data/axiom_products/` (the supplied files) is read-only for both.

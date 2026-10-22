@@ -6,8 +6,9 @@ column names, so the script matches on the same validated values the Product Cat
 
 Public contract:
     catalog_frame() -> DataFrame                 the merged catalog as the script's catalogue (cached)
-    requirement_refs(db, opp_id, req_ids) -> list[dict]   {req_id, text, quote, category, document, page}: the
-                                                 requirements as the input agent sees them, with their source
+    requirement_refs(db, opp_id, req_ids=None) -> list[dict]   {req_id, text, quote, section, category, document,
+                                                 page}: the requirements as the agents see them, with their source;
+                                                 None = every technical and compliance item
     normalise(raw, items=()) -> dict             the agent's answer -> {"input" (the script's JSON, target units),
                                                  "provenance" {"board.x": {req_ids, source, stated, unit, interpreted}},
                                                  "unit_issues" [...]}; numbers are parsed from the text as written
@@ -15,9 +16,19 @@ Public contract:
                                                  dropped with an issue (the model never converts)
     missing(cfg_input) -> list[dict]             inputs the script needs that the requirements do not state:
                                                  {scope, field, needed_for}
-    inputs(db, opp_id, req_ids) -> dict          requirement_refs + agent (frozen) + normalise + missing
+    inputs(db, opp_id, req_ids, scope=None, component="") -> dict   requirement_refs + agent (frozen) + normalise +
+                                                 missing; scope "board" or "system" keeps that part of the input
+                                                 only; component tells the agent what the items were grouped under
     run(prepared) -> dict                        the script's report (configure) on the merged catalog, with the
                                                  provenance, the requirement refs and the missing inputs beside it
+    components(db, opp_id) -> dict               P-55 (C-56): the bid's technical and compliance items grouped by
+                                                 requested component (one frozen model call); one configurator search
+                                                 per DC/DC group (board input only), the system checks once (system
+                                                 input only), other components listed without a numeric search:
+                                                 {"groups": [{name, kind, req_ids, run|None}], "system": run|None,
+                                                  "ungrouped": [req_id] (no component, or not answered),
+                                                  "unassigned": [req_id] (the model gave no answer), "unknown_ids"}
+    prepare(items, scope, component), plan(items)   inputs() and components() on refs already read (no database)
 """
 import re
 from functools import lru_cache
@@ -43,6 +54,9 @@ COLUMNS = {"component_id": "Component ID", "part_number": "Part Number", "produc
            "regulation": "Regulation"}
 
 
+PRODUCT_CATEGORIES = {"technical", "compliance"}   # as matching.PRODUCT_CATEGORIES: what a product can answer
+
+
 @lru_cache
 def catalog_frame() -> pd.DataFrame:
     rows = []
@@ -55,11 +69,17 @@ def catalog_frame() -> pd.DataFrame:
     return rc.prepare_catalog(pd.DataFrame(rows))
 
 
-def requirement_refs(db: Session, opp_id: str, req_ids: list[str]) -> list[dict]:
+def requirement_refs(db: Session, opp_id: str, req_ids: list[str] | None = None) -> list[dict]:
+    """None: every technical and compliance item of the register (leaf items, document order)."""
     docs = {d.id: d.filename for d in opportunities.documents(db, opp_id)}
-    by_id = {r.req_id: r for r in requirements.current(db, opp_id, include_children=True)}
-    return [{"req_id": r.req_id, "text": r.text, "quote": r.quote, "category": r.category,
-             "document": docs.get(r.document_id), "page": r.page} for i in req_ids if (r := by_id.get(i))]
+    rows = [r for r in requirements.current(db, opp_id, include_children=True) if r.kind == "item"]
+    by_id = {r.req_id: r for r in rows}
+    if req_ids is None:
+        picked = [r for r in rows if r.category in PRODUCT_CATEGORIES]
+    else:
+        picked = [by_id[i] for i in req_ids if i in by_id]
+    return [{"req_id": r.req_id, "text": r.text, "quote": r.quote, "section": r.section, "category": r.category,
+             "document": docs.get(r.document_id), "page": r.page} for r in picked]
 
 
 # unit as written -> (quantity, factor to the base unit). Case matters: MW is megawatt, mW milliwatt.
@@ -133,7 +153,8 @@ def normalise(raw: dict, items: list[dict] = ()) -> dict:
             out[scope][f] = {"value": value, "source": "; ".join(v["req_ids"]) + ": " + v["source"]}
             prov[f"{scope}.{f}"] = {"req_ids": v["req_ids"], "source": v["source"], "stated": stated, "unit": unit,
                                    # a category the model chose (N+1 for "four blocks plus a catcher"): confirm it
-                                   "interpreted": kind == "text" and str(stated).lower() not in v["source"].lower()}
+                                   "interpreted": kind != "number" and not all(
+                                       str(x).lower() in v["source"].lower() for x in (stated if kind == "list" else [stated]))}
     return {"input": out, "provenance": prov, "unit_issues": issues}
 
 
@@ -156,16 +177,63 @@ def missing(cfg_input: dict) -> list[dict]:
     return out
 
 
-def inputs(db: Session, opp_id: str, req_ids: list[str]) -> dict:
-    items = requirement_refs(db, opp_id, req_ids)
-    prepared = normalise(agent.extract(items, rc.catalog_vocab(catalog_frame())), items)
+def inputs(db: Session, opp_id: str, req_ids: list[str], scope: str | None = None, component: str = "") -> dict:
+    return prepare(requirement_refs(db, opp_id, req_ids), scope, component)
+
+
+def prepare(items: list[dict], scope: str | None = None, component: str = "") -> dict:
+    """inputs() on requirement refs already read (no database)."""
+    prepared = normalise(agent.extract(items, rc.catalog_vocab(catalog_frame()), component), items)
+    if scope:   # a component search sees board fields only, the system checks system fields only (C-56)
+        prepared["input"] = {scope: prepared["input"][scope]}
+        prepared["provenance"] = {k: v for k, v in prepared["provenance"].items() if k.startswith(scope + ".")}
+        prepared["unit_issues"] = [i for i in prepared["unit_issues"] if i["field"].startswith(scope + ".")]
     return {"requirements": items, **prepared, "missing": missing(prepared["input"])}
 
 
 def run(prepared: dict) -> dict:
     report = rc.configure(prepared["input"], catalog_frame())
+    for scope in ("system", "board"):     # a scoped run (inputs(..., scope)) reports its own part only
+        if scope not in prepared["input"]:
+            report.pop(scope, None)
     return report | {"inputs": prepared["provenance"], "requirements": prepared.get("requirements", []),
                      "unit_issues": prepared.get("unit_issues", []), "missing": missing(prepared["input"])}
+
+
+DATA_CENTRE = {"total_it_load_mw", "rack_density_kw", "cooling_mode", "coolant_supply_temp_c", "liquid_capture_fraction"}
+
+
+def components(db: Session, opp_id: str) -> dict:
+    return plan(requirement_refs(db, opp_id))
+
+
+def plan(items: list[dict]) -> dict:
+    """components() on requirement refs already read (no database)."""
+    known = {i["req_id"]: i for i in items}
+    grouped_ = agent.group(items)
+    groups = grouped_["groups"]
+    unknown = sorted({i for g in groups for i in g["req_ids"]} - set(known))     # an ID the model made up: reported, dropped
+    out, system = [], None
+    for g in groups:
+        ids = [i for i in dict.fromkeys(g["req_ids"]) if i in known]
+        if not ids:
+            continue
+        run_, refs = None, [known[i] for i in ids]
+        if g["kind"] == "dc_dc":
+            run_ = run(prepare(refs, "board", f"dc_dc: {g['name']} (fill the board fields for this conversion)"))
+        elif g["kind"] == "system":
+            prepared = prepare(refs, "system", "system: installation-wide parameters")
+            if DATA_CENTRE & set(prepared["input"]["system"]):
+                run_ = run(prepared)
+            else:   # the script's system checks are Axiom AI-module limits: not for, say, a switchgear lineup
+                run_ = {"status": "not_applicable", "inputs": prepared["provenance"], "requirements": prepared["requirements"],
+                        "reason": "The RFP states no IT load, rack density or cooling for a data-centre installation, so "
+                                  "the configurator's system checks (Axiom AI module limits) do not apply."}
+            system = run_
+        out.append({"name": g["name"], "kind": g["kind"], "req_ids": ids, "run": run_})
+    grouped = {i for g in out for i in g["req_ids"]}
+    return {"groups": out, "system": system, "ungrouped": [i for i in known if i not in grouped],
+            "unknown_ids": unknown, "unassigned": grouped_["unassigned"]}
 
 
 if __name__ == "__main__":  # self-check: python -m app.modules.configurator.service

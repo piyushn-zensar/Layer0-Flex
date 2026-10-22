@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "components": [
+      {
+        "id": "G1",
+        "kind": "other",
+        "name": "Power blocks converting MV AC to 800 VDC"
+      },
+      {
+        "id": "G2",
+        "kind": "other",
+        "name": "800 VDC distribution system"
+      },
+      {
+        "id": "G3",
+        "kind": "dc_dc",
+        "name": "Compute racks with 800 VDC to 54 VDC power shelves"
+      },
+      {
+        "id": "G4",
+        "kind": "other",
+        "name": "Cooling distribution units (CDUs)"
+      },
+      {
+        "id": "G5",
+        "kind": "other",
+        "name": "Liquid cooling system"
+      },
+      {
+        "id": "G6",
+        "kind": "other",
+        "name": "Service substation for utility connection"
+      },
+      {
+        "id": "G7",
+        "kind": "other",
+        "name": "Medium-voltage switchgear"
+      },
+      {
+        "id": "G8",
+        "kind": "other",
+        "name": "Energy storage system"
+      },
+      {
+        "id": "G9",
+        "kind": "other",
+        "name": "Backup generation system"
+      },
+      {
+        "id": "G10",
+        "kind": "other",
+        "name": "Compute system with GPU and CPU partitions"
+      },
+      {
+        "id": "G11",
+        "kind": "other",
+        "name": "Control-plane network"
+      },
+      {
+        "id": "G12",
+        "kind": "other",
+        "name": "Storage system"
+      }
+    ]
+  },
+  "task": "configurator_groups"
+}
