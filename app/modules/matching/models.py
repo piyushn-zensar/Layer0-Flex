@@ -21,7 +21,7 @@ class Match(Base):
     confidence: Mapped[float] = mapped_column(default=0.0)
     rationale: Mapped[str] = mapped_column(Text, default="")
     evidence: Mapped[list] = mapped_column(JSON, default=list)   # retrieved catalog / past-response hits
-    method: Mapped[str] = mapped_column(String(20), default="agent")  # agent | retrieval_only | manual
+    method: Mapped[str] = mapped_column(String(20), default="agent")  # agent | retrieval_only | rule | manual | routed (the bid manager, P-44)
     status: Mapped[str] = mapped_column(String(12), default="proposed")  # proposed | accepted | rejected
     decided_by: Mapped[str | None] = mapped_column(String(80))
     created_at: Mapped[datetime] = mapped_column(default=utcnow)

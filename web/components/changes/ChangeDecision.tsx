@@ -44,7 +44,7 @@ function DecisionForm({ setId, item, onDone, onCancel, tour = false }:
       onSubmit={(e) => { e.preventDefault(); confirm(new FormData(e.currentTarget)); }}>
       <label>Change <select value={kind} onChange={(e) => setKind(e.target.value as ChangeKind)} data-tour={t("chg-decide-kind")}>
         {(Object.keys(KINDS) as ChangeKind[]).map((k) => <option key={k} value={k}>{KINDS[k]}</option>)}</select></label>
-      {needsTarget && <label>Baseline requirement <select value={target} onChange={(e) => setTarget(e.target.value)} data-tour={t("chg-decide-target")}>
+      {needsTarget && <label>Frozen requirement <select value={target} onChange={(e) => setTarget(e.target.value)} data-tour={t("chg-decide-target")}>
         {options.map((c) => <option key={c.req_id} value={c.req_id}>{c.req_id} — {short(c.text)}</option>)}
         <option value={OTHER}>Another requirement ID…</option></select></label>}
       {needsTarget && target === OTHER && <label>Requirement ID <input name="other" required maxLength={20} placeholder="REQ-…" aria-invalid={error ? true : undefined} data-tour={t("chg-decide-other")} /></label>}

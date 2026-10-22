@@ -25,7 +25,8 @@ def test_schedule_and_approvals():
                       headers=auth("crown.pm")).status_code == 403
     assert client.put(f"{base}/schedule", json={"due_date": "2026-11-20", "consolidation_days": 3}).status_code == 200
 
-    date = {"estimated_completion": "2026-11-10", "note": "drawings after the kick-off"}
+    date = {"estimated_completion": "2026-11-10", "note": "drawings after the kick-off",  # + the five factors (P-47)
+            "factors": [{"factor": f, "status": "ok"} for f in ("people", "skills", "capacity", "materials", "cost")]}
     assert client.put(f"{base}/units/CROWN/completion", json=date, headers=auth("crown.de")).status_code == 403  # not the manager
     assert client.put(f"{base}/units/CROWN/completion", json=date, headers=auth("ep2.pm")).status_code == 403   # another unit
     assert client.put(f"{base}/units/JETCOOL/completion", json=date, headers=auth("jetcool.pm")).status_code in (200, 409)

@@ -54,7 +54,8 @@ from app.modules.knowledge.sources import (  # noqa: F401  (public contract)
 from app.modules.requirements import service as requirements
 from app.modules.workpackages import service as workpackages
 
-COMPLIANCE_WORDS = {"met": "Met", "partial": "Partially met", "not_met": "Not met", "exception": "Exception"}
+COMPLIANCE_WORDS = {"met": "Met", "partial": "Partially met", "not_met": "Not met", "exception": "Exception",
+                    "deviation": "Met with changes"}
 REVIEWED_BY = "a unit's manager or designer / engineer for its answers; the bid manager for bid-level items"
 
 

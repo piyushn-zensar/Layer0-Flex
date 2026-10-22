@@ -60,7 +60,7 @@ def test_exports_name_the_addendum():
     text = client.get(f"/api/bids/{opp}/compliance-matrix.csv").text.lstrip("﻿")
     table = list(_csv.reader(io.StringIO(text)))
     head, body = table[0], table[1:]
-    assert head[:2] == ["Requirement ID", "Source"] and len(head) == 18  # 14 columns + J-11's Reason, Conditions, Workaround, Next Steps
+    assert head[:2] == ["Requirement ID", "Source"] and len(head) == 18  # 14 columns + J-11's Reason, Conditions, Proposed change, Next Steps
     sources = {r[0]: r[1] for r in body}
     assert sources[breaker] == named and all(sources[k] == v for k, v in changed.items())
     assert all(sources[k] == v for k, v in main.items())  # unchanged for the main RFP

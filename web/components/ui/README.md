@@ -35,6 +35,10 @@ Foundation (globals.css). Old names stay; "new" marks what was added in this pas
 | Utilities | `.row` (flex, wraps), `.stack` (column), `.grid-2`, `.right` (push right), `.text-right`, `.nowrap`, `.truncate`, `.sr-only`, `.per-req` (320px scroll box for long lists) |
 | Shell | `.topbar`, `.brand` + `.brand-mark` + `.brand-sub`, `.topnav a.active`, `.topbar-right`, `.actor`; `.opp-head`, `.stepper li.done/.current`, `.step-no`, `.step-later` (Changes, same anatomy as a step) |
 
+Under 640px a `table.stack-sm` becomes one card per row: give each `td` a `data-label` (its column name); a cell without one heads
+the card. `<ChangeGate done canChange label>` shows a done step's recorded state: the form folds behind "Change…" for the
+person who may change it and disappears for anyone else.
+
 Responsive: under 1100px the three trace panes stack, the top bar wraps onto two rows, the stepper wraps, and any
 `table` that is a direct child of `.content`, `.card` or `.form` scrolls sideways inside its box. Use `.table-scroll` for
 a table elsewhere. Under 640px the gutter is 16px.

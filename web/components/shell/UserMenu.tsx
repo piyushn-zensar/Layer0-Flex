@@ -9,7 +9,7 @@ export default function UserMenu() {
     <div className="actor" data-tour="shell-actor">
       <div className="actor-id" aria-live="polite">
         <strong>{me?.name ?? "…"}</strong>
-        {me && <span>{me.role_label} · {me.bu ?? "No unit"}</span>}
+        {me && <span>{me.role_label}{me.bu && ` · ${me.bu}`}</span>}
       </div>
       <button type="button" className="secondary sm" onClick={() => signOut()}>Sign out</button>
     </div>

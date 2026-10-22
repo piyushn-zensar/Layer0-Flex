@@ -1,5 +1,6 @@
 // Shared UI primitives (plain React + globals.css, no dependencies). See README.md in this folder.  Owner: Janvia.
 export { default as Alert } from "./Alert";
+export { default as ChangeGate } from "./ChangeGate";
 export type { AlertKind } from "./Alert";
 export { default as ConfirmDialog, useConfirm } from "./ConfirmDialog";
 export type { ConfirmProps } from "./ConfirmDialog";

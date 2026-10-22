@@ -24,7 +24,7 @@
 /* Inbox: link row, response column wide enough for the answer form, status column fixed */
 .inbox-links { margin-bottom: var(--s3); row-gap: var(--s2); }
 .inbox-sep { flex-basis: 100%; height: 0; }
-.inbox th:nth-child(1) { width: 120px; } .inbox th:nth-child(3) { width: 32%; } .inbox th:nth-child(4) { width: 190px; }
+.inbox th:nth-child(1) { width: 120px; } .inbox td.mono { white-space: nowrap; } .inbox th:nth-child(3) { width: 32%; } .inbox th:nth-child(4) { width: 190px; }
 .inbox .form.compact .alert { margin: 0 0 var(--s1); font-size: var(--fs-sm); }
 .inbox-return, .inbox-validate { margin-top: var(--s2); }
 .inbox-return textarea { width: 100%; }

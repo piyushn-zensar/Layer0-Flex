@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BID_MANAGER_ONLY, api, errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
-import { DOC_TYPES, coverageLabel, docTypeLabel, snapshotName, type Coverage, type Doc, type Opportunity, type Snapshot } from "@/lib/types";
+import { DOC_TYPES, coverageLabel, docTypeLabel, formatDate, readSummary, snapshotName, statusLabel, type Coverage, type Doc, type Opportunity, type Snapshot } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, Skeleton, StatusBadge, useToast } from "@/components/ui";
 
@@ -18,6 +18,10 @@ export default function DocumentsPage() {
   const toast = useToast();
   const { data, error, reload } = useApi<{ opportunity: Opportunity; documents: Received[] }>(`/api/bids/${id}`);
   const { data: snapshots } = useApi<Snapshot[]>(`/api/bids/${id}/extraction`);
+  const { data: bids } = useApi<{ opp: { id: string }; requirements: number }[]>("/api/portfolio"); // the register's size
+  // C-37: saved Requirement Traceability views of a bundled sample RFP (Syracuse: the power electronics requirements)
+  const { data: samples } = useApi<{ samples: { filename: string; views?: { label: string; query: string }[] }[] }>("/api/samples");
+  const views = samples?.samples.find((s) => data?.documents.some((d) => d.role === "main" && d.filename === s.filename))?.views ?? [];
   const bm = isBidManager(useMe()); // uploading and reading are the bid manager's (section 16.6)
   const readBefore = (snapshots?.length ?? 0) > 0; // a snapshot exists: reading again needs a reason (E2, E3...)
   const [busy, setBusy] = useState("");
@@ -58,8 +62,8 @@ export default function DocumentsPage() {
     setBusy("Reader agent running… (about a minute for a 100-page RFP)"); setMessage(undefined);
     try {
       const r = await post<{ proposed: number; problems: string[]; snapshot?: number; exceptions?: number; frozen?: number | null; not_frozen?: string }>(`/api/bids/${id}/requirements/extract`, reason ? { reason } : {});
-      const saved = (r.snapshot ? ` Saved as extraction snapshot ${snapshotName(r.snapshot)}${r.exceptions !== undefined ? `; ${r.exceptions} exception${r.exceptions === 1 ? "" : "s"}` : ""}.` : "")
-        + (r.frozen ? ` Frozen automatically as baseline ${r.frozen} (P-32).` : r.not_frozen ? ` Not frozen: ${r.not_frozen}` : "");
+      const saved = (r.snapshot ? ` Saved as ${snapshotName(r.snapshot)}${r.exceptions !== undefined ? `; ${r.exceptions} ${r.exceptions === 1 ? "needs" : "need"} a source check` : ""}.` : "")
+        + (r.frozen ? ` Frozen automatically as version ${r.frozen}.` : r.not_frozen ? ` Not frozen: ${r.not_frozen}` : "");
       window.dispatchEvent(new Event("opp-status-changed")); // the stepper and status badge follow the freeze
       if (r.problems.length) setMessage({ text: `${r.proposed} line items proposed.${saved} Some pages were not read:`, problems: r.problems });
       else { if (saved) toast.success(`${r.proposed} line items proposed.${saved}`); router.push(`/opportunities/${id}/trace`); }
@@ -79,11 +83,12 @@ export default function DocumentsPage() {
     try {
       const b = await post<{ number: number }>(`/api/bids/${id}/requirements/freeze`, { reason });
       window.dispatchEvent(new Event("opp-status-changed"));
-      toast.success(`Frozen as baseline ${b.number}; the pages not read stay open questions.`); router.push(`/opportunities/${id}/trace`);
+      toast.success(`Frozen as version ${b.number}; the pages not read stay open questions.`); router.push(`/opportunities/${id}/trace`);
     } catch (e) { fail(e); } finally { setBusy(""); }
   }
   const started = !!data && !canRead; // UX-17: once review has started the upload form is secondary
-  const received = (d: Received) => d.received_at ? new Date(d.received_at).toLocaleDateString() : "";
+  const received = (d: Received) => formatDate(d.received_at, true);
+  const read = data?.documents.some((d) => d.role === "main" && d.status === "ingested");
 
   const form = (
     <form className={started ? "form" : "card form"} onSubmit={upload} aria-busy={!!busy} data-tour="rfp-upload-form">
@@ -97,7 +102,8 @@ export default function DocumentsPage() {
   return (
     <>
       <PageHead level={2} title="RFP documents"
-        help={`${data?.opportunity.customer || "Customer not set"} · ${data?.opportunity.customer_type || "customer type not set"}. Upload the RFP, then let the reader agent break it into requirements.`} />
+        help={`${data?.opportunity.customer || "Customer not set"} · ${data?.opportunity.customer_type || "customer type not set"}. ${read ? "The RFP has been read into requirements; add an addendum, a clarification or a change request below."
+          : "Upload the RFP, then let the reader agent break it into requirements."}`} />
       <Alert kind="error">{error}</Alert>
       {earlier && <Alert kind="warn" onClose={() => setEarlier(undefined)}><p>An earlier version of this document ({earlier.filename}) is
         already in bid <Link href={`/opportunities/${earlier.bid}`}>{earlier.bid}: {earlier.title}</Link>. This newer version was not stored here;
@@ -105,13 +111,15 @@ export default function DocumentsPage() {
       {message && <Alert kind="error" onClose={() => setMessage(undefined)}><p>{message.text}</p>
         {message.problems && <ul>{message.problems.map((p) => <li key={p}>{p}</li>)}</ul>}</Alert>}
       {!data && !error && <Skeleton lines={3} />}
+      {views.length > 0 && <p data-tour="rfp-saved-views">Focus: {views.map((v, i) => <span key={v.query}>{i > 0 && " · "}
+        <Link href={`/opportunities/${id}/trace?${v.query}`}>{v.label}</Link></span>)}</p>}
       {data && (
         <table className="docs" data-tour="rfp-docs-table">
           <thead><tr><th>File</th><th>Document type</th><th className="num">Pages</th><th>Status</th><th>Received</th></tr></thead>
           <tbody>
             {data.documents.map((d) => (
               <tr key={d.id} data-tour={d.role === "main" ? "rfp-doc-main" : `rfp-doc-${d.id}`}><td>{d.filename}</td><td>{docTypeLabel(d.role)}</td><td className="num">{d.page_count}</td>
-                <td data-tour={d.role === "main" ? "rfp-doc-status" : undefined}><StatusBadge status={d.status} /></td>
+                <td data-tour={d.role === "main" ? "rfp-doc-status" : undefined}><StatusBadge status={d.status} label={statusLabel(d.status)} /></td>
                 <td title={`SHA-256 ${d.sha256}`} data-tour={d.role === "main" ? "rfp-doc-received" : undefined}>{received(d) || <span className="mono">{d.sha256.slice(0, 12)}</span>}</td></tr>
             ))}
             {data.documents.length === 0 && <tr><td colSpan={5} className="muted">No documents yet. Upload the RFP below.</td></tr>}
@@ -136,11 +144,12 @@ export default function DocumentsPage() {
               {found.passages.length === 0 && <li className="muted">Nothing found.</li>}</ol>
           </div>)}
         </section>)}
-      {snapshots?.[0]?.coverage && <ReadCoverage name={snapshotName(snapshots[0].number)} c={snapshots[0].coverage} />}
+      {snapshots?.[0]?.coverage && <ReadCoverage name={snapshotName(snapshots[0].number)} c={snapshots[0].coverage}
+        requirements={bids?.find((b) => b.opp.id === id)?.requirements} />}
       {data && (canRead ? (<div className="row" data-tour="rfp-extract-row">
         {readBefore ? (
           <form className="form" data-tour="rfp-reread-form" onSubmit={(e) => { e.preventDefault(); const reason = String(new FormData(e.currentTarget).get("reason")).trim(); if (reason) extract(reason); }}>
-            <label>Why read the RFP again? <span className="field-hint">(the earlier snapshots are kept)</span> <input name="reason" required maxLength={500} disabled={!!busy} /></label>
+            <label>Why read the RFP again? <span className="field-hint">(the earlier readings are kept)</span> <input name="reason" required maxLength={500} disabled={!!busy} /></label>
             <button disabled={!!busy || !!unread || !bm} title={bm ? "" : BID_MANAGER_ONLY} data-tour="rfp-extract">Read again</button>
           </form>
         ) : <button disabled={!!busy || !!unread || !bm} title={bm ? "" : BID_MANAGER_ONLY} onClick={() => extract()} data-tour="rfp-extract">Run the reader agent → requirements</button>}
@@ -157,15 +166,15 @@ export default function DocumentsPage() {
 }
 
 // What the last read covered (C-03): the pages and the candidates each add up, so nothing is silently left out.
-function ReadCoverage({ name, c }: { name: string; c: Coverage }) {
+function ReadCoverage({ name, c, requirements }: { name: string; c: Coverage; requirements?: number }) {
   const sum = (total: string, parts: string[]) => `${c[total]} ${coverageLabel(total)} = ` + parts.map((k) => `${c[k] ?? 0} ${coverageLabel(k)}`).join(" + ");
   const pages = ["pages_read", "pages_failed", "pages_skipped", "pages_unreadable"];
   return (
     <section className="card" data-tour="rfp-coverage">
-      <div className="card-head"><h2>What the reader covered</h2><span className="muted">Extraction snapshot {name}</span></div>
+      <div className="card-head"><h2>What the reader covered</h2><span className="muted">{name}</span></div>
       {"pages_read" in c
         ? <p>{sum("pages", pages)}{c.chunks_failed ? ` (${c.chunks_failed} of ${c.chunks} ${coverageLabel("chunks")} failed)` : ""}</p>
         : <p className="muted">{c.pages} pages (read before page coverage was recorded)</p>}
-      <p>{sum("candidates", ["admitted", "exceptions", "duplicates"])}{c.groups ? `; ${c.groups} ${coverageLabel("groups")}` : ""}</p>
+      <p>{readSummary(c, requirements)}</p>
     </section>);
 }

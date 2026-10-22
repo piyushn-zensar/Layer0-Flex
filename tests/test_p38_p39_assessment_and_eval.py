@@ -1,6 +1,6 @@
-"""P-38 (C-23): the executive summary's assessment keeps domain alignment, product-evidence coverage, specialist-review
-progress and preliminary feasibility apart, each with the requirements it counts, reads product evidence from the
-latest assessment run, and is never a probability. P-39 (C-29 point 8): the RAG evaluation runs and its passing
+"""P-38 (C-23), P-43 (C-39): the Assessment Summary keeps technical requirement match, reviewed by design engineers and
+specialist review progress apart, each with the requirements it counts, reads product evidence from the latest
+assessment run for the evidence gaps, and is never a probability. P-39 (C-29 point 8): the RAG evaluation runs and its passing
 measures do not regress."""
 import json
 import os
@@ -24,12 +24,13 @@ def test_assessment_score_measures_and_gaps():
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     s = client.get(f"/api/bids/{opp}/assessment-score").json()
     m = s["measures"]
-    assert s["run"] is None and m["product_evidence"]["n"] is None and s["technical"] > 0
-    assert m["domain_alignment"]["n"] == len(m["domain_alignment"]["req_ids"]) <= m["domain_alignment"]["of"] == s["technical"]
+    assert s["run"] is None and set(m) == {"technical_match", "engineer_reviewed", "review_progress"} and s["technical"] > 0
+    assert m["technical_match"]["n"] == len(m["technical_match"]["req_ids"]) <= m["technical_match"]["of"] == s["technical"]
     assert m["review_progress"]["n"] <= m["review_progress"]["of"] and "not a probability" in s["note"]
-    assert all(g["req_ids"] for g in s["gaps"]) and "formula" in m["preliminary_feasibility"]
+    assert all(g["req_ids"] for g in s["gaps"])
+    assert m["technical_match"]["label"] == "Technical requirement match" and all("exception queue" not in g["label"] for g in s["gaps"])  # P-42 plain words
 
-    first = next(r for r in m["domain_alignment"]["req_ids"])
+    first = m["technical_match"]["req_ids"][0]
     text = next(r["req"]["text"] for r in client.get(f"/api/bids/{opp}/trace").json()["rows"] if r["req"]["req_id"] == first)
     note = Path(tempfile.mkdtemp()) / "datasheet.md"
     note.write_text(f"# Datasheet\n{text}\n", "utf-8")
@@ -38,9 +39,7 @@ def test_assessment_score_measures_and_gaps():
         k.review_source(db, src.ks_id, True, "verified", "Crown Product Manager", "product_manager")
     assert client.post(f"/api/bids/{opp}/reassessments", json={"reason": "datasheet reviewed"}).status_code == 200
     s = client.get(f"/api/bids/{opp}/assessment-score").json()
-    m = s["measures"]
-    assert s["run"] == 1 and first in m["product_evidence"]["req_ids"] and m["product_evidence"]["n"] >= 1
-    assert m["preliminary_feasibility"]["n"] is not None and m["preliminary_feasibility"]["n"] <= s["technical"]
+    assert s["run"] == 1
     gap = {g["kind"]: g["req_ids"] for g in s["gaps"]}
     assert first not in gap.get("no_product_evidence", [])
     assert client.get("/api/bids/OPP-9999/assessment-score").status_code == 404

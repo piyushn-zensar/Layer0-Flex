@@ -115,7 +115,7 @@ export default function ActivityPage() {
           hint={filtering ? "Clear a filter to see more." : "Every action on the bid is recorded here as it happens."} />
       ) : (
         <div className="table-scroll">
-          <table className="act-table" data-tour="act-table">
+          <table className="act-table stack-sm" data-tour="act-table">
             <caption className="sr-only">Activity log of {id}, newest first</caption>
             <thead><tr><th>When</th><th>Who</th><th>What</th><th>Subject</th><th>Details</th></tr></thead>
             <tbody>
@@ -126,12 +126,12 @@ export default function ActivityPage() {
                 return (
                   <tr key={e.id}>
                     <td className="act-when">{when(e.at)}</td>
-                    <td>{e.actor}</td>
-                    <td>{what(e)}</td>
-                    <td><span className="tag">{entityLabel(e.entity)}</span>{" "}
+                    <td data-label="Who">{e.actor}</td>
+                    <td data-label="What">{what(e)}</td>
+                    <td data-label="Subject"><span className="tag">{entityLabel(e.entity)}</span>{" "}
                       {isReq ? <Link className="mono" href={`/opportunities/${id}/trace#${e.entity_id}`} title="Open in Traceability">{e.entity_id}</Link> : <span className="mono">{e.entity_id}</span>}
                       {unit && <span className="muted"> · {unit}</span>}</td>
-                    <td className="act-detail">{line ?? <span className="muted">—</span>}
+                    <td className="act-detail" data-label="Details">{line ?? <span className="muted">—</span>}
                       {Object.keys(e.data).length > 0 && (
                         <details className="act-raw"><summary>All data</summary><pre>{JSON.stringify(e.data, null, 1)}</pre></details>)}</td>
                   </tr>

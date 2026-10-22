@@ -1,7 +1,8 @@
 // Walkthrough chapter 8: My work: unit work packages, answers and validation (web/app/inbox, web/app/inbox/[bu]).  Owner: Janvia (J-15).
 // Runs on /inbox/CROWN as "Crown Product Manager" (the unit manager answers the unit's schedule, commercial and staffing
-// items and validates the unit's answers), then back to the bid manager. The first open row of the walkthrough bid is the
-// highlighted one. Roles come from data/knowledge_base/workflow.json.
+// items and validates its designers' / engineers' technical answers), then back to the bid manager, who validates the unit
+// manager's answer (workflow.json, 19 Oct 2026: nobody validates their own answer). The first open row of the walkthrough
+// bid is the highlighted one. Roles come from data/knowledge_base/workflow.json.
 import type { TourChapter, TourCtx } from "../types";
 import { present } from "../helpers";
 
@@ -30,16 +31,23 @@ const rememberRow = (ctx: TourCtx) => {
   const id = Number(ctx.el("inbox-form")?.getAttribute("data-assignment"));
   if (id) ctx.set("inboxAssignment", id);
 };
-const rowStatus = async (ctx: TourCtx) => {
-  const id = ctx.get<number>("inboxAssignment");
+const rowStatus = async (ctx: TourCtx, key = "inboxAssignment") => {
+  const id = ctx.get<number>(key);
   return id ? (await crown(ctx)).find((a) => a.id === id)?.status : undefined;
+};
+/** Remember the row whose Validate is lit: the first submitted row of the bid, which on the demo bid can be an answer
+ * submitted before the walkthrough rather than the one just submitted. Its first cell reads "OPP-xxxxREQ-xxxx-xxxx". */
+const rememberValidate = async (ctx: TourCtx) => {
+  const m = ctx.el("inbox-validate")?.closest("tr")?.querySelector("td")?.textContent?.match(/(OPP-\d+)\s*(REQ-\d+-\d+)/);
+  const row = m && (await crown(ctx)).find((a) => a.opportunity_id === m[1] && a.req_id === m[2]);
+  if (row) ctx.set("inboxValidate", row.id);
 };
 
 const chapter: TourChapter = {
   id: "inbox",
   order: 8,
   title: "My work: unit answers and validation",
-  summary: "My work and the unit work packages: sign in as Crown's unit manager, answer a requirement, submit and validate it, see the completion dates and Knowledge review, and download the unit's hand-off file.",
+  summary: "My work and the unit work packages: sign in as Crown's unit manager, give the unit's delivery estimate and its five factors, answer a requirement with one of the four outcomes and submit it, then validate it as the bid manager, and download the unit's hand-off file.",
   entryRoute: "/inbox/BID",
   steps: [
     {
@@ -51,7 +59,7 @@ const chapter: TourChapter = {
       fallback: "The bid desk lists the items no unit takes; it is empty until a bid has been sent to the units.",
       body: [
         "**My work** opens the work of the signed-in person: a unit's people land on their unit's work package, the **Bid Manager** on the **bid desk** (`/inbox/BID`). A work package is one unit's items across every bid, ordered by bid then requirement.",
-        "The bid desk holds the high-level, consolidated items answered once for the whole bid: on Syracuse the **73** submission and legal requirements. The bid manager answers and validates those personally. The units hold the rest: technical items for their designers / engineers, schedule, commercial and staffing items for their unit managers.",
+        "The bid desk holds the high-level, consolidated items answered once for the whole bid: on Syracuse the **73** submission and legal requirements, plus any recorded capability gaps. The bid manager answers and validates those personally. The units hold the rest: technical items for their designers / engineers, schedule, commercial and staffing items for their unit managers.",
       ],
     },
     {
@@ -64,7 +72,7 @@ const chapter: TourChapter = {
       instruction: "Sign out in the top bar and sign in as crown.pm, or press Use example.",
       skipIf: (ctx) => ctx.actor === CROWN_PM,
       body: [
-        "Each person signs in; **Sign out** in the top bar leads to the sign-in page. The sign-in token travels in a cookie with every request, the server records the signed-in name on every event and enforces the role rules from `workflow.json`: a unit's **designers / engineers** answer its technical items, its **unit manager** answers the other items and **validates** the unit's answers, and the **bid manager** may return any answer with a question.",
+        "Each person signs in; **Sign out** in the top bar leads to the sign-in page. The sign-in token travels in a cookie with every request, the server records the signed-in name on every event and enforces the role rules from `workflow.json`: a unit's **designers / engineers** answer its technical items and its **unit manager** validates them; the unit manager answers the other items and the **bid manager** validates those, so nobody validates their own answer. The bid manager may also return any answer with a question.",
         "Crown Product Manager is Crown Technical Systems' **Unit manager**. Reading is open to everyone; writing is tied to the role and the unit.",
       ],
       example: { label: "Sign in as Crown Product Manager", apply: (ctx) => ctx.signInAs("crown.pm") },
@@ -72,13 +80,14 @@ const chapter: TourChapter = {
     },
     {
       id: "inbox-completion",
-      title: "Your unit's completion dates",
+      title: "Your unit's delivery estimates",
       route: "/inbox/CROWN",
       target: "inbox-completion",
       placement: "bottom",
-      fallback: "The unit manager sees one row per bid with a date field for the unit's estimated completion.",
+      fallback: "The unit manager sees one row per bid with the unit's estimate and its five delivery factors.",
       body: [
-        "The unit manager states **when the unit expects to finish each bid**: a date and an optional note, saved per bid. The bid manager plans the submission from these dates on the Assessment page, which warns when the planned date falls after the RFP's due date.",
+        "This is **delivery feasibility from the team**. The unit manager states **when the unit expects to finish each bid** and reports five factors that could limit delivery: **people, skills, manufacturing capacity, materials and cost**, each *No constraint* or *Constraint* with a note on what limits delivery (the note is required for a constraint). Technical feasibility is the designers' / engineers' answers.",
+        "The bid manager accepts these estimates on the Assessment Summary, which shows each unit's constraints and warns when the planned date falls after the RFP's due date; the units set the dates, not the bid manager, and no resource plan is needed.",
       ],
     },
     {
@@ -100,7 +109,7 @@ const chapter: TourChapter = {
       target: "inbox-units",
       placement: "bottom",
       body: [
-        "The chips switch between work packages: the bid desk and each unit with work, with a count of answers waiting for validation. Anyone can read a package; only its own people act on it, and a blue banner says so when you are only reading.",
+        "The chips switch between work packages, with a count of answers waiting for the signed-in person's validation. A unit's people see only their own unit here; the bid manager and the administrator see the bid desk and every unit with work. Only a package's own people act on it, and a blue banner says so when you are only reading.",
       ],
     },
     {
@@ -112,7 +121,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       fallback: "Above the table: one button per bid to open its RFP and, for a unit, one hand-off download per bid.",
       body: [
-        "**Open the RFP** has one button per bid; it opens that bid's Requirement Traceability page, where the unit reads the requirement next to the highlighted lines of the PDF. **Hand-off for this unit's systems** downloads a JSON of the unit's items grouped into routes for its own tools (explained at the end of the chapter).",
+        "**Open the RFP** has one button per bid; it opens that bid's Requirement Traceability page, where the unit reads the requirement next to the highlighted lines of the PDF. **Download hand-off file** (one button per bid) downloads a JSON of the unit's items grouped into routes for its own tools (explained at the end of the chapter).",
       ],
     },
     {
@@ -143,10 +152,10 @@ const chapter: TourChapter = {
       target: "inbox-form",
       placement: "left",
       onEnter: rememberRow,
-      fallback: "Each row you may answer carries a compact form: a compliance select, a product field and a \"How it is met\" text box.",
+      fallback: "Each row you may answer carries a compact form: a compliance select, the proposed solution and a \"How it is met\" text box.",
       body: [
-        "**Compliance** is **Fully compliant**, **Partially compliant** or **Non-compliant**; it is what the compliance matrix is built from, so choose it honestly. **Product / configuration** is pre-filled from the match when there is one. **How it is met** is the answer in the unit's words.",
-        "For partial or non-compliant answers a **Reason** (what is not met and why) is **required**; **Conditions**, **Workaround** and **Next steps** are optional and appear in the matrix and its exports. The highlighted row is the first open row of the bid (`REQ-0001-0001`, the submission deadline). **Use example** fills a plausible answer.",
+        "**Compliance** has four outcomes: **Compliant**, **Partially compliant**, **Compliant with changes** (a deviation from the requested specification) or **Non-compliant**. It is what the compliance matrix and the go/no-go are built from, so choose it honestly. For a technical item, the **Proposed solution** (unit · solution area, with example models) is shown above the answer; say in **How it is met** which configuration you offer. **How it is met** is the answer in the unit's words.",
+        "Unless the answer is Compliant, a **Reason** (what is not met or what changes, and why) is **required**; for Compliant with changes the **Proposed change** is required too; **Conditions** and **Next steps** are optional and appear in the matrix and its exports. The highlighted row is the first open row of the bid that the unit manager may answer (a schedule, commercial or staffing item). **Use example** fills a plausible answer.",
       ],
       example: {
         label: "Fill an example answer",
@@ -154,7 +163,7 @@ const chapter: TourChapter = {
           rememberRow(ctx);
           setValue(field(ctx, "inbox-compliance"), "met");
           setValue(field(ctx, "inbox-response"),
-            "Met. Crown Technical Systems will meet the submission dates in the RFP; the unit's estimated completion date is entered under Your unit's completion dates.");
+            "Compliant. Crown Technical Systems will meet the dates in the RFP; the unit's estimate and delivery factors are entered under Your unit's delivery estimates.");
         },
       },
     },
@@ -185,7 +194,7 @@ const chapter: TourChapter = {
       placement: "top",
       fallback: "The submitted row now shows the compliance in bold, the text and a blue \"submitted\" badge.",
       body: [
-        "The row shows the compliance in bold and the explanation, with a **submitted** badge. On the Bids screen the Crown bar gained a blue \"awaiting validation\" segment. Nothing else moves until the unit manager validates it: the compliance matrix and the exports treat an answer as the unit's position only once it is **validated**.",
+        "The row shows the compliance in bold and the explanation, with a **submitted** badge. On the Bids screen the Crown bar gained a blue \"awaiting validation\" segment. Nothing else moves until it is validated (here by the bid manager, because the unit manager gave it): the compliance matrix and the exports treat an answer as the unit's position only once it is **validated**.",
       ],
     },
     {
@@ -211,20 +220,36 @@ const chapter: TourChapter = {
       ],
     },
     {
+      id: "inbox-switch-bm",
+      title: "Back to the bid manager to validate",
+      route: "/inbox/CROWN",
+      target: "inbox-table",
+      placement: "top",
+      kind: "action",
+      instruction: "Sign out and sign in again as bid.manager, or press Use example.",
+      skipIf: (ctx) => ctx.actor === BM,
+      body: [
+        "Nobody validates their own answer. A unit manager's schedule, commercial or staffing answer is validated by the **bid manager**; a designer's / engineer's technical answer by the **unit manager**. Sign in again as the Bid Manager to validate the unit manager's submitted answers. The next chapters are the bid manager's too: the compliance matrix, the activity log, the catalog and changes.",
+      ],
+      example: { label: "Sign in as Bid Manager", apply: (ctx) => ctx.signInAs("bid.manager") },
+      done: (ctx) => ctx.actor === BM,
+    },
+    {
       id: "inbox-validate",
       title: "Validate the answer",
       route: "/inbox/CROWN",
       target: "inbox-validate",
       placement: "left",
       kind: "action",
-      instruction: "Press Validate on the submitted row (as the unit manager).",
-      fallback: "Submitted rows show Validate and Return in the Status column for the unit manager.",
+      onEnter: rememberValidate,
+      instruction: "Press Validate on the highlighted row (as the bid manager): the first answer of this bid waiting for validation, on the demo bid possibly one given before yours.",
+      fallback: "Submitted rows show Validate and Return in the Status column to the person who validates them: the bid manager for the unit manager's answers, the unit manager for technical answers.",
       body: [
-        "In this workflow the **unit manager validates** the unit's answers: **Validate** marks the answer as the unit's position for this bid (status **validated**, with the validator's name). From then on it counts in the green segment of the Bids bar, in the compliance matrix and its exports, and can be nominated as a reviewed example.",
-        "Validation checks substance: is the claim defensible against the quote, is the product right. A doubtful answer is **returned**.",
+        "**Validate** marks the answer as the unit's position for this bid (status **validated**, with the validator's name). The bid manager validates the unit manager's answers, as here; the unit manager validates the designers' / engineers' technical answers, which is what **Reviewed by design engineers** on the Assessment Summary counts. From then on the answer counts in the green segment of the Bids bar, in the compliance matrix and its exports, in the reviewed compliance outcomes of the Bid decision, and can be nominated as a reviewed example.",
+        "Validation checks substance: is the claim defensible against the quote, is the outcome right, is the proposed solution or the proposed change right. A doubtful answer is **returned**.",
       ],
       done: async (ctx) => {
-        const s = await rowStatus(ctx);
+        const s = (await rowStatus(ctx, "inboxValidate")) ?? (await rowStatus(ctx));
         if (s) return s === "validated";
         return ctx.el("inbox-validate") === null;
       },
@@ -237,23 +262,8 @@ const chapter: TourChapter = {
       placement: "left",
       fallback: "While a row is submitted, Return opens a note box next to Validate; with no submitted rows left there is nothing to return.",
       body: [
-        "**Return** opens a note box; the note is **required** and the unit sees it. The row goes back to **returned**, reopens for the unit with the note above its form, and counts as open again. The **bid manager** can also return any answer with a **question**, without validating it, which is how a bid-level question reaches a unit; questions and comments stay on the row until closed.",
+        "**Return** (next to Validate, for the person who validates) opens a note box; the note is **required** and the unit sees it. The row goes back to **returned**, reopens for the unit with the note above its form, and counts as open again. The **bid manager** can also return any answer with a **question**, without validating it, which is how a bid-level question reaches a unit; questions and comments stay on the row until closed.",
       ],
-    },
-    {
-      id: "inbox-switch-bm",
-      title: "Back to the bid manager",
-      route: "/inbox/CROWN",
-      target: "inbox-table",
-      placement: "top",
-      kind: "action",
-      instruction: "Sign out and sign in again as bid.manager, or press Use example.",
-      skipIf: (ctx) => ctx.actor === BM,
-      body: [
-        "The next chapters are the bid manager's: the compliance matrix, the activity log, the catalog and changes. Sign in again as the Bid Manager.",
-      ],
-      example: { label: "Sign in as Bid Manager", apply: (ctx) => ctx.signInAs("bid.manager") },
-      done: (ctx) => ctx.actor === BM,
     },
     {
       id: "inbox-handoff",
@@ -264,7 +274,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       skipIf: (ctx) => !present("inbox-links")(ctx),
       body: [
-        "The **hand-off** buttons download one JSON per unit and bid: the bid, the unit, the go/no-go decision, `stated_facts` (ratings read from the requirements, each citing its REQ) and the unit's items grouped into three routes: a **CPQ seed** for configure-to-order products, a **basis of design** for semi-custom ones and a **specialist queue** for engineered-to-order work. Each item carries its source, quote, product, offering type, engineering flags and the unit's answer with its status.",
+        "The **hand-off** buttons download one JSON per unit and bid: the bid, the unit, the go/no-go decision, `stated_facts` (ratings read from the requirements, each citing its REQ) and the unit's items grouped into three routes: a **CPQ seed** for configure-to-order products, a **basis of design** for semi-custom ones and a **specialist queue** for engineered-to-order work. Each item carries its source, quote, proposed solution (unit · solution area, example models; the catalog family ID is kept for the unit's systems), type of offer, engineering flags and the unit's answer with its status.",
         "The file says `requires_human_completion: true`: Layer 0 seeds the configurator and briefs engineering; it does not configure or design anything. It is regenerated from the current data on every download.",
       ],
     },

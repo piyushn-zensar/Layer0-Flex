@@ -3,16 +3,16 @@
 // The filters live in the page address of each window and travel between windows as `filters` messages (channel.ts).  Owner: Janvia.
 // 19 Oct client review: each dropdown lists only the values this bid has, narrowed by the other filters, with how many
 // requirements each would show; a dropdown that cannot narrow anything is left out; the labels say what they filter.
-import { complianceLabel } from "@/lib/types";
+import { TERMS, categoryLabel, complianceLabel } from "@/lib/types";
 import { RESPONSES, SORTS, facets, type Facet, type FilterKey } from "@/components/requirements/filters"; // A-27 (Atharv)
 import { useWorkspace } from "./TraceWorkspace";
 
 const LABELS: Record<Facet, [string, Record<string, string>]> = {
   category: ["Category", {}],
-  offering: ["Offering type", { CTO: "CTO (configure to order)", SEMI_CUSTOM: "Semi-custom", ETO: "ETO (engineer to order)", NONE: "Bid desk (no product)", unmatched: "Not matched yet" }],
+  offering: [TERMS.offering_type, { CTO: "CTO (configure to order)", SEMI_CUSTOM: "Semi-custom", ETO: "ETO (engineer to order)", NONE: "Bid desk (no product)", unmatched: "Not matched yet" }],
   unit: ["Business unit", { BID: "Bid desk" }],
   response: ["Unit response", RESPONSES],
-  compliance: ["Unit compliance", { met: complianceLabel("met"), partial: complianceLabel("partial"), not_met: complianceLabel("not_met"), exception: "Exception (earlier value)" }],
+  compliance: ["Unit compliance (any answer)", { met: complianceLabel("met"), partial: complianceLabel("partial"), deviation: complianceLabel("deviation"), not_met: complianceLabel("not_met"), exception: "Exception (earlier value)" }],
   source: ["RFP source check", { verified: "Quote found on the RFP page", not_verified: "Quote not found on the page" }],
   origin: ["Added by", { extraction: "The RFP reader", correction: "A correction", customer_change: "A customer change document" }],
 };
@@ -28,11 +28,11 @@ export default function FilterBar() {
     const options = [...counts[k].entries()].sort(([a], [b]) => a.localeCompare(b));
     // nothing to choose: a single value that every row has (and no choice made) narrows nothing
     if (!f[k] && (options.length === 0 || (options.length === 1 && options[0][1] === d.view.length))) return null;
-    if (f[k] && !counts[k].has(f[k]!)) options.push([f[k]!, 0]);
+    if (f[k] && !counts[k].has(f[k]!)) options.push([f[k]!, f[k]!.includes(",") ? d.view.length : 0]); // a saved several-unit link (C-37)
     return (
       <label key={k}>{label} <select value={f[k] ?? ""} onChange={(e) => ws.setFilter(k, e.target.value)} data-tour={`trace-filter-${k}`}>
         <option value="">Any</option>
-        {options.map(([v, n]) => <option key={v} value={v}>{names[v] ?? v} ({n})</option>)}</select></label>);
+        {options.map(([v, n]) => <option key={v} value={v}>{names[v] ?? (k === "category" ? categoryLabel(v) : v.split(",").join(", "))} ({n})</option>)}</select></label>);
   };
   return (
     <div className="filters trace-filters" role="search" aria-label="Filter and sort the requirements" data-tour="trace-filters">

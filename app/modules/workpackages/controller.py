@@ -11,25 +11,28 @@ from app.core.web import BID_MANAGER, CORRECTORS, actor, require, row, user
 from app.modules.catalog import service as catalog
 from app.modules.requirements import service as requirements
 from app.modules.workpackages import service
-from app.modules.workpackages.models import BID_DESK, NEEDS_REASON, OFFERED
+from app.modules.workpackages.models import BID_DESK, NEEDS_CHANGE, NEEDS_REASON, OFFERED
 
 router = APIRouter(tags=["workpackages"])
 AssignmentId = Path(ge=1, le=2**31 - 1)
 
 
 class RespondIn(BaseModel):
-    compliance: Literal["met", "partial", "not_met"]  # = models.OFFERED; "exception" is no longer offered (16.5)
+    compliance: Literal["met", "partial", "deviation", "not_met"]  # = models.OFFERED; "exception" is no longer offered (16.5)
     product_ref: str = ""
     response: str = ""
-    reason: str = ""       # required for partial and not_met (C-12)
+    reason: str = ""       # required for partial, deviation and not_met (C-12, C-43)
     conditions: str = ""
-    workaround: str = ""
+    workaround: str = ""   # the proposed change: required for deviation (C-43)
     next_steps: str = ""
 
     @model_validator(mode="after")
     def _partial_needs_reason(self):
         if self.compliance in NEEDS_REASON and not self.reason.strip():
-            raise ValueError("Say what is not met and why (reason) for a partially or non-compliant answer.")
+            raise ValueError("Say what is not met or what changes, and why (reason) for a partially compliant, compliant "
+                             "with changes or non-compliant answer.")
+        if self.compliance in NEEDS_CHANGE and not self.workaround.strip():
+            raise ValueError("Say what changes from the requested specification (proposed change) for a compliant-with-changes answer.")
         return self
 
 
@@ -42,6 +45,7 @@ class CommentIn(BaseModel):
 
 class GapIn(BaseModel):
     reason: str
+    response: str = ""  # the text the compliance matrix shows (the reason when empty)
 
 
 class ValidateIn(BaseModel):
@@ -89,7 +93,7 @@ def needs_owner(opp_id: str, db: Session = Depends(get_db)):
 @router.post("/bids/{opp_id}/requirements/{req_id}/capability-gap")
 def capability_gap(opp_id: str, req_id: str, body: GapIn, request: Request, db: Session = Depends(get_db)):
     require(request, BID_MANAGER)  # owned by the bid manager (technical-architecture 16.5)
-    return row(_call(service.record_gap, db, opp_id, req_id, body.reason, actor(request)))
+    return row(_call(service.record_gap, db, opp_id, req_id, body.reason, actor(request), body.response))
 
 
 @router.get("/bids/{opp_id}/handoff/{bu}")
@@ -104,14 +108,19 @@ def inbox(bu: str, request: Request, db: Session = Depends(get_db)):
     if bu != BID_DESK and catalog.unit(bu) is None:
         raise HTTPException(404, f"Unit {bu} not found.")
 
-    questions = Counter(c.req_id for o in {a.opportunity_id for a in service.inbox(db, bu)} for c in service.open_questions(db, o))
-    me = user(request)
+    items = service.inbox(db, bu)
+    bids = {a.opportunity_id for a in items}
+    questions = Counter(c.req_id for o in bids for c in service.open_questions(db, o))
+    parts = {k: v for o in bids for k, v in requirements.parts(db, o).items()}  # a group's approved parts
+    me, refs = user(request), service.solution_refs(db, items)
 
     def item(a):
         req = requirements.get(db, a.req_id)  # None if the requirement was deleted after dispatch
         return row(a) | {"requirement": row(req, "source") if req else None, "open_questions": questions[a.req_id],
-                         "may": service.actions(db, a, me)}  # what the signed-in user may do with this row (C-25)
-    return {"bu": bu, "unit": catalog.unit(bu), "compliance": OFFERED, "items": [item(a) for a in service.inbox(db, bu)]}
+                         "parts": parts.get(a.req_id, []),  # [{req_id, text}]: the group's approved sub-requirements
+                         "may": service.actions(db, a, me),  # what the signed-in user may do with this row (C-25)
+                         "solution": catalog.solution(a.bu, refs[a.id]) if refs[a.id] and a.bu != BID_DESK else None}
+    return {"bu": bu, "unit": catalog.unit(bu), "compliance": OFFERED, "items": [item(a) for a in items]}
 
 
 @router.post("/assignments/{assignment_id}/respond")

@@ -195,6 +195,7 @@ button.link:disabled { background: none; color: var(--muted-2); }
 .chip { background: #fff; color: var(--ink-2); border: 1px solid var(--line-2); font-weight: 500; min-height: 30px; padding: 4px 12px; border-radius: var(--radius-pill); }
 .chip:hover { background: var(--surface-2); }
 .chip span { margin-left: 6px; font-size: var(--fs-xs); color: var(--muted); }
+a.chip { display: inline-flex; align-items: center; flex-wrap: wrap; max-width: 100%; } /* a link chip stays one pill (wraps inside, never across lines) */
 .chip.on, .chip[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); } .chip.on span, .chip[aria-pressed="true"] span { color: var(--nav-ink); }
 
 /* ---------- Alerts, notices, empty states, loading, toasts, dialog ---------- */
@@ -347,7 +348,9 @@ tr.history-row > td { background: var(--bg); }
 .group-title { font-weight: 600; }
 button.link.expand { padding-left: 0; margin-top: var(--s1); }
 .req-table tr.child > td { background: #fbfcfe; font-size: var(--fs-md); }
-.req-table tr.child > td:nth-child(3), .req-table tr.child > td:nth-child(4) { padding-left: var(--s5); }
+.req-table tr.child > td:nth-child(2), .req-table tr.child > td:nth-child(3) { padding-left: var(--s5); }
+/* a group's approved sub-requirements under its text (compliance matrix detail, My work) */
+.parts { margin: var(--s1) 0 var(--s2); padding-left: 18px; font-size: var(--fs-md); } .parts li { margin-bottom: 2px; } .parts .mono { white-space: nowrap; }
 .trace-children { margin: 6px 0 0; padding-left: 18px; font-size: 12.5px; } .trace-children li { margin-bottom: 2px; }
 
 /* ---------- Final response (consolidation page) ---------- */
@@ -419,3 +422,38 @@ tr.blocking td:first-child { box-shadow: inset 3px 0 0 #d97706; }
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1 1 auto; min-width: 0; }
 .tour-pill-open:hover { background: var(--surface-2); }
 html[data-tour-room] body { padding-bottom: var(--tour-room); } /* walkthrough: room to scroll a lit part clear of the bubble */
+
+/* Phone width (390 px review): the top bar in rows (brand, nav, then New bid / person / walkthrough, wrapping instead of
+   overlapping); the Bids table as one card per bid. */
+@media (max-width: 640px) {
+  .brand-sub { display: none; }
+  .topnav { flex: 1 1 100%; order: 2; min-width: 0; }
+  .topbar-right { order: 3; flex-wrap: wrap; justify-content: flex-start; }
+  .topbar-right > * { flex: 0 0 auto; }
+  .actor-id { margin-right: 0; }
+  table.portfolio, table.portfolio tbody, table.portfolio tr, table.portfolio td { display: block; width: 100%; }
+  table.portfolio thead { display: none; }
+  table.portfolio tr { border-bottom: 1px solid var(--line); padding: var(--s2) 0; }
+  table.portfolio td { border: 0; padding: 2px 0; }
+  table.portfolio td.num::before { content: "Requirements: "; color: var(--ink-2); }
+}
+/* the teams' estimates and delivery factors: one stacked card per unit on a phone */
+@media (max-width: 640px) {
+  table.feasibility, table.feasibility tbody, table.feasibility tr, table.feasibility td { display: block; width: 100%; }
+  table.feasibility thead { display: none; }
+  table.feasibility tr { border-bottom: 1px solid var(--line); padding: var(--s2) 0; }
+  table.feasibility td { border: 0; padding: 2px 0; }
+  table.feasibility td::before { content: attr(data-label) ": "; color: var(--ink-2); font-weight: 600; }
+  /* the same for every table marked .stack-sm (Bid decision, compliance matrix, My work, Activity, routing): one card per row, each value
+     under its column's name (data-label); a cell without one (the row's ID or name) heads the card */
+  table.stack-sm, table.stack-sm tbody, table.stack-sm tr, table.stack-sm td { display: block; width: 100%; }
+  table.stack-sm thead { display: none; }
+  table.stack-sm tr { border-bottom: 1px solid var(--line); padding: var(--s2) var(--s2); }
+  table.stack-sm tr:last-child { border-bottom: 0; }
+  table.stack-sm td { border: 0; padding: 2px 0; text-align: left; }
+  table.stack-sm td[data-label]::before { content: attr(data-label) ": "; color: var(--ink-2); font-weight: 600; }
+  table.stack-sm td.num[data-label] { display: flex; justify-content: space-between; gap: var(--s2); }
+  table.stack-sm td.num[data-label]::before { content: attr(data-label); }
+  table.stack-sm .inline { flex-wrap: wrap; }
+  table.stack-sm td:has(> .form, > div > .form)::before { display: block; margin-bottom: var(--s1); }
+}

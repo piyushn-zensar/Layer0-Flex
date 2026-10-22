@@ -4,19 +4,22 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useApi } from "@/lib/api";
+import { TERMS, complianceLabel } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge } from "@/components/ui";
 import SendToKnowledge from "@/components/knowledge/SendToKnowledge"; // A-11 (Atharv)
 
 type Draft = { drafted: boolean; paragraphs: { text: string; sources: string[] }[]; gaps: string[]; dropped: number; note: string };
-type Answer = { assignment_id: number; req_id: string; source: string; unit: string; compliance: string; product: string; requirement: string; response: string };
+// compliance: the words the drafting agent is prompted with; outcome: the stored value, shown with the screens' labels
+type Answer = { assignment_id: number; req_id: string; source: string; unit: string; compliance: string; outcome: string; product: string; requirement: string; response: string; capability_gap?: boolean; label?: string };
+// exceptions: the chapter's answers that are not fully compliant (a list; older data may send one line of text)
 type Chapter = {
-  id: string; title: string; total: number; answered: number; draft: Draft; material: Answer[]; exceptions: Answer[];
+  id: string; title: string; total: number; answered: number; draft: Draft; material: Answer[]; exceptions: Answer[] | string;
   open: { req_id: string; source: string; text: string; state: string }[];
   references: { rfp: { page: number; line_start: number; line_end: number; text: string }[]; past: { id: string; bu: string; text: string }[];
     mode: { rfp: string; knowledge: string } };
 };
-type Outline = { total: number; answered: number; validated_answers: number; summary: Draft; chapters: Chapter[]; note: string };
+type Outline = { total: number; answered: number; validated_answers: number; capability_gaps: number; summary: Draft; chapters: Chapter[]; note: string };
 
 const OPEN_SHOWN = 8; // open requirements listed per chapter before the link to the Compliance matrix
 const HELP = "A first draft for the bid manager to edit, written by the drafting agent only from validated answers. Every paragraph cites its requirements; nothing is drafted for open ones.";
@@ -58,8 +61,8 @@ export default function OutlinePage() {
   return (
     <div className="outline">
       {head}
-      <p className="outline-summary" data-tour="outline-summary"><StatusBadge status="proposed" label="Draft" /> <strong>{o.answered} / {o.total}</strong> requirements answered and validated ({o.validated_answers} validated answers).{" "}
-        <span className="muted">{o.note}</span></p>
+      <p className="outline-summary" data-tour="outline-summary"><StatusBadge status="proposed" label="Draft" /> <strong>{o.answered} / {o.total}</strong> requirements answered and validated ({o.validated_answers} validated answers{o.capability_gaps > 0 &&
+          `, ${o.capability_gaps} of them capability gaps stated as not offered`}).</p>
 
       <section className="card" data-tour="outline-exec">
         <div className="card-head"><h3>Executive summary</h3></div>
@@ -73,7 +76,9 @@ export default function OutlinePage() {
           <DraftView d={c.draft} n={n + 1} />
           {c.exceptions.length > 0 && (
             <div data-tour={n === firstExceptions ? "outline-exceptions" : undefined}>
-              <Alert kind="warn" title="Not full compliance">{c.exceptions.map((a, i) => <span key={a.req_id + a.unit}>{i > 0 && "; "}{ref(a.req_id)} {a.unit}: {a.compliance}</span>)}</Alert>
+              <Alert kind="warn" title="Not full compliance">{typeof c.exceptions === "string" ? c.exceptions
+                : <ul className="outline-exceptions">{c.exceptions.map((a) => <li key={a.req_id + a.unit}>{ref(a.req_id)}{" "}
+                  {a.capability_gap ? TERMS.capability_gap : a.label ?? `${a.unit}: ${complianceLabel(a.outcome)}`}</li>)}</ul>}</Alert>
             </div>)}
           {c.material.length > 0 && (
             <details data-tour={n === firstAnswers ? "outline-answers" : undefined}><summary>Validated answers ({c.material.length})</summary>
@@ -81,7 +86,7 @@ export default function OutlinePage() {
               <table className="outline-answers"><thead><tr><th>Requirement</th><th>Unit</th><th>Compliance</th><th>Answer</th><th>Knowledge base</th></tr></thead>
                 <tbody>{c.material.map((a) => (
                   <tr key={a.req_id + a.unit}><td>{ref(a.req_id)}<div className="muted">{a.source}</div></td><td>{a.unit}{a.product && <div className="muted">{a.product}</div>}</td>
-                    <td><StatusBadge status={a.compliance} kind="compliance" /></td><td>{a.response}</td>
+                    <td><StatusBadge status={a.outcome} kind="compliance" label={complianceLabel(a.outcome)} /></td><td>{a.response}</td>
                     <td><SendToKnowledge kind="response" refId={a.assignment_id} status={sent?.[`response:${a.assignment_id}`]} onSent={reloadSent} /></td></tr>))}
                 </tbody></table>
               </div>

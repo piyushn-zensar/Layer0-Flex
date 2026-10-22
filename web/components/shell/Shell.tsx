@@ -8,6 +8,14 @@ import UserMenu from "@/components/shell/UserMenu";
 import { ToastProvider } from "@/components/ui/Toast";
 import { TourLauncher, TourOverlay, TourProvider, WalkthroughButton } from "@/components/tour";
 import { isPaneWindowPath } from "@/components/workspace/types";
+import { useMe } from "@/lib/api";
+
+// Only the bid manager (and the administrator, who reads) starts a bid: the unit roles do not see New bid.
+function NewBid() {
+  const me = useMe();
+  if (me?.role !== "bid_manager" && me?.role !== "admin") return null;
+  return <Link className="button" href="/opportunities/new" data-tour="shell-new-opportunity">New bid</Link>;
+}
 
 export default function Shell({ children }: { children: React.ReactNode }) {
   if (isPaneWindowPath(usePathname())) return <ToastProvider><div className="pane-window">{children}</div></ToastProvider>;
@@ -19,7 +27,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           <Link className="brand" href="/portfolio" data-tour="shell-brand"><span className="brand-mark" aria-hidden>L0</span>Layer 0 <span className="brand-sub">Bid workflow</span></Link>
           <TopNav />
           <div className="topbar-right">
-            <Link className="button" href="/opportunities/new" data-tour="shell-new-opportunity">New bid</Link>
+            <NewBid />
             <UserMenu />
             <WalkthroughButton />
           </div>

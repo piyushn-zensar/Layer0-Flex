@@ -7,16 +7,16 @@ import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useApi } from "@/lib/api";
-import type { Opportunity } from "@/lib/types";
+import { TERMS, bidStatus, type Opportunity } from "@/lib/types";
 import StatusBadge from "@/components/ui/StatusBadge";
 
 // Workflow order (technical-architecture 16.2, A-26): RFP, Requirement Traceability (the register moved into its pane 2),
-// Assessment (A-16), Compliance matrix, Bid decision (go/no-go only, after the assessment); Changes is a separate link.
+// Assessment Summary (A-16), Compliance matrix, Bid decision (go/no-go only, after the assessment); Changes is a separate link.
 // A step is ticked once the bid status has moved past it. `tour` is the walkthrough's data-tour id.
 const STEPS = [
   { suffix: "", label: "RFP", doneFrom: "reading", tour: "step-rfp" },
   { suffix: "/trace", label: "Requirement Traceability", doneFrom: "frozen", tour: "step-trace" },
-  { suffix: "/assessment", label: "Assessment", doneFrom: "dispatched", tour: "step-assessment" },
+  { suffix: "/assessment", label: TERMS.assessment, doneFrom: "dispatched", tour: "step-assessment" },
   { suffix: "/consolidation", label: "Compliance matrix", doneFrom: "submitted", tour: "step-consolidation" },
   { suffix: "/decisions", label: "Bid decision", doneFrom: "submitted", tour: "step-decisions" },
 ];
@@ -32,7 +32,7 @@ export default function OppSteps() {
   // Status changes when a page acts (freeze, go, dispatch): refresh on every step change, on the page's event, and every few seconds.
   // 19 Oct review: no screen sets the status to submitted, so the last two steps tick once the go/no-go is recorded
   // (the bid decision follows the compliance matrix); read on step changes and page events only, not every 5 s
-  const { data: decided, reload: reloadDecision } = useApi<{ go_no_go: unknown }>(`/api/bids/${id}/decisions`);
+  const { data: decided, reload: reloadDecision } = useApi<{ go_no_go: { outcome: string } | null }>(`/api/bids/${id}/decisions`);
   useEffect(() => { reload(); reloadDecision(); }, [path, reload, reloadDecision]);
   useEffect(() => { const t = setInterval(reload, 5000); return () => clearInterval(t); }, [reload]);
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function OppSteps() {
     <div className="opp-head" data-tour="opp-head">
       <div className="opp-title">
         <nav className="crumbs" aria-label="Breadcrumb"><Link href="/portfolio">Bids</Link><span aria-hidden>›</span><span className="mono">{id}</span></nav>
-        <h1>{data?.opportunity.title ?? id} {data && <span data-tour="opp-status"><StatusBadge status={status} kind="opp" className="opp-status lg" label={status.replace("_", "-")} /></span>}</h1>
+        <h1>{data?.opportunity.title ?? id} {data && <span data-tour="opp-status"><StatusBadge kind="opp" className="opp-status lg" {...bidStatus(status, decided?.go_no_go?.outcome)} /></span>}</h1>
       </div>
       <nav aria-label="Workflow steps">
         <ol className="stepper" data-tour="stepper">

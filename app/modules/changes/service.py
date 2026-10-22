@@ -115,7 +115,7 @@ def upload(db: Session, opp_id: str, filename: str, data: bytes, actor: str, rol
         raise ValueError(f"Unknown document type {role!r}; expected addendum, qa (clarification) or change (request).")
     b = requirements.baseline(db, opp_id)
     if b is None:
-        raise ValueError("Read the RFP first: a change document is compared with the frozen baseline.")
+        raise ValueError("Read the RFP first: a change document is compared with the frozen requirements.")
     _no_set_in_review(db, opp_id)
     if not filename.lower().endswith(".pdf"):
         raise ValueError("Upload the change document as a PDF.")
@@ -126,7 +126,7 @@ def upload(db: Session, opp_id: str, filename: str, data: bytes, actor: str, rol
             raise ValueError(f"This file is the main RFP of {opp_id}, not a change document.")
         done = db.scalar(select(ChangeSet).where(ChangeSet.document_id == doc.id, ChangeSet.status == "applied"))
         if done:
-            raise ValueError(f"{doc.filename} was already applied (change set {done.id}, baseline {done.baseline_to}).")
+            raise ValueError(f"{doc.filename} was already applied (change set {done.id}, frozen version {done.baseline_to}).")
         if doc.status != "ingested":
             read = ingestion.ingest(db, doc.id)
             if "error" in read:
@@ -211,9 +211,9 @@ def decide(db: Session, set_id: int, item_id: int, kind: str, target: str | None
         raise ValueError(f"Unknown classification {kind!r}; expected one of {KINDS}.")
     if kind in NEEDS_TARGET:
         if not target:
-            raise ValueError(f"Name the baseline requirement this statement {VERB[kind]}.")
+            raise ValueError(f"Name the frozen requirement this statement {VERB[kind]}.")
         if target not in {r.req_id for r in _baseline_items(db, s.opportunity_id)}:
-            raise ValueError(f"{target} is not an approved requirement of baseline {s.baseline_from}.")
+            raise ValueError(f"{target} is not an approved requirement of frozen version {s.baseline_from}.")
     else:
         target = None
     _claim(db, s, "review")
@@ -264,7 +264,7 @@ def apply(db: Session, set_id: int, actor: str) -> ChangeSet:
                                  "mark the others unchanged.")
         b = requirements.baseline(db, opp_id)
         if b is None or b.number != s.baseline_from:
-            raise ValueError(f"This set was read against baseline {s.baseline_from}, which is no longer the latest; "
+            raise ValueError(f"This set was read against frozen version {s.baseline_from}, which is no longer the latest; "
                              "discard it and upload the document again.")
     except ValueError:
         db.rollback()  # the set stays in review
@@ -294,10 +294,10 @@ def apply(db: Session, set_id: int, actor: str) -> ChangeSet:
         if changes:
             _follow_up(db, opp_id, out, notes, s.filename, actor, dispatched_before, result)
         else:
-            result["note"] = f"Nothing changed: the baseline stays {s.baseline_from}."
+            result["note"] = f"Nothing changed: the frozen version stays {s.baseline_from}."
     except Exception as exc:
         db.rollback()
-        result["note"] = (f"Baseline {out['baseline']} is applied, but the follow-up stopped ({type(exc).__name__}: "
+        result["note"] = (f"Frozen version {out['baseline']} is applied, but the follow-up stopped ({type(exc).__name__}: "
                           f"{exc}); new and changed requirements may still need matching and dispatch.")
         audit.record(db, actor, "follow_up_failed", "change", str(s.id), opp_id, error=str(exc)[:500])
     s.result = dict(result)
@@ -318,7 +318,7 @@ def _follow_up(db: Session, opp_id: str, out: dict, notes: dict, source: str, ac
         # only what changed: re-matching everything would change the frozen page batches of untouched requirements
         matching.match(db, opp_id, f"matching agent ({actor})", req_ids=out["added"] + out["modified"])
     if not dispatched_before:
-        result["note"] = "Not dispatched: no work was dispatched before this change; dispatch from the decisions page."
+        result["note"] = "Not sent to units: no work was sent before this change; send it from the Assessment Summary."
     else:
         try:
             result["dispatched"] = workpackages.dispatch(db, opp_id, actor)
@@ -337,7 +337,7 @@ def correct(db: Session, opp_id: str, kind: str, body: dict, reason: str, actor:
         _follow_up(db, opp_id, out, notes, "a correction", actor, dispatched_before, result)
     except Exception as exc:
         db.rollback()
-        result["note"] = (f"Baseline {out['baseline']} is saved, but the follow-up stopped ({type(exc).__name__}: "
+        result["note"] = (f"Frozen version {out['baseline']} is saved, but the follow-up stopped ({type(exc).__name__}: "
                           f"{exc}); new and changed requirements may still need matching and dispatch.")
         audit.record(db, actor, "follow_up_failed", "baseline", str(out["baseline"]), opp_id, error=str(exc)[:500])
         db.commit()

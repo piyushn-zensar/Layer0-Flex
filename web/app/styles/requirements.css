@@ -31,6 +31,12 @@ details.card[open] > summary { padding-bottom: var(--s3); border-bottom: 1px sol
 
 /* P-23: origin tag, extraction snapshots */
 .req-table .tag.origin { display: block; margin-top: var(--s1); }
+/* 21 Oct review: three columns so the register fits pane 2: the source under the ID, status, History and the actions under the text */
+.req-table .req-source { margin-top: var(--s1); font-size: var(--fs-sm); color: var(--ink-2); }
+.req-table .req-meta { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s2); align-items: center; margin-top: var(--s2); }
+.req-table .req-meta .status-cell { display: inline-flex; gap: var(--s2); align-items: center; } .req-table .req-meta .badge { margin: 0; }
+.req-table .req-meta button.link { padding: 0; }
+.req-table .row-actions button { white-space: normal; text-align: left; }
 .snapshot-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s3); }
 .snapshot-list li { padding-top: var(--s2); border-top: 1px solid var(--line); }
 .snapshot-list button.link { padding-left: 0; }

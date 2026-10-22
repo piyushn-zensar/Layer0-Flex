@@ -1,0 +1,500 @@
+{
+ "_note": "ILLUSTRATIVE placeholder answers of Flex Power Modules for RC-1 (OPP-0003), written for the PoC demo (P-49 part B). Not real unit positions; no rating, certification or figure here is a verified fact.",
+ "answers": [
+  {
+   "req_id": "REQ-0003-0208",
+   "role": "design_engineer",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: The solution delivers 800 VDC two-wire distribution to the racks inside the 1500 VDC limit, sized for 198 to 330 kW racks in each 20 MW deployment unit with a growth path to 570 kW per rack position.",
+   "reason": "Flex Power Modules covers the 800 VDC distribution and rack power only; the 13.8 kV site buses and 15 kV class equipment come from the medium-voltage lot, and the utility step-down above 100 kV is not in the Flex offer.",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": "Confirm the medium-voltage interface with the switchgear lot at the first dialogue session."
+  },
+  {
+   "req_id": "REQ-0003-0215",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our 800 VDC distribution stays inside the voltage band: no setpoint or average above 1500 VDC, with an 840 VDC overvoltage disconnect. The system uses IT or high-resistance grounding with insulation monitoring for first-fault detection, and we will supply the grounding, fault-current and personnel-safety analysis for our scope.",
+   "reason": "",
+   "conditions": "The final grounding scheme is chosen with the Owner at the technical decision point.",
+   "workaround": "",
+   "next_steps": "Share the draft grounding analysis during dialogue."
+  },
+  {
+   "req_id": "REQ-0003-0216",
+   "role": "design_engineer",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: On the distribution side, our power distribution and tap cans support fast shutdown by shunt trip, current-limited DC fault current and two protection zones, with insulation monitoring on the facility side and residual current monitoring at the rack interface. Series arcing is covered by connector temperature monitoring and high-frequency sensing at the rack interface and converter outputs.",
+   "reason": "The L2.13 clause on the power blocks (shunt-trip shutdown, internal disconnect and a current-limiting stage in each block) belongs to the power blocks, which are not in the Flex offer (capability gap REQ-0003-0213).",
+   "conditions": "Clearing times and the holdup covering up to about 20 ms are stated in the tender data sheets; solid-state breaker ratings for liquid-cooled shelves are confirmed at the design review.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0217",
+   "role": "design_engineer",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: At distribution and rack level the solution uses N+1 converters and semiconductor OR-ing so that no single failure drops a rack, supporting the 99.9% availability target.",
+   "reason": "The 4+1 power-block arrangement and its DC static transfer switch sit with the MV-to-800 VDC power blocks, which Flex does not offer in this bid; we cover the redundancy downstream of the blocks.",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": "Agree the catcher-path interface with the power-block supplier the Owner selects."
+  },
+  {
+   "req_id": "REQ-0003-0222",
+   "role": "design_engineer",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: Rack power equipment is designed to UL 62368-1 methods with leakage held within 3.5 mA AC and 10 mA DC, and meets EMC Class A to CISPR 32 and CISPR 35. The rack-level capacitive storage follows the applicable storage safety standards.",
+   "reason": "Campus battery storage is not in the Flex offer, so the UL 9540A cell, module and rack fire propagation tests apply only where our rack-level capacitive storage falls in scope; that scope and the certification path are still to be confirmed.",
+   "conditions": "EMC test reports are provided at the factory test.",
+   "workaround": "",
+   "next_steps": "Confirm with the Owner which storage standards apply to rack-level capacitive storage."
+  },
+  {
+   "req_id": "REQ-0003-0066",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Rack-level capacitive energy storage and fast converter control hold the bus within plus or minus 3% with 3 ms settling for the reference load steps of up to 180% of rack TDP.",
+   "reason": "",
+   "conditions": "Performance is confirmed by the system-level simulation accepted before delivery.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0219",
+   "role": "design_engineer",
+   "compliance": "deviation",
+   "response": "Illustrative placeholder response: Flex supplies 125 A 800 VDC power whips hardwired to the tap can behind a normally open contactor, so the whip is only live when the rack-side connector is locked.",
+   "reason": "Our qualified connectors do not have a latch switch built into the connector body.",
+   "conditions": "",
+   "workaround": "A pilot-contact loop in the connector opens the contactor before the latch can release and closes it only once locked, giving the same no-live-unplug and anti-arcing result.",
+   "next_steps": "Provide the interlock sequence and connector data for Owner review."
+  },
+  {
+   "req_id": "REQ-0003-0220",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Each compute rack takes an 800 VDC to 54 VDC power shelf; we will state the shelf output voltage and converter count in the tender against the six 15 kW converter baseline. Racks are designed for 198 to 330 kW with a liquid-cooled shelf path to 570 kW and native 800 VDC inside the rack, with local smoothing and solid-state branch protection.",
+   "reason": "",
+   "conditions": "The 570 kW liquid-cooled shelf is offered for later phases and fixed at the technical decision point.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0221",
+   "role": "design_engineer",
+   "compliance": "deviation",
+   "response": "Illustrative placeholder response: For Phase 1 the solution offers 800 VDC power racks beside the compute racks, taking 415 to 480 VAC three-phase through 12 whips of 100 A for about 660 kW, with per-converter energy storage and the optional four-unit battery backup.",
+   "reason": "Our power rack is built from a larger standard rectifier than the 18.3 kW converter in the RFP.",
+   "conditions": "",
+   "workaround": "Shelves use our standard larger rectifiers, giving the same about 660 kW per rack and at least the 1,200 J storage per converter position with fewer, larger converters.",
+   "next_steps": "Show the rack layout and storage figures at the first dialogue session."
+  },
+  {
+   "req_id": "REQ-0003-0077",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Where the plus or minus 400 VDC variant is proposed, our in-row power rack takes plus or minus 400 VDC three-wire at the rack input, and the tender will name that input with its data sheet as the required evidence.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0078",
+   "role": "design_engineer",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: The plus or minus 400 VDC variant delivers 410 V at no load and 400 V at full load with built-in droop, using 1OU shelf modules in the 25 to 30 kW range, a three-conductor busbar up to 1.1 MW and 63 A or 125 A cables.",
+   "reason": "End-to-end efficiency includes upstream power conversion outside our scope, and the above-95% figure at 20% load still has to be shown by test for our part of the chain.",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": "Provide measured efficiency curves for our equipment before the final tender."
+  },
+  {
+   "req_id": "REQ-0003-0081",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Rack power equipment reports telemetry over Redfish, PMBus and Modbus, with CANbus available where the Owner's controls need it.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": "Agree the telemetry point list with the controls lot."
+  },
+  {
+   "req_id": "REQ-0003-0244",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our power equipment is designed to ride through any disturbance that stays within the Section 9 interface limits, including the 800 VDC ripple and regulation band.",
+   "reason": "",
+   "conditions": "Confirmed by the system-level simulation accepted before delivery.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0230",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: For the interfaces in the Flex Power Modules scope, the solution meets the 800 VDC input band, the 125 A interlocked whip, the 54 VDC in-rack bus and the telemetry and control interfaces as listed.",
+   "reason": "",
+   "conditions": "The 13.8 kV, busduct and facility-water interfaces are answered by the units supplying those lots.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0241",
+   "role": "design_engineer",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: We will complete the power chain data for our equipment: efficiency at 50% and 100% load, static and dynamic regulation and ripple, short-circuit rating, and breaker clearing time with the holdup that covers it.",
+   "reason": "The rated DC output per power block comes from the power-block supplier; power blocks are not in the Flex offer (capability gap REQ-0003-0213).",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0003",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Flex will install and integrate the Owner-furnished equipment that connects to our power distribution, and include it in our design and test plans.",
+   "reason": "",
+   "conditions": "The Owner provides interface data and delivery dates for furnished equipment.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0005",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We provide training for the Owner's operations staff on our power equipment, covering operation, safe isolation and routine maintenance.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0017",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will use the PUE and energy price the Owner publishes in our total cost of ownership figures.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0110",
+   "role": "product_manager",
+   "compliance": "deviation",
+   "response": "Illustrative placeholder response: Flex provides five years of 24 by 7 maintenance and support for our power equipment from acceptance, designed for concurrent maintenance.",
+   "reason": "A guaranteed four-hour on-site response and two-hour repairs need permanent on-site staff, which is not in our standard service model.",
+   "conditions": "",
+   "workaround": "A four-hour remote response with an on-site spares pool and hot-swappable shelves, so the site team can restore a rack within the repair times, with Flex field engineers on site the next business day.",
+   "next_steps": "Price the option of a resident Flex engineer."
+  },
+  {
+   "req_id": "REQ-0003-0113",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our power equipment can be delivered in phases, with rack power for the first core components and the test system shipped first after contract signing.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0124",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our plan follows the Owner's acceptance sequence from factory tests through the 30-day availability test, with deliverables timed from award and first delivery.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0126",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will agree the pre-delivery assembly, quality and factory test plan at least 30 days before the factory test, including burn-in and fault injection on our equipment.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0128",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our equipment and team support the 60-day acceptance period, including the cold boots, fault injection and the 30-day availability test.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0132",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We support the integration, validation and operational readiness phases for our power equipment.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0133",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Flex will attend the kickoff meeting within 45 days of award.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0134",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will deliver our risk management plan and risk register within 30 days of award and update the register monthly.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0135",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will deliver the project plan for our scope within 90 days of award and update it quarterly.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0136",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will take part in the technical decision point 9 to 12 months before delivery to fix the final power configuration.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0232",
+   "role": "product_manager",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: We will deliver the facilities and site preparation, acceptance test, and delivery and installation plans for our equipment on the dates listed.",
+   "reason": "The network plan belongs to the compute lot and is not prepared by Flex Power Modules.",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0141",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will provide the coolant data for our liquid-cooled power shelves as input to the chemical management plan nine months before delivery.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0142",
+   "role": "product_manager",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: We give guaranteed delivery dates for each deployment unit with the tender, stated as weeks from award.",
+   "reason": "DL-10 asks for guaranteed delivery dates; before award only dates counted from award can be guaranteed. They become calendar dates at contract signature.",
+   "conditions": "Dates for later deployment units depend on semiconductor supply allocations.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0233",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our prices are firm, all-inclusive and in US dollars, free of taxes, and the schedule separates equipment, freight, installation, commissioning, spares and five years of maintenance, with any extension priced as an option.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0145",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our prices are unconditional and do not refer to any separate contract.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0146",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our offer stays valid for at least four months after the submission deadline.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0234",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Flex will provide the 10% performance guarantee, any pre-financing guarantee, and the performance and payment bonds in a form the Owner approves.",
+   "reason": "",
+   "conditions": "Subject to Flex treasury approval of the final bond forms.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0149",
+   "role": "product_manager",
+   "compliance": "deviation",
+   "response": "Illustrative placeholder response: We accept liquidated damages for missed service levels, capped by the at-risk amounts described, and delay penalties that scale with the length of the delay and the seriousness of the breach, subject to an aggregate cap on liquidated damages and delay penalties together.",
+   "reason": "Liquidated damages and delay penalties have no overall limit as written, which leaves an open-ended risk on a phased multi-lot delivery.",
+   "conditions": "",
+   "workaround": "An aggregate cap on liquidated damages and delay penalties together, set as a percentage of each lot's price; the percentage is stated in the financial offer and listed in the commercial exceptions schedule (CT-08).",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0150",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our commercial exceptions are listed in the separate exceptions schedule and kept to a minimum: on liquidated damages, only the aggregate cap per lot asked for under CT-07; any indexed price is shown there only as an alternative to the firm price.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0236",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Warranty for our equipment is included within the five-year maintenance period, and we take responsibility for failures caused by disturbances within the Section 9 interface limits.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0153",
+   "role": "product_manager",
+   "compliance": "deviation",
+   "response": "Illustrative placeholder response: We provide a supply-chain security and risk plan for the components Flex designs and builds, with qualified alternatives for third-party semiconductors. Instead of a guarantee for each original component over the system's whole lifetime, we commit to the availability period stated as the proposed change.",
+   "reason": "No supplier can guarantee every original component for an open-ended system lifetime: electronic parts follow their makers' life cycles.",
+   "conditions": "",
+   "workaround": "Spare parts or compatible form-fit-function replacements available for at least 10 years from acceptance, with at least 12 months' notice of end of life and a last-time-buy offer before any component is discontinued.",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0156",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Flex accepts that it bears its bidding costs and that the Owner may end the procurement before signature.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0163",
+   "role": "product_manager",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: Flex runs regional service and support centres with English-speaking staff that support data center clients.",
+   "reason": "Whether a Flex centre in the site's region meets the two-year and two-client criteria still has to be confirmed.",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": "Confirm the nearest qualifying Flex support centre once the site is known."
+  },
+  {
+   "req_id": "REQ-0003-0165",
+   "role": "product_manager",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: We will name the data center power infrastructure specialist for Lot 4, with at least three years in role and a different person from the other named experts.",
+   "reason": "One data center infrastructure specialist is named per lot; the systems architect, systems engineer, application and benchmarking roles are named by the Cloud team.",
+   "conditions": "The named expert is confirmed with the tender.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0167",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: The Flex group composition will not change between submission and award, and we will supply a reference.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0174",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will give capital and operating cost inputs for our equipment, including energy use at the stated efficiencies and maintenance beyond five years.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0176",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our guaranteed delivery dates are given for evaluation, and we will work to any schedule adjustment the Owner makes.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0177",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our lump-sum prices are itemised so the Owner can compare them with its engineer's estimate.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0185",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Flex will take part in the qualification, the dialogue sessions and the mandatory site visit, and submit a final tender if invited.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  }
+ ],
+ "feasibility": {
+  "estimate": "2026-11-13",
+  "factors": {
+   "people": {
+    "status": "ok",
+    "note": "Illustrative placeholder: design and product team available for the response and the first deployment unit."
+   },
+   "skills": {
+    "status": "ok",
+    "note": "Illustrative placeholder: 800 VDC distribution and rack power design are core skills of the unit."
+   },
+   "capacity": {
+    "status": "constraint",
+    "note": "Illustrative placeholder: power shelf lines are shared with other AI rack programmes; mitigation: reserve line slots at award and qualify a second build site."
+   },
+   "materials": {
+    "status": "ok",
+    "note": "Illustrative placeholder: long-lead power semiconductors are ordered at the technical decision point."
+   },
+   "cost": {
+    "status": "ok",
+    "note": "Illustrative placeholder: within the unit's standard cost model for rack power."
+   }
+  }
+ }
+}

@@ -2,7 +2,7 @@ from datetime import date
 from typing import Literal
 
 from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, Request, UploadFile
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from sqlalchemy.orm import Session
 
 from app.core import audit
@@ -128,7 +128,7 @@ def _compliance(db: Session, opp_id: str) -> dict:
     for r in consolidation.compliance_matrix(db, opp_id)["rows"]:
         if not r["unit"]:
             continue
-        unit = out.setdefault(r["unit"], {"met": 0, "partial": 0, "not_met": 0, "open": 0})
+        unit = out.setdefault(r["unit"], {"met": 0, "partial": 0, "deviation": 0, "not_met": 0, "open": 0})
         unit[r["compliance"] if r["status"] == "validated" and r["compliance"] in unit else "open"] += 1
     return out
 
@@ -137,8 +137,10 @@ def _snapshot(db: Session, opp_id: str, kind: str) -> dict:
     if kind == "compliance":
         return _compliance(db, opp_id)
     s = service.schedule(db, opp_id, decisions.participating_units(db, opp_id))
+    # a changed estimate or factor status reopens the acceptance; a note edit does not (P-47)
     return {"due_date": str(s["due_date"]) if s["due_date"] else None, "planned_submission": str(s["planned_submission"]),
-            "units": {u["bu"]: str(u["estimated_completion"]) for u in s["units"]}}
+            "units": {u["bu"]: {"estimated_completion": str(u["estimated_completion"]),
+                                "factors": {k: v["status"] for k, v in sorted(u["factors"].items())}} for u in s["units"]}}
 
 
 def _approval(db: Session, opp_id: str, a) -> dict | None:
@@ -165,21 +167,35 @@ def set_due(opp_id: str, body: DueIn, request: Request, db: Session = Depends(ge
     return row(_guard(lambda: service.set_due(db, opp_id, body.due_date, body.consolidation_days, actor(request))))
 
 
+class FactorIn(BaseModel):
+    factor: Literal["people", "skills", "capacity", "materials", "cost"]  # = models.FEASIBILITY_FACTORS
+    status: Literal["ok", "constraint"]                                  # = models.FEASIBILITY_STATUSES
+    note: str = Field("", max_length=2000)
+
+    @model_validator(mode="after")
+    def _constraint_needs_note(self):
+        if self.status == "constraint" and not self.note.strip():
+            raise ValueError("Say what limits delivery (note) for a constraint.")
+        return self
+
+
 class CompletionIn(BaseModel):
     estimated_completion: date
     note: str = Field("", max_length=2000)
+    factors: list[FactorIn] = Field(default_factory=list, max_length=5)  # P-47 (C-42); optional, stated ones are kept
 
 
 @router.put("/bids/{opp_id}/units/{bu}/completion")
 def set_completion(opp_id: str, bu: str, body: CompletionIn, request: Request, db: Session = Depends(get_db)):
-    """The unit manager of `bu` gives the unit's estimated completion date (C-24, C-25)."""
+    """The unit manager of `bu` gives the unit's estimated completion date and its delivery factors (C-24, C-42)."""
     u = require(request, UNIT_MANAGER)
     if not same_unit(u, bu):
-        raise HTTPException(403, f"Only {bu}'s unit manager gives its completion date.")
+        raise HTTPException(403, f"Only {bu}'s unit manager gives its delivery estimate.")
     _guard(lambda: service.require(db, opp_id))  # an unknown bid is a 404 before any participation check
     if bu not in decisions.participating_units(db, opp_id):
         raise HTTPException(409, f"{bu} does not take part in this bid.")
-    return row(_guard(lambda: service.set_unit_completion(db, opp_id, bu, body.estimated_completion, body.note, u["name"])))
+    return row(_guard(lambda: service.set_unit_completion(db, opp_id, bu, body.estimated_completion, body.note, u["name"],
+                                                                   [f.model_dump() for f in body.factors])))
 
 
 class ApproveIn(BaseModel):
@@ -189,15 +205,20 @@ class ApproveIn(BaseModel):
 
 @router.post("/bids/{opp_id}/approvals")
 def approve(opp_id: str, body: ApproveIn, request: Request, db: Session = Depends(get_db)):
-    """The bid manager approves the overall schedule (only once every participating unit has a date) or the
-    high-level compliance position (C-24)."""
+    """The bid manager accepts the teams' estimates (kind schedule: only once every participating unit has its date
+    and the five delivery factors, C-42) or approves the high-level compliance position (C-24; once a unit answer is
+    validated, C-41)."""
     require(request, BID_MANAGER)
     if body.kind == "schedule":
         s = _guard(lambda: service.schedule(db, opp_id, decisions.participating_units(db, opp_id)))
         if not s["ready"]:
-            raise HTTPException(409, "The schedule can be approved once every participating unit has given its estimated "
-                                     f"completion date (missing: {', '.join(s['missing']) or 'no participating unit'}).")
-    elif not _compliance(db, opp_id):
-        raise HTTPException(409, "Nothing has been sent to the units yet; there is no compliance position to approve.")
+            factors = "; ".join(f"{bu}: {', '.join(fs)}" for bu, fs in s["missing_factors"].items()) or "none"
+            raise HTTPException(409, "The teams' estimates can be accepted once every participating unit has given its "
+                                     "estimate and the five delivery factors (missing: "
+                                     f"{', '.join(s['missing']) or ('none' if s['units'] else 'no participating unit')}; "
+                                     f"factors: {factors}).")
+    elif not any(n for c in _compliance(db, opp_id).values() for k, n in c.items() if k != "open"):  # C-41
+        raise HTTPException(409, "No unit answer has been validated yet; the compliance position is approved on the "
+                                 "Bid decision step once validated answers exist.")
     a = _guard(lambda: service.approve(db, opp_id, body.kind, _snapshot(db, opp_id, body.kind), actor(request), body.note))
     return _approval(db, opp_id, a)

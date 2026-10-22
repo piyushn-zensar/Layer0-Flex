@@ -10,12 +10,12 @@
   {
    "id": "compliance",
    "name": "Compliance",
-   "question": "Are enough product requirements fully or partially compliant in the validated answers (at least the compliance threshold)?"
+   "question": "How do the validated answers to product requirements split into compliant, partially compliant, compliant with changes and non-compliant, and are enough of them not non-compliant (at least the compliance threshold)?"
   },
   {
    "id": "schedule",
-   "name": "Schedule",
-   "question": "Can the units meet the RFP's dates?"
+   "name": "Schedule and delivery feasibility",
+   "question": "Can the teams deliver by the RFP's due date (their estimates and the people, skills, manufacturing capacity, materials and cost they report)?"
   },
   {
    "id": "scope_fit",
@@ -25,12 +25,12 @@
   {
    "id": "all_matched",
    "name": "Every requirement routed",
-   "question": "Does every requirement in the published register have an owner (a participating unit, the bid desk (commercial and submission items) for non-product items, or a recorded capability gap)?"
+   "question": "Does every requirement in the frozen register have an owner (a participating unit, the bid desk (commercial and submission items) for non-product items, or a recorded capability gap)?"
   },
   {
    "id": "engineering_rules",
    "name": "Engineering rules",
-   "question": "Does no engineering rule fail (R-001..R-004)?"
+   "question": "Does no engineering rule fail?"
   },
   {
    "id": "open_questions",
@@ -44,7 +44,7 @@
   },
   {
    "id": "deviations",
-   "name": "Deviations from the standard product",
+   "name": "Data-sheet ratings vs standard products",
    "question": "Does the RFP's data sheet stay within the standard ratings of the products offered?"
   },
   {
@@ -52,13 +52,5 @@
    "name": "Capacity and portfolio conflicts",
    "question": "Do the units have capacity for this work, given their open work on other bids?"
   }
- ],
- "preliminary_feasibility": {
-  "_note": "P-38 (C-23): the overall assessment score, a PLACEHOLDER formula to be agreed with the bid manager. It is a count of requirements, never a probability; retrieval scores and model confidence are not part of it.",
-  "formula": "Of the technical requirements (categories technical and compliance): a requirement with validated unit answers counts as feasible when every validated answer is fully or partially compliant; one without counts as feasible when it is matched to a unit's product (domain alignment) and the latest assessment run found reviewed product evidence for it. Preliminary feasibility = feasible / technical requirements.",
-  "feasible_compliance": [
-   "met",
-   "partial"
-  ]
- }
+ ]
 }

@@ -1,15 +1,16 @@
 "use client";
-// Assessment step (A-16, technical-architecture 16.5): bid summary, open questions, participation, routing, Send for
+// Assessment Summary step (A-16, technical-architecture 16.5): bid summary, open questions, participation, routing, Send for
 // assessment (dispatch: the register is frozen when the RFP is read, P-32) and progress per unit. Go/no-go follows on
-// the Bid decision step.  Owner: Atharv.
+// the Bid decision step. P-44: the bid manager's first stage: business relevance, participation, routing (unit only),
+// sending; no technical approval here (C-41).  Owner: Atharv.
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
-import type { Unit } from "@/lib/types";
+import { TERMS, categoryLabel, type Unit } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { STATUS_EVENT } from "@/components/shell/OppSteps"; // the header listens for it after sending
-import { Alert, Busy, Skeleton, StatusBadge, offeringLabel, useToast } from "@/components/ui";
+import { Alert, Busy, ChangeGate, Skeleton, StatusBadge, offeringLabel, useToast } from "@/components/ui";
 import SendToKnowledge from "@/components/knowledge/SendToKnowledge";
 import ScheduleCard from "@/components/schedule/ScheduleCard";
 import AssessmentPanel from "@/components/assessment/AssessmentPanel";
@@ -30,9 +31,10 @@ type Data = {
   routing: { req_id: string; text: string; category: string; section: string; route: Route;
     units: { bu: string; product_id: string | null; specialists: string[] }[] }[];
   progress: Record<string, { total: number; submitted: number; validated: number }>;
+  decision: { outcome: string; decided_by: string; criteria: { id: string; status: string; note: string }[] } | null; // the go/no-go
 };
 const BID_DESK = "Bid desk (commercial and submission items)";
-const ROUTE: Record<Route, string> = { unit: "Business unit", bid_desk: BID_DESK, capability_gap: "Capability gap (non-compliant)", needs_owner: "Needs an owner" };
+const ROUTE: Record<Route, string> = { unit: "Business unit", bid_desk: BID_DESK, capability_gap: TERMS.capability_gap, needs_owner: "Needs an owner" };
 
 export default function AssessmentPage() {
   const { id } = useParams<{ id: string }>();
@@ -42,12 +44,19 @@ export default function AssessmentPage() {
   const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/bids/${id}/knowledge`); // A-11
   const [busy, setBusy] = useState<string>(); // one action at a time: no double participation or dispatch
   const [version, setVersion] = useState(0); // the score panel loads again after each action here (19 Oct review)
-  if (error) return <Alert kind="error" title="Could not load the assessment.">{error}</Alert>;
+  const [routeEdit, setRouteEdit] = useState<string>(); // P-44: one row's Change unit form at a time
+  if (error) return <Alert kind="error" title="Could not load the Assessment Summary.">{error}</Alert>;
   if (!data) return <Skeleton lines={5} />;
   const { summary: s, open_questions: q, participation: part } = data;
   const notRead = q.not_read ?? [];
-  const open = q.exceptions.length + q.needs_owner.length + q.rule_warnings.length + q.questions.length + notRead.length;
+  // rule warnings the bid manager judged at the go/no-go (open questions met, with a note) are shown as resolved
+  const resolved = data.decision?.criteria.find((c) => c.id === "open_questions" && c.status === "met")?.note;
+  const open = q.exceptions.length + q.needs_owner.length + (resolved ? 0 : q.rule_warnings.length) + q.questions.length + notRead.length;
+  const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
   const count = (route: Route) => data.routing.filter((r) => r.route === route).length;
+  // 21 Oct review: once the go/no-go is recorded the bid manager's forms here fold behind "Change…" and the recorded state shows;
+  // a person who cannot act sees no greyed form once its step is done
+  const decided = !!data.decision;
 
   const run = <T,>(label: string, request: Promise<T>, done: (r: T) => void) => {
     setBusy(label);
@@ -60,6 +69,13 @@ export default function AssessmentPage() {
   const recordGap = (reqId: string, form: FormData) =>
     run("gap", post(`/api/bids/${id}/requirements/${reqId}/capability-gap`, { reason: form.get("reason") }),
       () => toast.success(`${reqId}: capability gap recorded (non-compliant, with the reason).`));
+  const routeTo = (reqId: string, form: FormData) => {
+    const units = form.getAll("units");
+    run("route", post(`/api/bids/${id}/requirements/${reqId}/route`, { units }), () => {
+      setRouteEdit(undefined);
+      toast.success(`${reqId}: routed${units.length ? " to " + units.join(", ") : ": no unit"}.`);
+    });
+  };
   const send = () => run("send", post<{ created: number; needs_owner: number }>(`/api/bids/${id}/dispatch`), (r) => {
     toast.success((r.created ? `${r.created} new assignment(s) sent to the units.` : "Nothing new to send: every unit already has its work.")
       + (r.needs_owner ? ` ${r.needs_owner} product requirement(s) need an owner and were not sent.` : ""));
@@ -68,30 +84,29 @@ export default function AssessmentPage() {
 
   return (
     <div className="decisions">
-      <PageHead level={2} title="Assessment"
-        help="Review the bid summary and the open questions, choose the participating business units, check the routing, then send the register for assessment. Each unit's specialists answer in My work; the go/no-go follows on the Bid decision step." />
+      <PageHead level={2} title={TERMS.assessment}
+        help="Review the business relevance of the bid (summary and open questions), choose the participating business units, route requirements to their teams, then send the work. Each unit's designers / engineers confirm or correct the technical matches and answer in My work; the compliance position and the go/no-go follow on the Bid decision step." />
 
       <section className="card" data-tour="asm-summary">
         <div className="card-head"><h2>Bid summary</h2>
-          <span className="muted">{s.requirements} requirement(s) in the register · {data.published ? `frozen as baseline ${data.baseline}` : "not frozen yet: read the RFP first"}</span></div>
+          <span className="muted">{plural(s.requirements, "requirement")} in the register · {data.published ? `frozen as version ${data.baseline}` : "not frozen yet: read the RFP first"}</span></div>
         {/* A-24 (C-20): each count opens Traceability filtered to it (?category= / ?offering=) */}
-        <p>By category: {Object.entries(s.by_category).map(([k, v]) => <Link key={k} className="chip" href={`/opportunities/${id}/trace?category=${encodeURIComponent(k)}`}>{k} {v}</Link>)}</p>
-        <p>By offering type: {Object.entries(s.by_offering).map(([k, v]) => (
+        <p className="row">By category: {Object.entries(s.by_category).map(([k, v]) => <Link key={k} className="chip" href={`/opportunities/${id}/trace?category=${encodeURIComponent(k)}`}>{categoryLabel(k)} <span>{v}</span></Link>)}</p>
+        <p className="row">By type of offer: {Object.entries(s.by_offering).map(([k, v]) => (
           <Link key={k} href={`/opportunities/${id}/trace?offering=${encodeURIComponent(k)}`}><StatusBadge status={k} kind="offering" label={`${offeringLabel(k)} ${v}`} /></Link>))}</p>
-        {s.sections.length > 0 && <p>Major sections: {s.sections.map((x) => `${x.section} (${x.count})`).join(" · ")}</p>}
-        <p>Suggested units: {Object.entries(s.suggested_units).map(([k, v]) => <strong key={k}>{k} ({v}) </strong>)}
+        <p>Suggested units: {Object.entries(s.suggested_units).map(([k, v], i) => <span key={k}>{i > 0 && " · "}<strong>{k} ({v})</strong></span>)}
           {Object.keys(s.suggested_units).length === 0 && "none yet: run matching in Traceability"}</p>
       </section>
 
-      <AssessmentPanel key={version} oppId={id} />
+      <AssessmentPanel key={version} oppId={id} decided={!!data.decision} />
 
       <section className="card" data-tour="asm-open-questions">
         <div className="card-head"><h2>Open questions</h2><span className="muted">{open === 0 ? "None." : `${open} to look at`}</span></div>
-        {q.exceptions.length > 0 && <><h3>Source not verified ({q.exceptions.length})</h3>
+        {q.exceptions.length > 0 && <><h3>{TERMS.exception} ({q.exceptions.length})</h3>
           <ul className="per-req">{q.exceptions.map((e) => <li key={e.req_id}><span className="mono">{e.req_id}</span> {e.text} <span className="muted">{e.reason}</span></li>)}</ul>
           <p className="muted">Link them to their lines or dismiss them on the <Link href={`/opportunities/${id}/trace`}>Requirement Traceability</Link> step.</p></>}
         {q.needs_owner.length > 0 && <div data-tour="asm-needs-owner"><h3>Needs an owner ({q.needs_owner.length})</h3>
-          <p className="muted">Product requirements no participating unit holds are not sent. Assign a unit in Traceability (pane 3), let the matched unit take part, or record a capability gap: why no unit can offer it.</p>
+          <p className="muted">Product requirements no participating unit holds are not sent. Route it to a unit under Routing below, let the matched unit take part, or record a capability gap: why no unit can offer it.</p>
           <ul className="per-req">{q.needs_owner.map((o) => <li key={o.req_id}>
             <Link className="mono" href={`/opportunities/${id}/trace#${o.req_id}`}>{o.req_id}</Link> {o.text}
             {o.suggested.length > 0 && <span className="muted"> (matched to {o.suggested.join(", ")}, not taking part)</span>}
@@ -99,8 +114,9 @@ export default function AssessmentPage() {
               <label><span className="sr-only">Why no unit can offer {o.req_id}</span><input name="reason" required placeholder="Capability gap: why no unit can offer it" /></label>
               <button className="secondary sm" disabled={!!busy}>Record capability gap</button></form>}
           </li>)}</ul></div>}
-        {q.rule_warnings.length > 0 && <><h3>Engineering rule warnings ({q.rule_warnings.length})</h3>
-          <ul className="per-req">{q.rule_warnings.map((r) => <li key={r.id}><span className="mono">{r.id}</span> <StatusBadge status={r.status} /> {r.note}</li>)}</ul></>}
+        {q.rule_warnings.length > 0 && <><h3>Engineering rule warnings ({q.rule_warnings.length}){resolved && <span className="muted"> · resolved at the bid decision</span>}</h3>
+          <ul className="per-req">{q.rule_warnings.map((r) => <li key={r.id}><StatusBadge status={resolved ? "pass" : r.status} label={resolved ? "checked" : undefined} /> {r.note}</li>)}</ul>
+          {resolved && <p className="muted">Checked by {data.decision!.decided_by}: {resolved}</p>}</>}
         {notRead.length > 0 && <><h3>Not read from the RFP ({notRead.length})</h3>
           <ul className="per-req">{notRead.map((t) => <li key={t}>{t}</li>)}</ul>
           <p className="muted">The RFP step shows which pages; the register was frozen without them.</p></>}
@@ -113,6 +129,7 @@ export default function AssessmentPage() {
           {part && <span className="muted">Recorded by <strong>{part.decided_by}</strong>: {part.units.join(", ")}</span>}</div>
         {part && <p>{part.rationale}
           {part.rationale && <> <SendToKnowledge kind="decision" refId={part.id} status={sent?.[`decision:${part.id}`]} onSent={reloadSent} /></>}</p>}
+        <ChangeGate done={bm ? decided && !!part : !!part} canChange={bm} label="Change participation…">
         <form className="form" action={recordParticipation}>
           <fieldset className="dec-units"><legend className="sr-only">Business units</legend>
             {data.units.map((u) => (
@@ -124,26 +141,40 @@ export default function AssessmentPage() {
           <button disabled={!!busy || !bm}>Record participation</button>
           {busy === "participation" && <Busy label="Recording…" />}
           {!bm && <span className="muted">Only the bid manager records participation.</span>}
-        </form>
+        </form></ChangeGate>
       </section>
 
       <section className="card" data-tour="asm-routing">
-        <div className="card-head"><h2>Routing</h2>
+        <div className="card-head"><h2>2. Route requirements to teams</h2>
           <span className="muted">{count("unit")} to units · {count("bid_desk")} to the bid desk · {count("capability_gap")} capability gap(s) · {count("needs_owner")} need an owner{part ? "" : " (preview with the suggested units)"}</span></div>
+        <p className="muted">Only the unit changes here; the unit's designer / engineer confirms or corrects the solution in Traceability.</p>
         <details><summary>Requirement → unit → specialists ({data.routing.length})</summary>
-          <div className="table-scroll"><table className="dense">
-            <thead><tr><th>Requirement</th><th>Category</th><th>Route</th><th>Unit and product</th><th>Specialists</th></tr></thead>
+          <div className="table-scroll"><table className="dense stack-sm">
+            <thead><tr><th>Requirement</th><th>Category</th><th>Route</th><th>Unit</th><th>Specialists</th>{bm && <th>Change</th>}</tr></thead>
             <tbody>{data.routing.map((r) => (
               <tr key={r.req_id}><td><Link className="mono" href={`/opportunities/${id}/trace#${r.req_id}`}>{r.req_id}</Link> {r.text}</td>
-                <td>{r.category}</td><td className={r.route === "needs_owner" ? "warn" : undefined}>{ROUTE[r.route]}</td>
-                <td>{r.units.map((u) => <div key={u.bu}>{u.bu === "BID" ? "Bid desk" : u.bu}{u.product_id && <span className="mono muted"> {u.product_id}</span>}</div>)}</td>
-                <td>{r.units.map((u) => <div key={u.bu}>{u.specialists.join(", ") || "—"}</div>)}</td></tr>))}</tbody>
+                <td data-label="Category">{categoryLabel(r.category)}</td><td data-label="Route" className={r.route === "needs_owner" ? "warn" : undefined}>{ROUTE[r.route]}</td>
+                <td data-label="Unit">{r.units.map((u) => <div key={u.bu}>{u.bu === "BID" ? "Bid desk" : u.bu}</div>)}</td>
+                <td data-label="Specialists">{r.units.map((u) => <div key={u.bu}>{u.specialists.join(", ") || "—"}</div>)}</td>
+                {bm && <td>{routeEdit !== r.req_id
+                  ? <button className="secondary sm" disabled={!!busy} onClick={() => setRouteEdit(r.req_id)}>Change unit</button>
+                  : <form className="inline" action={(f) => routeTo(r.req_id, f)}>
+                    <fieldset className="dec-units"><legend className="sr-only">Units for {r.req_id}</legend>
+                      {data.units.filter((u) => u.status === "active").map((u) => (
+                        <label key={u.code} className="check"><input type="checkbox" name="units" value={u.code} defaultChecked={r.units.some((x) => x.bu === u.code)} /> {u.code}</label>))}
+                    </fieldset>
+                    <button className="sm" disabled={!!busy}>Save</button>
+                    <button type="button" className="secondary sm" disabled={!!busy} onClick={() => setRouteEdit(undefined)}>Cancel</button>
+                    {busy === "route" && <Busy label="Saving…" />}
+                  </form>}</td>}</tr>))}</tbody>
           </table></div></details>
       </section>
 
       <section className="card" data-tour="asm-send">
-        <div className="card-head"><h2>2. Send for assessment</h2>
-          <span className="muted">Sends each participating unit its work. Repeat after changing matches or participation: new work is sent, work that no longer fits is withdrawn.</span></div>
+        <div className="card-head"><h2>3. Send for assessment</h2>
+          <span className="muted">Sends each participating unit its work. Repeat after changing matches, routing or participation: new work is sent, work that no longer fits is withdrawn.</span></div>
+        {data.sent && <p>Sent to the participating units.</p>}
+        <ChangeGate done={bm ? decided && data.sent : data.sent} canChange={bm} label="Send again…">
         <div className="row">
           <button disabled={!!busy || !part || data.no_go || !bm || !data.published} onClick={send} data-tour="asm-send-button">Send for assessment</button>
           {!data.published && <span className="muted">The register is frozen automatically when the RFP has been read (RFP step).</span>}
@@ -151,16 +182,16 @@ export default function AssessmentPage() {
           {!part && <span className="muted">Record which business units take part first.</span>}
           {data.no_go && <span className="muted">The bid is marked no-go: nothing is sent until a go decision resumes it.</span>}
           {part && !data.no_go && !bm && <span className="muted">Only the bid manager sends the bid for assessment.</span>}
-        </div>
+        </div></ChangeGate>
         {data.sent && <><h3>Progress per unit</h3>
           <table className="dense" data-tour="asm-progress"><thead><tr><th>Unit</th><th className="num">Items</th><th className="num">Answered</th><th className="num">Validated</th></tr></thead>
             <tbody>{Object.entries(data.progress).map(([bu, p]) => (
-              <tr key={bu}><td><Link href={`/inbox/${bu}`}>{bu === "BID" ? BID_DESK : bu}</Link></td>
+              <tr key={bu}><td><Link href={`/inbox/${bu}`}>{bu === "BID" ? "Bid desk and capability gaps" : bu}</Link></td>
                 <td className="num">{p.total}</td><td className="num">{p.submitted}</td><td className="num">{p.validated}</td></tr>))}</tbody></table>
           <p className="muted">When the units have answered, the bid manager decides on the <Link href={`/opportunities/${id}/decisions`}>Bid decision</Link> step.</p></>}
       </section>
 
-      <ScheduleCard oppId={id} />
+      <ScheduleCard oppId={id} part="schedule" decided={decided} />
     </div>
   );
 }

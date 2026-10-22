@@ -4,6 +4,7 @@
 .cons-summary { font-size: var(--fs-lg); }
 .cons-table .col-id { width: 130px; } .cons-table .col-cat { width: 110px; } .cons-table .col-units { width: 16%; }
 .cons-table .col-state { width: 20%; } .cons-table .col-comp { width: 150px; } .cons-table .col-src { width: 120px; }
+.cons-table td.mono { white-space: nowrap; } /* a requirement ID on one line */
 .cons-response { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: var(--s1); }
 .matrix-filters { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: end; margin: var(--s4) 0 var(--s2); }
 .matrix-filters label { display: flex; flex-direction: column; gap: var(--s1); font-size: var(--fs-sm); font-weight: 600; color: var(--muted); }
@@ -79,7 +80,7 @@
 .resp-history > summary { cursor: pointer; color: var(--accent); font-size: var(--fs-sm); }
 .resp-history-list { margin: var(--s2) 0 0; padding-left: 18px; display: grid; gap: var(--s2); font-size: var(--fs-sm); }
 .act-table { table-layout: auto; } .act-table td, .act-table th { vertical-align: top; }
-.act-when { white-space: nowrap; } .act-detail { min-width: 220px; overflow-wrap: anywhere; }
+.act-when { white-space: nowrap; } .act-table .mono { white-space: nowrap; } /* an ID never breaks mid-ID */ .act-detail { min-width: 220px; overflow-wrap: anywhere; }
 .act-raw { margin-top: var(--s1); font-size: var(--fs-sm); } .act-raw summary { cursor: pointer; color: var(--accent); }
 .act-raw pre { margin: var(--s1) 0 0; max-height: 180px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--surface-2); border-radius: 4px; padding: var(--s2); }
 .matrix-filters .act-req { flex: 1 1 200px; } .matrix-filters .act-req input { width: 100%; }

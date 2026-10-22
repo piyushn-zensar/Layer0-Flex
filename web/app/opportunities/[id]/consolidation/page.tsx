@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { memo, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { useApi } from "@/lib/api";
-import { complianceLabel, docTypeLabel } from "@/lib/types";
+import { categoryLabel, complianceLabel, docTypeLabel } from "@/lib/types";
 import type { Doc } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, EmptyState, Skeleton, StatusBadge } from "@/components/ui";
@@ -54,16 +54,16 @@ const Row = memo(function Row({ row, href, selected, onSelect }: { row: MatrixRo
       onKeyDown={(e) => { if (e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onSelect(key); } }}>
       <td className="mono"><Link href={href} title="Open in Traceability">{row.req_id}</Link></td>
       <td>{row.requirement}</td>
-      <td><span className="tag">{row.category}</span></td>
-      <td>{row.unit
-        ? <><strong>{row.unit}</strong><div className="muted">{row.unit_name}</div>{row.product && <div className="muted">{row.product}</div>}</>
+      <td data-label="Category"><span className="tag">{categoryLabel(row.category)}</span></td>
+      <td data-label="Unit">{row.unit
+        ? <><strong>{row.unit}</strong><div className="muted">{row.unit_name}</div>{row.solution?.area && <div className="muted">{row.solution.area}</div>}</>
         : <span className="muted">not assigned</span>}</td>
-      <td>{row.status ? <StatusBadge status={row.status} /> : <StatusBadge status={row.state} />}
+      <td data-label="Response">{row.status ? <StatusBadge status={row.status} /> : <StatusBadge status={row.state} />}
         {row.response && <div className="muted cons-response" title={row.response}>{row.response}</div>}
         {row.assignment_id != null && <button type="button" className="link row-history" onClick={(e) => { e.stopPropagation(); onSelect(key, true); }}
           aria-label={`Show the history of ${row.req_id} for ${row.unit}`}>History</button>}</td>
-      <td>{row.compliance ? <ComplianceBadge row={row} /> : <span className="muted">{row.unit ? "No compliance yet" : ""}</span>}</td>
-      <td className="muted">{row.source}</td>
+      <td data-label="Compliance">{row.compliance ? <ComplianceBadge row={row} /> : <span className="muted">{row.unit ? "No compliance yet" : ""}</span>}</td>
+      <td className="muted" data-label="Source">{row.source}</td>
     </tr>
   );
 });
@@ -102,12 +102,12 @@ export default function ConsolidationPage() {
     return m;
   }, [rows]);
   const reasons = useMemo(() => new Map([...byReq].map(([k, v]) => [k, reasonOf(v)] as const)), [byReq]);
-  const haystack = useMemo(() => (rows ?? []).map((r) => [r.req_id, r.requirement, r.quote, r.source, r.unit, r.unit_name, r.product, r.response, r.category]
+  const haystack = useMemo(() => (rows ?? []).map((r) => [r.req_id, r.requirement, r.quote, r.source, r.unit, r.unit_name, r.solution?.area, r.response, r.category]
     .filter(Boolean).join(" ").toLowerCase()), [rows]);
   const options = useMemo(() => {
     const units = new Map<string, string>();
     for (const r of rows ?? []) if (r.unit) units.set(r.unit, r.unit_name);
-    const compliance = ["met", "partial", "not_met", "exception"].filter((c) => rows?.some((r) => r.compliance === c));
+    const compliance = ["met", "partial", "deviation", "not_met", "exception"].filter((c) => rows?.some((r) => r.compliance === c));
     return { units: [...units].sort(([a], [b]) => a.localeCompare(b)), compliance, categories: [...new Set((rows ?? []).map((r) => r.category))].sort(),
       unassigned: !!rows?.some((r) => !r.unit), unanswered: !!rows?.some((r) => r.unit && !r.compliance) };
   }, [rows]);
@@ -159,7 +159,7 @@ export default function ConsolidationPage() {
 
       {rows.length === 0 ? (
         <div data-tour="cons-empty">
-          <EmptyState title="No requirements in the baseline yet" hint="Read the RFP first: its register is frozen then, and the coverage check runs against that baseline.">
+          <EmptyState title="No frozen requirements yet" hint="Read the RFP first: its register is frozen then, and the coverage check runs against them.">
             <Link className="button secondary" href={`/opportunities/${id}/trace`}>Requirement Traceability</Link>
           </EmptyState>
         </div>
@@ -167,7 +167,7 @@ export default function ConsolidationPage() {
         <>
           <div className="matrix-filters" role="search" aria-label="Filter the compliance matrix" data-tour="cons-filter">
             <label className="mf-search">Search
-              <input type="search" value={f.q} placeholder="Requirement, ID, unit, product, response…" onChange={(e) => set({ q: e.target.value })} />
+              <input type="search" value={f.q} placeholder="Requirement, ID, unit, proposed solution, response…" onChange={(e) => set({ q: e.target.value })} />
             </label>
             <label>Unit
               <select value={f.unit} onChange={(e) => set({ unit: e.target.value })}>
@@ -192,7 +192,7 @@ export default function ConsolidationPage() {
             <label>Category
               <select value={f.category} onChange={(e) => set({ category: e.target.value })}>
                 <option value="">All</option>
-                {options.categories.map((c) => <option key={c} value={c}>{c}</option>)}
+                {options.categories.map((c) => <option key={c} value={c}>{categoryLabel(c)}</option>)}
               </select>
             </label>
             <div className="mf-actions">
@@ -208,7 +208,7 @@ export default function ConsolidationPage() {
           <div className={`matrix-layout${selected ? " has-detail" : ""}`}>
           <div className="matrix-main">
           <div className="table-scroll">
-            <table className="cons-table" data-tour="cons-table">
+            <table className="cons-table stack-sm" data-tour="cons-table">
               <thead><tr>
                 <th className="col-id">ID</th><th>Requirement</th><th className="col-cat">Category</th>
                 <th className="col-units" data-tour="cons-col-units">Unit</th>

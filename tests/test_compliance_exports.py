@@ -1,5 +1,6 @@
-"""J-11: the CSV and Excel compliance matrix. Compliance reads Fully / Partially / Non-compliant; Reason, Conditions,
-Workaround and Next Steps are appended last (blank until A-18 stores them); everything else stays where it was.
+"""J-11: the CSV and Excel compliance matrix. Compliance reads Compliant / Partially compliant / Compliant with changes /
+Non-compliant (C-43); Reason, Conditions, Proposed change and Next Steps are appended last (blank until A-18 stores them); everything else stays where it was.
+The customer sheet has no Next Steps (internal: Tracking only), customer-facing unit names and no prefix on the bid desk's statements.
 
 Run:  .venv\\Scripts\\python -m pytest -q tests/test_compliance_exports.py
 Uses a temporary store, so it never touches your local database (no model call: frozen answers only).
@@ -21,10 +22,10 @@ from app.modules.consolidation import excel, service  # noqa: E402
 from app.modules.workpackages.models import Assignment  # noqa: E402
 from scripts import seed_demo  # noqa: E402
 
-ORIGINAL = ["Requirement ID", "Source", "Category", "Requirement", "Quote", "Business unit", "Product", "Offering type",
+ORIGINAL = ["Requirement ID", "Source", "Category", "Requirement", "Quote", "Business unit", "Proposed solution", "Type of offer",
             "Compliance", "Response", "Validated by", "State", "Assignment status", "Responded by"]
-NEW = ["Reason", "Conditions", "Workaround", "Next Steps"]
-CUSTOMER_ORIGINAL = ["Requirement ID", "RFP reference", "Requirement", "RFP wording", "Compliance", "Response", "Offered by"]
+NEW = ["Reason", "Conditions", "Proposed change", "Next Steps"]
+CUSTOMER_ORIGINAL = ["Requirement ID", "RFP reference", "Requirement", "RFP wording", "Compliance", "Response", "Proposed solution"]
 
 
 def _seeded():
@@ -81,9 +82,9 @@ def test_csv_compliance_wording_and_one_row_per_assignment():
     assert len(body) == 16  # two more assignments, two more rows
     mine = {r[5]: r for r in body if r[0] == first}
     assert set(mine) == {"CROWN", "EP2"}  # one requirement, two units: each keeps its own answer
-    assert mine["CROWN"][8] == "Fully" and mine["EP2"][8] == "Partially" and mine["EP2"][9] == "Auxiliary supply only"
+    assert mine["CROWN"][8] == "Compliant" and mine["EP2"][8] == "Partially compliant" and mine["EP2"][9] == "Auxiliary supply only"
     words = {r[8] for r in body}
-    assert {"Fully", "Partially", "Non-compliant", "Exception", ""} >= words and "Non-compliant" in words  # "Exception" is the seed's earlier value
+    assert {"Compliant", "Partially compliant", "Compliant with changes", "Non-compliant", "Exception", ""} >= words and "Non-compliant" in words  # "Exception" is the seed's earlier value
     assert not words & {"met", "partial", "not_met", "Comply", "Partially comply", "Does not comply"}
     assert next(r for r in body if r[8] == "") [10] == ""  # a row with no result stays blank (assigned: no validation either)
     # the stored values are untouched: the matrix endpoint still reports them
@@ -96,7 +97,7 @@ def test_csv_extended_cells_are_filled_and_formula_safe():
                                                                   next_steps="Ask the customer")
     row = service._row(req, None, a, "pending")
     assert len(row) == 18 and row[3] == "'=HYPERLINK(\"http://x\")"  # the existing guard still applies
-    assert row[8] == "Partially"
+    assert row[8] == "Partially compliant"
     assert row[14:] == ["'=1+1", "Needs site survey", "'+cmd", "Ask the customer"]  # new cells are guarded too
     assert service._row(req, None, None, "not_assigned")[14:] == ["", "", "", ""]  # a requirement nobody holds
     assert service._row(req, None, SimpleNamespace(**{k: v for k, v in vars(a).items() if k not in ("reason", "workaround")}), "pending")[14:] \
@@ -110,17 +111,17 @@ def test_excel_sheets_headers_and_formatting():
     ws, tr = wb["Compliance matrix"], wb["Tracking"]
     assert ws["A1"].value.startswith("Compliance matrix: ") and ws["A1"].font.bold and ws["A2"].value.startswith("Customer: ")
     head = [c.value for c in ws[4] if c.value]
-    assert head == CUSTOMER_ORIGINAL + NEW  # customer sheet: originals first, new ones appended
+    assert head == CUSTOMER_ORIGINAL + NEW[:3]  # customer sheet: originals first, new ones appended, no internal Next Steps
     assert [c.value for c in tr[1] if c.value] == ORIGINAL + NEW
     assert ws.freeze_panes == "A5" and tr.freeze_panes == "A2"
-    assert ws.auto_filter.ref == f"A4:K{ws.max_row}" and tr.auto_filter.ref == f"A1:R{tr.max_row}"
+    assert ws.auto_filter.ref == f"A4:J{ws.max_row}" and tr.auto_filter.ref == f"A1:R{tr.max_row}"
     for sheet, first in ((ws, 5), (tr, 2)):
         assert sheet.max_row > first
         assert all(c.alignment.wrap_text for c in sheet[first])  # wrapped text kept on data rows
         assert all(c.alignment.wrap_text for c in sheet[first - 1] if c.value)  # and on the header
     widths = {name: ws.column_dimensions[chr(65 + i)].width for i, name in enumerate(head)}
     assert widths["Requirement"] == 48 and widths["Response"] == 60  # existing widths unchanged
-    assert all(widths[n] >= 40 for n in NEW)  # room for long future values
+    assert all(widths[n] >= 40 for n in NEW[:3])  # room for long future values
     assert all(tr.column_dimensions[chr(65 + i)].width >= 40 for i in range(14, 18))
     assert all(cell.data_type != "f" for sheet in wb for row in sheet.iter_rows() for cell in row)  # never a formula
 
@@ -130,9 +131,9 @@ def test_excel_wording_blank_extended_cells_and_deterministic_cells():
     wb = _xlsx(client, opp)
     ws, tr = wb["Compliance matrix"], wb["Tracking"]
     words = {row[4] for row in ws.iter_rows(min_row=5, values_only=True)}
-    assert "Fully" in words and words <= {"Fully", "Partially", "Non-compliant", "Exception", "Open"}
-    assert {row[8] for row in tr.iter_rows(min_row=2, values_only=True)} <= {"Fully", "Partially", "Non-compliant", "Exception", None, ""}
-    for sheet, start, cols in ((ws, 5, range(7, 11)), (tr, 2, range(14, 18))):
+    assert "Compliant" in words and words <= {"Compliant", "Partially compliant", "Compliant with changes", "Non-compliant", "Exception", "Open"}
+    assert {row[8] for row in tr.iter_rows(min_row=2, values_only=True)} <= {"Compliant", "Partially compliant", "Compliant with changes", "Non-compliant", "Exception", None, ""}
+    for sheet, start, cols in ((ws, 5, range(7, 10)), (tr, 2, range(14, 18))):
         assert all(row[i] in (None, "") for row in sheet.iter_rows(min_row=start, values_only=True) for i in cols)  # blank until A-18
     again = _xlsx(client, opp)
     for name in wb.sheetnames:
@@ -149,15 +150,19 @@ def test_excel_customer_sheet_with_populated_extended_fields_and_two_units():
     open_one = _fake_answer(id=3, bu="CROWN", status="submitted", compliance="not_met", reason="Not yet validated", response="No")
     rows = [{"req": _fake_req("REQ-9-0001"), "assignments": [crown, ep2]},
             {"req": _fake_req("REQ-9-0002"), "assignments": [open_one]},
-            {"req": _fake_req("REQ-9-0003"), "assignments": [_fake_answer(id=4, compliance="not_met", reason="=SUM(A1)")]}]
+            {"req": _fake_req("REQ-9-0003"), "assignments": [_fake_answer(id=4, compliance="not_met", reason="=SUM(A1)")]},
+            {"req": _fake_req("REQ-9-0004"), "assignments": [_fake_answer(id=5, bu="BID", compliance="not_met", reason="Gap",
+                                                                          response="Not offered in this tender")]}]
     tracking = [service._row(r["req"], None, a, "answered") for r in rows for a in r["assignments"]]
-    wb = load_workbook(io.BytesIO(excel.build("Test bid", "Customer", rows, {}, lambda c: c.title(), service.COLUMNS, tracking)))
+    name = lambda c: "" if c == "BID" else c.title()  # noqa: E731  (the customer-facing name; the bid desk has none)
+    wb = load_workbook(io.BytesIO(excel.build("Test bid", "Customer", rows, {}, name, service.COLUMNS, tracking)))
     ws = wb["Compliance matrix"]
     data = {r[0]: r for r in ws.iter_rows(min_row=5, values_only=True)}
     first = data["REQ-9-0001"]
-    assert first[4] == "Partially"  # the worst validated answer wins
-    assert first[7:] == ("Crown: Lead time", "Crown: Site survey", "Crown: Phase 1 now", "Crown: Confirm date")  # EP2 has none: no line
-    assert data["REQ-9-0002"][4] == "Open" and data["REQ-9-0002"][7:] == (None, None, None, None)  # not validated: nothing shown
+    assert first[4] == "Partially compliant"  # the worst validated answer wins
+    assert first[7:] == ("Crown: Lead time", "Crown: Site survey", "Crown: Phase 1 now")  # EP2 has none: no line; no Next Steps
+    assert data["REQ-9-0002"][4] == "Open" and data["REQ-9-0002"][7:] == (None, None, None)  # not validated: nothing shown
+    assert data["REQ-9-0004"][5:8] == ("Not offered in this tender", None, "Gap")  # the bid desk: no prefix, no unit
     assert data["REQ-9-0003"][4] == "Non-compliant" and data["REQ-9-0003"][7] == "Crown: =SUM(A1)"
     assert all(c.data_type != "f" for row in ws.iter_rows() for c in row)  # stays text, never a formula
     track = list(wb["Tracking"].iter_rows(min_row=2, values_only=True))

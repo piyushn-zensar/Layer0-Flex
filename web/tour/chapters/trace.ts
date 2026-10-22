@@ -1,5 +1,6 @@
-// Walkthrough chapter 6: Traceability and product matching (app/opportunities/[id]/trace, components/matching/MatchActions).
-// Targets are data-tour ids on the trace page; "trace-sel-*" and "match-*" sit on the selected row only.
+// Walkthrough chapter 6: Traceability and proposed solutions (app/opportunities/[id]/trace, components/matching/MatchActions).
+// Targets are data-tour ids on the trace page; "trace-sel-*" and "match-*" sit on the selected row only. "trace-match-button"
+// (Propose solutions) is shown only to the bid manager before the go/no-go is recorded; the steps fall back to text otherwise.
 import type { TourChapter, TourCtx } from "../types";
 import { present, statusIn, textIn, openDetails } from "../helpers";
 
@@ -11,7 +12,8 @@ const DECIDED = ["go", "no_go", "dispatched", "consolidating", "submitted"];
 const rows3 = (ctx: TourCtx) => Array.from(ctx.el("trace-table-3")?.querySelectorAll<HTMLElement>("tr[data-req]") ?? []);
 const selectedRow = (ctx: TourCtx) => rows3(ctx).find((tr) => tr.classList.contains("selected"));
 const hasUnit = (tr: HTMLElement) => tr.querySelector(".trace-unit") !== null;
-const isProposed = (tr: HTMLElement) => hasUnit(tr) && (tr.querySelector(".match-meta")?.textContent ?? "").includes("proposed");
+/** P-44: a proposed match the signed-in user may act on (its Accept is enabled: the API's can_change). */
+const canAct = (tr: HTMLElement) => [...tr.querySelectorAll<HTMLButtonElement>(".row-actions button")].some((b) => b.textContent === "Accept" && !b.disabled);
 /** Select the first row that satisfies `pick` unless the selected row already does (a click on the row = the page's select()). */
 const selectRow = (pick: (tr: HTMLElement) => boolean) => (ctx: TourCtx) => {
   const current = selectedRow(ctx);
@@ -24,16 +26,16 @@ const currentReq = () => decodeURIComponent(window.location.hash.slice(1));
 const chapter: TourChapter = {
   id: "trace",
   order: 6,
-  title: "Traceability and product matching",
-  summary: "Follow every requirement from the RFP page to the unit and product that will answer it: run the matcher, read a match, accept or change it.",
+  title: "Traceability and proposed solutions",
+  summary: "Follow every requirement from the RFP page to the unit and its proposed solution that will answer it: propose solutions, read a match; the unit's designer / engineer accepts or corrects it.",
   entryRoute: ROUTE,
   steps: [
     {
       id: "trace-intro", route: ROUTE,
       title: "Requirement Traceability: three panes",
       body: [
-        "This is **Requirement Traceability**, the second step of the workflow and the page most people work from. Pane 1 is the original RFP page with the requirement's lines highlighted, pane 2 is the requirement register (chapter 5) and pane 3 is the product mapping with the units' responses.",
-        "It exists because every answer in a bid must trace back to the customer's own words. Selecting a requirement in any pane selects it in all three, and every pane that is **Linked** follows it (pane 1 turns to its source page), so a reviewer can check in seconds whether a requirement, a product choice or a unit's answer really corresponds to what the RFP says.",
+        "This is **Requirement Traceability**, the second step of the workflow and the page most people work from. Pane 1 is the original RFP page with the requirement's lines highlighted, pane 2 is the requirement register (chapter 5) and pane 3 is the proposed solution with the units' responses.",
+        "It exists because every answer in a bid must trace back to the customer's own words. Selecting a requirement in any pane selects it in all three, and every pane that is **Linked** follows it (pane 1 turns to its source page), so a reviewer can check in seconds whether a requirement, a proposed solution or a unit's answer really corresponds to what the RFP says.",
         "The panes are a workspace: you can enlarge one, drag them into another order, resize them and open any of them in a window of its own for a second screen. The next steps show each of these.",
       ],
       fallback: "The three panes are not on the page yet (the trace is still loading, or this bid has no requirements).",
@@ -44,9 +46,9 @@ const chapter: TourChapter = {
       body: [
         "Pane 1 renders one page of the RFP as an image (`/api/documents/<doc>/pages/<n>.png`) and draws a highlight box over every requirement anchored on that page. The boxes come from the reader: each requirement stores its page and the bounding boxes of the lines it was quoted from, so the highlight sits exactly on the customer's text, not on an approximation.",
         "The highlight of the selected requirement is drawn in the selected style; the others are faint. Click any highlight to select that requirement: the linked panes 2 and 3 scroll to it. A group (a requirement merged from several line items) is highlighted through its sub-requirements on the same page.",
-        "A requirement with no highlight on a page is an **exception**: the reader found it but its quote could not be matched word for word, so it waits on the Exceptions tab of pane 2 instead of the register.",
+        "A requirement with no highlight on a page **needs a source check**: the reader found it but its quote could not be matched word for word, so it waits on the Needs a source check tab of pane 2 instead of the register.",
       ],
-      fallback: "Pane 1 is empty: this opportunity has no readable RFP page (no main document, or it is still being read).",
+      fallback: "Pane 1 is empty: this bid has no readable RFP page (no main document, or it is still being read).",
     },
     {
       id: "trace-pager", route: ROUTE, target: "trace-pager", placement: "bottom",
@@ -70,18 +72,18 @@ const chapter: TourChapter = {
       id: "trace-pane-2", route: ROUTE, target: "trace-pane-2", placement: "left",
       title: "Pane 2: the requirement register",
       body: [
-        "Pane 2 lists every current requirement in document order: 312 for the Syracuse RFP. Each row is a link into the other two panes; the selected row is marked and keeps the keyboard focus (Enter or Space selects a row). The register, its Exceptions tab, corrections and history were the subject of chapter 5; **enlarge** this pane to work in it at full width.",
+        "Pane 2 lists every current requirement in document order: 312 for the Syracuse RFP, in three columns (selection, ID, Requirement). Each row is a link into the other two panes; the selected row is marked and keeps the keyboard focus (Enter or Space selects a row). The register, its Needs a source check tab, corrections and history were the subject of chapter 5; **enlarge** this pane to work in it at full width.",
       ],
       fallback: "No requirements yet: nothing has been extracted from the RFP for this bid.",
     },
     {
       id: "trace-pane-3", route: ROUTE, target: "trace-pane-3", placement: "left",
-      title: "Pane 3: product mapping and responses",
+      title: "Pane 3: proposed solution and responses",
       body: [
-        "Pane 3 has one row per requirement, aligned with pane 2. The **Unit · product** column shows the business unit, the product and its offering type, the rationale, the bill of materials and the match actions. The **Response** column shows the work item of each unit after dispatch, with its status and the unit's answer.",
-        "Before matching, every row reads *not matched yet*; after matching, a product item shows its unit and product, and a non-product item reads *Bid manager (not a product item)*. Until the bid is sent for assessment the Response column reads *Responses appear once the bid is sent for assessment*; once it is sent, a requirement without work reads *not dispatched*.",
+        "Pane 3 has one row per requirement, aligned with pane 2. The **Proposed solution** column shows the business unit and the solution area (unit · solution area), with published models only as examples, the type of offer, the rationale, an example bill of materials and the match actions. It assesses the unit's solution for the requirement, not a part number. The **Response** column shows the work item of each unit once the work is sent, with its status and the unit's answer.",
+        "Before solutions are proposed, every row reads *Not matched yet*. Afterwards a product item shows its proposed solution; a non-product item reads *Bid desk (not a product item)* or *Not a product item: answered by the unit managers* with their units; a product item no participating unit takes reads *Needs an owner* until the bid manager routes it or records a gap, then *Capability gap: not offered*. Until the bid is sent for assessment the Response column reads *Responses appear once the bid is sent for assessment*; once it is sent, a requirement without work reads *Not sent to units*.",
       ],
-      fallback: "Nothing to map yet: product mappings and unit responses appear once requirements exist.",
+      fallback: "Nothing to map yet: proposed solutions and unit responses appear once requirements exist.",
     },
     {
       id: "trace-pane-controls", route: ROUTE, target: "trace-link-2", placement: "bottom",
@@ -136,58 +138,59 @@ const chapter: TourChapter = {
     },
     {
       id: "trace-legend", route: ROUTE, target: "trace-legend", placement: "bottom",
-      title: "Offering types: CTO, Semi-custom, ETO",
+      title: "Types of offer: CTO, Semi-custom, ETO",
       body: [
-        "Every product match carries an offering type. **CTO** (configure-to-order) is a catalog product with options, quoted through CPQ. **Semi-custom** is a configured product plus workshop work for this customer. **ETO** (engineered-to-order) is designed for this requirement.",
-        "The type is proposed by the matcher from the catalog's usual type for the product and the wording of the requirement; a person can change it. It drives the Bid decision page: CTO counts as *fully* satisfied, Semi-custom and ETO as *partly* until a unit answers, and an offering type below a unit's default tier (for example CTO for Crown, whose default is guided ETO) is flagged for an engineer.",
+        "Every product match carries a type of offer. **CTO** (configure-to-order) is a catalog product with options, quoted through CPQ. **Semi-custom** is a configured product plus workshop work for this customer. **ETO** (engineered-to-order) is designed for this requirement.",
+        "The type is proposed by the matcher from the catalog's usual type for the product and the wording of the requirement; a person can change it. It drives the Bid decision page: until a unit answers, CTO counts as *Compliant*, Semi-custom and ETO as *Partially compliant*, and a type of offer below a unit's usual type of offer (for example CTO for Crown, whose usual type is guided ETO) is flagged for an engineer.",
       ],
     },
     {
       id: "trace-unit-responses", route: ROUTE, target: "trace-unit-responses", placement: "bottom",
       title: "Unit responses at a glance",
       body: [
-        "The toolbar sums up the units' work on this opportunity: one badge per unit with *validated / total*, for example **CROWN 1/93 validated**; hover to see how many answers were submitted. The badge is green when everything is validated, blue while answers are coming in, amber while items are still only assigned. BID is the bid desk.",
-        "Until the bid is sent for assessment it reads *Not sent for assessment yet* and shows no badges. The same numbers appear on the portfolio page and feed the consolidation step.",
+        "The toolbar sums up the units' work on this bid: one badge per unit with *validated / total*, for example **CROWN 1/118 validated**; hover to see how many answers were submitted. The badge is green when everything is validated, blue while answers are coming in, amber while items are still only assigned. BID is the bid desk.",
+        "Until the bid is sent for assessment it reads *Not sent for assessment yet* and shows no badges. The same numbers appear on the Bids page and feed the Compliance matrix.",
       ],
     },
     {
       id: "trace-match-explain", route: ROUTE, target: "trace-match-button", placement: "bottom",
-      title: "What Match products does",
+      title: "What Propose solutions does",
       body: [
-        "**Match products** runs the matching agent over every approved requirement that nobody has decided yet. It proposes, for each one, the business unit(s), the product and the offering type, with a rationale; accepted, manually set and rejected matches are a person's decision and are kept as they are (the toast reports them as *kept*).",
-        "How it works: requirements outside the product categories (anything but technical and compliance) go to the bid desk **by rule**, without a model call. The rest are sent **one page at a time** (at most 15 per call) with the page's header block and the whole product catalog and past responses in the prompt; the answer may only name catalog products, the unit is taken from the product, and at most three units are kept per requirement. An empty answer means *not a product item*.",
-        "When no model answer exists, the fallback is **retrieval only**: the closest catalog entry by text similarity, labelled as such in the row (\"closest catalog entry (no agent answer)\"), or the bid desk when nothing is close enough. For the Syracuse RFP the frozen answers give 312 matches in 64 page calls: 214 by the agent, 98 by rule; Crown 93, EP2 6, bid desk 213.",
+        "**Propose solutions** runs the matching agent over every requirement that nobody has decided yet. It proposes, for each one, the business unit(s), the solution area and the type of offer, with a rationale; accepted, manually set, routed and rejected matches are a person's decision and are kept as they are (the toast reports them as *kept as decided*). The button is the bid manager's and is shown only until the go/no-go is recorded: after that the solutions are the units' answers.",
+        "How it works: requirements outside the product categories (anything but technical and compliance) are routed **by rule**, without a model call. The rest are sent **one page at a time** (at most 15 per call) with the page's header block and the whole product catalog and past responses in the prompt; the answer may only name catalog solution areas, the unit is taken from the solution area, and at most three units are kept per requirement. An empty answer means *not a product item*.",
+        "When no model answer exists, the fallback is **retrieval only**: the closest catalog entry by text similarity, labelled as such in the row (\"closest catalog entry (no agent answer)\"), or the bid desk when nothing is close enough. For the Syracuse RFP the frozen answers give 312 proposals in 64 page calls: 214 by the agent, 98 by rule; Crown 93, EP2 6, and 213 that are not product items.",
       ],
+      fallback: "Propose solutions is shown in the page header to the bid manager only, until the go/no-go is recorded.",
     },
     {
       id: "trace-match-run", route: ROUTE, target: "trace-match-button", placement: "bottom", kind: "action",
-      title: "Run the matcher",
+      title: "Propose solutions",
       body: [
-        "Click **Match products**. A *Matching…* indicator shows while it runs; on the walkthrough opportunity the answers are frozen, so it takes a few seconds. When it finishes a toast reports *Matching done: N requirement(s) matched, M kept as decided* and the page reloads with pane 3 filled.",
+        "Click **Propose solutions**. A *Proposing solutions…* indicator shows while it runs; on the demo bids the answers are frozen, so it takes a few seconds. When it finishes a toast reports *Solutions proposed for N requirement(s); M kept as decided.* and pane 3 fills in.",
         "Running it again later only refreshes proposals that nobody has accepted, rejected or changed; a person's decisions always win over the agent (rule R4).",
       ],
-      instruction: "Click Match products and wait for the toast.",
+      instruction: "Click Propose solutions and wait for the toast.",
       done: matched,
       skipIf: statusIn(...DECIDED),
-      fallback: "The Match products button is in the page header, on the right.",
+      fallback: "Propose solutions is in the page header, on the right, for the bid manager until the go/no-go is recorded.",
     },
     {
       id: "trace-match-result", route: ROUTE, target: "trace-pane-3", placement: "left", onEnter: selectRow(hasUnit),
       title: "What appeared in pane 3",
       body: [
-        "Every row now has a match. Product items show their unit, product and offering badge; the other rows read *Bid manager (not a product item)* with the rationale \"A schedule requirement, not a product item: the bid manager answers it\" (or legal, commercial, submission, staffing). Each match also shows its status badge (**proposed**) and how it came about: *proposed by the matching agent* or *routed to the bid desk by rule*.",
-        "For the Syracuse RFP: 99 product matches (Crown Technical Systems 93, EP² 6), of which 85 ETO, 11 CTO and 3 Semi-custom; 213 go to the bid desk. The walkthrough selected the first matched product row so the next steps can read it.",
-        "Limitations to keep in mind: the agent only sees the page's text and the catalog, so a product it does not know cannot be proposed; and *proposed* means exactly that: nothing is sent to a unit until the bid manager sends the work on the Assessment step.",
+        "Every row now has a match. Product items show their proposed solution (unit · solution area) and type-of-offer badge, with a status badge (**proposed**) and how it came about: *proposed by the matching agent*. The other rows are routed by rule and need no acceptance: submission and legal items read *Bid desk (not a product item)*, and schedule, commercial and staffing items, once sent, read *Not a product item: answered by the unit managers* of the participating units.",
+        "For the Syracuse RFP: 99 product matches (Crown Technical Systems 93, EP² 6), of which 85 ETO, 11 CTO and 3 Semi-custom; 213 are not product items. The walkthrough selected the first matched product row so the next steps can read it.",
+        "Limitations to keep in mind: the agent only sees the page's text and the catalog, so a product it does not know cannot be proposed; and *proposed* means exactly that: nothing is sent to a unit until the bid manager sends the work on the Assessment Summary.",
       ],
     },
     {
       id: "trace-sel-unit", route: ROUTE, target: "trace-sel-unit", placement: "left", onEnter: selectRow(hasUnit),
-      title: "Unit, product and offering type",
+      title: "Proposed solution and type of offer",
       body: [
-        "The first line is the business unit by name (for example **Crown Technical Systems**), the second the catalog product with its offering badge (**Arc-resistant metal-clad MV switchgear**, ETO). The unit always comes from the product: a product belongs to exactly one unit, so the two never disagree.",
-        "When a requirement needs products from several units, the main unit is shown here and the others on an *Also:* line underneath; when the work is sent each participating unit gets its own work item for the requirement.",
+        "The first line reads **Proposed solution: Crown Technical Systems · Arc-resistant metal-clad MV switchgear**: the business unit and the solution area (the product family). Under it, *For example:* names the published models of that family when the catalog lists any, then the type-of-offer badge (ETO). The match assesses the unit's solution for the requirement; a model is an example, not a part number.",
+        "When a requirement needs several units, each unit has its own Proposed solution line, main unit first; when the work is sent each participating unit gets its own work item for the requirement. A unit the bid manager routed reads *solution to be set by the unit's designer / engineer* until the engineer chooses one.",
       ],
-      fallback: "The selected requirement has no product match (it is a bid-desk item or not matched yet). Select a technical requirement in pane 2 to see a unit and product.",
+      fallback: "The selected requirement has no product match (it is a bid-desk item or not matched yet). Select a technical requirement in pane 2 to see a proposed solution.",
     },
     {
       id: "trace-sel-rationale", route: ROUTE, target: "trace-sel-rationale", placement: "left", onEnter: selectRow(hasUnit),
@@ -201,31 +204,33 @@ const chapter: TourChapter = {
     {
       id: "trace-sel-bom", route: ROUTE, target: "trace-sel-bom", placement: "left",
       onEnter: (ctx) => { selectRow(hasUnit)(ctx); openDetails("trace-sel-bom")(ctx); },
-      title: "Bill of materials",
+      title: "Example bill of materials",
       body: [
-        "When the catalog has a bill of materials for the product, a collapsible **Bill of materials (n lines)** lists its items and quantities (the arc-resistant switchgear has 5 lines). It comes from the catalog, not from the RFP: it tells the reviewer what the standard product contains so deviations asked by the RFP stand out.",
+        "When the catalog has a bill of materials for the solution area, a collapsible **Example bill of materials (n lines)** lists its items and quantities (the arc-resistant switchgear has 5 lines). It comes from the catalog, not from the RFP: it tells the reviewer what the family's standard build contains so deviations asked by the RFP stand out.",
         "The Bid decision page compares the RFP's own data sheet with the standard ratings of these products (Deviations from the standard product).",
       ],
       fallback: "The selected product has no bill of materials in the catalog.",
     },
     {
-      id: "trace-match-actions", route: ROUTE, target: "match-buttons", placement: "left", onEnter: selectRow(isProposed),
+      id: "trace-match-actions", route: ROUTE, target: "match-buttons", placement: "left", onEnter: selectRow(canAct),
       title: "Accept, Reject, Change",
       body: [
-        "Under each match are its actions. **Accept** confirms the proposal: the match becomes *accepted* and records who decided. **Reject** marks it *rejected*: the row then reads \"rejected: choose a unit with Change\", the requirement no longer counts for any unit, and a re-run of the matcher does not propose it again (a person's decision). **Change** opens a form to set the units yourself.",
-        "Accept and Reject are shown only while the match is *proposed*; Change is always available. The Bid decision page counts product matches nobody has accepted or changed, so reviewing them here is part of the job before go/no-go.",
+        "Under each match are its actions. **Accept** confirms the proposal: the match becomes *accepted* and records who decided. **Reject** marks it *rejected*: the requirement no longer counts for any unit and a re-run of the matcher does not propose it again (a person's decision). **Change** opens a form to set the units and solutions yourself.",
+        "On a **technical** match these actions belong to the designer / engineer of the matched unit: the buttons are shown only to them, and the server refuses the bid manager (403). The bid manager's first stage is business relevance and routing, not technical approval. Non-technical items stay with the bid manager. Reject hands the requirement back to the bid manager, who routes it on the Assessment Summary (Needs an owner); the bid manager only changes the unit there, never the solution.",
+        "Accept and Reject are shown only while the match is *proposed*. The Bid decision page counts the technical matches the units' designers / engineers have not confirmed yet, so reviewing them here is part of their job before go/no-go.",
       ],
+      example: { label: "Sign in as Crown Design Engineer", apply: (ctx) => (ctx.actor !== "Crown Design Engineer" ? ctx.signInAs("crown.de") : undefined) },
       fallback: "Select a matched requirement in pane 3 to see its actions.",
     },
     {
-      id: "trace-match-accept", route: ROUTE, target: "match-accept", placement: "left", kind: "action", onEnter: selectRow(isProposed),
+      id: "trace-match-accept", route: ROUTE, target: "match-accept", placement: "left", kind: "action", onEnter: selectRow(canAct),
       title: "Accept this match",
       body: [
-        "Click **Accept** on the selected row. The status badge turns to *accepted* and a toast confirms \"<ID>: match accepted.\" Nothing else changes: the unit gets the work only when the bid manager sends it. Accepting is reversible in practice: Change lets you pick another unit at any time.",
+        "Click **Accept** on the selected row. The status badge turns to *accepted* and a toast confirms \"<ID>: match accepted.\" This is the engineer confirming the proposed solution; once the unit's answer is validated as Compliant, the requirement counts as *confirmed* under **Reviewed by design engineers** on the Assessment Summary. Nothing else changes: the unit gets the work only when the bid manager sends it. Accepting is reversible in practice: Change lets the engineer pick another solution at any time.",
       ],
       instruction: "Click Accept on the selected row.",
       done: textIn("match-meta", "accepted"),
-      fallback: "No proposed match is selected (all matches of this opportunity may already be decided). Use Continue.",
+      fallback: "Sign in as a unit's designer / engineer (Use example on the previous step) and select one of that unit's proposed matches. If all matches of this bid are already decided, use Continue.",
     },
     {
       id: "trace-match-change", route: ROUTE, target: "match-change", placement: "left", kind: "action",
@@ -239,10 +244,10 @@ const chapter: TourChapter = {
     },
     {
       id: "trace-match-form", route: ROUTE, target: "match-form", placement: "left",
-      title: "Choosing units, products and offering types",
+      title: "Choosing units, solution areas and types of offer",
       body: [
-        "Each line of the form is one unit: a product selector grouped by business unit (only **active** units are offered: EPC Power is a pending acquisition and cannot be chosen), an offering type selector (CTO, Semi-custom, ETO) and **Remove**. **Add unit** adds a line for requirements that need several units; **Save** stores your choice as a *manual* match with status accepted (\"set by <you>\"); **Cancel** discards the draft.",
-        "Removing every line and saving means *No unit: the bid manager answers it*. Several units give several work items when the work is sent, one per participating unit, each with its first product as the reference.",
+        "Each line of the form is one unit: a solution-area selector grouped by business unit (only **active** units are offered: EPC Power is a pending acquisition and cannot be chosen), a type-of-offer selector (CTO, Semi-custom, ETO) and **Remove**. **Add unit** adds a line for requirements that need several units; **Save** stores your choice as a *manual* match with status accepted (\"set by <you>\"); **Cancel** discards the draft.",
+        "Removing every line and saving hands a technical item back to the bid manager (Needs an owner on the Assessment Summary); for a non-technical item it means the bid manager answers it. Several units give several work items when the work is sent, one per participating unit, each with its solution area as the reference.",
         "If the requirement was already sent to the units, a warning explains that the change takes effect the next time the work is sent: added units get the work (if they take part), removed units have theirs withdrawn.",
       ],
       fallback: "The Change form is closed. Click Change on a selected row to open it.",
@@ -250,7 +255,7 @@ const chapter: TourChapter = {
     {
       id: "trace-match-cancel", route: ROUTE, target: "match-cancel", placement: "left", kind: "action",
       title: "Close the form without saving",
-      body: ["Press **Cancel** to leave the match as it is. (Saving would be fine too: on the walkthrough opportunity you may change any match you like.)"],
+      body: ["Press **Cancel** to leave the match as it is. A saved change is a correction by the engineer: once the unit's answer is validated, the requirement counts as *corrected* (another solution named) under **Reviewed by design engineers** on the Assessment Summary."],
       instruction: "Click Cancel.",
       done: (ctx) => !present("match-form")(ctx),
       fallback: "The form is already closed.",
@@ -271,7 +276,7 @@ const chapter: TourChapter = {
       title: "Assignments and their statuses",
       body: [
         "The Response column lists the work items sent to the units for the selected requirement: one per participating unit it is routed to, else the bid desk (**BID**). Each shows the unit, a status badge and, once answered, the compliance and the unit's text.",
-        "Statuses: **assigned** (sent, no answer yet), **submitted** (the unit answered), **returned** (sent back with a question; the unit answers again) and **validated** (the unit manager accepted the answer). Compliance reads **Fully**, **Partially** or **Non-compliant**. Until the bid is sent for assessment the column holds only *Responses appear once the bid is sent for assessment*; sending happens on the **Assessment** step, next.",
+        "Statuses: **assigned** (sent, no answer yet), **submitted** (the unit answered), **returned** (sent back with a question; the unit answers again) and **validated** (accepted: a technical answer by the unit manager, the unit manager's own answers by the bid manager). Compliance reads **Compliant**, **Partially compliant**, **Compliant with changes** or **Non-compliant**. Until the bid is sent for assessment the column holds only *Responses appear once the bid is sent for assessment*; sending happens on the **Assessment Summary** step, next.",
       ],
       fallback: "Select a requirement to see its assignments; before the bid is sent for assessment every row reads: Responses appear once the bid is sent for assessment.",
     },
@@ -279,9 +284,10 @@ const chapter: TourChapter = {
       id: "trace-done", route: ROUTE,
       title: "Before you leave Requirement Traceability",
       body: [
-        "Checklist: the matcher has run, the product matches you care about are accepted or changed, register exceptions are linked or dismissed, and multi-unit requirements list the right units. Everything else can wait: the Assessment page reads this state live and tells you what is still open.",
-        "Next: **Assessment**, where the participating units are chosen, the routing is checked and the work is sent to the units.",
+        "Checklist: solutions have been proposed, the matched units' designers / engineers have accepted or corrected their technical matches, requirements that need a source check are linked or dismissed, and multi-unit requirements list the right units. Everything else can wait: the Assessment Summary page reads this state live and tells you what is still open.",
+        "Next: **Assessment Summary**, where the bid manager chooses the units, routes requirements and sends the work.",
       ],
+      example: { label: "Sign in as Bid Manager", apply: (ctx) => ctx.signInAs("bid.manager") },
     },
   ],
 };

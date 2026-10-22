@@ -22,8 +22,19 @@ Public contract (other modules call only these):
     main_document(db, opp_id) -> Document | None
     set_document_status(db, doc_id, status, page_count=None)
     samples() -> list[dict]                      the bundled sample documents (name, filename, kind, pages,
-                                                 description; never a path), for the walkthrough's "Use example"
+                                                 description, optional views [{label, query}]: saved Requirement
+                                                 Traceability filters for a bid on that RFP; never a path), for the
+                                                 walkthrough's "Use example"
     sample_file(name, kind) -> (filename, bytes)  ValueError for an unknown name or a sample of another kind
+    set_due(db, opp_id, due_date, consolidation_days, actor) -> BidSchedule
+    set_unit_completion(db, opp_id, bu, when, note, actor, factors=None) -> UnitSchedule
+                                                 the unit manager's estimate and the five delivery factors (P-47, C-42);
+                                                 ValueError for an unknown factor or a constraint without a note
+    schedule(db, opp_id, units) -> dict          estimates, factors, constraints, missing, missing_factors,
+                                                 latest_unit_date, planned_submission, after_due, ready
+    approve(db, opp_id, kind, snapshot, actor, note="") -> BidApproval
+    approvals(db, opp_id) -> dict                the latest approval of each kind
+    FACTOR_LABELS                                delivery factor -> lower-case word for messages (C-42)
 """
 import hashlib
 from datetime import date, timedelta
@@ -40,8 +51,9 @@ from sqlalchemy.orm import Session
 
 from app.core import audit, config
 from app.core.audit import AuditEvent
-from app.modules.opportunities.models import (STATUSES, BidApproval, BidSchedule, Document, DocumentIdentity,
-                                               Opportunity, UnitSchedule)
+from app.modules.opportunities.models import (FEASIBILITY_FACTORS, FEASIBILITY_STATUSES, STATUSES, BidApproval,
+                                               BidSchedule, Document, DocumentIdentity, Opportunity, UnitFeasibility,
+                                               UnitSchedule)
 
 FILES = config.STORE / "files"
 READABLE = (".pdf", ".docx", ".xlsx")  # Word and Excel are read through a rendered PDF (ingestion/office.py, P-28)
@@ -50,13 +62,22 @@ READABLE = (".pdf", ".docx", ".xlsx")  # Word and Excel are read through a rende
 # whitelist: the API serves these names only, never a path. kind "rfp" goes in as the main RFP, kind "change" as a
 # change document. The Syracuse and Logan City RFPs have frozen reader answers, so new opportunities can read them
 # offline; the addendum's frozen change-agent answers match the demo opportunity's requirement set only.
-SAMPLES = {
+SAMPLES = {  # C-35: cloud and power first
+    "rc1_rfp": {
+        "path": "samples/RC-1_Grid-to-Chip_RFP_Synthetic.docx", "filename": "RC-1_Grid-to-Chip_RFP_Synthetic.docx",
+        "kind": "rfp", "pages": 11,
+        "description": "RC-1 Grid-to-Chip (synthetic, written for the PoC): a 120 MW AI training campus bought in six "
+                       "lots, from the utility connection and 800 V DC power to the racks, liquid cooling and the compute "
+                       "systems. Word file with tables; read and matched offline from frozen answers."},
     "syracuse_rfp": {
         "path": "RFP-2023-20-Switchgear-Procurement-Final.pdf", "filename": "RFP-2023-20-Switchgear-Procurement-Final.pdf",
         "kind": "rfp", "pages": 101,
         "description": "Syracuse Regional Airport Authority, RFP 2023-20 Switchgear Procurement: the public RFP behind "
                        "the demo bid. Read offline from frozen answers: about 820 line items grouped into "
-                       "about 310 requirements, each anchored to its page and lines."},
+                       "about 310 requirements, each anchored to its page and lines.",
+        # C-37 (PLAN 11.2 decision 6): the power electronics view, a Requirement Traceability filter link
+        "views": [{"label": "Power electronics requirements (Crown, EP², Anord Mardix)",
+                   "query": "category=technical&unit=CROWN,EP2,ANORD"}]},
     "logan_rfp": {
         "path": "Logan-City-Substation-6-15kV-Switchgear.pdf", "filename": "Logan-City-Substation-6-15kV-Switchgear.pdf",
         "kind": "rfp", "pages": 46,
@@ -67,7 +88,7 @@ SAMPLES = {
         "path": "samples/rfp_syracuse_addendum_1.pdf", "filename": "rfp_syracuse_addendum_1.pdf",
         "kind": "change", "pages": 1,
         "description": "Illustrative Addendum No. 1 to the Syracuse RFP, written for the PoC: it revises, removes and "
-                       "adds requirements against the frozen baseline. Its frozen change-agent answers match the demo "
+                       "adds requirements against the frozen requirements. Its frozen change-agent answers match the demo "
                        "bid's requirement set only."},
 }
 
@@ -327,24 +348,54 @@ def set_due(db: Session, opp_id: str, due_date: date | None, consolidation_days:
     return bs
 
 
-def set_unit_completion(db: Session, opp_id: str, bu: str, when: date, note: str, actor: str) -> UnitSchedule:
+FACTOR_LABELS = {"people": "people", "skills": "skills", "capacity": "manufacturing capacity", "materials": "materials",
+                 "cost": "cost"}
+
+
+def set_unit_completion(db: Session, opp_id: str, bu: str, when: date, note: str, actor: str,
+                        factors: list[dict] | None = None) -> UnitSchedule:
+    """The unit's estimate and, with `factors` [{factor, status, note}], its delivery factors (P-47, C-42); factors
+    not sent stay as they were."""
+    # ponytail: status + note per factor, no quantities; resource planning is out of scope (C-42)
     require(db, opp_id)
-    row = db.scalar(select(UnitSchedule).where(UnitSchedule.opportunity_id == opp_id, UnitSchedule.bu == bu))
+    factors = factors or []
+    for f in factors:
+        if f["factor"] not in FEASIBILITY_FACTORS or f["status"] not in FEASIBILITY_STATUSES:
+            raise ValueError(f"Unknown delivery factor or status: {f['factor']!r} {f['status']!r}.")
+        if f["status"] == "constraint" and not f.get("note", "").strip():
+            raise ValueError(f"Say what limits delivery (note) for a constraint on {FACTOR_LABELS[f['factor']]}.")
+    if len({f["factor"] for f in factors}) != len(factors):
+        raise ValueError("State each delivery factor once.")
+    row =db.scalar(select(UnitSchedule).where(UnitSchedule.opportunity_id == opp_id, UnitSchedule.bu == bu))
     before = str(row.estimated_completion) if row else None
     row = row or UnitSchedule(opportunity_id=opp_id, bu=bu, estimated_completion=when, entered_by=actor)
     row.estimated_completion, row.note, row.entered_by = when, note.strip(), actor
     db.add(row)
-    audit.record(db, actor, "completion_estimated", "schedule", opp_id, opp_id, bu=bu, before=before, after=str(when))
+    stated = {f.factor: f for f in db.scalars(select(UnitFeasibility).where(UnitFeasibility.opportunity_id == opp_id,
+                                                                           UnitFeasibility.bu == bu))}
+    for f in factors:
+        fr = stated.get(f["factor"]) or UnitFeasibility(opportunity_id=opp_id, bu=bu, factor=f["factor"])
+        fr.status, fr.note, fr.entered_by = f["status"], f.get("note", "").strip(), actor
+        db.add(fr)
+    audit.record(db, actor, "completion_estimated", "schedule", opp_id, opp_id, bu=bu, before=before, after=str(when),
+                 factors={f["factor"]: f["status"] for f in factors})
     db.commit()
     return row
 
 
 def schedule(db: Session, opp_id: str, units: list[str]) -> dict:
     """The consolidated schedule for the participating `units`: each unit's estimated completion, the latest, the
-    planned submission date (latest + consolidation days) once every unit has a date, and whether it is after the due date."""
+    planned submission date (latest + consolidation days) once every unit has a date, and whether it is after the due
+    date; and each unit's five delivery factors (C-42); ready once every unit has its estimate and all five factors."""
     require(db, opp_id)
     bs = db.get(BidSchedule, opp_id)
     dates = {u.bu: u for u in db.scalars(select(UnitSchedule).where(UnitSchedule.opportunity_id == opp_id))}
+    feas: dict[str, dict[str, UnitFeasibility]] = {}
+    for f in db.scalars(select(UnitFeasibility).where(UnitFeasibility.opportunity_id == opp_id)):
+        feas.setdefault(f.bu, {})[f.factor] = f
+    missing_factors = {bu: gaps for bu in units if (gaps := [k for k in FEASIBILITY_FACTORS if k not in feas.get(bu, {})])}
+    constraints = [{"bu": bu, "factor": k, "note": feas[bu][k].note} for bu in units for k in FEASIBILITY_FACTORS
+                   if feas.get(bu, {}).get(k) and feas[bu][k].status == "constraint"]
     days = bs.consolidation_days if bs else CONSOLIDATION_DAYS
     missing = [bu for bu in units if bu not in dates]
     latest = max((dates[bu].estimated_completion for bu in units if bu in dates), default=None)
@@ -352,10 +403,15 @@ def schedule(db: Session, opp_id: str, units: list[str]) -> dict:
     due = bs.due_date if bs else None
     return {"due_date": due, "consolidation_days": days,
             "units": [{"bu": bu, "estimated_completion": dates[bu].estimated_completion if bu in dates else None,
-                       "note": dates[bu].note if bu in dates else "", "entered_by": dates[bu].entered_by if bu in dates else None}
+                       "note": dates[bu].note if bu in dates else "", "entered_by": dates[bu].entered_by if bu in dates else None,
+                       "factors": {k: {"status": f.status, "note": f.note, "entered_by": f.entered_by}
+                                   for k, f in feas.get(bu, {}).items()},
+                       "constraints": [c["factor"] for c in constraints if c["bu"] == bu]}
                       for bu in units],
-            "missing": missing, "latest_unit_date": latest, "planned_submission": planned,
-            "after_due": bool(planned and due and planned > due), "ready": bool(units) and not missing}
+            "missing": missing, "missing_factors": missing_factors, "constraints": constraints,
+            "latest_unit_date": latest, "planned_submission": planned,
+            "after_due": bool(planned and due and planned > due),
+            "ready": bool(units) and not missing and not missing_factors}
 
 
 def approve(db: Session, opp_id: str, kind: str, snapshot: dict, actor: str, note: str = "") -> BidApproval:

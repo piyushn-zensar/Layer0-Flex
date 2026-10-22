@@ -1,8 +1,9 @@
 "use client";
 // The detail of one matrix row (a requirement and one unit's answer), beside the table.  Owner: Janvia.
-// reason, conditions, workaround and next steps are what the unit wrote (A-18); a missing value reads "Not provided".
+// reason, conditions, workaround (shown as Proposed change) and next steps are what the unit wrote (A-18); a missing value reads "Not provided".
 import Link from "next/link";
 import { forwardRef, useState } from "react";
+import { TERMS, categoryLabel, examplesLabel, solutionLabel } from "@/lib/types";
 import { StatusBadge } from "@/components/ui";
 import ComplianceBadge from "./ComplianceBadge";
 import ResponseHistory from "./ResponseHistory";
@@ -33,11 +34,12 @@ const DetailPanel = forwardRef<HTMLHeadingElement, { row: MatrixRow; docName: st
           <button type="button" className="secondary sm" onClick={onClose} aria-label={`Close the details of ${row.req_id}`}>Close</button>
         </div>
         <dl className="detail-list">
-          <Field label="Requirement">{text(row.requirement)}</Field>
+          <Field label="Requirement">{text(row.requirement)}
+            {(row.parts?.length ?? 0) > 0 && <ul className="parts">{row.parts!.map((p) => <li key={p.req_id}><span className="mono">{p.req_id}</span> {p.text}</li>)}</ul>}</Field>
           <Field label="Quote from the RFP">{row.quote ? <blockquote className="quote">“{row.quote}”</blockquote> : NOT_PROVIDED}</Field>
-          <Field label="Category"><span className="tag">{row.category}</span></Field>
+          <Field label="Category"><span className="tag">{categoryLabel(row.category)}</span></Field>
           <Field label="Unit">{row.unit ? <>{row.unit} <span className="muted">· {row.unit_name}</span></> : <span className="muted">Not assigned</span>}</Field>
-          <Field label="Product">{text(row.product)}</Field>
+          <Field label={TERMS.solution}>{row.solution ? <>{text(solutionLabel(row.solution))}{row.solution.examples.length > 0 && <div className="muted">{examplesLabel(row.solution)}</div>}</> : NOT_PROVIDED}</Field>
           <Field label="Requirement state"><StatusBadge status={row.state} label={sentence(row.state)} /></Field>
           <Field label="Assignment state">
             {row.status ? <StatusBadge status={row.status} label={sentence(row.status)} /> : <span className="muted">Not assigned</span>}
@@ -47,7 +49,7 @@ const DetailPanel = forwardRef<HTMLHeadingElement, { row: MatrixRow; docName: st
           <Field label="Compliance">{row.compliance ? <ComplianceBadge row={row} /> : <span className="muted">No compliance yet</span>}</Field>
           <Field label="Reason">{text(row.reason)}</Field>
           <Field label="Conditions">{text(row.conditions)}</Field>
-          <Field label="Workaround">{text(row.workaround)}</Field>
+          <Field label="Proposed change">{text(row.workaround)}</Field>
           <Field label="Next steps">{text(row.next_steps)}</Field>
           {(row.responded_by || row.validated_by) && (
             <Field label="Answered by">{row.responded_by ?? "—"}{row.validated_by && <span className="muted"> · validated by {row.validated_by}</span>}

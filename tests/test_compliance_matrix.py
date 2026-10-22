@@ -18,7 +18,7 @@ from app.modules.workpackages.models import Assignment  # noqa: E402
 from scripts import seed_demo  # noqa: E402
 
 ROW_KEYS = {"req_id", "requirement", "quote", "category", "state", "source", "document_id", "page", "line_start",
-            "line_end", "spans", "assignments", "unit", "unit_name", "product", "offering_type",
+            "line_end", "spans", "parts", "assignments", "unit", "unit_name", "product", "solution", "offering_type",
             "assignment_id", "status", "compliance", "compliance_label", "response", "responded_by", "validated_by",
             "validation_note", "reason", "conditions", "workaround", "next_steps"}
 
@@ -42,7 +42,7 @@ def test_matrix_response_shape_and_unknown_bid():
     places = [(r["page"], r["line_start"]) for r in data["rows"]]
     assert places == sorted(places)  # RFP order: by page, then line
     met = next(r for r in data["rows"] if r["compliance"] == "met")
-    assert met["compliance_label"] == "Fully compliant" and met["unit_name"]
+    assert met["compliance_label"] == "Compliant" and met["unit_name"]
     open_row = next(r for r in data["rows"] if r["compliance"] is None)
     assert open_row["compliance_label"] == "" and open_row["status"] == "assigned"
 

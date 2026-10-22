@@ -4,13 +4,13 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { errorMessage, isBidManager, isReader, post, useMe } from "@/lib/api";
-import type { ChangeItem, ChangeKind, ChangeSet } from "@/lib/types";
+import { formatDate, type ChangeItem, type ChangeKind, type ChangeSet } from "@/lib/types";
 import { Alert, Busy, StatusBadge, useConfirm, useToast } from "@/components/ui";
 import ChangeDecision, { KINDS, KindBadge } from "@/components/changes/ChangeDecision";
 import ChangeDocument from "@/components/changes/ChangeDocument";
 
 const STATUS_LABEL = { review: "in review", applied: "applied", discarded: "discarded" } as const;
-const when = (t: string) => new Date(t.endsWith("Z") || t.includes("+") ? t : `${t}Z`).toLocaleString();
+const when = (t: string) => formatDate(t, true);
 const pct = (x: number) => `${x > 0 && x < 0.1 ? (x * 100).toFixed(1) : Math.round(x * 100)}%`; // 0.009 -> 0.9%, not 1%
 const kindOf = (i: ChangeItem) => i.kind ?? i.proposed_kind; // the person's decision, else the proposal
 const WORDING = new Set<ChangeKind>(["added", "modified"]); // the kinds that carry a new wording
@@ -35,15 +35,15 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour =
 
   const trace = (reqId: string) => <Link key={reqId} className="mono" href={`/opportunities/${oppId}/trace#${reqId}`} title="Open in Traceability">{reqId}</Link>;
   // A removed requirement is no longer on the Traceability page: its ID only, its history is on the Requirements page.
-  const gone = (reqId: string) => <span key={reqId} className="mono" title={`Removed in baseline ${set.baseline_to}: see its history in pane 2 of Requirement Traceability`}>{reqId}</span>;
+  const gone = (reqId: string) => <span key={reqId} className="mono" title={`Removed in frozen version ${set.baseline_to}: see its history in pane 2 of Requirement Traceability`}>{reqId}</span>;
   const ids = (list: string[], link = trace) => list.length ? list.map((x, i) => <span key={x}>{i > 0 && ", "}{link(x)}</span>) : <span className="muted">none</span>;
   const run = (action: string, label: string, done: string) => {
     setBusy(label); setError(undefined);
     post(`/api/changes/${set.id}/${action}`).then(() => { toast.success(done); onChanged(); }, (e) => setError(errorMessage(e))).finally(() => setBusy(""));
   };
   const discard = async () => {
-    if (await ask({ title: "Discard this change set?", message: `The changes read from ${set.filename} are dropped; the baseline stays as it is.`, confirmLabel: "Discard", danger: true }))
-      run("discard", "Discarding…", "Change set discarded; the baseline is unchanged.");
+    if (await ask({ title: "Discard this change set?", message: `The changes read from ${set.filename} are dropped; the frozen version stays as it is.`, confirmLabel: "Discard", danger: true }))
+      run("discard", "Discarding…", "Change set discarded; the frozen version is unchanged.");
   };
   // A row selects its page in the change document; its source opens the document; a highlight scrolls to its row.
   const select = (item: ChangeItem, show = false) => {
@@ -63,20 +63,20 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour =
         <h3 id={`change-set-${set.id}`}>{set.filename} <StatusBadge status={set.status} label={STATUS_LABEL[set.status]} /></h3>
         <span className="muted">{set.confirmed} / {set.total} confirmed</span>
       </div>
-      <p className="muted" data-tour={t("chg-set-meta")}>Read by {set.created_by} on {when(set.created_at)}, against baseline {set.baseline_from}.
-        {applied && set.applied_at && <> Applied by {set.applied_by} on {when(set.applied_at)}: baseline {set.baseline_to}.</>}
+      <p className="muted" data-tour={t("chg-set-meta")}>Read by {set.created_by} on {when(set.created_at)}, against frozen version {set.baseline_from}.
+        {applied && set.applied_at && <> Applied by {set.applied_by} on {when(set.applied_at)}: frozen version {set.baseline_to}.</>}
         {set.status === "discarded" && <> Discarded{set.applied_by && ` by ${set.applied_by}`}{set.applied_at && ` on ${when(set.applied_at)}`}: nothing was applied.</>}</p>
 
       <div data-tour={t("chg-set-share")}>
         {set.drastic ? (
-          <Alert kind="error" title="Drastic change"><strong>{pct(set.share)} of the baseline is modified or removed</strong> (threshold {pct(threshold)}, placeholder):
+          <Alert kind="error" title="Drastic change"><strong>{pct(set.share)} of the frozen version is modified or removed</strong> (threshold {pct(threshold)}, placeholder):
             consider a new bid linked to this one. A person decides.</Alert>
-        ) : <p className="muted">{pct(set.share)} of the baseline is modified or removed (drastic above {pct(threshold)}, placeholder).</p>}
+        ) : <p className="muted">{pct(set.share)} of the frozen version is modified or removed (drastic above {pct(threshold)}, placeholder).</p>}
       </div>
 
       {r && (
         <div data-tour={t("chg-set-result")}>
-          <Alert kind="success" title={`Baseline ${r.baseline} frozen with the changes.`}>
+          <Alert kind="success" title={`Frozen version ${r.baseline} saved with the changes.`}>
             <ul>
               <li>Added: {ids(r.added)}</li>
               <li>Modified (new version): {ids(r.modified)}</li>
@@ -104,7 +104,7 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour =
       <table className="chg-items">
         <thead><tr>
           <th className="col-n">#</th><th className="col-src" data-tour={t("chg-col-source")}>Source</th><th data-tour={t("chg-col-quote")}>Quote</th><th className="col-kind" data-tour={t("chg-col-proposed")}>Proposed</th>
-          <th data-tour={t("chg-col-target")}>Target in the baseline</th><th data-tour={t("chg-col-wording")}>New wording</th><th data-tour={t("chg-col-rationale")}>Rationale</th><th className="col-decide" data-tour={t("chg-col-decision")}>Decision</th>
+          <th data-tour={t("chg-col-target")}>Target in the frozen version</th><th data-tour={t("chg-col-wording")}>New wording</th><th data-tour={t("chg-col-rationale")}>Rationale</th><th className="col-decide" data-tour={t("chg-col-decision")}>Decision</th>
         </tr></thead>
         <tbody>
           {items.map((i, idx) => {
@@ -125,7 +125,7 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour =
                 <td><KindBadge kind={i.proposed_kind} />
                   <div className="muted">{pct(i.confidence)} confidence</div></td>
                 <td>{target ? (<>{applied && kind === "removed" ? gone(target) : trace(target)}
-                  {revised ? <div className="muted">Revised in baseline {set.baseline_to}; the earlier wording is in its history (Requirement Traceability, pane 2).</div> : (<>
+                  {revised ? <div className="muted">Revised in frozen version {set.baseline_to}; the earlier wording is in its history (Requirement Traceability, pane 2).</div> : (<>
                     {i.target_text && <div>{i.target_text}</div>}
                     {i.target_source && <div className="muted">{i.target_source}</div>}</>)}</>)
                   : <span className="muted">{kind === "added" ? "new requirement" : "—"}</span>}</td>
@@ -144,11 +144,11 @@ export default function ChangeSetCard({ set, oppId, threshold, onChanged, tour =
         <div className="chg-actions" aria-busy={!!busy} data-tour={t("chg-actions")}>
           <button type="button" className="secondary" disabled={!!busy || set.confirmed === set.total || readOnly} data-tour={t("chg-confirm-all")} onClick={() => run("confirm-all", "Confirming…", "Every proposal confirmed.")}>Confirm all proposals</button>
           <button type="button" disabled={!!busy || !bidManager || set.confirmed < set.total} data-tour={t("chg-apply")}
-            onClick={() => run("apply", "Applying: new versions, matching and dispatch…", "Changes applied: a new baseline is frozen and the affected answers are back with the units.")}>Apply to requirements</button>
+            onClick={() => run("apply", "Applying: new versions, matching and dispatch…", "Changes applied: a new frozen version is saved and the affected answers are back with the units.")}>Apply to requirements</button>
           <button type="button" className="danger secondary" disabled={!!busy || !bidManager} data-tour={t("chg-discard")} onClick={discard}>Discard</button>
           {busy && <Busy label={busy} />}
           <span className="muted">{set.confirmed < set.total ? `${set.total - set.confirmed} change(s) still need a person's confirmation. ` : ""}
-            Only the bid manager applies or discards. Applying creates the new versions, freezes a new baseline and returns the affected answers to the units.</span>
+            Only the bid manager applies or discards. Applying creates the new versions, freezes a new version and returns the affected answers to the units.</span>
           <Alert kind="error" className="chg-error" onClose={() => setError(undefined)}>{error}</Alert>
         </div>)}
       {confirmDialog}

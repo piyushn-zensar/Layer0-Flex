@@ -22,13 +22,13 @@ export function filtersUrl(pathname: string, f: Filters, hash: string): string {
 }
 
 const unitsOf = (r: TraceRow) => new Set([...(r.match?.units ?? []).map((u) => u.bu), ...(r.match?.bu ? [r.match.bu] : []), ...r.assignments.map((a) => a.bu)]);
-const COMPLIANCE_ORDER = ["not_met", "partial", "met"]; // weakest first, as the go/no-go summary reads them
+const COMPLIANCE_ORDER = ["not_met", "partial", "deviation", "met"]; // weakest first, as the go/no-go summary reads them
 
 function matches(r: TraceRow, f: Filters): boolean {
   const req = r.req;
   if (f.category && req.category !== f.category) return false;
   if (f.offering && (r.match?.offering_type ?? "unmatched") !== f.offering) return false;
-  if (f.unit && !unitsOf(r).has(f.unit)) return false;
+  if (f.unit && !f.unit.split(",").some((u) => unitsOf(r).has(u))) return false; // ?unit=CROWN,EP2,ANORD: any of them (C-37)
   if (f.response && !(f.response === "not_sent" ? r.assignments.length === 0 : r.assignments.some((a) => a.status === f.response))) return false;
   if (f.compliance && !r.assignments.some((a) => a.compliance === f.compliance)) return false;
   if (f.source && (req.provenance === "EXTRACTED") !== (f.source === "verified")) return false;

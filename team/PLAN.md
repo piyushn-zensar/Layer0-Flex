@@ -406,6 +406,12 @@ Size: S hours, M one to two days, L several days (rough, for comparison only).
 | P-51 | Final HTML (decision 7): `scripts/export_demo_html.py` reads the API after P-49 (bids list, RC-1 RFP pages with highlighted sources, Requirement Traceability with the three panes, Assessment Summary, My work per role, compliance matrix, Bid decision, Activity) and writes `demo/layer0-demo.html`: internal JS and CSS (`globals.css` inlined), data embedded as JSON, page images embedded, no login (role picker), Show guidance toggle, no network; opens by double-click from `file://`; checked at 1440 and 390 px against the live screens | C-45, C-46 | M–L | P-49, P-50 (built last) |
 | P-52 | Docs: `Documents/changes-iteration4.md` (client-facing register of C-35 to C-51, neutral voice), built parts marked; P-40 and P-29 folded in | all | M | everything |
 
+**Known limits of the RC-1 demo state (P-48, P-49; 21 Oct 2026):**
+- A correction keeps its source on one page: the corrected texts of the requirements cut at a page break (L3.11, CT-02, L2.09, L4.11, IF-09) are complete, but their verbatim quote and highlight still end at the page break; the continuation lines are not highlighted, and the split-off tails are excluded from the register. A source span across pages would need a change to the correction API.
+- The response outline is a first draft from one live model pass (frozen, replayed in mock mode). Points for the bid manager to edit before it goes to a customer: the executive summary is written from the opening requirements and overstates compliance; the technical chapter does not name the capability gaps (the outline lists them under "To add or confirm").
+- The RFP due date (1 Dec 2026) is a placeholder derived from the RFP's schedule chart (an image the reader does not read). The outline drafts were regenerated once (live, 6 calls) on the final state and replay in mock mode.
+- Demo account names stay "<unit> Product Manager" (the role is shown as Unit manager); the seeded activity log stamps the scripted steps within seconds of each other.
+
 ### 11.5 Later (no tasks yet)
 
 | ID | Ask | Note for when it starts |

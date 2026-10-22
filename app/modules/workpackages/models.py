@@ -5,9 +5,12 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db import Base, utcnow
 
-COMPLIANCE = ["met", "partial", "not_met", "exception"]  # stored values; "exception" only on earlier answers
-OFFERED = ["met", "partial", "not_met"]   # what a unit answers: Fully / Partially / Non-compliant (16.5)
-NEEDS_REASON = ("partial", "not_met")     # these need a reason: what is not met and why
+COMPLIANCE = ["met", "partial", "deviation", "not_met", "exception"]  # stored values; "exception" only on earlier answers
+OFFERED = ["met", "partial", "deviation", "not_met"]  # what a unit answers (16.5, C-43)
+NEEDS_REASON = ("partial", "deviation", "not_met")    # these need a reason: what is not met or what changes, and why
+NEEDS_CHANGE = ("deviation",)  # also needs the proposed change (stored in workaround)
+COMPLIANCE_LABELS = {"met": "Compliant", "partial": "Partially compliant", "deviation": "Compliant with changes",
+                     "not_met": "Non-compliant", "exception": "Exception (earlier value)"}  # screen words; = web/lib/types.ts
 EXTENDED = ("reason", "conditions", "workaround", "next_steps")  # the response fields beside the answer (C-12)
 BID_DESK = "BID"  # pseudo-unit: requirements the bid manager answers (commercial, submission, legal)
 
@@ -42,15 +45,15 @@ class Assignment(Base):
     bu: Mapped[str] = mapped_column(String(20), index=True)
     owner: Mapped[str] = mapped_column(String(80))
     status: Mapped[str] = mapped_column(String(12), default="assigned")  # assigned | submitted | validated | returned | withdrawn
-    compliance: Mapped[str | None] = mapped_column(String(12))           # met | partial | not_met | exception
+    compliance: Mapped[str | None] = mapped_column(String(12))           # met | partial | deviation | not_met | exception
     product_ref: Mapped[str | None] = mapped_column(String(80))          # what meets it (product / configuration)
     response: Mapped[str] = mapped_column(Text, default="")
     responded_by: Mapped[str | None] = mapped_column(String(80))
     responded_at: Mapped[datetime | None]
     validated_by: Mapped[str | None] = mapped_column(String(80))
     validation_note: Mapped[str] = mapped_column(Text, default="")
-    reason: Mapped[str | None] = mapped_column(Text)       # what is not met and why (required for partial, not_met)
+    reason: Mapped[str | None] = mapped_column(Text)       # what is not met and why (required for partial, deviation, not_met)
     conditions: Mapped[str | None] = mapped_column(Text)   # under which conditions it is met
-    workaround: Mapped[str | None] = mapped_column(Text)   # what the unit offers instead
+    workaround: Mapped[str | None] = mapped_column(Text)   # what the unit offers instead; for deviation the proposed change (required)
     next_steps: Mapped[str | None] = mapped_column(Text)   # what has to happen next, and by whom
     created_at: Mapped[datetime] = mapped_column(default=utcnow)

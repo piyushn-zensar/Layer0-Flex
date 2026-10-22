@@ -5,7 +5,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Alert, Busy, Skeleton } from "@/components/ui";
 import { api, errorMessage as message, post, useApi } from "@/lib/api";
-import type { CorrectionResult, Doc, Requirement } from "@/lib/types";
+import { categoryLabel, type CorrectionResult, type Doc, type Requirement } from "@/lib/types";
 
 const MAX_LINES = 40; // as the API (requirements.service.MAX_SELECTED_LINES)
 
@@ -91,7 +91,7 @@ export default function LinePicker({ oppId, startPage, startLines, categories, r
         const res = await post<CorrectionResult>(`/api/bids/${oppId}/corrections`,
           resolve ? { kind: "resolve", reason: reason.trim(), req_id: resolve.reqId, ...body } : { kind: "add", reason: reason.trim(), ...body });
         clear(); setReason(""); setText(resolve ? text : "");
-        setAdded(`Correction saved: baseline ${res.baseline}${res.returned ? `; ${res.returned} answer${res.returned === 1 ? "" : "s"} returned to their units` : ""}.${res.note ? ` ${res.note}` : ""}`);
+        setAdded(`Correction saved: frozen version ${res.baseline}${res.returned ? `; ${res.returned} answer${res.returned === 1 ? "" : "s"} returned to their units` : ""}.${res.note ? ` ${res.note}` : ""}`);
         await onAdded();
         return;
       }
@@ -151,7 +151,7 @@ export default function LinePicker({ oppId, startPage, startLines, categories, r
         </div>
         <label>Short text (optional; default: the quote) <input data-tour="lp-text" value={text} maxLength={200} onChange={(e) => setText(e.target.value)} /></label>
         <label>Category <select data-tour="lp-category" value={category} onChange={(e) => setCategory(e.target.value)}>
-          {categories.map((c) => <option key={c}>{c}</option>)}</select></label>
+          {categories.map((c) => <option key={c} value={c}>{categoryLabel(c)}</option>)}</select></label>
         {published && <label>Reason for the correction <input data-tour="lp-reason" value={reason} maxLength={500} required onChange={(e) => setReason(e.target.value)} /></label>}
         <span className="inline"><button data-tour="lp-add" disabled={busy || !quote || !!problem || (published && !reason.trim())}>{busy ? "Saving…" : resolve ? "Link to these lines" : "Add requirement"}</button></span>
         {error && <div data-tour="lp-error"><Alert kind="error" onClose={() => setError(undefined)}>{error}</Alert></div>}

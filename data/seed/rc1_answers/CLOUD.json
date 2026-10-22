@@ -1,0 +1,490 @@
+{
+ "_note": "ILLUSTRATIVE placeholder answers for the RC-1 Grid-to-Chip demo bid (OPP-0003), unit CLOUD (Flex cloud and rack-scale integration), P-49 part B: written for the PoC from the unit's point of view, not real unit positions. No certification, rating, figure or date in them is verified.",
+ "answers": [
+  {
+   "req_id": "REQ-0003-0003",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will install and integrate the Owner-furnished equipment that falls in Lot 6 into our rack and system design, and treat it as part of the integrated system we test and hand over.",
+   "reason": "",
+   "conditions": "The Owner's equipment list and delivery dates are confirmed during dialogue.",
+   "workaround": "",
+   "next_steps": "Ask for the Owner-furnished equipment list at the first dialogue session."
+  },
+  {
+   "req_id": "REQ-0003-0005",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will train the Owner's operations staff on the compute system, covering daily operation, monitoring, first-line repair and the management stack, as part of the Lot 6 price.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": "Agree the training plan and number of attendees with the Owner's team."
+  },
+  {
+   "req_id": "REQ-0003-0017",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will use the Owner's published PUE and energy price in our total cost of ownership figures for the compute system rather than our own assumptions.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0226",
+   "role": "design_engineer",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: We offer the full compute system as integrated, liquid-cooled racks: control plane, GPU and CPU partitions, interconnect and multi-tier storage, with each GPU on its own high-speed network link, racks fed at 800 VDC and rack TDP stated per rack type. The hardware meets the memory, NVMe and network figures; the cloud-like service layer is not part of the Flex offer.",
+   "reason": "We integrate and support the hardware; the virtual machine, Kubernetes and Slurm service layer is not a Flex product and is not offered (capability gap REQ-0003-0109).",
+   "conditions": "The accelerator model is fixed at the technical decision point.",
+   "workaround": "",
+   "next_steps": "Confirm the accelerator platform before the final tender."
+  },
+  {
+   "req_id": "REQ-0003-0099",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our design keeps each deployment unit below 20 MW under any workload, storage and network included, and we will state the maximum power in total and per partition.",
+   "reason": "",
+   "conditions": "Final figures follow the configuration fixed at the technical decision point.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0228",
+   "role": "design_engineer",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: The system provides power controls at system, rack, node and component level with stated reaction times, warns ahead of draw changes above 1 MW over 15 minutes, and supports a sequenced full-system power up and down with described timings. Board and sub-component control depends on what the chosen accelerator platform exposes.",
+   "reason": "Board and sub-component power controls are set by the accelerator and board vendors, so we can only commit to the controls their platform provides.",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": "Confirm the board and sub-component controls with the accelerator vendor and state reaction times in the final tender."
+  },
+  {
+   "req_id": "REQ-0003-0229",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: The system is designed with no single point of failure: it keeps running, at worst degraded, after the loss of any one field-replaceable unit, server or switch, and supports rolling upgrades with at least half in production. We will propose availability, mean time between interrupts and job mean time to interrupt, and show how we derived them.",
+   "reason": "",
+   "conditions": "Reliability figures are derived from the final configuration and component failure data.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0106",
+   "role": "design_engineer",
+   "compliance": "deviation",
+   "response": "Illustrative placeholder response: The system's security design is compatible with ISO/IEC 27001, with strict tenant isolation including network traffic, and we will patch firmware, drivers and software throughout the maintenance period.",
+   "reason": "Fix times for high or critical vulnerabilities depend on when the component vendors release a fix, so we cannot commit to the Owner's policy deadlines unchanged.",
+   "conditions": "",
+   "workaround": "A joint patch policy: fixes applied within the Owner's deadlines once the vendor releases them, with agreed interim mitigations until then.",
+   "next_steps": "Review the Owner's vulnerability policy during dialogue."
+  },
+  {
+   "req_id": "REQ-0003-0107",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Storage is offered in tiers: a POSIX parallel file system and capacity object storage, both expandable without interruption and accessed over POSIX, NFS and S3.",
+   "reason": "",
+   "conditions": "File system software is from a storage partner, integrated and supported by us.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0108",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: The control-plane network is kept separate from the compute and storage network, tenants are securely partitioned, and our hall layout keeps links between halls within 500 m.",
+   "reason": "",
+   "conditions": "Hall layout is confirmed in the network plan.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0110",
+   "role": "product_manager",
+   "compliance": "deviation",
+   "response": "Illustrative placeholder response: We will provide five years of maintenance and support from acceptance, 24 by 7, with a four-hour response, concurrent maintenance and six hours for cabinet-level concurrent repairs.",
+   "reason": "Two hours for every other repair is not realistic for every fault, for example where a part has to be swapped and re-tested.",
+   "conditions": "",
+   "workaround": "Two hours to restore service using the on-site spares, and a full repair within eight hours.",
+   "next_steps": "Agree the repair definitions during dialogue."
+  },
+  {
+   "req_id": "REQ-0003-0111",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will keep an on-site parts cache sized for two weeks of normal repairs, plus spare nodes of at least 1% of each node type, and refill it as parts are used.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0112",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will run MLPerf Storage, IOR, BigDataBench, Ray Train, Horovod, MLPerf Training and MLPerf Inference on the offered system, and will add benchmarks the Owner asks for.",
+   "reason": "",
+   "conditions": "Benchmarks added later are scheduled and scoped with the Owner.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0113",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will deliver in phases: control plane, storage and network with a minimal set of compute nodes first, and a test system with a minimal management stack as soon as possible after contract signing.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": "Include the phase plan in the project plan."
+  },
+  {
+   "req_id": "REQ-0003-0244",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our racks and compute equipment are designed to tolerate any disturbance that is foreseeable within the Section 9 interface limits on the power, cooling and telemetry they receive.",
+   "reason": "",
+   "conditions": "Applies to the Lot 6 side of each interface.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0230",
+   "role": "design_engineer",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: As integrator we confirm the interface schedule between the lots offered: the 800 VDC input, busduct, row busway and interlocked whips (IF-03 to IF-05, distribution side), the 54 VDC in-rack bus from the 800 to 54 VDC shelf (IF-06), facility water up to 45 °C at the CDU with the stated secondary loop (IF-07), and telemetry and control from our equipment to Lot 6 (IF-09).",
+   "reason": "The sides that belong to scope not offered in this tender are not confirmed: the power-block output to Lot 3 (IF-03, power-block side), the power-block telemetry over Modbus TCP/IP (IF-09) and the chiller supply of IF-08.",
+   "conditions": "Each other handoff is also confirmed by the unit that supplies it.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0124",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We accept acceptance from factory tests through the 30-day availability test, and will time our deliverables against award and first delivery.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0126",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will agree the pre-delivery assembly, quality and factory test plan at least 30 days before the factory test, covering burn-in, benchmarks and fault injection such as pulled cables, powered-down subsystems and known bad parts.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0128",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We plan for a 60-day acceptance period with a functionality demonstration, a system test with two cold boots, a resilience test with fault injection, five runs of each benchmark and a 30-day contiguous availability test.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0129",
+   "role": "design_engineer",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: We accept no upgrades and no open critical bugs in the last seven days of the availability test.",
+   "reason": "Counting every repair that causes downtime as an outage would also count repairs on a single node that do not affect users, so we accept this only for repairs that take down a partition or the service.",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": "Agree the outage definition in the acceptance test plan."
+  },
+  {
+   "req_id": "REQ-0003-0132",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will deliver in three phases, integration, validation and operational readiness, and will declare operational readiness only when the integrated system serves users at the offer's specifications.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0133",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will hold the kickoff meeting within 45 days of award.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0134",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will deliver the risk management plan and risk register within 30 days of award and update the register monthly.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0135",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will deliver the project plan within 90 days of award and update it every quarter.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0136",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will hold the technical decision point 9 to 12 months before delivery to fix the final configuration and turn performance targets into requirements.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0232",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will deliver the facilities and site preparation plan, acceptance test plan, delivery and installation plan and network plan as drafts and finals at the times listed.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0141",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will deliver the chemical management plan for the compute racks' coolant nine months before delivery, aligned with the cooling lot's plan.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": "Agree one coolant specification with the cooling unit."
+  },
+  {
+   "req_id": "REQ-0003-0142",
+   "role": "product_manager",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: We give guaranteed delivery dates for the racks, integration and installation with the tender, stated as weeks from award.",
+   "reason": "DL-10 asks for guaranteed delivery dates; before award only dates counted from award can be guaranteed. They become calendar dates at contract signature.",
+   "conditions": "Dates for GPU racks depend on the accelerator allocation from the GPU vendor.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0233",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our Lot 6 prices will be firm, all-inclusive and in US dollars, free of taxes, covering delivery, installation, commissioning and training, with equipment, freight, installation, commissioning, spares and five years of maintenance shown separately and any extension priced as an option.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0145",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our prices will be unconditional, with no 'to be discussed' items or references to a separate contract.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0146",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our offer will stay valid for at least four months after the submission deadline.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0234",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will provide the 10% performance guarantee at signature, a pre-financing guarantee of up to 30% if pre-financing is requested, and performance and payment bonds in a form the Owner approves.",
+   "reason": "",
+   "conditions": "Subject to Flex treasury approval of the guarantee and bond amounts.",
+   "workaround": "",
+   "next_steps": "Confirm the guarantee amounts with Flex treasury."
+  },
+  {
+   "req_id": "REQ-0003-0149",
+   "role": "product_manager",
+   "compliance": "deviation",
+   "response": "Illustrative placeholder response: We accept liquidated damages for missed service levels, capped by the at-risk amounts described, and delay penalties that scale with the length of the delay and the seriousness of the breach, subject to an aggregate cap on liquidated damages and delay penalties together.",
+   "reason": "Liquidated damages and delay penalties have no overall limit as written, which leaves an open-ended risk on a phased multi-lot delivery.",
+   "conditions": "",
+   "workaround": "An aggregate cap on liquidated damages and delay penalties together, set as a percentage of each lot's price; the percentage is stated in the financial offer and listed in the commercial exceptions schedule (CT-08).",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0150",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our commercial exceptions are listed in the separate exceptions schedule and kept to a minimum: on liquidated damages, only the aggregate cap per lot asked for under CT-07; any indexed price is shown there only as an alternative to the firm price.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0236",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Warranty is included in the five-year maintenance period, with component warranties running inside it, and we accept responsibility for failures caused by foreseeable disturbances within the Section 9 limits.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0153",
+   "role": "product_manager",
+   "compliance": "deviation",
+   "response": "Illustrative placeholder response: We provide a supply-chain security and risk plan for the compute system, with last-time buys and alternative sources for sensitive components such as accelerators. Instead of a guarantee for each original component over the system's whole lifetime, we commit to the availability period stated as the proposed change.",
+   "reason": "No supplier can guarantee every original component for an open-ended system lifetime: electronic parts follow their makers' life cycles.",
+   "conditions": "",
+   "workaround": "Spare parts or compatible form-fit-function replacements available for at least 10 years from acceptance, with at least 12 months' notice of end of life and a last-time-buy offer before any component is discontinued.",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0156",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We accept that we bear our own bidding costs and that the Owner may abandon the procurement before signature without compensation.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0163",
+   "role": "product_manager",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: We would support the compute system through Flex's regional service operation, with English-speaking staff.",
+   "reason": "The site region is not yet stated, so the qualifying centre, its more than two years in the region and the two similar clients cannot be confirmed yet.",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": "Confirm the regional support centre and its references."
+  },
+  {
+   "req_id": "REQ-0003-0165",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will name five different experts, each with at least three years in role, as systems architect, systems engineer, data center infrastructure specialist for Lot 6, application and benchmarking specialist, and project manager.",
+   "reason": "",
+   "conditions": "Named people and CVs to be confirmed before submission; the other lots each name their own infrastructure specialist.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0167",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: Our group composition will not change between submission and award, and the group leader will supply at least one reference.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0174",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will give the capital cost inputs (system, infrastructure preparation, maintenance and licences) and operating cost inputs (energy, staff, user support and maintenance beyond five years) for the compute system.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0175",
+   "role": "design_engineer",
+   "compliance": "partial",
+   "response": "Illustrative placeholder response: We will use the Owner's PUE and energy price and commit energy-to-solution and time-to-solution figures, giving an AI performance per watt metric.",
+   "reason": "The Owner's workload is not yet available to us, so the committed figures can only be given after we run it during dialogue.",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": "Ask for the Owner's workload at the first dialogue session."
+  },
+  {
+   "req_id": "REQ-0003-0176",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will give guaranteed delivery dates for evaluation and accept that the Owner may adjust the project schedule to fit them.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0177",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We note that the Owner compares each lump-sum price with its engineer's estimate, and will show how our price is built up.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0185",
+   "role": "product_manager",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will take part in all three steps, including at least two dialogue sessions and the mandatory site visit, and submit a final tender if invited.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": "Plan the site visit attendees."
+  },
+  {
+   "req_id": "REQ-0003-0240",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: We will fill in every Annex 10C value for the compute system: node counts, peak performance, memory, accelerators, network, storage per tier, floor size, maximum power and rack figures.",
+   "reason": "",
+   "conditions": "Values follow the configuration fixed at the final tender.",
+   "workaround": "",
+   "next_steps": ""
+  }
+ ],
+ "feasibility": {
+  "estimate": "2026-11-13",
+  "factors": {
+   "people": {
+    "status": "ok",
+    "note": "Illustrative placeholder: the Cloud bid team and design engineers are available for the response."
+   },
+   "skills": {
+    "status": "ok",
+    "note": "Illustrative placeholder: rack-scale integration, liquid-cooled racks and system test are core skills of the unit."
+   },
+   "capacity": {
+    "status": "ok",
+    "note": "Illustrative placeholder: rack integration and test capacity fits the phased deliveries, to be confirmed per site."
+   },
+   "materials": {
+    "status": "constraint",
+    "note": "Illustrative placeholder: GPU and high-bandwidth memory supply is allocated by the vendors; mitigation: request an allocation for the RC-1 volumes now and use the phased delivery."
+   },
+   "cost": {
+    "status": "ok",
+    "note": "Illustrative placeholder: costed from the unit's integration rates and vendor budget quotes."
+   }
+  }
+ }
+}

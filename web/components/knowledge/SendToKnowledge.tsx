@@ -20,7 +20,7 @@ export default function SendToKnowledge({ kind, refId, status, onSent, short }:
   const readOnly = isReader(useMe()); // the administrator reads only: nothing to nominate
   if (status && status !== "rejected") return <StatusBadge status={status} label={STATE[status] ?? status} className="kb-sent" />;
   if (!open)
-    return <button type="button" className="link" data-tour="kb-send-button" title={readOnly ? "The administrator reads only." : FULL} disabled={readOnly} onClick={(e) => { e.stopPropagation(); setOpen(true); }}>{short ? "Nominate" : FULL}</button>;
+    return <button type="button" className="link" data-tour="kb-send-button" title={readOnly ? "The administrator reads only." : FULL} disabled={readOnly} onClick={(e) => { e.stopPropagation(); setOpen(true); }}>{short ? "Nominate" : "Nominate as example"}</button>;
 
   async function send(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

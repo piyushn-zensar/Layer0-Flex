@@ -1,7 +1,7 @@
 """Trace: the three linked screens and the portfolio view. Read-only.  Owner: Janvia.
 
 Screen 1 = original RFP page with highlights; screen 2 = requirement line items;
-screen 3 = requirement -> business unit, product, offering type, BOM and unit response.
+screen 3 = requirement -> proposed solution (unit · solution area, example models), offering type, BOM and unit response.
 
 Public contract:
     portfolio(db) -> list[dict]
@@ -16,6 +16,7 @@ Public contract:
 from sqlalchemy.orm import Session
 
 from app.modules.catalog import service as catalog
+from app.modules.decisions import service as decisions
 from app.modules.ingestion import service as ingestion
 from app.modules.matching import service as matching
 from app.modules.opportunities import service as opportunities
@@ -25,7 +26,9 @@ from app.modules.workpackages import service as workpackages
 
 def portfolio(db: Session) -> list[dict]:
     return [{"opp": o, "requirements": len(requirements.current(db, o.id)),
-             "progress": workpackages.progress(db, o.id)} for o in opportunities.list_all(db)]
+             "progress": workpackages.progress(db, o.id),
+             "decision": (d.outcome if (d := decisions.latest(db, o.id, "go_no_go")) else None)}  # shown beside the status
+            for o in opportunities.list_all(db)]
 
 
 def _sizes(pages: list[dict]) -> list[dict]:
@@ -74,7 +77,9 @@ def trace(db: Session, opp_id: str) -> dict:
     for req in requirements.current(db, opp_id):
         m = matches.get(req.req_id)
         product = catalog.product(m.product_id) if m and m.product_id else None
+        units = (m.units or ([{"bu": m.bu, "product_id": m.product_id}] if m.bu else [])) if m else []
         rows.append({"req": req, "match": m, "product": product,
+                     "solutions": [catalog.solution(u["bu"], u["product_id"]) for u in units],  # C-40, main unit first
                      "unit": catalog.unit(m.bu) if m and m.bu else None,
                      "bom": catalog.bom(product["id"]) if product else [],
                      "assignments": assignments.get(req.req_id, []), "children": kids.get(req.req_id, []),

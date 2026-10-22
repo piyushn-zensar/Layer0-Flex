@@ -1,5 +1,5 @@
 "use client";
-// The compliance badge; for Partially compliant and Non-compliant it also explains itself (mouse hover or keyboard focus).
+// The compliance badge; for Partially compliant, Compliant with changes and Non-compliant it also explains itself (mouse hover or keyboard focus).
 // The text is the unit's real reason, or "Reason not provided" (A-18 stores it; nothing is made up).  Owner: Janvia.
 import { useId, useState } from "react";
 import { complianceLabel } from "@/lib/types";
@@ -13,7 +13,7 @@ export default function ComplianceBadge({ row }: { row: Pick<MatrixRow, "complia
   const [pos, setPos] = useState<{ x: number; y: number }>();
   if (!row.compliance) return null;
   const badge = <StatusBadge status={row.compliance} kind="compliance" label={complianceLabel(row.compliance)} />;
-  if (row.compliance !== "partial" && row.compliance !== "not_met") return badge;
+  if (!["partial", "deviation", "not_met"].includes(row.compliance)) return badge;
   // position: fixed, so the table's own scrolling never clips the text; always in the page, so aria-describedby always resolves
   const show = (el: HTMLElement) => { const b = el.getBoundingClientRect(); setPos({ x: Math.max(8, Math.min(b.left, window.innerWidth - 320)), y: b.bottom + 6 }); };
   return (

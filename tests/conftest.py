@@ -13,6 +13,7 @@ import pytest
 os.environ["DEMO_PASSWORD"] = "test-password"  # tests never depend on the local .env
 os.environ["MYSQL_HOST"] = ""                    # accounts go in the test store's SQLite, never the local MySQL
 os.environ["CATALOG_REFRESH_HOURS"] = "0"        # no network in tests (P-34)
+os.environ["LLM_PROVIDER"] = "mock"              # frozen answers only: a cache miss never calls the model
 
 
 @functools.cache   # one sign-in per account: checking a password takes about 0.4 s by design

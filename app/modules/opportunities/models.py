@@ -73,6 +73,28 @@ class UnitSchedule(Base):
     entered_at: Mapped[datetime] = mapped_column(default=utcnow)
 
 
+# C-42 (P-47): the delivery factors each unit manager states beside the unit's estimate. Shown as People, Skills,
+# Manufacturing capacity, Materials, Cost.
+FEASIBILITY_FACTORS = ["people", "skills", "capacity", "materials", "cost"]
+FEASIBILITY_STATUSES = ["ok", "constraint"]
+
+
+class UnitFeasibility(Base):
+    """C-42 (P-47): one delivery factor of a participating unit, stated by its unit manager beside the unit's estimate
+    (unit_schedule): ok, or a constraint with a note. A table beside unit_schedule, so that table keeps its columns.
+    Not resource planning: no quantities, no plan."""
+    __tablename__ = "unit_feasibility"
+    __table_args__ = (UniqueConstraint("opportunity_id", "bu", "factor"),)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    opportunity_id: Mapped[str] = mapped_column(String(20), index=True)
+    bu: Mapped[str] = mapped_column(String(20))
+    factor: Mapped[str] = mapped_column(String(24))      # FEASIBILITY_FACTORS
+    status: Mapped[str] = mapped_column(String(12))      # ok | constraint
+    note: Mapped[str] = mapped_column(Text, default="")  # required for a constraint
+    entered_by: Mapped[str] = mapped_column(String(80))
+    entered_at: Mapped[datetime] = mapped_column(default=utcnow)
+
+
 class BidApproval(Base):
     """The bid manager's approval of the overall schedule or the high-level compliance position (C-24), with the
     figures approved. An approval no longer matches when those figures change: it shows as reopened."""

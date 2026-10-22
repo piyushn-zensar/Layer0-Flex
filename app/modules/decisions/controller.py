@@ -74,7 +74,7 @@ def go_no_go(opp_id: str, body: GoNoGoIn, request: Request, db: Session = Depend
 
 @router.get("/bids/{opp_id}/assessment-score")
 def assessment_score(opp_id: str, db: Session = Depends(get_db)):
-    """The executive summary's assessment (P-38): four separate measures and the evidence gaps."""
+    """The Assessment Summary (P-38, P-43): three separate measures over technical requirements and the evidence gaps."""
     try:
         return service.assessment_score(db, opp_id)
     except LookupError as exc:

@@ -18,7 +18,8 @@ export const docTypeLabel = (role: string) => DOC_TYPES[role] ?? role;
 export const ROLE_LABELS: Record<string, string> = { bid_manager: "Bid manager", product_manager: "Unit manager",
   design_engineer: "Unit designer / engineer", admin: "Administrator" };
 export const roleLabel = (role: string) => ROLE_LABELS[role] ?? role;
-export const COMPLIANCE_LABELS: Record<string, string> = { met: "Fully compliant", partial: "Partially compliant", not_met: "Non-compliant" };
+// C-43: stored values stay; deviation = a deviation from the requested specification (with a proposed change)
+export const COMPLIANCE_LABELS: Record<string, string> = { met: "Compliant", partial: "Partially compliant", deviation: "Compliant with changes", not_met: "Non-compliant" };
 export const complianceLabel = (c: string | null | undefined) => (c ? COMPLIANCE_LABELS[c] ?? c.replace(/_/g, " ") : "");
 export const sourceLabel = (provenance: string) => (provenance === "EXTRACTED" ? "Source verified" : "Source not verified");
 
@@ -37,7 +38,7 @@ export interface Span { document_id: string; page: number; line_start: number; l
 /** An exception's likely place (P-24): the reader's page when it holds most of the quote's words. Where to look, never a source. */
 export interface LocationHint { page: number; line_start: number | null; line_end: number | null; share: number }
 export type Origin = "extraction" | "correction" | "customer_change";
-export const ORIGIN_LABELS: Record<string, string> = { extraction: "Extraction", correction: "Correction", customer_change: "Customer change" };
+export const ORIGIN_LABELS: Record<string, string> = { extraction: "Read from the RFP", correction: "Correction", customer_change: "Customer change" };
 export const originLabel = (o: string | null | undefined) => (o ? ORIGIN_LABELS[o] ?? o.replace(/_/g, " ") : "");
 
 // Extraction snapshots (P-23): E1 is the first read, never changed; E2... are later reads asked for with a reason.
@@ -45,9 +46,14 @@ export const originLabel = (o: string | null | undefined) => (o ? ORIGIN_LABELS[
 export type Coverage = Record<string, number>;
 export const COVERAGE_LABELS: Record<string, string> = { pages: "pages", pages_read: "pages read", pages_failed: "pages the reader failed on",
   pages_skipped: "pages skipped (contents, blank)", pages_unreadable: "pages not readable", chunks: "reader calls", chunks_failed: "reader calls failed",
-  candidates: "candidates", admitted: "in the register", exceptions: "exceptions", duplicates: "duplicates", groups: "groups", problems: "problems" };
+  candidates: "candidates", admitted: "in the register", exceptions: "need a source check", duplicates: "duplicates", groups: "groups", problems: "problems" };
 export const coverageLabel = (k: string) => COVERAGE_LABELS[k] ?? k.replace(/_/g, " ");
-export const snapshotName = (n: number) => `E${n}`;
+export const snapshotName = (n: number) => `RFP reading ${n}`;
+// What a read produced, in plain words: "207 statements read, grouped into 117 requirements (36 groups)."
+export const readSummary = (c: Coverage, requirements?: number) => `${c.candidates ?? 0} statements read`
+  + (requirements !== undefined ? `, grouped into ${requirements} requirements` : `, ${c.admitted ?? 0} in the register`)
+  + (c.groups ? ` (${c.groups} groups)` : "") + (c.exceptions ? `; ${c.exceptions} need a source check` : "")
+  + (c.duplicates ? `; ${c.duplicates} duplicates` : "") + ".";
 export interface Snapshot { number: number; document_id: string; created_by: string; created_at: string; reason: string; model: string; pipeline_version: string; coverage: Coverage | null }
 export interface SnapshotItem {
   req_id: string; text: string; quote: string; category: string; section: string; page: number | null; line_start: number | null; line_end: number | null;
@@ -56,16 +62,54 @@ export interface SnapshotItem {
 export interface SnapshotDetail extends Snapshot { items: SnapshotItem[] }
 export interface CorrectionResult { baseline: number; added: string[]; modified: string[]; removed: string[]; affected: string[]; returned: number; dispatched: number; note: string }
 // Requirement register (C-02/C-05): approved = in the register; exception / dismissed sit outside it.
-export const STATUS_LABELS: Record<string, string> = { approved: "In register", rejected: "Excluded: not a requirement", exception: "Source not verified",
-  dismissed: "Dismissed", duplicate: "Duplicate", proposed: "Proposed", split: "Split", merged: "Merged", removed: "Removed" };
+export const STATUS_LABELS: Record<string, string> = { approved: "In register", rejected: "Excluded: not a requirement", exception: "Needs a source check",
+  dismissed: "Dismissed", duplicate: "Duplicate", proposed: "Proposed", split: "Split", merged: "Merged", removed: "Removed",
+  uploaded: "Uploaded", ingesting: "Reading", ingested: "Read" }; // the last three: an RFP document
 export const statusLabel = (s: string) => STATUS_LABELS[s] ?? s.replace(/_/g, " ");
+// Plain words for internal terms (C-44, P-42): screens, messages and the walkthrough use the right-hand word;
+// stored values, API paths and data-tour ids keep the internal one. Backend messages repeat these words literally.
+export const TERMS = {
+  assessment: "Assessment Summary",              // the step, its page and panel (C-36)
+  domain_alignment: "Technical requirement match",
+  offering_type: "Type of offer",                // CTO / Semi-custom / ETO stay as the values
+  exception: "Needs a source check",             // the exception queue and status "exception"
+  baseline: "Frozen version",                    // "baseline 2" reads "frozen version 2"
+  snapshot: "RFP reading",                       // extraction snapshot E1, E2...
+  tier: "usual type of offer",                   // a unit's default tier
+  solution: "Proposed solution",                 // a match / product mapping: unit · solution area (C-40)
+  solution_area: "Solution area",                // the product family's name; its published models are examples
+  solution_pending: "solution to be set by the unit's designer / engineer", // routed, no solution yet (P-44)
+  capability_gap: "Capability gap: not offered", // a product requirement no unit offers, held by the bid desk as non-compliant
+} as const;
+// Bid status (opportunities.STATUSES): the badge shows these, tones still key on the stored value.
+export const OPP_STATUS_LABELS: Record<string, string> = { new: "New", reading: "Reading the RFP", review: "In review",
+  frozen: "Requirements frozen", go: "Go", no_go: "No-go", dispatched: "Sent to units", consolidating: "Go: response in preparation", submitted: "Submitted" };
+export const oppStatusLabel = (s: string) => OPP_STATUS_LABELS[s] ?? s.replace(/_/g, " ");
+/** The bid's one status badge where a go/no-go is recorded: never "Sent to units" beside "Go recorded". consolidating (every answer
+ * validated after a go) and submitted already say it; before that the recorded decision is the status. */
+export const bidStatus = (status: string, decision?: string | null): { status: string; label: string } =>
+  decision === "no_go" ? { status: "no_go", label: "No-go recorded" }
+    : decision === "go" && !["consolidating", "submitted"].includes(status) ? { status: "go", label: "Go recorded" }
+    : { status, label: oppStatusLabel(status) };
+// Requirement categories are stored lower case ("technical"); screens show them as labels ("Technical").
+export const categoryLabel = (c: string) => (c ? c.charAt(0).toUpperCase() + c.slice(1).replace(/_/g, " ") : c);
+/** An approved sub-requirement of a group with its current (corrected) text: matrix rows and My work items (parts). */
+export interface Part { req_id: string; text: string }
+// One date format on every screen (21 Oct review): "13 Nov 2026", with the time "13 Nov 2026, 19:01". Stored values stay ISO;
+// a date alone is a calendar day, a timestamp without a zone is UTC (the API's).
+export const formatDate = (t?: string | null, time = false) => {
+  if (!t) return "";
+  const d = new Date(/^\d{4}-\d{2}-\d{2}$/.test(t) ? `${t}T00:00:00` : /(Z|[+-]\d{2}:?\d{2})$/.test(t) ? t : `${t}Z`);
+  return d.toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", ...(time ? { hour: "2-digit", minute: "2-digit" } : {}) });
+};
 // An exception-queue row: the proposed text whose source could not be verified, with the reader's page hint and the reason.
 export interface RequirementException extends Requirement { suggested_page: number | null; location_hint: LocationHint | null; reason: string }
 export interface Baseline { number: number; count: number; frozen_by: string }
 export interface Match {
   id: number; req_id: string; bu: string | null; product_id: string | null; offering_type: OfferingType;
   confidence: number; rationale: string; method: string; status: string;
-  units: { bu: string; product_id: string; offering_type: Exclude<OfferingType, "NONE"> }[]; evidence?: unknown[]; decided_by: string | null;
+  // product_id null: routed by the bid manager, the unit's designer / engineer sets the solution (P-44)
+  units: { bu: string; product_id: string | null; offering_type: Exclude<OfferingType, "NONE"> }[]; evidence?: unknown[]; decided_by: string | null;
 }
 export interface Assignment {
   id: number; opportunity_id: string; req_id: string; bu: string; owner: string; status: string;
@@ -77,10 +121,16 @@ export interface Product { id: string; bu: string; name: string; offering_type: 
 export interface Progress { [bu: string]: { total: number; submitted: number; validated: number } }
 export interface Page { page: number; width: number; height: number; unreviewed: boolean }
 
+// C-40: matching proposes a solution (unit · solution area), not a product or part number; published models are examples only.
+export interface Solution { unit: string; area: string | null; examples: string[] }
+export const solutionLabel = (s: Solution) => (s.area ? `${s.unit} · ${s.area}` : s.unit);
+export const examplesLabel = (s: Solution) => (s.examples.length ? `For example: ${s.examples.join(", ")}` : "");
 export interface TraceRow {
   req: Requirement; match: Match | null; product: Product | null; unit: Unit | null;
+  solutions: Solution[]; // C-40: one per unit on the match, main unit first (catalog.solution)
   bom: { item: string; qty: string }[]; assignments: Assignment[];
   children: { req_id: string; text: string; source: string; document_id: string }[];
+  can_change: boolean; // P-44: the signed-in user may accept, reject or change this match (matching.may_change)
 }
 // A document shown in Traceability pane 1: the main RFP first, then change documents with requirements anchored in them (P-11).
 export interface TraceDoc { id: string; filename: string; role: string; pages: Page[] }
@@ -146,12 +196,24 @@ export const KB_EXAMPLE_TYPES: Record<KbExampleType, string> = {
   requirement: "Requirement", preference: "Preference", background: "Background information", partial_compliance: "Partial compliance",
   insufficient_evidence: "Insufficient evidence", other: "Other",
 };
-// GET /api/bids/{id}/schedule (P-33, C-24): unit completion dates, planned submission and the two bid-manager approvals. Dates are ISO "YYYY-MM-DD".
-export interface ScheduleUnit { bu: string; estimated_completion: string | null; note: string; entered_by: string | null }
+// GET /api/bids/{id}/schedule (P-33, C-24): unit estimates, delivery factors (P-47, C-42), planned submission and the bid manager's
+// acceptance and compliance approval. Dates are ISO "YYYY-MM-DD".
+export type FeasibilityFactor = "people" | "skills" | "capacity" | "materials" | "cost"; // = opportunities.FEASIBILITY_FACTORS
+export type FeasibilityStatus = "ok" | "constraint";
+export const FEASIBILITY_FACTOR_LABELS: Record<FeasibilityFactor, string> = {
+  people: "People", skills: "Skills", capacity: "Manufacturing capacity", materials: "Materials", cost: "Cost" };
+export const FEASIBILITY_STATUS_LABELS: Record<FeasibilityStatus, string> = { ok: "No constraint", constraint: "Constraint" };
+export const FEASIBILITY_FACTORS = Object.keys(FEASIBILITY_FACTOR_LABELS) as FeasibilityFactor[];
+export interface FeasibilityEntry { status: FeasibilityStatus; note: string; entered_by: string }
+export interface ScheduleUnit {
+  bu: string; estimated_completion: string | null; note: string; entered_by: string | null;
+  factors: Partial<Record<FeasibilityFactor, FeasibilityEntry>>; constraints: FeasibilityFactor[];
+}
 export interface Approval { id: number; kind: "schedule" | "compliance"; snapshot: unknown; note: string; approved_by: string; approved_at: string; current: boolean }
-export interface ComplianceCounts { met: number; partial: number; not_met: number; open: number }
+export interface ComplianceCounts { met: number; partial: number; deviation: number; not_met: number; open: number }
 export interface Schedule {
   due_date: string | null; consolidation_days: number; units: ScheduleUnit[]; missing: string[];
+  missing_factors: Record<string, FeasibilityFactor[]>; constraints: { bu: string; factor: FeasibilityFactor; note: string }[];
   latest_unit_date: string | null; planned_submission: string | null; after_due: boolean; ready: boolean;
   compliance: Record<string, ComplianceCounts>;
   approvals: { schedule: Approval | null; compliance: Approval | null };
@@ -169,13 +231,15 @@ export interface PublishedRun {
 export interface PublishedCatalog { products: PublishedProduct[]; runs: PublishedRun[]; catalog_version: number | null }
 // GET /api/catalog/published/versions?key=...
 export interface PublishedVersion { version: number; name: string; features: string[]; link: string; refresh_id: number | string; valid_from: string; valid_to: string | null }
-// GET /api/bids/{id}/assessment-score (P-38, C-23): executive-summary measures for the bid manager. "n" is null until an assessment run exists.
-// A preliminary assessment, never a probability.
-export interface AssessmentMeasure { label: string; n: number | null; of: number; req_ids?: string[]; explain: string; formula?: string }
+// GET /api/bids/{id}/assessment-score (P-38, P-43): the Assessment Summary, three measures over technical requirements only
+// (C-38, C-39); standards items listed beside, not counted. Counts, never a probability.
+export interface AssessmentMeasure { label: string; n: number | null; of: number; req_ids?: string[]; explain: string; confirmed?: number; corrected?: number;
+  other_solution?: number; not_compliant_answer?: number } // engineer_reviewed: corrected = other_solution + not_compliant_answer
 export type AssessmentGapKind = "no_product_evidence" | "not_in_domain" | "exception" | "needs_owner" | "non_compliant";
 export interface AssessmentScore {
   run: number | null; run_at: string | null; catalog_version: number | null; technical: number;
-  measures: { domain_alignment: AssessmentMeasure; product_evidence: AssessmentMeasure; review_progress: AssessmentMeasure; preliminary_feasibility: AssessmentMeasure };
+  measures: { technical_match: AssessmentMeasure; engineer_reviewed: AssessmentMeasure; review_progress: AssessmentMeasure };
+  standards: { label: string; req_ids: string[] };
   gaps: { kind: AssessmentGapKind; label: string; req_ids: string[] }[];
   note: string;
 }

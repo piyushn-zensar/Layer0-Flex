@@ -53,7 +53,7 @@ const FEATURES = (w: number, h: number, l: number, t: number) => `popup=yes,widt
 export default function TraceWorkspace({ bidId, mode, pane, children }: { bidId: string; mode: "main" | "pane"; pane?: Pane; children: React.ReactNode }) {
   const toast = useToast();
   const { data, error, reload } = useApi<TraceView>(`/api/bids/${bidId}/trace`);
-  const bm = isBidManager(useMe()); // P-31: match changes are the bid manager's; one lookup for every row
+  const bm = isBidManager(useMe()); // P-31: running the matcher is the bid manager's; match actions follow each row's can_change (P-44)
   const { data: sent, reload: reloadSent } = useApi<Record<string, string>>(`/api/bids/${bidId}/knowledge`); // A-11
 
   // --- the workspace state ---
@@ -106,7 +106,14 @@ export default function TraceWorkspace({ bidId, mode, pane, children }: { bidId:
       if (req && data?.docs?.some((d) => d.id === req.document_id)) setDocId(req.document_id); // a new version from an addendum
       if (req?.page) setPageNo(req.page);
     } else {
-      document.querySelectorAll(`[data-pane="${p}"] tr[data-req="${reqId}"]`).forEach((tr) => tr.scrollIntoView({ block: "nearest", behavior: "smooth" }));
+      // scroll inside the pane only (never the window, 390 px review) and back to its left edge
+      document.querySelectorAll<HTMLElement>(`[data-pane="${p}"]`).forEach((pane) => {
+        const tr = pane.querySelector<HTMLElement>(`tr[data-req="${reqId}"]`);
+        if (!tr) return;
+        const top = tr.getBoundingClientRect().top - pane.getBoundingClientRect().top + pane.scrollTop;
+        const seen = top >= pane.scrollTop + 48 && top + tr.offsetHeight <= pane.scrollTop + pane.clientHeight; // 48: the sticky pane head
+        pane.scrollTo({ top: seen ? pane.scrollTop : Math.max(0, top - 64), left: 0, behavior: "smooth" });
+      });
     }
   }, [data]);
 
@@ -165,7 +172,7 @@ export default function TraceWorkspace({ bidId, mode, pane, children }: { bidId:
   const matchProducts = useCallback(() => { // runs the matching agent over the requirements that nobody has decided yet (accepted, manual and rejected stay)
     setMatching(true);
     post<{ matched: number; kept: number }>(`/api/bids/${bidId}/match`)
-      .then((r) => { toast.success(`Matching done: ${r.matched} requirement(s) matched, ${r.kept} kept as decided.`); afterWrite(); },
+      .then((r) => { toast.success(`Solutions proposed for ${r.matched} requirement(s); ${r.kept} kept as decided.`); afterWrite(); },
         (e) => toast.error(errorMessage(e)))
       .finally(() => setMatching(false));
   }, [bidId, toast, afterWrite]);

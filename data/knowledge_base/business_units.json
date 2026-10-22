@@ -1,5 +1,5 @@
 {
-  "_note": "Business units from the public Flex web pages retrieved 12 Oct 2026 (source_url per unit); product families and models in products.json and catalog_items.json are as published there. The scope (which units Layer 0 offers, SpinCo / Axiom Solutions or wider Flex group) still needs confirmation. EP2 is part of SpinCo per client direction. Each unit has a product manager and a design engineer; names are role placeholders until real people are named.",
+  "_note": "Business units from the public Flex web pages retrieved 12 Oct 2026 (source_url per unit); product families and models in products.json and catalog_items.json are as published there. The scope (which units Layer 0 offers, SpinCo / Axiom Solutions or wider Flex group) still needs confirmation. EP2 is part of SpinCo per client direction. Each unit has a product manager and a design engineer; names are role placeholders until real people are named. customer_name (optional): the name used in what goes to the customer (the compliance matrix sheet) when the internal name is not one.",
   "units": [
     {"code": "EP2", "name": "Electrical Power Products (EP²)", "pillar": "Critical Power", "status": "active",
      "focus": "Engineered-to-order protective relay and control panels, drop-in-place integrated control enclosures (substation control buildings) and the auxiliary AC/DC power fitted in them, for utility, generation, transmission, distribution, renewables and data centres. Des Moines, Iowa; acquisition completed May 2026.",
@@ -21,7 +21,7 @@
      "focus": "Direct-to-chip liquid cooling: SmartPlate cold plates (350 W to over 3 kW per processor), liquid-assisted air cooling, in-rack and row coolant distribution units (up to 1.8 MW), in-rack manifolds and quick disconnects, custom and direct-to-die cooling.",
      "product_manager": "JetCool Product Manager", "design_engineer": "JetCool Design Engineer",
      "source_url": "https://jetcool.com/"},
-    {"code": "CLOUD", "name": "Cloud (in-house)", "pillar": "Cloud", "status": "active",
+    {"code": "CLOUD", "name": "Cloud (in-house)", "customer_name": "Flex Cloud and Data Center", "pillar": "Cloud", "status": "active",
      "focus": "Compute and storage joint design and manufacturing (PCA and box build), data-centre racks and enclosures (19 in, OCP ORV3), node- and rack-level integration including 1 MW liquid-cooled IT racks in the Flex AI infrastructure platform.",
      "product_manager": "Cloud Product Manager", "design_engineer": "Cloud Design Engineer",
      "source_url": "https://flex.com/industries/data-center"},

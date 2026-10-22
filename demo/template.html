@@ -1,0 +1,1269 @@
+<!doctype html>
+<!-- P-51: the static Layer 0 demo. scripts/export_demo_html.py fills the CSS (web/app/*.css, copied at export) and the
+     recorded data (one JSON blob). Everything is inline: no network, opens from file://. Read-only: actions show a toast. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Layer 0 Demo</title>
+<style>
+/*__APP_CSS__*/
+/* ---- demo only ---- */
+.demo-ctl { display: flex; align-items: center; gap: var(--s2); }
+.demo-ctl select { min-height: 28px; padding: 3px 6px; font-size: var(--fs-sm); max-width: 250px; }
+.demo-guide { display: none; }
+body.guide-on .demo-guide { display: flex; }
+.demo-guide .alert-title::before { content: "ⓘ "; }
+.demo-stamp { color: var(--nav-ink); font-size: var(--fs-xs); white-space: nowrap; }
+.ws-split { touch-action: none; }
+a.chip { display: inline-flex; white-space: nowrap; margin: 2px 0; }
+@media (max-width: 1100px) { .topbar-right { flex-wrap: wrap; } .demo-stamp { display: none; } }
+@media (max-width: 640px) { .page-actions { flex-wrap: wrap; } .page-actions .button { white-space: normal; } .matrix-filters label, .matrix-filters select { min-width: 0; max-width: 100%; }
+  .topbar { flex-wrap: wrap; } .portfolio td:nth-child(2) { min-width: 160px; }
+  .topbar-right > .actor { flex: 1 1 100%; } .demo-ctl { flex: 1 1 100%; min-width: 0; } .demo-ctl label { flex: 1 1 auto; min-width: 0; } .demo-ctl select { max-width: 100%; width: 100%; } }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#/portfolio"><span class="brand-mark" aria-hidden="true">L0</span>Layer 0 <span class="brand-sub">Bid workflow</span></a>
+  <nav class="topnav" aria-label="Main" id="topnav"></nav>
+  <div class="topbar-right">
+    <a class="button" href="#" data-demo="Creating a bid" id="newbid">New bid</a>
+    <div class="actor"><div class="actor-id" aria-live="polite" id="actor"></div></div>
+    <div class="demo-ctl">
+      <label><span class="sr-only">View as</span><select id="role" title="Whose view to show (no sign-in in the demo)"></select></label>
+      <button type="button" class="secondary sm" id="guide" aria-pressed="false">Show guidance</button>
+    </div>
+    <span class="demo-stamp" id="stamp"></span>
+  </div>
+</header>
+<main id="main"></main>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<script type="application/json" id="demo-data">__DEMO_DATA__</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById("demo-data").textContent);
+const BID = D.meta.bid;
+const $ = (s, el = document) => el.querySelector(s);
+const store = { get(k) { try { return localStorage.getItem("layer0.demo." + k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem("layer0.demo." + k, v); } catch { /* private window: per-visit only */ } } };
+
+// ---------- labels (web/lib/types.ts, web/components/ui/StatusBadge.tsx) ----------
+const TONES = { proposed: "pending", approved: "ok", accepted: "ok", rejected: "neutral", merged: "neutral", split: "neutral", duplicate: "neutral",
+  review: "pending", applied: "ok", discarded: "neutral", queued: "pending", confirmed: "ok",
+  assigned: "pending", submitted: "info", validated: "ok", returned: "bad", withdrawn: "neutral", blocked: "bad",
+  new: "neutral", reading: "pending", frozen: "info", go: "info", no_go: "bad", dispatched: "info", consolidating: "info",
+  uploaded: "pending", ingesting: "pending", ingested: "ok", failed: "bad", active: "ok",
+  high: "bad", medium: "pending", low: "neutral", pass: "ok", warn: "pending", fail: "bad", "n/a": "neutral",
+  answered: "ok", pending: "pending", over: "bad",
+  CTO: "ok", SEMI_CUSTOM: "pending", ETO: "bad", NONE: "neutral",
+  met: "ok", partial: "pending", partially_met: "pending", not_met: "bad", deviation: "info", exception: "info", unknown: "neutral",
+  added: "ok", modified: "pending", removed: "bad", unchanged: "neutral", not_a_requirement: "neutral" };
+const OFFERING = { SEMI_CUSTOM: "Semi-custom", NONE: "Bid desk" };
+const offeringLabel = (s) => OFFERING[String(s ?? "NONE")] ?? String(s ?? "NONE");
+// the meaning of each type of offer, as the Traceability legend states it (a badge's tooltip on every screen)
+const OFFERING_MEANING = { CTO: "Configure-to-order: catalog product with options (CPQ)", SEMI_CUSTOM: "Semi-custom: configured product plus workshop work for this customer",
+  ETO: "Engineered-to-order: designed for this requirement", NONE: "Bid desk: not a product item" };
+const toneOf = (status, kind = "status") => { const s = String(status ?? "").trim().replace(/[\s-]+/g, "_");
+  return (kind === "opp" && s === "submitted" && "ok") || TONES[s] || TONES[s.toLowerCase()] || "neutral"; };
+const DOC_TYPES = { main: "Main RFP", addendum: "Addendum", qa: "Clarification / Q&A", change: "Change request", other: "Other" };
+const COMPLIANCE_LABELS = { met: "Compliant", partial: "Partially compliant", deviation: "Compliant with changes", not_met: "Non-compliant" };
+const complianceLabel = (c) => (c ? COMPLIANCE_LABELS[c] ?? c.replace(/_/g, " ") : "");
+const sourceLabel = (p) => (p === "EXTRACTED" ? "Source verified" : "Source not verified");
+const ORIGIN_LABELS = { extraction: "Read from the RFP", correction: "Correction", customer_change: "Customer change" };
+const originLabel = (o) => (o ? ORIGIN_LABELS[o] ?? o.replace(/_/g, " ") : "");
+const COVERAGE_LABELS = { pages: "pages", pages_read: "pages read", pages_failed: "pages the reader failed on", pages_skipped: "pages skipped (contents, blank)",
+  pages_unreadable: "pages not readable", chunks: "reader calls", chunks_failed: "reader calls failed", candidates: "candidates", admitted: "in the register",
+  exceptions: "need a source check", duplicates: "duplicates", groups: "groups", problems: "problems" };
+const coverageLabel = (k) => COVERAGE_LABELS[k] ?? k.replace(/_/g, " ");
+const STATUS_LABELS = { approved: "In register", rejected: "Excluded: not a requirement", exception: "Needs a source check", dismissed: "Dismissed",
+  duplicate: "Duplicate", proposed: "Proposed", split: "Split", merged: "Merged", removed: "Removed", uploaded: "Uploaded", ingesting: "Reading", ingested: "Read" };
+const statusLabel = (s) => STATUS_LABELS[s] ?? s.replace(/_/g, " ");
+const OPP_STATUS_LABELS = { new: "New", reading: "Reading the RFP", review: "In review", frozen: "Requirements frozen", go: "Go", no_go: "No-go",
+  dispatched: "Sent to units", consolidating: "Go: response in preparation", submitted: "Submitted" };
+const oppStatusLabel = (s) => OPP_STATUS_LABELS[s] ?? s.replace(/_/g, " ");
+// the bid's one status badge where a go/no-go is recorded (types.ts bidStatus)
+const bidStatus = (status, decision) => decision === "no_go" ? { status: "no_go", label: "No-go recorded" }
+  : decision === "go" && !["consolidating", "submitted"].includes(status) ? { status: "go", label: "Go recorded" } : { status, label: oppStatusLabel(status) };
+const categoryLabel = (c) => (c ? c.charAt(0).toUpperCase() + c.slice(1).replace(/_/g, " ") : c);
+const snapshotName = (n) => `RFP reading ${n}`;
+const readSummary = (c, requirements) => `${c.candidates ?? 0} statements read`
+  + (requirements !== undefined ? `, grouped into ${requirements} requirements` : `, ${c.admitted ?? 0} in the register`)
+  + (c.groups ? ` (${c.groups} groups)` : "") + (c.exceptions ? `; ${c.exceptions} need a source check` : "") + (c.duplicates ? `; ${c.duplicates} duplicates` : "") + ".";
+// one date format on every screen: "13 Nov 2026", with the time "13 Nov 2026, 19:01" (a timestamp without a zone is UTC)
+const formatDate = (t, time = false) => { if (!t) return "";
+  const d = new Date(/^\d{4}-\d{2}-\d{2}$/.test(t) ? `${t}T00:00:00` : /(Z|[+-]\d{2}:?\d{2})$/.test(t) ? t : `${t}Z`);
+  return d.toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", ...(time ? { hour: "2-digit", minute: "2-digit" } : {}) }); };
+const TERMS = { assessment: "Assessment Summary", offering_type: "Type of offer", exception: "Needs a source check", solution: "Proposed solution",
+  solution_area: "Solution area", solution_pending: "solution to be set by the unit's designer / engineer", capability_gap: "Capability gap: not offered" };
+const solutionLabel = (s) => (s.area ? `${s.unit} · ${s.area}` : s.unit);
+const examplesLabel = (s) => (s.examples.length ? `For example: ${s.examples.join(", ")}` : "");
+const KB_STATE = { queued: "Waiting for review", approved: "Reviewed example", retired: "Replaced by a newer version" };
+
+// ---------- tiny view helpers ----------
+const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const attr = (name, v) => (v === undefined || v === null || v === false ? "" : v === true ? ` ${name}` : ` ${name}="${esc(v)}"`);
+const badge = (status, { kind = "status", label, cls = "", title } = {}) => {
+  const plain = String(status ?? "unknown").replace(/_/g, " ");
+  const text = label ?? (kind === "offering" ? offeringLabel(status) : plain.charAt(0).toUpperCase() + plain.slice(1));
+  const tip = title ?? (kind === "offering" ? OFFERING_MEANING[String(status ?? "NONE")] : undefined);
+  return `<span class="${`badge t-${toneOf(status, kind)} ${cls}`.trim()}"${attr("title", tip)}>${esc(text)}</span>`;
+};
+const when = (t) => formatDate(t, true);
+const pageHead = (title, help, actions = "", level = 2) => `<div class="page-head"><div><h${level} class="page-title">${esc(title)}</h${level}>`
+  + (help ? `<p class="page-help">${esc(help)}</p>` : "") + `</div>${actions ? `<div class="page-actions">${actions}</div>` : ""}</div>`;
+const alertBox = (kind, body, title) => `<div class="alert ${kind}" role="${kind === "error" || kind === "warn" ? "alert" : "status"}"><div class="alert-body">`
+  + (title ? `<span class="alert-title">${esc(title)}</span>` : "") + `${body}</div></div>`;
+const empty = (title, hint, extra = "") => `<div class="empty"><div class="empty-title">${esc(title)}</div>${hint ? `<p>${esc(hint)}</p>` : ""}${extra}</div>`;
+// data-demo: an action that writes in the real app; the demo shows a toast instead
+const demoBtn = (label, { cls = "", disabled = false, title, what } = {}) =>
+  `<button type="button"${attr("class", cls || undefined)}${attr("disabled", disabled)}${attr("title", title)} data-demo="${esc(what || label)}">${esc(label)}</button>`;
+
+// ---------- who is viewing ----------
+const ACCOUNTS = D.accounts;
+const unitName = (code) => (D.unit_names.find((u) => u.code === code) ?? {}).name ?? code;
+let user = ACCOUNTS.some((a) => a.username === store.get("user")) ? store.get("user") : "bid.manager";
+const me = () => ACCOUNTS.find((a) => a.username === user).me;
+const isBM = () => me().role === "bid_manager";
+
+// ---------- guidance (Show guidance) ----------
+const PLACEHOLDER = "The units' answers in this demo are illustrative placeholder responses, not offers.";
+const GUIDE = {
+  portfolio: "The list of bids. This demo holds one: the RC-1 AI campus, a synthetic request for proposal covering the power and cooling chain from the grid connection to the chip, taken through the whole workflow. Its status shows that the go decision is recorded and the response is being prepared; the bars show, per business unit, how many of its answers are validated. Open the bid to follow its steps. " + PLACEHOLDER,
+  rfp: "Step 1. The customer's RFP was uploaded here and read automatically: each statement became a requirement tied to its page and lines, and related statements were grouped under one requirement. The coverage card shows that every page and every statement is accounted for. The search box finds passages in plain words; the demo shows one recorded search.",
+  trace: "Step 2. Three panes side by side: the RFP page (1), the requirement register (2) and the proposed solution with the units' answers (3). Select a requirement in any pane and the others follow: its source lines are highlighted on the page and its proposed solution and answers come into view. The filters above narrow panes 2 and 3.",
+  pane1: "The boxes show where each requirement was quoted from; the orange box is the selected one. Click a box to select its requirement; use the arrows to turn the pages.",
+  pane2: "The requirement register. It was frozen when the RFP was read; every correction since then (an edit, a split, a merge, an exclusion, a missed requirement) was saved with a reason as a new frozen version. A group holds a requirement and its sub-requirements: expand it to see them. History shows who changed what.",
+  pane3: "For each requirement: the proposed solution (business unit and solution area, with example products), the type of offer and an example bill of materials, then each unit's answer and compliance. Product requirements that no participating unit offers are marked as capability gaps: not offered. " + PLACEHOLDER,
+  assessment: "Step 3. The bid manager reviews what the bid is about, chooses the business units that take part, routes each requirement to a team and sends the work out. In this final state every step is done: the recorded choices are shown and the forms are folded away (the bid manager can reopen them with the Change buttons; other roles only see what was recorded).",
+  score: "Three separate measures, never a probability: how many technical requirements the system first matched to a participating unit's solution; how many the units' design engineers reviewed (confirmed as proposed, or corrected with another solution or a compliance answer other than Compliant); and how many requirements sent to the units have all their answers validated. Standards and regulatory items are listed beside them, not counted.",
+  open_questions: "What needed attention before the response: requirements without an owner, requirements whose source could not be verified, engineering rule warnings and questions from the units. Rule warnings the bid manager checked at the bid decision are shown as checked.",
+  participation: "The business units the bid manager chose to take part, with the reason. Only these units received work.",
+  routing: "Each requirement goes to one team: a business unit, or the bid desk for commercial and submission items. Product requirements that no participating unit can offer are recorded as capability gaps and stated in the response as not offered.",
+  schedule: "Each unit manager gave the unit's finish date and said whether people, skills, manufacturing capacity, materials or cost limit delivery. The planned submission date is the latest unit date plus the days needed to assemble the response. The bid manager accepted these estimates and did not set the dates.",
+  compliance_position: "Per unit: how many validated answers are compliant, partially compliant, compliant with changes or non-compliant. The bid desk row holds the capability gaps. The bid manager approved this position.",
+  consolidation: "Step 4. One row per requirement and unit answer: the response to the customer is built from these. Every requirement is answered and validated. Select a row to see the full answer, its history and the highlighted source in the RFP. " + PLACEHOLDER,
+  outline: "A first draft of the written response, built only from validated answers; each paragraph cites the requirements it rests on, and the points still to add or confirm are listed. It is a starting point for the bid manager to edit before anything goes to the customer.",
+  decisions: "Step 5. The evidence for the go / no-go: engineering checks, workload, the compliance position and the decision criteria. Layer 0 gives its assessment of each criterion; the bid manager made the call and recorded the reasons, shown at the bottom of the page.",
+  engineering: "Automatic checks over the requirements: which parts of the grid-to-chip chain the RFP covers, and simple engineering rules. They are evidence for the bid manager, never a decision; the rules and capacities are illustrative.",
+  gonogo: "Layer 0's assessment of each criterion next to the bid manager's judgement, and the decision recorded for this bid. The bid manager can reopen it with Change decision.",
+  activity: "Everything recorded for this bid, newest first: who did what and when. Nothing here can be changed. Filter by type, requirement, unit or person. The demo workflow was run in one sitting, so many steps carry nearly the same time.",
+  changes: "Addenda, Q&A answers and change requests are read like the RFP and compared with the frozen requirements; a person confirms each change, and applying it returns the affected answers to their units.",
+  inbox: "One work package: the requirements assigned to a business unit or to the bid desk. Designers / engineers answer the technical items; unit managers answer the other items and validate the technical answers; the bid manager validates the rest and can return any answer with a question. Switch the role at the top to see each person's view. " + PLACEHOLDER,
+  completion: "Only the unit manager sees this: the unit's finish date for the bid and the five delivery factors.",
+  catalog: "The business units, their product families and published models from which solutions are proposed, and the reference documents behind them. Models are examples taken from public Flex web pages.",
+};
+const guide = (key, extra = "") => GUIDE[key] ? `<div class="alert info demo-guide" role="note"><div class="alert-body"><span class="alert-title">Guidance</span>${esc(GUIDE[key] + (extra ? " " + extra : ""))}</div></div>` : "";
+// ---------- page images: base64 data URIs turned into blob URLs once ----------
+const blobs = {};
+function img(doc, n) {
+  const k = `${doc}/${n}`;
+  if (!blobs[k] && D.images[k]) {
+    const [head, b64] = D.images[k].split(","), bin = atob(b64), a = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) a[i] = bin.charCodeAt(i);
+    blobs[k] = URL.createObjectURL(new Blob([a], { type: head.slice(5, head.indexOf(";")) }));
+  }
+  return blobs[k] ?? "";
+}
+
+// ---------- shell ----------
+const opp = () => D.bid.detail.opportunity;
+const STEPS = [
+  { suffix: "", label: "RFP", doneFrom: "reading" },
+  { suffix: "/trace", label: "Requirement Traceability", doneFrom: "frozen" },
+  { suffix: "/assessment", label: TERMS.assessment, doneFrom: "dispatched" },
+  { suffix: "/consolidation", label: "Compliance matrix", doneFrom: "submitted" },
+  { suffix: "/decisions", label: "Bid decision", doneFrom: "submitted" },
+];
+const ORDER = ["new", "reading", "review", "frozen", "go", "no_go", "dispatched", "consolidating", "submitted"];
+const rank = (s) => (s === "no_go" ? ORDER.indexOf("go") : ORDER.indexOf(s));
+
+function bidHead(path) {
+  const base = `/opportunities/${BID}`, status = opp().status, decided = !!D.bid.decisions.go_no_go;
+  const onChanges = path === base + "/changes", onActivity = path === base + "/consolidation/activity";
+  const steps = STEPS.map((s, i) => {
+    const current = !(s.suffix === "/consolidation" && onActivity) && (path === base + s.suffix || (s.suffix !== "" && path.startsWith(base + s.suffix + "/")));
+    const done = rank(status) >= rank(s.doneFrom) || (s.doneFrom === "submitted" && decided);
+    return `<li class="${current ? "current" : ""} ${done ? "done" : ""}"><a href="#${base + s.suffix}"${attr("aria-current", current && "step")}${attr("title", done && `${s.label}: done`)}>`
+      + `<span class="step-no" aria-hidden="true">${done ? "✓" : i + 1}</span>${esc(s.label)}${done ? '<span class="sr-only"> (done)</span>' : ""}</a></li>`;
+  }).join("");
+  return `<div class="opp-head"><div class="opp-title"><nav class="crumbs" aria-label="Breadcrumb"><a href="#/portfolio">Bids</a><span aria-hidden="true">›</span><span class="mono">${esc(BID)}</span></nav>`
+    + `<h1>${esc(opp().title)} <span>${(({ status: st, label }) => badge(st, { kind: "opp", cls: "opp-status lg", label }))(bidStatus(status, D.bid.decisions.go_no_go?.outcome))}</span></h1></div>`
+    + `<nav aria-label="Workflow steps"><ol class="stepper">${steps}</ol><div class="step-side">`
+    + `<a class="step-later ${onChanges ? "current" : ""}" href="#${base}/changes"${attr("aria-current", onChanges && "page")}><span class="step-no" aria-hidden="true">Δ</span>Changes</a>`
+    + `<a class="step-later ${onActivity ? "current" : ""}" href="#${base}/consolidation/activity"${attr("aria-current", onActivity && "page")}><span class="step-no" aria-hidden="true">≡</span>Activity</a>`
+    + `</div></nav></div>`;
+}
+
+function shell(path) {
+  const links = [["#/portfolio", "Bids", ["/portfolio", "/opportunities/"]], ["#/inbox", "My work", ["/inbox"]], ["#/catalog", "Product catalog", ["/catalog"]]];
+  $("#topnav").innerHTML = links.map(([href, label, m]) => { const on = m.some((x) => path.startsWith(x));
+    return `<a href="${href}"${attr("class", on && "active")}${attr("aria-current", on && "page")}>${label}</a>`; }).join("");
+  const m = me();
+  $("#actor").innerHTML = `<strong>${esc(m.name)}</strong><span>${esc(m.role_label)}${m.bu ? ` · ${esc(m.bu)}` : ""}</span>`;
+  $("#newbid").style.display = isBM() ? "" : "none"; // only the bid manager starts a bid (.button sets display, so not [hidden])
+}
+
+// ---------- screens ----------
+function portfolioScreen() {
+  const rows = D.portfolio.map(({ opp: o, requirements, progress, decision }) => {
+    const units = Object.entries(progress), st = bidStatus(o.status, decision);
+    const up = units.length === 0 ? '<span class="muted">Not sent to units</span>' :`<div class="unit-progress">${units.map(([bu, p]) => {
+      const waiting = p.submitted - p.validated, note = `${p.validated} validated, ${waiting} awaiting validation, ${p.total - p.submitted} not answered`;
+      const pct = (n) => `${p.total ? (n / p.total) * 100 : 0}%`;
+      return `<div class="unit-row" title="${esc(note)}"><a href="#/inbox/${esc(bu)}" aria-label="${esc(`${bu} work package: ${note}`)}">${esc(bu)}</a>`
+        + `<span class="unit-count">${p.validated}/${p.total} validated</span><span class="unit-bar" aria-hidden="true">`
+        + `<span class="done" style="width:${pct(p.validated)}"></span><span class="wait" style="width:${pct(waiting)}"></span></span></div>`; }).join("")}</div>`;
+    return `<tr><td class="mono"><a href="#/opportunities/${esc(o.id)}">${esc(o.id)}</a></td>`
+      + `<td><a href="#/opportunities/${esc(o.id)}/trace" class="portfolio-title">${esc(o.title)}</a></td>`
+      + `<td>${o.customer ? esc(o.customer) : '<span class="muted">not set</span>'}</td>`
+      + `<td>${badge(st.status, { kind: "opp", label: st.label })}</td><td class="num">${requirements}</td><td>${up}</td>`
+      + `<td><a class="button secondary sm" href="#/opportunities/${esc(o.id)}/trace" aria-label="Open ${esc(o.id)}">Open</a></td></tr>`;
+  }).join("");
+  return `<div class="content">${pageHead("Bids", "Every bid in progress, with how far each business unit has answered.", "", 1)}`
+    + guide("portfolio")
+    + `<table class="portfolio"><thead><tr><th>ID</th><th>Title</th><th>Customer</th><th>Status</th><th class="num">Requirements</th><th>Unit responses (validated / total)</th><th scope="col" aria-label="Open"></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+let searched = false;
+function rfpScreen() {
+  const o = opp(), docs = D.bid.detail.documents, snaps = D.bid.extraction, status = o.status;
+  const canRead = status === "new" || status === "review", started = !canRead, bm = isBM();
+  const read = docs.some((d) => d.role === "main" && d.status === "ingested");
+  const views = (D.samples?.samples ?? []).find((s) => docs.some((d) => d.role === "main" && d.filename === s.filename))?.views ?? [];
+  const table = `<table class="docs"><thead><tr><th>File</th><th>Document type</th><th class="num">Pages</th><th>Status</th><th>Received</th></tr></thead><tbody>`
+    + docs.map((d) => `<tr><td>${esc(d.filename)}</td><td>${esc(DOC_TYPES[d.role] ?? d.role)}</td><td class="num">${d.page_count}</td><td>${badge(d.status, { label: statusLabel(d.status) })}</td>`
+      + `<td title="SHA-256 ${esc(d.sha256)}">${esc(formatDate(d.received_at, true)) || `<span class="mono">${esc(d.sha256.slice(0, 12))}</span>`}</td></tr>`).join("")
+    + (docs.length ? "" : '<tr><td colspan="5" class="muted">No documents yet. Upload the RFP below.</td></tr>') + "</tbody></table>";
+  const form = `<form class="${started ? "form" : "card form"}" data-demo-form="Uploading a document">`
+    + `<label>RFP file (PDF, Word or Excel) <input type="file" name="file" disabled></label>`
+    + `<label>Document type <select name="role">${Object.entries(DOC_TYPES).map(([v, l]) => `<option value="${v}"${attr("selected", v === (started ? "addendum" : "main"))}>${esc(l)}</option>`).join("")}</select></label>`
+    + demoBtn("Upload and read", { disabled: !bm, title: bm ? undefined : BM_ONLY }) + demoBtn("Refresh status", { cls: "secondary" }) + `</form>`;
+  const s = D.bid.search;
+  const search = read ? `<section class="card"><div class="card-head"><h2>Search this RFP</h2><span class="muted">Ask in plain words; the best passages come back with page and lines.</span></div>`
+    + `<form class="inline rfp-search" role="search" data-act="search"><label><span class="sr-only">Question</span><input type="search" name="q" value="${esc(s.q)}" placeholder="e.g. what short-circuit rating is required?" class="wide"></label><button>Search</button></form>`
+    + (searched ? `<div><p class="muted">${s.mode === "embeddings" ? "Meaning-based search" : "Keyword search (no embedding service: offline)"} over the RFP's passages. <em>Demo: the recorded answer to “${esc(s.q)}”.</em></p><ol class="passages">`
+      + s.passages.map((p) => `<li><span class="mono">p. ${p.page}, lines ${p.line_start}-${p.line_end}</span> ${esc(p.text)}</li>`).join("")
+      + (s.passages.length ? "" : '<li class="muted">Nothing found.</li>') + "</ol></div>" : "") + "</section>" : "";
+  const c = snaps[0]?.coverage, n = D.portfolio.find((x) => x.opp.id === BID)?.requirements;
+  const sum = (total, parts) => `${c[total]} ${coverageLabel(total)} = ` + parts.map((k) => `${c[k] ?? 0} ${coverageLabel(k)}`).join(" + ");
+  const coverage = c ? `<section class="card"><div class="card-head"><h2>What the reader covered</h2><span class="muted">${snapshotName(snaps[0].number)}</span></div>`
+    + ("pages_read" in c ? `<p>${esc(sum("pages", ["pages_read", "pages_failed", "pages_skipped", "pages_unreadable"]))}${c.chunks_failed ? ` (${c.chunks_failed} of ${c.chunks} ${coverageLabel("chunks")} failed)` : ""}</p>` : `<p class="muted">${c.pages} pages (read before page coverage was recorded)</p>`)
+    + `<p>${esc(readSummary(c, n))}</p></section>` : "";
+  return pageHead("RFP documents", `${o.customer || "Customer not set"} · ${o.customer_type || "customer type not set"}. ${read ? "The RFP has been read into requirements; add an addendum, a clarification or a change request below." : "Upload the RFP, then let the reader agent break it into requirements."}`)
+    + guide("rfp")
+    + (views.length ? `<p>Focus: ${views.map((v) => `<a href="#/opportunities/${BID}/trace?${esc(v.query)}">${esc(v.label)}</a>`).join(" · ")}</p>` : "")
+    + table
+    + (started ? `<details class="card"><summary><strong>Add another document</strong> <span class="muted">(addendum, clarification / Q&amp;A, change request)</span></summary>${form}</details>` : form)
+    + search + coverage
+    + (started ? '<p class="muted">Requirement review has started, so the RFP is not re-read. Missed items can be added in pane 2 of Requirement Traceability.</p>'
+      : `<div class="row">${demoBtn("Run the reader agent → requirements", { disabled: !bm, title: bm ? undefined : BM_ONLY })}${bm ? "" : '<span class="muted">Only the bid manager uploads documents and runs the reader.</span>'}</div>`);
+}
+// ---------- Requirement Traceability ----------
+const PANE_NAMES = { 1: "Original RFP", 2: "Requirement register", 3: "Proposed solution and responses" };
+const DEFAULT_WIDTHS = { 1: 1, 2: 1, 3: 1.3 };
+const T = { sel: null, docId: null, page: 1, linked: { 1: true, 2: true, 3: true }, enlarged: null, order: [1, 2, 3], widths: { ...DEFAULT_WIDTHS },
+  f: {}, reg: { tab: "register", filter: "register", q: "", open: new Set(), history: null, checked: new Set() }, scrollTo: null };
+const isDefaultLayout = () => T.order.join() === "1,2,3" && [1, 2, 3].every((p) => T.widths[p] === DEFAULT_WIDTHS[p]);
+
+// filters.ts (A-27), ported as is
+const SORTS = { id: "ID", category: "Category", unit: "Unit", compliance: "Compliance", changed: "Last change" };
+const RESPONSES = { not_sent: "Not sent", assigned: "Assigned", submitted: "Submitted", returned: "Returned", validated: "Validated" };
+const FACETS = ["category", "offering", "unit", "response", "compliance", "source", "origin"];
+const FACET_LABELS = {
+  category: ["Category", {}],
+  offering: [TERMS.offering_type, { CTO: "CTO (configure to order)", SEMI_CUSTOM: "Semi-custom", ETO: "ETO (engineer to order)", NONE: "Bid desk (no product)", unmatched: "Not matched yet" }],
+  unit: ["Business unit", { BID: "Bid desk" }],
+  response: ["Unit response", RESPONSES],
+  compliance: ["Unit compliance (any answer)", { ...COMPLIANCE_LABELS, exception: "Exception (earlier value)" }],
+  source: ["RFP source check", { verified: "Quote found on the RFP page", not_verified: "Quote not found on the page" }],
+  origin: ["Added by", { extraction: "The RFP reader", correction: "A correction", customer_change: "A customer change document" }],
+};
+const unitsOf = (r) => new Set([...(r.match?.units ?? []).map((u) => u.bu), ...(r.match?.bu ? [r.match.bu] : []), ...r.assignments.map((a) => a.bu)]);
+const COMPLIANCE_ORDER = ["not_met", "partial", "deviation", "met"];
+function matches(r, f) {
+  const req = r.req;
+  if (f.category && req.category !== f.category) return false;
+  if (f.offering && (r.match?.offering_type ?? "unmatched") !== f.offering) return false;
+  if (f.unit && !f.unit.split(",").some((u) => unitsOf(r).has(u))) return false; // ?unit=CROWN,EP2,ANORD: any of them
+  if (f.response && !(f.response === "not_sent" ? r.assignments.length === 0 : r.assignments.some((a) => a.status === f.response))) return false;
+  if (f.compliance && !r.assignments.some((a) => a.compliance === f.compliance)) return false;
+  if (f.source && (req.provenance === "EXTRACTED") !== (f.source === "verified")) return false;
+  if (f.origin && (req.origin ?? "extraction") !== f.origin) return false;
+  if (f.from && (req.page ?? 0) < Number(f.from)) return false;
+  if (f.to && (req.page ?? Infinity) > Number(f.to)) return false;
+  if (f.q) { const q = f.q.toLowerCase();
+    if (!`${req.req_id} ${req.text} ${req.quote} ${r.children.map((k) => k.text).join(" ")}`.toLowerCase().includes(q)) return false; }
+  return true;
+}
+function sortKey(r, sort) {
+  switch (sort) {
+    case "id": return r.req.req_id;
+    case "category": return r.req.category;
+    case "unit": return r.match?.bu ?? "~";
+    case "compliance": { const ranks = r.assignments.map((a) => COMPLIANCE_ORDER.indexOf(a.compliance ?? "")).filter((i) => i >= 0);
+      return ranks.length ? Math.min(...ranks) : COMPLIANCE_ORDER.length; }
+    case "changed": return -Date.parse(r.req.created_at ?? "") || 0;
+    default: return 0;
+  }
+}
+function applyFilters(rows, f) {
+  const kept = rows.filter((r) => matches(r, f));
+  const sort = f.sort && f.sort !== "rfp" ? f.sort : "";
+  if (!sort) return kept;
+  return kept.map((r, i) => ({ r, i, k: sortKey(r, sort) })).sort((a, b) => (a.k < b.k ? -1 : a.k > b.k ? 1 : a.i - b.i)).map((x) => x.r);
+}
+const isFiltered = (f) => Object.entries(f).some(([k, v]) => v && !(k === "sort" && v === "rfp"));
+function valuesOf(r, k) {
+  switch (k) {
+    case "category": return [r.req.category];
+    case "offering": return [r.match?.offering_type ?? "unmatched"];
+    case "unit": return [...unitsOf(r)];
+    case "response": return r.assignments.length ? [...new Set(r.assignments.map((a) => a.status))] : ["not_sent"];
+    case "compliance": return [...new Set(r.assignments.map((a) => a.compliance).filter(Boolean))];
+    case "source": return [r.req.provenance === "EXTRACTED" ? "verified" : "not_verified"];
+    case "origin": return [r.req.origin ?? "extraction"];
+  }
+}
+function facets(rows, f) {
+  const out = {};
+  for (const k of FACETS) { const others = { ...f, [k]: undefined }, m = new Map();
+    for (const r of rows) if (matches(r, others)) for (const v of valuesOf(r, k)) m.set(v, (m.get(v) ?? 0) + 1);
+    out[k] = m; }
+  return out;
+}
+
+function traceDerived() {
+  const data = D.trace, docs = data.docs ?? [];
+  const mainId = data.doc?.id ?? docs[0]?.id, shown = docs.find((x) => x.id === T.docId) ?? docs[0], pages = shown?.pages ?? [];
+  return { data, docs, mainId, shown, pages, page: pages[T.page - 1], view: applyFilters(data.rows, T.f), filtered: isFiltered(T.f),
+    docName: (x) => (!x || x.id === mainId ? "RFP" : x.filename), assessed: data.sent_for_assessment ?? data.rows.some((r) => r.assignments.length > 0) };
+}
+
+function selectReq(reqId, { from } = {}) {
+  T.sel = reqId;
+  const row = D.trace.rows.find((r) => r.req.req_id === reqId);
+  if (row && T.linked[1] && row.req.page) { T.docId = row.req.document_id; T.page = row.req.page; }
+  T.scrollTo = { req: reqId, panes: [2, 3].filter((p) => T.linked[p] && p !== from) };
+  render();
+}
+
+function paneFrame(p, body, d) {
+  const name = PANE_NAMES[p], at = T.order.indexOf(p), hidden = T.enlarged !== null && T.enlarged !== p, linked = T.linked[p];
+  const grip = `<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">${[3, 7, 11].flatMap((y) => [4, 10].map((x) => `<circle cx="${x}" cy="${y}" r="1.3" fill="currentColor"/>`)).join("")}</svg>`;
+  return `<section class="pane" data-pane="${p}" data-keep="pane${p}"${attr("hidden", hidden)}><div class="pane-head">`
+    + `<div class="pane-arrange" role="group" aria-label="Arrange pane ${p}: ${name}">`
+    + `<button type="button" class="pane-grip" title="Drag to reorder. Left and right arrow keys also move it." aria-label="Move pane ${p}: ${name}" data-act="grip" data-arg="${p}">${grip}</button>`
+    + `<button type="button" class="pane-move" ${at <= 0 ? "disabled" : ""} data-act="move" data-arg="${p},-1" title="Move left" aria-label="Move pane ${p}: ${name} left"><span aria-hidden="true">◀</span></button>`
+    + `<button type="button" class="pane-move" ${at >= 2 ? "disabled" : ""} data-act="move" data-arg="${p},1" title="Move right" aria-label="Move pane ${p}: ${name} right"><span aria-hidden="true">▶</span></button></div>`
+    + `<h2>${p} · ${name}</h2><div class="pane-tools">`
+    + `<button type="button" class="chip${linked ? " on" : ""}" data-act="link" data-arg="${p}" title="A linked pane follows the selected requirement; an unlinked pane keeps its place until you link it again.">${linked ? "Linked" : "Unlinked"}</button>`
+    + `<button type="button" class="secondary sm" data-act="enlarge" data-arg="${p}" title="${T.enlarged === p ? "Back to the three panes (Esc)" : "Show only this pane"}">${T.enlarged === p ? "Restore" : "Enlarge"}</button>`
+    + `<button type="button" class="secondary sm pane-detach" data-demo="Opening a pane in its own window" title="Open this pane in its own window, for example on another screen">New window</button>`
+    + `</div></div>${guide("pane" + p)}${body}</section>`;
+}
+
+function pane1(d) {
+  const { shown, page, pages, docs } = d;
+  if (!shown || !page) return '<p class="muted trace-empty">No RFP page available.</p>';
+  const boxes = d.data.rows.filter((r) => r.req.page === T.page && r.req.document_id === shown.id).flatMap((r) => r.req.bboxes.map(([x0, y0, x1, y1], i) =>
+    `<div class="hl${r.req.req_id === T.sel ? " sel" : ""}" title="${esc(r.req.req_id)}" role="button" tabindex="${i === 0 ? 0 : -1}" aria-label="Select ${esc(r.req.req_id)}" data-hl="${esc(r.req.req_id)}"`
+    + ` style="left:${(x0 / page.width) * 100}%;top:${(y0 / page.height) * 100}%;width:${((x1 - x0) / page.width) * 100}%;height:${((y1 - y0) / page.height) * 100}%"></div>`)).join("");
+  return `<div class="trace-docs"><span>Showing <strong>${esc(d.docName(shown))}</strong>${shown.id !== d.mainId ? ` <span class="tag">${esc(DOC_TYPES[shown.role] ?? shown.role)}</span>` : ""}</span>`
+    + (docs.length > 1 ? `<span class="trace-doc-switch" role="group" aria-label="Document shown">${docs.map((x) => `<button type="button" class="chip${x.id === shown.id ? " on" : ""}" aria-pressed="${x.id === shown.id}" title="${esc(x.filename)}" data-act="doc" data-arg="${esc(x.id)}">${esc(d.docName(x))}</button>`).join("")}</span>` : "")
+    + `</div><div class="pager"><button aria-label="Previous page" data-act="page" data-arg="-1">◀</button>`
+    + `<span>Page <input type="number" id="pageno" aria-label="Page number" min="1" max="${pages.length}" value="${T.page}" data-change="pageno"> / ${pages.length}</span>`
+    + `<button aria-label="Next page" data-act="page" data-arg="1">▶</button>${page.unreviewed ? '<span class="warn">No text layer: page not read (needs OCR)</span>' : ""}</div>`
+    + `<div class="page"><img src="${img(shown.id, T.page)}" alt="${esc(`${d.docName(shown)} page ${T.page}`)}">${boxes}</div>`;
+}
+
+const INACTIVE = new Set(["rejected", "split", "merged", "duplicate", "removed", "exception", "dismissed"]);
+const OUTSIDE = new Set(["exception", "dismissed"]);
+const REG_FILTERS = {
+  register: ["In register", (r) => !INACTIVE.has(r.status)], rejected: ["Excluded", (r) => r.status === "rejected"],
+  duplicates: ["Duplicates", (r) => r.status === "duplicate"], replaced: ["Ungrouped / split / merged", (r) => r.status === "split" || r.status === "merged"],
+  all: ["All", () => true],
+};
+const kbBadgeOr = (key, link) => { const s = D.bid.knowledge[key];
+  return s && s !== "rejected" ? badge(s, { label: KB_STATE[s] ?? s, cls: "kb-sent" }) : link; };
+const nominate = '<button type="button" class="link" data-demo="Nominating a reviewed example" title="Nominate as a reviewed example">Nominate as example</button>';
+
+function historyBox(reqId) {
+  const h = D.req_history[reqId];
+  if (!h) return '<p class="muted">No history recorded.</p>';
+  return `<div class="history"><div><h3>Versions (${h.versions.length})</h3><ol class="versions">`
+    + h.versions.map((v) => `<li><div class="muted">v${v.n} · ${esc(v.label)}${v.origin ? ` (${esc(originLabel(v.origin))})` : ""} by <strong>${esc(v.by)}</strong> · ${esc(when(v.at))}${v.reason ? ` · reason: ${esc(v.reason)}` : ""}</div><div>${esc(v.text)} <span class="tag">${esc(v.category)}</span></div></li>`).join("")
+    + `</ol><p class="quote">Source (${esc(h.source)}): “${esc(h.quote)}”</p>${h.derived_from.length ? `<p class="muted">Created from ${esc(h.derived_from.join(", "))}</p>` : ""}</div>`
+    + `<div><h3>Timeline</h3><ul class="timeline">` + h.events.map((e) => `<li><span class="muted">${esc(when(e.at))}</span> <strong>${esc(e.action.replace("_", " "))}</strong> by ${esc(e.by)}`
+      + Object.entries(e.details).filter(([, v]) => v !== "" && !(Array.isArray(v) && v.length === 0)).map(([k, v]) => `<span class="muted"> · ${k === "provenance" ? esc(sourceLabel(String(v)).toLowerCase()) : `${esc(k.replace("_", " "))}: ${esc(Array.isArray(v) ? v.join(", ") : String(v))}`}</span>`).join("")
+      + "</li>").join("") + "</ul></div></div>";
+}
+
+function pane2(d) {
+  const R = D.bid.requirements, reg = T.reg, frozen = !!R.baseline;
+  const all = R.requirements.filter((r) => !r.parent_id && !OUTSIDE.has(r.status));
+  const kidsOf = new Map();
+  for (const r of R.requirements) if (r.parent_id) kidsOf.set(r.parent_id, [...(kidsOf.get(r.parent_id) ?? []), r]);
+  const activeCount = all.filter(REG_FILTERS.register[1]).length, exc = D.bid.exceptions, latest = D.bid.extraction[0];
+  const q = reg.q.toLowerCase(), hit = (r) => `${r.req_id} ${r.text} ${r.quote}`.toLowerCase().includes(q);
+  let rows = all.filter((r) => REG_FILTERS[reg.filter][1](r) && (!q || hit(r) || (kidsOf.get(r.req_id) ?? []).some(hit)));
+  const order = d.filtered ? d.view.map((r) => r.req.req_id) : null;
+  if (order && reg.filter === "register") { const pos = new Map(order.map((id, i) => [id, i])); rows = rows.filter((r) => pos.has(r.req_id)).sort((a, b) => pos.get(a.req_id) - pos.get(b.req_id)); }
+  const selectable = rows.filter((r) => !INACTIVE.has(r.status)).map((r) => r.req_id), allSelected = selectable.length > 0 && selectable.every((id) => reg.checked.has(id));
+  T.reg.selectable = selectable;
+
+  // three columns (21 Oct review): select; ID with its category and source; the requirement with its status, history and actions under it
+  const line = (r, child = false) => {
+    const active = !INACTIVE.has(r.status), kids = kidsOf.get(r.req_id) ?? [], group = r.kind === "group", sel = !child && r.req_id === T.sel;
+    const cls = `${active ? "" : "inactive"} ${child ? "child" : ""} ${group ? "group" : ""} ${sel ? "selected" : ""}`.trim();
+    let html = `<tr${attr("class", cls || undefined)}${child ? "" : ` data-req="${esc(r.req_id)}" data-from="2" tabindex="0"`}${attr("aria-current", sel && "true")}>`
+      + `<td>${active && !child ? `<input type="checkbox" aria-label="Select ${esc(r.req_id)}" data-change="check" data-arg="${esc(r.req_id)}"${attr("checked", reg.checked.has(r.req_id))}>` : ""}</td>`
+      + `<td><div class="mono">${esc(r.req_id)}</div><span class="tag">${esc(categoryLabel(r.category))}</span>${r.origin === "correction" || r.origin === "customer_change" ? `<span class="tag origin" title="How this version came in">${esc(originLabel(r.origin))}</span>` : ""}`
+      + `<div class="req-source">${r.provenance === "UNANCHORED" ? badge("medium", { kind: "severity", label: sourceLabel(r.provenance), title: "Quote not located on the page; check the source manually" }) : esc(r.source)}</div></td>`
+      + `<td><div${attr("class", group && "group-title")}>${esc(r.text)}</div>`
+      + (group ? `<button type="button" class="link expand" aria-expanded="${reg.open.has(r.req_id)}" data-act="expand" data-arg="${esc(r.req_id)}">${reg.open.has(r.req_id) ? "▾" : "▸"} ${kids.length} sub-requirements</button>` : `<div class="quote">“${esc(r.quote)}”</div>`)
+      + (r.status === "duplicate" ? `<div class="muted">Duplicate of ${esc(r.derived_from.join(", "))}: restore it to keep it anyway</div>` : r.derived_from?.length ? `<div class="muted">From ${esc(r.derived_from.join(", "))}</div>` : "")
+      + (sel ? `<span>${kbBadgeOr(`requirement:${r.req_id}`, nominate)}</span>` : "")
+      + `<div class="req-meta"><span class="status-cell">${badge(r.status, { label: statusLabel(r.status) })}<button type="button" class="link" aria-expanded="${reg.history === r.req_id}" data-act="history" data-arg="${esc(r.req_id)}">History</button></span>`
+      + (active ? `<div class="row-actions">${demoBtn("Exclude: not a requirement", { cls: "secondary", what: "Excluding a requirement" })}${demoBtn("Edit", { cls: "secondary", what: "Editing a requirement" })}${!group && !child ? demoBtn("Split", { cls: "secondary", what: "Splitting a requirement" }) : ""}</div>` : "")
+      + "</div></td></tr>";
+    if (reg.history === r.req_id) html += `<tr class="history-row"><td colspan="3">${historyBox(r.req_id)}</td></tr>`;
+    if (group && reg.open.has(r.req_id)) html += kids.map((k) => line(k, true)).join("");
+    return html;
+  };
+
+  const help = frozen ? `Frozen version ${R.baseline.number}, frozen automatically when ${esc(R.baseline.frozen_by)} read the RFP (${R.baseline.count} items). Edits, splits, merges, exclusions and missed requirements are saved as corrections with a reason; customer documents run on the <a href="#/opportunities/${BID}/changes">Changes</a> step.`
+    : `${activeCount} requirements in the register; related line items are grouped (expand a group to see its sub-requirements).`;
+  let html = `<p class="muted register-help">${help}</p>`
+    + `<div class="filters" role="tablist" aria-label="Requirements view"><button role="tab" aria-selected="${reg.tab === "register"}" class="chip ${reg.tab === "register" ? "on" : ""}" data-act="regtab" data-arg="register">Register <span>${activeCount}</span></button>`
+    + `<button role="tab" aria-selected="${reg.tab === "exceptions"}" class="chip ${reg.tab === "exceptions" ? "on" : ""}" data-act="regtab" data-arg="exceptions">${TERMS.exception} <span>${R.exceptions ?? exc.length}</span></button></div>`;
+  if (R.coverage && Object.keys(R.coverage).length) html += `<details class="muted"><summary>${esc(readSummary(R.coverage, activeCount))}</summary>${latest ? `${snapshotName(latest.number)}: ` : "Latest read: "}`
+    + `${esc(Object.entries(R.coverage).filter(([k, v]) => !(k === "problems" && !v)).map(([k, v]) => `${v} ${coverageLabel(k)}`).join(", "))}</details>`;
+  if (reg.tab === "exceptions") {
+    html += exc.length === 0 ? empty("Nothing needs a source check", "Every proposed requirement has a verified source.") : `<ul class="exceptions">${exc.map((r) => {
+      const h = r.location_hint, where = h ? `Probably p. ${h.page}${h.line_start ? `, lines ${h.line_start}-${h.line_end}` : ""} (wording not matched exactly)` : r.suggested_page ? `Suggested page ${r.suggested_page}` : "No page suggested";
+      return `<li class="card"><div><span class="mono">${esc(r.req_id)}</span> <span class="tag">${esc(r.category)}</span> ${badge("medium", { kind: "severity", label: "Source not verified" })}</div><div>${esc(r.text)}</div><div class="quote">“${esc(r.quote)}”</div>`
+        + `<div class="muted">${esc(where)} · ${esc(r.reason)}</div><div class="row-actions">${demoBtn("Link to lines")}${demoBtn("Dismiss", { cls: "secondary" })}</div></li>`; }).join("")}</ul>`;
+  } else if (all.length === 0) {
+    html += empty("No requirements yet", "The reader proposes line items here once the main RFP has been read.");
+  } else {
+    html += `<div class="filters" role="tablist" aria-label="Filter line items">${Object.entries(REG_FILTERS).map(([k, [label, test]]) =>
+      `<button role="tab" aria-selected="${reg.filter === k}" class="chip ${reg.filter === k ? "on" : ""}" data-act="regfilter" data-arg="${k}">${label} <span>${all.filter(test).length}</span></button>`).join("")}`
+      + `<input type="search" id="regq" placeholder="Search ID or text" value="${esc(reg.q)}" aria-label="Search line items" data-change="regq"></div>`;
+    if (order && reg.filter === "register") html += `<p class="muted">Filtered and sorted by the bar above: ${rows.length} of ${activeCount} requirements.</p>`;
+    if (reg.checked.size) html += `<div class="bulkbar" role="region" aria-label="Selected line items"><strong>${reg.checked.size} selected</strong>${demoBtn("Merge into one", { cls: "secondary", disabled: reg.checked.size < 2, what: "Merging requirements" })}<button type="button" class="secondary" data-act="uncheck">Clear</button></div>`;
+    html += `<table class="req-table"><thead><tr><th class="col-check"><input type="checkbox" aria-label="Select all line items in view" data-change="checkall"${attr("disabled", selectable.length === 0)}${attr("checked", allSelected)}></th><th class="col-id">ID</th><th>Requirement</th></tr></thead><tbody>`
+      + rows.map((r) => line(r)).join("") + (rows.length ? "" : `<tr><td colspan="3" class="muted">${reg.q ? `Nothing in “${REG_FILTERS[reg.filter][0]}” matches “${esc(reg.q)}”.` : `No line items under “${REG_FILTERS[reg.filter][0]}”.`}</td></tr>`) + "</tbody></table>";
+  }
+  if (reg.tab === "register") html += `<details class="card"><summary><strong>Add a requirement the agent missed</strong> <span class="muted">${frozen ? "select its lines on the RFP page; saved as a correction" : "select its lines on the RFP page, or paste the quote"}</span></summary><p class="muted">Demo: selecting lines on the page and saving the correction runs in the live app.</p></details>`;
+  const snaps = D.bid.extraction;
+  if (snaps.length) html += `<details class="card snapshots"><summary><strong>RFP readings</strong> <span class="muted">${snaps.length} read${snaps.length === 1 ? "" : "s"} of the RFP; each is kept as it was produced</span></summary><ul class="snapshot-list">`
+    + snaps.map((s) => { const open = T.reg.snap === s.number, items = D.bid.snapshots[s.number]?.items ?? [];
+      return `<li><div><strong class="mono">${snapshotName(s.number)}</strong> · ${esc(s.created_by)} · ${esc(when(s.created_at))}${s.reason ? ` · reason: ${esc(s.reason)}` : ""}</div>`
+        + `<div class="muted">${esc([s.model, s.pipeline_version].filter(Boolean).join(" · "))}${s.coverage ? esc(` · ${Object.entries(s.coverage).filter(([k, v]) => !(k === "problems" && !v)).map(([k, v]) => `${v} ${coverageLabel(k)}`).join(", ")}`) : ""}</div>`
+        + `<button type="button" class="link" aria-expanded="${open}" data-act="snap" data-arg="${s.number}">${open ? "Hide items" : "View items"}</button>`
+        + (open ? `<p class="muted">${snapshotName(s.number)} never changes: this is what the read produced, whatever happened to the register afterwards.</p><table class="req-table"><thead><tr><th>ID</th><th>Page / lines</th><th>Text</th><th>Status</th><th>Group / duplicate of</th></tr></thead><tbody>`
+          + items.map((i) => `<tr><td class="mono">${esc(i.req_id)}</td><td>${i.page ? `p. ${i.page}${i.line_start ? `, lines ${i.line_start}-${i.line_end ?? i.line_start}` : ""}` : ""}</td><td>${esc(i.text)}</td><td>${esc(statusLabel(i.status))}</td><td class="mono">${esc(i.duplicate_of ? `duplicate of ${i.duplicate_of}` : i.group ?? "")}</td></tr>`).join("")
+          + "</tbody></table>" : "") + "</li>"; }).join("") + "</ul></details>";
+  return html;
+}
+
+// MatchActions.tsx: how the match came about
+const METHOD = { manual: "set by a person", routed: "routed by the bid manager: the unit's designer / engineer confirms the solution", agent: "proposed by the matching agent",
+  rule: "routed by rule", retrieval_only: "closest catalog entry (no agent answer)" };
+const PRODUCT = ["technical", "compliance"]; // the items a unit's designer / engineer answers
+const NEEDS_OWNER = "Needs an owner: no participating unit offers it yet";
+
+function pane3(d) {
+  if (d.data.rows.length === 0) return empty("Nothing to map yet", "Proposed solutions and unit responses appear here once requirements exist.");
+  const may = new Set(D.can_change[user] ?? []);
+  return `<table class="rows"><thead><tr><th class="col-id">ID</th><th>${TERMS.solution}</th><th>Response</th></tr></thead><tbody>` + d.view.map(({ req, match: m, solutions, bom, assignments }) => {
+    const sel = req.req_id === T.sel, can = may.has(req.req_id);
+    // a non-product item routed to units is answered by their managers; a product item with no unit is a capability gap once the bid desk holds it
+    const managers = assignments.some((a) => a.bu !== "BID") ? assignments.filter((a) => a.bu !== "BID").map((a) => a.bu) : PRODUCT.includes(req.category) ? [] : (m?.units ?? []).map((u) => u.bu);
+    const noUnit = PRODUCT.includes(req.category) ? (assignments.some((a) => a.bu === "BID") ? TERMS.capability_gap : NEEDS_OWNER) : "Bid desk (not a product item)";
+    const solution = m?.bu && PRODUCT.includes(req.category) ? solutions.map((s) => `<div><div class="trace-unit"><span class="muted">${TERMS.solution}:</span> ${esc(solutionLabel(s))}${s.area ? "" : `<span class="muted"> · ${TERMS.solution_pending}</span>`}</div>${s.examples.length ? `<div class="muted trace-product">${esc(examplesLabel(s))}</div>` : ""}</div>`).join("")
+      + `<div class="trace-product">${badge(m.offering_type, { kind: "offering" })}</div><div class="muted trace-rationale">${esc(m.rationale)}</div>`
+      + (bom.length ? `<details class="trace-bom"><summary>Example bill of materials (${bom.length} ${bom.length === 1 ? "line" : "lines"})</summary><ul>${bom.map((b) => `<li>${esc(b.item)} — ${esc(b.qty)}</li>`).join("")}</ul></details>` : "")
+      : `<span class="muted">${m?.status === "rejected" ? "Rejected: choose a unit with Change" : m ? esc(managers.length ? `Not a product item: answered by the unit managers (${managers.join(", ")})` : noUnit) : "Not matched yet"}</span>`;
+    const hasSolution = !(m?.units ?? []).some((u) => !u.product_id);
+    const actions = `<div class="match-actions">${m ? `<div class="muted match-meta">${m.method !== "rule" && (m.bu || m.status === "rejected") ? badge(m.status) : ""} ${esc(METHOD[m.method] ?? m.method)}</div>` : ""}`
+      + (can ? `<div class="row-actions">${m?.status === "proposed" && m.method !== "rule" ? demoBtn("Accept", { disabled: !hasSolution, title: hasSolution ? undefined : "Choose a solution for each unit (Change).", what: "Accepting a match" }) + demoBtn("Reject", { cls: "secondary", what: "Rejecting a match" }) : ""}`
+        + demoBtn("Change", { cls: "secondary", what: "Changing a match" }) + "</div>" : "") + "</div>";
+    const response = !d.assessed ? '<span class="muted">Responses appear once the bid is sent for assessment</span>'
+      : assignments.map((a) => `<div class="trace-assign"><strong>${esc(a.bu)}</strong> ${badge(a.status, { cls: "trace-status" })}${a.compliance ? badge(a.compliance, { kind: "compliance", label: complianceLabel(a.compliance), cls: "trace-compliance" }) : ""}`
+        + `${a.response ? `<div class="muted trace-response">${esc(a.response)}</div>` : ""}${a.status === "validated" ? kbBadgeOr(`response:${a.id}`, nominate) : ""}</div>`).join("")
+        + (assignments.length ? "" : '<span class="muted">Not sent to units</span>');
+    return `<tr data-req="${esc(req.req_id)}" data-from="3" tabindex="0"${attr("class", sel && "selected")}${attr("aria-current", sel && "true")}><td class="mono trace-id">${esc(req.req_id)}</td><td>${solution}${actions}</td><td>${response}</td></tr>`;
+  }).join("") + "</tbody></table>";
+}
+function filterBar(d) {
+  const f = T.f, counts = facets(d.data.rows, f);
+  const facet = (k) => {
+    const [label, names] = FACET_LABELS[k], options = [...counts[k].entries()].sort(([a], [b]) => a.localeCompare(b));
+    if (!f[k] && (options.length === 0 || (options.length === 1 && options[0][1] === d.view.length))) return "";
+    if (f[k] && !counts[k].has(f[k])) options.push([f[k], f[k].includes(",") ? d.view.length : 0]); // a saved several-unit link
+    return `<label>${esc(label)} <select data-change="filter" data-arg="${k}"><option value="">Any</option>${options.map(([v, n]) => `<option value="${esc(v)}"${attr("selected", f[k] === v)}>${esc(names[v] ?? (k === "category" ? categoryLabel(v) : v.split(",").join(", ")))} (${n})</option>`).join("")}</select></label>`;
+  };
+  return `<div class="filters trace-filters" role="search" aria-label="Filter and sort the requirements">${FACETS.map(facet).join("")}`
+    + `<label>Pages <input type="number" min="1" class="narrow" id="ffrom" value="${esc(f.from ?? "")}" aria-label="From page" data-change="filter" data-arg="from"> – <input type="number" min="1" class="narrow" id="fto" value="${esc(f.to ?? "")}" aria-label="To page" data-change="filter" data-arg="to"></label>`
+    + `<input type="search" id="fq" placeholder="Search ID or text" value="${esc(f.q ?? "")}" aria-label="Search the requirements" data-change="filter" data-arg="q">`
+    + `<label>Sort <select data-change="filter" data-arg="sort"><option value="">RFP order</option>${Object.entries(SORTS).map(([v, l]) => `<option value="${v}"${attr("selected", f.sort === v)}>${l}</option>`).join("")}</select></label>`
+    + `<span class="muted">${d.view.length} of ${d.data.rows.length}</span>${d.filtered ? '<button type="button" class="secondary sm" data-act="clearfilters">Clear</button>' : ""}</div>`;
+}
+
+function traceScreen() {
+  if (!T.sel) { const first = D.trace.rows.find((r) => r.req.page); if (first) { T.sel = first.req.req_id; T.docId = first.req.document_id; T.page = first.req.page; T.scrollTo = { req: T.sel, panes: [2, 3] }; } }
+  const d = traceDerived(), bm = isBM(), total = T.order.reduce((s, p) => s + T.widths[p], 0);
+  const units = d.assessed ? Object.entries(d.data.progress).map(([bu, p]) => badge(p.validated === p.total ? "validated" : p.submitted > 0 ? "submitted" : "assigned",
+    { label: `${bu} ${p.validated}/${p.total} validated`, title: `${p.submitted} of ${p.total} answers submitted` })).join("") : "Not sent for assessment yet";
+  const body = { 1: pane1, 2: pane2, 3: pane3 };
+  const panes = T.order.map((p, i) => (i > 0 ? `<div class="ws-split" role="separator" aria-orientation="vertical" data-split="${T.order[i - 1]},${p}"${attr("hidden", T.enlarged !== null)} title="Drag to resize." data-label="${Math.round(T.widths[T.order[i - 1]] / total * 100)}% | ${Math.round(T.widths[p] / total * 100)}%"></div>` : "") + paneFrame(p, body[p](d), d)).join("");
+  const cols = T.order.map((p) => `minmax(240px, ${T.widths[p]}fr)`).join(" 10px ");
+  return pageHead("Requirement Traceability", "Original RFP, the requirement register and the proposed solutions side by side. Select a requirement in any linked pane to follow it across the panes; correct the register in pane 2 (enlarge it to work there). Drag a pane by its grip, or use the arrows, to change the order; drag the bars between panes to resize them; open a pane in a window of its own for another screen.",
+    // the bid manager's, until the go/no-go is recorded: then the solutions are the units' answers
+    bm && !D.bid.decisions.go_no_go ? demoBtn("Propose solutions", { cls: "secondary", title: "Propose a solution (unit and solution area) for every requirement nobody has decided yet", what: "Proposing solutions" }) : "")
+    + guide("trace")
+    + `<div class="toolbar"><span class="muted">Unit responses: ${units}</span><button type="button" class="secondary sm" data-act="resetlayout"${attr("disabled", isDefaultLayout())} title="Back to the original order and widths of the panes">Reset layout</button></div>`
+    + filterBar(d)
+    + `<div class="trace-legend" aria-label="Type of offer legend"><span class="tag CTO"><strong>CTO</strong> Configure-to-order: catalog product with options (CPQ)</span><span class="tag SEMI_CUSTOM"><strong>Semi-custom</strong> Configured product plus workshop work for this customer</span><span class="tag ETO"><strong>ETO</strong> Engineered-to-order: designed for this requirement</span></div>`
+    + `<div class="three ws${T.enlarged !== null ? " zoom" : ""}" style="--ws-cols: ${cols}">${panes}</div>`;
+}
+
+// ---------- shared bits of the later steps ----------
+const BID_DESK = "Bid desk (commercial and submission items)";
+const BID_DESK_GAPS = "Bid desk and capability gaps";
+const BM_ONLY = "Only the bid manager can do this.";
+const day = (iso) => (iso ? String(iso).slice(0, 10) : "");
+const show = (iso) => formatDate(day(iso)); // a date shown: "13 Nov 2026"
+const traceHref = (id) => `#/opportunities/${BID}/trace#${id}`;
+const reqLink = (id) => `<a class="mono" href="${traceHref(esc(id))}" title="Open in Traceability">${esc(id)}</a>`;
+const reqLinks = (ids, summary) => `<details><summary>${esc(summary)}</summary><p class="row">${ids.map(reqLink).join("")}</p></details>`;
+const FACTORS = { people: "People", skills: "Skills", capacity: "Manufacturing capacity", materials: "Materials", cost: "Cost" };
+const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
+// ChangeGate.tsx: a step that is done shows its recorded state; the person who may change it gets "Change…" (with Cancel), anyone else sees no form
+const GATE = {};
+const changeGate = (key, done, canChange, label, form) => !done ? form : !canChange ? ""
+  : GATE[key] ? `${form}<div class="row"><button type="button" class="secondary sm" data-act="gate" data-arg="${key}">Cancel</button></div>`
+  : `<div class="row"><button type="button" class="secondary sm" data-act="gate" data-arg="${key}">${esc(label)}</button></div>`;
+
+// ScheduleCard.tsx: part "schedule" (Assessment Summary) or "compliance" (Bid decision)
+function scheduleCard(part, decided = false) {
+  const s = D.bid.schedule, bm = isBM();
+  const settled = part === "schedule" && decided && !!s.approvals.schedule?.current && !GATE.schedule;
+  const approval = (kind) => {
+    const a = s.approvals[kind], accept = kind === "schedule", blocked = accept && !s.ready;
+    const line = !a ? `<span class="muted">${accept ? "Not accepted yet." : "Not approved yet."}</span>`
+      : !a.current ? `<span class="warn">Reopened: ${accept ? "an estimate or a delivery factor" : "answers"} changed since ${show(a.approved_at)}</span>`
+      : `<span>${accept ? "Accepted" : "Approved"} by <strong>${esc(a.approved_by)}</strong> on ${show(a.approved_at)}${a.note ? ` <span class="muted">(${esc(a.note)})</span>` : ""}</span>`;
+    return `<div class="row">${bm && !settled ? demoBtn(accept ? "Accept the teams' estimates" : "Approve compliance position", { cls: a?.current ? "secondary sm" : "sm", disabled: blocked }) : ""}${line}`
+      + (bm && blocked ? '<span class="muted">Every participating unit must give its estimate and the five delivery factors first</span>' : "")
+      + (!bm && !a?.current ? `<span class="muted">${accept ? "Only the bid manager accepts the estimates." : "Only the bid manager approves."}</span>` : "")
+      + (bm && settled ? '<button type="button" class="secondary sm" data-act="gate" data-arg="schedule">Change…</button>' : "")
+      + (bm && part === "schedule" && GATE.schedule ? '<button type="button" class="secondary sm" data-act="gate" data-arg="schedule">Cancel</button>' : "") + "</div>";
+  };
+  if (part === "compliance") {
+    if (!Object.values(s.compliance).some((c) => Object.entries(c).some(([k, n]) => k !== "open" && n > 0))) return "";
+    const lab = (k) => COMPLIANCE_LABELS[k];
+    return `<section class="card"><div class="card-head"><h2>Compliance position</h2></div>${guide("compliance_position")}`
+      + `<p class="muted">Counted per unit answer: a requirement several units answer counts once for each, and the bid desk row holds the capability gaps (stated as not offered). The bid manager approves the high-level position here; each unit validates its own answers.</p>`
+      + `<div class="table-scroll"><table class="dense stack-sm"><thead><tr><th>Unit</th>${["met", "partial", "deviation", "not_met"].map((k) => `<th class="num">${lab(k)}</th>`).join("")}<th class="num">Open</th></tr></thead><tbody>`
+      + Object.keys(s.compliance).sort().map((bu) => { const c = s.compliance[bu];
+        return `<tr><td><strong>${esc(bu === "BID" ? BID_DESK_GAPS : bu)}</strong></td>${["met", "partial", "deviation", "not_met"].map((k) => `<td class="num" data-label="${lab(k)}">${c[k]}</td>`).join("")}<td class="num" data-label="Open">${c.open}</td></tr>`; }).join("")
+      + `</tbody></table></div>${approval("compliance")}</section>`;
+  }
+  const factor = (u, f) => { const e = u.factors[f];
+    return !e ? '<span class="muted">Not stated</span>' : e.status === "ok" ? '<span class="muted">No constraint</span>' : `<span class="tag sev-medium" title="${esc(e.note)}">Constraint</span><div class="muted">${esc(e.note)}</div>`; };
+  return `<section class="card"><div class="card-head"><h2>Delivery feasibility from the teams</h2></div>${guide("schedule")}`
+    + `<p class="muted">Each unit manager gives the unit's estimate and reports people, skills, manufacturing capacity, materials and cost. Technical feasibility is the designers' / engineers' answers. The bid manager accepts the teams' estimates and does not set the units' dates.</p>`
+    + (!bm || settled ? `<p>RFP due date: <strong>${show(s.due_date) || "not set"}</strong> · Consolidation days: <strong>${s.consolidation_days}</strong></p>`
+      : `<form class="form" data-demo-form="Saving the schedule settings"><div class="row"><label>RFP due date (from the RFP) <input type="date" name="due_date" value="${day(s.due_date)}"></label>`
+        + `<label>Consolidation days <input type="number" name="consolidation_days" class="narrow" min="0" step="1" value="${s.consolidation_days}"></label><button class="secondary sm">Save</button></div></form>`)
+    + "<h3>Estimates and delivery factors per unit</h3>"
+    + (s.units.length === 0 ? '<p class="muted">No unit takes part yet: record participation first.</p>'
+      : `<div class="table-scroll"><table class="dense feasibility"><thead><tr><th>Unit</th><th>Estimate</th>${Object.values(FACTORS).map((l) => `<th>${l}</th>`).join("")}<th>Entered by</th></tr></thead><tbody>`
+        + s.units.map((u) => `<tr><td data-label="Unit">${esc(u.bu)}</td><td data-label="Estimate">${u.estimated_completion ? `${show(u.estimated_completion)}${u.note ? `<div class="muted">${esc(u.note)}</div>` : ""}` : '<span class="tag">Waiting for the unit manager</span>'}</td>`
+          + Object.keys(FACTORS).map((f) => `<td data-label="${FACTORS[f]}">${factor(u, f)}</td>`).join("") + `<td data-label="Entered by">${esc(u.entered_by || "—")}</td></tr>`).join("") + "</tbody></table></div>")
+    + (s.units.length ? (s.constraints.length === 0 ? '<p class="muted">No team reports a constraint.</p>'
+      : `<p>Constraints reported: <strong>${s.constraints.length}</strong></p><ul>${s.constraints.map((c) => `<li>${esc(c.bu)} · ${FACTORS[c.factor]}: ${esc(c.note)}</li>`).join("")}</ul>`) : "")
+    + `<p>${s.planned_submission ? `Latest estimate ${show(s.latest_unit_date)}; planned submission <strong>${show(s.planned_submission)}</strong> (+ ${s.consolidation_days} days to consolidate)`
+      : `Planned submission: when every unit has given its estimate (waiting: ${esc(s.missing.join(", ") || "none")})`}</p>`
+    + (s.after_due ? alertBox("warn", `The planned submission ${show(s.planned_submission)} is later than the RFP due date ${show(s.due_date)}.`, "After the due date") : "")
+    + approval("schedule") + "</section>";
+}
+
+// ---------- Assessment Summary (assessment/page.tsx, AssessmentPanel.tsx) ----------
+const ROUTE = { unit: "Business unit", bid_desk: BID_DESK, capability_gap: TERMS.capability_gap, needs_owner: "Needs an owner" };
+function assessmentPanel(decided) {
+  const a = D.bid.assessment_score, m = a.measures, bm = isBM(), hasRun = a.run !== null;
+  const share = (x) => (x.n === null || x.of <= 0 ? "" : `${Math.round((x.n / x.of) * 100)}% of ${x.of}`);
+  const tile = (x) => { const ids = x.req_ids ?? [];
+    return `<div class="card" style="flex:1 1 220px;margin:0;min-width:0"><h3 style="margin-top:0">${esc(x.label)}</h3>`
+      + (x.n === null ? '<p style="font-size:1.5rem;font-weight:700;margin:0">Not assessed yet</p>' : `<p style="font-size:2rem;font-weight:700;margin:0">${x.n} of ${x.of}</p>`)
+      + `<p class="muted" style="margin:0">${share(x) || " "}</p>`
+      + (x.corrected !== undefined ? `<p class="muted" style="margin:0">${x.confirmed} confirmed as proposed, ${x.other_solution} with another solution named, ${x.not_compliant_answer} answered other than Compliant (a requirement can be in both of the last two groups)</p>` : "")
+      + `<p class="muted" style="font-size:var(--fs-sm)">${esc(x.explain)}</p>${ids.length ? reqLinks(ids, `Requirements (${ids.length})`) : ""}</div>`; };
+  return `<section class="card"><div class="card-head"><h2>Three measures</h2></div>${guide("score")}<p class="muted">${esc(a.note)}</p>`
+    + `<div class="row" style="align-items:stretch">${[m.technical_match, m.engineer_reviewed, m.review_progress].map(tile).join("")}</div>`
+    + (a.standards.req_ids.length ? `<div class="muted">${reqLinks(a.standards.req_ids, `${a.standards.label}: ${a.standards.req_ids.length}`)}</div>` : "")
+    + "<h3>Evidence gaps</h3>" + (a.gaps.length === 0 ? '<p class="muted">No evidence gaps</p>'
+      : `<ul class="per-req">${a.gaps.map((g) => `<li>${g.req_ids.length ? reqLinks(g.req_ids, `${g.label}: ${g.req_ids.length}`) : `${esc(g.label)}: 0`}</li>`).join("")}</ul>`)
+    + `<p class="muted">${hasRun ? `Knowledge-base assessment ${a.run}, ${esc(formatDate(a.run_at, true))}; catalog version ${a.catalog_version ?? "none"}`
+      : decided ? "No knowledge-base assessment was run: the bid was decided on the units' reviewed answers." : "No knowledge-base assessment run yet"}</p>`
+    + (hasRun || !decided ? `<form class="form" data-demo-form="Reassessing"><div class="row"><label><span class="sr-only">Reason for the assessment</span><input name="reason" placeholder="${hasRun ? "Why reassess?" : "Why assess now?"}"${attr("disabled", !bm)}></label>`
+      + `<button class="${hasRun ? "secondary sm" : "sm"}"${attr("disabled", !bm)}${attr("title", !bm && BM_ONLY)}>${hasRun ? "Reassess" : "Assess with the knowledge base"}</button>${!bm ? `<span class="muted">${BM_ONLY}</span>` : ""}</div></form>` : "")
+    + "</section>";
+}
+
+function assessmentScreen() {
+  const a = D.bid.assessment, s = a.summary, q = a.open_questions, part = a.participation, bm = isBM(), decided = !!a.decision;
+  const notRead = q.not_read ?? [];
+  // rule warnings the bid manager judged at the go/no-go (open questions met, with a note) are shown as resolved
+  const resolved = a.decision?.criteria.find((c) => c.id === "open_questions" && c.status === "met")?.note;
+  const open = q.exceptions.length + q.needs_owner.length + (resolved ? 0 : q.rule_warnings.length) + q.questions.length + notRead.length;
+  const count = (r) => a.routing.filter((x) => x.route === r).length, T0 = `#/opportunities/${BID}/trace`;
+  const summary = `<section class="card"><div class="card-head"><h2>Bid summary</h2><span class="muted">${plural(s.requirements, "requirement")} in the register · ${a.published ? `frozen as version ${a.baseline}` : "not frozen yet: read the RFP first"}</span></div>`
+    + `<p class="row">By category: ${Object.entries(s.by_category).map(([k, v]) => `<a class="chip" href="${T0}?category=${encodeURIComponent(k)}">${esc(categoryLabel(k))} <span>${v}</span></a>`).join("")}</p>`
+    + `<p class="row">By type of offer: ${Object.entries(s.by_offering).map(([k, v]) => `<a href="${T0}?offering=${encodeURIComponent(k)}">${badge(k, { kind: "offering", label: `${offeringLabel(k)} ${v}` })}</a>`).join("")}</p>`
+    + `<p>Suggested units: ${Object.entries(s.suggested_units).map(([k, v]) => `<strong>${esc(k)} (${v})</strong>`).join(" · ")}${Object.keys(s.suggested_units).length ? "" : "none yet: run matching in Traceability"}</p></section>`;
+  const questions = `<section class="card"><div class="card-head"><h2>Open questions</h2><span class="muted">${open === 0 ? "None." : `${open} to look at`}</span></div>${guide("open_questions")}`
+    + (q.exceptions.length ? `<h3>${TERMS.exception} (${q.exceptions.length})</h3><ul class="per-req">${q.exceptions.map((e) => `<li><span class="mono">${esc(e.req_id)}</span> ${esc(e.text)} <span class="muted">${esc(e.reason)}</span></li>`).join("")}</ul>`
+      + `<p class="muted">Link them to their lines or dismiss them on the <a href="${T0}">Requirement Traceability</a> step.</p>` : "")
+    + (q.needs_owner.length ? `<div><h3>Needs an owner (${q.needs_owner.length})</h3><p class="muted">Product requirements no participating unit holds are not sent. Route it to a unit under Routing below, let the matched unit take part, or record a capability gap: why no unit can offer it.</p><ul class="per-req">`
+      + q.needs_owner.map((o) => `<li>${reqLink(o.req_id)} ${esc(o.text)}${o.suggested.length ? `<span class="muted"> (matched to ${esc(o.suggested.join(", "))}, not taking part)</span>` : ""}`
+        + (bm ? `<form class="inline" data-demo-form="Recording a capability gap"><label><span class="sr-only">Why no unit can offer ${esc(o.req_id)}</span><input name="reason" placeholder="Capability gap: why no unit can offer it"></label><button class="secondary sm">Record capability gap</button></form>` : "") + "</li>").join("") + "</ul></div>" : "")
+    + (q.rule_warnings.length ? `<h3>Engineering rule warnings (${q.rule_warnings.length})${resolved ? '<span class="muted"> · resolved at the bid decision</span>' : ""}</h3><ul class="per-req">${q.rule_warnings.map((r) => `<li>${badge(resolved ? "pass" : r.status, { label: resolved ? "checked" : undefined })} ${esc(r.note)}</li>`).join("")}</ul>`
+      + (resolved ? `<p class="muted">Checked by ${esc(a.decision.decided_by)}: ${esc(resolved)}</p>` : "") : "")
+    + (notRead.length ? `<h3>Not read from the RFP (${notRead.length})</h3><ul class="per-req">${notRead.map((t) => `<li>${esc(t)}</li>`).join("")}</ul><p class="muted">The RFP step shows which pages; the register was frozen without them.</p>` : "")
+    + (q.questions.length ? `<h3>Questions not yet closed (${q.questions.length})</h3><ul class="per-req">${q.questions.map((c) => `<li>${reqLink(c.req_id)} <strong>${esc(c.author)}</strong>: ${esc(c.text)}</li>`).join("")}</ul>` : "")
+    + "</section>";
+  const partForm = `<form class="form" data-demo-form="Recording participation"><fieldset class="dec-units"><legend class="sr-only">Business units</legend>`
+    + a.units.map((u) => `<label class="check"><input type="checkbox" name="units" value="${esc(u.code)}"${attr("checked", part ? part.units.includes(u.code) : u.code in s.suggested_units)}> ${esc(u.name)}</label>`).join("") + "</fieldset>"
+    + `<label>Rationale <input name="rationale"></label><button${attr("disabled", !bm)}>Record participation</button>${bm ? "" : '<span class="muted">Only the bid manager records participation.</span>'}</form>`;
+  const participation = `<section class="card"><div class="card-head"><h2>1. Which business units take part?</h2>${part ? `<span class="muted">Recorded by <strong>${esc(part.decided_by)}</strong>: ${esc(part.units.join(", "))}</span>` : ""}</div>${guide("participation")}`
+    + (part ? `<p>${esc(part.rationale)}${part.rationale ? " " + kbBadgeOr(`decision:${part.id}`, nominate) : ""}</p>` : "")
+    + changeGate("part", bm ? decided && !!part : !!part, bm, "Change participation…", partForm) + "</section>";
+  const routing = `<section class="card"><div class="card-head"><h2>2. Route requirements to teams</h2><span class="muted">${count("unit")} to units · ${count("bid_desk")} to the bid desk · ${count("capability_gap")} capability gap(s) · ${count("needs_owner")} need an owner${part ? "" : " (preview with the suggested units)"}</span></div>${guide("routing")}`
+    + `<p class="muted">Only the unit changes here; the unit's designer / engineer confirms or corrects the solution in Traceability.</p><details><summary>Requirement → unit → specialists (${a.routing.length})</summary>`
+    + `<div class="table-scroll"><table class="dense stack-sm"><thead><tr><th>Requirement</th><th>Category</th><th>Route</th><th>Unit</th><th>Specialists</th>${bm ? "<th>Change</th>" : ""}</tr></thead><tbody>`
+    + a.routing.map((r) => `<tr><td>${reqLink(r.req_id)} ${esc(r.text)}</td><td data-label="Category">${esc(categoryLabel(r.category))}</td><td data-label="Route"${attr("class", r.route === "needs_owner" && "warn")}>${esc(ROUTE[r.route] ?? r.route)}</td>`
+      + `<td data-label="Unit">${r.units.map((u) => `<div>${esc(u.bu === "BID" ? "Bid desk" : u.bu)}</div>`).join("")}</td><td data-label="Specialists">${r.units.map((u) => `<div>${esc(u.specialists.join(", ") || "—")}</div>`).join("")}</td>`
+      + (bm ? `<td>${demoBtn("Change unit", { cls: "secondary sm", what: "Routing a requirement to another unit" })}</td>` : "") + "</tr>").join("") + "</tbody></table></div></details></section>";
+  const sendRow = `<div class="row">${demoBtn("Send for assessment", { disabled: !part || a.no_go || !bm || !a.published, what: "Sending the bid for assessment" })}`
+    + (!a.published ? '<span class="muted">The register is frozen automatically when the RFP has been read (RFP step).</span>' : "")
+    + (!part ? '<span class="muted">Record which business units take part first.</span>' : "")
+    + (a.no_go ? '<span class="muted">The bid is marked no-go: nothing is sent until a go decision resumes it.</span>' : "")
+    + (part && !a.no_go && !bm ? '<span class="muted">Only the bid manager sends the bid for assessment.</span>' : "") + "</div>";
+  const send = `<section class="card"><div class="card-head"><h2>3. Send for assessment</h2><span class="muted">Sends each participating unit its work. Repeat after changing matches, routing or participation: new work is sent, work that no longer fits is withdrawn.</span></div>`
+    + (a.sent ? "<p>Sent to the participating units.</p>" : "")
+    + changeGate("send", bm ? decided && a.sent : a.sent, bm, "Send again…", sendRow)
+    + (a.sent ? `<h3>Progress per unit</h3><table class="dense"><thead><tr><th>Unit</th><th class="num">Items</th><th class="num">Answered</th><th class="num">Validated</th></tr></thead><tbody>`
+      + Object.entries(a.progress).map(([bu, p]) => `<tr><td><a href="#/inbox/${esc(bu)}">${esc(bu === "BID" ? BID_DESK_GAPS : bu)}</a></td><td class="num">${p.total}</td><td class="num">${p.submitted}</td><td class="num">${p.validated}</td></tr>`).join("")
+      + `</tbody></table><p class="muted">When the units have answered, the bid manager decides on the <a href="#/opportunities/${BID}/decisions">Bid decision</a> step.</p>` : "") + "</section>";
+  return `<div class="decisions">${pageHead(TERMS.assessment, "Review the business relevance of the bid (summary and open questions), choose the participating business units, route requirements to their teams, then send the work. Each unit's designers / engineers confirm or correct the technical matches and answer in My work; the compliance position and the go/no-go follow on the Bid decision step.")}`
+    + guide("assessment") + summary + assessmentPanel(decided) + questions + participation + routing + send + scheduleCard("schedule", decided) + "</div>";
+}
+// ---------- Bid decision (decisions/page.tsx) ----------
+const JUDGEMENT = { met: "met", not_met: "not met", unknown: "not known" };
+// how a requirement is satisfied; bid_desk: a commercial or submission item without an answer yet (its column shows only while one is open)
+const LEVEL = { fully: COMPLIANCE_LABELS.met, partly: COMPLIANCE_LABELS.partial, changes: COMPLIANCE_LABELS.deviation, not: COMPLIANCE_LABELS.not_met, bid_desk: "Bid desk item, not answered yet" };
+// the engineering rules in plain sentences (shown when an id is listed here)
+const RULE = {
+  "R-001": "When 800 VDC is specified, every product in the power path must be 800 VDC-compatible.",
+  "R-002": "Racks of 100 kW or more need direct-to-chip liquid cooling, not air cooling alone.",
+  "R-003": "2N redundancy at utility level needs a utility-grade protection unit (EP² or Crown), not Anord Mardix alone.",
+  "R-004": "EPC Power is a pending acquisition: a design that relies on it carries a supply-timeline risk.",
+};
+function decisionsScreen() {
+  const { evidence: ev, summary: s, go_no_go: go } = D.bid.decisions, bm = isBM(), c = ev.checks, T0 = `#/opportunities/${BID}/trace`;
+  const judged = (id) => go?.criteria?.find((x) => x.id === id && x.status === "met")?.note;
+  const evidence = `<section class="card"><div class="card-head"><h2>Evidence</h2><span class="muted">${ev.requirements} requirements · ${esc(Object.entries(ev.by_category).map(([k, v]) => `${categoryLabel(k)} ${v}`).join(", "))}</span></div>`
+    + `<p class="row">Types of offer: ${Object.entries(ev.offering_mix).map(([k, v]) => badge(k, { kind: "offering", label: `${offeringLabel(k)} ${v}` })).join("")}</p>`
+    + `<p>Suggested units: ${Object.entries(ev.suggested_units).map(([k, v]) => `<strong>${esc(k)} (${v})</strong>`).join(" · ")}${Object.keys(ev.suggested_units).length ? "" : "none yet: run matching"}</p>`
+    + (ev.unanchored.length ? `<details class="dec-unanchored"><summary class="warn">Source not verified: ${ev.unanchored.length} requirement(s) without a place in the RFP</summary><p class="muted mono">${esc(ev.unanchored.join(", "))}</p></details>` : "")
+    + (ev.unmatched.length ? `<p class="muted">Not yet matched: ${ev.unmatched.length}</p>` : "")
+    + (ev.not_reviewed > 0 ? `<p class="muted">Technical matches the units' designers / engineers have not confirmed yet: ${ev.not_reviewed} (Traceability, pane 3)</p>` : "")
+    + (!ev.frozen ? alertBox("warn", "The requirement register is not frozen yet: read the RFP on the RFP step (the register freezes when the read is complete) before deciding go or no-go.") : "") + "</section>";
+  const outside = Object.entries(c.units_outside_scope), scopeChecked = judged("scope_fit");
+  const engineering = `<section class="card"><div class="card-head"><h2>Engineering checks</h2><span class="muted">Over ${c.requirements_checked} requirements in the published register. Illustrative rules and capacities for the demo; to be confirmed with each unit.</span></div>${guide("engineering")}`
+    + `<h3>Scope: layers this RFP covers</h3><ul class="dec-layers">${c.scope.layers.map((l) => `<li>${badge(l.in_scope ? "pass" : "n/a", { label: l.in_scope ? "in scope" : "not in scope" })} ${l.n}. ${esc(l.name)} <span class="muted">(${esc(l.basis)})</span>`
+      + (l.terms.length ? `<div class="muted">${l.terms.map((t) => `<span>“${esc(t.term)}” ×${t.count} in ${t.req_ids.map(reqLink).join(", ")}; </span>`).join("")}</div>` : "") + "</li>").join("")}</ul>`
+    + (outside.length ? alertBox(scopeChecked ? "info" : "warn", `Suggested although nothing in the RFP points to their layers: ${esc(outside.map(([bu, ids]) => `${bu} (${ids.length})`).join(", "))}.${scopeChecked ? ` Checked by the bid manager: ${esc(scopeChecked)}` : " Check these matches."}`) : "")
+    + `<h3>Rules</h3><table class="dense dec-rules"><tbody>${c.rules.map((r) => `<tr><td>${badge(r.status)}</td><td>${esc(RULE[r.id] ?? r.rule)}<div class="muted">${esc(r.note)}</div></td></tr>`).join("")}</tbody></table>`
+    + "<h3>Type of offer against each unit's usual type of offer</h3>" + (c.tier_flags.length === 0 ? '<p class="muted">No flags.</p>'
+      : `<details><summary>${c.tier_flags.length} item(s) need an engineer's confirmation</summary><ul class="per-req">${c.tier_flags.map((f) => `<li>${reqLink(f.req_id)} ${esc(f.bu)}: ${esc(f.note)}</li>`).join("")}</ul></details>`)
+    + (c.solver.status !== "NOT_SOLVABLE" ? `<div><h3>Low-voltage solver</h3><p>${badge("pass", { label: c.solver.status.replace(/_/g, " ").toLowerCase() })}</p>`
+      + (c.solver.reasons.length ? `<ul>${c.solver.reasons.map((r) => `<li class="muted">${esc(r)}</li>`).join("")}</ul>` : "")
+      + (c.solver.working.length ? `<table class="dense"><tbody>${c.solver.working.map((w) => `<tr><td>${esc(w.step)}</td><td class="mono">${esc(w.expression)} = ${esc(w.result)} ${esc(w.unit)}</td><td class="muted">${esc(w.reference)}</td></tr>`).join("")}</tbody></table>` : "")
+      + c.solver.warnings.map((w) => `<p class="warn">${esc(w)}</p>`).join("") + "</div>" : "") + "</section>";
+  const d = ev.deviations, w = ev.workload;
+  const portfolio = `<section class="card"><div class="card-head"><h2>Bid and portfolio checks</h2><span class="muted">Evidence for the bid manager, never a decision.</span></div><h3>Deviations from the standard product</h3>`
+    + (d.rows.length === 0 ? `<p class="ok">${d.checked ? `${d.checked} data-sheet ratings are within the standard products.` : "No data-sheet rating to compare."}</p>`
+      : `<table class="dense"><thead><tr><th>Product</th><th>Rating</th><th>RFP asks</th><th>Standard</th><th>Severity</th><th>Source</th></tr></thead><tbody>${d.rows.map((r) => `<tr><td class="mono">${esc(r.product_id)}</td><td>${esc(r.field)}</td><td>${esc(r.rfp)}</td><td>${esc(r.standard)}</td><td>${badge(r.severity, { kind: "severity" })}</td><td>${esc(r.source)}</td></tr>`).join("")}</tbody></table>`)
+    + `<p class="muted">${esc(d.note)}</p><h3>Workload across bids</h3><table class="dense"><thead><tr><th>Unit</th><th class="num">This bid</th><th>Other bids</th><th class="num">Total open</th><th>Capacity</th></tr></thead><tbody>`
+    + w.rows.map((r) => `<tr><td>${esc(r.bu)}</td><td class="num">${r.open_here}</td><td>${r.open_elsewhere}${r.other_opportunities.length ? `<span class="muted"> (${esc(r.other_opportunities.join(", "))})</span>` : ""}</td><td class="num">${r.total}</td><td>${r.capacity ?? "—"} ${r.over ? badge("over") : ""}</td></tr>`).join("")
+    + `</tbody></table><p class="muted">${esc(w.note)}</p></section>`;
+  let summary = "";
+  if (s) {
+    const rows = Object.entries(s.by_category), levels = Object.keys(LEVEL).filter((l) => l !== "bid_desk" || rows.some(([, n]) => n.bid_desk > 0));
+    summary = alertBox("info", `<strong>${esc(s.advice)}</strong>`)
+      + `<div><p>Reviewed compliance outcomes, per product requirement (technical and standards items with a validated answer, each counted once by its weakest answer; a capability gap (not offered) counts as non-compliant):</p>`
+      + ["met", "partial", "deviation", "not_met"].map((k) => `<details><summary>${s.compliance[k].length} ${complianceLabel(k)}</summary><p class="row">${s.compliance[k].map(reqLink).join("")}</p></details>`).join("") + "</div>"
+      + `<h3>How the requirements are satisfied <span class="muted">(per requirement, every category: ${s.rows.length})</span></h3><table class="dense stack-sm"><thead><tr><th>Category</th>${levels.map((l) => `<th class="num">${LEVEL[l]}</th>`).join("")}</tr></thead><tbody>`
+      + rows.map(([cat, n]) => `<tr><td><a href="${T0}?category=${encodeURIComponent(cat)}"><strong>${esc(categoryLabel(cat))}</strong></a></td>${levels.map((l) => `<td class="num" data-label="${LEVEL[l]}">${n[l]}</td>`).join("")}</tr>`).join("") + "</tbody></table>"
+      + `<details><summary>Per requirement (${s.rows.length}): from the unit's answer where there is one, otherwise estimated from the match</summary><ul class="per-req">`
+      + s.rows.map((r) => `<li>${reqLink(r.req_id)} <strong>${esc(r.level === "not" && r.units.join() === "BID" ? TERMS.capability_gap : LEVEL[r.level] ?? r.level)}</strong> <span class="muted">(${esc(r.basis)}${r.units.length ? `: ${esc(r.units.map((u) => (u === "BID" ? "bid desk" : u)).join(", "))}` : ""})</span> ${esc(r.text)}</li>`).join("") + "</ul></details>";
+  }
+  const criteria = s?.criteria ?? [];
+  const recorded = `<div><div class="table-scroll"><table class="dec-criteria stack-sm"><thead><tr><th>Criterion</th><th>Layer 0's assessment</th><th>Bid manager's judgement</th><th>Note</th></tr></thead><tbody>`
+    + criteria.map((x) => { const j = go?.criteria?.find((y) => y.id === x.id);
+      return `<tr><td><strong>${esc(x.name)}</strong><div class="muted">${esc(x.question)}</div></td><td data-label="Layer 0's assessment">${badge(x.status, { kind: "compliance", label: JUDGEMENT[x.status] })}<div class="muted">${esc(x.detail)}</div></td>`
+        + `<td data-label="Bid manager's judgement">${j ? badge(j.status, { kind: "compliance", label: j.status === x.status ? JUDGEMENT[j.status] : `${JUDGEMENT[j.status]} (judged by the bid manager)` }) : '<span class="muted">not recorded</span>'}</td>`
+        + `<td data-label="Note">${j?.note && j.note !== x.detail ? esc(j.note) : '<span class="muted">as assessed</span>'}</td></tr>`; }).join("") + "</tbody></table></div>"
+    + (bm ? '<div class="row"><button type="button" class="secondary" data-act="gate" data-arg="decision">Change decision</button></div>' : "") + "</div>";
+  const form = `<form class="form compact" data-demo-form="Recording the go / no-go decision">`
+    + (s ? `<div class="table-scroll"><table class="dec-criteria stack-sm"><thead><tr><th>Criterion</th><th>Layer 0's assessment</th><th>Your judgement</th><th>Note</th></tr></thead><tbody>`
+      + criteria.map((x) => { const mine = go?.criteria?.find((y) => y.id === x.id);
+        return `<tr><td><strong>${esc(x.name)}</strong><div class="muted">${esc(x.question)}</div></td><td data-label="Layer 0's assessment">${badge(x.status, { kind: "compliance", label: JUDGEMENT[x.status] })}<div class="muted">${esc(x.detail)}</div></td>`
+          + `<td data-label="Your judgement"><label><span class="sr-only">Your judgement on ${esc(x.name)}</span><select name="crit-${esc(x.id)}">${Object.entries(JUDGEMENT).map(([j, l]) => `<option value="${j}"${attr("selected", j === (mine?.status ?? x.status))}>${l}</option>`).join("")}</select></label></td>`
+          + `<td data-label="Note"><label><span class="sr-only">Note on ${esc(x.name)}</span><input name="note-${esc(x.id)}" placeholder="optional" value="${esc(mine?.note ?? "")}"></label></td></tr>`; }).join("") + "</tbody></table></div>" : "")
+    + `<label>Rationale <input name="rationale" value="${esc(go?.rationale ?? "")}"></label><div class="row">${demoBtn("Go", { disabled: !ev.frozen || !bm, what: "Recording go" })}${demoBtn("No-go", { cls: "danger secondary", disabled: !ev.frozen || !bm, what: "Recording no-go" })}`
+    + (!ev.frozen ? '<span class="muted">Read the RFP first.</span>' : !bm ? '<span class="muted">Only the bid manager records go or no-go.</span>' : "")
+    + (go ? '<button type="button" class="secondary" data-act="gate" data-arg="decision">Cancel</button>' : "") + "</div></form>";
+  const judgedLine = go?.criteria?.length ? `<span class="muted"> Criteria judged: ${["met", "not_met", "unknown"].map((j) => `${go.criteria.filter((x) => x.status === j).length} ${JUDGEMENT[j]}`).join(", ")}.</span>` : "";
+  const gonogo = `<section class="card"><div class="card-head"><h2>Go / no-go</h2>${go ? `<span class="muted">Decision ${badge(go.outcome, { kind: "opp", label: oppStatusLabel(go.outcome) })} by <strong>${esc(go.decided_by)}</strong></span>` : ""}</div>${guide("gonogo")}`
+    + (go ? `<p>${esc(go.rationale)}${judgedLine}${go.rationale ? " " + kbBadgeOr(`decision:${go.id}`, nominate) : ""}</p>` : "")
+    + (s && s.assessment.validated < s.assessment.items ? alertBox("warn", `Assessment incomplete: ${s.assessment.validated} of ${s.assessment.items} item(s) sent to the units have a validated answer. You can still record go or no-go.`) : "")
+    + (s && s.assessment.items === 0 ? alertBox("warn", "Nothing has been sent to the units yet: a decision now is made without their assessment.") : "")
+    + summary + (go && !GATE.decision ? recorded : form) + "</section>";
+  return `<div class="decisions">${pageHead("Bid decision", "Go/no-go only: once the units have assessed the bid (Assessment Summary step), review the evidence and their answers; the bid manager decides go or no-go.")}`
+    + guide("decisions") + evidence + (ev.frozen ? engineering + portfolio : "")
+    + alertBox("info", `Participation, routing (the unit only) and sending the work are on the <a href="#/opportunities/${BID}/assessment">Assessment Summary</a> step; decide here once the units have answered.`)
+    + (ev.frozen ? scheduleCard("compliance") : "") + gonogo + "</div>";
+}
+// ---------- history words (consolidation/_components/historyText.ts) ----------
+const WHAT = {
+  "assignment.assigned": "assigned the work", "assignment.reopened": "reopened the work", "assignment.responded": "submitted an answer",
+  "assignment.validated": "validated the answer", "assignment.returned": "returned the answer", "assignment.withdrawn": "withdrew the work",
+  "assignment.capability_gap": "recorded a capability gap",
+  "match.proposed": "proposed a solution", "match.manual": "set the proposed solution", "match.accept": "accepted the match", "match.reject": "rejected the match",
+  "match.routed": "routed the requirement to a unit",
+  "requirement.proposed": "proposed the requirement", "requirement.approve": "approved the requirement", "requirement.reject": "rejected the requirement",
+  "requirement.edit": "edited the requirement", "requirement.split": "split the requirement", "requirement.merged": "merged requirements",
+  "requirement.merged_into": "merged it into another", "requirement.grouped": "grouped requirements", "requirement.ungrouped": "ungrouped the group",
+  "requirement.revised": "revised the requirement", "requirement.removed": "removed the requirement", "requirement.duplicate_of": "marked it a duplicate",
+  "requirement.resolved": "linked a requirement to its source", "requirement.dismissed": "dismissed a requirement that needed a source check", "requirement.discarded": "discarded the draft",
+  "opportunity.created": "created the bid", "opportunity.status": "moved the bid to a new status",
+  "participation.decided": "decided which units take part", "go_no_go.decided": "recorded the go / no-go decision",
+  "baseline.frozen": "froze a version of the requirements", "baseline.follow_up_failed": "could not finish the follow-up of a frozen version",
+  "change.read": "read a change document", "change.confirmed": "confirmed a change", "change.overridden": "overrode a change", "change.confirmed_all": "confirmed every change",
+  "change.applied": "applied a change set", "change.discarded": "discarded a change set", "change.follow_up_failed": "could not finish the follow-up of a change set",
+  "document.uploaded": "uploaded a document", "extraction_snapshot.read": "read the RFP",
+  "comment.asked": "asked a question", "comment.commented": "added a comment", "comment.closed": "closed a question",
+  "knowledge.sent": "nominated a reviewed example", "knowledge.nominated": "nominated a reviewed example",
+};
+const pretty = (s) => { const t = String(s).replace(/_/g, " "); return t.charAt(0).toUpperCase() + t.slice(1); };
+const what = (e) => WHAT[`${e.entity}.${e.action}`] ?? pretty(e.action).toLowerCase();
+const ENTITIES = { assignment: "Unit answer", match: TERMS.solution, requirement: "Requirement", opportunity: "Bid", participation: "Participation", go_no_go: "Go / no-go",
+  baseline: "Frozen version", change: "Change set", document: "Document", extraction_snapshot: "RFP reading", comment: "Question or comment", knowledge: "Knowledge base" };
+const entityLabel = (e) => ENTITIES[e] ?? pretty(e);
+const CHANGE_LABELS = { status: "State", compliance: "Compliance", product_ref: TERMS.solution, response: "How it is met", reason: "Reason", conditions: "Conditions", workaround: "Proposed change", next_steps: "Next steps" };
+const changeValue = (k, v) => (v == null || v === "" ? "—" : k === "compliance" ? (v === "exception" ? "Exception (earlier value)" : complianceLabel(v)) : k === "status" ? pretty(v) : v);
+const asText = (v) => (v == null ? "" : typeof v === "string" ? v : typeof v === "number" || typeof v === "boolean" ? String(v) : JSON.stringify(v));
+const clip = (s, n = 220) => (s.length > n ? `${s.slice(0, n).trimEnd()}…` : s);
+function detail(e) {
+  const d = e.data, parts = [], add = (label, v) => { const t = asText(v).trim(); if (t) parts.push(label ? `${label}: ${clip(t)}` : clip(t)); };
+  switch (`${e.entity}.${e.action}`) {
+    case "assignment.responded": add("Compliance", d.compliance ? complianceLabel(String(d.compliance)) : ""); add(TERMS.solution, d.product_ref); add("Answer", d.response); break;
+    case "assignment.assigned": add("Owner", d.owner); break;
+    case "assignment.withdrawn": add("Was", d.was); add("Because", d.reason); break;
+    case "assignment.returned": case "assignment.validated": add("Note", d.note); break;
+    case "opportunity.status": add("", `${asText(d.before)} → ${asText(d.after)}`); break;
+    case "opportunity.created": add("Title", d.title); break;
+    case "baseline.frozen": add("Requirements", d.count); break;
+    case "match.proposed": case "match.manual": case "match.routed":
+      if (Array.isArray(d.units)) add("", d.units.map((u) => [u.bu, u.product_id].filter(Boolean).join(" · ")).filter(Boolean).join("; "));
+      add("Method", d.method); break;
+    case "participation.decided": case "go_no_go.decided": add("Units", Array.isArray(d.units) ? d.units.join(", ") : d.units); add("Reason", d.rationale); break;
+    case "document.uploaded": add("File", d.filename); add("Type", d.role); break;
+    default: add("", d.note); add("Reason", d.reason); add("", d.text);
+  }
+  return parts.length ? parts.join(" · ") : null;
+}
+
+// ---------- Compliance matrix (consolidation/page.tsx + _components) ----------
+const NO_FILTER = { q: "", unit: "", compliance: "", state: "", category: "", onlyOpen: false };
+const C = { f: { ...NO_FILTER }, limit: 100, sel: null, history: false, source: false };
+const rowKey = (r) => `${r.req_id}:${r.assignment_id ?? "none"}`;
+const REASONS = [["validation", "Waiting for validation"], ["unit", "Waiting for the unit"], ["returned", "Returned"], ["unassigned", "Not assigned"]];
+function reasonOf(rows) {
+  const { state, assignments } = rows[0];
+  if (state === "answered") return null;
+  if (assignments === 0) return "unassigned";
+  const st = rows.map((r) => r.status);
+  return st.includes("returned") ? "returned" : st.includes("assigned") ? "unit" : "validation";
+}
+const complianceBadge = (r) => { if (!r.compliance) return "";
+  const b = badge(r.compliance, { kind: "compliance", label: complianceLabel(r.compliance) });
+  return ["partial", "deviation", "not_met"].includes(r.compliance) ? `<span class="reason-tip" tabindex="0">${b}<span role="tooltip" class="reason-pop">${esc(r.reason ?? "Reason not provided")}</span></span>` : b; };
+const sentence = (v) => pretty(v);
+function historyList(id, unit) {
+  const evs = D.asg_history[id] ?? [];
+  if (!evs.length) return '<p class="muted">Nothing is recorded for this answer yet.</p>';
+  return `<ol class="resp-history-list" aria-label="History of the ${esc(unit ?? "unit")} answer, oldest first">` + evs.map((ev) => `<li><div><strong>${esc(ev.actor)}</strong> ${what({ entity: "assignment", action: ev.action })} <span class="muted">· ${esc(when(ev.at))}</span></div>`
+    + (ev.note ? `<div class="detail-text">Note: ${esc(ev.note)}</div>` : "")
+    + Object.keys(CHANGE_LABELS).filter((k) => k in ev.after).map((k) => `<div class="muted">${CHANGE_LABELS[k]}: ${esc(changeValue(k, ev.before[k] ?? null))} → ${esc(changeValue(k, ev.after[k] ?? null))}</div>`).join("") + "</li>").join("") + "</ol>";
+}
+function pageView(docId, pageNo, boxes, label) {
+  const p = (D.trace.docs ?? []).find((x) => x.id === docId)?.pages?.[pageNo - 1];
+  return `<div class="preview-page"><div class="page"><img src="${img(docId, pageNo)}" alt="${esc(label)}, with the source lines highlighted">`
+    + (p ? boxes.map(([x0, y0, x1, y1]) => `<div class="hl sel" aria-hidden="true" style="left:${(x0 / p.width) * 100}%;top:${(y0 / p.height) * 100}%;width:${((x1 - x0) / p.width) * 100}%;height:${((y1 - y0) / p.height) * 100}%"></div>`).join("") : "")
+    + `</div>${!boxes.length ? '<p class="muted">No highlight boxes are stored for this page; only the page is shown.</p>' : ""}</div>`;
+}
+function sourcePreview(row, docName) {
+  const pages = [];
+  for (const s of row.spans) { if (!s.document_id || !s.page) continue;
+    let p = pages.find((x) => x.docId === s.document_id && x.page === s.page);
+    if (!p) pages.push((p = { docId: s.document_id, page: s.page, boxes: [], spans: [] }));
+    p.boxes.push(...s.bboxes); if (s.line_start) p.spans.push([s.line_start, s.line_end ?? s.line_start]); }
+  if (!pages.length) return `<p class="preview-empty">No source location is stored for this requirement, so there is no page to show and nothing to highlight. <a href="${traceHref(esc(row.req_id))}">Open in Traceability</a></p>`;
+  const p = pages[Math.min(C.srcPage ?? 0, pages.length - 1)], merged = [];
+  for (const [a, b] of [...p.spans].sort((x, y) => x[0] - y[0])) { const last = merged[merged.length - 1]; if (last && a <= last[1] + 1) last[1] = Math.max(last[1], b); else merged.push([a, b]); }
+  const ranges = merged.map(([a, b]) => (a === b ? `${a}` : `${a}-${b}`));
+  const lines = ranges.length ? `, line${ranges.length > 1 || ranges[0].includes("-") ? "s" : ""} ${ranges.join(", ")}` : "";
+  return `<div class="preview"><p class="preview-ref"><strong>${esc(docName)}, page ${p.page}${lines}</strong></p>`
+    + (pages.length > 1 ? `<div class="preview-pages" role="group" aria-label="Pages of this source">${pages.map((x, i) => `<button type="button" class="chip" aria-pressed="${x === p}" data-act="srcpage" data-arg="${i}">Page ${x.page}</button>`).join("")}</div>` : "")
+    + pageView(p.docId, p.page, p.boxes, `${docName}, page ${p.page}`) + `<p><a href="${traceHref(esc(row.req_id))}">Open in Traceability</a></p></div>`;
+}
+function detailPanel(row) {
+  const NP = '<span class="muted">Not provided</span>', text = (v) => (v && v.trim() ? `<span class="detail-text">${esc(v)}</span>` : NP);
+  const field = (label, html) => `<div class="detail-field"><dt>${esc(label)}</dt><dd>${html}</dd></div>`;
+  const doc = D.bid.detail.documents.find((x) => x.id === row.document_id);
+  const docName = doc ? `${doc.filename}${doc.role !== "main" ? ` (${DOC_TYPES[doc.role] ?? doc.role})` : ""}` : "RFP document";
+  const hasSource = row.spans.some((s) => s.document_id && s.page), n = (D.asg_history[row.assignment_id] ?? []).length;
+  return `<aside class="matrix-detail" aria-label="Details of ${esc(row.req_id)}"><div class="detail-head"><div><h3 tabindex="-1">Requirement <span class="mono">${esc(row.req_id)}</span></h3>`
+    + `<p class="muted">${row.unit ? esc(`${row.unit} · ${row.unit_name}`) : "Not assigned to a unit"}</p></div><button type="button" class="secondary sm" data-act="mclose" aria-label="Close the details of ${esc(row.req_id)}">Close</button></div><dl class="detail-list">`
+    + field("Requirement", text(row.requirement) + (row.parts?.length ? `<ul class="parts">${row.parts.map((p) => `<li><span class="mono">${esc(p.req_id)}</span> ${esc(p.text)}</li>`).join("")}</ul>` : ""))
+    + field("Quote from the RFP", row.quote ? `<blockquote class="quote">“${esc(row.quote)}”</blockquote>` : NP)
+    + field("Category", `<span class="tag">${esc(categoryLabel(row.category))}</span>`)
+    + field("Unit", row.unit ? `${esc(row.unit)} <span class="muted">· ${esc(row.unit_name)}</span>` : '<span class="muted">Not assigned</span>')
+    + field(TERMS.solution, row.solution ? `${text(solutionLabel(row.solution))}${row.solution.examples.length ? `<div class="muted">${esc(examplesLabel(row.solution))}</div>` : ""}` : NP)
+    + field("Requirement state", badge(row.state, { label: sentence(row.state) }))
+    + field("Assignment state", (row.status ? badge(row.status, { label: sentence(row.status) }) : '<span class="muted">Not assigned</span>') + (row.assignments > 1 ? `<span class="muted"> · held by ${row.assignments} units</span>` : ""))
+    + field("Response", row.response ? `<span class="detail-text">${esc(row.response)}</span>` : '<span class="muted">No response yet</span>')
+    + field("Compliance", row.compliance ? complianceBadge(row) : '<span class="muted">No compliance yet</span>')
+    + field("Reason", text(row.reason)) + field("Conditions", text(row.conditions)) + field("Proposed change", text(row.workaround)) + field("Next steps", text(row.next_steps))
+    + (row.responded_by || row.validated_by ? field("Answered by", `${esc(row.responded_by ?? "—")}${row.validated_by ? `<span class="muted"> · validated by ${esc(row.validated_by)}</span>` : ""}${row.validation_note ? `<div class="muted">${esc(row.validation_note)}</div>` : ""}`) : "")
+    + field("History", (row.assignment_id != null ? `<details class="resp-history" data-toggle="mhistory"${attr("open", C.history)}><summary>${C.history ? `Hide history (${n})` : "Show history"}</summary>${historyList(row.assignment_id, row.unit)}</details>`
+      : '<span class="muted">No unit holds this requirement yet, so there is no answer history.</span>') + `<div class="detail-actions"><a href="#/opportunities/${BID}/consolidation/activity?req_id=${encodeURIComponent(row.req_id)}">All activity for ${esc(row.req_id)}</a></div>`)
+    + field("Source", `${esc(row.source)} <span class="muted">· ${esc(docName)}</span><div class="detail-actions">${hasSource ? `<button type="button" class="secondary sm" aria-expanded="${C.source}" data-act="msource">${C.source ? "Hide source page" : "Show source page"}</button>` : ""}<a href="${traceHref(esc(row.req_id))}">Open in Traceability</a></div>`)
+    + "</dl>" + (C.source || !hasSource ? sourcePreview(row, docName) : "") + "</aside>";
+}
+function consolidationScreen() {
+  const M = D.bid.matrix, rows = M.rows, f = C.f, q = f.q.trim().toLowerCase();
+  const byReq = new Map(); for (const r of rows) byReq.set(r.req_id, [...(byReq.get(r.req_id) ?? []), r]);
+  const reasons = new Map([...byReq].map(([k, v]) => [k, reasonOf(v)]));
+  const hay = (r) => [r.req_id, r.requirement, r.quote, r.source, r.unit, r.unit_name, r.solution?.area, r.response, r.category].filter(Boolean).join(" ").toLowerCase();
+  const units = new Map(); for (const r of rows) if (r.unit) units.set(r.unit, r.unit_name);
+  const comps = ["met", "partial", "deviation", "not_met", "exception"].filter((c) => rows.some((r) => r.compliance === c));
+  const cats = [...new Set(rows.map((r) => r.category))].sort(), unassigned = rows.some((r) => !r.unit), unanswered = rows.some((r) => r.unit && !r.compliance);
+  const NONE = "__none";
+  const filtered = rows.filter((r) => (!f.onlyOpen || reasons.get(r.req_id)) && (!q || hay(r).includes(q)) && (!f.category || r.category === f.category) && (!f.state || r.state === f.state)
+    && (!f.unit || (f.unit === NONE ? !r.unit : r.unit === f.unit)) && (!f.compliance || (f.compliance === NONE ? !r.compliance : r.compliance === f.compliance)));
+  const filtering = JSON.stringify(f) !== JSON.stringify(NO_FILTER), drawn = filtered.slice(0, C.limit), selected = rows.find((r) => rowKey(r) === C.sel);
+  const openIds = [...reasons].filter(([, why]) => why);
+  const groups = REASONS.map(([key, label]) => ({ key, label, ids: openIds.filter(([, w]) => w === key).map(([k]) => k) })).filter((g) => g.ids.length);
+  const sel = (name, value, opts) => `<select data-change="mf" data-arg="${name}">${opts.map(([v, l]) => `<option value="${esc(v)}"${attr("selected", value === v)}>${esc(l)}</option>`).join("")}</select>`;
+  const head = pageHead("Compliance matrix", "Every requirement must be answered by its business unit and validated before the response is complete.",
+    `<a class="button secondary" href="#/opportunities/${BID}/consolidation/outline">Response outline (draft)</a><a class="button secondary" href="#/opportunities/${BID}/consolidation/activity">Activity log</a>`
+    + `<a class="button secondary" href="#" data-demo="Downloading the CSV">CSV</a><a class="button" href="#" data-demo="Downloading the Excel compliance matrix">Download compliance matrix (Excel)</a>`);
+  let html = head + guide("consolidation") + `<p class="cons-summary"><strong>${M.answered} / ${M.total}</strong> requirements answered. ${M.blocking.length ? `<span class="warn">${M.blocking.length} still need an answer.</span>` : '<span class="ok">Every requirement is answered.</span>'}</p>`;
+  if (groups.length) html += `<section class="cons-blockers" aria-label="Requirements that still need an answer"><h3>Needs an answer</h3>${groups.map((g) => `<div class="cons-group"><span class="cons-group-label">${g.label} <span>(${g.ids.length})</span></span><span class="cons-ids">`
+    + g.ids.slice(0, 10).map(reqLink).join("") + (g.ids.length > 10 ? `<details class="cons-more"><summary>${g.ids.length - 10} more</summary><span class="cons-ids">${g.ids.slice(10).map(reqLink).join("")}</span></details>` : "") + "</span></div>").join("")}</section>`;
+  if (!rows.length) return html + empty("No frozen requirements yet", "Read the RFP first: its register is frozen then, and the coverage check runs against them.");
+  html += `<div class="matrix-filters" role="search" aria-label="Filter the compliance matrix"><label class="mf-search">Search <input type="search" id="mfq" value="${esc(f.q)}" placeholder="Requirement, ID, unit, proposed solution, response…" data-change="mf" data-arg="q"></label>`
+    + `<label>Unit ${sel("unit", f.unit, [["", "All units"], ...[...units].sort(([a], [b]) => a.localeCompare(b)).map(([c, n]) => [c, `${c} · ${n}`]), ...(unassigned ? [[NONE, "Not assigned"]] : [])])}</label>`
+    + `<label>Compliance ${sel("compliance", f.compliance, [["", "All"], ...comps.map((c) => [c, complianceLabel(c)]), ...(unanswered || unassigned ? [[NONE, "No compliance yet"]] : [])])}</label>`
+    + `<label>State ${sel("state", f.state, [["", "All"], ["answered", "Answered"], ["pending", "Pending"], ["not_assigned", "Not assigned"]])}</label>`
+    + `<label>Category ${sel("category", f.category, [["", "All"], ...cats.map((c) => [c, categoryLabel(c)])])}</label>`
+    + `<div class="mf-actions"><button type="button" class="chip" aria-pressed="${f.onlyOpen}" data-act="mopen">Open only <span>${openIds.length}</span></button><button type="button" class="secondary sm" data-act="mclear"${attr("disabled", !filtering)}>Clear filters</button></div></div>`
+    + `<p class="muted matrix-count" role="status">${filtering ? `${filtered.length} of ${rows.length} rows match` : `${rows.length} rows`}${drawn.length < filtered.length ? `, showing the first ${drawn.length}` : ""}</p>`;
+  const tr = (r) => { const key = rowKey(r);
+    return `<tr data-mkey="${esc(key)}" tabindex="0"${attr("aria-current", key === C.sel && "true")}${attr("class", `${r.state !== "answered" ? "blocking" : ""}${key === C.sel ? " selected" : ""}`.trim() || undefined)}>`
+      + `<td class="mono">${reqLink(r.req_id)}</td><td>${esc(r.requirement)}</td><td data-label="Category"><span class="tag">${esc(categoryLabel(r.category))}</span></td>`
+      + `<td data-label="Unit">${r.unit ? `<strong>${esc(r.unit)}</strong><div class="muted">${esc(r.unit_name)}</div>${r.solution?.area ? `<div class="muted">${esc(r.solution.area)}</div>` : ""}` : '<span class="muted">not assigned</span>'}</td>`
+      + `<td data-label="Response">${badge(r.status || r.state)}${r.response ? `<div class="muted cons-response" title="${esc(r.response)}">${esc(r.response)}</div>` : ""}${r.assignment_id != null ? `<button type="button" class="link row-history" data-act="mhist" data-arg="${esc(key)}" aria-label="Show the history of ${esc(r.req_id)} for ${esc(r.unit)}">History</button>` : ""}</td>`
+      + `<td data-label="Compliance">${r.compliance ? complianceBadge(r) : `<span class="muted">${r.unit ? "No compliance yet" : ""}</span>`}</td><td class="muted" data-label="Source">${esc(r.source)}</td></tr>`; };
+  html += `<div class="matrix-layout${selected ? " has-detail" : ""}"><div class="matrix-main" data-keep="matrix"><div class="table-scroll"><table class="cons-table stack-sm"><thead><tr><th class="col-id">ID</th><th>Requirement</th><th class="col-cat">Category</th><th class="col-units">Unit</th><th class="col-state">Response</th><th class="col-comp">Compliance</th><th class="col-src">Source</th></tr></thead><tbody>`
+    + drawn.map(tr).join("") + (filtered.length ? "" : `<tr><td colspan="7" class="matrix-empty">${filtering ? 'No rows match these filters. <button type="button" class="link" data-act="mclear">Clear filters</button>' : "Every requirement is answered."}</td></tr>`)
+    + "</tbody></table></div>" + (drawn.length < filtered.length ? `<p class="matrix-more"><button type="button" class="secondary" data-act="mmore">Show ${Math.min(100, filtered.length - drawn.length)} more (${filtered.length - drawn.length} not shown)</button></p>` : "")
+    + `</div>${selected ? detailPanel(selected) : ""}</div>`;
+  return html;
+}
+
+// ---------- Response outline (consolidation/outline/page.tsx) ----------
+function outlineScreen() {
+  const o = D.bid.outline;
+  const draft = (d) => d.drafted ? "<div>" + d.paragraphs.map((p) => `<p class="outline-para">${esc(p.text)} <span class="muted">[${p.sources.map(reqLink).join(", ")}]</span></p>`).join("")
+    + (d.gaps.length ? `<div class="outline-gaps"><strong>To add or confirm</strong><ul>${d.gaps.map((g) => `<li>${esc(g)}</li>`).join("")}</ul></div>` : "") + (d.note ? `<p class="muted">${esc(d.note)}</p>` : "") + "</div>"
+    : `<p class="muted">Not drafted: ${esc(d.note)}</p>`;
+  return `<div class="outline">${pageHead("Response outline", "A first draft for the bid manager to edit, written by the drafting agent only from validated answers. Every paragraph cites its requirements; nothing is drafted for open ones.",
+    `<a class="button secondary" href="#/opportunities/${BID}/consolidation">Back to Compliance matrix</a><a class="button" href="#" data-demo="Downloading the outline">Download outline (Markdown)</a>`)}${guide("outline")}`
+    + `<p class="outline-summary">${badge("proposed", { label: "Draft" })} <strong>${o.answered} / ${o.total}</strong> requirements answered and validated (${o.validated_answers} validated answers${o.capability_gaps > 0 ? `, ${o.capability_gaps} of them capability gaps stated as not offered` : ""}).</p>`
+    + `<section class="card"><div class="card-head"><h3>Executive summary</h3></div>${draft(o.summary)}</section>`
+    + (o.chapters.length ? "" : empty("No chapters to draft yet", "The outline follows the RFP's sections once the requirements are frozen."))
+    + o.chapters.map((c, n) => `<section class="card"><div class="card-head"><h3>${n + 1}. ${esc(c.title)}</h3><span class="muted">${c.answered} of ${c.total} answered</span></div>${draft(c.draft)}`
+      + (c.exceptions.length ? alertBox("warn", typeof c.exceptions === "string" ? esc(c.exceptions)
+        : `<ul class="outline-exceptions">${c.exceptions.map((a) => `<li>${reqLink(a.req_id)} ${esc(a.capability_gap ? TERMS.capability_gap : a.label ?? `${a.unit}: ${complianceLabel(a.outcome)}`)}</li>`).join("")}</ul>`, "Not full compliance") : "")
+      + (c.material.length ? `<details><summary>Validated answers (${c.material.length})</summary><div class="table-scroll"><table class="outline-answers"><thead><tr><th>Requirement</th><th>Unit</th><th>Compliance</th><th>Answer</th><th>Knowledge base</th></tr></thead><tbody>`
+        + c.material.map((a) => `<tr><td>${reqLink(a.req_id)}<div class="muted">${esc(a.source)}</div></td><td>${esc(a.unit)}${a.product ? `<div class="muted">${esc(a.product)}</div>` : ""}</td><td>${badge(a.outcome, { kind: "compliance", label: complianceLabel(a.outcome) })}</td><td>${esc(a.response)}</td><td>${kbBadgeOr(`response:${a.assignment_id}`, nominate)}</td></tr>`).join("")
+        + "</tbody></table></div></details>" : "")
+      + (c.open.length ? `<details><summary>Still open (${c.open.length})</summary><ul>${c.open.slice(0, 8).map((r) => `<li>${reqLink(r.req_id)} <span class="muted">${esc(r.source)}</span> ${esc(r.text)}</li>`).join("")}</ul>`
+        + (c.open.length > 8 ? `<p class="muted">and ${c.open.length - 8} more: see <a href="#/opportunities/${BID}/consolidation">Compliance matrix</a>.</p>` : "") + "</details>" : "")
+      + (c.references.rfp.length || c.references.past.length ? `<details><summary>Related passages</summary>`
+        + (c.references.rfp.length ? `<p class="muted">In this RFP (${esc(c.references.mode.rfp)} search)</p><ul>${c.references.rfp.map((p) => `<li><span class="mono">p. ${p.page}, lines ${p.line_start}-${p.line_end}</span> ${esc(p.text)}</li>`).join("")}</ul>` : "")
+        + (c.references.past.length ? `<p class="muted">Past responses (${esc(c.references.mode.knowledge)} search; illustrative)</p><ul>${c.references.past.map((p) => `<li><span class="mono">${esc(p.id)}</span> ${esc(p.text)}</li>`).join("")}</ul>` : "") + "</details>" : "")
+      + "</section>").join("") + "</div>";
+}
+// ---------- Activity (consolidation/activity/page.tsx) ----------
+const A = { entity: "", req_id: "", bu: "", person: "", shown: 200 };
+function activityScreen() {
+  const act = D.bid.activity, o = act.filters, filtering = !!(A.entity || A.req_id || A.bu || A.person);
+  const all = act.events.filter((e) => (!A.entity || e.entity === A.entity) && (!A.req_id || e.entity_id === A.req_id || e.data.req_id === A.req_id)
+    && (!A.bu || e.data.bu === A.bu) && (!A.person || e.actor === A.person));
+  const events = all.slice(0, A.shown);
+  const sel = (k, first, list, label = (x) => x) => `<select data-change="act" data-arg="${k}"><option value="">${first}</option>${list.map((x) => `<option value="${esc(x)}"${attr("selected", A[k] === x)}>${esc(label(x))}</option>`).join("")}</select>`;
+  return pageHead("Activity", "Everything recorded for this bid, newest first: who did what, and when. Read-only; nothing here can be changed.", `<a class="button secondary" href="#/opportunities/${BID}/consolidation">Compliance matrix</a>`)
+    + guide("activity")
+    + `<form class="matrix-filters" role="search" aria-label="Filter the activity log" data-act="actreq"><label>Type ${sel("entity", "All types", o.entities, entityLabel)}</label>`
+    + `<label class="act-req">Requirement <input type="search" id="actreq" name="req_id" value="${esc(A.req_id)}" placeholder="e.g. REQ-0001-0885"></label>`
+    + `<label>Unit ${sel("bu", "All units", o.units)}</label><label>Person ${sel("person", "Everyone", o.people)}</label>`
+    + `<div class="mf-actions"><button type="button" class="secondary sm" data-act="actclear"${attr("disabled", !filtering)}>Clear filters</button><button type="button" class="secondary sm" data-demo="Refreshing the log">Refresh</button></div></form>`
+    + `<p class="muted matrix-count" role="status">${filtering ? `${all.length} matching events` : `${act.total} events`}${events.length < all.length ? `, showing the newest ${events.length}` : ""}</p>`
+    + (events.length === 0 ? empty(filtering ? "No events match these filters" : "Nothing has been recorded for this bid yet", filtering ? "Clear a filter to see more." : "Every action on the bid is recorded here as it happens.")
+      : `<div class="table-scroll"><table class="act-table stack-sm"><caption class="sr-only">Activity log of ${esc(BID)}, newest first</caption><thead><tr><th>When</th><th>Who</th><th>What</th><th>Subject</th><th>Details</th></tr></thead><tbody>`
+        + events.map((e) => { const line = detail(e), unit = typeof e.data.bu === "string" ? e.data.bu : "";
+          return `<tr><td class="act-when">${esc(when(e.at))}</td><td data-label="Who">${esc(e.actor)}</td><td data-label="What">${esc(what(e))}</td><td data-label="Subject"><span class="tag">${esc(entityLabel(e.entity))}</span> `
+            + (e.entity_id.startsWith("REQ-") ? reqLink(e.entity_id) : `<span class="mono">${esc(e.entity_id)}</span>`) + (unit ? `<span class="muted"> · ${esc(unit)}</span>` : "") + "</td>"
+            + `<td class="act-detail" data-label="Details">${line ? esc(line) : '<span class="muted">—</span>'}${Object.keys(e.data).length ? `<details class="act-raw"><summary>All data</summary><pre>${esc(JSON.stringify(e.data, null, 1))}</pre></details>` : ""}</td></tr>`; }).join("")
+        + "</tbody></table></div>")
+    + (events.length < all.length ? '<p class="matrix-more"><button type="button" class="secondary" data-act="actmore">Show older events</button></p>' : "");
+}
+
+// ---------- Changes (changes/page.tsx) ----------
+function changesScreen() {
+  const ch = D.bid.changes, bm = isBM(), inReview = ch.sets.some((s) => s.status === "review");
+  return pageHead("Changes", "Addenda, Q&A answers and change requests are read like the RFP and compared with the frozen requirements. A person confirms each change; applying creates new requirement versions and returns the affected answers to the units.")
+    + guide("changes", ch.sets.length ? "" : "No change document was read for this bid.")
+    + (ch.baseline ? `<p>Current frozen version <strong>${ch.baseline.number}</strong>: ${ch.baseline.count} requirements.</p>`
+      : alertBox("warn", `The register is not frozen yet: it is frozen when the RFP has been read on the <a href="#/opportunities/${BID}">RFP</a> step; change documents are read against it.`))
+    + (ch.baseline ? `<form class="card chg-upload" data-demo-form="Reading a change document"><div class="card-head"><h3>Read a change document</h3><span class="muted">An addendum, Q&amp;A answers or a change request, as a PDF.</span></div>`
+      + `<div class="form"><label for="chg-file">Change document (PDF)</label><input id="chg-file" type="file" name="file" accept=".pdf" disabled><label for="chg-role">Document type</label>`
+      + `<select id="chg-role" name="role"${attr("disabled", inReview)}><option value="" disabled selected>Choose a type…</option>${["addendum", "qa", "change"].map((v) => `<option value="${v}">${DOC_TYPES[v]}</option>`).join("")}</select>`
+      + `<button${attr("disabled", inReview || !bm)}${attr("title", !bm && BM_ONLY)}>Read the change document</button><span class="muted">${inReview ? "Apply or discard the change set in review first." : "Read against the current frozen version."}</span></div></form>` : "")
+    + (ch.sets.length === 0 ? empty("No change documents read yet", ch.baseline ? "Read an addendum, Q&A answers or a change request above; each change statement is compared with the frozen requirements." : "Read the RFP first: its register is frozen when it is read.")
+      // ponytail: a bid with change sets shows their headline only; the full change-set card (items, decisions, document) runs in the live app
+      : ch.sets.map((s) => `<section class="card chg-set"><div class="card-head"><h3>${esc(s.filename)} ${badge(s.status, { label: { review: "in review", applied: "applied", discarded: "discarded" }[s.status] })}</h3><span class="muted">${s.confirmed} / ${s.total} confirmed</span></div>`
+        + `<p class="muted">Read by ${esc(s.created_by)} on ${esc(when(s.created_at))}, against frozen version ${s.baseline_from}.</p><p class="muted">The change statements and their decisions are shown in the live app.</p></section>`).join(""));
+}
+
+// ---------- My work (inbox/[bu]/page.tsx, UnitCompletion, KnowledgeReview) ----------
+const INBOX_ACTIONS = { assigned: "assigned it", reopened: "reopened it", responded: "submitted an answer", validated: "validated it", returned: "returned it", withdrawn: "withdrew it", capability_gap: "recorded a capability gap" };
+const INBOX_CHANGES = { compliance: "Compliance", product_ref: TERMS.solution, response: "How it is met", reason: "Reason", conditions: "Conditions", workaround: "Proposed change", next_steps: "Next steps" };
+const answerLabel = (c) => (c === "exception" ? "Exception (earlier value)" : complianceLabel(c));
+const KB_TYPES = { requirement: "Requirement", preference: "Preference", background: "Background information", partial_compliance: "Partial compliance", insufficient_evidence: "Insufficient evidence", other: "Other" };
+const KB_KIND = { requirement: "Requirement", response: "Validated answer", decision: "Decision rationale", correction: "Correction" };
+const INBOX_FIELDS = [["conditions", "Conditions"], ["workaround", "Proposed change", "required for compliant with changes"], ["next_steps", "Next steps"]];
+function unitCompletion(bu) {
+  const m = me(), mine = D.bid.schedule.units.find((u) => u.bu === bu);
+  if (m.role !== "product_manager" || m.bu !== bu || !mine || !(D.inbox[bu]?.items.length)) return "";
+  const stated = Object.keys(FACTORS).filter((f) => mine.factors[f]).length;
+  return `<section class="card"><div class="card-head"><h2>Your unit's delivery estimates</h2><span class="muted">When your unit expects to finish each bid and what could limit delivery: people, skills, manufacturing capacity, materials and cost. The bid manager accepts these estimates; no resource plan is needed.</span></div>${guide("completion")}`
+    + `<div class="table-scroll"><table class="dense stack-sm"><thead><tr><th>Bid</th><th>Current estimate</th><th>Constraints</th><th>Your estimate</th></tr></thead><tbody><tr><td class="mono"><strong>${esc(BID)}</strong></td>`
+    + `<td data-label="Current estimate">${mine.estimated_completion ? show(mine.estimated_completion) : '<span class="muted">not given</span>'}</td>`
+    + `<td data-label="Constraints">${stated === 0 ? '<span class="muted">factors not stated</span>' : mine.constraints.length === 0 ? '<span class="muted">none</span>' : mine.constraints.map((f) => `<span class="tag sev-medium" title="${esc(mine.factors[f]?.note)}">${FACTORS[f]}</span>`).join("")}</td>`
+    + `<td data-label="Your estimate"><form data-demo-form="Saving the delivery estimate"><div class="inline"><label><span class="sr-only">Estimated completion date for ${esc(BID)}</span><input type="date" name="estimated_completion" value="${day(mine.estimated_completion)}"></label>`
+    + `<label><span class="sr-only">Note for ${esc(BID)} (optional)</span><input name="note" placeholder="Note (optional)" value="${esc(mine.note)}"></label><button class="sm">Save</button></div>`
+    + `<details><summary>Delivery factors (${stated} of 5 stated)</summary>${Object.entries(FACTORS).map(([f, l]) => `<div class="inline"><label>${l} <select name="f-${f}">${[["", "Not stated"], ["ok", "No constraint"], ["constraint", "Constraint"]].map(([v, t]) => `<option value="${v}"${attr("selected", (mine.factors[f]?.status ?? "") === v)}>${t}</option>`).join("")}</select></label>`
+      + `<label><span class="sr-only">What limits delivery: ${l}</span><input name="n-${f}" placeholder="What limits delivery (required for a constraint)" value="${esc(mine.factors[f]?.note ?? "")}"></label></div>`).join("")}</details></form></td></tr></tbody></table></div></section>`;
+}
+function knowledgeReview() {
+  const k = D.kb_review[user] ?? { items: [], curator: "" }, row = (l, v) => (v ? `<div><strong>${l}:</strong> ${esc(v)}</div>` : "");
+  return `<details class="card"${attr("open", k.items.length > 0)}><summary><strong>Knowledge review${k.items.length ? ` (${k.items.length})` : ""}</strong></summary><p class="muted">Approved examples become reusable knowledge. ${esc(k.curator)}</p>`
+    + (k.items.length === 0 ? '<p class="muted">No examples are waiting for your review.</p>' : `<ul class="stack" style="list-style:none;padding:0">${k.items.map((i) => `<li class="card stack"><div class="card-head"><h3><span class="mono">${esc(i.kb_id)}</span> ${esc(KB_TYPES[i.example_type] ?? i.example_type)}</h3>`
+      + `<span class="muted">${esc(KB_KIND[i.kind] ?? i.kind)} · from ${esc(i.opportunity_id)}${i.source ? `, ${esc(i.source)}` : ""}</span></div>`
+      + row("Requirement", i.requirement) + row("Response", i.response) + row("When it holds", i.conditions) + row("When it does not apply", i.limits) + row("Why keep it", i.note)
+      + `<div class="muted">Nominated by ${esc(i.sent_by)}, ${esc(String(i.sent_at).slice(0, 16).replace("T", " "))}</div>`
+      + `<form class="form compact" data-demo-form="Approving a reviewed example"><label>Response to keep <span class="field-hint">(tidy it if needed)</span><textarea name="response" rows="3">${esc(i.response)}</textarea></label>`
+      + `<label>Note <span class="field-hint">(required to reject)</span><input name="note"></label><div class="inline"><button class="sm">Approve</button>${demoBtn("Reject", { cls: "danger secondary sm", what: "Rejecting a reviewed example" })}</div></form></li>`).join("")}</ul>`)
+    + "</details>";
+}
+function inboxScreen() {
+  const bu = route().bu, data = D.inbox[bu] ?? { bu, unit: unitName(bu) !== bu ? { name: unitName(bu) } : null, compliance: [], items: [] };
+  const m = me(), bm = isBM(), rights = (D.may[user] ?? {})[bu] ?? {};
+  const may = (a) => { const r = rights[a.id] ?? ""; return { answer: r.includes("a"), validate: r.includes("v"), return: r.includes("r") }; };
+  const items = data.items, canAnswer = items.some((a) => may(a).answer), canValidate = items.some((a) => may(a).validate || may(a).return);
+  const openCount = items.filter((a) => may(a).answer).length, toValidate = items.filter((a) => may(a).validate).length;
+  // answers waiting for validation, per unit and bid, shown on the units the viewer validates (the bid manager: any)
+  const validates = (u) => bm || (m.role === "product_manager" && m.bu === u);
+  const waiting = { BID: {} };
+  for (const o of D.portfolio) for (const [u, p] of Object.entries(o.progress)) { waiting[u] = waiting[u] ?? {}; if (p.submitted > p.validated) waiting[u][o.opp.id] = p.submitted - p.validated; }
+  const waitingLabel = (u) => { const w = Object.entries(waiting[u]), n = w.reduce((s, [, k]) => s + k, 0); return validates(u) && n > 0 ? `${n} to validate (${w.map(([o]) => o).join(", ")})` : ""; };
+  const showsUnit = (u) => bm || m.bu === u; // a unit role sees its own unit only
+  const allDone = items.length > 0 && items.every((a) => a.status === "validated");
+  const opps = [...new Set(items.map((a) => a.opportunity_id))];
+  const notes = (reqId) => D.bid.comments.filter((c) => c.req_id === reqId);
+  const questions = (a) => { const list = notes(a.req_id);
+    return `<details class="inbox-questions"><summary>Questions and comments${a.open_questions > 0 ? ` · <span class="warn">${a.open_questions} open question(s)</span>` : ""}</summary>`
+      + (list.length === 0 ? '<p class="muted">None yet.</p>' : `<ol>${list.map((c) => `<li><strong>${esc(c.author)}</strong> <span class="muted">(${esc(c.kind)}${c.status === "closed" ? `, closed by ${esc(c.closed_by)}` : c.kind === "question" ? ", open" : ""})</span>: ${esc(c.text)}`
+        + (c.status === "open" && c.kind === "question" && (c.author === m.name || bm) ? ` ${demoBtn("Close", { cls: "secondary sm", what: "Closing a question" })}` : "") + "</li>").join("")}</ol>`)
+      + `<form class="form compact" data-demo-form="Sending a question or comment"><label><span class="sr-only">Question or comment</span><select name="kind"><option value="question">Question (open until closed)</option><option value="comment">Comment</option></select></label>`
+      + `<label><span class="sr-only">Text</span><textarea name="text" rows="2" placeholder="Ask a question or add a comment"></textarea></label><button class="secondary sm">Send</button></form></details>`; };
+  const showVal = (k, v) => (v == null || v === "" ? "—" : k === "compliance" ? answerLabel(v) : v);
+  const history = (a) => `<details class="inbox-history"><summary>History</summary><ol>${(D.asg_history[a.id] ?? []).map((ev) => `<li><span class="muted">${esc(when(ev.at))}</span> <strong>${esc(ev.actor)}</strong> ${esc(INBOX_ACTIONS[ev.action] ?? ev.action)}${ev.note ? `: ${esc(ev.note)}` : ""}`
+    + Object.keys(ev.after).filter((k) => k in INBOX_CHANGES).map((k) => `<div class="muted">${INBOX_CHANGES[k]}: ${esc(showVal(k, ev.before[k]))} → ${esc(showVal(k, ev.after[k]))}</div>`).join("") + "</li>").join("")}</ol></details>`;
+  const row = (a) => { const r = a.requirement, mm = may(a);
+    const reqCell = (r ? `${esc(r.text)}` + (a.parts?.length ? `<ul class="parts">${a.parts.map((p) => `<li><span class="mono">${esc(p.req_id)}</span> ${esc(p.text)}</li>`).join("")}</ul>` : "")
+      + `<div class="quote">“${esc(r.quote)}”</div>` + (r.provenance === "UNANCHORED" ? badge("medium", { kind: "severity", label: "Source not verified", title: "Quote not located on the page; check the source manually" })
+      : `<a class="muted" href="${traceHref(esc(a.req_id))}">${esc(r.source)}: show highlighted source</a>`) : '<span class="warn">This requirement no longer exists in the bid.</span>') + questions(a);
+    const resp = mm.answer ? `<form class="form compact" data-demo-form="Submitting an answer">${a.status === "returned" ? alertBox("warn", `by ${esc(a.validated_by)}: ${esc(a.validation_note)}`, "Returned") : ""}`
+      + `<label><span class="sr-only">Compliance</span><select name="compliance">${data.compliance.map((c) => `<option value="${c}"${attr("selected", (a.compliance ?? "met") === c)}>${esc(answerLabel(c))}</option>`).join("")}</select></label>`
+      + (a.solution ? `<div class="muted">${TERMS.solution}: ${esc(solutionLabel(a.solution))}${a.solution.examples.length ? ` · ${esc(examplesLabel(a.solution))}` : ""}</div>` : "")
+      + `<label><span class="sr-only">How it is met</span><textarea name="response" rows="2" placeholder="How it is met">${esc(a.response)}</textarea></label>`
+      + `<label><span class="sr-only">Reason</span><textarea name="reason" rows="2" placeholder="Reason: what is not met or what changes, and why (required unless compliant)">${esc(a.reason ?? "")}</textarea></label>`
+      + INBOX_FIELDS.map(([n, l, h]) => `<label><span class="sr-only">${l}</span><input name="${n}" value="${esc(a[n] ?? "")}" placeholder="${l} (${h ?? "optional"})"></label>`).join("")
+      + '<div class="inline"><button class="sm">Submit</button></div></form>'
+      : `<div>${a.compliance ? `<strong>${esc(answerLabel(a.compliance))}</strong>` : ""}${a.solution ? `<div class="muted">${TERMS.solution}: ${esc(solutionLabel(a.solution))}</div>` : ""}${a.response ? `<div class="muted">${esc(a.response)}</div>` : ""}`
+        + (a.reason ? `<div class="muted"><strong>Reason:</strong> ${esc(a.reason)}</div>` : "") + INBOX_FIELDS.map(([n, l]) => (a[n] ? `<div class="muted"><strong>${l}:</strong> ${esc(a[n])}</div>` : "")).join("")
+        + (!a.compliance ? '<div class="muted">not answered yet</div>' : "") + "</div>";
+    const status = badge(a.status) + (a.validated_by && a.status === "validated" ? `<div class="muted">by ${esc(a.validated_by)}</div>` : "") + history(a)
+      + (mm.validate || mm.return ? `<div class="inline inbox-validate">${mm.validate ? demoBtn("Validate", { cls: "sm", what: "Validating an answer" }) : ""}${demoBtn(mm.validate ? "Return" : "Return with a question", { cls: "secondary sm", what: "Returning an answer with a note" })}</div>` : "");
+    return `<tr><td class="mono"><a href="${traceHref(esc(a.req_id))}">${esc(a.opportunity_id)}<br>${esc(a.req_id)}</a></td><td>${reqCell}</td><td data-label="Response">${resp}</td><td data-label="Status">${status}</td></tr>`; };
+  const html = pageHead(`My work: ${data.unit?.name ?? BID_DESK}`, "Each line is a requirement assigned to this unit. Mark it compliant, partially compliant, compliant with changes (a deviation from the requested specification) or non-compliant; say how it is met; give a reason unless it is compliant, and the proposed change for compliant with changes; add conditions or next steps where they apply, then submit. The unit manager validates the technical answers and the bid manager the others; the bid manager may return any answer with a question.",
+    canAnswer && openCount > 0 ? demoBtn("Submit all answered rows", { what: "Submitting the answered rows" }) : "", 1)
+    + guide("inbox", bu !== "BID" && !(D.bid.assessment.participation?.units ?? []).includes(bu) ? `${unitName(bu)} was not chosen to take part in this bid, so nothing is assigned to it.` : "") + unitCompletion(bu) + knowledgeReview()
+    + `<nav class="row inbox-links" aria-label="Work packages"><span>Work package:</span>${Object.keys(waiting).filter(showsUnit).sort((x, y) => (x === "BID" ? -1 : y === "BID" ? 1 : x.localeCompare(y))).map((u) =>
+      `<a href="#/inbox/${esc(u)}" class="chip${u === bu ? " on" : ""}"${attr("aria-current", u === bu && "page")}>${esc(u === "BID" ? BID_DESK : u)}${waitingLabel(u) ? `<span>${esc(waitingLabel(u))}</span>` : ""}</a>`).join("")}</nav>`
+    + (opps.length ? `<div class="row inbox-links"><span>Open the RFP:</span>${opps.map((o) => `<a class="button secondary sm" href="#/opportunities/${esc(o)}/trace">${esc(o)}</a>`).join("")}`
+      + (data.unit ? `<span class="inbox-sep" aria-hidden="true"></span><span>Download hand-off file:</span>${opps.map((o) => `<a class="button secondary sm" href="#" data-demo="Downloading the hand-off file">${esc(o)}</a>`).join("")}<span class="muted">Starting points for people, not a configuration or a design.</span>` : "") + "</div>" : "")
+    + (allDone ? alertBox("info", `All ${items.length} answers are submitted and validated: nothing to do.`)
+      : !canAnswer && !canValidate ? alertBox("info", `You are signed in as ${esc(m.name)}: you can read this work package but not act on it. A unit's technical items are answered by its designers / engineers and validated by its unit manager; its other items are answered by the unit manager and validated by the bid manager.`) : "")
+    + (canAnswer && openCount > 0 ? `<p class="muted">${openCount} open row(s). “Submit all answered rows” sends every open row where “How it is met” is filled in.</p>` : "")
+    + (canValidate && toValidate > 0 ? `<p class="muted">${toValidate} submitted answer(s) waiting for validation.</p>` : "")
+    + (items.length === 0 ? empty("Nothing assigned", "Requirements appear here once the bid manager dispatches a bid to this unit.")
+      : `<table class="inbox stack-sm"><thead><tr><th>Bid</th><th>Requirement</th><th>Response</th><th>Status</th></tr></thead><tbody>${items.map(row).join("")}</tbody></table>`);
+  return `<div class="content">${html}</div>`;
+}
+// ---------- Product catalog (catalog/page.tsx, SourcesTab.tsx, PublishedTab.tsx) ----------
+const CAT = { tab: "products" };
+function catalogScreen() {
+  const tabs = { products: "Products", sources: "Sources", published: "Published catalog" }, src = (u) => (u ? '<a class="catalog-source" href="#" data-demo="Opening the source page (external link)">source</a>' : "");
+  let body;
+  if (CAT.tab === "products") {
+    const c = D.catalog;
+    body = `<p class="muted catalog-provenance">Families and models from public Flex web pages (retrieved 12 Oct 2026); to be confirmed with each unit.</p>`
+      + `<form class="inline catalog-search" role="search" data-demo-form="Searching the knowledge base"><label><span class="sr-only">Search the knowledge base</span><input type="search" name="q" placeholder="Search products, models and past responses"></label><button>Search</button></form>`
+      + (c.units.length === 0 ? empty("No business units", "No business units are loaded yet.") : "")
+      + c.units.map((u) => { const products = c.products.filter((p) => p.bu === u.code);
+        return `<section class="card"><div class="card-head"><h2>${esc(u.name)} <span class="mono muted">${esc(u.code)}</span></h2><span class="muted">${esc(u.pillar)}</span>${badge(u.status)}</div>`
+          + `<p>${esc(u.focus)} ${src(u.source_url)}</p><p class="muted">Unit manager ${esc(u.product_manager)} · Unit designer / engineer ${esc(u.design_engineer)}</p>`
+          + (products.length === 0 ? '<p class="muted">No products listed.</p>' : `<ul class="catalog-products">${products.map((p) => { const models = c.items.filter((i) => i.family === p.id);
+            return `<li><span class="mono">${esc(p.id)}</span> ${esc(p.name)} ${badge(p.offering_type, { kind: "offering" })} ${src(p.source_url)}`
+              + (models.length ? `<details class="catalog-models"><summary>${models.length} model${models.length > 1 ? "s" : ""} / series</summary><ul>${models.map((mm) => `<li><strong>${esc(mm.model)}</strong> ${mm.name !== mm.model ? `${esc(mm.name)}. ` : ""}<span class="muted">${esc(mm.specs)}</span> ${src(mm.source_url)}</li>`).join("")}</ul></details>` : "") + "</li>"; }).join("")}</ul>`)
+          + "</section>"; }).join("");
+  } else if (CAT.tab === "sources") {
+    const s = D.sources, allowed = ["bid_manager", "product_manager", "design_engineer"].includes(me().role), ST = { draft: "Draft", published: "Published", rejected: "Rejected", retired: "Retired" };
+    body = `<p class="muted">Sources become evidence only after review. Market and vendor context is never used as verified evidence.</p>`
+      + `<details class="card"><summary><strong>Register a source</strong></summary><form class="form" data-demo-form="Registering a source"><label class="grow">File <span class="field-hint">(PDF, Word, Excel, HTML, Markdown or text)</span><input type="file" name="file" disabled></label>`
+      + `<label>Collection <select name="collection"><option value="" disabled selected>Choose…</option>${Object.entries(s.collections).map(([k, v]) => `<option value="${esc(k)}">${esc(v)}</option>`).join("")}</select></label>`
+      + `<label class="grow">Title <input name="title"></label><label>Publisher <input name="publisher"></label><div class="inline"><button${attr("disabled", !allowed)}>Register</button></div></form></details>`
+      + `<div class="filters"><label><span class="sr-only">Collection</span><select disabled><option>All collections</option></select></label><label><span class="sr-only">Status</span><select disabled><option>Any status</option></select></label></div>`
+      + (s.sources.length === 0 ? empty("No sources", "Register a reference document to get started.")
+        : `<table class="dense"><thead><tr><th>Title</th><th>Collection</th><th>Status</th><th class="num">Pages</th><th class="num">Passages</th><th class="num">Version</th><th>Registered</th></tr></thead><tbody>${s.sources.map((x) => `<tr><td>${esc(x.title || x.file_name)}<div class="muted">${esc([x.publisher, x.revision].filter(Boolean).join(" · "))}</div></td>`
+          + `<td>${esc(s.collections[x.collection] ?? x.collection)}</td><td>${badge(x.status, { label: ST[x.status] ?? x.status })}</td><td class="num">${x.pages}</td><td class="num">${x.passages}</td><td class="num">${x.version}</td><td>${esc(x.registered_by)}<div class="muted">${esc(String(x.registered_at).slice(0, 16).replace("T", " "))}</div></td></tr>`).join("")}</tbody></table>`);
+  } else {
+    const p = D.published, run = p.runs[0], bmOk = me().role === "bid_manager";
+    body = `<p class="muted">Read from the official Flex product pages on server start and every 24 hours. It shows what is published (name, key features, link); it is not compliance evidence, and it does not change the matching.</p>`
+      + `<section class="card"><div class="row">${run ? `<span>Last refresh ${esc(String(run.finished_at ?? run.started_at).slice(0, 16).replace("T", " "))} ${badge(run.status === "ok" ? "confirmed" : run.status, { label: run.status })} ${run.added} added / ${run.changed} changed / ${run.removed} removed · catalog version ${p.catalog_version ?? "-"}</span>` : '<span class="muted">No refresh has run yet.</span>'}`
+      + `${demoBtn("Refresh now", { disabled: !bmOk, title: bmOk ? undefined : "Only the bid manager or an administrator can refresh.", what: "Refreshing the published catalog" })}</div></section>`
+      + (p.products.length === 0 ? empty("No published catalog yet.", "It is read on server start; use Refresh now. This demo was recorded offline, so no Flex page was read.")
+        : `<table class="dense"><thead><tr><th>Name</th><th>Category</th><th>Key features</th><th>Link</th><th>First seen</th><th>Last seen</th></tr></thead><tbody>${p.products.filter((x) => x.active).map((x) => `<tr><td><strong>${esc(x.name)}</strong></td><td>${esc(x.category)}</td><td><ul>${x.features.slice(0, 4).map((f) => `<li>${esc(f)}</li>`).join("")}</ul></td><td class="muted">-</td><td>${day(x.first_seen)}</td><td>${day(x.last_seen)}</td></tr>`).join("")}</tbody></table>`);
+  }
+  return `<div class="content">${pageHead("Product catalog", "Business units, their product families and models, the past responses used for matching, and the reference documents (sources) that back them.", "", 1)}${guide("catalog")}`
+    + `<div class="filters" role="tablist" aria-label="Catalog view">${Object.entries(tabs).map(([t, l]) => `<button role="tab" aria-selected="${CAT.tab === t}" class="chip ${CAT.tab === t ? "on" : ""}" data-act="cattab" data-arg="${t}">${l}</button>`).join("")}</div>${body}</div>`;
+}
+
+const SCREENS = { portfolio: portfolioScreen, rfp: rfpScreen, trace: traceScreen, assessment: assessmentScreen, consolidation: consolidationScreen, outline: outlineScreen,
+  decisions: decisionsScreen, changes: changesScreen, activity: activityScreen, inbox: inboxScreen, catalog: catalogScreen };
+
+// ---------- router ----------
+function route() {
+  const [full, anchor] = (location.hash.slice(1) || "/portfolio").split("#"), [path, query] = full.split("?");
+  const r = routeOf(path);
+  return { ...r, query: new URLSearchParams(query ?? ""), anchor };
+}
+function routeOf(path) {
+  let m;
+  if ((m = path.match(/^\/opportunities\/([^/]+)(\/.*)?$/))) {
+    const rest = m[2] ?? "";
+    const name = { "": "rfp", "/trace": "trace", "/assessment": "assessment", "/consolidation": "consolidation", "/consolidation/activity": "activity",
+      "/decisions": "decisions", "/changes": "changes", "/consolidation/outline": "outline" }[rest];
+    return { path, name: m[1] === BID && name ? name : "missing", bid: true };
+  }
+  if ((m = path.match(/^\/inbox(?:\/([^/]+))?$/))) return { path, name: "inbox", bu: m[1] };
+  if (path === "/catalog") return { path, name: "catalog" };
+  return { path: "/portfolio", name: "portfolio" };
+}
+
+function render() {
+  const r = route();
+  if (r.name === "inbox" && !r.bu) { location.replace(`#/inbox/${me().bu ?? "BID"}`); return; }
+  // keep the scroll of each pane and the focused field across a re-render
+  const keep = {}; document.querySelectorAll("[data-keep]").forEach((el) => (keep[el.dataset.keep] = el.scrollTop));
+  const f = document.activeElement, fid = f?.id, caret = fid && "selectionStart" in f ? [f.selectionStart, f.selectionEnd] : null;
+  shell(r.path);
+  const screen = SCREENS[r.name];
+  const html = screen ? screen() : `<div class="content">${empty("Not in this demo", `This demo holds bid ${BID} only.`, `<div class="row" style="justify-content:center"><a class="button" href="#/portfolio">Back to Bids</a></div>`)}</div>`;
+  $("#main").innerHTML = r.bid && r.name !== "missing" ? bidHead(r.path) + `<div class="content">${html}</div>` : html;
+  document.querySelectorAll("[data-keep]").forEach((el) => { if (keep[el.dataset.keep] !== undefined) el.scrollTop = keep[el.dataset.keep]; });
+  if (fid && document.getElementById(fid)) { const el = document.getElementById(fid); el.focus(); if (caret) try { el.setSelectionRange(...caret); } catch { /* number inputs */ } }
+  if (T.scrollTo) { // the linked panes follow the selection
+    for (const p of T.scrollTo.panes) { const pane = $(`[data-pane="${p}"]`), row = pane && pane.querySelector(`[data-req="${CSS.escape(T.scrollTo.req)}"]`);
+      if (row) { const pr = pane.getBoundingClientRect(), rr = row.getBoundingClientRect(); if (rr.top < pr.top + 60 || rr.bottom > pr.bottom) pane.scrollTop += rr.top - pr.top - 80; } }
+    const p1 = $('[data-pane="1"]'), box = p1 && p1.querySelector(".hl.sel"), page = p1 && p1.querySelector(".page img");
+    const show = () => { const pr = p1.getBoundingClientRect(), br = box.getBoundingClientRect(); if (br.top < pr.top + 80 || br.bottom > pr.bottom) p1.scrollTop += br.top - pr.top - 120; };
+    if (box && T.linked[1]) page.complete ? show() : page.addEventListener("load", show, { once: true }); // boxes have no height until the page image is in
+    T.scrollTo = null;
+  }
+}
+
+// ---------- events ----------
+let toastSeq = 0;
+function toast(text, kind = "info") {
+  const id = "t" + ++toastSeq, box = $("#toasts");
+  box.insertAdjacentHTML("beforeend", `<div class="toast ${kind}" id="${id}" role="status"><span class="toast-text">${esc(text)}</span><button type="button" class="alert-close" aria-label="Dismiss" data-close="${id}">×</button></div>`);
+  setTimeout(() => document.getElementById(id)?.remove(), 4500);
+}
+const ACT = {
+  move(arg) { const [p, dir] = arg.split(",").map(Number), i = T.order.indexOf(p), j = i + dir; if (j < 0 || j > 2) return; [T.order[i], T.order[j]] = [T.order[j], T.order[i]]; render(); },
+  grip() { toast("Drag the panes by their grip in the app; here, use the ◀ ▶ arrows to change the order."); },
+  link(p) { T.linked[p] = !T.linked[p]; if (T.linked[p] && T.sel) selectReq(T.sel); else render(); },
+  enlarge(p) { p = Number(p); T.enlarged = T.enlarged === p ? null : p; T.scrollTo = { req: T.sel, panes: [2, 3] }; render(); },
+  resetlayout() { T.order = [1, 2, 3]; T.widths = { ...DEFAULT_WIDTHS }; render(); },
+  doc(id) { T.docId = id; T.page = 1; render(); },
+  page(dir) { const n = traceDerived().pages.length; T.page = Math.min(n, Math.max(1, T.page + Number(dir))); render(); },
+  clearfilters() { T.f = {}; render(); },
+  regtab(t) { T.reg.tab = t; render(); }, regfilter(k) { T.reg.filter = k; render(); },
+  expand(id) { T.reg.open.has(id) ? T.reg.open.delete(id) : T.reg.open.add(id); render(); },
+  history(id) { T.reg.history = T.reg.history === id ? null : id; render(); },
+  snap(n) { n = Number(n); T.reg.snap = T.reg.snap === n ? null : n; render(); },
+  uncheck() { T.reg.checked.clear(); render(); },
+  // compliance matrix
+  mopen() { C.f.onlyOpen = !C.f.onlyOpen; C.limit = 100; render(); },
+  mclear() { C.f = { ...NO_FILTER }; C.limit = 100; render(); },
+  mmore() { C.limit += 100; render(); },
+  mhist(key) { C.sel = key; C.history = true; C.srcPage = 0; render(); },
+  mclose() { const k = C.sel; C.sel = null; C.source = false; render(); document.querySelector(`tr[data-mkey="${CSS.escape(k)}"]`)?.focus(); },
+  msource() { C.source = !C.source; render(); },
+  srcpage(i) { C.srcPage = Number(i); render(); },
+  // activity, catalog
+  actclear() { Object.assign(A, { entity: "", req_id: "", bu: "", person: "", shown: 200 }); render(); },
+  actmore() { A.shown += 200; render(); },
+  cattab(t) { CAT.tab = t; render(); },
+  gate(k) { GATE[k] = !GATE[k]; render(); }, // a folded step opened again with "Change…", or closed with Cancel
+};
+const CHANGE = {
+  pageno(_, el) { const n = traceDerived().pages.length; T.page = Math.min(n, Math.max(1, Number(el.value) || 1)); render(); },
+  filter(k, el) { T.f[k] = el.value || undefined; render(); },
+  regq(_, el) { T.reg.q = el.value; render(); },
+  check(id, el) { el.checked ? T.reg.checked.add(id) : T.reg.checked.delete(id); render(); },
+  checkall(_, el) { T.reg.checked = el.checked ? new Set(T.reg.selectable ?? []) : new Set(); render(); },
+  mf(k, el) { C.f[k] = el.value; C.limit = 100; render(); },
+  act(k, el) { A[k] = el.value; A.shown = 200; render(); },
+};
+document.addEventListener("click", (e) => {
+  const t = e.target;
+  const close = t.closest("[data-close]"); if (close) { document.getElementById(close.dataset.close)?.remove(); return; }
+  const demo = t.closest("[data-demo]");
+  if (demo) { e.preventDefault(); if (!demo.disabled) toast(`Demo: not saved. ${demo.dataset.demo} works in the live app.`); return; }
+  const act = t.closest("[data-act]");
+  if (act && act.tagName !== "FORM") { e.preventDefault(); ACT[act.dataset.act]?.(act.dataset.arg, act); return; }
+  const hl = t.closest("[data-hl]"); if (hl) { selectReq(hl.dataset.hl, { from: 1 }); return; }
+  if (t.closest("button, a, input, select, textarea, summary, details, label")) return;
+  const row = t.closest("[data-req]"); if (row) selectReq(row.dataset.req, { from: Number(row.dataset.from) });
+  const mrow = t.closest("[data-mkey]"); if (mrow) { C.sel = mrow.dataset.mkey; C.history = false; C.srcPage = 0; render(); }
+});
+// the matrix detail's history: remember whether it is open across re-renders
+document.addEventListener("toggle", (e) => { if (e.target.dataset?.toggle === "mhistory" && C.history !== e.target.open) { C.history = e.target.open; render(); } }, true);
+// the compliance reason: a tooltip that is never clipped by the table's scroll (ComplianceBadge.tsx)
+const tip = (on) => (e) => { const t = e.target.closest?.(".reason-tip"); if (!t) return; const pop = t.querySelector(".reason-pop");
+  if (!on) { pop.classList.remove("on"); pop.style.left = pop.style.top = ""; return; }
+  const b = t.getBoundingClientRect(); pop.style.left = `${Math.max(8, Math.min(b.left, window.innerWidth - 320))}px`; pop.style.top = `${b.bottom + 6}px`; pop.classList.add("on"); };
+document.addEventListener("mouseover", tip(true)); document.addEventListener("mouseout", tip(false));
+document.addEventListener("focusin", tip(true)); document.addEventListener("focusout", tip(false));
+document.addEventListener("keydown", (e) => {
+  const t = e.target;
+  if ((e.key === "Enter" || e.key === " ") && t.matches?.("[data-mkey]")) { e.preventDefault(); C.sel = t.dataset.mkey; C.history = false; render(); return; }
+  if (e.key === "Escape" && C.sel && route().name === "consolidation") { ACT.mclose(); return; }
+  if ((e.key === "Enter" || e.key === " ") && t.matches?.("[data-req], [data-hl]")) { e.preventDefault(); selectReq(t.dataset.req ?? t.dataset.hl, { from: Number(t.dataset.from) || 1 }); }
+  if (e.key === "Escape" && T.enlarged !== null) { T.enlarged = null; render(); }
+});
+// text fields re-render as you type; selects and numbers on change
+document.addEventListener("input", (e) => { const el = e.target; if (el.dataset?.change && el.type === "search") CHANGE[el.dataset.change](el.dataset.arg, el); });
+document.addEventListener("change", (e) => { const el = e.target; if (el.dataset?.change && el.type !== "search") CHANGE[el.dataset.change](el.dataset.arg, el); });
+document.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (e.target.dataset.act === "search") { searched = true; render(); }
+  else if (e.target.dataset.act === "actreq") { A.req_id = $("#actreq").value.trim(); A.shown = 200; render(); }
+  else if (e.target.dataset.demoForm) toast(`Demo: not saved. ${e.target.dataset.demoForm} works in the live app.`);
+});
+// the bars between panes: drag to resize the two neighbours (layout.ts resizePair, simplified)
+document.addEventListener("pointerdown", (e) => {
+  const bar = e.target.closest?.("[data-split]"); if (!bar || e.button !== 0) return;
+  const [l, r] = bar.dataset.split.split(",").map(Number), lw = $(`[data-pane="${l}"]`).offsetWidth, rw = $(`[data-pane="${r}"]`).offsetWidth;
+  const x0 = e.clientX, pair = T.widths[l] + T.widths[r], grid = bar.parentElement;
+  bar.setPointerCapture(e.pointerId); bar.classList.add("active"); e.preventDefault();
+  const move = (ev) => { const nl = Math.min(lw + rw - 240, Math.max(240, lw + ev.clientX - x0));
+    T.widths[l] = pair * nl / (lw + rw); T.widths[r] = pair - T.widths[l];
+    grid.style.setProperty("--ws-cols", T.order.map((p) => `minmax(240px, ${T.widths[p]}fr)`).join(" 10px ")); };
+  const up = () => { bar.removeEventListener("pointermove", move); bar.removeEventListener("pointerup", up); render(); };
+  bar.addEventListener("pointermove", move); bar.addEventListener("pointerup", up);
+});
+
+// ---------- controls: role picker, guidance ----------
+(function controls() {
+  const groups = [["Bid desk", ACCOUNTS.filter((a) => a.role === "bid_manager")],
+    ...[...new Set(ACCOUNTS.filter((a) => a.bu).map((a) => a.bu))].map((bu) => [unitName(bu), ACCOUNTS.filter((a) => a.bu === bu)])];
+  $("#role").innerHTML = groups.map(([label, list]) => `<optgroup label="${esc(label)}">${list.map((a) => `<option value="${esc(a.username)}"${attr("selected", a.username === user)}>${esc(a.me.role_label)} · ${esc(a.bu ?? "Bid desk")}</option>`).join("")}</optgroup>`).join("");
+  $("#role").addEventListener("change", (e) => {
+    user = e.target.value; store.set("user", user);
+    const home = `#/inbox/${me().bu ?? "BID"}`;
+    if (route().name === "inbox" && location.hash !== home) location.hash = home; else render();
+    toast(`Now viewing as ${me().name} (${me().role_label}).`);
+  });
+  const g = $("#guide");
+  const setGuide = (on) => { document.body.classList.toggle("guide-on", on); g.setAttribute("aria-pressed", String(on)); g.textContent = on ? "Hide guidance" : "Show guidance"; store.set("guide", on ? "1" : "0"); };
+  g.addEventListener("click", () => setGuide(!document.body.classList.contains("guide-on")));
+  setGuide(store.get("guide") === "1");
+  $("#stamp").textContent = `Demo · ${BID} · recorded ${formatDate(D.meta.generated_at)}`;
+})();
+function applyLink() {
+  const r = route();
+  if (r.name === "trace") {
+    const f = {}; for (const k of [...FACETS, "from", "to", "q", "sort"]) if (r.query.get(k)) f[k] = r.query.get(k);
+    if (r.query.toString() || r.anchor) T.f = f; // a link sets the filters it carries, as the app's URL does
+    if (r.anchor && D.trace.rows.some((x) => x.req.req_id === r.anchor)) { selectReq(r.anchor); return; }
+  }
+  if (r.name === "activity") { A.req_id = r.query.get("req_id") ?? ""; A.shown = 200; }
+  render();
+}
+let lastScreen = route().name;
+window.addEventListener("hashchange", () => {
+  const name = route().name;
+  if (name !== lastScreen) { Object.assign(C, { sel: null, source: false, history: false }); for (const k in GATE) delete GATE[k]; } // leaving a page resets its panels, as the app does
+  lastScreen = name; window.scrollTo(0, 0); applyLink();
+});
+applyLink();
+</script>
+</body>
+</html>

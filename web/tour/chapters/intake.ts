@@ -7,7 +7,7 @@ const chapter: TourChapter = {
   id: "intake",
   order: 4,
   title: "New bid and the RFP",
-  summary: "The New bid form, then the RFP page: the files, what the reader covered, the automatic freeze, and the search over the RFP text.",
+  summary: "The New bid form, then the RFP page: the files, what the reader covered, the automatic freeze, the search over the RFP text and the saved focus on the power electronics requirements.",
   entryRoute: "/opportunities/new",
   steps: [
     {
@@ -31,7 +31,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       fallback: "The table lists the files stored in this bid.",
       body: [
-        "This is the first step of a bid. The table lists every file with its **document type** (Main RFP, Addendum, Clarification / Q&A, Change request, Other), page count, reading status and the date it was received. The Syracuse RFP is one 101-page main RFP, status *ingested*.",
+        "This is the first step of a bid. The table lists every file with its **document type** (Main RFP, Addendum, Clarification / Q&A, Change request, Other), page count, reading status and the date it was received. The Syracuse RFP is one 101-page main RFP, status *Read*. Word and Excel files are read too (RC-1 is a Word file with 19 tables; table rows are kept as text).",
         "Files are stored once under their SHA-256 fingerprint and never modified. On a **new** bid this page also holds the upload form for the main RFP and the button that reads it.",
       ],
     },
@@ -41,7 +41,7 @@ const chapter: TourChapter = {
       route: "/opportunities/{opp}",
       body: [
         "Every uploaded file is identified by the **Document ID and Instance ID** embedded in it (PDF, Word), with a SHA-256 fingerprint when the file has none. If the same file is uploaded into a new bid, Layer 0 does not read it again: it **opens the bid that already holds it**, with its stored, frozen requirements, and says so. A *newer instance* of a known RFP names the bid that holds the earlier one and offers to add it there as a change document.",
-        "**Add another document** takes addenda, clarification / Q&A answers and change requests after the freeze; they are compared with the baseline on the Changes page (chapter 11), not merged silently.",
+        "**Add another document** takes addenda, clarification / Q&A answers and change requests after the freeze; they are compared with the frozen requirements on the Changes page (chapter 11), not merged silently.",
       ],
     },
     {
@@ -50,10 +50,10 @@ const chapter: TourChapter = {
       route: "/opportunities/{opp}",
       target: "rfp-coverage",
       placement: "top",
-      fallback: "The coverage card shows the first extraction snapshot (E1) of the bid.",
+      fallback: "The coverage card shows RFP reading 1, the first reading of the bid.",
       body: [
-        "Extraction snapshot **E1** records exactly what the reader did and is never altered: 101 pages = 100 read + 1 skipped (contents, blank) + 0 failed + 0 unreadable; 818 candidates = 779 in the register + 12 exceptions + 27 duplicates; 161 groups. Unread pages and quotes that could not be located are reported, never hidden.",
-        "A read that completes with no failed page **freezes the register at once** as baseline 1. After that the RFP is not read again: edits, splits, merges, exclusions and missed requirements are saved as **corrections with a reason**, each a new version, and customer changes come in through Changes.",
+        "**RFP reading 1** records exactly what the reader did and is never altered: 101 pages = 100 read + 0 failed + 1 skipped (contents, blank) + 0 not readable; 818 statements read, grouped into 312 requirements (161 groups); 12 need a source check; 27 duplicates. Unread pages and quotes that could not be located are reported, never hidden.",
+        "A read that completes with no failed page **freezes the register at once** as frozen version 1. After that the RFP is not read again: edits, splits, merges, exclusions and missed requirements are saved as **corrections with a reason**, each a new version, and customer changes come in through Changes.",
       ],
     },
     {
@@ -65,6 +65,17 @@ const chapter: TourChapter = {
       fallback: "The search box asks a question in plain words and returns passages with page and lines.",
       body: [
         "A short-term index is built per RFP: ask in plain words (for example \"what short-circuit rating is required?\") and the best passages come back with page and lines. When embeddings are not available it falls back to keyword ranking and says so. The index is private to this bid.",
+      ],
+    },
+    {
+      id: "intake-focus",
+      title: "Focus: the power electronics requirements",
+      route: "/opportunities/{opp}",
+      target: "rfp-saved-views",
+      placement: "bottom",
+      fallback: "For the Syracuse RFP a Focus line above the documents links to its power electronics requirements.",
+      body: [
+        "For the Syracuse RFP the page offers a saved **Focus** view: **Power electronics requirements (Crown, EP², Anord Mardix)**. It opens Requirement Traceability filtered to the technical requirements of those three units, so the demo can concentrate on the power electronics part of a switchgear procurement. It is only a filter link; nothing in the register changes.",
       ],
       instruction: "Press Next to open Requirement Traceability.",
     },

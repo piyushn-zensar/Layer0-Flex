@@ -40,6 +40,8 @@ Public contract:
     dismiss(db, req_id, reason, actor) -> Requirement   an exception that is not a requirement; reason required;
                                                  also after publishing (an exception is outside the register)
     children(db, req_id) -> list[Requirement]    the sub-requirements of a group
+    parts(db, opp_id) -> dict[str, list[dict]]   every group's approved sub-requirements in document order, with their
+                                                 current (corrected) text: {group req_id: [{req_id, text}]}
     ungroup(db, req_id, actor, reason="") -> list[Requirement]   a group's sub-requirements become requirements again
     get(db, req_id, baseline=None) -> Requirement | None   latest version; with baseline: the version in that baseline
     review(db, req_id, action, actor, text=None, reason="", category=None)   action: approve | reject | edit;
@@ -120,7 +122,7 @@ def _writable(db: Session, opp_id: str) -> None:
     opportunities.require(db, opp_id)
     b = baseline(db, opp_id)
     if b:
-        raise ValueError(f"The register is frozen (baseline {b.number}); correct it with a reason, or through a "
+        raise ValueError(f"The register is frozen (version {b.number}); correct it with a reason, or through a "
                          "change document.")
 
 
@@ -417,6 +419,14 @@ def children(db: Session, req_id: str) -> list[Requirement]:
     return rows
 
 
+def parts(db: Session, opp_id: str) -> dict[str, list[dict]]:
+    out: dict[str, list[dict]] = {}
+    for k in current(db, opp_id, include_children=True):
+        if k.parent_id and k.status == "approved":
+            out.setdefault(k.parent_id, []).append({"req_id": k.req_id, "text": k.text})
+    return out
+
+
 def ungroup(db: Session, req_id: str, actor: str, reason: str = "") -> list[Requirement]:
     req = _draft(db, req_id)
     if req.kind != "group":
@@ -459,7 +469,7 @@ def _exception(db: Session, req_id: str, published_ok: bool = False) -> Requirem
     if not published_ok:
         _writable(db, req.opportunity_id)
     if req.status != "exception":
-        raise ValueError(f"{req_id} is not in the exception queue.")
+        raise ValueError(f"{req_id} does not need a source check.")
     return req
 
 
@@ -529,7 +539,7 @@ def review(db: Session, req_id: str, action: str, actor: str, text: str | None =
     if req.status in ("split", "merged"):
         raise ValueError(f"{req_id} is {req.status}; review its replacement instead.")
     if action in ("approve", "reject") and req.status in ("exception", "dismissed"):
-        raise ValueError(f"{req_id} is in the exception queue: link it to its lines or dismiss it with a reason.")
+        raise ValueError(f"{req_id} needs a source check: link it to its lines or dismiss it with a reason.")
     if action == "approve" and req.provenance != "EXTRACTED":
         raise ValueError(f"{req_id} has no verified source, so it cannot enter the register.")
     if action == "reject" and not reason.strip():
@@ -587,7 +597,7 @@ def freeze(db: Session, opp_id: str, actor: str) -> Baseline:
     _read_main_document(db, opp_id)
     items = [r for r in current(db, opp_id) if r.status == "approved"]
     if not items:
-        raise ValueError("The register is empty; a baseline needs at least one requirement.")
+        raise ValueError("The register is empty; freezing needs at least one requirement.")
     unverified = [r.req_id for r in items if r.provenance != "EXTRACTED"]
     if unverified:  # data from before the register rule (14 Oct 2026); a fresh read puts them in the exception queue
         raise ValueError(f"{len(unverified)} requirements in the register have no verified source "
@@ -621,7 +631,7 @@ def apply_change(db: Session, opp_id: str, change_doc_id: str, items: list[dict]
     opportunities.require(db, opp_id)
     b = baseline(db, opp_id)
     if b is None:
-        raise ValueError("Nothing is frozen yet: a change document is compared with a frozen baseline.")
+        raise ValueError("Nothing is frozen yet: a change document is compared with the frozen requirements.")
     number = b.number + 1
     out = {"baseline": number, "added": [], "modified": [], "removed": [], "affected": []}
     try:
@@ -645,7 +655,7 @@ def apply_change(db: Session, opp_id: str, change_doc_id: str, items: list[dict]
                 continue
             old = live.get(item.get("target") or "")
             if old is None or old.status != "approved" or old.baseline is None:
-                raise ValueError(f"{item.get('target')} is not an approved requirement of baseline {b.number}.")
+                raise ValueError(f"{item.get('target')} is not an approved requirement of frozen version {b.number}.")
             if kind == "modified":
                 hit = _anchor(anchoring.find(item["quote"], pages, item.get("page")), change_doc_id)
                 if not hit:
@@ -724,7 +734,7 @@ def apply_correction(db: Session, opp_id: str, kind: str, body: dict, actor: str
         def published(req_id: str) -> Requirement:
             r = live.get(req_id or "")
             if r is None or r.status != "approved" or r.baseline is None:
-                raise ValueError(f"{req_id} is not a requirement of baseline {b.number}.")
+                raise ValueError(f"{req_id} is not a requirement of frozen version {b.number}.")
             return r
 
         def lines(document_id: str | None = None) -> tuple:
@@ -751,7 +761,7 @@ def apply_correction(db: Session, opp_id: str, kind: str, body: dict, actor: str
         elif kind == "resolve":
             req = get(db, body.get("req_id") or "")
             if req is None or req.opportunity_id != opp_id or req.status != "exception":
-                raise ValueError(f"{body.get('req_id')} is not in the exception queue.")
+                raise ValueError(f"{body.get('req_id')} does not need a source check.")
             doc, quote, pages = lines(req.document_id)  # an exception from an addendum links to the addendum's lines
             hit = _anchor(anchoring.find(quote, pages, body["page"]), doc.id)
             if not hit:

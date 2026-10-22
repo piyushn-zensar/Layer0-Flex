@@ -12,7 +12,7 @@ An in-app, step-by-step tour of every screen of Layer 0. It dims the page, highl
 
 ## 2. Chapters
 
-219 steps in 12 chapters (the catalogue is `CHAPTERS` / `STEPS` in `web/tour/index.ts`). The step id prefix is the chapter id, except where noted.
+165 steps in 12 chapters (21 Oct 2026) (the catalogue is `CHAPTERS` / `STEPS` in `web/tour/index.ts`). The step id prefix is the chapter id, except where noted.
 
 | # | Chapter id | Title | Steps | Starts on |
 |---|---|---|---|---|
@@ -29,7 +29,7 @@ An in-app, step-by-step tour of every screen of Layer 0. It dims the page, highl
 | 11 | changes | Addenda and change handling | 22 | /opportunities/OPP-0001/changes |
 | 12 | recap | Recap and completion | 6 | /opportunities/{opp} |
 
-Total: 5+9+12+16+34+29+32+16+23+15+22+6 = 219.
+Total: 165 steps after the iteration-4 update (21-22 Oct 2026); the per-chapter counts above predate it.
 
 ## 3. Screens covered
 
@@ -72,7 +72,7 @@ Action steps (kind `action`) and wait steps (kind `wait`) are finished by `done(
 | requirements-reject-added | Reject the added item again | its History has a reject event | frozen or later |
 | requirements-approve-all | Tick Select all, press Approve | To review reads 0 | frozen or later |
 | requirements-freeze | Press Freeze baseline and confirm | baseline line present | frozen or later |
-| trace-match-run | Press Match products | match results present in pane 3 | already decided/dispatched |
+| trace-match-run | Press Propose solutions (bid manager, before the go/no-go) | match results present in pane 3 | already decided/dispatched |
 | trace-match-accept | Accept the selected match | match badge reads accepted | none |
 | trace-match-change / trace-match-cancel | Open then cancel the Change form | form present / form gone | none |
 | trace-sync | Click a highlight or a row | URL hash changed | none |

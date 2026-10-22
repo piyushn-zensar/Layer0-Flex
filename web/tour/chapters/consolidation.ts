@@ -6,7 +6,12 @@ import { onRoute, openDetails, present } from "../helpers";
 const CONS = "/opportunities/{opp}/consolidation";
 const OUTLINE = "/opportunities/{opp}/consolidation/outline";
 const ACT = "/opportunities/{opp}/consolidation/activity";
-const missing = (id: string) => (ctx: TourCtx) => ctx.el(id) === null;
+/** Skip when the element is not on the page, judged once the page has loaded (its `ready` element is there, at most
+ * 15 s): the matrix can take several seconds to load, and a check made earlier would skip a step that applies. */
+const missing = (id: string, ready = id.startsWith("outline-") ? "outline-summary" : "cons-summary") => async (ctx: TourCtx) => {
+  for (let i = 0; i < 30 && !ctx.el(ready); i++) await new Promise((r) => setTimeout(r, 500));
+  return ctx.el(id) === null;
+};
 const pressed = (tourId: string, nth: number) => (ctx: TourCtx) =>
   ctx.el(tourId)?.querySelectorAll(".chip")[nth]?.getAttribute("aria-pressed") === "true";
 
@@ -22,8 +27,8 @@ const chapter: TourChapter = {
       title: "Compliance matrix: is every requirement answered?",
       route: CONS,
       body: [
-        "The **Compliance matrix** is the fourth step and the bid manager's consolidation: every requirement with the answer of the unit that owns it. It runs against the frozen baseline and the answers that came back through My work.",
-        "The rule is strict: a requirement is **answered** only when every item for it is **validated** (by the unit manager, or by the bid manager for the bid desk's items). An item still with the unit, submitted but not validated, or returned blocks completion. Nothing is estimated: the page counts states, it does not judge content.",
+        "The **Compliance matrix** is the fourth step and the bid manager's consolidation: every requirement with the answer of the unit that owns it. It runs against the frozen requirements and the answers that came back through My work.",
+        "The rule is strict: a requirement is **answered** only when every item for it is **validated** (a technical answer by the unit manager; the unit managers' own answers and the bid desk's items by the bid manager). An item still with the unit, submitted but not validated, or returned blocks completion. Nothing is estimated: the page counts states, it does not judge content.",
         "From here you open the Response outline (the drafting agent's first draft), the Activity log, and download the matrix as Excel for the customer or CSV for tracking.",
       ],
     },
@@ -35,7 +40,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       fallback: "The summary line reads 'answered / total requirements answered' and, in red, how many still need an answer.",
       body: [
-        "**answered / total**: the total is the number of requirements in the baseline (312 for the Syracuse RFP); answered counts requirements whose items are all validated. In the seeded demo that is **1 / 312**, with **311 still need an answer** in red. When nothing is left, the line turns green. The count changes through My work (a unit submits, the unit manager validates) or through Changes (an addendum returns answers for review).",
+        "**answered / total**: the total is the number of requirements in the frozen version (312 for the Syracuse RFP); answered counts requirements whose items are all validated. On the demo bid only a handful of the 312 are answered so far; how many still need an answer is shown in red. When nothing is left, the line turns green. The count changes through My work (a unit submits, the answer is validated) or through Changes (an addendum returns answers for review).",
       ],
     },
     {
@@ -47,7 +52,7 @@ const chapter: TourChapter = {
       skipIf: missing("cons-blockers"),
       fallback: "The 'Needs an answer' panel only appears while some requirement is open.",
       body: [
-        "Every open requirement is grouped by **why** it is open: **Waiting for validation** (1 on the demo), **Waiting for the unit** (195, still assigned), **Returned** (sent back with a note) and **Not assigned** (115 product requirements no participating unit holds; assign a unit in Traceability or record a capability gap on the Assessment page). A requirement with several units takes the most urgent reason.",
+        "Every open requirement is grouped by **why** it is open: **Waiting for validation** (submitted, not validated yet), **Waiting for the unit** (still assigned), **Returned** (sent back with a note) and **Not assigned** (115 product requirements no participating unit holds; on the Assessment Summary the bid manager routes each to a unit or records a capability gap). A requirement with several units takes the most urgent reason.",
         "Each group lists up to ten requirement IDs, with a toggle for the rest. Every ID links into **Requirement Traceability**: the quickest way from \"what is missing\" to \"who do I ask\".",
       ],
     },
@@ -58,7 +63,7 @@ const chapter: TourChapter = {
       target: "cons-filter",
       placement: "bottom",
       body: [
-        "Search by requirement text, ID, unit, product or response, and filter by **unit**, **compliance** (Fully, Partially, Non-compliant), **state** and **category**. **Open only** (311) shows what still needs an answer; **Clear filters** resets everything. The count beside it says how many rows match and that the table shows the first 100.",
+        "Search by requirement text, ID, unit, proposed solution or response, and filter by **unit**, **compliance** (Compliant, Partially compliant, Compliant with changes, Non-compliant), **state** and **category**. **Open only** (311) shows what still needs an answer; **Clear filters** resets everything. The count beside it says how many rows match and that the table shows the first 100.",
       ],
     },
     {
@@ -69,7 +74,7 @@ const chapter: TourChapter = {
       placement: "top",
       body: [
         "Each row is a requirement and one unit's answer to it, with the requirement's **category**, the **unit**, the **response** state, the **compliance** and the **source** page and lines. A requirement owned by two units appears twice: the schedule, commercial and staffing items go to the unit managers of both Crown and EP², so the 312 requirements make 337 rows. The ID links to the requirement in Traceability.",
-        "**Click a row** to open its detail panel: the unit's **Reason**, **Conditions**, **Workaround** and **Next steps** (*Not provided* when blank), the source page with the highlighted lines, a link to Traceability and the answer's history. Hovering a *Partially compliant* or *Non-compliant* badge shows the reason.",
+        "**Click a row** to open its detail panel: the unit's **Reason**, **Conditions**, **Proposed change** and **Next steps** (*Not provided* when blank), the source page with the highlighted lines, a link to Traceability and the answer's history. Hovering a *Partially compliant*, *Compliant with changes* or *Non-compliant* badge shows the reason.",
       ],
     },
     {
@@ -79,7 +84,7 @@ const chapter: TourChapter = {
       target: "cons-col-units",
       placement: "bottom",
       body: [
-        "The unit column gives the code (**BID** for the bid desk, **CROWN**, **EP2**) and the unit's name. A requirement nobody holds reads *not assigned*.",
+        "The unit column gives the code (**BID** for the bid desk, **CROWN**, **EP2**) and the unit's name. Under the unit name: the solution area of its proposed solution (no part number). A requirement nobody holds reads *not assigned*.",
       ],
     },
     {
@@ -100,7 +105,7 @@ const chapter: TourChapter = {
       target: "cons-xlsx",
       placement: "bottom",
       body: [
-        "The Excel workbook has two sheets. The **customer sheet** has a title block, a frozen header row, filters and wrapped text, and carries only **validated** answers: Fully, Partially or Non-compliant, with Reason, Conditions, Workaround and Next steps, the source page and lines and the offering type colours; everything else reads *Open*. The **Tracking sheet** is the internal view with the CSV columns. It is built deterministically, with no model call.",
+        "The Excel workbook has two sheets. The **customer sheet** has a title block, a frozen header row, filters and wrapped text, and carries only **validated** answers: Compliant, Partially compliant, Compliant with changes or Non-compliant, the proposed solution (unit · solution area), with Reason, Conditions, Proposed change and Next steps, the source page and lines and the type-of-offer colours; everything else reads *Open*. The **Tracking sheet** is the internal view with the CSV columns. It is built deterministically, with no model call.",
       ],
     },
     {
@@ -195,7 +200,7 @@ const chapter: TourChapter = {
       fallback: "A chapter without validated answers, or without a model answer, reads 'Not drafted: …'.",
       body: [
         "A chapter reads **Not drafted** with its reason in two cases: it has no validated answer yet (most chapters of the demo, where most requirements are still open), or the model service has no answer for this exact material (offline mock mode with an answer that was never frozen). In both cases the validated answers are still listed below as they are.",
-        "This is deliberate: a draft that invents content to fill a chapter would be worse than an empty one. Validate more answers in the Inbox and the chapter fills in.",
+        "This is deliberate: a draft that invents content to fill a chapter would be worse than an empty one. As more answers are validated in My work, the chapter fills in.",
       ],
     },
     {
@@ -207,7 +212,7 @@ const chapter: TourChapter = {
       skipIf: missing("outline-chapter-1"),
       fallback: "Chapters appear once the register has been read; each one covers one category group.",
       body: [
-        "The chapters are fixed by category, not by the model: **Technical response** (technical), **Compliance, legal and contract terms** (compliance, legal), **Commercial terms and schedule** (commercial, schedule), **Project team and staffing** (staffing), **Submission requirements** (submission) and **Other requirements**. A chapter appears only when the baseline has requirements in it; the heading shows *answered of total* for that chapter (the demo's technical chapter: 1 of 146).",
+        "The chapters are fixed by category, not by the model: **Technical response** (technical), **Compliance, legal and contract terms** (compliance, legal), **Commercial terms and schedule** (commercial, schedule), **Project team and staffing** (staffing), **Submission requirements** (submission) and **Other requirements**. A chapter appears only when the frozen version has requirements in it; the heading shows *answered of total* for that chapter (the demo's technical chapter: 1 of 146).",
         "Under the draft, each chapter has the same expandable blocks: the validated answers it rests on, what is still open, and related passages from both retrieval indexes.",
       ],
     },
@@ -218,9 +223,9 @@ const chapter: TourChapter = {
       target: "outline-exceptions",
       placement: "bottom",
       skipIf: missing("outline-exceptions"),
-      fallback: "A warning lists validated answers whose compliance is not 'Comply', when there are any.",
+      fallback: "A warning lists validated answers that are not Compliant, when there are any.",
       body: [
-        "An amber **Not full compliance** warning lists every validated answer in the chapter whose compliance is not *Comply*: *REQ-… Unit: Partially comply / Does not comply / Exception*. The drafting agent is told never to turn these into full compliance; the warning makes sure the writer does not either.",
+        "An amber **Not full compliance** warning lists every validated answer in the chapter that is not *Compliant*: *REQ-… Unit: Partially compliant / Compliant with changes / Non-compliant*, and *Capability gap: not offered* for a gap the bid desk recorded. The drafting agent is told never to turn these into full compliance; the warning makes sure the writer does not either.",
       ],
     },
     {
@@ -233,7 +238,7 @@ const chapter: TourChapter = {
       onEnter: openDetails("outline-answers"),
       fallback: "'Validated answers (N)' expands to the table of answers the chapter was drafted from.",
       body: [
-        "The material behind the draft: one row per validated answer with the **Requirement** ID and its source, the **Unit** and the product it named, the **Compliance** badge and the **Answer** text as the unit wrote it. In the demo: REQ-0001-0885 (p. 55, lines 16-62), Crown Technical Systems, Comply, *Two-section 15 kV arc-resistant metal-clad lineup offered.*",
+        "The material behind the draft: one row per validated answer with the **Requirement** ID and its source, the **Unit** and the solution area it named, the **Compliance** badge and the **Answer** text as the unit wrote it. In the demo: REQ-0001-0885 (p. 55, lines 16-62), Crown Technical Systems, Compliant, *Two-section 15 kV arc-resistant metal-clad lineup offered.*",
         "The last column nominates a good answer as a **reviewed example** so later bids can reuse it; the unit's reviewer approves it in Knowledge review in My work.",
       ],
     },
@@ -286,7 +291,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       fallback: "'Back to Compliance matrix' returns to the matrix.",
       body: [
-        "The loop is: the unit manager validates answers in My work → the Compliance matrix shows what is still open → the outline drafts what is validated → the Markdown goes into the proposal. When a customer issues an addendum, the Changes page (chapter 11) revises the baseline and returns the affected answers, and both pages here follow automatically.",
+        "The loop is: the unit manager validates answers in My work → the Compliance matrix shows what is still open → the outline drafts what is validated → the Markdown goes into the proposal. When a customer issues an addendum, the Changes page (chapter 11) revises the frozen requirements and returns the affected answers, and both pages here follow automatically.",
         "Next: the Activity log of this bid, then the Product catalog.",
       ],
     },

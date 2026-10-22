@@ -2,16 +2,16 @@
 // Portfolio: every bid with unit progress.  Owner: Janvia.
 import Link from "next/link";
 import { useApi } from "@/lib/api";
-import type { Opportunity, Progress } from "@/lib/types";
+import { bidStatus, type Opportunity, type Progress } from "@/lib/types";
 import PageHead from "@/components/shell/PageHead";
 import { Alert, EmptyState, Skeleton, StatusBadge } from "@/components/ui";
 
-type Item = { opp: Opportunity; requirements: number; progress: Progress };
+type Item = { opp: Opportunity; requirements: number; progress: Progress; decision: "go" | "no_go" | null }; // decision: the recorded go/no-go
 
 // One line per unit: link to its work package, the count, and a two-segment bar (validated, then awaiting validation).
 function UnitProgress({ progress }: { progress: Progress }) {
   const units = Object.entries(progress);
-  if (units.length === 0) return <span className="muted">not dispatched</span>;
+  if (units.length === 0) return <span className="muted">Not sent to units</span>;
   return (
     <div className="unit-progress">
       {units.map(([bu, p]) => {
@@ -37,9 +37,7 @@ export default function PortfolioPage() {
   const { data, error } = useApi<Item[]>("/api/portfolio");
   return (
     <div className="content">
-      <PageHead title="Bids" help="Every bid in progress, with how far each business unit has answered.">
-        <Link className="button" href="/opportunities/new" data-tour="portfolio-new">New bid</Link>
-      </PageHead>
+      <PageHead title="Bids" help="Every bid in progress, with how far each business unit has answered." />
       <Alert kind="error">{error}</Alert>
       {!data && !error && <Skeleton lines={4} />}
       {data?.length === 0 && (
@@ -50,12 +48,12 @@ export default function PortfolioPage() {
         <table className="portfolio" data-tour="portfolio-table">
           <thead><tr><th data-tour="portfolio-col-id">ID</th><th data-tour="portfolio-col-title">Title</th><th data-tour="portfolio-col-customer">Customer</th><th data-tour="portfolio-col-status">Status</th><th className="num" data-tour="portfolio-col-requirements">Requirements</th><th data-tour="portfolio-col-units">Unit responses (validated / total)</th><th scope="col" aria-label="Open" /></tr></thead>
           <tbody>
-            {data.map(({ opp, requirements, progress }) => (
+            {data.map(({ opp, requirements, progress, decision }) => (
               <tr key={opp.id} data-tour={`portfolio-row-${opp.id}`}>
                 <td className="mono"><Link href={`/opportunities/${opp.id}`}>{opp.id}</Link></td>
                 <td><Link href={`/opportunities/${opp.id}/trace`} className="portfolio-title">{opp.title}</Link></td>
                 <td>{opp.customer || <span className="muted">not set</span>}</td>
-                <td data-tour={`portfolio-status-${opp.id}`}><StatusBadge status={opp.status} kind="opp" /></td><td className="num" data-tour={`portfolio-reqs-${opp.id}`}>{requirements}</td>
+                <td data-tour={`portfolio-status-${opp.id}`}><StatusBadge kind="opp" {...bidStatus(opp.status, decision)} /></td><td className="num" data-tour={`portfolio-reqs-${opp.id}`}>{requirements}</td>
                 <td data-tour={`portfolio-units-${opp.id}`}><UnitProgress progress={progress} /></td>
                 <td><Link className="button secondary sm" href={`/opportunities/${opp.id}/trace`} aria-label={`Open ${opp.id}`} data-tour={`portfolio-open-${opp.id}`}>Open</Link></td>
               </tr>

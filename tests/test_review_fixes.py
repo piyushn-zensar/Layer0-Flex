@@ -112,7 +112,7 @@ def test_a_returned_capability_gap_survives_the_next_dispatch(opp):
     # depends on the knowledge earlier tests approved
     req = next(r for r in client.get(f"/api/bids/{opp}/requirements").json()["requirements"]
                if r["category"] == "technical" and r["status"] == "approved" and not r.get("parent_id"))
-    assert client.post(f"/api/bids/{opp}/requirements/{req['req_id']}/match", json={"units": []}, headers=bm).status_code == 200
+    assert client.post(f"/api/bids/{opp}/requirements/{req['req_id']}/route", json={"units": []}, headers=bm).status_code == 200
     gap = next(o for o in client.get(f"/api/bids/{opp}/needs-owner").json() if o["req_id"] == req["req_id"])
     client.post(f"/api/bids/{opp}/requirements/{gap['req_id']}/capability-gap", json={"reason": "no unit"}, headers=bm)
     a = _held(client, opp, lambda r, a: r["req"]["req_id"] == gap["req_id"] and a["bu"] == "BID")

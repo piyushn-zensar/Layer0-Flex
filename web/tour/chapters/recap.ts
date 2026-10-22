@@ -17,8 +17,8 @@ const chapter: TourChapter = {
       target: "stepper",
       placement: "bottom",
       body: [
-        "One chain runs through everything you saw. The **RFP** is read into requirements, each with a quote anchored to a page and lines, and the register is **frozen automatically** as baseline 1. In **Requirement Traceability** the original page, the register and the matcher's product proposals sit side by side, in panes you can rearrange and open in windows of their own. The **Assessment** chooses the participating units, routes every requirement and sends the work.",
-        "Units answer their checklist in **My work**; the unit manager validates each answer, and the bid manager may return one with a question. The **Compliance matrix** collects the validated answers against every requirement, so the last check, that nothing from the RFP is unanswered, is a table rather than a reading exercise. The **Bid decision** records go or no-go on that evidence. Each later object keeps the ID of the earlier one, which is why the trace holds in both directions.",
+        "One chain runs through everything you saw. The **RFP** is read into requirements, each with a quote anchored to a page and lines, and the register is **frozen automatically** as version 1. In **Requirement Traceability** the original page, the register and the matcher's proposed solutions sit side by side, in panes you can rearrange and open in windows of their own. The **Assessment Summary** is the bid manager's first stage: three measures, the participating units, the routing of every requirement, sending the work and the teams' delivery feasibility.",
+        "Units answer their checklist in **My work** with one of four outcomes; the unit manager validates the technical answers, the bid manager the unit managers' own answers, and the bid manager may return any answer with a question. The **Compliance matrix** collects the validated answers against every requirement, so the last check, that nothing from the RFP is unanswered, is a table rather than a reading exercise. The **Bid decision** shows the reviewed outcomes, takes the compliance position and records go or no-go on that evidence. Each later object keeps the ID of the earlier one, which is why the trace holds in both directions.",
       ],
       fallback: "The stepper under the bid title is the map of this chain.",
     },
@@ -26,8 +26,8 @@ const chapter: TourChapter = {
       id: "recap-changes",
       title: "Change handling keeps the chain intact",
       body: [
-        "An addendum does not restart the work. The change agent compares it with the **current baseline** and proposes added, modified and removed requirements with evidence; people confirm item by item, and applying the set creates **baseline 2** while the earlier wording stays in each requirement's history and the IDs stay stable, so matches, assignments and answers keep pointing at the right rows.",
-        "Removed requirements leave Requirement Traceability but keep their history in pane 2; modified ones show \"Revised in baseline n\" where they are used, so a unit knows to look again.",
+        "An addendum does not restart the work. The change agent compares it with the **current frozen version** and proposes added, modified and removed requirements with evidence; people confirm item by item, and applying the set creates **frozen version 2** while the earlier wording stays in each requirement's history and the IDs stay stable, so matches, assignments and answers keep pointing at the right rows.",
+        "Removed requirements leave Requirement Traceability but keep their history in pane 2; modified ones show \"Revised in frozen version n\" where they are used, so a unit knows to look again.",
       ],
     },
     {
@@ -50,8 +50,8 @@ const chapter: TourChapter = {
       id: "recap-explore",
       title: "Exploring on your own",
       body: [
-        "Rearrange the panes of **Requirement Traceability** and open one in a new window; filter by category or response and share the address. Sign in as a unit's designer / engineer to see My work from their side and what the server refuses to that role. Open the **Logan City** bid (OPP-0002) to see a second RFP read from its own frozen answers. Look at the **Sources** and **Published catalog** tabs of the Product catalog.",
-        "To put the demo data back to its starting state, close the app and run `reset-demo.cmd`; it reseeds both bids from the frozen answers. The **Walkthrough** button lets you reopen any chapter later.",
+        "Rearrange the panes of **Requirement Traceability** and open one in a new window; filter by category or response and share the address. Sign in as a unit's designer / engineer to see My work from their side and what the server refuses to that role. Open **RC-1 Grid-to-Chip** (OPP-0003) to see a cloud and power bid at the end of the workflow: the three measures filled in, the four outcomes, the teams' delivery factors, the compliance position and the go recorded, with the Assessment Summary forms folded behind *Change…*. Open the **Logan City** bid (OPP-0002) to see another RFP read from its own frozen answers. Look at the **Sources** and **Published catalog** tabs of the Product catalog.",
+        "To put the demo data back to its starting state, close the app and run `reset-demo.cmd`; it reseeds the bids from the frozen answers and runs the RC-1 workflow again. The **Walkthrough** button lets you reopen any chapter later.",
       ],
     },
     {

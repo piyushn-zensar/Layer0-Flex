@@ -7,20 +7,30 @@ Public contract:
     compliance_matrix(db, opp_id) -> dict      {"rows": [...], "total", "answered", "blocking": [req_id]} for the Compliance
                                                matrix screen (J-11): one row per requirement and assignment (a requirement
                                                nobody holds has one row with unit None); see its docstring for the row fields
-    compliance_matrix_csv(db, opp_id) -> str   one row per assignment, columns as in COLUMNS (compliance reads Fully /
-                                               Partially / Non-compliant; Reason, Conditions, Workaround and Next Steps come
+    compliance_matrix_csv(db, opp_id) -> str   one row per assignment, then one row per approved part of a group
+                                               (Requirement reads "Part of <group>: <text>", the answer cells blank,
+                                               as the .xlsx sub-rows), columns as in COLUMNS (Proposed solution reads
+                                               "unit · solution area", never a catalog id (C-40); compliance reads Compliant /
+                                               Partially compliant / Compliant with changes / Non-compliant; Reason,
+                                               Conditions, Proposed change and Next Steps come
                                                last and are blank until A-18); starts with a UTF-8 byte
                                                order mark and its cells are safe to open in Excel (no formulas)
     compliance_matrix_xlsx(db, opp_id) -> bytes  Excel workbook: "Compliance matrix" for the customer (validated answers,
-                                               RFP order, sub-requirements listed) and "Tracking" (the CSV's columns)
+                                               RFP order, sub-requirements listed, customer-facing unit names, the bid
+                                               desk without a prefix, no Next Steps) and "Tracking" (the CSV's columns)
     response_outline(db, opp_id) -> dict       the response-outline agent's draft per chapter (P-10), with the validated
-                                               answers it rests on, what is still open, and retrieval references
+                                               answers it rests on, what is still open, and retrieval references; the
+                                               draft's text carries no answer numbers ("(cites: [1])", "answer [2]");
+                                               chapter "exceptions": the answers not fully compliant, each with
+                                               capability_gap and label ("Capability gap: not offered" or
+                                               "<unit>: <compliance>")
     response_outline_md(db, opp_id) -> str     the same outline as Markdown, for the bid manager to edit
 Every export gives a requirement's source as "p. N, lines a-b"; one anchored in a change document (an addendum, P-11)
 names that document first: "<file name>, p. N, lines a-b".
 """
 import csv
 import io
+import re
 
 from sqlalchemy.orm import Session
 
@@ -50,8 +60,7 @@ def coverage(db: Session, opp_id: str) -> dict:
 
 
 # What the screen shows for a compliance value (the same words as web/lib/types.ts complianceLabel).
-COMPLIANCE_LABELS = {"met": "Fully compliant", "partial": "Partially compliant", "not_met": "Non-compliant",
-                     "exception": "Exception (earlier value)"}
+COMPLIANCE_LABELS = workpackages.COMPLIANCE_LABELS
 # Extended response fields (A-18 adds them to the assignment): read safely, so the screen works before and after.
 EXTENDED = ("reason", "conditions", "workaround", "next_steps")
 
@@ -84,23 +93,27 @@ def _response_fields(a) -> dict:
 def compliance_matrix(db: Session, opp_id: str) -> dict:
     """Rows for the Compliance matrix screen: one per requirement and assignment, in RFP order, as plain JSON values.
     Row: req_id, requirement, quote, category, state (answered | pending | not_assigned), source (label), document_id,
-    page, line_start, line_end, spans [{document_id, page, line_start, line_end, bboxes}] (the highlight boxes), unit, unit_name,
-    assignments (how many units hold it), product, offering_type, and the unit's answer: assignment_id, status,
+    page, line_start, line_end, spans [{document_id, page, line_start, line_end, bboxes}] (the highlight boxes), parts
+    [{req_id, text}] (a group's approved sub-requirements, current text; [] otherwise), unit, unit_name,
+    assignments (how many units hold it), product (the family id), solution (C-40: {unit, area, examples}, None for the
+    bid desk or no proposed solution), offering_type, and the unit's answer: assignment_id, status,
     compliance, compliance_label, response, responded_by, validated_by, validation_note, reason, conditions,
     workaround, next_steps. The last four are None until A-18 stores them. The history count waits for A-21."""
     cov = coverage(db, opp_id)
     source = _sources(db, opp_id)
     boxes = trace.highlights(db, opp_id)
+    parts = requirements.parts(db, opp_id)
     rows = []
     for r in cov["rows"]:
         req, m = r["req"], r["match"]
         base = {"req_id": req.req_id, "requirement": req.text, "quote": req.quote, "category": req.category,
                 "state": r["state"], "source": source(req), "document_id": req.document_id, "page": req.page,
                 "line_start": req.line_start, "line_end": req.line_end, "spans": _spans(req, boxes.get(req.req_id)),
-                "assignments": len(r["assignments"])}
+                "parts": parts.get(req.req_id, []), "assignments": len(r["assignments"])}
         for a in r["assignments"] or [None]:
             rows.append(base | {"unit": a.bu if a else None, "unit_name": _unit_name(a.bu) if a else "",
                                 "product": (a.product_ref if a else None) or (m.product_id if m else None) or None,
+                                "solution": catalog.solution(a.bu, ref) if a and a.bu != "BID" and (ref := workpackages.solution_ref(a, m)) else None,
                                 "offering_type": _offering(m, a.bu if a else None) or None} | _response_fields(a))
     return {"rows": rows, "total": cov["total"], "answered": cov["answered"], "blocking": cov["blocking"]}
 
@@ -120,8 +133,8 @@ def _offering(m, bu: str | None) -> str:
 
 
 # The last two columns were added on 9 Oct 2026 (traceability): they are appended so no earlier column moves.
-COLUMNS = ["Requirement ID", "Source", "Category", "Requirement", "Quote", "Business unit", "Product",
-           "Offering type", "Compliance", "Response", "Validated by", "State", "Assignment status", "Responded by",
+COLUMNS = ["Requirement ID", "Source", "Category", "Requirement", "Quote", "Business unit", "Proposed solution",
+           "Type of offer", "Compliance", "Response", "Validated by", "State", "Assignment status", "Responded by",
            *(name for _, name in excel.EXTENDED)]  # J-11: appended; blank until A-18 stores them
 BOM = "\ufeff"  # Excel opens a UTF-8 CSV as UTF-8 only when it starts with a byte order mark (else it assumes ANSI)
 
@@ -138,7 +151,7 @@ def _row(req, m, a, state: str, source: str | None = None) -> list[str]:
     """One matrix row; `a` is the assignment (None for a requirement that is not assigned), `m` its match."""
     return [_cell(v) for v in (
         req.req_id, source or req.source, req.category, req.text, req.quote,
-        a.bu if a else "", (a.product_ref if a else None) or (m.product_id if m else ""),
+        a.bu if a else "", _solution_text(a.bu, workpackages.solution_ref(a, m)) if a else (_solution_text(m.bu, m.product_id) if m else ""),
         _offering(m, a.bu if a else None), excel.EXPORT_WORDS.get(a.compliance, a.compliance) if a else "", a.response if a else "",
         a.validated_by if a else "", state, a.status if a else "", a.responded_by if a else "",
         *(getattr(a, field, None) for field, _ in excel.EXTENDED))]
@@ -150,9 +163,14 @@ def compliance_matrix_csv(db: Session, opp_id: str) -> str:
     w = csv.writer(out)
     w.writerow(COLUMNS)
     source = _sources(db, opp_id)
+    parts = requirements.parts(db, opp_id)
     for row in coverage(db, opp_id)["rows"]:
+        req = row["req"]
         for a in row["assignments"] or [None]:
-            w.writerow(_row(row["req"], row["match"], a, row["state"], source(row["req"])))
+            w.writerow(_row(req, row["match"], a, row["state"], source(req)))
+        for k in parts.get(req.req_id, []):  # the group's parts, as the .xlsx sub-rows: the group's answer applies
+            w.writerow([_cell(v) for v in (k["req_id"], "", req.category, f"Part of {req.req_id}: {k['text']}", "", "", "", "",
+                                           "", "", "", row["state"], "", "")] + [""] * len(excel.EXTENDED))
     return out.getvalue()
 
 
@@ -166,7 +184,9 @@ def compliance_matrix_xlsx(db: Session, opp_id: str) -> bytes:
     source = _sources(db, opp_id)
     tracking = [_row(r["req"], r["match"], a, r["state"], source(r["req"]))
                 for r in cov["rows"] for a in r["assignments"] or [None]]
-    return excel.build(opp.title, opp.customer, cov["rows"], kids, _unit_name, COLUMNS, tracking, source)
+    matches = {r["req"].req_id: r["match"] for r in cov["rows"]}
+    return excel.build(opp.title, opp.customer, cov["rows"], kids, _customer_unit, COLUMNS, tracking, source,
+                       solution=lambda a: _solution_text(a.bu, workpackages.solution_ref(a, matches.get(a.req_id)), _customer_unit))
 
 
 # The response outline (P-10) follows a proposal, not the RFP's own headings (about 170 on Syracuse): one chapter
@@ -185,6 +205,19 @@ def _unit_name(code: str) -> str:
     return "Bid desk" if code == "BID" else ((catalog.unit(code) or {}).get("name") or code)
 
 
+def _customer_unit(code: str) -> str:
+    """The unit's name in what goes to the customer (business_units.json customer_name, else its name); "" for the
+    bid desk, whose statements are the bid's own."""
+    u = catalog.unit(code) or {}
+    return "" if code == "BID" else (u.get("customer_name") or u.get("name") or code)
+
+
+def _solution_text(bu: str | None, product_id: str | None, name=_unit_name) -> str:
+    """C-40, the exports: "unit · solution area" (the catalog family's name, never its id); "" without a proposed solution."""
+    area = catalog.solution(bu, product_id)["area"] if bu and bu != "BID" and product_id else None
+    return f"{name(bu)} · {area}" if area else ""
+
+
 def _product_name(product_id: str | None) -> str:
     return ((catalog.product(product_id) or {}).get("name") or product_id or "") if product_id else ""
 
@@ -196,8 +229,11 @@ def _answers(rows: list[dict], source) -> list[dict]:
         req = r["req"]
         for a in r["assignments"]:
             if a.status == "validated" and (a.response or "").strip():
+                gap = a.bu == workpackages.BID_DESK and a.compliance == "not_met" and req.category in matching.PRODUCT_CATEGORIES
                 out.append({"assignment_id": a.id, "req_id": req.req_id, "source": source(req), "bu": a.bu, "unit": _unit_name(a.bu),
-                            "compliance": excel.COMPLIANCE_WORDS.get(a.compliance, a.compliance or ""),
+                            "capability_gap": gap,  # a product requirement no unit offers (record_gap), not the bid desk's own answer
+                            "compliance": excel.COMPLIANCE_WORDS.get(a.compliance, a.compliance or ""),  # the prompt's words
+                            "outcome": a.compliance,  # the stored value: screens show their own labels
                             "product": _product_name(a.product_ref), "requirement": req.text, "wording": req.quote or "",
                             "response": a.response.strip()})
     return out
@@ -218,10 +254,24 @@ def _draft(db: Session, opp_id: str, title: str, answers: list[dict]) -> dict:
                                   opp_id, semantic=False) if answers else []
     d = agent.draft(title, [{k: a[k] for k in ("unit", "compliance", "product", "requirement", "wording", "response")}
                             for a in answers], _past(answers), [f"{e['citation']}: {e['text']}" for e in evidence])
-    paragraphs = [{"text": p["text"], "sources": list(dict.fromkeys(answers[c - 1]["req_id"] for c in p["cites"])),
+    paragraphs = [{"text": _plain(p["text"], answers), "sources": list(dict.fromkeys(answers[c - 1]["req_id"] for c in p["cites"])),
                    "evidence": [evidence[e - 1]["citation"] for e in p.get("evidence", [])]}
                   for p in d["paragraphs"]]
-    return {k: v for k, v in d.items() if k != "paragraphs"} | {"paragraphs": paragraphs}
+    return {k: v for k, v in d.items() if k not in ("paragraphs", "gaps")} | {
+        "paragraphs": paragraphs, "gaps": [_plain(g, answers) for g in d["gaps"]]}
+
+
+CITES = re.compile(r"\s*\(\s*cites?:?\s*\[\d+\](?:\s*,\s*\[\d+\])*\s*\)")  # "(cites: [1], [2])": the sources show it
+ANSWER_REF = re.compile(r"\s*\b(?:as per|per|see|in) answers? \[(\d+)\]")   # "as per answer [2]" -> "(REQ-...)"
+
+
+def _plain(text: str, answers: list[dict]) -> str:
+    """The model sometimes writes the prompt's answer numbers into its text: drop "(cites: [n], ...)" (each paragraph
+    lists its sources) and turn "as per answer [n]" into the requirement ID, so no bare number reaches the bid manager."""
+    def ref(m) -> str:
+        n = int(m.group(1))
+        return f" ({answers[n - 1]['req_id']})" if 1 <= n <= len(answers) else ""
+    return ANSWER_REF.sub(ref, CITES.sub("", text)).strip()
 
 
 def _references(db: Session, opp_id: str, title: str, rows: list[dict]) -> dict:
@@ -236,6 +286,13 @@ def _references(db: Session, opp_id: str, title: str, rows: list[dict]) -> dict:
                     for p in rfp["passages"]],
             "past": [{"id": h["id"], "bu": h["bu"], "text": h["text"][:300]} for h in past],
             "mode": {"rfp": rfp["mode"], "knowledge": catalog.index_mode()}}
+
+
+def _gaps_point(answers: list[dict]) -> str | None:
+    """A to-add point for a draft whose answers include capability gaps (record_gap): the drafting agent
+    may leave them out, so the bid manager is reminded in plain words, never from a model."""
+    ids = list(dict.fromkeys(a["req_id"] for a in answers if a["capability_gap"]))
+    return f"State the {len(ids)} capability gap(s) as not offered: {', '.join(ids)}." if ids else None
 
 
 def response_outline(db: Session, opp_id: str) -> dict:
@@ -254,18 +311,27 @@ def response_outline(db: Session, opp_id: str) -> dict:
             continue
         answers = _answers(rows, source)
         everything += answers
+        draft = _draft(db, opp_id, title, answers)
+        if (point := _gaps_point(answers)) and draft.get("drafted"):
+            draft["gaps"] = draft["gaps"] + [point]
         chapters.append({
             "id": cid, "title": title, "total": len(rows), "answered": sum(r["state"] == "answered" for r in rows),
-            "draft": _draft(db, opp_id, title, answers), "material": answers,
-            "exceptions": [a for a in answers if a["compliance"] != "Comply"],
+            "draft": draft, "material": answers,
+            "exceptions": [a | {"label": "Capability gap: not offered" if a["capability_gap"] else
+                                f"{a['unit']}: {excel.EXPORT_WORDS.get(a['outcome'], a['outcome'])}"}
+                           for a in answers if a["compliance"] != "Comply"],  # "Not full compliance", one entry per answer
             "open": [{"req_id": r["req"].req_id, "source": source(r["req"]), "text": r["req"].text, "state": r["state"]}
                      for r in rows if r["state"] != "answered"],
             "references": _references(db, opp_id, title, rows)})
     order = {r["req"].req_id: i for i, r in enumerate(cov["rows"])}
     first = sorted(everything, key=lambda a: order[a["req_id"]])[:SUMMARY_ANSWERS]
+    summary = _draft(db, opp_id, "Executive summary", first)
+    if (point := _gaps_point(everything)) and summary.get("drafted"):
+        summary["gaps"] = summary["gaps"] + [f"Summarise the scope bid and name the gaps not offered. {point}"]
     return {"opportunity": {"id": opp.id, "title": opp.title, "customer": opp.customer},
             "total": cov["total"], "answered": cov["answered"], "validated_answers": len(everything),
-            "summary": _draft(db, opp_id, "Executive summary", first), "chapters": chapters,
+            "capability_gaps": sum(a["capability_gap"] for a in everything),
+            "summary": summary, "chapters": chapters,
             "note": "A first draft for the bid manager to edit, written only from validated answers; every paragraph "
                     "cites its requirements. Writing the final response stays a human task."}
 
@@ -299,9 +365,9 @@ def response_outline_md(db: Session, opp_id: str) -> str:
 if __name__ == "__main__":  # self-check: python -m app.modules.consolidation.service
     assert [_cell(v) for v in ("=1+1", "+cmd", "-2", "@SUM(A1)", "ok", None, 3)] == ["'=1+1", "'+cmd", "'-2", "'@SUM(A1)", "ok", "", "3"]
     from types import SimpleNamespace as NS
-    assert COLUMNS[:12] == ["Requirement ID", "Source", "Category", "Requirement", "Quote", "Business unit", "Product",
-                            "Offering type", "Compliance", "Response", "Validated by", "State"]  # earlier positions stay put
-    assert COLUMNS[12:14] == ["Assignment status", "Responded by"] and COLUMNS[14:] == ["Reason", "Conditions", "Workaround", "Next Steps"] and BOM.encode("utf-8") == b"\xef\xbb\xbf"
+    assert COLUMNS[:12] == ["Requirement ID", "Source", "Category", "Requirement", "Quote", "Business unit", "Proposed solution",
+                            "Type of offer", "Compliance", "Response", "Validated by", "State"]  # earlier positions stay put
+    assert COLUMNS[12:14] == ["Assignment status", "Responded by"] and COLUMNS[14:] == ["Reason", "Conditions", "Proposed change", "Next Steps"] and BOM.encode("utf-8") == b"\xef\xbb\xbf"
     req = NS(req_id="REQ-0001-0001", source="p. 55, line 16", category="technical", text="15 kV \u2013 EP\u00b2", quote="\u201cx\u201d")
     m = NS(product_id="EP2-RPP", offering_type="ETO", units=[])
     a = NS(bu="EP2", product_ref=None, compliance="met", response="=cmd", validated_by="Bid Manager", status="submitted",
@@ -313,4 +379,10 @@ if __name__ == "__main__":  # self-check: python -m app.modules.consolidation.se
     assert len(none) == len(COLUMNS) and none[-2:] == ["", ""]
     named = _row(req, m, a, "pending", "addendum-1.pdf, p. 1, line 3")  # anchored in an addendum (P-11)
     assert named[COLUMNS.index("Source")] == "addendum-1.pdf, p. 1, line 3" and row[1] == "p. 55, line 16"
+    crown = NS(bu="CROWN", product_ref="CROWN-ARMV", compliance="met", response="", validated_by="", status="validated",
+               responded_by="")
+    assert _row(req, m, crown, "answered")[6] == "Crown Technical Systems · Arc-resistant metal-clad MV switchgear"  # C-40
+    cited = [{"req_id": "REQ-0003-0001"}, {"req_id": "REQ-0003-0002"}]
+    assert _plain("It is met (cites: [1], [2]).", cited) == "It is met."
+    assert _plain("Verify the EMC class as per answer [2].", cited) == "Verify the EMC class (REQ-0003-0002)."
     print("consolidation ok")

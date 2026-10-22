@@ -11,7 +11,7 @@ import { STATUS_EVENT } from "@/components/shell/OppSteps";
 import { Alert, Busy, EmptyState, Skeleton, useToast } from "@/components/ui";
 import ChangeSetCard from "@/components/changes/ChangeSetCard";
 
-const HELP = "Addenda, Q&A answers and change requests are read like the RFP and compared with the frozen baseline. A person confirms each change; applying creates new requirement versions and returns the affected answers to the units.";
+const HELP = "Addenda, Q&A answers and change requests are read like the RFP and compared with the frozen requirements. A person confirms each change; applying creates new requirement versions and returns the affected answers to the units.";
 
 export default function ChangesPage() {
   const { id } = useParams<{ id: string }>();
@@ -41,7 +41,7 @@ export default function ChangesPage() {
   return (
     <>
       {head}
-      {data.baseline ? <p data-tour="chg-baseline">Current baseline <strong>{data.baseline.number}</strong>: {data.baseline.count} requirements.</p>
+      {data.baseline ? <p data-tour="chg-baseline">Current frozen version <strong>{data.baseline.number}</strong>: {data.baseline.count} requirements.</p>
         : <div data-tour="chg-no-baseline"><Alert kind="warn">The register is not frozen yet: it is frozen when the RFP has been read on the <Link href={`/opportunities/${id}`}>RFP</Link> step; change documents are read against it.</Alert></div>}
       {data.baseline && (
         <form className="card chg-upload" onSubmit={upload} aria-busy={!!busy} data-tour="chg-upload">
@@ -55,12 +55,12 @@ export default function ChangesPage() {
               {(["addendum", "qa", "change"] as const).map((v) => <option key={v} value={v}>{DOC_TYPES[v]}</option>)}
             </select>
             <button disabled={!!busy || inReview || !bm} title={bm ? "" : BID_MANAGER_ONLY} data-tour="chg-upload-button">Read the change document</button>
-            {busy ? <Busy label={busy} /> : <span id="chg-file-hint" className="muted">{inReview ? "Apply or discard the change set in review first." : "Read against the current baseline."}</span>}
+            {busy ? <Busy label={busy} /> : <span id="chg-file-hint" className="muted">{inReview ? "Apply or discard the change set in review first." : "Read against the current frozen version."}</span>}
           </div>
           <Alert kind="error" onClose={() => setMessage(undefined)}>{message}</Alert>
         </form>)}
       {data.sets.length === 0 ? (
-        <div data-tour="chg-empty"><EmptyState title="No change documents read yet" hint={data.baseline ? "Read an addendum, Q&A answers or a change request above; each change statement is compared with the frozen baseline." : "Read the RFP first: its register is frozen when it is read."} /></div>
+        <div data-tour="chg-empty"><EmptyState title="No change documents read yet" hint={data.baseline ? "Read an addendum, Q&A answers or a change request above; each change statement is compared with the frozen requirements." : "Read the RFP first: its register is frozen when it is read."} /></div>
       ) : data.sets.map((s, i) => <ChangeSetCard key={s.id} set={s} oppId={id} threshold={data.drastic_threshold} onChanged={changed} tour={i === 0} />)}
     </>
   );

@@ -44,7 +44,7 @@ def data_sheet(db: Session, opp_id: str) -> list[dict]:
 
 def deviations(db: Session, opp_id: str) -> dict:
     cfg = catalog.portfolio()
-    in_play = sorted({u["product_id"] for m in matching.for_opportunity(db, opp_id).values() for u in (m.units or [])})
+    in_play = sorted({u["product_id"] for m in matching.for_opportunity(db, opp_id).values() for u in (m.units or []) if u["product_id"]})  # routed: no solution yet
     sheet = data_sheet(db, opp_id)
     out, checked = [], 0
     for pid in in_play:
@@ -64,7 +64,7 @@ def deviations(db: Session, opp_id: str) -> dict:
                             "standard": f"{std} {f['unit']}", "severity": f["severity"],
                             "source": f"p. {row['page']}, data sheet row {row['row']}"})
     return {"rows": out, "checked": checked, "products": in_play,
-            "placeholder": True, "note": "Standard ratings are PLACEHOLDERS ported from the v1.1 demo; to be confirmed."}
+            "placeholder": True, "note": "Illustrative standard ratings for the demo; to be confirmed with each unit."}
 
 
 def workload(db: Session, opp_id: str) -> dict:
@@ -88,7 +88,7 @@ def workload(db: Session, opp_id: str) -> dict:
                      "other_opportunities": others, "total": total, "capacity": cap,
                      "over": cap is not None and total > cap})
     return {"rows": rows, "placeholder": True,
-            "note": "Capacity is a PLACEHOLDER count of open work items per unit; to be confirmed with each unit."}
+            "note": "Illustrative capacity (open work items per unit) for the demo; to be confirmed with each unit."}
 
 
 if __name__ == "__main__":  # self-check: python -m app.modules.decisions.portfolio

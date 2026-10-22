@@ -10,7 +10,7 @@ import { Fragment, useMemo, useState } from "react";
 import LinePicker from "@/components/requirements/LinePicker"; // P-15
 import { Alert, Busy, EmptyState, Skeleton, StatusBadge, useToast } from "@/components/ui";
 import { errorMessage, isReader, post, useApi, useMe } from "@/lib/api";
-import { coverageLabel, originLabel, snapshotName, sourceLabel, statusLabel, type Baseline, type Coverage, type CorrectionResult, type Requirement, type RequirementException, type RequirementHistory, type Snapshot, type SnapshotDetail } from "@/lib/types";
+import { TERMS, categoryLabel, coverageLabel, originLabel, readSummary, snapshotName, sourceLabel, statusLabel, type Baseline, type Coverage, type CorrectionResult, type Requirement, type RequirementException, type RequirementHistory, type Snapshot, type SnapshotDetail, formatDate } from "@/lib/types";
 
 const CATEGORIES = ["technical", "compliance", "commercial", "schedule", "submission", "legal", "staffing"];
 const FILTERS = {
@@ -84,7 +84,7 @@ export default function Register({ bidId: id, onChanged, rowProps, extra, order 
   };
   const review = (reqId: string, body: object, msg?: string, at?: string) => act(post(`/api/requirements/${reqId}/review`, body), msg, at);
   // After publish every change is a correction: POST /corrections with a required reason; each makes the next baseline (P-23).
-  const saved = (res: CorrectionResult) => `Correction saved: baseline ${res.baseline}${res.returned ? `; ${res.returned} answer${res.returned === 1 ? "" : "s"} returned to their units` : ""}.${res.note ? ` ${res.note}` : ""}`;
+  const saved = (res: CorrectionResult) => `Correction saved: frozen version ${res.baseline}${res.returned ? `; ${res.returned} answer${res.returned === 1 ? "" : "s"} returned to their units` : ""}.${res.note ? ` ${res.note}` : ""}`;
   const correct = (body: object, at?: string) => act(post<CorrectionResult>(`/api/bids/${id}/corrections`, body), saved, at);
   const merge = (text: string, reason: string) => frozen ? correct({ kind: "merge", reason, req_ids: [...selected], text }, "merge")
     : act(post(`/api/bids/${id}/requirements/merge`, { req_ids: [...selected], text }), `${selected.size} line items merged into one.`, "merge");
@@ -99,7 +99,7 @@ export default function Register({ bidId: id, onChanged, rowProps, extra, order 
   const toggle = (reqId: string) => setSelected((s) => flip(s, reqId));
   const openForm = (next?: { id: string; mode: "edit" | "split" | "exclude" }) => { setFormError(undefined); setEditing(next); };
   const errorAt = (at: string) => formError?.at === at && <p className="warn form-error" role="alert">{formError.text}</p>;
-  const cols = 6;
+  const cols = 3; // select, ID (category, source), requirement (status, history, actions under it): fits a pane (21 Oct review)
   const reasonField = frozen && <label>Reason for the correction <input name="reason" data-tour="req-reason" required maxLength={500} /></label>;
   const latest = snapshots?.[0];
   const exceptions = data.exceptions ?? exc?.length ?? 0;
@@ -126,19 +126,19 @@ export default function Register({ bidId: id, onChanged, rowProps, extra, order 
         <tr {...linked} data-tour={lead ? "req-row-first" : child ? first("req-row-child") : undefined}
           className={`${INACTIVE.has(r.status) ? "inactive" : ""} ${child ? "child" : ""} ${group ? "group" : ""} ${linked.className ?? ""}`}>
           <td>{active && !child && <input type="checkbox" data-tour={at("req-row-check")} aria-label={`Select ${r.req_id}`} checked={selected.has(r.req_id)} onChange={() => toggle(r.req_id)} />}</td>
-          <td><div className="mono" data-tour={at("req-row-id")}>{r.req_id}</div><span className="tag" data-tour={at("req-row-category")}>{r.category}</span>
-            {(r.origin === "correction" || r.origin === "customer_change") && <span className="tag origin" data-tour={first("req-origin")} title="How this version came in">{originLabel(r.origin)}</span>}</td>
-          {/* UX-14: an unanchored item (shown as "source not verified") says so once, as a badge, instead of a source line plus a warning */}
-          <td data-tour={at("req-row-source")}>{r.provenance === "UNANCHORED"
-            ? <span data-tour={first("req-badge-unanchored")}><StatusBadge status="medium" kind="severity" label={sourceLabel(r.provenance).toLowerCase()} title="Quote not located on the page; check the source manually" /></span>
-            : r.source}</td>
+          <td><div className="mono" data-tour={at("req-row-id")}>{r.req_id}</div><span className="tag" data-tour={at("req-row-category")}>{categoryLabel(r.category)}</span>
+            {(r.origin === "correction" || r.origin === "customer_change") && <span className="tag origin" data-tour={first("req-origin")} title="How this version came in">{originLabel(r.origin)}</span>}
+            {/* UX-14: an unanchored item (shown as "source not verified") says so once, as a badge, instead of a source line plus a warning */}
+            <div className="req-source" data-tour={at("req-row-source")}>{r.provenance === "UNANCHORED"
+              ? <span data-tour={first("req-badge-unanchored")}><StatusBadge status="medium" kind="severity" label={sourceLabel(r.provenance)} title="Quote not located on the page; check the source manually" /></span>
+              : r.source}</div></td>
           <td>
             {isEditing && editing.mode === "edit" ? (
               <form className="form compact" data-tour="req-edit-form" aria-label={`Edit ${r.req_id}`}
                 action={(f) => frozen ? correct({ kind: "edit", reason: String(f.get("reason")).trim(), req_id: r.req_id, text: f.get("text"), category: f.get("category") }, r.req_id)
                   : review(r.req_id, { action: "edit", text: f.get("text"), category: f.get("category") }, `${r.req_id} saved.`, r.req_id)}>
                 <input name="text" data-tour="req-edit-text" defaultValue={r.text} aria-label="Requirement text" required maxLength={MAX_TEXT} autoFocus />
-                <select name="category" data-tour="req-edit-category" defaultValue={r.category} aria-label="Category">{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select>
+                <select name="category" data-tour="req-edit-category" defaultValue={r.category} aria-label="Category">{CATEGORIES.map((c) => <option key={c} value={c}>{categoryLabel(c)}</option>)}</select>
                 {reasonField}
                 {errorAt(r.req_id)}
                 <span className="inline"><button data-tour="req-edit-save" disabled={busy}>{busy ? "Saving…" : "Save"}</button><button type="button" className="secondary" onClick={() => openForm()}>Cancel</button></span>
@@ -165,12 +165,12 @@ export default function Register({ bidId: id, onChanged, rowProps, extra, order 
                 : r.derived_from?.length > 0 && <div className="muted" data-tour={first("req-row-derived")}>From {r.derived_from.join(", ")}</div>}
               {!child && extra?.(r.req_id)}
             </>)}
-          </td>
-          <td className="status-cell" data-tour={at("req-row-status")}><StatusBadge status={r.status} label={statusLabel(r.status)} />
+          <div className="req-meta">
+          <span className="status-cell" data-tour={at("req-row-status")}><StatusBadge status={r.status} label={statusLabel(r.status)} />
             <button type="button" className="link" data-tour={at("req-action-history")} aria-expanded={historyOf === r.req_id}
-              onClick={() => setHistoryOf(historyOf === r.req_id ? undefined : r.req_id)}>History</button></td>
+              onClick={() => setHistoryOf(historyOf === r.req_id ? undefined : r.req_id)}>History</button></span>
           {/* an excluded item or a duplicate keeps Restore: it goes back in the register (service contract) */}
-          <td>{(active || (!frozen && (r.status === "duplicate" || r.status === "rejected"))) && !isEditing && (
+          {(active || (!frozen && (r.status === "duplicate" || r.status === "rejected"))) && !isEditing && (
             <div className="row-actions" data-tour={at("req-row-actions")}>
               {!frozen && (r.status === "duplicate" || r.status === "rejected") && <button data-tour={at("req-action-restore")} disabled={busy || readOnly} onClick={() => review(r.req_id, { action: "approve" }, `${r.req_id} restored to the register.`)}>Restore</button>}
               {active && <button className="secondary" data-tour={at("req-action-exclude")} disabled={busy || readOnly} onClick={() => openForm({ id: r.req_id, mode: "exclude" })}>Exclude: not a requirement</button>}
@@ -178,7 +178,8 @@ export default function Register({ bidId: id, onChanged, rowProps, extra, order 
               {active && !group && !child && <button className="secondary" data-tour={first("req-action-split")} disabled={busy || readOnly} onClick={() => openForm({ id: r.req_id, mode: "split" })}>Split</button>}
               {!frozen && active && group && <button className="secondary" data-tour={first("req-action-ungroup")} disabled={busy || readOnly}
                 onClick={() => act(post(`/api/requirements/${r.req_id}/ungroup`), `${r.req_id} ungrouped: its ${kids.length} sub-requirements stand on their own.`)}>Ungroup</button>}
-            </div>)}</td>
+            </div>)}</div>
+          </td>
         </tr>
         {historyOf === r.req_id && <tr className="history-row"><td colSpan={cols}><History reqId={r.req_id} /></td></tr>}
         {group && open.has(r.req_id) && kids.map((k) => line(k, true))}
@@ -188,19 +189,20 @@ export default function Register({ bidId: id, onChanged, rowProps, extra, order 
 
   return (
     <>
-      <p className="muted register-help">{frozen ? <span data-tour="req-baseline">Baseline {data.baseline!.number} frozen automatically when {data.baseline!.frozen_by} read the RFP ({data.baseline!.count} items).
+      <p className="muted register-help">{frozen ? <span data-tour="req-baseline">Frozen version {data.baseline!.number}, frozen automatically when {data.baseline!.frozen_by} read the RFP ({data.baseline!.count} items).
             Edits, splits, merges, exclusions and missed requirements are saved as corrections with a reason; customer documents run on the <Link href={`/opportunities/${id}/changes`}>Changes</Link> step.</span>
-          : <span data-tour="req-help">{activeCount} requirements in the register; related line items are grouped (expand a group to see its sub-requirements). Each was verified against its source. The register is frozen automatically once the RFP has been read completely (P-32); until then, exclude anything that is not a requirement and read the RFP again.</span>}
+          : <span data-tour="req-help">{activeCount} requirements in the register; related line items are grouped (expand a group to see its sub-requirements). Each was verified against its source. The register is frozen automatically once the RFP has been read completely; until then, exclude anything that is not a requirement and read the RFP again.</span>}
         {busy && <Busy label="Saving…" />}</p>
 
       <div className="filters" role="tablist" aria-label="Requirements view" data-tour="req-tabs">
         <button role="tab" data-tour="req-tab-register" aria-selected={tab === "register"} className={`chip ${tab === "register" ? "on" : ""}`} onClick={() => setTab("register")}>Register <span>{activeCount}</span></button>
-        <button role="tab" data-tour="req-tab-exceptions" aria-selected={tab === "exceptions"} className={`chip ${tab === "exceptions" ? "on" : ""}`} onClick={() => setTab("exceptions")}>Exceptions <span>{exceptions}</span></button>
+        <button role="tab" data-tour="req-tab-exceptions" aria-selected={tab === "exceptions"} className={`chip ${tab === "exceptions" ? "on" : ""}`} onClick={() => setTab("exceptions")}>{TERMS.exception} <span>{exceptions}</span></button>
       </div>
 
       {data.coverage && Object.keys(data.coverage).length > 0 && (
-        <p className="muted" data-tour="req-coverage">{latest ? `${snapshotName(latest.number)}: ` : "Latest read: "}
-          {Object.entries(data.coverage).filter(([k, v]) => !(k === "problems" && !v)).map(([k, v]) => `${v} ${coverageLabel(k)}`).join(", ")}</p>)}
+        <details className="muted" data-tour="req-coverage"><summary>{readSummary(data.coverage, activeCount)}</summary>
+          {latest ? `${snapshotName(latest.number)}: ` : "Latest read: "}
+          {Object.entries(data.coverage).filter(([k, v]) => !(k === "problems" && !v)).map(([k, v]) => `${v} ${coverageLabel(k)}`).join(", ")}</details>)}
 
       {tab === "exceptions" ? (
         <Exceptions bidId={id} rows={exc} error={excError} frozen={frozen} busy={busy} act={act} done={done} requirements={data.requirements} />
@@ -242,8 +244,7 @@ export default function Register({ bidId: id, onChanged, rowProps, extra, order 
             <th className="col-check" data-tour="req-col-check">
               <input type="checkbox" data-tour="req-select-all" aria-label="Select all line items in view" disabled={selectable.length === 0}
                 checked={allSelected} onChange={() => setSelected(allSelected ? new Set() : new Set(selectable))} /></th>
-            <th className="col-id" data-tour="req-col-id">ID</th><th className="col-src" data-tour="req-col-source">Source</th><th data-tour="req-col-text">Requirement</th>
-            <th className="col-status" data-tour="req-col-status">Status</th><th className="col-actions" data-tour="req-col-actions">Actions</th>
+            <th className="col-id" data-tour="req-col-id">ID</th><th data-tour="req-col-text">Requirement</th>
           </tr></thead>
           <tbody>
             {rows.map((r) => line(r))}
@@ -267,7 +268,7 @@ export default function Register({ bidId: id, onChanged, rowProps, extra, order 
             "Requirement added; it is in the register.", "add")}>
             <label className="grow">Quote, copied from the RFP <textarea name="quote" data-tour="req-paste-quote" rows={2} required /></label>
             <label>Short text <span className="field-hint">(optional; default: the quote)</span> <input name="text" data-tour="req-paste-text" maxLength={MAX_TEXT} /></label>
-            <label>Category <select name="category" data-tour="req-paste-category">{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select></label>
+            <label>Category <select name="category" data-tour="req-paste-category">{CATEGORIES.map((c) => <option key={c} value={c}>{categoryLabel(c)}</option>)}</select></label>
             <label>Page <span className="field-hint">(optional)</span> <input name="page" type="number" data-tour="req-paste-page" min={1} className="narrow" /></label>
             <button data-tour="req-paste-add" disabled={busy}>{busy ? "Adding…" : "Add"}</button>
           </form>
@@ -286,7 +287,7 @@ function History({ reqId }: { reqId: string }) {
   const { data, error } = useApi<RequirementHistory>(`/api/requirements/${reqId}/history`);
   if (error) return <Alert kind="error">{error}</Alert>;
   if (!data) return <Skeleton lines={3} />;
-  const when = (t: string) => new Date(t.endsWith("Z") || t.includes("+") ? t : `${t}Z`).toLocaleString();
+  const when = (t: string) => formatDate(t, true);
   return (
     <div className="history" data-tour="req-history">
       <div data-tour="req-history-versions">
@@ -336,9 +337,9 @@ function Exceptions({ bidId, rows, error, frozen, busy, act, done, requirements 
 }) {
   const [mode, setMode] = useState<{ id: string; kind: "link" | "dismiss" }>();
   const readOnly = isReader(useMe()); // the administrator reads only
-  if (error) return <Alert kind="error" title="Exceptions could not be loaded.">{error}</Alert>;
+  if (error) return <Alert kind="error" title="Requirements that need a source check could not be loaded.">{error}</Alert>;
   if (!rows) return <Skeleton lines={4} />;
-  if (rows.length === 0) return <EmptyState title="No exceptions" hint="No exceptions: every proposed requirement has a verified source." />;
+  if (rows.length === 0) return <EmptyState title="Nothing needs a source check" hint="Every proposed requirement has a verified source." />;
   const active = requirements.filter((r) => !INACTIVE.has(r.status));
   return (
     <ul className="exceptions" data-tour="req-exceptions">
@@ -378,10 +379,10 @@ function where(r: RequirementException) {
 /** Every extraction snapshot (E1, E2...): who read the RFP, when, why, and what the read found. A snapshot never changes; "View items" shows it as it was. */
 function Snapshots({ bidId, snapshots }: { bidId: string; snapshots: Snapshot[] }) {
   const [viewing, setViewing] = useState<number>();
-  const when = (t: string) => new Date(t.endsWith("Z") || t.includes("+") ? t : `${t}Z`).toLocaleString();
+  const when = (t: string) => formatDate(t, true);
   return (
     <details className="card snapshots" data-tour="req-snapshots">
-      <summary><strong>Extraction snapshots</strong> <span className="muted">{snapshots.length} read{snapshots.length === 1 ? "" : "s"} of the RFP; each is kept as it was produced</span></summary>
+      <summary><strong>RFP readings</strong> <span className="muted">{snapshots.length} read{snapshots.length === 1 ? "" : "s"} of the RFP; each is kept as it was produced</span></summary>
       <ul className="snapshot-list">
         {snapshots.map((s) => (
           <li key={s.number}>

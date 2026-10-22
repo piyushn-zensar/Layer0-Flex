@@ -38,9 +38,9 @@ const chapter: TourChapter = {
       route: "/portfolio",
       target: `portfolio-status-${DEMO_OPP}`,
       placement: "right",
-      fallback: "Each row has a status chip; the Syracuse bid reads \"dispatched\".",
+      fallback: "Each row has a status chip; the Syracuse bid reads \"Sent to units\".",
       body: [
-        "The chip is the bid's lifecycle status, which only moves forward: **new** → **review** → **frozen** (the register became baseline 1) → **go** or **no-go** → **dispatched** (the work was sent to the units) → **consolidating** → **submitted**. The same status shows in the header of every page of the bid.",
+        "The chip is the bid's lifecycle status, which only moves forward: **New** → **In review** → **Requirements frozen** (the register became frozen version 1) → **Sent to units** (the work was sent to the units) → **Go recorded** or **No-go recorded** (the bid manager's decision, once the units have answered) → **Go: response in preparation** (every answer validated after a go) → **Submitted**. The same status shows in the header of every page of the bid.",
         "A bid is **frozen automatically** when its main RFP has been read completely, so the Syracuse bid is already beyond review; later corrections are versioned, not re-reads.",
       ],
     },
@@ -52,7 +52,7 @@ const chapter: TourChapter = {
       placement: "left",
       fallback: "The Requirements column shows 312 for the Syracuse bid.",
       body: [
-        "This is the count of **current** requirements. For the Syracuse RFP it reads **312**: the reader proposed 818 line items from 101 pages, 779 entered the register as 312 requirements after grouping (161 groups), 27 were marked duplicates and 12 wait in the exception queue because their quote could not be matched word for word.",
+        "This is the count of **current** requirements. For the Syracuse RFP it reads **312**: the reader proposed 818 line items from 101 pages, 779 entered the register as 312 requirements after grouping (161 groups), 27 were marked duplicates and 12 wait for a source check because their quote could not be matched word for word.",
       ],
     },
     {
@@ -61,9 +61,9 @@ const chapter: TourChapter = {
       route: "/portfolio",
       target: `portfolio-units-${DEMO_OPP}`,
       placement: "left",
-      fallback: "The column shows one line per unit with a progress bar; \"not dispatched\" when no work has been sent yet.",
+      fallback: "The column shows one line per unit with a progress bar; \"Not sent to units\" when no work has been sent yet.",
       body: [
-        "After the work is sent, every item goes to a unit or to the **BID** bid desk. Each line is one unit: its code links to that unit's work, then **validated / total**, then a bar: green for answers the unit manager has validated, blue for answers awaiting validation.",
+        "After the work is sent, every item goes to a unit or to the **BID** bid desk. Each line is one unit: its code links to that unit's work, then **validated / total**, then a bar: green for validated answers, blue for answers awaiting validation. A bid whose work has not been sent yet reads *Not sent to units*.",
         "On Syracuse: **CROWN** 118 items, **EP2** 31 and **BID** 73. Crown and EP² also receive the schedule, commercial and staffing items for their managers; the bid desk keeps the high-level submission and legal items.",
       ],
     },
@@ -75,7 +75,19 @@ const chapter: TourChapter = {
       placement: "bottom",
       fallback: "OPP-0002 is Logan City Light & Power's RFP for 15 kV switchgear at Substation 6.",
       body: [
-        "The second row is a public RFP from another issuer: **Logan City Light & Power (Utah), 15 kV switchgear for Substation 6**, 46 pages. It is there to check the pipeline on a document it was not tuned on: 167 requirements, 4 quotes waiting in the exception queue. It is frozen and not yet sent to units, so it has no unit bars.",
+        "The second row is a public RFP from another issuer: **Logan City Light & Power (Utah), 15 kV switchgear for Substation 6**, 46 pages. It is there to check the pipeline on a document it was not tuned on: 167 requirements, 4 quotes waiting for a source check. It is frozen and not yet sent to units, so it reads *Not sent to units*.",
+      ],
+    },
+    {
+      id: "portfolio-rc1",
+      title: "OPP-0003: RC-1 Grid-to-Chip, the cloud and power demo",
+      route: "/portfolio",
+      target: "portfolio-row-OPP-0003",
+      placement: "bottom",
+      fallback: "After a demo reset, OPP-0003 is the RC-1 Grid-to-Chip bid: a synthetic RFP for a 120 MW AI campus.",
+      body: [
+        "The third row is **RC-1 Grid-to-Chip**, a synthetic RFP written for the demo: a 120 MW AI training campus bought in six lots, from the utility connection and 800 V DC power to the racks, liquid cooling and the compute systems. Its requirement IDs keep the RFP's own numbering by lot (for example L2.04) in the text.",
+        "It has been worked through the whole workflow by the demo accounts with illustrative answers: every unit answer validated, the four compliance outcomes used, the teams' delivery estimates accepted, the compliance position approved and the go recorded. Open it after the walkthrough to see each screen at the end of a bid.",
       ],
     },
     {
@@ -87,7 +99,7 @@ const chapter: TourChapter = {
       fallback: "Each row ends with an Open button that leads to the bid's Requirement Traceability page.",
       body: [
         "**Open** takes you to Requirement Traceability, the page most people work from. The ID in the first column goes to the RFP page instead, and the stepper in the bid header moves between steps.",
-        "**New bid** (top right, bid manager only) starts a bid for another RFP; chapter 4 shows the form.",
+        "**New bid** (top right, shown only to the bid manager and the administrator) starts a bid for another RFP; chapter 4 shows the form.",
       ],
     },
   ],

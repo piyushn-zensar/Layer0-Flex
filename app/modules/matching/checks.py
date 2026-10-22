@@ -116,7 +116,7 @@ def rules(facts: dict, in_scope: list[int], matches: dict, kb: dict, eng: dict) 
 
     if facts["vdc_800"]:  # a stated fact makes the rule apply, whatever the scope
         status, note = "warn", (f"800 V DC is required{cite(facts['vdc_800'])}: confirm every power-path product is "
-                                f"800 V DC-compatible; the catalog holds no voltage ratings to check against.")
+                                f"800 V DC-compatible with its unit's engineer.")
     elif not {1, 3, 4} & set(in_scope):
         status, note = "n/a", "No power-path layer (1, 3, 4) is in scope and 800 V DC is not stated."
     elif facts["voltage_stated"]:
@@ -129,7 +129,7 @@ def rules(facts: dict, in_scope: list[int], matches: dict, kb: dict, eng: dict) 
     if d and d["value"] >= 100:
         ok = "JETCOOL-PLATE" in products
         status, note = ("pass" if ok else "fail"), (f"{d['value']:g} kW per rack{cite(d)} needs direct-to-chip cooling: "
-                                                    f"{'matched (JETCOOL-PLATE)' if ok else 'NOT among the matched products'}.")
+                                                    f"{'JetCool direct-to-chip cold plates are proposed' if ok else 'no direct-to-chip cooling is proposed'}.")
     elif d:
         status, note = "pass", f"{d['value']:g} kW per rack{cite(d)} is below the 100 kW direct-to-chip threshold."
     elif 5 in in_scope:
@@ -145,7 +145,7 @@ def rules(facts: dict, in_scope: list[int], matches: dict, kb: dict, eng: dict) 
     elif 2 not in in_scope:
         status, note = "n/a", "Utility / facility electrical (layer 2) is not in scope and no 2N redundancy is stated."
     else:
-        status, note = "warn", "Redundancy class is not stated: the layer-2 selection cannot be verified. Clarify before quoting."
+        status, note = "warn", "Redundancy class is not stated: the choice of utility and facility electrical equipment cannot be checked. Clarify before quoting."
     out.append({"id": "R-003", "rule": text["R-003"], "status": status, "note": note})
 
     epc = "EPC" in units

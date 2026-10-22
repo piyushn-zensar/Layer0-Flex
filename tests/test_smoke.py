@@ -91,21 +91,22 @@ def test_people_decide_and_dispatch_needs_go():
     client = signed_in()
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]  # newest first
     rows = client.get(f"/api/bids/{opp}/trace").json()["rows"]
-    rejected, accepted = rows[0]["match"], rows[1]["match"]
-    assert client.post(f"/api/matches/{rejected['id']}/decide", json={"action": "reject"}).status_code == 200
-    assert client.post(f"/api/matches/{accepted['id']}/decide", json={"action": "accept"}).status_code == 200
+    rejected, accepted = [r["match"] for r in rows if r["req"]["category"] == "technical" and r["match"] and r["match"]["bu"] == "CROWN"][:2]
+    de = auth("crown.de")  # P-44 (C-41): a technical match is the matched unit's designer / engineer's
+    assert client.post(f"/api/matches/{rejected['id']}/decide", json={"action": "reject"}, headers=de).status_code == 200
+    assert client.post(f"/api/matches/{accepted['id']}/decide", json={"action": "accept"}, headers=de).status_code == 200
     assert client.post(f"/api/bids/{opp}/match").json()["kept"] == 2
     after = {r["req"]["req_id"]: r["match"] for r in client.get(f"/api/bids/{opp}/trace").json()["rows"]}
     assert after[rejected["req_id"]] is None  # stays rejected: no older proposal comes back
     assert after[accepted["req_id"]]["id"] == accepted["id"] and after[accepted["req_id"]]["status"] == "accepted"
 
     a = client.get("/api/inbox/CROWN").json()["items"][0]
-    assert client.post(f"/api/matches/{accepted['id']}/decide", json={"action": "maybe"}).status_code == 422
+    assert client.post(f"/api/matches/{accepted['id']}/decide", json={"action": "maybe"}, headers=de).status_code == 422
     assert client.post("/api/matches/999999/decide", json={"action": "accept"}).status_code == 404
     assert client.post(f"/api/assignments/{a['id']}/respond", json={"compliance": "yes"}).status_code == 422
     assert client.post("/api/assignments/999999/respond", json={"compliance": "met"}).status_code == 404
     assert client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "maybe"}).status_code == 422
-    assert client.get(f"/api/bids/{opp}/decisions").json()["go_no_go"]["outcome"] == "go"
+    assert client.get(f"/api/bids/{opp}/decisions").json()["go_no_go"] is None  # iteration 4: the seed records no early go
 
     client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "no_go"})
     assert client.post(f"/api/bids/{opp}/dispatch").status_code == 409
@@ -194,12 +195,14 @@ def test_person_changes_match():
     req_id = next(r["req"]["req_id"] for r in rows if r["match"] and r["match"]["bu"] == "CROWN")
     url = f"/api/bids/{opp}/requirements/{req_id}/match"
     body = {"units": [{"product_id": "CROWN-ARMV", "offering_type": "ETO"}, {"product_id": "EP2-RPP", "offering_type": "ETO"}]}
-    m = client.post(url, json=body, headers=auth("bid.manager")).json()
-    assert (m["status"], m["method"], m["decided_by"], m["bu"]) == ("accepted", "manual", "Bid Manager", "CROWN")
+    de = auth("crown.de")  # P-44 (C-41): the matched unit's designer / engineer corrects a technical match
+    assert client.post(url, json=body).status_code == 403  # the bid manager routes, it does not correct
+    m = client.post(url, json=body, headers=de).json()
+    assert (m["status"], m["method"], m["decided_by"], m["bu"]) == ("accepted", "manual", "Crown Design Engineer", "CROWN")
     assert [u["bu"] for u in m["units"]] == ["CROWN", "EP2"]  # unit follows the product
-    assert client.post(url, json={"units": [{"product_id": "NOPE", "offering_type": "ETO"}]}).status_code == 422
-    assert client.post(url, json={"units": [{"product_id": "EPC-800V", "offering_type": "ETO"}]}).status_code == 422  # pending unit
-    assert client.post(url, json={"units": [{"product_id": "EP2-RPP", "offering_type": "NONE"}]}).status_code == 422
+    assert client.post(url, json={"units": [{"product_id": "NOPE", "offering_type": "ETO"}]}, headers=de).status_code == 422
+    assert client.post(url, json={"units": [{"product_id": "EPC-800V", "offering_type": "ETO"}]}, headers=de).status_code == 422  # pending unit
+    assert client.post(url, json={"units": [{"product_id": "EP2-RPP", "offering_type": "NONE"}]}, headers=de).status_code == 422
     assert client.post(f"/api/bids/{opp}/requirements/REQ-9999-0001/match", json=body).status_code == 404
 
     client.post(f"/api/bids/{opp}/participation", json={"units": ["CROWN", "EP2"]})
@@ -208,7 +211,7 @@ def test_person_changes_match():
     row = next(r for r in client.get(f"/api/bids/{opp}/trace").json()["rows"] if r["req"]["req_id"] == req_id)
     assert sorted({a["bu"] for a in row["assignments"]}) == ["CROWN", "EP2"]
 
-    none = client.post(url, json={"units": []}).json()  # a person says: not a product item
+    none = client.post(f"/api/bids/{opp}/requirements/{req_id}/route", json={"units": []}).json()  # the bid manager: no unit
     assert none["bu"] is None and none["offering_type"] == "NONE" and none["units"] == []
 
 
@@ -240,7 +243,7 @@ def test_workflow_order_and_roles():
 
     # the bid manager takes the item away from Crown: re-dispatch withdraws Crown's work; a product item does not
     # fall back to the bid desk, it needs an owner (A-19, C-08; updated by Atharv)
-    assert client.post(f"/api/bids/{opp}/requirements/{item['req_id']}/match", json={"units": []}, headers=BM).status_code == 200
+    assert client.post(f"/api/bids/{opp}/requirements/{item['req_id']}/route", json={"units": []}, headers=BM).status_code == 200
     assert client.post(f"/api/bids/{opp}/dispatch", headers=BM).json()["needs_owner"] >= 1
     row = next(r for r in client.get(f"/api/bids/{opp}/trace").json()["rows"] if r["req"]["req_id"] == item["req_id"])
     assert row["assignments"] == []
@@ -443,7 +446,7 @@ def test_go_no_go_summary_and_structured_criteria():
     assert 0 < s["assessment"]["validated"] < s["assessment"]["items"] and status["completeness"] == "not_met"
     assert status["compliance"] == "met" and status["schedule"] == "met"  # the seed's validated answers
     assert status["open_questions"] == "not_met"  # Syracuse states no redundancy class (R-003 warn)
-    assert {r["level"] for r in s["rows"]} <= {"fully", "partly", "not", "bid_desk"} and len(s["rows"]) == 13
+    assert {r["level"] for r in s["rows"]} <= {"fully", "partly", "changes", "not", "bid_desk"} and len(s["rows"]) == 13
     crit = [{"id": "compliance", "status": "met", "note": "checked"}, {"id": "schedule", "status": "unknown"}]
     assert client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "go", "criteria": crit}, headers=auth("crown.pm")).status_code == 403
     d = client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "go", "criteria": crit}, headers=auth("bid.manager")).json()
@@ -493,9 +496,9 @@ def test_compliance_matrix_new_columns_and_bom():
     assert r.status_code == 200 and r.content.startswith(b"\xef\xbb\xbf")
     rows = list(csv.reader(io.StringIO(r.content.decode("utf-8-sig"))))
     head = rows[0]
-    assert head[:12] == ["Requirement ID", "Source", "Category", "Requirement", "Quote", "Business unit", "Product",
-                         "Offering type", "Compliance", "Response", "Validated by", "State"]
-    assert head[12:] == ["Assignment status", "Responded by", "Reason", "Conditions", "Workaround", "Next Steps"] and all(len(row) == len(head) for row in rows)
+    assert head[:12] == ["Requirement ID", "Source", "Category", "Requirement", "Quote", "Business unit", "Proposed solution",
+                         "Type of offer", "Compliance", "Response", "Validated by", "State"]
+    assert head[12:] == ["Assignment status", "Responded by", "Reason", "Conditions", "Proposed change", "Next Steps"] and all(len(row) == len(head) for row in rows)
     status, by = head.index("Assignment status"), head.index("Responded by")
     assert {row[status] for row in rows[1:]} >= {"validated", "assigned"}
     assert all(row[by] for row in rows[1:] if row[status] in ("submitted", "validated"))  # an answer always has a person
@@ -531,7 +534,7 @@ def test_compliance_matrix_excel():
     ws = wb["Compliance matrix"]
     assert [c.value for c in ws[4]][:5] == ["Requirement ID", "RFP reference", "Requirement", "RFP wording", "Compliance"]
     words = {row[4] for row in ws.iter_rows(min_row=5, values_only=True)}
-    assert "Fully" in words and words <= {"Fully", "Partially", "Non-compliant", "Exception", "Open"}  # J-11 wording
+    assert "Compliant" in words and words <= {"Compliant", "Partially compliant", "Compliant with changes", "Non-compliant", "Exception", "Open"}  # J-11, C-43 wording
     assert all(cell.data_type != "f" for sheet in wb for row in sheet.iter_rows() for cell in row)  # never a formula
     assert wb["Tracking"].max_row - 1 == len(client.get(f"/api/bids/{opp}/compliance-matrix.csv").text.strip().splitlines()) - 1
     assert client.get("/api/bids/OPP-9999/compliance-matrix.xlsx").status_code == 404
@@ -600,7 +603,8 @@ def test_knowledge_base_queue():
     assert client.post("/api/knowledge", json={"kind": "response", "ref": str(done["id"])}).status_code == 409  # already queued
     assert client.post("/api/knowledge", json={"kind": "response", "ref": str(open_["id"])}).status_code == 409  # not validated
     assert client.post("/api/knowledge", json={"kind": "requirement", "ref": "REQ-9999-0001"}).status_code == 404
-    go = client.get(f"/api/bids/{opp}/decisions").json()["go_no_go"]
+    client.post(f"/api/bids/{opp}/go-no-go", json={"outcome": "go", "rationale": "In scope for the participating units."})
+    go = client.get(f"/api/bids/{opp}/decisions").json()["go_no_go"]  # the seed records no go (iteration 4): one here
     dec = client.post("/api/knowledge", json={"kind": "decision", "ref": str(go["id"])}).json()
     assert dec["response"].startswith("go:")
 
@@ -1161,7 +1165,7 @@ def test_dispatch_without_go_and_no_go_withdraws():
 
 def test_response_fields_and_reason():
     """A-18 (C-12): reason, conditions, workaround and next steps on every assignment row; a reason is required for
-    partially and non-compliant answers; "exception" is no longer offered. Appended by Atharv (append-only)."""
+    partially compliant, compliant with changes (deviation, C-43) and non-compliant answers; "exception" is no longer offered. Appended by Atharv (append-only)."""
     from app.core.db import SessionLocal
     from app.modules.workpackages import service as workpackages
 
@@ -1169,7 +1173,7 @@ def test_response_fields_and_reason():
     client, crown = signed_in(), auth("crown.de")
     opp = client.get("/api/portfolio").json()[0]["opp"]["id"]
     inbox = client.get("/api/inbox/CROWN").json()
-    assert inbox["compliance"] == ["met", "partial", "not_met"]
+    assert inbox["compliance"] == ["met", "partial", "deviation", "not_met"]
     item = next(i for i in inbox["items"] if i["opportunity_id"] == opp and i["status"] == "assigned")
     assert {"reason", "conditions", "workaround", "next_steps"} <= set(item)
     url = f"/api/assignments/{item['id']}/respond"
@@ -1207,7 +1211,7 @@ def test_needs_an_owner_and_capability_gap():
     req_id, url = held["req"]["req_id"], f"/api/bids/{opp}/requirements/{held['req']['req_id']}/capability-gap"
     assert client.post(url, json={"reason": "No unit"}, headers=bm).status_code == 409  # a unit holds it
 
-    client.post(f"/api/bids/{opp}/requirements/{req_id}/match", json={"units": []}, headers=bm)
+    client.post(f"/api/bids/{opp}/requirements/{req_id}/route", json={"units": []}, headers=bm)
     client.post(f"/api/bids/{opp}/dispatch", headers=bm)
     assert req_id in {o["req_id"] for o in client.get(f"/api/bids/{opp}/needs-owner").json()}
     summary = client.get(f"/api/bids/{opp}/decisions").json()["summary"]
@@ -1347,8 +1351,7 @@ def test_permissions_in_atharvs_modules():
     req_id, match_id = row["req"]["req_id"], row["match"]["id"]
     bid_manager_only = [
         (f"/api/bids/{opp}/match", None),
-        (f"/api/matches/{match_id}/decide", {"action": "accept"}),
-        (f"/api/bids/{opp}/requirements/{req_id}/match", {"units": []}),
+        (f"/api/bids/{opp}/requirements/{req_id}/route", {"units": []}),  # P-44: the bid manager routes (the unit only)
         (f"/api/bids/{opp}/participation", {"units": ["CROWN"]}),
         (f"/api/bids/{opp}/dispatch", None),
         (f"/api/bids/{opp}/go-no-go", {"outcome": "go"}),
@@ -1356,6 +1359,12 @@ def test_permissions_in_atharvs_modules():
     ]
     for url, body in bid_manager_only:
         for who in (pm, de, admin):
+            assert client.post(url, json=body, headers=who).status_code == 403, url
+    tech = next(r for r in client.get(f"/api/bids/{opp}/trace").json()["rows"]
+                if r["req"]["category"] == "technical" and r["match"] and r["match"]["bu"] == "CROWN")
+    for url, body in ((f"/api/matches/{tech['match']['id']}/decide", {"action": "accept"}),  # P-44: Crown's engineer only
+                      (f"/api/bids/{opp}/requirements/{tech['req']['req_id']}/match", {"units": []})):
+        for who in (auth("bid.manager"), pm, admin, auth("ep2.de")):
             assert client.post(url, json=body, headers=who).status_code == 403, url
     item = next(i for i in client.get("/api/inbox/CROWN").json()["items"] if i["opportunity_id"] == opp and i["status"] == "submitted")
     for who in (de, admin):  # A-17: the unit's product manager validates; the design engineer and administrator do not
@@ -1484,7 +1493,7 @@ def test_every_write_route_by_role():
         "/api/bids", "/api/bids/{opp_id}/documents", "/api/bids/{opp_id}/documents/from-sample", "/api/documents/{doc_id}/ingest",
         "/api/bids/{opp_id}/requirements/extract", "/api/bids/{opp_id}/requirements/freeze", "/api/bids/{opp_id}/changes",
         "/api/bids/{opp_id}/changes/from-sample", "/api/changes/{set_id}/apply", "/api/changes/{set_id}/discard",
-        "/api/bids/{opp_id}/match", "/api/matches/{match_id}/decide", "/api/bids/{opp_id}/requirements/{req_id}/match",
+        "/api/bids/{opp_id}/match", "/api/bids/{opp_id}/requirements/{req_id}/route",  # P-44
         "/api/bids/{opp_id}/participation", "/api/bids/{opp_id}/go-no-go", "/api/bids/{opp_id}/dispatch",
         "/api/bids/{opp_id}/requirements/{req_id}/capability-gap", "/api/knowledge/sources/{ks_id}/annotate",
         "/api/bids/{opp_id}/schedule", "/api/bids/{opp_id}/approvals", "/api/catalog/refresh",  # P-33, P-34
@@ -1497,7 +1506,8 @@ def test_every_write_route_by_role():
         "/api/knowledge/sources", "/api/bids/{opp_id}/comments"}
     by_item = {"/api/assignments/{assignment_id}/respond", "/api/assignments/{assignment_id}/validate",
                "/api/comments/{comment_id}/close", "/api/knowledge/{kb_id}/review", "/api/knowledge/sources/{ks_id}/review",
-               "/api/bids/{opp_id}/units/{bu}/completion"}  # P-33: that unit's manager
+               "/api/bids/{opp_id}/units/{bu}/completion",  # P-33: that unit's manager
+               "/api/matches/{match_id}/decide", "/api/bids/{opp_id}/requirements/{req_id}/match"}  # P-44: by the item's category
 
     spec = app.openapi()
     comps = spec.get("components", {}).get("schemas", {})

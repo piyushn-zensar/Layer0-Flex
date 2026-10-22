@@ -8,7 +8,7 @@ import { useTour } from "./TourProvider";
 
 const ABOUT = [
   "Layer 0 takes one bid from the moment an RFP arrives to the compliance matrix: it reads the RFP into requirements with exact page and line sources.",
-  "Each requirement is matched to a business unit's product; the participating units, the routing and the go/no-go decision are recorded with their rationale.",
+  "Each requirement is matched to a business unit's proposed solution; the participating units, the routing and the go/no-go decision are recorded with their rationale.",
   "Every participating unit gets one work package and answers it as a checklist; the unit manager validates the answers and the bid manager consolidates them.",
   "Agents propose, people decide: every proposal is reviewed by a named person and every action is written to an append-only audit trail.",
 ];

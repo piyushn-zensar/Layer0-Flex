@@ -2,13 +2,17 @@
 
     .venv\\Scripts\\python -m scripts.seed_demo          # Syracuse from the REAL extraction (P-08), then the
                                                          # independent Logan City RFP read up to the register (P-26)
-    .venv\\Scripts\\python -m scripts.seed_demo --reset  # deletes the local DB first
+    .venv\\Scripts\\python -m scripts.seed_demo --reset  # deletes the local DB first, then runs the demo workflow
+                                                         # on RC-1 (OPP-0003) through the API (scripts.run_demo_workflow)
+Both also seed RC-1 Grid-to-Chip (P-48) from its frozen answers, matched right after its automatic freeze.
+Run them with LLM_PROVIDER=mock: .env names the live provider.
 main() alone (as the tests call it) seeds only Syracuse, with its 13 hand-picked line items (quick and stable).
 
 The real Syracuse demo runs the reader agent and the grouping agent from their frozen answers (no model call, no
 API key): about 820 line items become about 310 requirements. The register (verified sources) is frozen, matched, the
-bid decision is recorded, the work is dispatched, and the sample answers from the seed file are attached to the
-real requirements that cover the same RFP lines. Every step calls the same service a user action would call,
+participation is recorded, the work is dispatched, and the sample answers from the seed file are attached to the
+real requirements that cover the same RFP lines. No go/no-go is recorded: it comes after the units answer
+(iteration 4), so Syracuse shows a bid in assessment. Every step calls the same service a user action would call,
 so the seed doubles as an end-to-end check.
 """
 import json
@@ -60,7 +64,6 @@ def main(seed_file: str = "demo_syracuse.json", real: bool = False) -> None:
         print("matching:", matching.match(db, opp.id, "matching agent (seed)"))
         units = list(matching.suggested_units(db, opp.id))
         decisions.record(db, opp.id, "participation", "units", units, "Suggested by matching; confirmed.", BM)
-        decisions.record(db, opp.id, "go_no_go", "go", units, "In scope for the participating units.", BM)
         print("dispatched:", workpackages.dispatch(db, opp.id, BM))
 
         for req_id, items in workpackages.by_requirement(db, opp.id).items():
@@ -77,7 +80,8 @@ def main(seed_file: str = "demo_syracuse.json", real: bool = False) -> None:
 def independent(seed_file: str = "demo_logan.json") -> None:
     """C-11: the independent validation RFP (another issuer, public), read from its own frozen answers into the
     register and the exception queue; the complete read freezes the register (P-32), then its products are matched
-    from frozen answers (19 Oct review: the assessment showed no matches). Dispatch is not seeded for it."""
+    from frozen answers (19 Oct review: the assessment showed no matches). Dispatch is not seeded for it.
+    The same path seeds RC-1 (P-48, demo_grid_to_chip.json); scripts.run_demo_workflow takes it from there."""
     seed = json.loads((config.SEED / seed_file).read_text("utf-8"))
     with SessionLocal() as db:
         o = seed["opportunity"]
@@ -115,5 +119,9 @@ def _read_and_review(db, opp_id: str, doc_id: str, seed: dict) -> dict:
 if __name__ == "__main__":
     main(real=True)  # P-08: the demo runs on the real extraction; only electrical-domain bids are seeded (C-11)
     independent()  # P-26: the independent validation RFP
+    independent("demo_grid_to_chip.json")  # P-48: RC-1 (OPP-0003 on a reset), matched right after its automatic freeze
     with SessionLocal() as db:  # P-35: the public references, registered as drafts waiting for review
         print("knowledge sources:", knowledge.register_references(db))
+    if "--reset" in sys.argv:  # P-49: a reset always rebuilds the demo bid, through the API as the demo accounts
+        from scripts import run_demo_workflow
+        run_demo_workflow.main()

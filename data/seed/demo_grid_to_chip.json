@@ -1,0 +1,6 @@
+{
+  "_note": "RC-1 Grid-to-Chip (C-35, C-37, P-48): the synthetic 800 V DC AI campus RFP written for the PoC (data/RFP/samples, 11 pages, 19 tables). Read, grouped and matched offline from its frozen layout (data/layout_cache), reader, grouping and matcher answers (data/llm_cache), right after the automatic freeze; scripts/run_demo_workflow.py then drives the workflow on it through the API. Seeded as OPP-0003, after Syracuse and Logan.",
+  "opportunity": {"title": "RC-1 AI campus: grid-to-chip power and cooling", "customer": "RC-1 campus owner (synthetic)",
+                  "customer_type": "hyperscaler"},
+  "document": "data/RFP/samples/RC-1_Grid-to-Chip_RFP_Synthetic.docx"
+}

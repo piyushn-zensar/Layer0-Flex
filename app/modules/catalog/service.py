@@ -8,6 +8,7 @@ Public contract:
     products(bu=None) -> list[dict]
     product(product_id) -> dict | None
     items(family=None) -> list[dict]            models/series of the families (catalog_items.json); not in the matcher prompt
+    solution(bu, product_id) -> dict            {"unit", "area", "examples"}: the proposed solution as shown (C-40)
     past_responses() -> list[dict]              past answers of the active units (the matcher's fixed prompt part)
     learned() -> list[dict]                     knowledge approved by the curator in this installation (A-11)
     learn(entry)                                add an approved entry to the long-term index (knowledge module)
@@ -65,6 +66,15 @@ def product(product_id: str) -> dict | None:
 def items(family: str | None = None) -> list[dict]:
     active = {u["code"] for u in units()}
     return [i for i in _load("catalog_items")["items"] if i["bu"] in active and (family is None or i["family"] == family)]
+
+
+def solution(bu: str, product_id: str | None) -> dict:
+    """C-40: a unit's proposed solution, worded at solution level: the unit's name, the solution area (the product
+    family's name) and up to three published models of the family as examples. A reference that is not a catalog
+    family (a unit's own text) is the area as written; no reference: area None."""
+    p = product(product_id) if product_id else None
+    return {"unit": (unit(bu) or {}).get("name") or bu, "area": p["name"] if p else (product_id or None),
+            "examples": [i["name"] for i in items(p["id"])][:3] if p else []}
 
 
 def learned() -> list[dict]:

@@ -17,9 +17,13 @@ Public contract:
     needs_owner(db, opp_id) -> list[dict]                 published product requirements with no participating unit
                                                           and no capability gap: {req_id, text, category, suggested
                                                           (matched units not taking part)}; not dispatched
-    record_gap(db, opp_id, req_id, reason, actor) -> Assignment   a capability gap: no unit can offer this product
+    record_gap(db, opp_id, req_id, reason, actor, response="") -> Assignment   a capability gap: no unit can offer this product
         requirement; a validated non-compliant bid desk answer with the reason, kept in the register and the matrix.
-        LookupError: not in the published register; ValueError: no reason, or a participating unit holds it
+        LookupError: not in the frozen register; ValueError: no reason, or a participating unit holds it. Its
+        match is accepted with no unit and the reason (matching.accept_gap)
+    consolidate_if_ready(db, opp_id, actor) -> bool       after a go, once every active assignment is validated, the bid
+                                                          status moves to "consolidating" (also run by validate and by
+                                                          decisions.record); True when it moved
     assessment(db, opp_id) -> dict                        the Assessment step (16.5): published, baseline, summary
         {requirements, by_category, by_offering, sections, suggested_units}, open_questions {exceptions, needs_owner,
         rule_warnings, questions, not_read [str]: what the latest read did not cover}, participation {id, units, rationale, decided_by} | None, no_go, units (catalog),
@@ -28,6 +32,9 @@ Public contract:
         register; without a participation: with the suggested units), sent, progress. LookupError: unknown bid
     by_requirement(db, opp_id) -> dict[str, list[Assignment]]   active (not withdrawn) assignments
     inbox(db, bu) -> list[Assignment]                     a unit's active work across all opportunities
+    solution_ref(a, m) -> str | None                      the solution the assignment's unit proposes (C-40, P-44): its
+        entry on the current match `m` (its designer / engineer may set or change it after dispatch), else the dispatched product_ref
+    solution_refs(db, assignments) -> dict[int, str | None]   solution_ref per assignment id, the matches read once per bid
     workflow() -> dict                                    data/knowledge_base/workflow.json: who answers, validates and
         returns with a question (C-07, C-25), and which non-technical categories go to the units' managers
     people(db, assignment) -> dict                        {"answer": [...], "validate": [...]}: the people
@@ -42,7 +49,8 @@ Public contract:
             next_steps="")
         user = {name, role, bu}: the workflow's answering role in the assignment's unit (technical items: unit
         designer / engineer; non-technical: unit manager; bid desk: bid manager), only while assigned or
-        returned. partial and not_met need a reason (C-12); empty fields are stored as None.
+        returned. partial, deviation and not_met need a reason; deviation also the proposed change (workaround)
+        (C-12, C-43); empty fields are stored as None.
         LookupError: no such assignment; PermissionError: wrong person; ValueError: wrong state, missing reason
     validate(db, assignment_id, ok, note, user)
         the unit's validating role (unit manager; bid desk: bid manager) validates or returns submitted work; the
@@ -51,7 +59,8 @@ Public contract:
     progress(db, opp_id) -> dict[str, dict]               bu -> {"total", "submitted", "validated"} (active work)
     handoff(db, opp_id, bu) -> dict                       per-unit hand-off payload (M8): items grouped by route
         (CPQ seed / basis of design / specialist queue), each with its source document (the main RFP or a change
-        document), requires_human_completion; LookupError: unknown
+        document), its proposed solution (unit · solution area, example models; C-40; product_id keeps the family
+        for the unit's systems) and unit_answer (with compliance_label), requires_human_completion; LookupError: unknown
         opportunity or no work for the unit; ValueError: the bid desk
     comments(db, opp_id, req_id=None, status=None) -> list[Comment]   a bid's questions and comments, oldest first (C-17)
     add_comment(db, opp_id, req_id, text, kind, actor, assignment_id=None) -> Comment   kind: question | comment.
@@ -80,7 +89,8 @@ from app.modules.decisions import service as decisions
 from app.modules.matching import service as matching
 from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service as requirements
-from app.modules.workpackages.models import BID_DESK, COMMENT_KINDS, COMPLIANCE, EXTENDED, NEEDS_REASON, Assignment, Comment
+from app.modules.workpackages.models import (BID_DESK, COMMENT_KINDS, COMPLIANCE, COMPLIANCE_LABELS, EXTENDED, NEEDS_CHANGE,
+                                             NEEDS_REASON, Assignment, Comment)
 
 BID_MANAGER = "Bid Manager"  # the bid desk's person (the seeded bid manager account), shown as the owner of its items
 
@@ -265,28 +275,40 @@ def assessment(db: Session, opp_id: str) -> dict:
         },
         "participation": {"id": p.id, "units": p.units, "rationale": p.rationale, "decided_by": p.decided_by} if p else None,
         "no_go": bool(go and go.outcome == "no_go"), "units": catalog.units(), "routing": routing,
+        "decision": {"outcome": go.outcome, "decided_by": go.decided_by, "criteria": go.criteria} if go else None,
         "sent": bool(by_requirement(db, opp_id)), "progress": progress(db, opp_id),
     }
 
 
-def record_gap(db: Session, opp_id: str, req_id: str, reason: str, actor: str) -> Assignment:
+def record_gap(db: Session, opp_id: str, req_id: str, reason: str, actor: str, response: str = "") -> Assignment:
     if not reason.strip():
         raise ValueError("Say why no unit can offer it (reason).")
     existing = _existing(db, opp_id)
     route = {req.req_id: targets for req, targets in _routing(db, opp_id, set(decisions.participating_units(db, opp_id)), existing)}
     if req_id not in route:
-        raise LookupError(f"{req_id} is not in the published register of {opp_id}.")
+        raise LookupError(f"{req_id} is not in the frozen register of {opp_id}.")
     if route[req_id] and BID_DESK not in route[req_id]:
         raise ValueError(f"{req_id} is held by {', '.join(route[req_id])}: that unit answers it.")
     a = existing.get((req_id, BID_DESK))
     if not a:
         a = Assignment(opportunity_id=opp_id, req_id=req_id, bu=BID_DESK, owner=BID_MANAGER)
         db.add(a)
-    a.status, a.compliance, a.reason, a.response = "validated", "not_met", reason.strip(), a.response or ""
+    a.status, a.compliance, a.reason, a.response = "validated", "not_met", reason.strip(), response.strip() or a.response or ""
     a.responded_by, a.responded_at, a.validated_by = actor, utcnow(), actor
     audit.record(db, actor, "capability_gap", "assignment", req_id, opp_id, bu=BID_DESK, reason=a.reason)
+    matching.accept_gap(db, opp_id, req_id, a.reason, actor)  # its match is decided too: nothing stays proposed
     db.commit()
     return a
+
+
+def consolidate_if_ready(db: Session, opp_id: str, actor: str) -> bool:
+    """After a go, once every active assignment is validated, the bid moves on to consolidating (the units' work is
+    done). True when the status moved."""
+    go = decisions.latest(db, opp_id, "go_no_go")
+    work = [a for items in by_requirement(db, opp_id).values() for a in items]
+    if go and go.outcome == "go" and work and all(a.status == "validated" for a in work):
+        return opportunities.set_status(db, opp_id, "consolidating", actor)
+    return False
 
 
 def withdraw_open(db: Session, opp_id: str, actor: str) -> int:
@@ -312,12 +334,24 @@ def inbox(db: Session, bu: str) -> list[Assignment]:
                            .order_by(Assignment.opportunity_id, Assignment.req_id)))
 
 
+def solution_ref(a: Assignment, m) -> str | None:
+    return next((u["product_id"] for u in (m.units if m else []) if u["bu"] == a.bu and u["product_id"]), None) or a.product_ref
+
+
+def solution_refs(db: Session, assignments: list[Assignment]) -> dict[int, str | None]:
+    matches = {o: matching.for_opportunity(db, o) for o in {a.opportunity_id for a in assignments}}
+    return {a.id: solution_ref(a, matches[a.opportunity_id].get(a.req_id)) for a in assignments}
+
+
 def respond(db: Session, assignment_id: int, compliance: str, product_ref: str | None, response: str, user: dict,
             reason: str = "", conditions: str = "", workaround: str = "", next_steps: str = "") -> None:
     # ponytail: "exception" is still accepted here for the seed's earlier-value answer; the API offers only OFFERED
     assert compliance in COMPLIANCE, compliance
     if compliance in NEEDS_REASON and not (reason or "").strip():
-        raise ValueError("Say what is not met and why (reason) for a partially or non-compliant answer.")
+        raise ValueError("Say what is not met or what changes, and why (reason) for a partially compliant, compliant "
+                         "with changes or non-compliant answer.")
+    if compliance in NEEDS_CHANGE and not (workaround or "").strip():
+        raise ValueError("Say what changes from the requested specification (proposed change) for a compliant-with-changes answer.")
     a = _get(db, assignment_id)
     who = people(db, a)["answer"]
     if not _holds(user, a, [p["role"] for p in who]):
@@ -386,6 +420,8 @@ def validate(db: Session, assignment_id: int, ok: bool, note: str, user: dict) -
     a.status, a.validated_by, a.validation_note = ("validated" if ok else "returned"), actor, note
     audit.record(db, actor, a.status, "assignment", a.req_id, a.opportunity_id, bu=a.bu, note=note)
     db.commit()
+    if ok:
+        consolidate_if_ready(db, a.opportunity_id, actor)
 
 
 def comments(db: Session, opp_id: str, req_id: str | None = None, status: str | None = None) -> list[Comment]:
@@ -515,8 +551,10 @@ def handoff(db: Session, opp_id: str, bu: str) -> dict:
                 "document": req.document_id if req else None,  # the source's document: a change document (P-11)
                 "requirement": req.text if req else None, "category": req.category if req else None,
                 "product_id": product_id, "product": (catalog.product(product_id) or {}).get("name"),
+                "proposed_solution": catalog.solution(bu, product_id) if product_id else None,  # C-40, as shown
                 "offering_type": offering, "engineering_flags": flags.get(a.req_id, []),
-                "unit_answer": {"status": a.status, "compliance": a.compliance, "product_ref": a.product_ref,
+                "unit_answer": {"status": a.status, "compliance": a.compliance,
+                                "compliance_label": COMPLIANCE_LABELS.get(a.compliance), "product_ref": a.product_ref,
                                 "response": a.response or None, "validated_by": a.validated_by,
                                 **{f: getattr(a, f) for f in EXTENDED}},
             }

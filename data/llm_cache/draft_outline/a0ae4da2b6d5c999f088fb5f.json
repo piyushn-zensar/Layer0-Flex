@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "gaps": [
+      "Confirm the exact lots and scope covered in the tender.",
+      "Verify the standards register content and ensure it aligns with the design requirements.",
+      "Ensure all subcontractor agreements and disclosures are complete and compliant.",
+      "Review the interface register for alignment with the independent design consultant's requirements."
+    ],
+    "paragraphs": [
+      {
+        "cites": [
+          1
+        ],
+        "text": "The proposer ensures compliance with the requirement to specify the revision of industry documents used in the design. A standards register is included in the technical tender, listing the edition of every code and standard applicable to the solution, covering all relevant lots."
+      },
+      {
+        "cites": [
+          2
+        ],
+        "text": "The proposer submits a tender covering specific lots as outlined in the response. Each lot's qualification evidence is presented separately, adhering to the procedure's requirements."
+      },
+      {
+        "cites": [
+          3
+        ],
+        "text": "The proposer acknowledges the role of the Owner's independent design consultant in owning the overall campus design. The proposer designs within its lots to align with the consultant's campus design and agrees on lot interfaces through a single interface register."
+      },
+      {
+        "cites": [
+          4
+        ],
+        "text": "The proposer discloses the share of work subcontracted outside its group in the tender. Subcontractors exceeding 15% of the price or required for qualification sign the confidentiality agreement and provide a written undertaking to make their resources available."
+      }
+    ]
+  },
+  "task": "draft_outline"
+}

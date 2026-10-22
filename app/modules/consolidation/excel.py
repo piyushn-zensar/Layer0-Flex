@@ -2,10 +2,13 @@
 
 Sheet "Compliance matrix" is what goes to the customer: one row per requirement in RFP order (a group's
 sub-requirements follow it, each with its own RFP reference), the compliance in customer words, and only answers
-the bid manager has validated. Sheet "Tracking" is internal: the same columns as the CSV, one row per unit answer.
+the bid manager has validated; units under their customer-facing names, the bid desk's statements without a prefix,
+and no internal Next Steps (they stay on the Tracking sheet). Sheet "Tracking" is internal: the same columns as the
+CSV, one row per unit answer.
 Every cell is written as plain text, so nothing in it can run as a formula.
-The compliance in both exports reads Fully / Partially / Non-compliant (J-11); the four extended response columns
-(Reason, Conditions, Workaround, Next Steps) are appended last and stay blank until the units' answers hold them (A-18).
+The offer reads "unit · solution area" (the proposed solution), never a part number or catalog id (C-40).
+The compliance in both exports reads Compliant / Partially compliant / Compliant with changes / Non-compliant (J-11,
+C-43); the extended response columns (Reason, Conditions, Proposed change, and Next Steps on the Tracking sheet only) are appended last and stay blank until the units' answers hold them (A-18).
 """
 import io
 from datetime import date
@@ -16,16 +19,20 @@ from openpyxl.utils import get_column_letter
 
 NAVY, WHITE = "0F172A", "FFFFFF"
 # COMPLIANCE_WORDS is the wording the response-outline agent is prompted with (its frozen answers are keyed by that
-# prompt text): leave it. EXPORT_WORDS is what the CSV and both Excel sheets show.
-COMPLIANCE_WORDS = {"met": "Comply", "partial": "Partially comply", "not_met": "Does not comply", "exception": "Exception"}
-EXPORT_WORDS = {"met": "Fully", "partial": "Partially", "not_met": "Non-compliant", "exception": "Exception"}
-FILLS = {"Fully": "DCFCE7", "Partially": "FEF3C7", "Non-compliant": "FEE2E2", "Exception": "FEE2E2", "Open": "EEF2F6"}
-WORST_FIRST = ["Non-compliant", "Exception", "Partially", "Fully"]
-EXTENDED = [("reason", "Reason"), ("conditions", "Conditions"), ("workaround", "Workaround"), ("next_steps", "Next Steps")]
+# prompt text): leave the existing words; "deviation" is a new key, so no frozen prompt changes. EXPORT_WORDS is what the CSV and both Excel sheets show.
+COMPLIANCE_WORDS = {"met": "Comply", "partial": "Partially comply", "not_met": "Does not comply", "exception": "Exception",
+                    "deviation": "Comply with changes"}
+EXPORT_WORDS = {"met": "Compliant", "partial": "Partially compliant", "deviation": "Compliant with changes",
+                "not_met": "Non-compliant", "exception": "Exception"}
+FILLS = {"Compliant": "DCFCE7", "Partially compliant": "FEF3C7", "Compliant with changes": "E0F2FE", "Non-compliant": "FEE2E2",
+         "Exception": "FEE2E2", "Open": "EEF2F6"}
+WORST_FIRST = ["Non-compliant", "Exception", "Partially compliant", "Compliant with changes", "Compliant"]
+EXTENDED = [("reason", "Reason"), ("conditions", "Conditions"), ("workaround", "Proposed change"), ("next_steps", "Next Steps")]
 THIN = Side(style="thin", color="CBD5E1")
+CUSTOMER_EXTENDED = [(f, name) for f, name in EXTENDED if f != "next_steps"]  # Next Steps are internal: Tracking sheet only
 CUSTOMER_COLUMNS = [("Requirement ID", 16), ("RFP reference", 16), ("Requirement", 48), ("RFP wording", 60),
-                    ("Compliance", 18), ("Response", 60), ("Offered by", 30)] + [(name, 40) for _, name in EXTENDED]
-TRACKING_WIDTHS = [16, 16, 12, 40, 50, 14, 18, 12, 12, 50, 18, 14, 16, 24] + [40] * len(EXTENDED)
+                    ("Compliance", 22), ("Response", 60), ("Proposed solution", 40)] + [(name, 40) for _, name in CUSTOMER_EXTENDED]
+TRACKING_WIDTHS = [16, 16, 12, 40, 50, 14, 30, 12, 12, 50, 18, 14, 16, 24] + [40] * len(EXTENDED)
 
 
 def customer_compliance(assignments: list) -> str:
@@ -37,9 +44,12 @@ def customer_compliance(assignments: list) -> str:
 
 
 def build(title: str, customer: str, rows: list[dict], kids: dict, unit_name, tracking_columns: list[str],
-          tracking_rows: list[list[str]], source=None) -> bytes:
-    """`source(req)` is the RFP reference shown (the file name first for a requirement anchored in an addendum)."""
+          tracking_rows: list[list[str]], source=None, solution=None) -> bytes:
+    """`unit_name(code)` is the customer-facing unit name ("" for the bid desk: its statements carry no prefix);
+    `source(req)` the RFP reference shown (the file name first for a requirement anchored in an addendum);
+    `solution(a)` the answer's proposed solution ("unit · solution area"; the unit name alone when it gives "")."""
     source = source or (lambda r: r.source)
+    solution = solution or (lambda a: "")
     wb = Workbook()
     ws = wb.active
     ws.title = "Compliance matrix"
@@ -54,14 +64,13 @@ def build(title: str, customer: str, rows: list[dict], kids: dict, unit_name, tr
     for row in rows:
         req, validated = row["req"], [a for a in row["assignments"] if a.status == "validated"]
         word = customer_compliance(row["assignments"])
-        answer = "\n".join(f"{unit_name(a.bu)}: {a.response}" for a in validated if a.response) if word != "Open" else ""
-        offered = ", ".join(dict.fromkeys(
-            f"{unit_name(a.bu)} ({a.product_ref})" if a.product_ref else unit_name(a.bu) for a in validated if a.bu != "BID"))
-        extended = [_by_unit(validated, field, unit_name) if word != "Open" else "" for field, _ in EXTENDED]
+        answer = "\n".join(_prefix(unit_name, a) + a.response for a in validated if a.response) if word != "Open" else ""
+        offered = ", ".join(dict.fromkeys(solution(a) or unit_name(a.bu) for a in validated if a.bu != "BID"))
+        extended = [_by_unit(validated, field, unit_name) if word != "Open" else "" for field, _ in CUSTOMER_EXTENDED]
         _append(ws, [req.req_id, source(req), req.text, req.quote if req.kind != "group" else "", word, answer, offered, *extended],
                 fill=FILLS.get(word), bold=req.kind == "group")
         for kid in kids.get(req.req_id, []):  # sub-requirements: own RFP reference, the group's answer applies
-            _append(ws, [kid.req_id, source(kid), "    " + kid.text, kid.quote, word, "", "", *[""] * len(EXTENDED)],
+            _append(ws, [kid.req_id, source(kid), "    " + kid.text, kid.quote, word, "", "", *[""] * len(CUSTOMER_EXTENDED)],
                     fill=FILLS.get(word), muted=True)
     _finish(ws, header_row, [w for _, w in CUSTOMER_COLUMNS])
 
@@ -75,9 +84,13 @@ def build(title: str, customer: str, rows: list[dict], kids: dict, unit_name, tr
     return out.getvalue()
 
 
+def _prefix(unit_name, a) -> str:
+    return f"{name}: " if (name := unit_name(a.bu)) else ""  # the bid desk speaks for the bid: no prefix
+
+
 def _by_unit(validated: list, field: str, unit_name) -> str:
     """What the validated answers say in one extended field, one line per unit; blank when none of them has it (A-18)."""
-    return "\n".join(f"{unit_name(a.bu)}: {v}" for a in validated if (v := getattr(a, field, None)) and str(v).strip())
+    return "\n".join(_prefix(unit_name, a) + str(v) for a in validated if (v := getattr(a, field, None)) and str(v).strip())
 
 
 def _header(ws, row: int, names: list[str]) -> None:

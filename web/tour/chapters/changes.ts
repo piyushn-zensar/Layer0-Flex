@@ -51,7 +51,7 @@ const chapter: TourChapter = {
   id: "changes",
   order: 11,
   title: "Addenda and change handling",
-  summary: "Read Addendum No. 1 against the frozen Syracuse baseline, confirm each change the agent proposes, apply it as the Bid Manager, and follow a revised requirement back to the addendum page in Traceability. Always on the demo bid OPP-0001.",
+  summary: "Read Addendum No. 1 against the frozen Syracuse requirements, confirm each change the agent proposes, apply it as the Bid Manager, and follow a revised requirement back to the addendum page in Traceability. Always on the demo bid OPP-0001.",
   entryRoute: ROUTE,
   steps: [
     {
@@ -59,20 +59,20 @@ const chapter: TourChapter = {
       title: "Changes: when the customer moves the goalposts",
       route: ROUTE,
       body: [
-        "After an RFP is issued, customers send **addenda**, **answers to bidders' questions** and **change requests**. Each one can change requirements that units are already answering. This screen reads such a document like the RFP, compares every statement in it with the **frozen baseline**, and lets a person confirm each change before the Bid Manager applies it as the next baseline.",
-        "This chapter always runs on the seeded demo **OPP-0001** (Syracuse switchgear), not on a bid you created: the sample addendum's frozen change-agent answers are keyed by the demo's approved line items, so the offline model only has answers for that requirement set. On any other opportunity the example would be refused.",
-        "What you will do: read *Addendum No. 1* with one click, inspect the 8 statements the agent found and how it classified them, override one wording, confirm the rest, apply as the Bid Manager, then follow a revised requirement into Traceability, where pane 1 shows the addendum page. Finish with the result block: it names what was added, revised, removed, returned and dispatched.",
+        "After an RFP is issued, customers send **addenda**, **answers to bidders' questions** and **change requests**. Each one can change requirements that units are already answering. This screen reads such a document like the RFP, compares every statement in it with the **frozen requirements**, and lets a person confirm each change before the Bid Manager applies it as the next frozen version.",
+        "This chapter always runs on the seeded demo **OPP-0001** (Syracuse switchgear), not on a bid you created: the sample addendum's frozen change-agent answers are keyed by the demo's approved line items, so the offline model only has answers for that requirement set. On any other bid the example would be refused.",
+        "What you will do: read *Addendum No. 1* with one click, inspect the 8 statements the agent found and how it classified them, override one wording, confirm the rest, apply as the Bid Manager, then follow a revised requirement into Traceability, where pane 1 shows the addendum page. Finish with the result block: it names what was added, revised, removed, returned and sent to the units.",
       ],
     },
     {
       id: "changes-baseline",
-      title: "The current baseline",
+      title: "The current frozen version",
       route: ROUTE,
       target: "chg-baseline",
       placement: "bottom",
-      fallback: "Without a frozen baseline the page shows a warning instead: the register is frozen when the main RFP has been read.",
+      fallback: "Without frozen requirements the page shows a warning instead: the register is frozen when the main RFP has been read.",
       body: [
-        "*Current baseline 1: 312 requirements.* A baseline is the frozen, numbered set of approved requirements. Change documents are always compared with the **latest** baseline, and applying a change set freezes the next one (baseline 2) without editing anything in place: every change is a new version or a new ID, so baseline 1 stays readable in each requirement's history.",
+        "*Current frozen version 1: 312 requirements.* A frozen version is the numbered set of approved requirements. Change documents are always compared with the **latest** frozen version, and applying a change set freezes the next one (frozen version 2) without editing anything in place: every change is a new version or a new ID, so frozen version 1 stays readable in each requirement's history.",
         "If the requirements were not frozen, the page would show a warning and no upload form: there is nothing to compare with yet.",
       ],
     },
@@ -84,7 +84,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       fallback: "The upload form takes one PDF: an addendum, Q&A answers or a change request.",
       body: [
-        "One PDF at a time. It is read by the same layout model and anchoring as the RFP, so every statement gets a page and lines. Two frozen model tasks then run: one lists the statements (a verbatim quote and the requirement as it reads after the change), the other compares each with up to five candidate baseline requirements and proposes *added*, *modified*, *removed*, *unchanged* or *not a requirement*, with a confidence and a rationale. Without a model answer nothing is guessed: the upload fails with a message and no set is created.",
+        "One PDF at a time. It is read by the same layout model and anchoring as the RFP, so every statement gets a page and lines. Two frozen model tasks then run: one lists the statements (a verbatim quote and the requirement as it reads after the change), the other compares each with up to five candidate frozen requirements and proposes *added*, *modified*, *removed*, *unchanged* or *not a requirement*, with a confidence and a rationale. Without a model answer nothing is guessed: the upload fails with a message and no set is created.",
         "Only **one set in review** exists at a time, the main RFP is refused as a change document, and a file that was already applied cannot be applied twice.",
       ],
     },
@@ -120,7 +120,7 @@ const chapter: TourChapter = {
       placement: "bottom",
       fallback: "Each change document read becomes one card: file name, status and the confirmed count.",
       body: [
-        "One card per change document, newest first: the **file name** (*rfp_syracuse_addendum_1.pdf*), the set's **status** pill (*in review*: a person is confirming; *applied*: it became a baseline; *discarded*: dropped, baseline unchanged) and **confirmed / total**: how many of its statements a person has confirmed (0 / 8 right after reading).",
+        "One card per change document, newest first: the **file name** (*rfp_syracuse_addendum_1.pdf*), the set's **status** pill (*in review*: a person is confirming; *applied*: it became a frozen version; *discarded*: dropped, frozen version unchanged) and **confirmed / total**: how many of its statements a person has confirmed (0 / 8 right after reading).",
         "A set is a unit of work: everything in it is applied together, or not at all.",
       ],
     },
@@ -130,21 +130,21 @@ const chapter: TourChapter = {
       route: ROUTE,
       target: "chg-set-meta",
       placement: "bottom",
-      fallback: "Under the title: who read the document, when, and against which baseline.",
+      fallback: "Under the title: who read the document, when, and against which frozen version.",
       body: [
-        "*Read by Bid Manager on … against baseline 1.* The baseline number matters: a set can only be applied while that baseline is still the latest. If another set is applied first, this one is refused with *discard it and upload the document again*, because its comparison would be stale.",
-        "After apply the line continues with *Applied by … : baseline 2*; a discarded set says so with no baseline change.",
+        "*Read by Bid Manager on … against frozen version 1.* The version number matters: a set can only be applied while that frozen version is still the latest. If another set is applied first, this one is refused with *discard it and upload the document again*, because its comparison would be stale.",
+        "After apply the line continues with *Applied by … : frozen version 2*; a discarded set says so and the frozen version is unchanged.",
       ],
     },
     {
       id: "changes-share",
-      title: "How much of the baseline changes: the drastic rule",
+      title: "How much of the frozen version changes: the drastic rule",
       route: ROUTE,
       target: "chg-set-share",
       placement: "bottom",
-      fallback: "A line under the card title says what share of the baseline is modified or removed.",
+      fallback: "A line under the card title says what share of the frozen version is modified or removed.",
       body: [
-        "*1.0% of the baseline is modified or removed (drastic above 25%, placeholder)*: 3 of 312 requirements (two modified, one removed; additions do not count). Above the threshold the line becomes a red **Drastic change** alert: *consider a new bid linked to this one. A person decides.*",
+        "*1.0% of the frozen version is modified or removed (drastic above 25%, placeholder)*: 3 of 312 requirements (two modified, one removed; additions do not count). Above the threshold the line becomes a red **Drastic change** alert: *consider a new bid linked to this one. A person decides.*",
         "The 25% is a **placeholder** awaiting confirmation; Layer 0 never opens or closes a bid by itself, it only flags the share so the decision is taken by a person, in the open.",
       ],
     },
@@ -157,7 +157,7 @@ const chapter: TourChapter = {
       fallback: "Chips above the table count the statements per kind and filter the table.",
       body: [
         "*All 8 · Added 2 · Modified 2 · Removed 1 · Unchanged 1 · Not a requirement 2*. Each chip filters the table to that kind; click it again to clear. The kind of a row is the person's decision once confirmed, else the agent's proposal, so an override moves a row between chips.",
-        "A statement the document itself calls a deletion can still end up *unchanged* if the person decides the baseline never required it, and the counts follow.",
+        "A statement the document itself calls a deletion can still end up *unchanged* if the person decides the frozen requirements never required it, and the counts follow.",
       ],
     },
     {
@@ -210,14 +210,14 @@ const chapter: TourChapter = {
     },
     {
       id: "changes-col-target",
-      title: "Target in the baseline",
+      title: "Target in the frozen version",
       route: ROUTE,
       target: "chg-col-target",
       placement: "bottom",
-      fallback: "The Target column names the baseline requirement a statement changes, removes or confirms.",
+      fallback: "The Target column names the frozen requirement a statement changes, removes or confirms.",
       body: [
-        "For modified, removed and unchanged: the baseline requirement the statement acts on, as a link into Traceability, with its short text and source: row 1 targets **REQ-0001-0046** (the proposal due date, *09/15/2023 at 4:00 PM*), row 2 **REQ-0001-0330** (the breaker positions, a sub-requirement of the switchgear group), row 5 **REQ-0001-0125** (AutoCAD drawings), row 6 **REQ-0001-0331** (Arc-resistant Type 2B). Added rows show *new requirement*.",
-        "After apply, a modified target reads *Revised in baseline 2; the earlier wording is in its history (History in pane 2 of Requirement Traceability)* and a removed one is plain text, because it has left Traceability.",
+        "For modified, removed and unchanged: the frozen requirement the statement acts on, as a link into Traceability, with its short text and source: row 1 targets **REQ-0001-0046** (the proposal due date, *09/15/2023 at 4:00 PM*), row 2 **REQ-0001-0330** (the breaker positions, a sub-requirement of the switchgear group), row 5 **REQ-0001-0125** (AutoCAD drawings), row 6 **REQ-0001-0331** (Arc-resistant Type 2B). Added rows show *new requirement*.",
+        "After apply, a modified target reads *Revised in frozen version 2; the earlier wording is in its history (History in pane 2 of Requirement Traceability)* and a removed one is plain text, because it has left Traceability.",
       ],
     },
     {
@@ -240,9 +240,9 @@ const chapter: TourChapter = {
       placement: "left",
       skipIf: notInReview,
       onEnter: (ctx) => ctx.el("chg-row-1")?.scrollIntoView({ block: "center", behavior: "smooth" }),
-      fallback: "While a set is in review, each undecided row ends with a small form: Change, Baseline requirement, New wording, Confirm.",
+      fallback: "While a set is in review, each undecided row ends with a small form: Change, Frozen requirement, New wording, Confirm.",
       body: [
-        "Rule R4 of this PoC: agents propose, a person confirms. Every row in review ends with a form prefilled with the proposal. **Change** picks one of the five kinds. **Baseline requirement** (for modified, removed, unchanged) lists the agent's candidates A to E with the proposed one first, plus *Another requirement ID…* for a requirement the agent did not offer: it must be an approved line item of the current baseline, otherwise the confirm is refused with the reason in red.",
+        "Rule R4 of this PoC: agents propose, a person confirms. Every row in review ends with a form prefilled with the proposal. **Change** picks one of the five kinds. **Frozen requirement** (for modified, removed, unchanged) lists the agent's candidates A to E with the proposed one first, plus *Another requirement ID…* for a requirement the agent did not offer: it must be an approved line item of the current frozen version, otherwise the confirm is refused with the reason in red.",
         "**New wording** (for added and modified) can be edited; it is only sent when it differs from the proposal. **Confirm** records the decision with your name; a confirmed row shows the kind, the target and *Confirmed by …* with a *Change* link to reopen it. Anyone may confirm; only applying is reserved to the Bid Manager.",
       ],
     },
@@ -305,9 +305,9 @@ const chapter: TourChapter = {
       route: ROUTE,
       target: "chg-discard",
       placement: "top",
-      fallback: "Discard is only shown while a set is in review (this set is already applied or discarded): it drops the set and leaves the baseline as it is.",
+      fallback: "Discard is only shown while a set is in review (this set is already applied or discarded): it drops the set and leaves the frozen version as it is.",
       body: [
-        "The other way out of review: **Discard** (Bid Manager only, with a confirmation dialog) drops the change set and every decision in it; the baseline stays as it is and the document can be read again later. Use it when a document was uploaded by mistake, or when the comparison went stale because another set was applied first.",
+        "The other way out of review: **Discard** (Bid Manager only, with a confirmation dialog) drops the change set and every decision in it; the frozen version stays as it is and the document can be read again later. Use it when a document was uploaded by mistake, or when the comparison went stale because another set was applied first.",
         "Nothing in this chapter asks you to discard: the next step applies the set, which is the state the rest of the walkthrough builds on. After apply (or discard) the button is gone and the card is read-only history.",
       ],
     },
@@ -327,9 +327,9 @@ const chapter: TourChapter = {
       done: present("chg-set-result"),
       fallback: "'Apply to requirements' is in the action row of a set in review; it is enabled for the Bid Manager once every row is confirmed.",
       body: [
-        "Only the **Bid Manager** applies or discards (the button is disabled for anyone else and the API checks the signed-in role too; change user with *Sign out* in the header and sign in again). Apply refuses if any row is unconfirmed, if two rows change the same requirement, or if the baseline moved since the upload.",
-        "What it does, in one transaction: each **added** statement becomes a new, approved requirement with a new ID anchored in the addendum; each **modified** one becomes **version 2** of its target with the new wording and the addendum's quote and lines; each **removed** one gets a version with status *removed* (removing a group removes its sub-requirements); then **baseline 2** is frozen with the new count. Then the follow-up: the unit answers of changed requirements are **returned** for review with a note (*Changed by rfp_syracuse_addendum_1.pdf: now reads: …*), only the added and modified requirements are **re-matched** (re-matching everything would change the frozen page batches of untouched ones), and if work was dispatched before and the latest go/no-go is *go*, **dispatch** runs: new assignments go out and removed work is withdrawn.",
-        "A failure after the baseline is committed (for example the model service) is reported in the result's note, not raised: the baseline stands, and matching or sending the work can be run from their own pages.",
+        "Only the **Bid Manager** applies or discards (the button is disabled for anyone else and the API checks the signed-in role too; change user with *Sign out* in the header and sign in again). Apply refuses if any row is unconfirmed, if two rows change the same requirement, or if the frozen version moved since the upload.",
+        "What it does, in one transaction: each **added** statement becomes a new, approved requirement with a new ID anchored in the addendum; each **modified** one becomes **version 2** of its target with the new wording and the addendum's quote and lines; each **removed** one gets a version with status *removed* (removing a group removes its sub-requirements); then **frozen version 2** is saved with the new count. Then the follow-up: the unit answers of changed requirements are **returned** for review with a note (*Changed by rfp_syracuse_addendum_1.pdf: now reads: …*), only the added and modified requirements are **re-matched** (re-matching everything would change the frozen page batches of untouched ones), and if work was sent to the units before, the work is **sent again**: new assignments go out and removed work is withdrawn (no go decision is needed; a no-go stops it).",
+        "A failure after the frozen version is committed (for example the model service) is reported in the result's note, not raised: the frozen version stands, and proposing solutions (Traceability) or sending the work (Assessment Summary) can be run from their own pages.",
       ],
     },
     {
@@ -340,11 +340,11 @@ const chapter: TourChapter = {
       placement: "bottom",
       skipIf: noResult,
       onEnter: remember,
-      fallback: "After apply a green block 'Baseline 2 frozen with the changes' lists the added, modified and removed IDs, the returned answers and the dispatched work.",
+      fallback: "After apply a green block 'Frozen version 2 saved with the changes' lists the added, modified and removed IDs, the returned answers and the work sent to the units.",
       body: [
-        "**Baseline 2 frozen with the changes.** *Added*: two new IDs (seismic qualification, warranty), links into Traceability where pane 1 shows the addendum. *Modified (new version)*: REQ-0001-0046 and REQ-0001-0330, now at version 2. *Removed*: REQ-0001-0125, shown as plain text because it has left Traceability (its history is in pane 2 of Requirement Traceability).",
-        "*3 unit answer(s) returned for review*: the changed and the removed requirements are sub-requirements, so the work on their groups gets a note of what changed (the submission group REQ-0001-0829, the switchgear group REQ-0001-0885 and the drawings group REQ-0001-0847). The switchgear group's validated answer from Crown Technical Systems goes back for review; the other two were not answered yet, so they only carry the note; the Final response count drops until they are answered again. *2 new assignment(s) sent*: the added requirements dispatched to the units matching proposed, because the demo had dispatched before and its go/no-go is *go*. When that is not the case the note says *Not dispatched: …* and why.",
-        "The header now reads baseline 2; the upload form is enabled again for the next addendum; the whole set is read-only history with every decision and who took it.",
+        "**Frozen version 2 saved with the changes.** *Added*: two new IDs (seismic qualification, warranty), links into Traceability where pane 1 shows the addendum. *Modified (new version)*: REQ-0001-0046 and REQ-0001-0330, now at version 2. *Removed*: REQ-0001-0125, shown as plain text because it has left Traceability (its history is in pane 2 of Requirement Traceability).",
+        "*3 unit answer(s) returned for review*: the changed and the removed requirements are sub-requirements, so the work on their groups gets a note of what changed (the submission group REQ-0001-0829, the switchgear group REQ-0001-0885 and the drawings group REQ-0001-0847). The switchgear group's validated answer from Crown Technical Systems goes back for review; the other two were not answered yet, so they only carry the note; the Compliance matrix count drops until they are answered again. *2 new assignment(s) sent to the units*: the added requirements went to the units their proposed solutions name, because the demo bid had been sent to the units before. When that is not the case the note says *Not sent to units: …* and why.",
+        "The page now reads *Current frozen version 2*; the upload form is enabled again for the next addendum; the whole set is read-only history with every decision and who took it.",
       ],
     },
     {
@@ -371,7 +371,7 @@ const chapter: TourChapter = {
       body: [
         "This is Traceability with the first **added** requirement of the result selected (REQ-0001-0980 in the demo: the seismic qualification; the same link the result block offers). Pane 1 shows a **document switch** (*RFP* / *rfp_syracuse_addendum_1.pdf*) and opens the **addendum page** with the requirement's lines highlighted: it is anchored to the addendum, p. 1, lines 17-19, not to the RFP, and every export writes its source as *rfp_syracuse_addendum_1.pdf, p. 1, lines 17-19*.",
         "The two modified requirements are **sub-requirements** of groups (REQ-0001-0046 belongs to the submission group REQ-0001-0829, REQ-0001-0330 to the switchgear group REQ-0001-0885): a link to them opens their group's row, where pane 2 lists them at version 2 with the new wording (the earlier text is in the History link in pane 2), and pane 3 shows the group's answers, including the one returned with the change note. The removed REQ-0001-0125 is no longer listed here.",
-        "That closes the loop: a customer change arrives as a document, becomes confirmed decisions, a new baseline, returned work, and stays traceable to its page and lines. Next: the recap.",
+        "That closes the loop: a customer change arrives as a document, becomes confirmed decisions, a new frozen version, returned work, and stays traceable to its page and lines. Next: the recap.",
       ],
     },
   ],

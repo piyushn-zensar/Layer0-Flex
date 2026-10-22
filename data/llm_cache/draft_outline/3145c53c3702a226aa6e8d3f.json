@@ -1,0 +1,42 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "gaps": [
+      "Confirm the short-circuit rating and breaker clearing time for the power chain.",
+      "Provide the thermal ride-through time and automatic restart sequence for the CDUs.",
+      "State the maximum water inlet and expected outlet temperatures for the cooling system.",
+      "Verify the compliance of the outdoor enclosures with the specified environmental standards."
+    ],
+    "paragraphs": [
+      {
+        "cites": [
+          1,
+          15
+        ],
+        "text": "The proposer offers a technical solution that partially complies with the requirements for power distribution and redundancy. The solution includes 800 VDC two-wire distribution to the racks, sized for 198 to 330 kW racks in each 20 MW deployment unit, with a growth path to 570 kW per rack position. The distribution system supports fast shutdown by shunt trip, current-limited DC fault current, and two protection zones, ensuring insulation monitoring on the facility side and residual current monitoring at the rack interface (cites: [1], [15])."
+      },
+      {
+        "cites": [
+          2
+        ],
+        "text": "The prefabricated modular power pods are designed for concurrent maintenance and the block-plus-catcher arrangement, meeting the redundancy requirements. The pods are suitable for outdoor use with ambient temperatures ranging from -30 to 40 °C, with stated derating above 40 °C. The solution includes upgraded outdoor enclosures to meet the C5 corrosion class and 120 mph wind rating (cites: [2])."
+      },
+      {
+        "cites": [
+          3,
+          37,
+          38
+        ],
+        "text": "The liquid cooling system supports the availability target of 99.9% with concurrently maintainable coolant distribution units (CDUs). The CDUs are modular, placed in mechanical galleries, and designed for facility water up to 45 °C on the primary side, serving a technical-grade secondary loop to GPU cold plates at a design flow of at least 1.5 LPM per kW. The system includes direct-to-chip cold plates for GPUs, sized to the rack design (cites: [3], [37], [38])."
+      },
+      {
+        "cites": [
+          63,
+          64
+        ],
+        "text": "The proposer confirms compliance with the interface requirements for the offered equipment. The solution meets the 800 VDC input band, the 125 A interlocked whip, the 54 VDC in-rack bus, and the telemetry and control interfaces as listed. The cooling system interfaces include facility water up to 45 °C on the CDU primary side and a technical-grade secondary loop at 1.5 LPM per kW or more (cites: [63], [64])."
+      }
+    ]
+  },
+  "task": "draft_outline"
+}

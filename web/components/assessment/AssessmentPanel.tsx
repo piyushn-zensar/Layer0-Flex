@@ -1,14 +1,15 @@
 "use client";
-// "Assessment" executive summary on the Assessment step (P-38, C-23): four measures of how well the bid fits (domain alignment,
-// product-evidence coverage, specialist-review progress, preliminary feasibility), the evidence gaps behind them, and the run they
-// come from. A preliminary assessment, never a probability. Reassessing is the bid manager's.  Owner: Atharv.
+// "Assessment Summary" on the Assessment Summary step (P-38, P-43; C-36, C-38, C-39): three separate measures, the first two over the
+// technical requirements only (technical requirement match, reviewed by design engineers), the third over every requirement sent to
+// the units (specialist review progress); the standards items
+// listed beside them, the evidence gaps, and the run they come from. Never a probability. Reassessing is the bid manager's.  Owner: Atharv.
 import Link from "next/link";
 import { useState } from "react";
 import { BID_MANAGER_ONLY, errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
-import type { AssessmentMeasure, AssessmentScore } from "@/lib/types";
+import { formatDate, type AssessmentMeasure, type AssessmentScore } from "@/lib/types";
 import { Alert, Busy, Skeleton, useToast } from "@/components/ui";
 
-const day = (iso?: string | null) => (iso ? iso.slice(0, 10) : "");
+
 const share = (m: AssessmentMeasure) => (m.n === null || m.of <= 0 ? "" : `${Math.round((m.n / m.of) * 100)}% of ${m.of}`);
 
 function ReqLinks({ oppId, ids, summary }: { oppId: string; ids: string[]; summary: string }) {
@@ -29,20 +30,22 @@ function Tile({ oppId, m }: { oppId: string; m: AssessmentMeasure }) {
         ? <p style={{ fontSize: "1.5rem", fontWeight: 700, margin: 0 }}>Not assessed yet</p>
         : <p style={{ fontSize: "2rem", fontWeight: 700, margin: 0 }}>{m.n} of {m.of}</p>}
       <p className="muted" style={{ margin: 0 }}>{share(m) || " "}</p>
+      {m.corrected !== undefined && <p className="muted" style={{ margin: 0 }}>{m.confirmed} confirmed as proposed, {m.other_solution} with another
+        solution named, {m.not_compliant_answer} answered other than Compliant (a requirement can be in both of the last two groups)</p>}
       <p className="muted" style={{ fontSize: "var(--fs-sm)" }}>{m.explain}</p>
       {ids.length > 0 && <ReqLinks oppId={oppId} ids={ids} summary={`Requirements (${ids.length})`} />}
-      {m.formula && <details><summary>How this is computed</summary><p className="muted">{m.formula}</p></details>}
     </div>
   );
 }
 
-export default function AssessmentPanel({ oppId }: { oppId: string }) {
+// decided: the go/no-go is recorded; without a knowledge-base run the empty state and its button are no longer offered
+export default function AssessmentPanel({ oppId, decided = false }: { oppId: string; decided?: boolean }) {
   const toast = useToast();
   const bm = isBidManager(useMe());
   const { data, error, reload } = useApi<AssessmentScore>(`/api/bids/${oppId}/assessment-score`);
   const [busy, setBusy] = useState(false);
   const [formError, setFormError] = useState<string>();
-  if (error) return <section className="card"><Alert kind="error" title="Could not load the assessment.">{error}</Alert></section>;
+  if (error) return <section className="card"><Alert kind="error" title="Could not load the Assessment Summary.">{error}</Alert></section>;
   if (!data) return <section className="card"><Skeleton lines={3} /></section>;
 
   const reassess = (form: FormData) => {
@@ -59,12 +62,14 @@ export default function AssessmentPanel({ oppId }: { oppId: string }) {
 
   return (
     <section className="card" data-tour="asm-score">
-      <div className="card-head"><h2>Assessment</h2></div>
+      <div className="card-head"><h2>Three measures</h2></div>
       <p className="muted">{data.note}</p>
 
       <div className="row" style={{ alignItems: "stretch" }}>
-        {[m.domain_alignment, m.product_evidence, m.review_progress, m.preliminary_feasibility].map((x) => <Tile key={x.label} oppId={oppId} m={x} />)}
+        {[m.technical_match, m.engineer_reviewed, m.review_progress].map((x) => <Tile key={x.label} oppId={oppId} m={x} />)}
       </div>
+      {data.standards.req_ids.length > 0 && <div className="muted">
+        <ReqLinks oppId={oppId} ids={data.standards.req_ids} summary={`${data.standards.label}: ${data.standards.req_ids.length}`} /></div>}
 
       <h3>Evidence gaps</h3>
       {data.gaps.length === 0 ? <p className="muted">No evidence gaps</p> : (
@@ -77,9 +82,9 @@ export default function AssessmentPanel({ oppId }: { oppId: string }) {
         </ul>)}
 
       <p className="muted" data-tour="asm-score-run">{hasRun
-        ? `Assessment run ${data.run}, ${day(data.run_at)}; catalog version ${data.catalog_version ?? "none"}`
-        : "No assessment run yet"}</p>
-      <form className="form" action={reassess}>
+        ? `Knowledge-base assessment ${data.run}, ${formatDate(data.run_at, true)}; catalog version ${data.catalog_version ?? "none"}`
+        : decided ? "No knowledge-base assessment was run: the bid was decided on the units' reviewed answers." : "No knowledge-base assessment run yet"}</p>
+      {(hasRun || !decided) && <form className="form" action={reassess}>
         <div className="row">
           <label><span className="sr-only">Reason for the assessment</span>
             <input name="reason" required placeholder={hasRun ? "Why reassess?" : "Why assess now?"} disabled={!bm || busy} /></label>
@@ -88,7 +93,7 @@ export default function AssessmentPanel({ oppId }: { oppId: string }) {
           {busy && <Busy label="Assessing…" />}
           {!bm && <span className="muted">{BID_MANAGER_ONLY}</span>}
         </div>
-      </form>
+      </form>}
       <Alert kind="error">{formError}</Alert>
     </section>
   );
