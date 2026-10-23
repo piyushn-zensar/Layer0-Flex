@@ -67,7 +67,7 @@ def _fields(inputs: dict) -> dict[str, list[str]]:
 
 
 def _stated(inputs: dict, fields: list[str], scope: str) -> str:
-    return ", ".join(str(inputs[f"{scope}.{f}"]["stated"]) for f in fields if f"{scope}.{f}" in inputs)
+    return ", ".join(dict.fromkeys(str(inputs[f"{scope}.{f}"]["stated"]) for f in fields if f"{scope}.{f}" in inputs))
 
 
 def _alone(cat: pd.DataFrame, values: dict) -> rc.MatchResult:
@@ -101,7 +101,9 @@ def _board(group: dict, cat: pd.DataFrame, parts: dict, web: list[dict]) -> dict
                   "candidates, not a recommendation, until the missing inputs are known.")
     elif b["status"] == "ok":
         outcome = "match"
-        reason = f"{len(cands)} power modules meet every stated constraint (best first: fewest modules, efficiency, size)."
+        total = b["funnel"][-1]["remaining"] if b["funnel"] else len(cands)
+        reason = (f"{total} power modules meet every stated constraint; the best {len(cands)} are listed (fewest modules, "
+                  "then efficiency, then size).")
     elif near:
         outcome = "near_match"
         reason = (f"No part meets every stated constraint. Without the {LABEL.get(best, best)} constraint, {relax[best]} "
@@ -127,7 +129,7 @@ def _board(group: dict, cat: pd.DataFrame, parts: dict, web: list[dict]) -> dict
             continue
         said = _stated(inputs, fs, "board")
         if outcome == "match" or (outcome == "insufficient_information" and cands):
-            per_req.append(_req(r, "satisfied", f"Met by the {len(cands)} listed parts ({said}).", fs, inputs))
+            per_req.append(_req(r, "satisfied", f"Met by every listed part ({said}).", fs, inputs))
         elif outcome == "near_match":
             failing = [f for f in fs if FILTER.get(f) == best
                        or (best == "fixed_ratio_output" and FILTER.get(f) in ("input_range", "output_voltage"))]
@@ -275,7 +277,7 @@ def _comparison(inputs: dict, shown: list[dict], n: int = 3) -> dict:
         r["req_ids"] += [i for i in p["req_ids"] if i not in r["req_ids"]]
     parts = shown[:n]
     return {"parts": [c["part_number"] for c in parts], "links": [c["link"] for c in parts],
-            "rows": [r | {"required": " to ".join(r["required"]), "values": [SHOW[f](c) for c in parts]}
+            "rows": [r | {"required": " to ".join(dict.fromkeys(r["required"])), "values": [SHOW[f](c) for c in parts]}
                      for f, r in rows.items()]}
 
 
@@ -293,6 +295,9 @@ def explain(group: dict, cat: pd.DataFrame, parts: dict, web: list[dict] = ()) -
         return _board(group, cat, parts, list(web))
     if group["kind"] == "system":
         return _system(group)
+    if group["kind"] == "spec_range":
+        from app.modules.configurator import ranges   # here: ranges imports catalog, as the service does
+        return ranges.explain(group)
     return {"outcome": "not_assessed", "reason": "No product table was supplied for this component, so the configurator "
             "does not assess it; the unit's engineers do.", "inputs": {}, "missing": [], "assumptions": [], "checks": [],
             "requirements": [_req(r, "cannot_assess", "Assessed by the unit's engineers.") for r in group["requirements"]]}

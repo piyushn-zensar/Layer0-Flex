@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "constraints": [
+      {
+        "as_written": "UL 9540",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0003-0065"
+        ],
+        "source": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level"
+      },
+      {
+        "as_written": "UL 9540A",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0003-0065"
+        ],
+        "source": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level"
+      },
+      {
+        "as_written": "UL 1973",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0003-0065"
+        ],
+        "source": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level"
+      },
+      {
+        "as_written": "IEC 62133",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0003-0065"
+        ],
+        "source": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level"
+      },
+      {
+        "as_written": "NFPA 855",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0003-0065"
+        ],
+        "source": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level"
+      },
+      {
+        "as_written": "UN 38.3",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0003-0065"
+        ],
+        "source": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level"
+      }
+    ]
+  },
+  "task": "configurator_range_inputs"
+}

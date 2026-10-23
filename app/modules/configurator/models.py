@@ -27,7 +27,7 @@ class ComponentMatch(Base):
     opportunity_id: Mapped[str] = mapped_column(String(20), index=True)
     seq: Mapped[int] = mapped_column(default=0)
     name: Mapped[str] = mapped_column(String(300))
-    kind: Mapped[str] = mapped_column(String(10))                 # dc_dc | system | other
+    kind: Mapped[str] = mapped_column(String(10))                 # dc_dc | system | spec_range | other
     req_ids: Mapped[list] = mapped_column(JSON, default=list)
     outcome: Mapped[str] = mapped_column(String(24))              # see explain.OUTCOMES
     reason: Mapped[str] = mapped_column(Text, default="")

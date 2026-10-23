@@ -18,7 +18,8 @@ export const FIT: Record<RequirementFit, { label: string; tone: string }> = { sa
 const CHECK_TONE: Record<string, string> = { open: "warn", not_supported: "n/a", pass: "pass", fail: "fail", review: "warn", unknown: "n/a" };
 const CHECK_LABEL: Record<string, string> = { open: "Open", not_supported: "Not checked by the configurator", pass: "Pass", fail: "Fail",
   review: "To review", unknown: "Unknown" };
-const KIND: Record<ComponentMatch["kind"], string> = { dc_dc: "DC/DC module search", system: "Installation checks", other: "No product table" };
+const KIND: Record<ComponentMatch["kind"], string> = { dc_dc: "DC/DC module search", system: "Installation checks",
+  spec_range: "Published ratings search", other: "No product table" };
 
 export function OutcomeBadge({ c, labels }: { c: Pick<ComponentMatch, "outcome">; labels: Record<string, string> }) {
   return <StatusBadge status={OUTCOME_TONE[c.outcome]} label={labels[c.outcome] ?? c.outcome} />;
@@ -47,6 +48,10 @@ function Details({ oppId, c }: { oppId: string; c: ComponentMatch }) {
         <ul className="per-req">{d.candidates!.map((p) => <li key={p.part_number}><Link className="mono" href={p.link}>{p.part_number}</Link>{" "}
           <span className="muted">{p.family ?? p.series} · {p.power_w_per_module ?? "?"} W × {p.modules_total ?? "?"} · {p.efficiency_pct ?? "?"}%
             {p.conflicts.length > 0 && " · web page disagrees"}</span></li>)}</ul></details>}
+      {(d.spec_candidates?.length ?? 0) > 0 && <details><summary>Published variants compared ({d.spec_candidates!.length}; families {d.families?.join(", ")})</summary>
+        <ul className="per-req">{d.spec_candidates!.map((s) => <li key={s.spec_id}><Link href={s.link}>{s.family_key}</Link> · {s.variant}{" "}
+          <span className="muted">{s.fails} failing, {s.unknowns} not published, of {s.compared} compared{s.verified ? " · confirmed by the unit" : " · unverified"}</span></li>)}</ul>
+      </details>}
       {(d.web_listed?.length ?? 0) > 0 && <p className="muted">Listed on the unit&apos;s web pages with no published ratings (not assessed; ask the unit):{" "}
         {d.web_listed!.map((w, i) => <span key={w.key}>{i > 0 && ", "}<Link href={w.link}>{w.name}</Link></span>)}</p>}
       <h4>Requirements ({d.requirements.length})</h4>

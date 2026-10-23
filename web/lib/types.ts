@@ -312,10 +312,15 @@ export interface ComponentDetail {
   web_listed?: { key: string; name: string; specs: string; source_url: string | null; link: string }[]; // no match: ask the unit
   // P-58: passages of the published product documents tagged to the families proposed for the component (never decides)
   evidence?: { families: string[]; documents: string[]; passages: ComponentEvidence[] };
+  // P-62: published-ratings search (kind spec_range): variants of the proposed families, best first
+  spec_candidates?: SpecCandidate[]; families?: string[];
 }
+export interface SpecCandidate { spec_id: string; family_key: string; variant: string; verified: boolean; link: string; compared: number;
+  fails: number; unknowns: number; results: { attribute: string; stated: string; status: "met" | "not_met" | "unknown" | "shown" | "not_compared";
+    published: string; citation: string | null }[] }
 export interface ComponentEvidence { citation: string; title: string; file_name: string; page: number; text: string; applies_to: string[] }
 export interface ComponentMatch { id: number; run_id: number; opportunity_id: string; seq: number; name: string;
-  kind: "dc_dc" | "system" | "other"; req_ids: string[]; outcome: ComponentOutcome; reason: string; detail: ComponentDetail }
+  kind: "dc_dc" | "system" | "spec_range" | "other"; req_ids: string[]; outcome: ComponentOutcome; reason: string; detail: ComponentDetail }
 export interface ComponentRun { id: number; opportunity_id: string; catalog_import: string; ungrouped: string[]; unassigned: string[]; run_by: string; run_at: string }
 export interface ComponentsResponse { run: ComponentRun | null; components: ComponentMatch[]; outcomes: Record<ComponentOutcome, string>; note: string }
 // GET /api/bids/{id}/requirements/{req_id}/components

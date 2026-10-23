@@ -145,3 +145,33 @@ def group(items: list[dict]) -> dict:
     system = [i for i, a in answers.items() if a["system"]]
     return {"groups": groups + ([{"name": "System parameters", "kind": "system", "req_ids": system}] if system else []),
             "unassigned": [i["req_id"] for i in items if i["req_id"] not in answers]}
+
+
+RANGE_TASK = "configurator_range_inputs"
+
+RANGE_PROMPT = """You map RFP requirement items to the rating names of a product catalogue, so that each requirement value
+can be compared with the published ratings of the products proposed for one component (busway, switchgear,
+switchboards, power distribution units, remote power panels, coolant distribution units).
+You get the component, the rating names you may use and the items (ID, text, verbatim quote). Return one constraint per
+value an item states for one of those ratings: {"attribute", "as_written", "req_ids", "source"}.
+- as_written: the value exactly as the item writes it, with its unit: "1200 A", "65 kA for 1 s", "480 V", "30 to 45 °C",
+  "IP54", "Form 4b", "UL 891", "1.5 MW". Copy the digits; never convert, multiply, add up or compute. A range stays a range.
+- req_ids: the IDs of the items that state it; source: the verbatim words that state it.
+Only ratings of this component itself: leave out auxiliary and control supplies (control voltage, close and trip
+supply, motor or heater supplies), values of other equipment, test procedures, quantities of units and anything not in
+the rating names. Return an empty list when the items state none."""
+
+RANGE_SCHEMA = {"type": "object", "additionalProperties": False, "required": ["constraints"], "properties": {
+    "constraints": {"type": "array", "items": {"type": "object", "additionalProperties": False,
+                                               "required": ["attribute", "as_written", "req_ids", "source"],
+                                               "properties": {"attribute": {"type": "string"}, "as_written": {"type": "string"},
+                                                              "req_ids": {"type": "array", "items": {"type": "string"}},
+                                                              "source": {"type": "string"}}}}}}
+
+
+def range_inputs(component: str, attributes: list[str], items: list[dict]) -> dict:
+    """items: [{req_id, text, quote}] of one component -> {"constraints": [...]} (values as written)."""
+    prompt = (f"Component: {component}\nRating names: {', '.join(attributes)}\n\nRequirement items:\n"
+              + "\n".join(json.dumps({"req_id": i["req_id"], "text": i["text"], "quote": i["quote"]}, ensure_ascii=False)
+                          for i in items))
+    return llm.complete_json(RANGE_TASK, RANGE_PROMPT, prompt, RANGE_SCHEMA)

@@ -1,0 +1,124 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "constraints": [
+      {
+        "as_written": "800 VDC",
+        "attribute": "rated_voltage_dc",
+        "req_ids": [
+          "REQ-0003-0009",
+          "REQ-0003-0050",
+          "REQ-0003-0053",
+          "REQ-0003-0064",
+          "REQ-0003-0072",
+          "REQ-0003-0116",
+          "REQ-0003-0118"
+        ],
+        "source": "DB-04 | Distribution to the rack is 800 VDC nominal, two-wire, inside the 1500 VDC low-voltage limit | S5; S3 §5.2.1"
+      },
+      {
+        "as_written": "1500 VDC",
+        "attribute": "rated_voltage_dc",
+        "req_ids": [
+          "REQ-0003-0009",
+          "REQ-0003-0053"
+        ],
+        "source": "DB-04 | Distribution to the rack is 800 VDC nominal, two-wire, inside the 1500 VDC low-voltage limit | S5; S3 §5.2.1"
+      },
+      {
+        "as_written": "125 A",
+        "attribute": "tap_off_current",
+        "req_ids": [
+          "REQ-0003-0050",
+          "REQ-0003-0069",
+          "REQ-0003-0117",
+          "REQ-0003-0118"
+        ],
+        "source": "800 VDC two-wire distribution shall run from the power-block output through DC switchboards and 6000 A-class busduct to parallel 1250 A row busways with 125 A tap cans"
+      },
+      {
+        "as_written": "6000 A",
+        "attribute": "rated_current",
+        "req_ids": [
+          "REQ-0003-0050",
+          "REQ-0003-0117"
+        ],
+        "source": "800 VDC two-wire distribution shall run from the power-block output through DC switchboards and 6000 A-class busduct to parallel 1250 A row busways with 125 A tap cans"
+      },
+      {
+        "as_written": "1250 A",
+        "attribute": "rated_current",
+        "req_ids": [
+          "REQ-0003-0050",
+          "REQ-0003-0117"
+        ],
+        "source": "800 VDC two-wire distribution shall run from the power-block output through DC switchboards and 6000 A-class busduct to parallel 1250 A row busways with 125 A tap cans"
+      },
+      {
+        "as_written": "840 VDC",
+        "attribute": "rated_voltage_dc",
+        "req_ids": [
+          "REQ-0003-0053"
+        ],
+        "source": "Operation shall stay inside the voltage band: no setpoint above 1500 VDC, no average above 1500 VDC, no extended excursion above it, and 840 VDC as the overvoltage disconnect hinge"
+      },
+      {
+        "as_written": "UL 9540",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0003-0065"
+        ],
+        "source": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level"
+      },
+      {
+        "as_written": "UL 9540A",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0003-0065"
+        ],
+        "source": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level"
+      },
+      {
+        "as_written": "UL 1973",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0003-0065"
+        ],
+        "source": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level"
+      },
+      {
+        "as_written": "IEC 62133",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0003-0065"
+        ],
+        "source": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level"
+      },
+      {
+        "as_written": "NFPA 855",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0003-0065"
+        ],
+        "source": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level"
+      },
+      {
+        "as_written": "UN 38.3",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0003-0065"
+        ],
+        "source": "Storage shall comply with UL 9540, UL 9540A, UL 1973, IEC 62133, NFPA 855 and UN 38.3, with fire propagation tests per UL 9540A at cell, module and rack level"
+      },
+      {
+        "as_written": "±400 VDC",
+        "attribute": "rated_voltage_dc",
+        "req_ids": [
+          "REQ-0003-0077"
+        ],
+        "source": "±400 VDC variant: a bidder proposing ±400 VDC sidecar racks shall name the rack input that accepts ±400 VDC three-wire, or the conversion to 800 VDC. The Owner accepts ±400 VDC only on that evidence"
+      }
+    ]
+  },
+  "task": "configurator_range_inputs"
+}

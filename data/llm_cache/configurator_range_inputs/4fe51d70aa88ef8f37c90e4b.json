@@ -1,0 +1,42 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "constraints": [
+      {
+        "as_written": "15 kV",
+        "attribute": "rated_voltage_ac",
+        "req_ids": [
+          "REQ-0003-0008",
+          "REQ-0003-0021",
+          "REQ-0003-0049"
+        ],
+        "source": "DB-03 | All medium-voltage equipment is 15 kV class | S2 §4.2; S10; S13"
+      },
+      {
+        "as_written": "15 kV",
+        "attribute": "rated_voltage_ac",
+        "req_ids": [
+          "REQ-0003-0049"
+        ],
+        "source": "Lot 2 includes the 15 kV-class switchgear lineups at each deployment unit that feed the power blocks, built to L1.04 to L1.06"
+      },
+      {
+        "as_written": "kA for 1 s",
+        "attribute": "short_time_withstand",
+        "req_ids": [
+          "REQ-0003-0023"
+        ],
+        "source": "Bidders shall state the switchgear short-circuit rating in kA for 1 s, subject to calculation"
+      },
+      {
+        "as_written": "57 to 63 Hz",
+        "attribute": "frequency",
+        "req_ids": [
+          "REQ-0003-0115"
+        ],
+        "source": "IF-02 | Lot 1 to Lot 2 | 13.8 kV ±10%, three-phase three-wire plus PE, 57 to 63 Hz, with low-resistance or solid MV grounding | S2 §4.2"
+      }
+    ]
+  },
+  "task": "configurator_range_inputs"
+}

@@ -1,0 +1,57 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "constraints": [
+      {
+        "as_written": "4.8 to 5 MW",
+        "attribute": "output_power",
+        "req_ids": [
+          "REQ-0003-0030"
+        ],
+        "source": "Each block shall deliver 4.8 to 5 MW at the DC output from an input of 13.8 kVac ±10%, three-phase three-wire plus PE"
+      },
+      {
+        "as_written": "98% between 50% and 100% utilization",
+        "attribute": "efficiency",
+        "req_ids": [
+          "REQ-0003-0041"
+        ],
+        "source": "Efficiency shall be at least 98% between 50% and 100% utilization, counting power train loss only"
+      },
+      {
+        "as_written": "18 to 40 kA symmetrical at 13.8 kV",
+        "attribute": "short_time_withstand",
+        "req_ids": [
+          "REQ-0003-0033"
+        ],
+        "source": "Short-circuit withstand shall be 18 to 40 kA symmetrical at 13.8 kV, with duration stated by the bidder"
+      },
+      {
+        "as_written": "110 kV",
+        "attribute": "impulse_withstand_voltage",
+        "req_ids": [
+          "REQ-0003-0033"
+        ],
+        "source": "Short-circuit withstand shall be 18 to 40 kA symmetrical at 13.8 kV, with duration stated by the bidder, and the basic impulse level shall be at least 110 kV"
+      },
+      {
+        "as_written": "800 VDC nominal",
+        "attribute": "rated_voltage_dc",
+        "req_ids": [
+          "REQ-0003-0037",
+          "REQ-0003-0116"
+        ],
+        "source": "Output shall be 800 VDC nominal, unipolar, with ripple ±0.5%, static regulation ±1% and dynamic regulation"
+      },
+      {
+        "as_written": "NEMA 3R",
+        "attribute": "ip_rating",
+        "req_ids": [
+          "REQ-0003-0043"
+        ],
+        "source": "Outdoor enclosures shall be NEMA 3R, rated ·30 to 40 °C with derating stated above 40 °C, corrosion class C5, seismic design category D and 120 mph wind, with a design life of 15 years or more within a 10 to 20 ft by 8 ft by 8.5 ft envelope"
+      }
+    ]
+  },
+  "task": "configurator_range_inputs"
+}

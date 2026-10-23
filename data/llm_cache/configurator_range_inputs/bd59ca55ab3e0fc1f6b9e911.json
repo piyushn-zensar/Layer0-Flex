@@ -1,0 +1,76 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "constraints": [
+      {
+        "as_written": "15kV",
+        "attribute": "rated_voltage_ac",
+        "req_ids": [
+          "REQ-0001-0322",
+          "REQ-0001-0330",
+          "REQ-0001-0435",
+          "REQ-0001-0443",
+          "REQ-0001-0761"
+        ],
+        "source": "One (1) 15kV two (2) section Metal Clad Switchgear lineup."
+      },
+      {
+        "as_written": "95kV",
+        "attribute": "impulse_withstand_voltage",
+        "req_ids": [
+          "REQ-0001-0445",
+          "REQ-0001-0478",
+          "REQ-0001-0489",
+          "REQ-0001-0761"
+        ],
+        "source": "Impulse Withstand Rating (BIL) 95 kV peak"
+      },
+      {
+        "as_written": "2000/1200 A",
+        "attribute": "rated_current",
+        "req_ids": [
+          "REQ-0001-0446",
+          "REQ-0001-0469"
+        ],
+        "source": "Rated Continuous Current\n2000/1200 A,rms"
+      },
+      {
+        "as_written": "25 kA",
+        "attribute": "short_time_withstand",
+        "req_ids": [
+          "REQ-0001-0447"
+        ],
+        "source": "Momentary rating\n25 kA, rms"
+      },
+      {
+        "as_written": "60 Hz",
+        "attribute": "frequency",
+        "req_ids": [
+          "REQ-0001-0435",
+          "REQ-0001-0485"
+        ],
+        "source": "Frequency, hertz: 60."
+      },
+      {
+        "as_written": "IEEE C37.20.2",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0001-0346",
+          "REQ-0001-0376"
+        ],
+        "source": "IEEE C37.20.2 - Metal-Clad Switchgear."
+      },
+      {
+        "as_written": "IEEE C37.20.7",
+        "attribute": "standards",
+        "req_ids": [
+          "REQ-0001-0331",
+          "REQ-0001-0347",
+          "REQ-0001-0377"
+        ],
+        "source": "Switchgear shall be Arc-resistant Type 2B. The switchgear shall meet or exceed the most conservative interpretation of standard IEEE C37.20.7."
+      }
+    ]
+  },
+  "task": "configurator_range_inputs"
+}

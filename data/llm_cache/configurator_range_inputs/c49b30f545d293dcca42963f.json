@@ -1,0 +1,52 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "constraints": [
+      {
+        "as_written": "35 °C ambient for extended periods and at 40 °C on peak days",
+        "attribute": "approach_temperature",
+        "req_ids": [
+          "REQ-0003-0089"
+        ],
+        "source": "The plant shall reject the full heat load at 35 °C ambient for extended periods and at 40 °C on peak days, and bidders shall show approach temperatures for both cases"
+      },
+      {
+        "as_written": "45 °C",
+        "attribute": "supply_temperature",
+        "req_ids": [
+          "REQ-0003-0013",
+          "REQ-0003-0084",
+          "REQ-0003-0120"
+        ],
+        "source": "The liquid cooling design point is facility water at 45 °C"
+      },
+      {
+        "as_written": "expected outlet temperatures",
+        "attribute": "return_temperature",
+        "req_ids": [
+          "REQ-0003-0084",
+          "REQ-0003-0204"
+        ],
+        "source": "The liquid cooling design point shall be facility water up to 45 °C, and bidders shall state maximum water inlet and expected outlet temperatures"
+      },
+      {
+        "as_written": "1.5 LPM per kW",
+        "attribute": "flow_rate",
+        "req_ids": [
+          "REQ-0003-0085",
+          "REQ-0003-0120"
+        ],
+        "source": "CDUs shall be liquid-to-liquid, modular and placed in mechanical galleries with N+1 group redundancy. They take facility water on the primary side and cool a separate technical-grade secondary loop that serves GPU cold plates at a design flow of at least 1.5 LPM per kW"
+      },
+      {
+        "as_written": "·20 to +45 °C",
+        "attribute": "operating_temperature",
+        "req_ids": [
+          "REQ-0003-0095"
+        ],
+        "source": "Prefabricated cooling equipment shall suit outdoor use at ·20 to +45 °C, or the local 20-year extreme if more stringent, with corrosion protection tested to ISO 12944-6 or equivalent"
+      }
+    ]
+  },
+  "task": "configurator_range_inputs"
+}

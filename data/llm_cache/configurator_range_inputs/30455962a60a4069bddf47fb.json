@@ -1,0 +1,40 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "constraints": [
+      {
+        "as_written": "800 VDC",
+        "attribute": "rated_voltage_dc",
+        "req_ids": [
+          "REQ-0003-0009"
+        ],
+        "source": "DB-04 | Distribution to the rack is 800 VDC nominal, two-wire, inside the 1500 VDC low-voltage limit | S5; S3 §5.2.1"
+      },
+      {
+        "as_written": "800 VDC",
+        "attribute": "rated_voltage_dc",
+        "req_ids": [
+          "REQ-0003-0050"
+        ],
+        "source": "800 VDC two-wire distribution shall run from the power-block output through DC switchboards and 6000 A-class busduct to parallel 1250 A row busways with 125 A tap cans"
+      },
+      {
+        "as_written": "800 VDC",
+        "attribute": "rated_voltage_dc",
+        "req_ids": [
+          "REQ-0003-0069"
+        ],
+        "source": "The Contractor shall supply 125 A 800 VDC power whips hardwired to the tap can behind a normally open contactor that closes only when the rack-side connector is mechanically locked and opens before the connector unlocks"
+      },
+      {
+        "as_written": "800 VDC",
+        "attribute": "rated_voltage_dc",
+        "req_ids": [
+          "REQ-0003-0118"
+        ],
+        "source": "IF-05 | Lot 3 to Lot 4 | 125 A 800 VDC interlocked whip behind a normally open contactor | S5"
+      }
+    ]
+  },
+  "task": "configurator_range_inputs"
+}

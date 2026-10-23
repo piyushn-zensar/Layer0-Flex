@@ -1,0 +1,33 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "constraints": [
+      {
+        "as_written": "1.5 LPM per kW",
+        "attribute": "flow_rate",
+        "req_ids": [
+          "REQ-0003-0085",
+          "REQ-0003-0120"
+        ],
+        "source": "CDUs shall be liquid-to-liquid, modular and placed in mechanical galleries with N+1 group redundancy. They take facility water on the primary side and cool a separate technical-grade secondary loop that serves GPU cold plates at a design flow of at least 1.5 LPM per kW"
+      },
+      {
+        "as_written": "1.5 LPM per kW or more",
+        "attribute": "flow_rate",
+        "req_ids": [
+          "REQ-0003-0120"
+        ],
+        "source": "IF-07 | Lot 5 to Lot 6 | Facility water up to 45 °C to the CDU primary side, and a technical-grade secondary loop to cold plates at 1.5 LPM per kW or more | S6"
+      },
+      {
+        "as_written": "up to 45 °C",
+        "attribute": "supply_temperature",
+        "req_ids": [
+          "REQ-0003-0120"
+        ],
+        "source": "IF-07 | Lot 5 to Lot 6 | Facility water up to 45 °C to the CDU primary side, and a technical-grade secondary loop to cold plates at 1.5 LPM per kW or more | S6"
+      }
+    ]
+  },
+  "task": "configurator_range_inputs"
+}

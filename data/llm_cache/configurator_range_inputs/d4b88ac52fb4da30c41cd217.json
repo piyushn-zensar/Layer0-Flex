@@ -1,0 +1,96 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "constraints": [
+      {
+        "as_written": "15kV nominal",
+        "attribute": "rated_voltage_ac",
+        "req_ids": [
+          "REQ-0001-0479"
+        ],
+        "source": "1. Voltage: a. Rated kV or nominal kV class: 15."
+      },
+      {
+        "as_written": "15kV max",
+        "attribute": "rated_voltage_ac",
+        "req_ids": [
+          "REQ-0001-0479"
+        ],
+        "source": "1. Voltage: b. Maximum kV: 15."
+      },
+      {
+        "as_written": "13.2kV operating",
+        "attribute": "rated_voltage_ac",
+        "req_ids": [
+          "REQ-0001-0479"
+        ],
+        "source": "1. Voltage: c. Operating kV: 13.2"
+      },
+      {
+        "as_written": "1.30 range factor",
+        "attribute": "rated_voltage_ac",
+        "req_ids": [
+          "REQ-0001-0479"
+        ],
+        "source": "1. Voltage: d. Rated voltage range factor (K): 1.30."
+      },
+      {
+        "as_written": "1,200A continuous",
+        "attribute": "rated_current",
+        "req_ids": [
+          "REQ-0001-0480"
+        ],
+        "source": "2. Current Ratings: a. Continuous amperes: 1,200"
+      },
+      {
+        "as_written": "25,000A momentary",
+        "attribute": "short_time_withstand",
+        "req_ids": [
+          "REQ-0001-0480"
+        ],
+        "source": "2. Current Ratings: b. Momentary, rms amperes (three-second): (25,000)."
+      },
+      {
+        "as_written": "18,000",
+        "attribute": "short_time_withstand",
+        "req_ids": [
+          "REQ-0001-0481"
+        ],
+        "source": "Short-circuit current at rated max kV: (18,000)."
+      },
+      {
+        "as_written": "500",
+        "attribute": "breaking_capacity",
+        "req_ids": [
+          "REQ-0001-0482"
+        ],
+        "source": "Three-phase rated MVA or nominal MVA class: (500)."
+      },
+      {
+        "as_written": "18,000 amperes",
+        "attribute": "breaking_capacity",
+        "req_ids": [
+          "REQ-0001-0483"
+        ],
+        "source": "Maximum symmetrical interrupting, amperes: (18,000)."
+      },
+      {
+        "as_written": "62,000 amperes",
+        "attribute": "peak_withstand",
+        "req_ids": [
+          "REQ-0001-0484"
+        ],
+        "source": "Close and latch, peak amperes: (62,000)."
+      },
+      {
+        "as_written": "5 cycles",
+        "attribute": "other",
+        "req_ids": [
+          "REQ-0001-0486"
+        ],
+        "source": "Rated interrupting time, cycles: 5."
+      }
+    ]
+  },
+  "task": "configurator_range_inputs"
+}

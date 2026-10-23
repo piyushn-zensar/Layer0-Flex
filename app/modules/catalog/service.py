@@ -29,6 +29,8 @@ Public contract:
     specs(db=None, family_key=None) -> list[dict]   ratings extracted from the documents and pages (product_specs.json),
                                                 unverified until reviewed; with db: the unit's latest review
     review_spec(db, spec_id, status, note, user) -> SpecReview   the family's unit confirms or rejects an item
+    convert_unit(value, unit, base) -> (value | None, why | None)   a value as written -> a spec attribute's base unit
+    spec_attributes() -> dict                   the spec tables' rating names -> (kind, base unit)
     product_rows(q, type, family, status, interface, application, sort, dir, page, size) -> dict
                                                 all products as table rows, spreadsheet parts and web items (C-60)
     product_detail(key) -> dict | None          one product by part number or catalog ID, with variants, documents, images
@@ -41,6 +43,8 @@ from functools import lru_cache
 
 from app.core import config
 from app.core.vectors import Index
+from app.modules.catalog.agent import ATTRIBUTES as _SPEC_ATTRIBUTES
+from app.modules.catalog.units import convert as convert_unit  # noqa: F401  (public contract)
 from app.modules.catalog.scrape import published, refresh, versions  # noqa: F401  (public contract)
 
 
@@ -172,6 +176,11 @@ ROW = ("key", "part_number", "family_key", "family", "series", "product_type", "
 def power_modules() -> list[dict]:
     """The Flex Power Modules spreadsheet merged into the catalog (P-53; scripts/import_power_modules.py)."""
     return _load("power_modules")["items"]
+
+
+def spec_attributes() -> dict:
+    """The spec tables' rating names -> (kind range | text, base unit)."""
+    return dict(_SPEC_ATTRIBUTES)
 
 
 def _specs_file() -> list[dict]:

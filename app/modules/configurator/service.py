@@ -21,7 +21,9 @@ Public contract:
                                                  only; component tells the agent what the items were grouped under
     run(prepared) -> dict                        the script's report (configure) on the merged catalog, with the
                                                  provenance, the requirement refs and the missing inputs beside it
-    components(db, opp_id) -> dict               P-55 (C-56): the bid's technical and compliance items grouped by
+    components(db, opp_id) -> dict               P-55 (C-56); P-62: "other" components whose proposed families have
+                                                 published ratings (catalog.specs) become kind spec_range (ranges.py)
+    proposed_families(refs, matches) -> list[str]   the families the matcher proposed for these requirements: the bid's technical and compliance items grouped by
                                                  requested component (one frozen model call); one configurator search
                                                  per DC/DC group (board input only), the system checks once (system
                                                  input only), other components listed without a numeric search:
@@ -45,7 +47,7 @@ from sqlalchemy.orm import Session
 from app.core import config
 from app.modules.catalog import service as catalog
 from app.core import audit
-from app.modules.configurator import agent, explain
+from app.modules.configurator import agent, explain, ranges
 from app.modules.configurator.models import ComponentMatch, ComponentRun
 from app.modules.knowledge import service as knowledge
 from app.modules.matching import service as matching
@@ -216,11 +218,19 @@ DATA_CENTRE = {"total_it_load_mw", "rack_density_kw", "cooling_mode", "coolant_s
 
 
 def components(db: Session, opp_id: str) -> dict:
-    return plan(requirement_refs(db, opp_id))
+    return plan(requirement_refs(db, opp_id), matching.for_opportunity(db, opp_id), catalog.specs(db))
 
 
-def plan(items: list[dict]) -> dict:
-    """components() on requirement refs already read (no database)."""
+def proposed_families(refs: list[dict], matches: dict) -> list[str]:
+    """The product families the matcher proposed for these requirements (their own match, else their group's)."""
+    return sorted({u["product_id"] for r in refs if (m := matches.get(r["req_id"]) or matches.get(r.get("parent") or ""))
+                   for u in m.units if u.get("product_id")})
+
+
+def plan(items: list[dict], matches: dict | None = None, specs: list[dict] | None = None) -> dict:
+    """components() on requirement refs already read (no database). With matches and spec items, a component whose
+    proposed families have published ratings becomes a published-ratings search (kind spec_range, P-62)."""
+    rated = {s["family_key"].split("/", 1)[0] for s in specs or []}
     known = {i["req_id"]: i for i in items}
     grouped_ = agent.group(items)
     groups = grouped_["groups"]
@@ -233,6 +243,17 @@ def plan(items: list[dict]) -> dict:
         run_, refs = None, [known[i] for i in ids]
         if g["kind"] == "dc_dc":
             run_ = run(prepare(refs, "board", f"dc_dc: {g['name']} (fill the board fields for this conversion)"))
+        elif g["kind"] == "other" and (fams := [f for f in proposed_families(refs, matches or {}) if f in rated]):
+            raw = agent.range_inputs(f"{g['name']} (proposed product families: {', '.join(fams)})",
+                                     list(catalog.spec_attributes()), refs)
+            cs, prov, issues = ranges.parse(raw, refs)
+            cs = ranges.dedupe(cs)
+            for c in cs:   # compared only with the families proposed for this value's own requirements
+                c["families"] = [f for f in proposed_families([known[i] for i in c["req_ids"] if i in known], matches or {})
+                                 if f in fams] or fams
+            run_ = {"constraints": cs, "inputs": prov, "issues": issues, "families": fams,
+                    "candidates": ranges.search(cs, fams, specs)}
+            g = g | {"kind": "spec_range"}
         elif g["kind"] == "system":
             prepared = prepare(refs, "system", "system: installation-wide parameters")
             if DATA_CENTRE & set(prepared["input"]["system"]):
@@ -254,9 +275,7 @@ def evidence(db: Session, group: dict, matches: dict) -> dict:
     their group's) are searched, ranked by keyword (the same on every machine), and a passage counts only when its page
     is tagged to one of those families; each passage says which. Evidence for operating conditions, compatibility and certifications; it never changes an outcome.
     -> {"families": [...], "documents": [file], "passages": [...]}"""
-    families = sorted({u["product_id"] for r in group["requirements"]
-                       if (m := matches.get(r["req_id"]) or matches.get(r.get("parent") or ""))
-                       for u in m.units if u.get("product_id")})
+    families = proposed_families(group["requirements"], matches)
     docs = {d["file"]: d for d in catalog.documents()
             if any(k.split("/", 1)[0] in families for k in d["family_keys"])}
     out = []
