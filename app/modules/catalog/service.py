@@ -26,6 +26,7 @@ Public contract:
     power_modules() -> list[dict]               the spreadsheet parts merged into the catalog (P-53, power_modules.json)
     power_modules_import() -> str               its last import date
     documents() -> list[dict]                   the supplied product documents with family keys, parts, pages (J-21)
+    product_file(path) -> (Path, media type)    a file a manifest lists (document, fetched page, image); LookupError
     specs(db=None, family_key=None) -> list[dict]   ratings extracted from the documents and pages (product_specs.json),
                                                 unverified until reviewed; with db: the unit's latest review
     review_spec(db, spec_id, status, note, user) -> SpecReview   the family's unit confirms or rejects an item
@@ -231,6 +232,21 @@ def documents() -> list[dict]:
     return _manifest("documents.json")
 
 
+def product_file(path: str):
+    """A supplied or fetched product file (a document, a page or an image) by its manifest path, e.g. "MDX-Switchgear-
+    Catalog_2026.pdf", "images/anord-busway-databar-dx-1.jpg", "web/pdf/Power-Distribution-Unit-UL.pdf". Only paths a
+    manifest lists (documents.json, images.json, web/web_sources.json) are served. -> (absolute path, media type);
+    LookupError otherwise."""
+    listed = {d["file"] for d in _manifest("documents.json")} | {i["file"] for i in _manifest("images.json")}
+    web = config.DATA / "axiom_products" / "web" / "web_sources.json"
+    listed |= {w["file"] for w in (json.loads(web.read_text("utf-8")) if web.exists() else []) if w.get("file")}
+    full = (config.DATA / "axiom_products" / path)
+    if path not in listed or not full.is_file():
+        raise LookupError(f"No product file {path!r}.")
+    types = {".pdf": "application/pdf", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".html": "text/plain"}
+    return full, types.get(full.suffix.lower(), "application/octet-stream")
+
+
 def power_modules_import() -> str:
     """The date of the last spreadsheet import that changed power_modules.json."""
     return _load("power_modules")["last_import"]
@@ -256,7 +272,7 @@ def _catalog() -> tuple[dict, dict]:
     for i in web.values():
         full[i["id"]] = {"key": i["id"], "part_number": i["model"], "name": i["name"], "family_key": i["id"],
                          "family": names.get(i["family"]), "series": i["model"], "product_type": "web_listing",
-                         "status": "Published", "interfaces": [], "application": [], "specs": i["specs"],
+                         "status": "Published", "interfaces": [], "application": [], "web_text": i["specs"],
                          "source_url": i.get("source_url"), "bu": i["bu"], "conflicts": [], "source": "web"}
     for k, f in full.items():
         rows[k] = {c: f.get(c) for c in ROW} | {"has_conflict": bool(f["conflicts"])}

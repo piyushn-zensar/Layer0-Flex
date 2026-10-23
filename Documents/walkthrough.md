@@ -303,7 +303,25 @@ This proof of concept demonstrates the workflow from document upload through the
 
 ## Appendix A: Product Catalog
 
-**Purpose.** The reference list of business units and their solution areas, the documents behind the evidence, and the products published by Flex.
+**Purpose.** Every product the system knows in one table, each product's details, the reference list of business units and their solution areas, the documents behind the evidence, and the products published by Flex.
+
+![All products](images/16-catalog-all-products.png)
+
+*Figure 12a. The Product catalog: All products (the default view).*
+
+- **All products.** One table of 797 products: the 721 parts of the Flex Power Modules spreadsheet (exported 14 Oct 2026; 170 of them in a series the Flex web pages list) and the 76 products listed on the Flex web pages. Columns: image, part number, family, series, type (module, evaluation board or web series), input and output voltage, power, efficiency, source (spreadsheet, web, or both), documents and conflicts; further columns (status, current, interface, catalog ID) are chosen with **Columns**. Search, the filters (family, type, source, status, interface, image, documents, conflicts), sorting by any column heading and pages work on every product, not only on those a bid matched. A **conflict** marks a part whose value falls outside the range the web page states for its series; both values are kept for the unit to review. Each part number opens the product's details.
+
+![Product details: a part](images/17-product-details-part.png)
+
+*Figure 12b. Product details of a spreadsheet part (BMR4920311/011).*
+
+- **Product details of a part.** Every value grouped as an engineer reads a datasheet (input, output, power and current, mechanical, interfaces and isolation, application), each with its source (the spreadsheet row and the date of the import that set it); an empty cell reads **Unknown**, never zero. A conflict is shown beside the value with the web page's value and a link to the page. Below: the evaluation boards for the part's series (a board shows the modules it evaluates), each opening its own details, and the series on the web catalog. Values are as exported and not yet confirmed by the unit.
+
+![Product details: a web series](images/18-product-details-series.png)
+
+*Figure 12c. Product details of a web series (MDX switchgear).*
+
+- **Product details of a web series.** What the official page publishes, with a link to it; the **published ratings** read from the supplied brochures and the official pages (each value with its conditions, the document and page it is on and the words it is quoted from), shown as **Unverified** until the family's own unit confirms or rejects them (only that unit's manager or designer / engineer sees **Confirm these ratings** and **Reject…**); the supplied documents about the product, opened at its pages; and the pictures taken from the documents, a picture the page does not name the product beside shown as **Not verified**. The product configurator's candidates on the Assessment Summary open these pages.
 
 ![Product catalog](images/12-product-catalog.png)
 

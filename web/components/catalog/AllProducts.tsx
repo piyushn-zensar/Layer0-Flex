@@ -2,6 +2,7 @@
 // "All products" tab of the Product catalog (J-19, C-60): every product (spreadsheet parts and web catalog entries) in one table with
 // search, filters, sort, pages, a column picker, and source / document / conflict / image badges.  Owner: Janvia.
 // The logic is in products.ts (checked by products.check.mjs); the data is loaded by useProducts.ts.
+import Link from "next/link";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import type { ProductRow } from "@/lib/types";
 import { Alert, EmptyState, Skeleton } from "@/components/ui";
@@ -47,7 +48,8 @@ function ConflictsCell({ row, idx }: { row: ProductRow; idx: MediaIndex }) {
 
 const cell: Record<ColumnId, (r: ProductRow, idx: MediaIndex, ready: boolean) => React.ReactNode> = {
   image: (r, idx, ready) => <ProductThumb row={r} idx={idx} ready={ready} />,
-  part: (r) => <><span className="mono">{r.part_number}</span>{r.product_type === "web_listing" && <div className="muted mono">{r.key}</div>}</>,
+  part: (r) => <><Link className="mono" href={`/catalog/product?part=${encodeURIComponent(r.key)}`} title="Open the product details">{r.part_number}</Link>
+    {r.product_type === "web_listing" && <div className="muted mono">{r.key}</div>}</>,  // J-20: the details page
   family: (r) => r.family ? <>{r.family}{r.family_key && r.product_type !== "web_listing" && <div className="muted mono">{r.family_key}</div>}</> : <Unknown />,
   series: (r) => r.series ?? <Unknown />,
   type: (r) => <span className={`badge ${r.product_type === "web_listing" ? "t-info" : r.product_type === "evaluation_board" ? "t-pending" : "t-neutral"}`}>{TYPE_LABEL[r.product_type]}</span>,
@@ -144,8 +146,8 @@ export default function AllProducts() {
   return (
     <section data-tour="catalog-all">
       <p className="muted catalog-provenance">
-        {all.length} products: {all.filter((r) => r.source !== "web").length} parts from the Flex Power Modules spreadsheet and {all.filter((r) => r.source !== "spreadsheet").length} entries
-        from the Flex web pages. Documents and images come from the supplied product PDFs and belong to a product's series, not to each part.
+        {all.length} products: {all.filter((r) => r.source !== "web").length} parts from the Flex Power Modules spreadsheet ({all.filter((r) => r.source === "both").length} of
+        them in a series the Flex web pages list) and {all.filter((r) => r.product_type === "web_listing").length} products listed on the Flex web pages. Documents and images come from the supplied product PDFs and belong to a product's series, not to each part.
         {!ready && <> Loading documents and images ({progress[0]} of {progress[1]})…</>}
       </p>
       <div className="catalog-controls" data-tour="catalog-all-filters">

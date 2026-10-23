@@ -156,3 +156,4 @@ Plan and contracts: [team/PLAN.md](../PLAN.md) section 9; design: `Documents/tec
 | 23 Oct 2026 | P-60 web data and spec tables, P-61 configurator fixes | P-62 (decision) or P-59 |
 | 23 Oct 2026 | P-62 published-ratings search | P-59 |
 | 23 Oct 2026 | P-59 end-to-end validation, seed and HTML refreshed, changes-iteration5.md | J-20 product details (Janvia); screenshots |
+| 23 Oct 2026 | J-20 and J-23 done here at the team's request (Janvia's lane: product details page, file API, tour steps, walkthrough appendix A, screenshots); `GET /api/catalog/file`; web listing text renamed `web_text` in the product detail | iteration 5 complete; review with the Zensar point of contact |

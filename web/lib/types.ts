@@ -276,9 +276,10 @@ export interface ProductDocument { file: string; title: string; doc_type: string
 export interface ProductImage { file: string; family_key: string; part_numbers: string[]; source_file: string; page: number;
   kind: "photo" | "illustration"; verified: boolean }
 // GET /api/catalog/product?part=<part number or catalog ID>: a spreadsheet part (PowerModule fields) or a web-only listing
-// (key, name, specs, source_url, family_key; numbers absent), with the manifests joined.
+// (key, name, web_text, source_url, bu, family_key; numbers absent), with the manifests and the family's spec items joined.
 export interface ProductDetail extends Partial<PowerModule> {
   key: string; name: string; family: string | null; source: ProductRow["source"];
+  web_text?: string; source_url?: string | null; bu?: string;   // a web listing: what its page publishes
   variants: ProductRow[];                      // a web series: its spreadsheet parts; a part: its evaluation boards
   documents: ProductDocument[]; images: ProductImage[]; specs: ProductSpec[];
 }

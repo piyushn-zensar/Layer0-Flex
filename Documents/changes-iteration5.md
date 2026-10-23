@@ -38,13 +38,13 @@ Every result says which requirements it satisfies, fails or cannot assess yet, a
 | C-57 | Real product recommendations with specifications, catalog links, quantities, assumptions | Built |
 | C-58 | Explain outcomes: satisfied, failed, cannot assess; match, near match, insufficient information, no match | Built |
 | C-59 | Assessment Summary and Technical Requirement Matching screens | Built |
-| C-60 | All-products table on the Product Catalog page | Built (table); product details page in progress |
+| C-60 | All-products table on the Product Catalog page | Built (table and product details) |
 | C-61 | Assumptions and engineering limits visible | Built |
 | C-62 | Validate the whole flow on a power and a cloud RFP, with a match and a no-match or missing-information case | Built (section 5) |
 | C-63 | Link datasheets and brochures to the right part or family | Built |
 | C-64 | Index the supporting documents into retrieval with page references | Built |
 | C-65 | Verified product images with sources; placeholder when uncertain | Built |
-| C-66 | Catalog presentation | In progress |
+| C-66 | Catalog presentation | Built |
 
 ## 4. Changes in Detail
 
@@ -78,7 +78,7 @@ Every result says which requirements it satisfies, fails or cannot assess yet, a
 - The measure and the new card read **Technical Requirement Matching**. On the Assessment Summary the card shows coverage, each component with its outcome and reason, the requirement-to-product comparison (the required value beside the first products' values), gaps, assumptions and pending engineering reviews, with the note "configurator result on the supplied product data, pending engineering review; not proof that the RFP can be met". Requirement Traceability shows the same result under each requirement.
 
 ### C-60, C-63 to C-66. Catalog, documents, retrieval, images
-- The Product Catalog page lists every product (spreadsheet parts and web listings) in one table with search, filters, sorting and pages. The 16 supplied documents are tied to the families and pages they describe; the extracted images keep their source page and show a placeholder when the product is uncertain. The documents are product evidence in retrieval, published by the owning unit's manager; each component cites up to three passages from documents tagged to its proposed families, as supporting evidence that never decides an outcome.
+- The Product Catalog page lists every product (spreadsheet parts and web listings) in one table with search, filters, sorting and pages; each product opens its details (values grouped with their sources, conflicts with both values, related boards and parts, published ratings with the unit's review, documents opened at the product's pages, images). The 16 supplied documents are tied to the families and pages they describe; the extracted images keep their source page and show a placeholder when the product is uncertain. The documents are product evidence in retrieval, published by the owning unit's manager; each component cites up to three passages from documents tagged to its proposed families, as supporting evidence that never decides an outcome.
 
 ## 5. The Demonstration (C-62)
 

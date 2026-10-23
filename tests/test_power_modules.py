@@ -78,3 +78,15 @@ def test_product_table_and_detail_api():
     mdx = client.get("/api/catalog/product", params={"part": "ANORD-LVSB/MDX"}).json()
     assert any(d["file"] == "MDX-Switchgear-Catalog_2026.pdf" for d in mdx["documents"])
     assert client.get("/api/catalog/product", params={"part": "NOPE"}).status_code == 404
+
+
+def test_product_files_only_from_the_manifests_and_web_text_kept():
+    client = signed_in()
+    pdf = client.get("/api/catalog/file", params={"path": "MDX-Switchgear-Catalog_2026.pdf"})
+    assert pdf.status_code == 200 and pdf.headers["content-type"] == "application/pdf"
+    img = json.loads((imp.ROOT / "data/axiom_products/images.json").read_text("utf-8"))[0]["file"]
+    assert client.get("/api/catalog/file", params={"path": img}).headers["content-type"].startswith("image/")
+    for bad in ("../.env", "documents.json", "PowerModules-1791937030.xlsx", "images/../../../.env"):
+        assert client.get("/api/catalog/file", params={"path": bad}).status_code == 404, bad
+    mdx = client.get("/api/catalog/product", params={"part": "ANORD-LVSB/MDX"}).json()
+    assert mdx["web_text"].startswith("Main busbar") and isinstance(mdx["specs"], list) and mdx["specs"]

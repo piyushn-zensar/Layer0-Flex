@@ -1,6 +1,7 @@
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
@@ -42,6 +43,16 @@ def product(part: str, db: Session = Depends(get_db)):
     if p is None:
         raise HTTPException(404, f"no product {part!r}")
     return p
+
+
+@router.get("/catalog/file")
+def product_file(path: str):
+    """A product document, fetched page or image listed in the manifests (J-20: open a datasheet at its page; J-19 images)."""
+    try:
+        full, media = service.product_file(path)
+    except LookupError as exc:
+        raise HTTPException(404, str(exc))
+    return FileResponse(full, media_type=media, headers={"Cache-Control": "private, max-age=3600"})
 
 
 @router.get("/catalog/specs")

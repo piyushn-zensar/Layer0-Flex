@@ -48,7 +48,55 @@ const chapter: TourChapter = {
       target: "catalog-tabs",
       placement: "bottom",
       body: [
-        "**All products** is one table of every product (the Flex power modules spreadsheet and the web catalog) with search, filters, sort and a column picker. **Business units** is the units and their products, with the search below. **Sources** is the reference documents behind the evidence (engineering references, vendor and market context), registered and reviewed. **Published catalog** is what the official Flex product pages say today, read automatically. The next steps look at the business units, then Sources and the Published catalog.",
+        "**All products** is one table of every product (the Flex power modules spreadsheet and the web catalog) with search, filters, sort and a column picker; each product opens its details. **Business units** is the units and their products, with the search below. **Sources** is the reference documents behind the evidence (engineering references, vendor and market context), registered and reviewed. **Published catalog** is what the official Flex product pages say today, read automatically. The next steps look at the business units, then Sources and the Published catalog.",
+      ],
+    },
+    {
+      id: "catalog-all",
+      title: "All products in one table",
+      route: "/catalog",
+      target: "catalog-all-table",
+      placement: "top",
+      onEnter: (ctx) => showTab(ctx, "all"),
+      fallback: "All products: every spreadsheet part and every web catalog product, one row each, with search, filters, sort, pages and a column picker.",
+      body: [
+        "**All products** lists the 721 parts of the Flex Power Modules spreadsheet and every product of the web catalog, one row each: part number, family, series, type (module, evaluation board or web series), input and output voltage, power, efficiency, the **source** (spreadsheet, web, or both) and the documents and conflicts. Search, the filters above, a click on a column heading and the column picker work on all rows; nothing is limited to the products a bid matched.",
+        "A **conflict** means the web page for the part's series states a range the spreadsheet value falls outside of (for example the BMR492 input range); both values are kept for the unit to review. A part number opens the product's details.",
+      ],
+    },
+    {
+      id: "catalog-detail-part",
+      title: "A part's details, value by value",
+      route: "/catalog/product?part=BMR4920311%2F011",
+      target: "catalog-detail-specs",
+      placement: "top",
+      fallback: "A part's details: every value grouped (input, output, power, mechanical, interfaces, application) with its source row and import date.",
+      body: [
+        "Every value of the part, grouped as an engineer reads a datasheet: input, output, power and current, mechanical, interfaces and isolation, application. Under each value, where it comes from (the spreadsheet row and the date of the import that set it); an empty cell reads **Unknown**, never zero.",
+        "Here the web page for the BMR492 series states 40 to 60 V in, the spreadsheet 36 to 75 V for this part: the disagreement is shown with both values and a link to the page. Below: the evaluation boards for the series, each opening its own details. These are the parts the product configurator recommends from.",
+      ],
+    },
+    {
+      id: "catalog-detail-ratings",
+      title: "Published ratings, confirmed by the unit",
+      route: "/catalog/product?part=ANORD-LVSB%2FMDX",
+      target: "catalog-detail-ratings",
+      placement: "top",
+      fallback: "A web series' published ratings: read from the brochures and product pages, each with its page and quote, unverified until the unit confirms them.",
+      body: [
+        "For families without a spreadsheet (switchgear, busway, PDUs, CDUs) the ratings were read from the supplied brochures and the official product pages: each value with its conditions, the document and page it is on, and the words it is quoted from. They are **unverified** until the family's own unit confirms or rejects them here; only that unit's manager or designer / engineer sees the buttons.",
+        "The product configurator compares RFP values with these ratings (the published-ratings search on the Assessment Summary); a brochure range is a candidate family, never an orderable configuration.",
+      ],
+    },
+    {
+      id: "catalog-detail-documents",
+      title: "Documents and images",
+      route: "/catalog/product?part=ANORD-LVSB%2FMDX",
+      target: "catalog-detail-documents",
+      placement: "top",
+      fallback: "The supplied documents tied to the product, opened at its pages, and its images.",
+      body: [
+        "The supplied datasheets and brochures that cover this product, with what they apply to (this family, this part, or general) and the pages about it; a title opens the PDF at the first of those pages. Below, the pictures taken from the documents: a picture the page does not name the product beside is shown as **Not verified**, never as the product's photograph.",
       ],
     },
     {

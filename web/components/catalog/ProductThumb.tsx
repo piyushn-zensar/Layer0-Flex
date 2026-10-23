@@ -5,8 +5,9 @@ import { useState } from "react";
 import type { ProductRow } from "@/lib/types";
 import { hasUnverifiedImage, imageOf, type MediaIndex } from "./products";
 
-/** The address of an image file of data/axiom_products/images/ (served by web/app/catalog/image/route.ts). */
-export const imageUrl = (file: string) => `/catalog/image?file=${encodeURIComponent(file)}`;
+/** The address of a product file a manifest lists (an image, a document, a fetched page): GET /api/catalog/file. */
+export const fileUrl = (file: string) => `/api/catalog/file?path=${encodeURIComponent(file)}`;
+export const imageUrl = fileUrl;
 
 export default function ProductThumb({ row, idx, ready }: { row: ProductRow; idx: MediaIndex; ready: boolean }) {
   const [failed, setFailed] = useState<string>();

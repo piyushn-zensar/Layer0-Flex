@@ -203,7 +203,9 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
     const want = route ? resolveRoute(route, { oppId }) : null;
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
-    if (want && pathname !== want) {
+    // a route with a query (J-23: /catalog/product?part=...) is compared with the query too
+    const here = want?.includes("?") && typeof window !== "undefined" ? pathname + window.location.search : pathname;
+    if (want && here !== want) {
       const key = `${index}:${want}`;
       if (navigatedFor.current !== key) { navigatedFor.current = key; router.push(want); }
       setTarget("searching");
