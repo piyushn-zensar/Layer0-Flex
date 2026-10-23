@@ -29,16 +29,22 @@ Public contract:
                                                   "ungrouped": [req_id] (no component, or not answered),
                                                   "unassigned": [req_id] (the model gave no answer), "unknown_ids"}
     prepare(items, scope, component), plan(items)   inputs() and components() on refs already read (no database)
+    assess(db, opp_id, actor) -> ComponentRun    P-56: components() explained (explain.py) and stored as a new run
+    latest(db, opp_id) -> dict                   {"run": ComponentRun | None, "components": [ComponentMatch]}
+    for_requirement(db, opp_id, req_id) -> list[dict]   [{component, requirement}]: where a requirement sits
 """
 import re
 from functools import lru_cache
 
 import pandas as pd
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core import config
 from app.modules.catalog import service as catalog
-from app.modules.configurator import agent
+from app.core import audit
+from app.modules.configurator import agent, explain
+from app.modules.configurator.models import ComponentMatch, ComponentRun
 from app.modules.configurator import rfp_configurator as rc
 from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service as requirements
@@ -196,7 +202,9 @@ def run(prepared: dict) -> dict:
     for scope in ("system", "board"):     # a scoped run (inputs(..., scope)) reports its own part only
         if scope not in prepared["input"]:
             report.pop(scope, None)
-    return report | {"inputs": prepared["provenance"], "requirements": prepared.get("requirements", []),
+    report["parsed"] = report.pop("requirements")   # the script's parsed input; "requirements" = the RFP items
+    return report | {"inputs": prepared["provenance"], "input": prepared["input"],
+                     "requirements": prepared.get("requirements", []),
                      "unit_issues": prepared.get("unit_issues", []), "missing": missing(prepared["input"])}
 
 
@@ -230,10 +238,47 @@ def plan(items: list[dict]) -> dict:
                         "reason": "The RFP states no IT load, rack density or cooling for a data-centre installation, so "
                                   "the configurator's system checks (Axiom AI module limits) do not apply."}
             system = run_
-        out.append({"name": g["name"], "kind": g["kind"], "req_ids": ids, "run": run_})
+        out.append({"name": g["name"], "kind": g["kind"], "req_ids": ids, "run": run_, "requirements": refs})
     grouped = {i for g in out for i in g["req_ids"]}
     return {"groups": out, "system": system, "ungrouped": [i for i in known if i not in grouped],
             "unknown_ids": unknown, "unassigned": grouped_["unassigned"]}
+
+
+def assess(db: Session, opp_id: str, actor: str) -> ComponentRun:
+    """P-56 (C-57, C-58, C-61): components() explained and stored as a new run (earlier runs stay)."""
+    planned = components(db, opp_id)
+    parts = {p["part_number"]: p for p in catalog.power_modules()}
+    run_ = ComponentRun(opportunity_id=opp_id, catalog_import=catalog.power_modules_import(), run_by=actor,
+                        ungrouped=planned["ungrouped"], unassigned=planned["unassigned"])
+    db.add(run_)
+    db.flush()
+    for n, g in enumerate(planned["groups"]):
+        e = explain.explain(g, catalog_frame(), parts)
+        db.add(ComponentMatch(run_id=run_.id, opportunity_id=opp_id, seq=n, name=g["name"], kind=g["kind"],
+                              req_ids=g["req_ids"], outcome=e.pop("outcome"), reason=e.pop("reason"), detail=e))
+    audit.record(db, actor, "configurator_run", "component_run", run_.id, opp_id, groups=len(planned["groups"]),
+                 catalog_import=run_.catalog_import)
+    db.commit()
+    return run_
+
+
+def latest(db: Session, opp_id: str) -> dict:
+    """The bid's last run: {"run": ComponentRun | None, "components": [ComponentMatch]} (seq order)."""
+    run_ = db.scalar(select(ComponentRun).where(ComponentRun.opportunity_id == opp_id).order_by(ComponentRun.id.desc()))
+    if run_ is None:
+        return {"run": None, "components": []}
+    rows = db.scalars(select(ComponentMatch).where(ComponentMatch.run_id == run_.id).order_by(ComponentMatch.seq))
+    return {"run": run_, "components": list(rows)}
+
+
+def for_requirement(db: Session, opp_id: str, req_id: str) -> list[dict]:
+    """The components of the last run that hold a requirement, with that requirement's status (for pane 3)."""
+    out = []
+    for c in latest(db, opp_id)["components"]:
+        if req_id in c.req_ids:
+            mine = next((r for r in c.detail.get("requirements", []) if r["req_id"] == req_id), None)
+            out.append({"component": c, "requirement": mine})
+    return out
 
 
 if __name__ == "__main__":  # self-check: python -m app.modules.configurator.service

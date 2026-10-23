@@ -282,3 +282,35 @@ export interface ProductDetail extends Partial<PowerModule> {
   variants: ProductRow[];                      // a web series: its spreadsheet parts; a part: its evaluation boards
   documents: ProductDocument[]; images: ProductImage[];
 }
+// GET/POST /api/bids/{id}/components (P-56): the configurator's last run, one entry per requested component.
+// An outcome is the configurator's result on the supplied product data, pending engineering review (never proof).
+export type ComponentOutcome = "match" | "near_match" | "insufficient_information" | "no_match" | "system_checks" | "not_applicable" | "not_assessed";
+export type RequirementFit = "satisfied" | "not_satisfied" | "cannot_assess";
+export interface ComponentRequirement { req_id: string; text: string; document: string | null; page: number | null;
+  status: RequirementFit; why: string; fields: string[]; interpreted: string[] }
+export interface ComponentInput { req_ids: string[]; source: string; stated: string | string[]; unit: string | null; interpreted: boolean }
+export interface ComponentCandidate {
+  part_number: string; link: string; family_key: string | null; series: string | null; family: string | null;
+  modules_for_load: number | null; modules_total: number | null; input_v: (number | null)[]; output_v: (number | null)[];
+  power_w_per_module: number | null; peak_w_per_module: number | null; current_a_per_module: number | null; efficiency_pct: number | null;
+  isolation: string | null; isolation_v: number | null; regulation: string | null; digital: string | null;
+  package: (string | null)[]; size_mm: (number | null)[]; applications: string | null; review_flags: string[];
+  verified: boolean; conflicts: ProductConflict[]; multi_output: boolean;
+}
+export interface ComponentAssumption { item: string; value: string; basis: string }
+export interface ComponentCheck { check: string; status: "open" | "not_supported" | "pass" | "fail" | "review" | "unknown"; detail: string }
+export interface ComponentDetail {
+  requirements: ComponentRequirement[]; inputs: Record<string, ComponentInput>;
+  missing: { scope: "board" | "system"; field: string; needed_for: string }[];
+  assumptions: ComponentAssumption[]; checks: ComponentCheck[];
+  candidates?: ComponentCandidate[]; near_matches?: ComponentCandidate[]; notes?: string[];
+  unit_issues?: { field: string; message: string; req_ids: string[] }[];
+  cdu_options?: Record<string, unknown>[]; certifications?: { requested: string; found_in: string | null; status: string }[];
+  counts?: Record<"pass" | "fail" | "review" | "unknown", number>;
+}
+export interface ComponentMatch { id: number; run_id: number; opportunity_id: string; seq: number; name: string;
+  kind: "dc_dc" | "system" | "other"; req_ids: string[]; outcome: ComponentOutcome; reason: string; detail: ComponentDetail }
+export interface ComponentRun { id: number; opportunity_id: string; catalog_import: string; ungrouped: string[]; unassigned: string[]; run_by: string; run_at: string }
+export interface ComponentsResponse { run: ComponentRun | null; components: ComponentMatch[]; outcomes: Record<ComponentOutcome, string>; note: string }
+// GET /api/bids/{id}/requirements/{req_id}/components
+export interface RequirementComponent { component: ComponentMatch; requirement: ComponentRequirement | null }

@@ -13,7 +13,7 @@ from app.core import audit, auth, config, db  # noqa: F401  (audit registers its
 
 # Order = workflow order. Every module ships a working (possibly stub) controller, so the app runs at any stage.
 MODULES = ["opportunities", "ingestion", "requirements", "catalog", "matching", "decisions",
-           "workpackages", "consolidation", "knowledge", "changes", "trace"]
+           "workpackages", "consolidation", "knowledge", "changes", "trace", "configurator"]
 
 @asynccontextmanager
 async def lifespan(_app):

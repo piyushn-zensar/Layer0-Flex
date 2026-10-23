@@ -24,6 +24,7 @@ Public contract:
     people() -> list[str]                       actors for the PoC user picker
     unit_of(actor) -> str | None                business-unit code of a product manager / design engineer
     power_modules() -> list[dict]               the spreadsheet parts merged into the catalog (P-53, power_modules.json)
+    power_modules_import() -> str               its last import date
     product_rows(q, type, family, status, interface, application, sort, dir, page, size) -> dict
                                                 all products as table rows, spreadsheet parts and web items (C-60)
     product_detail(key) -> dict | None          one product by part number or catalog ID, with variants, documents, images
@@ -167,6 +168,11 @@ ROW = ("key", "part_number", "family_key", "family", "series", "product_type", "
 def power_modules() -> list[dict]:
     """The Flex Power Modules spreadsheet merged into the catalog (P-53; scripts/import_power_modules.py)."""
     return _load("power_modules")["items"]
+
+
+def power_modules_import() -> str:
+    """The date of the last spreadsheet import that changed power_modules.json."""
+    return _load("power_modules")["last_import"]
 
 
 def _manifest(name: str) -> list[dict]:
