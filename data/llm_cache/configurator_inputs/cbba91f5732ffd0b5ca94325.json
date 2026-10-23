@@ -1,0 +1,100 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "board": {
+      "applications": null,
+      "design_margin_pct": null,
+      "digital": {
+        "req_ids": [
+          "REQ-0003-0246"
+        ],
+        "source": "L4.14 The compute tray converters shall report telemetry over PMBus and shall have a typical efficiency of at least 97% at full load.",
+        "value": "PMBus"
+      },
+      "footprints": null,
+      "input_v_max": {
+        "as_written": "60 VDC",
+        "req_ids": [
+          "REQ-0003-0245"
+        ],
+        "source": "L4.13 Each compute tray shall convert the 54 VDC in-rack bus, which varies between 40 VDC and 60 VDC, to a 12 VDC intermediate bus for the tray's boards."
+      },
+      "input_v_min": {
+        "as_written": "40 VDC",
+        "req_ids": [
+          "REQ-0003-0245"
+        ],
+        "source": "L4.13 Each compute tray shall convert the 54 VDC in-rack bus, which varies between 40 VDC and 60 VDC, to a 12 VDC intermediate bus for the tray's boards."
+      },
+      "isolation": null,
+      "isolation_v_min": null,
+      "max_height_mm": {
+        "as_written": "15 mm",
+        "req_ids": [
+          "REQ-0003-0247"
+        ],
+        "source": "L4.15 Each compute tray converter shall fit a board area of at most 60 mm by 40 mm, with a height of at most 15 mm."
+      },
+      "max_length_mm": {
+        "as_written": "60 mm",
+        "req_ids": [
+          "REQ-0003-0247"
+        ],
+        "source": "L4.15 Each compute tray converter shall fit a board area of at most 60 mm by 40 mm, with a height of at most 15 mm."
+      },
+      "max_width_mm": {
+        "as_written": "40 mm",
+        "req_ids": [
+          "REQ-0003-0247"
+        ],
+        "source": "L4.15 Each compute tray converter shall fit a board area of at most 60 mm by 40 mm, with a height of at most 15 mm."
+      },
+      "min_efficiency_pct": {
+        "as_written": "97%",
+        "req_ids": [
+          "REQ-0003-0246"
+        ],
+        "source": "L4.14 The compute tray converters shall report telemetry over PMBus and shall have a typical efficiency of at least 97% at full load."
+      },
+      "mountings": null,
+      "output_current_a": null,
+      "output_power_w": {
+        "as_written": "1,500 W",
+        "req_ids": [
+          "REQ-0003-0245"
+        ],
+        "source": "L4.13 Each compute tray shall convert the 54 VDC in-rack bus, which varies between 40 VDC and 60 VDC, to a 12 VDC intermediate bus for the tray's boards. The converter shall deliver at least 1,500 W of continuous output power per tray."
+      },
+      "output_v_max": {
+        "as_written": "12 VDC",
+        "req_ids": [
+          "REQ-0003-0245"
+        ],
+        "source": "L4.13 Each compute tray shall convert the 54 VDC in-rack bus, which varies between 40 VDC and 60 VDC, to a 12 VDC intermediate bus for the tray's boards."
+      },
+      "output_v_min": {
+        "as_written": "12 VDC",
+        "req_ids": [
+          "REQ-0003-0245"
+        ],
+        "source": "L4.13 Each compute tray shall convert the 54 VDC in-rack bus, which varies between 40 VDC and 60 VDC, to a 12 VDC intermediate bus for the tray's boards."
+      },
+      "package_types": null,
+      "peak_power_w": null,
+      "redundancy": null,
+      "regulation": null
+    },
+    "system": {
+      "certifications": null,
+      "coolant_supply_temp_c": null,
+      "cooling_mode": null,
+      "deployment": null,
+      "distribution_voltage": null,
+      "liquid_capture_fraction": null,
+      "rack_density_kw": null,
+      "redundancy": null,
+      "total_it_load_mw": null
+    }
+  },
+  "task": "configurator_inputs"
+}

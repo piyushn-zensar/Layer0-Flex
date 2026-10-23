@@ -1,0 +1,38 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "components": [
+      {
+        "id": "G1",
+        "kind": "other",
+        "name": "MV AC to 800 VDC power blocks"
+      },
+      {
+        "id": "G2",
+        "kind": "other",
+        "name": "800 VDC distribution system"
+      },
+      {
+        "id": "G3",
+        "kind": "dc_dc",
+        "name": "800 VDC to 54 VDC rack power shelves"
+      },
+      {
+        "id": "G4",
+        "kind": "dc_dc",
+        "name": "54 VDC to 12 VDC compute tray converters"
+      },
+      {
+        "id": "G5",
+        "kind": "other",
+        "name": "Cooling plant and CDUs"
+      },
+      {
+        "id": "G6",
+        "kind": "other",
+        "name": "Compute and storage systems"
+      }
+    ]
+  },
+  "task": "configurator_groups"
+}

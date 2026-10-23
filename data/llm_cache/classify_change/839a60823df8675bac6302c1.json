@@ -1,0 +1,32 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "change": "added",
+        "confidence": 0.9,
+        "n": 1,
+        "new_text": "Each compute tray shall convert the 54 VDC in-rack bus (40-60 VDC range) to a 12 VDC intermediate bus, delivering at least 1,500 W continuous output power per tray.",
+        "rationale": "None of the candidates directly address the requirement for compute trays to convert 54 VDC to 12 VDC and deliver 1,500 W continuous output power.",
+        "target": ""
+      },
+      {
+        "change": "added",
+        "confidence": 0.9,
+        "n": 2,
+        "new_text": "The compute tray converters shall report telemetry over PMBus and have a typical efficiency of at least 97% at full load.",
+        "rationale": "None of the candidates directly address the requirement for compute tray converters to report telemetry over PMBus and achieve 97% efficiency at full load.",
+        "target": ""
+      },
+      {
+        "change": "added",
+        "confidence": 0.9,
+        "n": 3,
+        "new_text": "Each compute tray converter shall fit a board area of at most 60 mm by 40 mm, with a height of at most 15 mm.",
+        "rationale": "None of the candidates directly address the physical dimensions of compute tray converters.",
+        "target": ""
+      }
+    ]
+  },
+  "task": "classify_change"
+}

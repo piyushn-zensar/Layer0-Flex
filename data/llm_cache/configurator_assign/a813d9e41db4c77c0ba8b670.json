@@ -1,0 +1,258 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "component": "G3",
+        "req_id": "REQ-0003-0059",
+        "system": false
+      },
+      {
+        "component": "",
+        "req_id": "REQ-0003-0060",
+        "system": false
+      },
+      {
+        "component": "G1",
+        "req_id": "REQ-0003-0061",
+        "system": false
+      },
+      {
+        "component": "",
+        "req_id": "REQ-0003-0062",
+        "system": true
+      },
+      {
+        "component": "",
+        "req_id": "REQ-0003-0063",
+        "system": true
+      },
+      {
+        "component": "G2",
+        "req_id": "REQ-0003-0064",
+        "system": false
+      },
+      {
+        "component": "G2",
+        "req_id": "REQ-0003-0065",
+        "system": false
+      },
+      {
+        "component": "G2",
+        "req_id": "REQ-0003-0066",
+        "system": false
+      },
+      {
+        "component": "",
+        "req_id": "REQ-0003-0067",
+        "system": true
+      },
+      {
+        "component": "G6",
+        "req_id": "REQ-0003-0068",
+        "system": false
+      },
+      {
+        "component": "G2",
+        "req_id": "REQ-0003-0069",
+        "system": false
+      },
+      {
+        "component": "G2",
+        "req_id": "REQ-0003-0070",
+        "system": false
+      },
+      {
+        "component": "G3",
+        "req_id": "REQ-0003-0071",
+        "system": false
+      },
+      {
+        "component": "G2",
+        "req_id": "REQ-0003-0072",
+        "system": false
+      },
+      {
+        "component": "G2",
+        "req_id": "REQ-0003-0073",
+        "system": false
+      },
+      {
+        "component": "G3",
+        "req_id": "REQ-0003-0074",
+        "system": false
+      },
+      {
+        "component": "G1",
+        "req_id": "REQ-0003-0075",
+        "system": false
+      },
+      {
+        "component": "G1",
+        "req_id": "REQ-0003-0076",
+        "system": false
+      },
+      {
+        "component": "G2",
+        "req_id": "REQ-0003-0077",
+        "system": false
+      },
+      {
+        "component": "G2",
+        "req_id": "REQ-0003-0078",
+        "system": false
+      },
+      {
+        "component": "G3",
+        "req_id": "REQ-0003-0079",
+        "system": false
+      },
+      {
+        "component": "G3",
+        "req_id": "REQ-0003-0081",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0082",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0083",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0084",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0085",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0086",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0087",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0088",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0089",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0090",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0091",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0092",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0093",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0094",
+        "system": false
+      },
+      {
+        "component": "G5",
+        "req_id": "REQ-0003-0095",
+        "system": false
+      },
+      {
+        "component": "G6",
+        "req_id": "REQ-0003-0096",
+        "system": false
+      },
+      {
+        "component": "G6",
+        "req_id": "REQ-0003-0097",
+        "system": false
+      },
+      {
+        "component": "G6",
+        "req_id": "REQ-0003-0098",
+        "system": false
+      },
+      {
+        "component": "",
+        "req_id": "REQ-0003-0099",
+        "system": true
+      },
+      {
+        "component": "",
+        "req_id": "REQ-0003-0100",
+        "system": true
+      },
+      {
+        "component": "",
+        "req_id": "REQ-0003-0101",
+        "system": true
+      },
+      {
+        "component": "",
+        "req_id": "REQ-0003-0102",
+        "system": true
+      },
+      {
+        "component": "",
+        "req_id": "REQ-0003-0103",
+        "system": true
+      },
+      {
+        "component": "",
+        "req_id": "REQ-0003-0104",
+        "system": true
+      },
+      {
+        "component": "",
+        "req_id": "REQ-0003-0105",
+        "system": true
+      },
+      {
+        "component": "",
+        "req_id": "REQ-0003-0106",
+        "system": true
+      },
+      {
+        "component": "G6",
+        "req_id": "REQ-0003-0107",
+        "system": false
+      },
+      {
+        "component": "G6",
+        "req_id": "REQ-0003-0108",
+        "system": false
+      },
+      {
+        "component": "G6",
+        "req_id": "REQ-0003-0109",
+        "system": false
+      }
+    ]
+  },
+  "task": "configurator_assign"
+}

@@ -22,6 +22,13 @@ Part A (P-49 first half):
      routes the items without a unit to the teams (the receiving unit's engineer then sets the solution) or records a
      capability gap (customer-facing "Not offered in this tender: ..." with the internal rationale as a comment), and
      sends for assessment (dispatch); nothing may be left needing an owner
+  1b. (P-59, C-62) the bid manager applies the synthetic Addendum No. 1 (rc1_addendum_1: L4.13 to L4.15, the compute
+     trays' 54 VDC to 12 VDC board converters), confirmed as read; its new items are matched like any change
+  4. (P-58, P-59) the unit managers publish their supplied product documents as product evidence, and the bid manager
+     runs the product configurator (Technical Requirement Matching: components, part-level and published-ratings
+     searches, explanations)
+  New steps have no frozen answers until run once with --live-new-steps (Azure): only the addendum, the matching of its
+  items and the configurator then call the model; every other step stays in mock mode, so the recorded state holds.
 Part B (P-49 second half, part_b()): the units' and the bid desk's placeholder answers (data/seed/rc1_answers),
 the delivery estimates and factors, validation (one answer returned with a question and answered again), the bid
 manager's approvals, a knowledge-base assessment run (retrieval only) and the go/no-go, which moves the bid to
@@ -303,6 +310,49 @@ def correct(api: Api) -> tuple[int, str | None]:
     return made, added
 
 
+LIVE = {"on": False}   # --live-new-steps: the new steps (addendum, configurator) may call the model once
+
+
+class live:
+    """Inside the block the model gateway may call Azure (when --live-new-steps is given); outside it, mock."""
+    def __enter__(self):
+        self.was = config.LLM_PROVIDER
+        if LIVE["on"]:
+            config.LLM_PROVIDER = "azure"
+
+    def __exit__(self, *exc):
+        config.LLM_PROVIDER = self.was
+
+
+def add_addendum(api: Api) -> dict:
+    """Step 1b (P-59): the synthetic Addendum No. 1 as a change document: read, every classification confirmed, applied."""
+    bm = user(None, BM)
+    if any(holds(r, "L4.13") for r in rows(api).values()):
+        print("  skip: the addendum is applied already")
+        return {}
+    s = api(bm, "POST", f"/bids/{OPP}/changes/from-sample", {"name": "rc1_addendum_1"})
+    api(bm, "POST", f"/changes/{s['id']}/confirm-all")
+    out = api(bm, "POST", f"/changes/{s['id']}/apply")
+    result = out.get("result") or {}
+    print(f"  applied: version {result.get('baseline')}, added {result.get('added')}, modified {result.get('modified')}")
+    return {k: result.get(k) for k in ("baseline", "added", "modified", "removed")}
+
+
+def publish_product_documents(api: Api) -> int:
+    """Step 4 (P-58): each supplied product document is published by the manager of the unit its families belong to."""
+    unit_of = {d["title"]: next((catalog.product(k.split("/", 1)[0]) or {}).get("bu") for k in d["family_keys"])
+               for d in catalog.documents()}
+    n = 0
+    for s in api(user(None, BM), "GET", "/knowledge/sources?collection=product_evidence")["sources"]:
+        if s["status"] != "draft" or not unit_of.get(s["title"]):
+            continue
+        api(user(unit_of[s["title"]], PM), "POST", f"/knowledge/sources/{s['ks_id']}/review", {"approve": True, "note": (
+            "Illustrative: the unit's own published datasheet or brochure, supplied for the PoC; accepted as product "
+            "evidence. Its ratings stay unverified in the spec tables until the unit confirms them.")})
+        n += 1
+    return n
+
+
 def comment(api: Api, who: str, req_id: str, text: str) -> None:
     api(who, "POST", f"/bids/{OPP}/comments", {"req_id": req_id, "text": text, "kind": "comment"})
 
@@ -383,12 +433,21 @@ def part_a() -> dict:
     print("part A, step 1: corrections of the reading (bid manager)")
     made, added = correct(api)
     solutions = {(added if k == "ADDED" else k): v for k, v in SOLUTIONS.items() if k != "ADDED" or added}
+    print("part A, step 1b: the bid manager applies the synthetic Addendum No. 1 (L4.13 to L4.15)")
+    with live():
+        addendum = add_addendum(api)
     print("part A, step 2: the units' designers / engineers review the technical matches")
     reviewed = review_matches(api, solutions)
     print("part A, step 3: the bid manager's first stage")
     sent = route_and_send(api, solutions)
-    summary = {"corrections": made, "added": added, "reviewed": {f"{bu} {k}": n for (bu, k), n in sorted(reviewed.items())},
-               **sent, "work": assignments(api)["counts"]}
+    print("part A, step 4: product documents published by the unit managers; the bid manager runs the configurator")
+    published = publish_product_documents(api)
+    with live():
+        components = api(user(None, BM), "POST", f"/bids/{OPP}/components")
+    summary = {"corrections": made, "added": added, "addendum": addendum,
+               "reviewed": {f"{bu} {k}": n for (bu, k), n in sorted(reviewed.items())}, **sent,
+               "work": assignments(api)["counts"], "product_documents_published": published,
+               "components": dict(Counter(c["outcome"] for c in components["components"]))}
     print("part A:", json.dumps(summary, indent=1))
     return summary
 
@@ -581,4 +640,5 @@ if __name__ == "__main__":
             json.dump(assignments(Api()), f, indent=1, ensure_ascii=False)
         print("written:", path)
     else:
+        LIVE["on"] = "--live-new-steps" in sys.argv
         main()

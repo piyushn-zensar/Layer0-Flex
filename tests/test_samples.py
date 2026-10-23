@@ -27,7 +27,7 @@ def client() -> TestClient:
 def test_samples_are_listed_without_paths(client):
     listed = client.get("/api/samples").json()["samples"]
     by_name = {s["name"]: s for s in listed}
-    assert set(by_name) == {"rc1_rfp", "syracuse_rfp", "logan_rfp", "syracuse_addendum_1"} == set(opportunities.SAMPLES)  # C-11
+    assert set(by_name) == {"rc1_rfp", "syracuse_rfp", "logan_rfp", "syracuse_addendum_1", "rc1_addendum_1"} == set(opportunities.SAMPLES)  # C-11, P-59
     assert listed[0]["name"] == "rc1_rfp" and by_name["rc1_rfp"]["filename"].endswith(".docx")  # C-35: cloud and power first
     assert by_name["syracuse_rfp"]["pages"] == 101 and by_name["syracuse_rfp"]["kind"] == "rfp"
     assert by_name["syracuse_addendum_1"]["kind"] == "change"

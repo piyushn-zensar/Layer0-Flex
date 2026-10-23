@@ -94,7 +94,7 @@ const readSummary = (c, requirements) => `${c.candidates ?? 0} statements read`
 const formatDate = (t, time = false) => { if (!t) return "";
   const d = new Date(/^\d{4}-\d{2}-\d{2}$/.test(t) ? `${t}T00:00:00` : /(Z|[+-]\d{2}:?\d{2})$/.test(t) ? t : `${t}Z`);
   return d.toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", ...(time ? { hour: "2-digit", minute: "2-digit" } : {}) }); };
-const TERMS = { assessment: "Assessment Summary", offering_type: "Type of offer", exception: "Needs a source check", solution: "Proposed solution",
+const TERMS = { assessment: "Assessment Summary", domain_alignment: "Technical Requirement Matching", offering_type: "Type of offer", exception: "Needs a source check", solution: "Proposed solution",
   solution_area: "Solution area", solution_pending: "solution to be set by the unit's designer / engineer", capability_gap: "Capability gap: not offered" };
 const solutionLabel = (s) => (s.area ? `${s.unit} · ${s.area}` : s.unit);
 const examplesLabel = (s) => (s.examples.length ? `For example: ${s.examples.join(", ")}` : "");
@@ -615,6 +615,32 @@ function assessmentPanel(decided) {
     + "</section>";
 }
 
+// ---------- Technical Requirement Matching (ComponentMatching.tsx, P-56 to P-62): read-only ----------
+const OUTCOME_TONE = { match: "pass", near_match: "warn", insufficient_information: "warn", no_match: "fail", system_checks: "frozen", not_applicable: "n/a", not_assessed: "n/a" };
+const FIT = { satisfied: ["pass", "Satisfied"], not_satisfied: ["fail", "Not satisfied"], cannot_assess: ["warn", "Cannot assess yet"] };
+const KIND = { dc_dc: "DC/DC module search", system: "Installation checks", spec_range: "Published ratings search", other: "No product table" };
+const CHECK = { open: ["warn", "Open"], not_supported: ["n/a", "Not checked by the configurator"], pass: ["pass", "Pass"], fail: ["fail", "Fail"], review: ["warn", "To review"], unknown: ["n/a", "Unknown"] };
+function componentsPanel() {
+  const r = D.bid.components;
+  if (!r || !r.run) return "";
+  const cs = r.components, fits = { satisfied: 0, not_satisfied: 0, cannot_assess: 0 };
+  cs.forEach((c) => c.detail.requirements.forEach((q) => { fits[q.status] += 1; }));
+  const out = (c) => badge(OUTCOME_TONE[c.outcome], { label: r.outcomes[c.outcome] ?? c.outcome });
+  const details = (c) => { const d = c.detail, cmp = d.comparison;
+    return (cmp && cmp.rows.length && cmp.parts.length ? `<h4>Requirement ↔ product</h4><div class="table-scroll"><table class="dense"><thead><tr><th>Constraint</th><th>Required</th><th>From</th>${cmp.parts.map((p) => `<th class="mono">${esc(p)}</th>`).join("")}</tr></thead><tbody>`
+        + cmp.rows.map((x) => `<tr><td>${esc(x.constraint)}</td><td><strong>${esc(x.required)}</strong></td><td>${x.req_ids.map(reqLink).join("<br>")}</td>${x.values.map((v) => `<td>${esc(v)}</td>`).join("")}</tr>`).join("") + "</tbody></table></div>" : "")
+      + `<h4>Requirements (${d.requirements.length})</h4><ul class="per-req">${d.requirements.map((q) => `<li>${reqLink(q.req_id)} ${badge(FIT[q.status][0], { label: FIT[q.status][1] })} <span class="muted">${esc(q.why)}</span></li>`).join("")}</ul>`
+      + (d.missing.length ? `<p><strong>Not stated in the RFP:</strong> ${esc(d.missing.map((m) => m.needed_for).join("; "))}</p>` : "")
+      + (d.evidence?.passages?.length ? `<h4>From the supplied product documents</h4><p class="muted">Keyword matches in the published datasheets and brochures tagged to the proposed product families; supporting evidence to check, never the basis of the outcome.</p><ul class="per-req">${d.evidence.passages.map((e) => `<li><strong>${esc(e.title)}</strong> <span class="muted">(${esc(e.citation)}; applies to ${esc(e.applies_to.join(", "))})</span><div class="muted">${esc(e.text)}</div></li>`).join("")}</ul>` : "")
+      + (d.checks.length ? `<h4>Checks</h4><ul class="per-req">${d.checks.map((k) => `<li>${badge(CHECK[k.status]?.[0] ?? "n/a", { label: CHECK[k.status]?.[1] ?? k.status })} <strong>${esc(k.check)}</strong> <span class="muted">${esc(k.detail)}</span></li>`).join("")}</ul>` : ""); };
+  return `<section class="card"><div class="card-head"><h2>${esc(TERMS.domain_alignment)}: products for the requested components</h2><span class="muted">Run ${r.run.id}, ${esc(formatDate(r.run.run_at, true))} · catalog import ${esc(r.run.catalog_import)}</span></div>`
+    + `<p class="muted">${esc(r.note)}</p><h3>Coverage</h3><p>${cs.length} requested components: ${cs.filter((c) => c.kind !== "other").length} checked by the configurator. ${r.run.ungrouped.length} items name no component.</p>`
+    + `<p class="row">${Object.keys(FIT).map((k) => badge(FIT[k][0], { label: `${FIT[k][1]} ${fits[k]}` })).join("")}</p>`
+    + `<div class="table-scroll"><table class="dense stack-sm"><thead><tr><th>Component</th><th>Checked by</th><th>Outcome</th><th>Why</th><th class="num">Items</th></tr></thead><tbody>`
+    + cs.map((c) => `<tr><td><strong>${esc(c.name)}</strong></td><td data-label="Checked by">${esc(KIND[c.kind] ?? c.kind)}</td><td data-label="Outcome">${out(c)}</td><td data-label="Why" class="muted">${esc(c.reason)}`
+      + (c.kind !== "other" ? `<details><summary>Details</summary>${details(c)}</details>` : "") + `</td><td class="num">${c.req_ids.length}</td></tr>`).join("") + "</tbody></table></div></section>";
+}
+
 function assessmentScreen() {
   const a = D.bid.assessment, s = a.summary, q = a.open_questions, part = a.participation, bm = isBM(), decided = !!a.decision;
   const notRead = q.not_read ?? [];
@@ -661,7 +687,7 @@ function assessmentScreen() {
       + Object.entries(a.progress).map(([bu, p]) => `<tr><td><a href="#/inbox/${esc(bu)}">${esc(bu === "BID" ? BID_DESK_GAPS : bu)}</a></td><td class="num">${p.total}</td><td class="num">${p.submitted}</td><td class="num">${p.validated}</td></tr>`).join("")
       + `</tbody></table><p class="muted">When the units have answered, the bid manager decides on the <a href="#/opportunities/${BID}/decisions">Bid decision</a> step.</p>` : "") + "</section>";
   return `<div class="decisions">${pageHead(TERMS.assessment, "Review the business relevance of the bid (summary and open questions), choose the participating business units, route requirements to their teams, then send the work. Each unit's designers / engineers confirm or correct the technical matches and answer in My work; the compliance position and the go/no-go follow on the Bid decision step.")}`
-    + guide("assessment") + summary + assessmentPanel(decided) + questions + participation + routing + send + scheduleCard("schedule", decided) + "</div>";
+    + guide("assessment") + summary + assessmentPanel(decided) + componentsPanel() + questions + participation + routing + send + scheduleCard("schedule", decided) + "</div>";
 }
 // ---------- Bid decision (decisions/page.tsx) ----------
 const JUDGEMENT = { met: "met", not_met: "not met", unknown: "not known" };

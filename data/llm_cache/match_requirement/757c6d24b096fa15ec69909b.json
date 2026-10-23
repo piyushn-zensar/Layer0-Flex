@@ -1,0 +1,44 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "answers": [
+      {
+        "confidence": 0.9,
+        "n": 1,
+        "rationale": "The requirement specifies a DC-DC converter module for converting 54 VDC to 12 VDC with high power output. FPM-DCDC modules are designed for board-level DC-DC conversion, supporting up to 1.5 kW output power, which matches the requirement.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-DCDC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.9,
+        "n": 2,
+        "rationale": "The requirement specifies telemetry over PMBus and high efficiency for the DC-DC converter. FPM-DCDC modules include PMBus communication and achieve high efficiency, typically around 97%, meeting the requirement.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-DCDC"
+          }
+        ]
+      },
+      {
+        "confidence": 0.8,
+        "n": 3,
+        "rationale": "The requirement specifies compact dimensions for the DC-DC converter. FPM-DCDC modules are available in compact formats suitable for board-level integration, which aligns with the specified dimensions.",
+        "units": [
+          {
+            "bu": "FPM",
+            "offering_type": "CTO",
+            "product_id": "FPM-DCDC"
+          }
+        ]
+      }
+    ]
+  },
+  "task": "match_requirement"
+}

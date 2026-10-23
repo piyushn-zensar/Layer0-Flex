@@ -95,7 +95,8 @@ def record(TestClient, app, config, a) -> dict:
             "extraction": "extraction", "requirements": "requirements", "exceptions": "requirements/exceptions",
             "knowledge": "knowledge", "decisions": "decisions", "assessment": "assessment", "assessment_score": "assessment-score",
             "schedule": "schedule", "matrix": "compliance-matrix", "outline": "response-outline",
-            "changes": "changes", "comments": "comments", "needs_owner": "needs-owner", "assessments": "assessments"}.items()}
+            "changes": "changes", "comments": "comments", "needs_owner": "needs-owner", "assessments": "assessments",
+            "components": "components"}.items()}  # P-57: Technical Requirement Matching
         bid["detail"] = detail
         bid["search"] = {"q": SAMPLE_QUERY, **get(f"{B}/rfp-search?k=8&q={SAMPLE_QUERY}")}  # one recorded RFP search
         events, before = [], None  # activity: every page, newest first

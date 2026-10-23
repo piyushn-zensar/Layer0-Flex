@@ -90,6 +90,12 @@ SAMPLES = {  # C-35: cloud and power first
         "description": "Illustrative Addendum No. 1 to the Syracuse RFP, written for the PoC: it revises, removes and "
                        "adds requirements against the frozen requirements. Its frozen change-agent answers match the demo "
                        "bid's requirement set only."},
+    "rc1_addendum_1": {  # P-59 (C-62): the demo's board-level DC/DC case, decided 23 Oct 2026
+        "path": "samples/RC-1_Addendum-1_Synthetic.pdf", "filename": "RC-1_Addendum-1_Synthetic.pdf",
+        "kind": "change", "pages": 1,
+        "description": "Synthetic Addendum No. 1 to RC-1, written for the PoC: adds the compute trays' 54 VDC to 12 VDC "
+                       "board converters to Lot 4 (L4.13 to L4.15), the requirement the Flex Power Modules data can "
+                       "match part by part. Its frozen answers match the demo bid's requirement set only."},
 }
 
 

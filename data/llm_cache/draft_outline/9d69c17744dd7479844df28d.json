@@ -1,0 +1,72 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "gaps": [
+      "Confirm specific details of the commercial terms and schedule.",
+      "Verify alignment of the proposed phased delivery with the Owner's requirements.",
+      "Ensure the acceptance test plan includes all necessary steps and is agreed upon within the specified timeframe.",
+      "Confirm the inclusion of all required cost performance inputs in the proposal."
+    ],
+    "paragraphs": [
+      {
+        "cites": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "evidence": [],
+        "text": "The proposer acknowledges the Owner's provision of major equipment for installation and integration into the overall data center design. The proposer will ensure proper installation and integration of the Owner-furnished equipment, coordinating interfaces and conducting necessary checks to align with the data center's design requirements."
+      },
+      {
+        "cites": [
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "evidence": [],
+        "text": "The proposer will utilize the Owner's published PUE and energy price during dialogue to calculate and present the energy costs associated with the proposed system. These figures will be incorporated into the total cost of ownership analysis."
+      },
+      {
+        "cites": [
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "evidence": [],
+        "text": "The proposer commits to delivering the system in phases, starting with core components such as control plane, storage, and network, followed by a test system with a minimal management stack as soon as possible after contract signing. Subsequent deliveries will be scheduled in alignment with the project timeline."
+      },
+      {
+        "cites": [
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          39,
+          40,
+          41,
+          42
+        ],
+        "evidence": [],
+        "text": "The proposer will participate in all acceptance steps, including factory tests, site tests, and a 30-day availability test, ensuring deliverables are timed against award and first delivery. The proposer will also agree on a pre-delivery test plan at least 30 days before the factory test, covering burn-in, benchmarks, and fault injection."
+      }
+    ]
+  },
+  "task": "draft_outline"
+}

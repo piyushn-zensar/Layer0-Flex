@@ -18,7 +18,7 @@ so the seed doubles as an end-to-end check.
 import json
 import sys
 
-from app.core import config
+from app.core import llm, config
 
 if "--reset" in sys.argv:
     for name in ("layer0.db", "layer0.db-wal", "layer0.db-shm"):  # the WAL side files go with the database
@@ -123,6 +123,13 @@ if __name__ == "__main__":
     with SessionLocal() as db:  # P-35: the public references, registered as drafts waiting for review
         print("knowledge sources:", knowledge.register_references(db))
         print("product documents:", knowledge.register_product_documents(db))  # P-58: drafts until a unit manager publishes
+        from app.modules.configurator import service as configurator   # P-59: Syracuse's product configurator run
+        try:
+            run = configurator.assess(db, "OPP-0001", "configurator (Bid Manager)")
+            print("configurator (Syracuse): run", run.id)
+        except llm.LLMUnavailable as exc:
+            print("configurator (Syracuse) not run, no frozen answer:", exc)
     if "--reset" in sys.argv:  # P-49: a reset always rebuilds the demo bid, through the API as the demo accounts
         from scripts import run_demo_workflow
+        run_demo_workflow.LIVE["on"] = "--live-new-steps" in sys.argv  # P-59: the new steps may call the model once
         run_demo_workflow.main()

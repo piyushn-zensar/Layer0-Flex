@@ -1,0 +1,47 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "gaps": [
+      "Confirmation of short-circuit rating and duration for the switchgear.",
+      "Details on the thermal ride-through time and automatic restart sequence for the CDUs.",
+      "Completion of the cooling data table with specific values for temperatures, flow rates, and other metrics.",
+      "Validation of the system-level simulation against test data."
+    ],
+    "paragraphs": [
+      {
+        "cites": [
+          5
+        ],
+        "evidence": [],
+        "text": "The proposed solution includes the supply of 15 kV-class metal-clad switchgear with arc-resistant Type 2B construction, draw-out vacuum breakers, protective relays, instrument transformers, a control power transformer, and battery-backed DC control power. The switchgear will be housed in a walk-in E-House with fire-rated walls of at least 2 hours. Main and feeder ratings, as well as the short-circuit rating for 1 second, will be determined based on the Owner's load schedule after the completion of a short-circuit study."
+      },
+      {
+        "cites": [
+          38
+        ],
+        "evidence": [],
+        "text": "The solution also includes modular liquid-to-liquid row CDUs placed in mechanical galleries with N+1 redundancy per group. These CDUs take facility water on the primary side and serve a separate technical-grade secondary loop to the GPU cold plates at a design flow of at least 1.5 LPM per kW. The CDU data sheet will provide detailed specifications, including rated capacity, pump type and count, temperatures, secondary flow, available lift, filter mesh, pipe routing, and power supply."
+      },
+      {
+        "cites": [
+          54,
+          55,
+          56,
+          57,
+          58
+        ],
+        "evidence": [],
+        "text": "The proposed system is designed to tolerate any disturbance foreseeable within the Section 9 interface limits. This includes the 13.8 kV ±10%, 57 to 63 Hz envelope for the Lot 1 to Lot 2 interface, the 800 VDC ripple and regulation band for the Lot 2 to Lot 3 interface, and the disturbances on the DC and cooling interfaces as specified."
+      },
+      {
+        "cites": [
+          27,
+          66
+        ],
+        "evidence": [],
+        "text": "The system-level simulation covering dynamic response, source output impedance, module current sharing, distribution inductance, and ripple will be delivered for the Owner's acceptance prior to delivery. This simulation will be calibrated against test results from the modules and racks, ensuring accuracy and reliability."
+      }
+    ]
+  },
+  "task": "draft_outline"
+}

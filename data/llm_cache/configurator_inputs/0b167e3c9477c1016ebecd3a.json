@@ -1,0 +1,84 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "board": {
+      "applications": null,
+      "design_margin_pct": null,
+      "digital": null,
+      "footprints": null,
+      "input_v_max": null,
+      "input_v_min": null,
+      "isolation": null,
+      "isolation_v_min": null,
+      "max_height_mm": null,
+      "max_length_mm": null,
+      "max_width_mm": null,
+      "min_efficiency_pct": null,
+      "mountings": null,
+      "output_current_a": null,
+      "output_power_w": null,
+      "output_v_max": null,
+      "output_v_min": null,
+      "package_types": null,
+      "peak_power_w": null,
+      "redundancy": null,
+      "regulation": null
+    },
+    "system": {
+      "certifications": {
+        "req_ids": [
+          "REQ-0003-0062"
+        ],
+        "source": "Clearance and creepage shall follow IEC 60664-1 for the working voltage, using overvoltage category III in the power room, category II in the data room, pollution degree 2 in racks and pollution degree 3 in ancillary zones",
+        "value": [
+          "IEC 60664-1"
+        ]
+      },
+      "coolant_supply_temp_c": {
+        "as_written": "45 °C",
+        "req_ids": [
+          "REQ-0003-0013"
+        ],
+        "source": "DB-08 | The liquid cooling design point is facility water at 45 °C | S6"
+      },
+      "cooling_mode": {
+        "req_ids": [
+          "REQ-0003-0013"
+        ],
+        "source": "DB-08 | The liquid cooling design point is facility water at 45 °C | S6",
+        "value": "liquid"
+      },
+      "deployment": null,
+      "distribution_voltage": {
+        "req_ids": [
+          "REQ-0003-0009"
+        ],
+        "source": "DB-04 | Distribution to the rack is 800 VDC nominal, two-wire, inside the 1500 VDC low-voltage limit | S5; S3 §5.2.1",
+        "value": "800 VDC"
+      },
+      "liquid_capture_fraction": null,
+      "rack_density_kw": {
+        "as_written": "330 kW",
+        "req_ids": [
+          "REQ-0003-0010"
+        ],
+        "source": "DB-05 | Baseline rack cabinets are 198 to 330 kW TDP, and designs shall allow growth to 570 kW per rack position and to native 800 VDC racks | S6; S5"
+      },
+      "redundancy": {
+        "req_ids": [
+          "REQ-0003-0104"
+        ],
+        "source": "L6.09 | No single point of failure shall cause an outage. The system shall stay operational or degraded after the failure of any single field-replaceable unit, server or switch, and shall support rolling upgrades while at least half stays in production | S7 §5.3.2, §5.4.1",
+        "value": "N+1"
+      },
+      "total_it_load_mw": {
+        "as_written": "120 MW",
+        "req_ids": [
+          "REQ-0003-0006"
+        ],
+        "source": "DB-01 | Critical IT load of 120 MW for AI training, in six deployment units of about 20 MW each | PA; S5 Option C"
+      }
+    }
+  },
+  "task": "configurator_inputs"
+}

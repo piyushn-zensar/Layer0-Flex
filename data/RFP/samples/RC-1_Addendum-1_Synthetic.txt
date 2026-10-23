@@ -1,0 +1,26 @@
+SYNTHETIC SAMPLE - NOT AN OFFICIAL DOCUMENT
+Written for the Layer 0 proof of concept as an addendum to the synthetic RC-1 Grid-to-Chip RFP. Like the RFP,
+it has no real owner, site or supplier behind it, and its content is invented for demonstration.
+
+ADDENDUM NO. 1
+RC-1 AI Campus: Grid-to-Chip Request for Proposal (Synthetic)
+Date of Addendum: October 23, 2026
+
+This addendum adds requirements to Lot 4 (rack power) of the RFP. Requirement IDs continue the Lot 4
+numbering of the RFP.
+
+A. ADDITIONS
+1. Lot 4, after L4.12: add the following as L4.13, Compute tray power conversion.
+"L4.13 Each compute tray shall convert the 54 VDC in-rack bus, which varies between 40 VDC and 60 VDC,
+to a 12 VDC intermediate bus for the tray's boards. The converter shall deliver at least 1,500 W of
+continuous output power per tray."
+
+2. Lot 4, after L4.13: add the following as L4.14, Compute tray converter telemetry and efficiency.
+"L4.14 The compute tray converters shall report telemetry over PMBus and shall have a typical efficiency
+of at least 97% at full load."
+
+3. Lot 4, after L4.14: add the following as L4.15, Compute tray converter size.
+"L4.15 Each compute tray converter shall fit a board area of at most 60 mm by 40 mm, with a height of at
+most 15 mm."
+
+All other terms of the RFP remain unchanged.

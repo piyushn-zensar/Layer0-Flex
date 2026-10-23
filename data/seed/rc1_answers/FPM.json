@@ -470,6 +470,36 @@
    "conditions": "",
    "workaround": "",
    "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0245",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: A regulated 48 V class intermediate bus converter from the BMR35x range (for example BMR3522200/031, 40 to 60 V in, 8 to 13.2 V out, 2,000 W continuous) converts the 54 VDC tray bus to 12 VDC; one module per tray covers the 1,500 W asked.",
+   "reason": "",
+   "conditions": "Ratings at datasheet conditions; derating at the tray's airflow to be confirmed in the thermal design.",
+   "workaround": "",
+   "next_steps": "Confirm the tray airflow and the 12 V bus tolerance with the compute lot."
+  },
+  {
+   "req_id": "REQ-0003-0246",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: The proposed converters report telemetry over PMBus, and their published typical efficiency is above 97% (97.9% for BMR352); the efficiency at full load will be stated from the datasheet curves.",
+   "reason": "",
+   "conditions": "Typical efficiency as published, not a guaranteed minimum.",
+   "workaround": "",
+   "next_steps": ""
+  },
+  {
+   "req_id": "REQ-0003-0247",
+   "role": "design_engineer",
+   "compliance": "met",
+   "response": "Illustrative placeholder response: The proposed quarter-brick converters measure 58.4 x 36.8 mm with a height of about 14.5 mm, inside the 60 x 40 x 15 mm envelope asked.",
+   "reason": "",
+   "conditions": "",
+   "workaround": "",
+   "next_steps": ""
   }
  ],
  "feasibility": {

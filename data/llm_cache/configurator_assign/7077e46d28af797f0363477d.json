@@ -1,0 +1,18 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "component": "G4",
+        "req_id": "REQ-0003-0246",
+        "system": false
+      },
+      {
+        "component": "G4",
+        "req_id": "REQ-0003-0247",
+        "system": false
+      }
+    ]
+  },
+  "task": "configurator_assign"
+}
