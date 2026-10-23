@@ -34,7 +34,8 @@ LABEL = {"input_range": "input voltage range", "output_voltage": "output voltage
          "capacity_and_paralleling": "power or current (with paralleling)", "isolation": "isolation",
          "regulation": "regulation", "digital_interface": "digital interface", "application": "application",
          "package_type": "package type", "footprint": "footprint", "mounting": "mounting", "max_length": "length",
-         "max_width": "width", "max_height": "height", "efficiency": "efficiency"}
+         "max_width": "width", "max_height": "height", "efficiency": "efficiency",
+         "fixed_ratio_output": "output across the stated input range (fixed-ratio modules)"}
 # system field -> the configure_system checks that use it
 CHECKS = {"total_it_load_mw": ("module count", "CDU sizing"), "rack_density_kw": ("rack density",),
           "distribution_voltage": ("distribution voltage", "RPP voltage"),
@@ -128,7 +129,8 @@ def _board(group: dict, cat: pd.DataFrame, parts: dict, web: list[dict]) -> dict
         if outcome == "match" or (outcome == "insufficient_information" and cands):
             per_req.append(_req(r, "satisfied", f"Met by the {len(cands)} listed parts ({said}).", fs, inputs))
         elif outcome == "near_match":
-            failing = [f for f in fs if FILTER.get(f) == best]
+            failing = [f for f in fs if FILTER.get(f) == best
+                       or (best == "fixed_ratio_output" and FILTER.get(f) in ("input_range", "output_voltage"))]
             per_req.append(_req(r, "not_satisfied", f"The near-match parts fail the {LABEL[best]} ({said}).", fs, inputs)
                            if failing else _req(r, "satisfied", f"Met by the near-match parts ({said}).", fs, inputs))
         elif outcome == "insufficient_information":
@@ -161,8 +163,9 @@ def _board(group: dict, cat: pd.DataFrame, parts: dict, web: list[dict]) -> dict
     checks = []
     if shown:
         if any(c["regulation"] == "Unregulated/Fixed Ratio" for c in shown):
-            checks.append(("Fixed-ratio output", "open", "Some candidates are unregulated (output tracks input): confirm "
-                                                         "the conversion ratio at the RFP's bus voltage and its tolerance."))
+            checks.append(("Fixed-ratio output", "open", "Some candidates are unregulated (output follows input); where "
+                           "the RFP states the input range their output across it is checked and shown per part: "
+                           "confirm the load's tolerance and the ratio at the RFP's bus voltage."))
         if any((c["modules_total"] or 0) > 1 for c in shown):
             checks.append(("Parallel operation", "open", "Some candidates need modules in parallel: confirm the maximum "
                                                          "parallel count and current-sharing rules in each datasheet."))

@@ -2,9 +2,22 @@
 """
 rfp_configurator.py - match RFP requirements to Flex / Axiom offerings.
 
-Vendored into Layer 0 (P-54) from data/axiom_products/rfp_configurator.py as supplied. One change: load_catalog()
-is split so prepare_catalog() can normalise a DataFrame built from the merged catalog (power_modules.json) instead
-of reading the .xlsx. Everything else is unchanged; keep it that way so a new supplied version can be diffed in.
+Vendored into Layer 0 (P-54) from data/axiom_products/rfp_configurator.py as supplied. Changes, each marked
+"Layer 0 fix" in the code (diff against the supplied file to see them all):
+  * load_catalog() is split so prepare_catalog() can normalise a DataFrame built from the merged catalog
+    (power_modules.json) instead of reading the .xlsx (P-54).
+  * F1 _to_float: "1,500 W" was read as 1 (the comma ended the number); thousands separators are now removed.
+  * F2 certifications: a substring match counted "UL 50" as "UL 508A" and a bare "IEC" as found; a request now
+    matches a listed standard only exactly or as a more specific part of it ("IEC 61439-2" -> "IEC 61439").
+  * F3 distribution voltage without AC or DC ("800 V") failed; it is now "review: AC or DC not stated".
+  * F4 in-rack CDUs were sized from the whole IT load (751 in-rack units for 120 MW); they are now sized per rack
+    (racks x units per rack) and need the rack density; facility CDUs stay sized on the total heat. The CDU
+    redundancy used is the installation's, stated as an assumption.
+  * F5 fixed-ratio (unregulated) modules passed an output check they cannot meet: their output follows the input
+    (BMR316, 4:1, gives 10-15 V across a 40-60 V bus). With the input range stated, the output across that range must
+    sit inside the required output (new filter "fixed_ratio_output"); each such candidate shows that range.
+  * F6 a blank Status made the active-parts filter fail on NA; blank now counts as not active.
+  * F7 the efficiency filter compares the catalogue's typical value; a note now says it is not a guaranteed minimum.
 
 Three layers:
   1. parse_requirements()   validate the JSON your LLM extracts from the RFP
@@ -142,7 +155,7 @@ def _to_float(value: Any, name: str, issues: list[Issue]) -> Optional[float]:
     try:
         out = float(value)
     except (TypeError, ValueError):
-        m = re.search(r"-?\d+(?:\.\d+)?", str(value))
+        m = re.search(r"-?\d+(?:\.\d+)?", str(value).replace(",", ""))  # Layer 0 fix F1: "1,500 W" is 1500
         if m:
             issues.append(Issue("warning", name, f"parsed {m.group()} from {value!r}; confirm units"))
             out = float(m.group())
@@ -495,7 +508,7 @@ def match_components(cat: pd.DataFrame, req: BoardRequirement, top_n: int = 15,
 
     base = cat[cat["is_product"]].copy()
     if not req.include_inactive:
-        base = base[base["Status"].str.lower() == "active"]
+        base = base[(base["Status"].str.lower() == "active").fillna(False).astype(bool)]  # Layer 0 fix F6: blank = not active
     n_load, n_total = _modules_needed(base, req)
     base["modules_for_load"] = n_load
     base["modules_total"] = n_total
@@ -507,6 +520,15 @@ def match_components(cat: pd.DataFrame, req: BoardRequirement, top_n: int = 15,
                                (base["Input Voltage (max) (V)"] >= req.input_v_max)
     if req.output_v_min is not None:
         masks["output_voltage"] = (base["out_v_lo"] <= req.output_v_min) & (base["out_v_hi"] >= req.output_v_max)
+    if req.input_v_min is not None and req.output_v_min is not None:
+        # Layer 0 fix F5: a fixed-ratio module's output follows its input (ratio = max input / max output), so
+        # across the stated input range it must stay inside the required output
+        fixed = base["Regulation"].eq("Unregulated/Fixed Ratio").fillna(False).astype(bool)
+        ratio = base["Input Voltage (max) (V)"] / base["out_v_hi"]
+        lo, hi = req.input_v_min / ratio, req.input_v_max / ratio
+        base["out_at_input"] = [f"{a:.3g}-{b:.3g} V" if f else None for f, a, b in zip(fixed, lo, hi)]
+        inside = ((lo >= req.output_v_min - 1e-6) & (hi <= req.output_v_max + 1e-6)).fillna(False).astype(bool)
+        masks["fixed_ratio_output"] = ~fixed | inside
     if req.output_power_w or req.output_current_a or req.peak_power_w or req.redundancy != "N":
         cap = base["modules_total"].replace([np.inf], np.nan)
         if req.allow_parallel:
@@ -561,6 +583,9 @@ def match_components(cat: pd.DataFrame, req: BoardRequirement, top_n: int = 15,
         "current-sharing design rules and derating in each datasheet.",
         "Catalogue power ratings are per module at datasheet conditions; confirm thermal derating.",
     ]
+    if req.min_efficiency_pct is not None:  # Layer 0 fix F7
+        notes.append("Efficiency is compared on the catalogue's typical value, not a guaranteed minimum; confirm "
+                     "the efficiency at the RFP's load points in each datasheet.")
     if req.input_v_max and req.input_v_max > cat.loc[cat["is_product"], "Input Voltage (max) (V)"].max():
         notes.append("Required input voltage exceeds every catalogue part; board-level modules cannot "
                      "take this bus directly. An upstream conversion stage is needed.")
@@ -590,6 +615,8 @@ def _rows(df: pd.DataFrame, template: Optional[str], failing: Optional[str] = No
         flags = []
         if str(r.get("Regulation")) == "Unregulated/Fixed Ratio":
             flags.append("unregulated: output tracks input; verify conversion ratio at the RFP bus voltage")
+        if isinstance(r.get("out_at_input"), str):  # Layer 0 fix F5
+            flags.append(f"fixed ratio: about {r['out_at_input']} out across the stated input range")
         if bool(r.get("fixed_output")):
             flags.append("fixed output voltage (typical value only in catalogue)")
         if r["modules_total"] > 1:
@@ -620,6 +647,13 @@ def _rows(df: pd.DataFrame, template: Optional[str], failing: Optional[str] = No
 # --------------------------------------------------------------------------
 # Layer 2: system-level checks
 # --------------------------------------------------------------------------
+
+def _cert_match(requested: str, listed: str) -> bool:
+    """Layer 0 fix F2: the same standard, or a more specific part of it ("IEC 61439-2" -> "IEC 61439");
+    "UL 50" is not "UL 508A" and a bare "IEC" names no standard."""
+    r, k = " ".join(requested.split()), " ".join(listed.split())
+    return r == k or (r.startswith(k) and not r[len(k)].isalnum())
+
 
 def _check(item: str, status: str, detail: str) -> dict:
     return {"item": item, "status": status, "detail": detail}
@@ -655,7 +689,11 @@ def configure_system(req: SystemRequirement) -> dict:
             racks = math.ceil(req.total_it_load_mw * 1000 / req.rack_density_kw)
 
     # distribution voltage
-    if req.distribution_voltage:
+    if req.distribution_voltage and not req.distribution_voltage.endswith(("AC", "DC")):  # Layer 0 fix F3
+        checks.append(_check("distribution voltage", "review",
+                             f"{req.distribution_voltage}: AC or DC not stated; Axiom options are "
+                             f"{AXIOM_SPEC['voltages']['value']}"))
+    elif req.distribution_voltage:
         ok = req.distribution_voltage in AXIOM_SPEC["voltages"]["value"]
         checks.append(_check("distribution voltage", "pass" if ok else "fail",
                              f"{req.distribution_voltage} " + ("is" if ok else "is not") +
@@ -693,14 +731,24 @@ def configure_system(req: SystemRequirement) -> dict:
         else:
             heat_kw = req.total_it_load_mw * 1000 * frac
             extra = 1 if (req.redundancy or "").upper().startswith("N+1") else 0
+            assumptions.append("CDU redundancy uses the installation redundancy (%s); the RFP may state the "
+                               "cooling redundancy separately." % (req.redundancy or "none stated"))
             for c in CDU_CATALOG:
-                if req.rack_density_kw and c["name"].startswith("SmartSense") and \
-                        req.rack_density_kw * frac > c["firm_kw"]:
+                in_rack = c["name"].startswith("SmartSense")
+                if in_rack and req.rack_density_kw and req.rack_density_kw * frac > c["firm_kw"]:
                     cdu_options.append({"cdu": c["name"], "feasible": False,
                                         "reason": f"rack heat {req.rack_density_kw * frac:.0f} kW exceeds "
                                                   f"firm capacity {c['firm_kw']:.0f} kW", "source": c["source"]})
                     continue
-                units = math.ceil(heat_kw / c["firm_kw"]) + extra
+                if in_rack and not req.rack_density_kw:  # Layer 0 fix F4: an in-rack CDU serves one rack
+                    cdu_options.append({"cdu": c["name"], "feasible": None, "reason": "in-rack CDUs are sized per "
+                                        "rack; the rack density is not stated", "source": c["source"]})
+                    continue
+                if in_rack:  # Layer 0 fix F4: racks x units per rack, not the whole IT load in one pool
+                    per_rack = math.ceil(req.rack_density_kw * frac / c["firm_kw"])
+                    units = math.ceil(req.total_it_load_mw * 1000 / req.rack_density_kw) * per_rack
+                else:
+                    units = math.ceil(heat_kw / c["firm_kw"]) + extra
                 cdu_options.append({"cdu": c["name"], "feasible": True, "units": units,
                                     "heat_load_kw": round(heat_kw, 1), "firm_kw_each": c["firm_kw"],
                                     "set_redundancy_units_added": extra, "source": c["source"]})
@@ -714,7 +762,7 @@ def configure_system(req: SystemRequirement) -> dict:
     cert_rows = []
     for c in req.certifications:
         key = c.strip().upper()
-        hit = next((k for k in CERTIFICATIONS_FOUND if k.upper() in key or key in k.upper()), None)
+        hit = next((k for k in CERTIFICATIONS_FOUND if _cert_match(key, k.upper())), None)  # Layer 0 fix F2
         cert_rows.append({"requested": c, "found_in": CERTIFICATIONS_FOUND.get(hit) if hit else None,
                           "status": "found in reviewed docs" if hit else "not found in reviewed docs; ask Flex"})
         if not hit:
@@ -803,6 +851,21 @@ def selftest(cat: pd.DataFrame) -> int:
     expect(st.get("rack density") == "fail" and st.get("redundancy") == "fail", "system limits flagged")
     expect(st.get("distribution voltage") == "pass", "bipolar voltage normalised to ±400VDC")
     expect(any("ISO 9001" in g for g in r["system"]["gaps"]), "unknown certification reported as gap")
+    # Layer 0 fixes F1-F5
+    expect(_to_float("1,500 W", "x", []) == 1500.0, "F1 thousands separator read")
+    r = configure({"system": {"certifications": ["UL 50", "IEC", "IEC 61439-2"]}}, cat)
+    found = {c["requested"]: c["found_in"] for c in r["system"]["certifications"]}
+    expect(found["UL 50"] is None and found["IEC"] is None and found["IEC 61439-2"], "F2 certification match")
+    r = configure({"system": {"distribution_voltage": "800 V"}}, cat)
+    expect([c["status"] for c in r["system"]["checks"] if c["item"] == "distribution voltage"] == ["review"],
+           "F3 voltage without AC or DC is a review")
+    r = configure({"system": {"total_it_load_mw": 20, "rack_density_kw": 100, "cooling_mode": "liquid"}}, cat)
+    rack = next(o for o in r["system"]["cdu_options"] if o["cdu"].startswith("SmartSense"))
+    expect(rack["units"] == 200, "F4 in-rack CDUs sized per rack (200 racks x 1)")
+    r = configure({"board": {"input_v_min": 40, "input_v_max": 60, "output_v_min": 11.4, "output_v_max": 12.6,
+                              "output_power_w": 800}}, cat, top_n=500)
+    expect(not any(c["regulation"] == "Unregulated/Fixed Ratio" for c in r["board"]["candidates"]),
+           "F5 fixed-ratio parts cannot hold 12 V +/-5% over a 40-60 V bus")
     print(f"\n{len(failures)} failure(s)")
     return 1 if failures else 0
 
