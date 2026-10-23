@@ -30,6 +30,7 @@ Knowledge sources (P-35, C-29; implemented in sources.py, re-exported here):
     evidence(db, collections=None, opp_id=None)         published passages and approved reviewed examples, with
                                                         citations; bid evidence only for its bid
     register_references(db)                             the public references in data/references/sources.json
+    register_product_documents(db)                      P-58: the supplied product documents as draft product evidence
 
 Retrieval and assessment records (P-37 part 1; retrieval.py, re-exported):
     retrieve(db, task, query, opp_id=None, k=None) -> list[dict]   evidence for a task profile, each with "citation"
@@ -49,7 +50,7 @@ from app.modules.decisions import service as decisions
 from app.modules.knowledge.models import EXAMPLE_TYPES, KINDS, KbItem
 from app.modules.knowledge.retrieval import assessments, embed_sources, profiles, reassess, retrieve  # noqa: F401  (public contract)
 from app.modules.knowledge.sources import (  # noqa: F401  (public contract)
-    COLLECTIONS, REVIEWERS, STATUSES, SUFFIXES, annotate, counts, evidence, get, register, register_references,
+    COLLECTIONS, REVIEWERS, STATUSES, SUFFIXES, annotate, counts, evidence, get, register, register_product_documents, register_references,
     review as review_source, source_passages, sources)
 from app.modules.requirements import service as requirements
 from app.modules.workpackages import service as workpackages

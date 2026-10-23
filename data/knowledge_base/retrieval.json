@@ -1,9 +1,10 @@
 {
- "_note": "Retrieval profiles per task (P-37, C-29 point 5): which collections each task may draw evidence from and how many passages. Only published sources and approved, non-illustrative reviewed examples are ever returned; current bid evidence only for its own bid. Market and vendor context is in no profile: it is never verified evidence. values_only keeps passages whose annotations state a value (numerical comparisons). response_drafting leaves out bid evidence because the outline prompt already gives each answer's RFP wording. A change here is a change of the retrieval, recorded with every assessment (profile hash).",
+ "_note": "Retrieval profiles per task (P-37, C-29 point 5): which collections each task may draw evidence from and how many passages. Only published sources and approved, non-illustrative reviewed examples are ever returned; current bid evidence only for its own bid. Market and vendor context is in no profile: it is never verified evidence. values_only keeps passages whose annotations state a value (numerical comparisons). component_evidence (P-58) cites the supplied product documents beside each requested component of the configurator; response_drafting leaves out bid evidence because the outline prompt already gives each answer's RFP wording. A change here is a change of the retrieval, recorded with every assessment (profile hash).",
  "requirement_interpretation": {"collections": ["bid_evidence", "engineering_reference", "reviewed_example"], "k": 6},
  "technical_explanation": {"collections": ["engineering_reference", "product_evidence"], "k": 6},
  "product_matching": {"collections": ["product_evidence", "reviewed_example"], "k": 5},
  "numerical_assessment": {"collections": ["engineering_reference", "product_evidence"], "k": 6, "values_only": true},
  "response_drafting": {"collections": ["reviewed_example", "product_evidence"], "k": 6},
+ "component_evidence": {"collections": ["product_evidence"], "k": 3},
  "executive_summary": {"collections": ["bid_evidence", "reviewed_example", "engineering_reference", "product_evidence"], "k": 8}
 }

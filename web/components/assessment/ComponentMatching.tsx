@@ -54,6 +54,11 @@ function Details({ oppId, c }: { oppId: string; c: ComponentMatch }) {
         <li key={r.req_id}><ReqLink oppId={oppId} id={r.req_id} /> <StatusBadge status={FIT[r.status].tone} label={FIT[r.status].label} />{" "}
           <span className="muted">{r.why}</span></li>))}</ul>
       {d.missing.length > 0 && <p><strong>Not stated in the RFP:</strong> {d.missing.map((m) => m.needed_for).join("; ")}</p>}
+      {(d.evidence?.passages.length ?? 0) > 0 && <><h4>From the supplied product documents</h4>
+        <p className="muted">Keyword matches in the published datasheets and brochures tagged to the proposed product families
+          ({d.evidence!.families.join(", ")}); supporting evidence to check, never the basis of the outcome.</p>
+        <ul className="per-req">{d.evidence!.passages.map((e) => <li key={e.citation}><strong>{e.title}</strong>{" "}
+          <span className="muted">({e.citation}; applies to {e.applies_to.join(", ")})</span><div className="muted">{e.text}</div></li>)}</ul></>}
       {d.checks.length > 0 && <><h4>Checks</h4>
         <ul className="per-req">{d.checks.map((k) => <li key={k.check}><StatusBadge status={CHECK_TONE[k.status]} label={CHECK_LABEL[k.status] ?? k.status} />{" "}
           <strong>{k.check}</strong> <span className="muted">{k.detail}</span></li>)}</ul></>}
@@ -109,7 +114,7 @@ export default function ComponentMatching({ oppId }: { oppId: string }) {
             <tr><td><strong>{c.name}</strong></td><td data-label="Checked by">{KIND[c.kind]}</td>
               <td data-label="Outcome"><OutcomeBadge c={c} labels={data.outcomes} /></td><td data-label="Why" className="muted">{c.reason}</td>
               <td className="num">{c.req_ids.length}</td>
-              <td>{c.kind !== "other" && <button className="secondary sm" onClick={() => setOpen(open === c.id ? undefined : c.id)}
+              <td>{(c.kind !== "other" || (c.detail.evidence?.passages.length ?? 0) > 0) && <button className="secondary sm" onClick={() => setOpen(open === c.id ? undefined : c.id)}
                 aria-expanded={open === c.id}>{open === c.id ? "Hide" : "Details"}</button>}</td></tr>
             {open === c.id && <tr><td colSpan={6}><Details oppId={oppId} c={c} /></td></tr>}
           </Fragment>))}</tbody>

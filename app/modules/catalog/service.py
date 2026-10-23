@@ -25,6 +25,7 @@ Public contract:
     unit_of(actor) -> str | None                business-unit code of a product manager / design engineer
     power_modules() -> list[dict]               the spreadsheet parts merged into the catalog (P-53, power_modules.json)
     power_modules_import() -> str               its last import date
+    documents() -> list[dict]                   the supplied product documents with family keys, parts, pages (J-21)
     product_rows(q, type, family, status, interface, application, sort, dir, page, size) -> dict
                                                 all products as table rows, spreadsheet parts and web items (C-60)
     product_detail(key) -> dict | None          one product by part number or catalog ID, with variants, documents, images
@@ -168,6 +169,11 @@ ROW = ("key", "part_number", "family_key", "family", "series", "product_type", "
 def power_modules() -> list[dict]:
     """The Flex Power Modules spreadsheet merged into the catalog (P-53; scripts/import_power_modules.py)."""
     return _load("power_modules")["items"]
+
+
+def documents() -> list[dict]:
+    """The supplied product documents and the families / parts they apply to (data/axiom_products/documents.json)."""
+    return _manifest("documents.json")
 
 
 def power_modules_import() -> str:

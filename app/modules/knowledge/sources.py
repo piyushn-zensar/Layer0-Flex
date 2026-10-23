@@ -285,6 +285,7 @@ def evidence(db: Session, collections: list[str] | None = None, opp_id: str | No
         q = q.where(KbSource.collection.in_(collections))
     q = q.where((KbSource.collection != "bid_evidence") | (KbSource.opportunity_id == (opp_id or "")))
     out = [{"passage_id": p.id, "ks_id": s.ks_id, "collection": s.collection, "title": s.title, "version": s.version,
+            "file_name": s.file_name,
             "page": p.page, "line_start": p.line_start, "line_end": p.line_end, "heading": p.heading,
             "table": p.table, "text": p.text, "annotations": p.annotations}
            for p, s in db.execute(q.order_by(KbPassage.id))]
@@ -383,5 +384,22 @@ def register_references(db: Session, actor: str = "Layer 0 setup") -> list[str]:
             annotate(db, src.ks_id, actor)
         except llm.LLMUnavailable:
             pass  # not generated yet (mock mode): the passages stand without annotations
+        out.append(src.ks_id)
+    return out
+
+
+def register_product_documents(db: Session, actor: str = "Layer 0 setup") -> list[str]:
+    """Register the supplied product datasheets and brochures (data/axiom_products, listed in documents.json) as draft
+    product capability evidence (P-58, C-64): read into passages with page and lines, published only by a unit
+    manager's review. Which families or parts a document applies to stays in documents.json (catalog.documents()), so a
+    corrected manifest re-tags them without registering again. Idempotent."""
+    from app.modules.catalog import service as catalog  # here: catalog's retrieval index imports this module's caller
+    out = []
+    for d in catalog.documents():
+        path = config.DATA / "axiom_products" / d["file"]
+        if not path.exists():
+            continue
+        src, _ = register(db, path, actor, "product_evidence", d["title"], d["publisher"], "", d.get("note", ""),
+                          "supplied for the PoC", "")
         out.append(src.ks_id)
     return out

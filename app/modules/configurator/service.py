@@ -30,6 +30,8 @@ Public contract:
                                                   "unassigned": [req_id] (the model gave no answer), "unknown_ids"}
     prepare(items, scope, component), plan(items)   inputs() and components() on refs already read (no database)
     assess(db, opp_id, actor) -> ComponentRun    P-56: components() explained (explain.py) and stored as a new run
+    evidence(db, group, matches) -> dict         P-58: cited passages of the published product documents tagged to the
+                                                 families proposed for a component
     latest(db, opp_id) -> dict                   {"run": ComponentRun | None, "components": [ComponentMatch]}
     for_requirement(db, opp_id, req_id) -> list[dict]   [{component, requirement}]: where a requirement sits
 """
@@ -45,6 +47,8 @@ from app.modules.catalog import service as catalog
 from app.core import audit
 from app.modules.configurator import agent, explain
 from app.modules.configurator.models import ComponentMatch, ComponentRun
+from app.modules.knowledge import service as knowledge
+from app.modules.matching import service as matching
 from app.modules.configurator import rfp_configurator as rc
 from app.modules.opportunities import service as opportunities
 from app.modules.requirements import service as requirements
@@ -244,17 +248,44 @@ def plan(items: list[dict]) -> dict:
             "unknown_ids": unknown, "unassigned": grouped_["unassigned"]}
 
 
+def evidence(db: Session, group: dict, matches: dict) -> dict:
+    """P-58 (C-64): cited passages of the published product documents for one requested component. Only documents
+    that documents.json ties to a product family proposed for the component's requirements (their own match, else
+    their group's) are searched, ranked by keyword (the same on every machine), and a passage counts only when its page
+    is tagged to one of those families; each passage says which. Evidence for operating conditions, compatibility and certifications; it never changes an outcome.
+    -> {"families": [...], "documents": [file], "passages": [...]}"""
+    families = sorted({u["product_id"] for r in group["requirements"]
+                       if (m := matches.get(r["req_id"]) or matches.get(r.get("parent") or ""))
+                       for u in m.units if u.get("product_id")})
+    docs = {d["file"]: d for d in catalog.documents()
+            if any(k.split("/", 1)[0] in families for k in d["family_keys"])}
+    out = []
+    if docs:
+        query = " ".join([group["name"], *(r["text"] for r in group["requirements"][:12])])
+        for h in knowledge.retrieve(db, "component_evidence", query, k=60, semantic=False):
+            d = docs.get(h.get("file_name"))
+            applies = [k for k, pages in (d or {}).get("pages", {}).items()
+                       if h["page"] in pages and k.split("/", 1)[0] in families]   # a page tagged to a proposed family
+            if not applies or len(out) == 3:
+                continue
+            out.append({"citation": h["citation"], "title": h["title"], "file_name": h["file_name"], "page": h["page"],
+                        "text": h["text"][:600], "applies_to": applies})
+    return {"families": families, "documents": sorted(docs), "passages": out}
+
+
 def assess(db: Session, opp_id: str, actor: str) -> ComponentRun:
     """P-56 (C-57, C-58, C-61): components() explained and stored as a new run (earlier runs stay)."""
     planned = components(db, opp_id)
     parts = {p["part_number"]: p for p in catalog.power_modules()}
     web = [i for i in catalog.items() if i["bu"] == "FPM"]   # the power modules unit's web listings
+    matches = matching.for_opportunity(db, opp_id)
     run_ = ComponentRun(opportunity_id=opp_id, catalog_import=catalog.power_modules_import(), run_by=actor,
                         ungrouped=planned["ungrouped"], unassigned=planned["unassigned"])
     db.add(run_)
     db.flush()
     for n, g in enumerate(planned["groups"]):
         e = explain.explain(g, catalog_frame(), parts, web)
+        e["evidence"] = evidence(db, g, matches)
         db.add(ComponentMatch(run_id=run_.id, opportunity_id=opp_id, seq=n, name=g["name"], kind=g["kind"],
                               req_ids=g["req_ids"], outcome=e.pop("outcome"), reason=e.pop("reason"), detail=e))
     audit.record(db, actor, "configurator_run", "component_run", run_.id, opp_id, groups=len(planned["groups"]),

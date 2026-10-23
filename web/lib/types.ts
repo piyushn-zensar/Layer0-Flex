@@ -310,7 +310,10 @@ export interface ComponentDetail {
   // P-57: requirement <-> product values side by side (first three parts); the verdicts are the requirement statuses
   comparison?: { parts: string[]; links: string[]; rows: { constraint: string; required: string; req_ids: string[]; values: string[] }[] };
   web_listed?: { key: string; name: string; specs: string; source_url: string | null; link: string }[]; // no match: ask the unit
+  // P-58: passages of the published product documents tagged to the families proposed for the component (never decides)
+  evidence?: { families: string[]; documents: string[]; passages: ComponentEvidence[] };
 }
+export interface ComponentEvidence { citation: string; title: string; file_name: string; page: number; text: string; applies_to: string[] }
 export interface ComponentMatch { id: number; run_id: number; opportunity_id: string; seq: number; name: string;
   kind: "dc_dc" | "system" | "other"; req_ids: string[]; outcome: ComponentOutcome; reason: string; detail: ComponentDetail }
 export interface ComponentRun { id: number; opportunity_id: string; catalog_import: string; ungrouped: string[]; unassigned: string[]; run_by: string; run_at: string }

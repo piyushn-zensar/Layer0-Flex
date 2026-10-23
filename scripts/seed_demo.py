@@ -122,6 +122,7 @@ if __name__ == "__main__":
     independent("demo_grid_to_chip.json")  # P-48: RC-1 (OPP-0003 on a reset), matched right after its automatic freeze
     with SessionLocal() as db:  # P-35: the public references, registered as drafts waiting for review
         print("knowledge sources:", knowledge.register_references(db))
+        print("product documents:", knowledge.register_product_documents(db))  # P-58: drafts until a unit manager publishes
     if "--reset" in sys.argv:  # P-49: a reset always rebuilds the demo bid, through the API as the demo accounts
         from scripts import run_demo_workflow
         run_demo_workflow.main()
