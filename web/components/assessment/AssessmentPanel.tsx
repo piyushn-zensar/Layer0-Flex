@@ -8,6 +8,7 @@ import { useState } from "react";
 import { BID_MANAGER_ONLY, errorMessage, isBidManager, post, useApi, useMe } from "@/lib/api";
 import { formatDate, type AssessmentMeasure, type AssessmentScore } from "@/lib/types";
 import { Alert, Busy, Skeleton, useToast } from "@/components/ui";
+import ComponentMatching from "./ComponentMatching";
 
 
 const share = (m: AssessmentMeasure) => (m.n === null || m.of <= 0 ? "" : `${Math.round((m.n / m.of) * 100)}% of ${m.of}`);
@@ -60,7 +61,7 @@ export default function AssessmentPanel({ oppId, decided = false }: { oppId: str
   const hasRun = data.run !== null;
   const m = data.measures;
 
-  return (
+  return (<>
     <section className="card" data-tour="asm-score">
       <div className="card-head"><h2>Three measures</h2></div>
       <p className="muted">{data.note}</p>
@@ -96,5 +97,7 @@ export default function AssessmentPanel({ oppId, decided = false }: { oppId: str
       </form>}
       <Alert kind="error">{formError}</Alert>
     </section>
+    <ComponentMatching oppId={oppId} />
+    </>
   );
 }

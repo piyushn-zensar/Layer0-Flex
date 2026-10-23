@@ -7,7 +7,7 @@ column names, so the script matches on the same validated values the Product Cat
 Public contract:
     catalog_frame() -> DataFrame                 the merged catalog as the script's catalogue (cached)
     requirement_refs(db, opp_id, req_ids=None) -> list[dict]   {req_id, text, quote, section, category, document,
-                                                 page}: the requirements as the agents see them, with their source;
+                                                 page, parent (the group it belongs to)}: the requirements as the agents see them, with their source;
                                                  None = every technical and compliance item
     normalise(raw, items=()) -> dict             the agent's answer -> {"input" (the script's JSON, target units),
                                                  "provenance" {"board.x": {req_ids, source, stated, unit, interpreted}},
@@ -85,7 +85,7 @@ def requirement_refs(db: Session, opp_id: str, req_ids: list[str] | None = None)
     else:
         picked = [by_id[i] for i in req_ids if i in by_id]
     return [{"req_id": r.req_id, "text": r.text, "quote": r.quote, "section": r.section, "category": r.category,
-             "document": docs.get(r.document_id), "page": r.page} for r in picked]
+             "document": docs.get(r.document_id), "page": r.page, "parent": r.parent_id} for r in picked]
 
 
 # unit as written -> (quantity, factor to the base unit). Case matters: MW is megawatt, mW milliwatt.
@@ -248,12 +248,13 @@ def assess(db: Session, opp_id: str, actor: str) -> ComponentRun:
     """P-56 (C-57, C-58, C-61): components() explained and stored as a new run (earlier runs stay)."""
     planned = components(db, opp_id)
     parts = {p["part_number"]: p for p in catalog.power_modules()}
+    web = [i for i in catalog.items() if i["bu"] == "FPM"]   # the power modules unit's web listings
     run_ = ComponentRun(opportunity_id=opp_id, catalog_import=catalog.power_modules_import(), run_by=actor,
                         ungrouped=planned["ungrouped"], unassigned=planned["unassigned"])
     db.add(run_)
     db.flush()
     for n, g in enumerate(planned["groups"]):
-        e = explain.explain(g, catalog_frame(), parts)
+        e = explain.explain(g, catalog_frame(), parts, web)
         db.add(ComponentMatch(run_id=run_.id, opportunity_id=opp_id, seq=n, name=g["name"], kind=g["kind"],
                               req_ids=g["req_ids"], outcome=e.pop("outcome"), reason=e.pop("reason"), detail=e))
     audit.record(db, actor, "configurator_run", "component_run", run_.id, opp_id, groups=len(planned["groups"]),

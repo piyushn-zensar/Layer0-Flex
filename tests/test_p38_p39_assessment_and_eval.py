@@ -28,7 +28,7 @@ def test_assessment_score_measures_and_gaps():
     assert m["technical_match"]["n"] == len(m["technical_match"]["req_ids"]) <= m["technical_match"]["of"] == s["technical"]
     assert m["review_progress"]["n"] <= m["review_progress"]["of"] and "not a probability" in s["note"]
     assert all(g["req_ids"] for g in s["gaps"])
-    assert m["technical_match"]["label"] == "Technical requirement match" and all("exception queue" not in g["label"] for g in s["gaps"])  # P-42 plain words
+    assert m["technical_match"]["label"] == "Technical Requirement Matching" and all("exception queue" not in g["label"] for g in s["gaps"])  # P-42 plain words
 
     first = m["technical_match"]["req_ids"][0]
     text = next(r["req"]["text"] for r in client.get(f"/api/bids/{opp}/trace").json()["rows"] if r["req"]["req_id"] == first)

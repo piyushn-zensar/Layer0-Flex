@@ -11,6 +11,7 @@ from conftest import auth, signed_in  # noqa: E402
 from app.modules.configurator import explain, service  # noqa: E402
 
 PARTS = {p["part_number"]: p for p in service.catalog.power_modules()}
+WEB = [i for i in service.catalog.items() if i["bu"] == "FPM"]
 
 
 def _item(rid: str, quote: str) -> dict:
@@ -30,7 +31,7 @@ def _group(board: dict, items: list[dict]) -> dict:
 
 
 def _explain(board: dict, items: list[dict]) -> dict:
-    return explain.explain(_group(board, items), service.catalog_frame(), PARTS)
+    return explain.explain(_group(board, items), service.catalog_frame(), PARTS, WEB)
 
 
 def test_match_with_candidates_assumptions_and_checks():
@@ -71,6 +72,8 @@ def test_no_match_explained_without_relaxing():
                   "digital": ("PMBus", "R2")}, items)
     assert e["outcome"] == "no_match" and not e["candidates"] and not e["near_matches"]
     assert "upstream conversion stage" in e["reason"]
+    assert "BMR720" in [w["name"] for w in e["web_listed"]] and "confirm with the unit" in e["reason"]  # pointer only
+    assert {"Web-listed products without ratings": "open"}.items() <= {k["check"]: k["status"] for k in e["checks"]}.items()
     why = {r["req_id"]: (r["status"], r["why"]) for r in e["requirements"]}
     assert why["R1"][0] == "not_satisfied" and "input voltage range (800 V)" in why["R1"][1]
     assert why["R2"][0] == "cannot_assess" and "on its own" in why["R2"][1]

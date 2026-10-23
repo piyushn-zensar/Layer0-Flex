@@ -70,7 +70,7 @@ export const statusLabel = (s: string) => STATUS_LABELS[s] ?? s.replace(/_/g, " 
 // stored values, API paths and data-tour ids keep the internal one. Backend messages repeat these words literally.
 export const TERMS = {
   assessment: "Assessment Summary",              // the step, its page and panel (C-36)
-  domain_alignment: "Technical requirement match",
+  domain_alignment: "Technical Requirement Matching", // C-59 (iteration 5): the measure and the configurator card
   offering_type: "Type of offer",                // CTO / Semi-custom / ETO stay as the values
   exception: "Needs a source check",             // the exception queue and status "exception"
   baseline: "Frozen version",                    // "baseline 2" reads "frozen version 2"
@@ -286,7 +286,7 @@ export interface ProductDetail extends Partial<PowerModule> {
 // An outcome is the configurator's result on the supplied product data, pending engineering review (never proof).
 export type ComponentOutcome = "match" | "near_match" | "insufficient_information" | "no_match" | "system_checks" | "not_applicable" | "not_assessed";
 export type RequirementFit = "satisfied" | "not_satisfied" | "cannot_assess";
-export interface ComponentRequirement { req_id: string; text: string; document: string | null; page: number | null;
+export interface ComponentRequirement { req_id: string; parent: string | null; text: string; document: string | null; page: number | null;
   status: RequirementFit; why: string; fields: string[]; interpreted: string[] }
 export interface ComponentInput { req_ids: string[]; source: string; stated: string | string[]; unit: string | null; interpreted: boolean }
 export interface ComponentCandidate {
@@ -307,6 +307,9 @@ export interface ComponentDetail {
   unit_issues?: { field: string; message: string; req_ids: string[] }[];
   cdu_options?: Record<string, unknown>[]; certifications?: { requested: string; found_in: string | null; status: string }[];
   counts?: Record<"pass" | "fail" | "review" | "unknown", number>;
+  // P-57: requirement <-> product values side by side (first three parts); the verdicts are the requirement statuses
+  comparison?: { parts: string[]; links: string[]; rows: { constraint: string; required: string; req_ids: string[]; values: string[] }[] };
+  web_listed?: { key: string; name: string; specs: string; source_url: string | null; link: string }[]; // no match: ask the unit
 }
 export interface ComponentMatch { id: number; run_id: number; opportunity_id: string; seq: number; name: string;
   kind: "dc_dc" | "system" | "other"; req_ids: string[]; outcome: ComponentOutcome; reason: string; detail: ComponentDetail }

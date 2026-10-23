@@ -316,7 +316,7 @@ def assessment_score(db: Session, opp_id: str) -> dict:
         "run": run["run"], "run_at": first.created_at if first else None, "catalog_version": first.catalog_version if first else None,
         "technical": len(tech),
         "measures": {
-            "technical_match": {"label": "Technical requirement match", "n": len(proposed_match), "of": len(tech), "req_ids": proposed_match,
+            "technical_match": {"label": "Technical Requirement Matching", "n": len(proposed_match), "of": len(tech), "req_ids": proposed_match,
                                 "explain": "System-generated: technical requirements whose initial system proposal (before the "
                                            "engineers' review and the bid manager's routing) names a participating unit's solution. "
                                            "Standards, legal, commercial and schedule items are not counted."},

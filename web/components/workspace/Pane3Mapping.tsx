@@ -6,12 +6,14 @@ import { EmptyState, StatusBadge } from "@/components/ui";
 import MatchActions from "@/components/matching/MatchActions"; // A-05 (Atharv)
 import SendToKnowledge from "@/components/knowledge/SendToKnowledge"; // A-11, P-36
 import { useWorkspace } from "./TraceWorkspace";
+import RequirementProducts, { useComponentsByReq } from "@/components/assessment/RequirementProducts"; // P-57 (Piyush)
 
 const PRODUCT = ["technical", "compliance"]; // matching.PRODUCT_CATEGORIES: the items a unit's designer / engineer answers
 const NEEDS_OWNER = "Needs an owner: no participating unit offers it yet";
 
 export default function Pane3Mapping() {
   const ws = useWorkspace();
+  const config = useComponentsByReq(ws.bidId); // the product configurator's last run (C-59)
   const { d, data, selected } = ws;
   if (!d || !data) return null;
   // Walkthrough targets (tour/chapters/trace.ts): "trace-sel-*" ids sit on the selected row only, so each id is unique.
@@ -46,6 +48,7 @@ export default function Pane3Mapping() {
                 : m ? (managers.length > 0 ? `Not a product item: answered by the unit managers (${managers.join(", ")})`
                   : noUnit) : "Not matched yet"}</span>}
               <MatchActions oppId={ws.bidId} reqId={req.req_id} match={m} dispatched={assignments.length > 0} onDone={ws.afterWrite} tour={req.req_id === selected} canChange={can_change} />
+              <RequirementProducts reqId={req.req_id} entries={config.by.get(req.req_id)} outcomes={config.outcomes} />
             </td>
             <td data-tour={sel(req.req_id, "trace-sel-response")}>
               {!d.assessed ? <span className="muted">Responses appear once the bid is sent for assessment</span> : <>

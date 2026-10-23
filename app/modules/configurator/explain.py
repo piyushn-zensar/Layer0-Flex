@@ -1,7 +1,9 @@
 """Explain a component's configurator result (P-56; C-57, C-58, C-61; PLAN 12.2 decision 7). Code only, no model.
 
-    explain(group, cat, parts) -> {"outcome", "reason", "requirements", "candidates", "near_matches", "assumptions",
-                                   "checks", "inputs", "missing", "unit_issues", "system"}
+    explain(group, cat, parts, web=()) -> {"outcome", "reason", "requirements", "candidates", "near_matches",
+                                   "assumptions", "checks", "inputs", "missing", "unit_issues", "web_listed", ...}
+    web: the unit's web catalog items; on a no match, those naming the required input voltage are listed as
+    "no published ratings: confirm with the unit" (never a match, the constraint is not relaxed)
 
 Outcomes: match (every stated constraint met), near_match (fails one constraint; shown for review, never as a match),
 insufficient_information (a needed input is not stated), no_match (with the reason), and for the other kinds
@@ -9,6 +11,7 @@ system_checks (the installation checks ran), not_applicable, not_assessed (no pr
 Per requirement: satisfied, not_satisfied, cannot_assess, each with the reason. Nothing is relaxed silently: a near
 match names the constraint it fails.
 """
+import re
 from urllib.parse import quote
 
 import pandas as pd
@@ -37,6 +40,9 @@ CHECKS = {"total_it_load_mw": ("module count", "CDU sizing"), "rack_density_kw":
           "distribution_voltage": ("distribution voltage", "RPP voltage"),
           "coolant_supply_temp_c": ("coolant supply temperature",), "redundancy": ("redundancy",),
           "cooling_mode": ("CDU sizing", "cooling mode"), "liquid_capture_fraction": ("CDU sizing",)}
+AXIOM = {"module_capacity_mw": "Axiom module capacity (MW)", "max_rack_density_kw": "Axiom maximum rack density (kW)",
+         "voltages": "Axiom distribution voltages", "max_coolant_supply_c": "Axiom maximum coolant supply (°C)",
+         "redundancy": "Axiom redundancy options"}
 WORST = {"fail": 0, "unknown": 1, "review": 2, "pass": 3}
 STATUS = {"pass": "satisfied", "fail": "not_satisfied"}
 
@@ -46,7 +52,7 @@ def _req(r: dict, status: str, why: str, fields: list[str] = (), inputs: dict | 
     guessed = [k.split(".", 1)[1] for k, v in (inputs or {}).items() if v.get("interpreted") and r["req_id"] in v["req_ids"]]
     if guessed:
         why += f" Interpreted from the text, to confirm: {', '.join(guessed)}."
-    return {"req_id": r["req_id"], "text": r["text"], "document": r.get("document"), "page": r.get("page"),
+    return {"req_id": r["req_id"], "parent": r.get("parent"), "text": r["text"], "document": r.get("document"), "page": r.get("page"),
             "status": status, "why": why, "fields": list(fields), "interpreted": guessed}
 
 
@@ -76,7 +82,7 @@ def _candidate(c: dict, parts: dict) -> dict:
                 "multi_output": bool(p.get("multi_output")) or bool(p.get("outputs"))}
 
 
-def _board(group: dict, cat: pd.DataFrame, parts: dict) -> dict:
+def _board(group: dict, cat: pd.DataFrame, parts: dict, web: list[dict]) -> dict:
     run, refs = group["run"], group["requirements"]
     b, inputs, missing = run["board"], run["inputs"], run["missing"]
     cands = [_candidate(c, parts) for c in b["candidates"]]
@@ -105,6 +111,12 @@ def _board(group: dict, cat: pd.DataFrame, parts: dict) -> dict:
         reason = (f"No catalogue power module meets the stated constraints, and dropping any one constraint does not "
                   f"help. First constraint that no part meets: {LABEL.get(stops, stops)}.")
         reason += "".join(" " + n for n in b["notes"] if "upstream conversion" in n)
+    listed = []
+    if outcome == "no_match" and "input_v_min" in run["input"]["board"]:
+        listed = _web_listed(web, run["input"]["board"]["input_v_min"]["value"])
+        if listed:
+            reason += (" Listed on the unit's web pages with no published ratings, so not assessed: "
+                       + ", ".join(w["name"] for w in listed) + "; confirm with the unit.")
 
     per_req, fields = [], _fields(inputs)
     for r in refs:
@@ -165,6 +177,10 @@ def _board(group: dict, cat: pd.DataFrame, parts: dict) -> dict:
         checks.append(("Catalogue values unverified", "open", "Values are the Flex Power Modules export as imported, "
                        "not confirmed by the unit" + (f"; the web pages disagree for {', '.join(flagged)}" if flagged else "")
                        + "."))
+    if listed:
+        checks.append(("Web-listed products without ratings", "open", "Ask the unit whether "
+                       + ", ".join(w["name"] for w in listed) + " meet the stated constraints; the configurator has no "
+                       "numbers for them."))
     checks.append(("Multiple outputs", "not_supported", "The configurator matches the main output only; second and "
                                                         "third outputs are not checked."))
     checks += [("Unit or value issue", "open", f"{i['field']}: {i['message']}") for i in run["unit_issues"]]
@@ -172,7 +188,7 @@ def _board(group: dict, cat: pd.DataFrame, parts: dict) -> dict:
             "near_matches": near if outcome == "near_match" else [], "assumptions": assumptions,
             "checks": [{"check": c, "status": s, "detail": d} for c, s, d in checks],
             "inputs": inputs, "missing": missing, "unit_issues": run["unit_issues"], "notes": b["notes"],
-            "funnel": b["funnel"], "relaxation": relax}
+            "funnel": b["funnel"], "relaxation": relax, "web_listed": listed, "comparison": _comparison(inputs, shown)}
 
 
 def _system(group: dict) -> dict:
@@ -200,8 +216,9 @@ def _system(group: dict) -> dict:
             f"; {c['requested']}: {c['status']}" for c in certs)
         per_req.append(_req(r, STATUS.get(worst, "cannot_assess"), detail.strip("; "), fs, inputs))
     assumptions = [{"item": "Assumption", "value": a, "basis": "configurator"} for a in s["assumptions"]]
-    assumptions += [{"item": k.replace("_", " "), "value": str(v["value"]), "basis": v["source"] + ("" if v["verified"]
-                     else "; not confirmed by Axiom")} for k, v in s["axiom_spec_used"].items()]
+    assumptions += [{"item": AXIOM.get(k, k), "value": ", ".join(v["value"]) if isinstance(v["value"], list) else f"{v['value']:g}",
+                     "basis": v["source"] + ("" if v["verified"] else "; not confirmed by Axiom")}
+                    for k, v in s["axiom_spec_used"].items()]
     counts = {k: sum(c["status"] == k for c in s["checks"]) for k in WORST}
     reason = (f"Installation checks: {counts['pass']} pass, {counts['fail']} fail, {counts['review']} to review, "
               f"{counts['unknown']} unknown. Configurator result, pending engineering review.")
@@ -213,10 +230,64 @@ def _system(group: dict) -> dict:
             "cdu_options": s["cdu_options"], "certifications": s["certifications"], "counts": counts}
 
 
-def explain(group: dict, cat: pd.DataFrame, parts: dict) -> dict:
+def _rng(v: list) -> str:
+    lo, hi = (None, None) if not v else (v[0], v[-1])
+    return "unknown" if lo is None else f"{lo:g} V" if lo == hi else f"{lo:g} to {hi:g} V"
+
+
+def _cap(c: dict) -> str:
+    parts = [f"{c['power_w_per_module']:g} W" if c["power_w_per_module"] else "power unknown"]
+    if c["peak_w_per_module"]:
+        parts[0] += f" (peak {c['peak_w_per_module']:g} W)"
+    if c["current_a_per_module"]:
+        parts.append(f"{c['current_a_per_module']:g} A")
+    if c["modules_total"]:
+        parts.append(f"{c['modules_total']:g} module(s)")
+    return ", ".join(parts)
+
+
+SHOW = {"input_range": lambda c: _rng(c["input_v"]), "output_voltage": lambda c: _rng(c["output_v"]),
+        "capacity_and_paralleling": lambda c: _cap(c),
+        "isolation": lambda c: f"{c['isolation'] or 'unknown'}" + (f", {c['isolation_v']:g} V" if c["isolation_v"] else ""),
+        "regulation": lambda c: c["regulation"] or "unknown", "digital_interface": lambda c: c["digital"] or "none",
+        "application": lambda c: c["applications"] or "unknown",
+        "package_type": lambda c: c["package"][0] or "unknown", "footprint": lambda c: c["package"][1] or "unknown",
+        "mounting": lambda c: c["package"][2] or "unknown",
+        "max_length": lambda c: "unknown" if c["size_mm"][0] is None else f"{c['size_mm'][0]:g} mm",
+        "max_width": lambda c: "unknown" if c["size_mm"][1] is None else f"{c['size_mm'][1]:g} mm",
+        "max_height": lambda c: "unknown" if c["size_mm"][2] is None else f"{c['size_mm'][2]:g} mm",
+        "efficiency": lambda c: "unknown" if c["efficiency_pct"] is None else f"{c['efficiency_pct']:g}%"}
+
+
+def _comparison(inputs: dict, shown: list[dict], n: int = 3) -> dict:
+    """Requirement <-> product table (C-59): one row per constraint the RFP states, the stated values and the first n
+    parts' values as text. The verdicts are the requirement statuses; this table only shows the values side by side."""
+    rows: dict[str, dict] = {}
+    for key, p in inputs.items():
+        flt = FILTER.get(key.split(".", 1)[1])
+        if not flt:
+            continue
+        r = rows.setdefault(flt, {"constraint": LABEL[flt], "required": [], "req_ids": []})
+        r["required"].append(str(p["stated"]) if not isinstance(p["stated"], list) else ", ".join(p["stated"]))
+        r["req_ids"] += [i for i in p["req_ids"] if i not in r["req_ids"]]
+    parts = shown[:n]
+    return {"parts": [c["part_number"] for c in parts], "links": [c["link"] for c in parts],
+            "rows": [r | {"required": " to ".join(r["required"]), "values": [SHOW[f](c) for c in parts]}
+                     for f, r in rows.items()]}
+
+
+def _web_listed(web: list[dict], volts: float) -> list[dict]:
+    """Web catalog products whose published text names the required input voltage (for example "800 VDC"): a pointer
+    for the unit, never a match. ponytail: a number-and-V search over the short web text."""
+    pattern = re.compile(rf"(?<![\d.]){volts:g}\s*V")
+    return [{"key": w["id"], "name": w["model"], "specs": w["specs"], "source_url": w.get("source_url"),
+             "link": "/catalog/product?part=" + quote(w["id"], safe="")} for w in web if pattern.search(w["specs"])]
+
+
+def explain(group: dict, cat: pd.DataFrame, parts: dict, web: list[dict] = ()) -> dict:
     """group: one entry of service.plan()["groups"] with its requirement refs ("requirements")."""
     if group["kind"] == "dc_dc":
-        return _board(group, cat, parts)
+        return _board(group, cat, parts, list(web))
     if group["kind"] == "system":
         return _system(group)
     return {"outcome": "not_assessed", "reason": "No product table was supplied for this component, so the configurator "
