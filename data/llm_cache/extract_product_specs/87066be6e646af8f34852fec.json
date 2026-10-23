@@ -1,0 +1,128 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Tap-off rated current",
+            "max": 250,
+            "min": 100,
+            "name": "rated_current",
+            "page": 14,
+            "quote": "100-250A Tap-off: A = 580mm B = 310mm C = 294mm Typ. 35kg",
+            "text": "100-250A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Height (A)",
+            "max": 580,
+            "min": 580,
+            "name": "height",
+            "page": 14,
+            "quote": "100-250A Tap-off: A = 580mm B = 310mm C = 294mm Typ. 35kg",
+            "text": "580mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Width (B)",
+            "max": 310,
+            "min": 310,
+            "name": "width",
+            "page": 14,
+            "quote": "100-250A Tap-off: A = 580mm B = 310mm C = 294mm Typ. 35kg",
+            "text": "310mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Depth (C)",
+            "max": 294,
+            "min": 294,
+            "name": "depth",
+            "page": 14,
+            "quote": "100-250A Tap-off: A = 580mm B = 310mm C = 294mm Typ. 35kg",
+            "text": "294mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Weight",
+            "max": 35,
+            "min": 35,
+            "name": "weight",
+            "page": 14,
+            "quote": "100-250A Tap-off: A = 580mm B = 310mm C = 294mm Typ. 35kg",
+            "text": "Typ. 35kg",
+            "unit": "kg"
+          }
+        ],
+        "variant": "IBAR HXA Tap-off 100-250A"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Tap-off rated current",
+            "max": 630,
+            "min": 400,
+            "name": "rated_current",
+            "page": 14,
+            "quote": "400-630A Tap-off: A = 829mm B = 360mm C = 329mm Typ. 46kg",
+            "text": "400-630A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Height (A)",
+            "max": 829,
+            "min": 829,
+            "name": "height",
+            "page": 14,
+            "quote": "400-630A Tap-off: A = 829mm B = 360mm C = 329mm Typ. 46kg",
+            "text": "829mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Width (B)",
+            "max": 360,
+            "min": 360,
+            "name": "width",
+            "page": 14,
+            "quote": "400-630A Tap-off: A = 829mm B = 360mm C = 329mm Typ. 46kg",
+            "text": "360mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Depth (C)",
+            "max": 329,
+            "min": 329,
+            "name": "depth",
+            "page": 14,
+            "quote": "400-630A Tap-off: A = 829mm B = 360mm C = 329mm Typ. 46kg",
+            "text": "329mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Weight",
+            "max": 46,
+            "min": 46,
+            "name": "weight",
+            "page": 14,
+            "quote": "400-630A Tap-off: A = 829mm B = 360mm C = 329mm Typ. 46kg",
+            "text": "Typ. 46kg",
+            "unit": "kg"
+          }
+        ],
+        "variant": "IBAR HXA Tap-off 400-630A"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

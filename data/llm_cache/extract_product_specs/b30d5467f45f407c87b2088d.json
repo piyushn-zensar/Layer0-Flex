@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Applicable standard",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 6,
+            "quote": "Applicable standard | UL891",
+            "text": "UL891",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Rated voltage",
+            "max": 600,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 6,
+            "quote": "Rated voltage | Up to 600V AC",
+            "text": "Up to 600V AC",
+            "unit": "V AC"
+          },
+          {
+            "conditions": "",
+            "label": "Frequency",
+            "max": 60,
+            "min": 60,
+            "name": "frequency",
+            "page": 6,
+            "quote": "Frequency | 60 Hz",
+            "text": "60 Hz",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "density rated",
+            "label": "Busbar rating",
+            "max": 6000,
+            "min": 1200,
+            "name": "rated_current",
+            "page": 6,
+            "quote": "Busbar rating | 1200A to 6000A (density rated)",
+            "text": "1200A to 6000A (density rated)",
+            "unit": "A"
+          },
+          {
+            "conditions": "1 second",
+            "label": "Short-time withstand",
+            "max": 100,
+            "min": null,
+            "name": "short_time_withstand",
+            "page": 6,
+            "quote": "Short-time withstand | Up to 100 kA for 1 second",
+            "text": "Up to 100 kA for 1 second",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Seismic",
+            "max": null,
+            "min": null,
+            "name": "seismic_or_arc",
+            "page": 6,
+            "quote": "Seismic | OSHPD compliant to ICC-ES AC156",
+            "text": "OSHPD compliant to ICC-ES AC156",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Communications",
+            "max": null,
+            "min": null,
+            "name": "communication",
+            "page": 6,
+            "quote": "Communications | Modbus TCP/IP, Modbus RTU",
+            "text": "Modbus TCP/IP, Modbus RTU",
+            "unit": ""
+          }
+        ],
+        "variant": "AMX Switchboards (UL891)"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

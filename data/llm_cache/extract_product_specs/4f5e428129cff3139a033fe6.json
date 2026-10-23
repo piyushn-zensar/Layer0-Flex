@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "800 VDC",
+            "max": 800,
+            "min": 800,
+            "name": "rated_voltage_dc",
+            "page": 3,
+            "quote": "DC/DC modules for 800 VDC systems",
+            "text": "800 VDC",
+            "unit": "VDC"
+          }
+        ],
+        "variant": "FPM-800V/BMR720"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

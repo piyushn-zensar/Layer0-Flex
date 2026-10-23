@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Up to 5no. tap-off points per 3m length",
+            "max": null,
+            "min": null,
+            "name": "tap_off_current",
+            "page": 25,
+            "quote": "Up to 5no. tap-off points per 3m length",
+            "text": "Up to 5no. tap-off points per 3m length",
+            "unit": ""
+          }
+        ],
+        "variant": "IBAR HXA Range"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

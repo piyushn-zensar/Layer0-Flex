@@ -1,0 +1,415 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Expandable channels",
+            "max": 96,
+            "min": null,
+            "name": "other",
+            "page": 4,
+            "quote": "expandable up to 96 channels",
+            "text": "expandable up to 96 channels",
+            "unit": ""
+          }
+        ],
+        "variant": "CM01"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Expandable channels",
+            "max": 96,
+            "min": null,
+            "name": "other",
+            "page": 4,
+            "quote": "expandable up to 96 channels",
+            "text": "expandable up to 96 channels",
+            "unit": ""
+          }
+        ],
+        "variant": "CM02"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Solid core CT current",
+            "max": 100,
+            "min": 100,
+            "name": "tap_off_current",
+            "page": 4,
+            "quote": "100 A solid core CTs",
+            "text": "100 A solid core CTs",
+            "unit": "A"
+          }
+        ],
+        "variant": "iBCM0A42A1"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "includes presence of voltage detection",
+            "label": "Solid core CT current",
+            "max": 100,
+            "min": 100,
+            "name": "tap_off_current",
+            "page": 4,
+            "quote": "100 A solid core CTs; includes presence of voltage detection",
+            "text": "100 A solid core CTs",
+            "unit": "A"
+          }
+        ],
+        "variant": "iBCM0B42A1"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Solid core CT current",
+            "max": 100,
+            "min": 100,
+            "name": "tap_off_current",
+            "page": 4,
+            "quote": "100 A solid core CTs",
+            "text": "100 A solid core CTs",
+            "unit": "A"
+          }
+        ],
+        "variant": "iBCM0A84A1"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "includes presence of voltage detection",
+            "label": "Solid core CT current",
+            "max": 100,
+            "min": 100,
+            "name": "tap_off_current",
+            "page": 4,
+            "quote": "100 A solid core CTs; includes presence of voltage detection",
+            "text": "100 A solid core CTs",
+            "unit": "A"
+          }
+        ],
+        "variant": "iBCM0B84A1"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Solid core CT current",
+            "max": 100,
+            "min": 100,
+            "name": "tap_off_current",
+            "page": 4,
+            "quote": "100 A solid core CTs",
+            "text": "100 A solid core CTs",
+            "unit": "A"
+          }
+        ],
+        "variant": "iBCM2A42A1"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "includes presence of voltage detection",
+            "label": "Solid core CT current",
+            "max": 100,
+            "min": 100,
+            "name": "tap_off_current",
+            "page": 4,
+            "quote": "100 A solid core CTs; includes presence of voltage detection",
+            "text": "100 A solid core CTs",
+            "unit": "A"
+          }
+        ],
+        "variant": "iBCM2B42A1"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Solid core CT current",
+            "max": 100,
+            "min": 100,
+            "name": "tap_off_current",
+            "page": 4,
+            "quote": "100 A solid core CTs",
+            "text": "100 A solid core CTs",
+            "unit": "A"
+          }
+        ],
+        "variant": "iBCM2A84A1"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "includes presence of voltage detection",
+            "label": "Solid core CT current",
+            "max": 100,
+            "min": 100,
+            "name": "tap_off_current",
+            "page": 4,
+            "quote": "100 A solid core CTs; includes presence of voltage detection",
+            "text": "100 A solid core CTs",
+            "unit": "A"
+          }
+        ],
+        "variant": "iBCM2B84A1"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Split core CT current",
+            "max": 100,
+            "min": 75,
+            "name": "tap_off_current",
+            "page": 4,
+            "quote": "75 A or 100 A split core CTs",
+            "text": "75 A or 100 A split core CTs",
+            "unit": "A"
+          }
+        ],
+        "variant": "iBCM3C24A1"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Split core CT current",
+            "max": 100,
+            "min": 75,
+            "name": "tap_off_current",
+            "page": 4,
+            "quote": "75 A or 100 A split core CTs",
+            "text": "75 A or 100 A split core CTs",
+            "unit": "A"
+          }
+        ],
+        "variant": "iBCM3C48A1"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Split core CT current",
+            "max": 100,
+            "min": 75,
+            "name": "tap_off_current",
+            "page": 4,
+            "quote": "75 A or 100 A split core CTs",
+            "text": "75 A or 100 A split core CTs",
+            "unit": "A"
+          }
+        ],
+        "variant": "iBCM3A72A1"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Split core CT current",
+            "max": 100,
+            "min": 75,
+            "name": "tap_off_current",
+            "page": 4,
+            "quote": "75 A or 100 A split core CTs",
+            "text": "75 A or 100 A split core CTs",
+            "unit": "A"
+          }
+        ],
+        "variant": "iBCM3C42A1"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Channel capacity",
+            "max": 6,
+            "min": 6,
+            "name": "other",
+            "page": 5,
+            "quote": "6 Channel Multi-Circuit Monitoring System",
+            "text": "6 Channel Multi-Circuit Monitoring System",
+            "unit": ""
+          }
+        ],
+        "variant": "iMCM0A061"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Channel capacity",
+            "max": 12,
+            "min": 12,
+            "name": "other",
+            "page": 5,
+            "quote": "12 Channel Multi-Circuit Monitoring System",
+            "text": "12 Channel Multi-Circuit Monitoring System",
+            "unit": ""
+          }
+        ],
+        "variant": "iMCM0A121"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Channel capacity",
+            "max": 24,
+            "min": 24,
+            "name": "other",
+            "page": 5,
+            "quote": "24 Channel Multi-Circuit Monitoring System",
+            "text": "24 Channel Multi-Circuit Monitoring System",
+            "unit": ""
+          }
+        ],
+        "variant": "iMCM0A241"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Channel capacity",
+            "max": 48,
+            "min": 48,
+            "name": "other",
+            "page": 5,
+            "quote": "48 Channel Multi-Circuit Monitoring System",
+            "text": "48 Channel Multi-Circuit Monitoring System",
+            "unit": ""
+          }
+        ],
+        "variant": "iMCM0A481"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Channel capacity",
+            "max": 72,
+            "min": 72,
+            "name": "other",
+            "page": 5,
+            "quote": "72 Channel Multi-Circuit Monitoring System",
+            "text": "72 Channel Multi-Circuit Monitoring System",
+            "unit": ""
+          }
+        ],
+        "variant": "iMCM0A721"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Channel capacity",
+            "max": 96,
+            "min": 96,
+            "name": "other",
+            "page": 5,
+            "quote": "96 Channel Multi-Circuit Monitoring System",
+            "text": "96 Channel Multi-Circuit Monitoring System",
+            "unit": ""
+          }
+        ],
+        "variant": "iMCM0A961"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Channel capacity",
+            "max": 24,
+            "min": 24,
+            "name": "other",
+            "page": 5,
+            "quote": "24 Channel Expansion Card",
+            "text": "24 Channel Expansion Card",
+            "unit": ""
+          }
+        ],
+        "variant": "iCTC24A1"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "standard",
+            "label": "Input power (standard)",
+            "max": 277,
+            "min": 90,
+            "name": "rated_voltage_ac",
+            "page": 6,
+            "quote": "90-277 VAC (480 VAC 4W+G) 50/ 60 Hz",
+            "text": "90-277 VAC (480 VAC 4W+G) 50/ 60 Hz",
+            "unit": "VAC"
+          },
+          {
+            "conditions": "enhanced",
+            "label": "Input power (enhanced)",
+            "max": 600,
+            "min": 480,
+            "name": "rated_voltage_ac",
+            "page": 6,
+            "quote": "480-600 VAC (3W or 4W+G) 50/ 60 Hz",
+            "text": "480-600 VAC (3W or 4W+G) 50/ 60 Hz",
+            "unit": "VAC"
+          },
+          {
+            "conditions": "",
+            "label": "Power consumption",
+            "max": 5,
+            "min": 5,
+            "name": "power_consumption",
+            "page": 6,
+            "quote": "<5W / 0.1 A @ 240 VAC",
+            "text": "<5W / 0.1 A @ 240 VAC",
+            "unit": "W"
+          },
+          {
+            "conditions": "<95% RH non-condensing",
+            "label": "Operating temperature",
+            "max": 60,
+            "min": 0,
+            "name": "operating_temperature",
+            "page": 6,
+            "quote": "0 to 60 °C (32 to 140 °F) (<95% RH non-condensing)",
+            "text": "0 to 60 °C (32 to 140 °F) (<95% RH non-condensing)",
+            "unit": "ºC"
+          },
+          {
+            "conditions": "",
+            "label": "Storage temperature",
+            "max": 70,
+            "min": -40,
+            "name": "other",
+            "page": 6,
+            "quote": "-40 to 70 °C (-40 to 158 °F)",
+            "text": "-40 to 70 °C (-40 to 158 °F)",
+            "unit": "ºC"
+          },
+          {
+            "conditions": "",
+            "label": "Enclosure versions",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 6,
+            "quote": "NEMA 1/IP20 (indoor use); NEMA 4 / IP67 (outdoor use)",
+            "text": "NEMA 1/IP20 (indoor use); NEMA 4 / IP67 (outdoor use)",
+            "unit": ""
+          }
+        ],
+        "variant": "ANORD-PMS/MCMS"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

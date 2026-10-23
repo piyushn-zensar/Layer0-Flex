@@ -1,0 +1,101 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Current [InA]",
+            "max": 1600,
+            "min": 1600,
+            "name": "rated_current",
+            "page": 6,
+            "quote": "Current [InA] 1600 A",
+            "text": "1600 A",
+            "unit": "A"
+          },
+          {
+            "conditions": "1 s",
+            "label": "RMS Fault [lcw]",
+            "max": 65,
+            "min": 65,
+            "name": "short_time_withstand",
+            "page": 6,
+            "quote": "RMS Fault [lcw] 65 kA/1s",
+            "text": "65 kA/1s",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Weight",
+            "max": 20.1,
+            "min": 20.1,
+            "name": "weight",
+            "page": 6,
+            "quote": "Weight 20.10 KG",
+            "text": "20.10 KG",
+            "unit": "KG"
+          },
+          {
+            "conditions": "",
+            "label": "# Bars / Poles",
+            "max": 4,
+            "min": 4,
+            "name": "conductors_or_poles",
+            "page": 6,
+            "quote": "# Bars / Poles 4 / TP&N",
+            "text": "4 / TP&N",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Voltage [Ue]",
+            "max": 1000,
+            "min": 1000,
+            "name": "rated_voltage_ac",
+            "page": 6,
+            "quote": "Voltage [Ue] 1000 V",
+            "text": "1000 V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Frequency [fn]",
+            "max": 50,
+            "min": 50,
+            "name": "frequency",
+            "page": 6,
+            "quote": "Frequency [fn] 50 Hz",
+            "text": "50 Hz",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "",
+            "label": "IP Rating",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 6,
+            "quote": "IP Rating 55",
+            "text": "IP55",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Complies With",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 6,
+            "quote": "Complies With BS EN 61439-6",
+            "text": "BS EN 61439-6",
+            "unit": ""
+          }
+        ],
+        "variant": "HXC-16-4P-PF-LF"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

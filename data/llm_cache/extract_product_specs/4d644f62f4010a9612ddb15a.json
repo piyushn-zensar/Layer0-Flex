@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Operating temperature",
+            "max": 45,
+            "min": 10,
+            "name": "operating_temperature",
+            "page": 13,
+            "quote": "Operating temperature +10ºC to +45ºC",
+            "text": "+10ºC to +45ºC",
+            "unit": "ºC"
+          },
+          {
+            "conditions": "",
+            "label": "Local Energy Storage Tray (LEST) power",
+            "max": 16,
+            "min": 16,
+            "name": "output_power",
+            "page": 13,
+            "quote": "16kW Local Energy Storage Tray (LEST)",
+            "text": "16kW Local Energy Storage Tray (LEST)",
+            "unit": "kW"
+          },
+          {
+            "conditions": "",
+            "label": "Height",
+            "max": 44,
+            "min": 44,
+            "name": "height",
+            "page": 13,
+            "quote": "Dimensions 44 x 465 x 788 mm (HxWxL)",
+            "text": "44 mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Width",
+            "max": 465,
+            "min": 465,
+            "name": "width",
+            "page": 13,
+            "quote": "Dimensions 44 x 465 x 788 mm (HxWxL)",
+            "text": "465 mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Depth",
+            "max": 788,
+            "min": 788,
+            "name": "depth",
+            "page": 13,
+            "quote": "Dimensions 44 x 465 x 788 mm (HxWxL)",
+            "text": "788 mm",
+            "unit": "mm"
+          }
+        ],
+        "variant": "Flex CESS N"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

@@ -1,0 +1,57 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Main busbars rated current",
+            "max": 8000,
+            "min": null,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "Main busbars rated up to 8000A with 99% pure copper conductors",
+            "text": "up to 8000A",
+            "unit": "A"
+          },
+          {
+            "conditions": "1 second",
+            "label": "Short-time withstand",
+            "max": 100,
+            "min": 100,
+            "name": "short_time_withstand",
+            "page": 4,
+            "quote": "Short-time withstand up to 100kA for 1 second",
+            "text": "100kA for 1 second",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Peak withstand",
+            "max": 220,
+            "min": 220,
+            "name": "peak_withstand",
+            "page": 4,
+            "quote": "peak withstand of 220kA for predictable fault performance",
+            "text": "220kA",
+            "unit": "kA"
+          },
+          {
+            "conditions": "IEC 61439-2",
+            "label": "Internal separation",
+            "max": null,
+            "min": null,
+            "name": "form_of_separation",
+            "page": 4,
+            "quote": "Internal separation up to Form 4b Type 7 (IEC 61439-2)",
+            "text": "up to Form 4b Type 7",
+            "unit": ""
+          }
+        ],
+        "variant": "MDX Switchgear (IEC 61439-2)"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

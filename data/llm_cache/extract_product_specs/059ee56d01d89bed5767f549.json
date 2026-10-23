@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Busbar rating",
+            "max": 6000,
+            "min": 800,
+            "name": "rated_current",
+            "page": 9,
+            "quote": "AMX busbars are tin‑plated copper, rear‑isolated, mechanically braced, and rated from 800 A up to 6000 A to support high‑density power distribution.",
+            "text": "800 A up to 6000 A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Short-circuit withstand rating",
+            "max": 100,
+            "min": null,
+            "name": "short_time_withstand",
+            "page": 10,
+            "quote": "Short‑circuit withstand rating: The verified ability of the AMX switchboard, including busbars and supports, to safely withstand and carry high fault currents (up to 100 kA) without mechanical or thermal damage.",
+            "text": "up to 100 kA",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Type tested assembly",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 10,
+            "quote": "Type tested assembly: A switchboard that has been tested as a complete system (not just individual components) for thermal performance, dielectric integrity, and short‑circuit withstand in accordance with UL891 standard.",
+            "text": "UL891",
+            "unit": ""
+          }
+        ],
+        "variant": "AMX Switchboards (UL891)"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

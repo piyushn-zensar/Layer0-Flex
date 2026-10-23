@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Same tap-offs fit all DATABAR ratings",
+            "max": 1000,
+            "min": 160,
+            "name": "rated_current",
+            "page": 8,
+            "quote": "Same tap-offs fit all DATABAR ratings from 160 A to 1000 A",
+            "text": "160 A to 1000 A",
+            "unit": "A"
+          }
+        ],
+        "variant": "DATABAR DX+ 160 A to 1000 A"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

@@ -1,0 +1,89 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "at 1 LPM/kW",
+            "label": "Cooling Capacity",
+            "max": 600,
+            "min": 600,
+            "name": "cooling_capacity",
+            "page": 2,
+            "quote": "delivering 600 kW to 1.8 MW of cooling capacity in performance mode.",
+            "text": "600 kW",
+            "unit": "kW"
+          },
+          {
+            "conditions": "Available pumping pressure in performance mode (dual pumps running)",
+            "label": "Flow Rate",
+            "max": 25,
+            "min": 25,
+            "name": "flow_rate",
+            "page": 2,
+            "quote": "Flow Rate (LPM)* 600 25 *Available pumping pressure in performance mode (dual pumps running).",
+            "text": "25 LPM",
+            "unit": "LPM"
+          }
+        ],
+        "variant": "Modular x2"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "at 1 LPM/kW",
+            "label": "Cooling Capacity",
+            "max": 1200,
+            "min": 1200,
+            "name": "cooling_capacity",
+            "page": 2,
+            "quote": "delivering 600 kW to 1.8 MW of cooling capacity in performance mode.",
+            "text": "1,200 kW",
+            "unit": "kW"
+          },
+          {
+            "conditions": "Available pumping pressure in performance mode (dual pumps running)",
+            "label": "Flow Rate",
+            "max": 25,
+            "min": 25,
+            "name": "flow_rate",
+            "page": 2,
+            "quote": "Flow Rate (LPM)* 1,200 25 *Available pumping pressure in performance mode (dual pumps running).",
+            "text": "25 LPM",
+            "unit": "LPM"
+          }
+        ],
+        "variant": "Modular x4"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "at 1 LPM/kW",
+            "label": "Cooling Capacity",
+            "max": 1800,
+            "min": 1800,
+            "name": "cooling_capacity",
+            "page": 2,
+            "quote": "delivering 600 kW to 1.8 MW of cooling capacity in performance mode.",
+            "text": "1,800 kW",
+            "unit": "kW"
+          },
+          {
+            "conditions": "Available pumping pressure in performance mode (dual pumps running)",
+            "label": "Flow Rate",
+            "max": 25,
+            "min": 25,
+            "name": "flow_rate",
+            "page": 2,
+            "quote": "Flow Rate (LPM)* 1,800 25 *Available pumping pressure in performance mode (dual pumps running).",
+            "text": "25 LPM",
+            "unit": "LPM"
+          }
+        ],
+        "variant": "Modular x6"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

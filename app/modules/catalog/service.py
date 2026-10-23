@@ -26,6 +26,9 @@ Public contract:
     power_modules() -> list[dict]               the spreadsheet parts merged into the catalog (P-53, power_modules.json)
     power_modules_import() -> str               its last import date
     documents() -> list[dict]                   the supplied product documents with family keys, parts, pages (J-21)
+    specs(db=None, family_key=None) -> list[dict]   ratings extracted from the documents and pages (product_specs.json),
+                                                unverified until reviewed; with db: the unit's latest review
+    review_spec(db, spec_id, status, note, user) -> SpecReview   the family's unit confirms or rejects an item
     product_rows(q, type, family, status, interface, application, sort, dir, page, size) -> dict
                                                 all products as table rows, spreadsheet parts and web items (C-60)
     product_detail(key) -> dict | None          one product by part number or catalog ID, with variants, documents, images
@@ -171,6 +174,49 @@ def power_modules() -> list[dict]:
     return _load("power_modules")["items"]
 
 
+def _specs_file() -> list[dict]:
+    path = config.KB / "product_specs.json"
+    return json.loads(path.read_text("utf-8"))["items"] if path.exists() else []
+
+
+def specs(db=None, family_key: str | None = None) -> list[dict]:
+    """Ratings extracted from the product documents and pages (scripts/extract_product_specs.py), with the unit's
+    latest review when db is given: verified = confirmed by the unit."""
+    items = [i for i in _specs_file() if family_key is None or i["family_key"] == family_key]
+    if db is None or not items:
+        return items
+    from sqlalchemy import select
+
+    from app.modules.catalog.models import SpecReview
+    latest = {r.spec_id: r for r in db.scalars(select(SpecReview).order_by(SpecReview.id))}
+    return [i | {"verified": i["spec_id"] in latest and latest[i["spec_id"]].status == "confirmed",
+                 "review": None if i["spec_id"] not in latest else {
+                     "status": latest[i["spec_id"]].status, "note": latest[i["spec_id"]].note,
+                     "by": latest[i["spec_id"]].reviewed_by, "at": latest[i["spec_id"]].reviewed_at.isoformat()}}
+            for i in items]
+
+
+def review_spec(db, spec_id: str, status: str, note: str, user: dict):
+    """A unit manager or designer / engineer of the family's unit confirms or rejects an extracted spec item (a
+    rejection needs a note). LookupError: unknown spec; PermissionError: another unit's family; ValueError: status."""
+    from app.core import audit
+    from app.modules.catalog.models import SpecReview
+    item = next((i for i in _specs_file() if i["spec_id"] == spec_id), None)
+    if item is None:
+        raise LookupError(f"No spec item {spec_id}.")
+    if status not in ("confirmed", "rejected") or (status == "rejected" and not note.strip()):
+        raise ValueError("Confirm, or reject with a note saying what is wrong.")
+    family = product(item["family_key"].split("/", 1)[0]) or {}
+    if user.get("bu") != family.get("bu"):
+        raise PermissionError(f"Only {family.get('bu', 'the unit')}'s manager or designer / engineer reviews this family.")
+    r = SpecReview(spec_id=spec_id, family_key=item["family_key"], status=status, note=note.strip(),
+                   reviewed_by=user["name"])
+    db.add(r)
+    audit.record(db, user["name"], f"spec_{status}", "spec_review", spec_id, None, family_key=item["family_key"], note=note)
+    db.commit()
+    return r
+
+
 def documents() -> list[dict]:
     """The supplied product documents and the families / parts they apply to (data/axiom_products/documents.json)."""
     return _manifest("documents.json")
@@ -231,7 +277,7 @@ def product_rows(q: str = "", type: str | None = None, family: str | None = None
     return {"total": len(hits), "page": page, "size": size, "items": ordered[(page - 1) * size: page * size]}
 
 
-def product_detail(key: str) -> dict | None:
+def product_detail(key: str, db=None) -> dict | None:
     """One product (part number or catalog ID) with its variants and the documents / images that apply (C-60, C-63)."""
     full, rows = _catalog()
     f = full.get(key)
@@ -250,7 +296,8 @@ def product_detail(key: str) -> dict | None:
         return bool(keys & {*m.get("family_keys", []), m.get("family_key"), *m.get("part_numbers", [])})
 
     return f | {"variants": variants, "documents": [d for d in _manifest("documents.json") if applies(d)],
-                "images": [i for i in _manifest("images.json") if applies(i)]}
+                "images": [i for i in _manifest("images.json") if applies(i)],
+                "specs": specs(db, f["family_key"]) if f["family_key"] else []}
 
 
 if __name__ == "__main__":  # self-check: python -m app.modules.catalog.service

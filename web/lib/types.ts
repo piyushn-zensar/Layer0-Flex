@@ -280,7 +280,7 @@ export interface ProductImage { file: string; family_key: string; part_numbers: 
 export interface ProductDetail extends Partial<PowerModule> {
   key: string; name: string; family: string | null; source: ProductRow["source"];
   variants: ProductRow[];                      // a web series: its spreadsheet parts; a part: its evaluation boards
-  documents: ProductDocument[]; images: ProductImage[];
+  documents: ProductDocument[]; images: ProductImage[]; specs: ProductSpec[];
 }
 // GET/POST /api/bids/{id}/components (P-56): the configurator's last run, one entry per requested component.
 // An outcome is the configurator's result on the supplied product data, pending engineering review (never proof).
@@ -320,3 +320,10 @@ export interface ComponentRun { id: number; opportunity_id: string; catalog_impo
 export interface ComponentsResponse { run: ComponentRun | null; components: ComponentMatch[]; outcomes: Record<ComponentOutcome, string>; note: string }
 // GET /api/bids/{id}/requirements/{req_id}/components
 export interface RequirementComponent { component: ComponentMatch; requirement: ComponentRequirement | null }
+// GET /api/catalog/specs?family= and ProductDetail.specs (23 Oct 2026): ratings read from the supplied documents and the official
+// product pages by a frozen model pass; a number is kept only when it is on the cited page; unverified until the family's unit confirms.
+export interface SpecAttribute { name: string; label: string; min: number | null; max: number | null; text: string; unit: string;
+  conditions: string; page: number; quote: string; min_base?: number | null; max_base?: number | null; base_unit?: string;
+  source: { file: string; page: number; url: string | null } }
+export interface ProductSpec { spec_id: string; family_key: string; variant: string; attributes: SpecAttribute[]; source_file: string;
+  url: string | null; verified: boolean; review?: { status: "confirmed" | "rejected"; note: string; by: string; at: string } | null }

@@ -1,0 +1,251 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 1000,
+            "min": 1000,
+            "name": "rated_current",
+            "page": 15,
+            "quote": "Rating (Amps) 1000 Single 350 350 250 700",
+            "text": "1000",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 1000,
+            "min": 1000,
+            "name": "rated_current",
+            "page": 16,
+            "quote": "Rating (Amps) 1000 Single 350 250 650 50 700",
+            "text": "1000",
+            "unit": "A"
+          }
+        ],
+        "variant": "HXC 1000 A copper"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 1250,
+            "min": 1250,
+            "name": "rated_current",
+            "page": 15,
+            "quote": "Rating (Amps) 1250 Single 350 350 250 700",
+            "text": "1250",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 1250,
+            "min": 1250,
+            "name": "rated_current",
+            "page": 16,
+            "quote": "Rating (Amps) 1250 Single 350 250 650 50 700",
+            "text": "1250",
+            "unit": "A"
+          }
+        ],
+        "variant": "HXC 1250 A copper"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 1600,
+            "min": 1600,
+            "name": "rated_current",
+            "page": 15,
+            "quote": "Rating (Amps) 1600 Single 350 350 250 700",
+            "text": "1600",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 1600,
+            "min": 1600,
+            "name": "rated_current",
+            "page": 16,
+            "quote": "Rating (Amps) 1600 Single 350 250 650 50 700",
+            "text": "1600",
+            "unit": "A"
+          }
+        ],
+        "variant": "HXC 1600 A copper"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 2000,
+            "min": 2000,
+            "name": "rated_current",
+            "page": 15,
+            "quote": "Rating (Amps) 2000 Single 350 350 275 700",
+            "text": "2000",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 2000,
+            "min": 2000,
+            "name": "rated_current",
+            "page": 16,
+            "quote": "Rating (Amps) 2000 Single 350 275 650 50 675",
+            "text": "2000",
+            "unit": "A"
+          }
+        ],
+        "variant": "HXC 2000 A copper"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 2500,
+            "min": 2500,
+            "name": "rated_current",
+            "page": 15,
+            "quote": "Rating (Amps) 2500 Single 350 350 300 700",
+            "text": "2500",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 2500,
+            "min": 2500,
+            "name": "rated_current",
+            "page": 16,
+            "quote": "Rating (Amps) 2500 Single 350 300 650 50 640",
+            "text": "2500",
+            "unit": "A"
+          }
+        ],
+        "variant": "HXC 2500 A copper"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 3200,
+            "min": 3200,
+            "name": "rated_current",
+            "page": 15,
+            "quote": "Rating (Amps) 3200 Single 350 350 325 700",
+            "text": "3200",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 3200,
+            "min": 3200,
+            "name": "rated_current",
+            "page": 16,
+            "quote": "Rating (Amps) 3200 Single 350 325 650 50 570",
+            "text": "3200",
+            "unit": "A"
+          }
+        ],
+        "variant": "HXC 3200 A copper"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 4000,
+            "min": 4000,
+            "name": "rated_current",
+            "page": 15,
+            "quote": "Rating (Amps) 4000 Double 500 500 375 700",
+            "text": "4000",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 4000,
+            "min": 4000,
+            "name": "rated_current",
+            "page": 16,
+            "quote": "Rating (Amps) 4000 Double 500 375 650 50 675",
+            "text": "4000",
+            "unit": "A"
+          }
+        ],
+        "variant": "HXC 4000 A copper"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 5000,
+            "min": 5000,
+            "name": "rated_current",
+            "page": 15,
+            "quote": "Rating (Amps) 5000 Double 500 500 415 700",
+            "text": "5000",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 5000,
+            "min": 5000,
+            "name": "rated_current",
+            "page": 16,
+            "quote": "Rating (Amps) 5000 Double 500 415 650 50 640",
+            "text": "5000",
+            "unit": "A"
+          }
+        ],
+        "variant": "HXC 5000 A copper"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 6300,
+            "min": 6300,
+            "name": "rated_current",
+            "page": 15,
+            "quote": "Rating (Amps) 6300 Double 500 500 485 700",
+            "text": "6300",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Rating (Amps)",
+            "max": 6300,
+            "min": 6300,
+            "name": "rated_current",
+            "page": 16,
+            "quote": "Rating (Amps) 6300 Double 500 485 650 50 570",
+            "text": "6300",
+            "unit": "A"
+          }
+        ],
+        "variant": "HXC 6300 A copper"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

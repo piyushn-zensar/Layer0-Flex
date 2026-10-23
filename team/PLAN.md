@@ -537,3 +537,14 @@ Size: S hours, M one to two days, L several days.
 - First: P-53a (contract and sample) is committed before anything else. From then on J-19 to J-22 need nothing from Piyush, and P-53 to P-57 need nothing from Janvia.
 - Soft links, no waiting: the product API returns empty `documents` / `images` until J-21 / J-22 land; P-58 tags documents once `documents.json` exists; P-56 links to `/catalog/product?part=…`, which J-20 serves; J-23's screenshots come after P-59.
 - Ask early: decisions 1 and 2 (Series meaning, series-level linking) with the Zensar point of contact.
+
+### 12.7 Added 23 Oct 2026: wider product data and configurator fixes
+
+Product matching covered only board-level DC/DC modules (the one numeric table supplied). Asked on 23 Oct 2026: fetch more official product data, turn the supplied PDFs into spec tables, and fix the supplied script's caveats.
+
+| ID | Task | Status |
+|---|---|---|
+| P-60 | Official product pages and datasheets for MDX, SEN Plus, AMX, DATABAR, IBAR, RESINBAR, PDU, RPP, SmartSense and Modular CDU, BMR720 (`data/axiom_products/web/`, manifest `web_sources.json` with URL, retrieval date, SHA-256; duplicates of supplied PDFs recorded, not saved). Spec tables: `scripts/extract_product_specs.py` + `catalog/agent.py` (frozen model pass per family and page chunk; a value kept only when its quote is on the cited page and its number in the quote; units converted by code) -> `data/knowledge_base/product_specs.json`; unit review (`spec_review` table, `GET /api/catalog/specs`, `POST /api/catalog/specs/{id}/review` by the family's unit), `ProductDetail.specs` for the catalog page (J-20) | review |
+| P-61 | Supplied configurator caveats fixed in the vendored copy (F1 thousands separators, F2 certification matching, F3 voltage without AC/DC, F4 in-rack CDU sizing, F5 fixed-ratio output across the input range, F6 blank status, F7 typical efficiency note), each with a self-test line | review |
+| P-62 | Range matcher on the spec tables (option B): requirement values vs a family's published ranges for busway, LV switchgear, CDUs, RPP, with the same outcomes and explanations as the DC/DC search | proposed, not started |
+

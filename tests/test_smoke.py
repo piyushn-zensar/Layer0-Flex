@@ -1508,7 +1508,8 @@ def test_every_write_route_by_role():
     by_item = {"/api/assignments/{assignment_id}/respond", "/api/assignments/{assignment_id}/validate",
                "/api/comments/{comment_id}/close", "/api/knowledge/{kb_id}/review", "/api/knowledge/sources/{ks_id}/review",
                "/api/bids/{opp_id}/units/{bu}/completion",  # P-33: that unit's manager
-               "/api/matches/{match_id}/decide", "/api/bids/{opp_id}/requirements/{req_id}/match"}  # P-44: by the item's category
+               "/api/matches/{match_id}/decide", "/api/bids/{opp_id}/requirements/{req_id}/match",  # P-44: by the item's category
+               "/api/catalog/specs/{spec_id}/review"}  # spec tables: the family's unit
 
     spec = app.openapi()
     comps = spec.get("components", {}).get("schemas", {})

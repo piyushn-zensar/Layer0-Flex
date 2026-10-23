@@ -1,0 +1,57 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Compliance",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 4,
+            "quote": "Compliance • UL 891 ETL Listed / UL 60950 / CSA C22.2 #60950",
+            "text": "UL 891 ETL Listed / UL 60950 / CSA C22.2 #60950",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Compliance",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 4,
+            "quote": "Compliance • DOE 2016 energy compliant",
+            "text": "DOE 2016 energy compliant",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Compliance",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 4,
+            "quote": "Compliance • UL1561 dry-type transformers",
+            "text": "UL1561 dry-type transformers",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Subfeed configuration",
+            "max": 1200,
+            "min": 250,
+            "name": "conductors_or_poles",
+            "page": 4,
+            "quote": "Subfeed configuration for 250A – 1200A.",
+            "text": "250A – 1200A",
+            "unit": "A"
+          }
+        ],
+        "variant": "AMX LOW-VOLTAGE DISTRIBUTION UNIT"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

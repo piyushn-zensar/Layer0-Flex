@@ -1,0 +1,35 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Tap-off current",
+            "max": 63,
+            "min": 16,
+            "name": "tap_off_current",
+            "page": 6,
+            "quote": "16A<br>32A<br>63A<br>16A<br>32A<br>63A",
+            "text": "16A to 63A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Communication protocols",
+            "max": null,
+            "min": null,
+            "name": "communication",
+            "page": 8,
+            "quote": "Communication protocols include Modbus RTU, Ethernet and SNMP.",
+            "text": "Modbus RTU, Ethernet, SNMP",
+            "unit": ""
+          }
+        ],
+        "variant": "DATABAR DX+"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

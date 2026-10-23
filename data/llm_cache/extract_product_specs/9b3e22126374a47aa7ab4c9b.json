@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Standard lengths",
+            "max": 3,
+            "min": 0.5,
+            "name": "other",
+            "page": 18,
+            "quote": "Standard lengths = 3m, 2m and 1m. Min. X = 0.5m, Max. X = 3m.",
+            "text": "Min. X = 0.5m, Max. X = 3m",
+            "unit": "m"
+          },
+          {
+            "conditions": "",
+            "label": "Width",
+            "max": 155,
+            "min": 155,
+            "name": "width",
+            "page": 18,
+            "quote": "W = 155mm",
+            "text": "W = 155mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Standard X and Y",
+            "max": 600,
+            "min": 275,
+            "name": "other",
+            "page": 19,
+            "quote": "Min. X and Y = 275mm, Max. X and Y = 600mm",
+            "text": "Min. X and Y = 275mm, Max. X and Y = 600mm",
+            "unit": "mm"
+          }
+        ],
+        "variant": "IBAR HXA RANGE"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

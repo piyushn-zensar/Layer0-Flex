@@ -1,0 +1,128 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rated Current",
+            "max": 250,
+            "min": 100,
+            "name": "rated_current",
+            "page": 11,
+            "quote": "100-250A Tap-off",
+            "text": "100-250A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Height",
+            "max": 580,
+            "min": 580,
+            "name": "height",
+            "page": 11,
+            "quote": "A = 580mm",
+            "text": "580mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Width",
+            "max": 310,
+            "min": 310,
+            "name": "width",
+            "page": 11,
+            "quote": "B = 310mm",
+            "text": "310mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Depth",
+            "max": 294,
+            "min": 294,
+            "name": "depth",
+            "page": 11,
+            "quote": "C = 294mm",
+            "text": "294mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Weight",
+            "max": 35,
+            "min": 35,
+            "name": "weight",
+            "page": 11,
+            "quote": "Typ. 35kg",
+            "text": "Typ. 35kg",
+            "unit": "kg"
+          }
+        ],
+        "variant": "100-250A Tap-off"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rated Current",
+            "max": 630,
+            "min": 400,
+            "name": "rated_current",
+            "page": 11,
+            "quote": "400-630A Tap-off",
+            "text": "400-630A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Height",
+            "max": 829,
+            "min": 829,
+            "name": "height",
+            "page": 11,
+            "quote": "A = 829mm",
+            "text": "829mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Width",
+            "max": 360,
+            "min": 360,
+            "name": "width",
+            "page": 11,
+            "quote": "B = 360mm",
+            "text": "360mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Depth",
+            "max": 329,
+            "min": 329,
+            "name": "depth",
+            "page": 11,
+            "quote": "C = 329mm",
+            "text": "329mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Weight",
+            "max": 46,
+            "min": 46,
+            "name": "weight",
+            "page": 11,
+            "quote": "Typ. 46kg",
+            "text": "Typ. 46kg",
+            "unit": "kg"
+          }
+        ],
+        "variant": "400-630A Tap-off"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

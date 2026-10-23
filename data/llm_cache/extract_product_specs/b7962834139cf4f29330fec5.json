@@ -1,0 +1,57 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Busbar ratings",
+            "max": 6300,
+            "min": 800,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "IBAR’s HX range provides a high-power feeder busbar solution with busbar ratings ranging from 800A up to 6300A.",
+            "text": "800A up to 6300A",
+            "unit": "A"
+          },
+          {
+            "conditions": "sandwich type construction",
+            "label": "Conductive bars",
+            "max": 6,
+            "min": 3,
+            "name": "conductors_or_poles",
+            "page": 4,
+            "quote": "Each rating type can be supplied with between 3 and 6 conductive bars arranged in a sandwich type construction.",
+            "text": "between 3 and 6 conductive bars",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "IP rating",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 4,
+            "quote": "contained within a unique two piece, IP55 rated, Aluminium trunking/housing.",
+            "text": "IP55",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "British Standards",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 4,
+            "quote": "All IBAR product is manufactured within the UK to the latest British Standards (BS EN 61439-6).",
+            "text": "BS EN 61439-6",
+            "unit": ""
+          }
+        ],
+        "variant": "IBAR HXA busbar trunking system"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

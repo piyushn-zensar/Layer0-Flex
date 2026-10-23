@@ -1,0 +1,79 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "DC output power",
+            "max": 110,
+            "min": null,
+            "name": "output_power",
+            "page": 13,
+            "quote": "Power shelf supports up to 6 PSUs for up to 110kW DC output power",
+            "text": "up to 110kW DC output power",
+            "unit": "kW"
+          },
+          {
+            "conditions": "",
+            "label": "AC input voltage range",
+            "max": 480,
+            "min": 342,
+            "name": "rated_voltage_ac",
+            "page": 13,
+            "quote": "AC input voltage range 342-480 Vac",
+            "text": "342-480 Vac",
+            "unit": "Vac"
+          },
+          {
+            "conditions": "",
+            "label": "DC output voltage",
+            "max": 54,
+            "min": 54,
+            "name": "output_voltage",
+            "page": 13,
+            "quote": "54Vdc output",
+            "text": "54Vdc",
+            "unit": "Vdc"
+          },
+          {
+            "conditions": "",
+            "label": "Height",
+            "max": 131.4,
+            "min": 131.4,
+            "name": "height",
+            "page": 13,
+            "quote": "Dimensions 19” – 131.4 x 438 x 876.2mm (HxWxL)",
+            "text": "131.4 mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Width",
+            "max": 438,
+            "min": 438,
+            "name": "width",
+            "page": 13,
+            "quote": "Dimensions 19” – 131.4 x 438 x 876.2mm (HxWxL)",
+            "text": "438 mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Depth",
+            "max": 876.2,
+            "min": 876.2,
+            "name": "depth",
+            "page": 13,
+            "quote": "Dimensions 19” – 131.4 x 438 x 876.2mm (HxWxL)",
+            "text": "876.2 mm",
+            "unit": "mm"
+          }
+        ],
+        "variant": "FPM-SHELF/GB300 NVL72 shelf"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

@@ -1,0 +1,62 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "DX range",
+            "max": 630,
+            "min": 16,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "DX range | 16A to 630A",
+            "text": "16A to 630A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Certification",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 4,
+            "quote": "Certification | IEC 61439-1/6",
+            "text": "IEC 61439-1/6",
+            "unit": ""
+          }
+        ],
+        "variant": "DATABAR IEC"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "DX range",
+            "max": 630,
+            "min": 160,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "DX range | 160A to 630A",
+            "text": "160A to 630A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Certification",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 4,
+            "quote": "Certification | UL 857",
+            "text": "UL 857",
+            "unit": ""
+          }
+        ],
+        "variant": "DATABAR UL"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

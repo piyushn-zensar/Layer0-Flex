@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Medium voltage",
+            "max": 38,
+            "min": 4.16,
+            "name": "rated_voltage_ac",
+            "page": 2,
+            "quote": "MV switchgear expertly commissioned, metal-clad and arc-resistant, ranging 4.16–38kV",
+            "text": "4.16–38kV",
+            "unit": "kV"
+          },
+          {
+            "conditions": "",
+            "label": "Up to current",
+            "max": 4000,
+            "min": null,
+            "name": "rated_current",
+            "page": 2,
+            "quote": "• Up to 4000A",
+            "text": "Up to 4000A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Interrupting Rating",
+            "max": 50,
+            "min": null,
+            "name": "breaking_capacity",
+            "page": 2,
+            "quote": "• Up to 50kA Interrupting Rating",
+            "text": "Up to 50kA",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Outdoor, non-walk-in",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 2,
+            "quote": "• Outdoor, non-walk-in, NEMA 3R/4",
+            "text": "NEMA 3R/4",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Arc-Resistant",
+            "max": null,
+            "min": null,
+            "name": "seismic_or_arc",
+            "page": 2,
+            "quote": "• Type 2B or 2C (IEEE C37.20.7)",
+            "text": "Type 2B or 2C (IEEE C37.20.7)",
+            "unit": ""
+          }
+        ],
+        "variant": "CROWN-EHOUSE/E-House"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

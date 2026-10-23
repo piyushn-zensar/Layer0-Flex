@@ -1,0 +1,112 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rated operational voltage (Ue)",
+            "max": 690,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 5,
+            "quote": "Rated operational voltage (Ue) Up to 690V AC",
+            "text": "Up to 690V AC",
+            "unit": "VAC"
+          },
+          {
+            "conditions": "",
+            "label": "Rated insulation voltage (Ui)",
+            "max": 1000,
+            "min": null,
+            "name": "insulation_voltage",
+            "page": 5,
+            "quote": "Rated insulation voltage (Ui) Up to 1000V",
+            "text": "Up to 1000V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Rated impulse withstand voltage (Uimp)",
+            "max": 12,
+            "min": 8,
+            "name": "impulse_withstand_voltage",
+            "page": 5,
+            "quote": "Rated impulse withstand voltage (Uimp) 8–12kV",
+            "text": "8–12kV",
+            "unit": "kV"
+          },
+          {
+            "conditions": "",
+            "label": "Rated frequency",
+            "max": 50,
+            "min": 50,
+            "name": "frequency",
+            "page": 5,
+            "quote": "Rated frequency 50Hz",
+            "text": "50Hz",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "",
+            "label": "Peak withstand current (Ipk)",
+            "max": 220,
+            "min": null,
+            "name": "peak_withstand",
+            "page": 5,
+            "quote": "Peak withstand current (Ipk) Up to 220kA",
+            "text": "Up to 220kA",
+            "unit": "kA"
+          },
+          {
+            "conditions": "3s, 1s",
+            "label": "Short‑time withstand current (Icw)",
+            "max": 100,
+            "min": 50,
+            "name": "short_time_withstand",
+            "page": 5,
+            "quote": "Short‑time withstand current (Icw) 50kA for 3s, up to 100kA for 1s",
+            "text": "50kA for 3s, up to 100kA for 1s",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Degree of protection",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 6,
+            "quote": "Degree of protection IP31, indoor industrial",
+            "text": "IP31, indoor industrial",
+            "unit": ""
+          },
+          {
+            "conditions": "Daily average, peak",
+            "label": "Ambient temperature",
+            "max": 40,
+            "min": 35,
+            "name": "operating_temperature",
+            "page": 6,
+            "quote": "Ambient temperature Daily average 35°C, peak 40°C",
+            "text": "Daily average 35°C, peak 40°C",
+            "unit": "ºC"
+          },
+          {
+            "conditions": "",
+            "label": "Maximum altitude",
+            "max": 1000,
+            "min": null,
+            "name": "altitude",
+            "page": 6,
+            "quote": "Maximum altitude 1000m above sea level",
+            "text": "1000m above sea level",
+            "unit": "m"
+          }
+        ],
+        "variant": "MDX low-voltage switchgear"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

@@ -1,0 +1,35 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Compact footprint height",
+            "max": 450,
+            "min": 450,
+            "name": "height",
+            "page": 10,
+            "quote": "Highly compact footprint as small as 450mm x 300mm reduces operating costs",
+            "text": "450mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Compact footprint width",
+            "max": 300,
+            "min": 300,
+            "name": "width",
+            "page": 10,
+            "quote": "Highly compact footprint as small as 450mm x 300mm reduces operating costs",
+            "text": "300mm",
+            "unit": "mm"
+          }
+        ],
+        "variant": "ANORD-PDU/RPP"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

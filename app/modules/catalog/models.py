@@ -47,3 +47,16 @@ class CatalogProductVersion(Base):
     refresh_id: Mapped[int] = mapped_column(ForeignKey("catalog_refresh.id"))  # the catalog version that brought it
     valid_from: Mapped[datetime] = mapped_column(default=utcnow)
     valid_to: Mapped[datetime | None]
+
+
+class SpecReview(Base):
+    """A unit's review of an extracted spec item (product_specs.json): confirmed or rejected, with a note. The latest
+    review per spec_id counts; earlier ones stay (history)."""
+    __tablename__ = "spec_review"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    spec_id: Mapped[str] = mapped_column(String(20), index=True)
+    family_key: Mapped[str] = mapped_column(String(120))
+    status: Mapped[str] = mapped_column(String(12))                  # confirmed | rejected
+    note: Mapped[str] = mapped_column(Text, default="")
+    reviewed_by: Mapped[str] = mapped_column(String(80))
+    reviewed_at: Mapped[datetime] = mapped_column(default=utcnow)

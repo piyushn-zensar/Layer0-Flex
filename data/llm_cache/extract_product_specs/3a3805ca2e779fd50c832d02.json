@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "To IEC-61439-2",
+            "label": "Construction Separation",
+            "max": null,
+            "min": null,
+            "name": "form_of_separation",
+            "page": 7,
+            "quote": "Construction Separation | To IEC-61439-2, up to Form 4B Type 6",
+            "text": "Form 4B Type 6",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Busbar System Current Rating",
+            "max": 1250,
+            "min": 100,
+            "name": "rated_current",
+            "page": 7,
+            "quote": "Busbar System Current Rating | 100A to 1250A",
+            "text": "100A to 1250A",
+            "unit": "A"
+          },
+          {
+            "conditions": "1s",
+            "label": "Busbar System Short Circuit Rating",
+            "max": 50,
+            "min": null,
+            "name": "short_time_withstand",
+            "page": 7,
+            "quote": "Busbar System Short Circuit Rating | Up to 50kA/1s",
+            "text": "Up to 50kA/1s",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Voltage Ratings",
+            "max": 690,
+            "min": 400,
+            "name": "rated_voltage_ac",
+            "page": 7,
+            "quote": "Voltage Ratings | 400V / 690V",
+            "text": "400V / 690V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Ingress protection",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 7,
+            "quote": "Ingress protection | IP31",
+            "text": "IP31",
+            "unit": ""
+          }
+        ],
+        "variant": "ANORD-PDU/PDU"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

@@ -1,0 +1,57 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "1 second",
+            "label": "short-time withstand capability",
+            "max": 100,
+            "min": null,
+            "name": "short_time_withstand",
+            "page": 2,
+            "quote": "short‑time withstand capability up to 100kA for 1 second",
+            "text": "up to 100kA for 1 second",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "busbars rated current",
+            "max": 6300,
+            "min": 1200,
+            "name": "rated_current",
+            "page": 2,
+            "quote": "Busbars rated up to 1200A to 6300A",
+            "text": "1200A to 6300A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "rated voltage",
+            "max": 690,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 2,
+            "quote": "MDX switchgear is rated up to 690V AC",
+            "text": "up to 690V AC",
+            "unit": "VAC"
+          },
+          {
+            "conditions": "",
+            "label": "IP rating",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 3,
+            "quote": "IP2X construction helps prevent inadvertent contact with live parts during operation",
+            "text": "IP2X",
+            "unit": ""
+          }
+        ],
+        "variant": "MDX Switchgear"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

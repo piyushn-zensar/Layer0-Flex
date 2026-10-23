@@ -1,0 +1,436 @@
+[
+ {
+  "file": "web/pages/mdx-switchgear.html",
+  "url": "https://anordmardix.com/mdx-switchgear/",
+  "kind": "page",
+  "family_keys": [
+   "ANORD-LVSB/MDX"
+  ],
+  "title": "MDX Switchgear (IEC 61439-2)",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "6781761f42886fc5794dbe5cea261e7b9f05526135dc3b2854296d0803dac8e2",
+  "bytes": 227771,
+  "has_ratings": true,
+  "note": "Official MDX product page; HTML text contains some numeric electrical ratings, full ratings are in the MDX catalogue PDF."
+ },
+ {
+  "file": "web/pages/sen-plus.html",
+  "url": "https://anordmardix.com/sen-plus/",
+  "kind": "page",
+  "family_keys": [
+   "ANORD-LVSB/SEN Plus"
+  ],
+  "title": "SEN Plus - Smart, Safe, and Scalable Power Distribution",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "a7119a69da32d50c3443bc252e03e3327e223874e91eb6a5bae68d95ef0c1d88",
+  "bytes": 236228,
+  "has_ratings": true,
+  "note": "Official SEN Plus product page; some numeric ratings in the page text, full detail in the SEN Plus brochure PDF."
+ },
+ {
+  "file": "web/pages/amx-switchboards-ul891.html",
+  "url": "https://anordmardix.com/amx-switchboards-ul891/",
+  "kind": "page",
+  "family_keys": [
+   "ANORD-LVSB/AMX"
+  ],
+  "title": "AMX Switchboards (UL891)",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "7332548a926eb10c7a61450f65422cce42ee0123a3ad47a8406279ff6dbc3b9b",
+  "bytes": 223799,
+  "has_ratings": true,
+  "note": "Official AMX UL 891 product page; some numeric ratings in the page text, full detail in the AMX catalogue PDF."
+ },
+ {
+  "file": "web/pages/databar.html",
+  "url": "https://anordmardix.com/products/databar/",
+  "kind": "page",
+  "family_keys": [
+   "ANORD-BUSWAY/DATABAR DX",
+   "ANORD-BUSWAY/DATABAR DX+"
+  ],
+  "title": "DATABAR (IEC and UL)",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "938004aab9dcb1caf58e4a58896dda6a7dcf205ca07c3017b5613a20bfa84f39",
+  "bytes": 252379,
+  "has_ratings": true,
+  "note": "Official DATABAR busway page (IEC and UL variants); some numeric ratings in the page text."
+ },
+ {
+  "file": "web/pages/ibar.html",
+  "url": "https://anordmardix.com/products/ibar/",
+  "kind": "page",
+  "family_keys": [
+   "ANORD-BUSWAY/IBAR HXC",
+   "ANORD-BUSWAY/IBAR HXA"
+  ],
+  "title": "IBAR",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "941b6b454c24bd8c16cd51adcdfd9c9ef9570bf1bc75ee2c27004ae9bcedd7f1",
+  "bytes": 252054,
+  "has_ratings": false,
+  "note": "Official IBAR busway page; descriptive, links to the HXA brochure and HXC catalogue PDFs."
+ },
+ {
+  "file": "web/pages/resinbar.html",
+  "url": "https://anordmardix.com/products/resinbar/",
+  "kind": "page",
+  "family_keys": [
+   "ANORD-BUSWAY/RESINBAR CXC",
+   "ANORD-BUSWAY/RESINBAR CXA"
+  ],
+  "title": "RESINBAR",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "5cdf2bffcb1f5dd90cf2ff62a747e8644cbdf13cbcf27589ca425c38b7f1e9c5",
+  "bytes": 246330,
+  "has_ratings": false,
+  "note": "Official RESINBAR busway page; descriptive, no numeric ratings in the page text."
+ },
+ {
+  "file": "web/pages/power-distribution-unit.html",
+  "url": "https://anordmardix.com/power-distribution-unit/",
+  "kind": "page",
+  "family_keys": [
+   "ANORD-PDU/PDU"
+  ],
+  "title": "Power Distribution Unit",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "9dd2484d2821db8961a3e485c3029666e7af00028de2f44ad1aadca0f099d567",
+  "bytes": 241559,
+  "has_ratings": true,
+  "note": "Official UL 891 PDU product page; some numeric ratings in the page text."
+ },
+ {
+  "file": "web/pages/remote-power-panel.html",
+  "url": "https://anordmardix.com/remote-power-panel/",
+  "kind": "page",
+  "family_keys": [
+   "ANORD-PDU/RPP"
+  ],
+  "title": "Remote Power Panel",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "c054295e327905232b123f669e6859f646f069341515ed8fb8dc3fa093116a93",
+  "bytes": 235096,
+  "has_ratings": false,
+  "note": "Official RPP product page; descriptive, ratings are in the RPP datasheet PDF."
+ },
+ {
+  "file": "web/pages/jetcool-smartsense-cdu.html",
+  "url": "https://jetcool.com/coolant-distribution-units-smartsense-cdu/",
+  "kind": "page",
+  "family_keys": [
+   "JETCOOL-CDU/SmartSense CDU",
+   "JETCOOL-CDU/Modular CDU"
+  ],
+  "title": "Coolant Distribution Units (CDUs)",
+  "publisher": "JetCool",
+  "retrieved": "2026-10-23",
+  "sha256": "9aa35c4d5e7aad914dfc7d2fc6131aecc2d08e1925d5d6f003bd8a893c690fcb",
+  "bytes": 224189,
+  "has_ratings": false,
+  "note": "Official JetCool CDU page covering in-rack SmartSense CDU and Modular CDU; links both datasheet PDFs, few numeric ratings in the page text."
+ },
+ {
+  "file": "web/pages/flex-power-modules.html",
+  "url": "https://flex.com/products/power-modules",
+  "kind": "page",
+  "family_keys": [
+   "FPM-800V/BMR720"
+  ],
+  "title": "Power Modules | High-efficiency DC/DC Converters",
+  "publisher": "Flex",
+  "retrieved": "2026-10-23",
+  "sha256": "789b6eea41de7d6c5bc92bd8a39db031ff8ba5b80cf1810fd337311cb5a5f8d8",
+  "bytes": 1004571,
+  "has_ratings": true,
+  "note": "Flex power modules hub; one DC/DC for 800 VDC block names BMR720 (800 and +/-400 VDC, peak power up to 15 kW); no BMR720 series page or datasheet link."
+ },
+ {
+  "file": "web/pages/flex-800-vdc-modules.html",
+  "url": "https://flex.com/products/power-modules/800-vdc-modules",
+  "kind": "page",
+  "family_keys": [
+   "FPM-800V/BMR720"
+  ],
+  "title": "Next-gen 800 VDC architecture modules | Flex",
+  "publisher": "Flex",
+  "retrieved": "2026-10-23",
+  "sha256": "c457816e50b92d2786209ed0ea9a7d0774c904ff43fed3676abcc892e58d84a4",
+  "bytes": 282607,
+  "has_ratings": true,
+  "note": "Flex 800 VDC modules overview (800 V and +/-400 V IBCs); marketing text with a few figures, no datasheet link and no BMR720 part table."
+ },
+ {
+  "file": "web/pdf/Power-Distribution-Unit-UL.pdf",
+  "url": "https://anordmardix.com/downloads/power-distribution-unit-pdu-catalog/",
+  "kind": "catalogue",
+  "family_keys": [
+   "ANORD-PDU/PDU"
+  ],
+  "title": "Power Distribution Unit (PDU) Catalog, UL 891 AMX low-voltage distribution unit",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "cf43223a08891e9239ce5e89bdf3460825dfbefd9ac9f77e8d875a45d6e2ab9f",
+  "bytes": 2510320,
+  "has_ratings": true,
+  "note": "Spec table: up to 600 VAC, 300-1200 kVA, 65 kAIC at 480 V, NEMA 1 enclosure, optional 100/200 kA SPD, -5 to +40 C, up to 2000 m."
+ },
+ {
+  "file": null,
+  "url": "https://anordmardix.com/downloads/mdx-switchgear-catalog-iec-61439-2/",
+  "kind": "catalogue",
+  "family_keys": [
+   "ANORD-LVSB/MDX"
+  ],
+  "title": "MDX-Switchgear-Catalog_2026.pdf",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "370d10c10f3485af9a0a75ccc86c3797e8e17febd359e9f92c6aa9c810ef09df",
+  "bytes": 3496100,
+  "has_ratings": null,
+  "duplicate_of": "MDX-Switchgear-Catalog_2026.pdf",
+  "note": "Downloaded and SHA-256 matched an existing file in data/axiom_products/; not saved again."
+ },
+ {
+  "file": null,
+  "url": "https://anordmardix.com/downloads/amx-switchboards-catalog-ul891/",
+  "kind": "catalogue",
+  "family_keys": [
+   "ANORD-LVSB/AMX"
+  ],
+  "title": "AMX-Switchboards-Catalog_2026.pdf",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "5fbd57747c0b8afa8bb25e0789c150ec69853b16f74d0c89622c0be6afcaaa86",
+  "bytes": 2920981,
+  "has_ratings": null,
+  "duplicate_of": "AMX-Switchboards-Catalog_2026.pdf",
+  "note": "Downloaded and SHA-256 matched an existing file in data/axiom_products/; not saved again."
+ },
+ {
+  "file": null,
+  "url": "https://anordmardix.com/downloads/databar-iec-brochure/",
+  "kind": "brochure",
+  "family_keys": [
+   "ANORD-BUSWAY/DATABAR DX",
+   "ANORD-BUSWAY/DATABAR DX+"
+  ],
+  "title": "Databar_IEC_Brochure_2026.pdf",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "1806138b7317fc6df1cdd5e874dadfbe3fd234bb856936bc13d0e85949dd2928",
+  "bytes": 1067549,
+  "has_ratings": null,
+  "duplicate_of": "Databar_IEC_Brochure_2026.pdf",
+  "note": "Downloaded and SHA-256 matched an existing file in data/axiom_products/; not saved again."
+ },
+ {
+  "file": null,
+  "url": "https://anordmardix.com/downloads/databar-ul-brochure/",
+  "kind": "brochure",
+  "family_keys": [
+   "ANORD-BUSWAY/DATABAR DX",
+   "ANORD-BUSWAY/DATABAR DX+"
+  ],
+  "title": "Databar_UL_Brochure_2026.pdf",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "3a646ba284179a7f7127420e7367a9bd3c981705dc1762b8e15f8fe5756ad2e5",
+  "bytes": 1137676,
+  "has_ratings": null,
+  "duplicate_of": "Databar_UL_Brochure_2026.pdf",
+  "note": "Downloaded and SHA-256 matched an existing file in data/axiom_products/; not saved again."
+ },
+ {
+  "file": null,
+  "url": "https://anordmardix.com/wp-content/uploads/2023/03/IBAR-HXA-Brochure-2023.pdf",
+  "kind": "brochure",
+  "family_keys": [
+   "ANORD-BUSWAY/IBAR HXA"
+  ],
+  "title": "IBAR-HXA-Brochure-2023.pdf",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "df7035bc5bcd3b2e46fe587e5929f531423fa38d3669063d7945114e72707303",
+  "bytes": 2174445,
+  "has_ratings": null,
+  "duplicate_of": "IBAR-HXA-Brochure-2023.pdf",
+  "note": "Downloaded and SHA-256 matched an existing file in data/axiom_products/; not saved again."
+ },
+ {
+  "file": null,
+  "url": "https://anordmardix.com/wp-content/uploads/2025/01/IBAR-HXC-CATALOGUE-2025.pdf",
+  "kind": "catalogue",
+  "family_keys": [
+   "ANORD-BUSWAY/IBAR HXC"
+  ],
+  "title": "IBAR-HXC-CATALOGUE-2025.pdf",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "5bfaaa87bb877faaa0137b3e98bf4a22e1a6e7ca453322e0e455ed452e31a030",
+  "bytes": 1285853,
+  "has_ratings": null,
+  "duplicate_of": "IBAR-HXC-CATALOGUE-2025.pdf",
+  "note": "Downloaded and SHA-256 matched an existing file in data/axiom_products/; not saved again."
+ },
+ {
+  "file": null,
+  "url": "https://anordmardix.com/wp-content/uploads/2025/01/2025-WEB-RESINBAR.pdf",
+  "kind": "brochure",
+  "family_keys": [
+   "ANORD-BUSWAY/RESINBAR CXC",
+   "ANORD-BUSWAY/RESINBAR CXA"
+  ],
+  "title": "2025-WEB-RESINBAR.pdf",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "bbde8475918483b24eadb6cc36e2a3816cf78fa506b1e061ab2792c61c0e60ce",
+  "bytes": 4312645,
+  "has_ratings": null,
+  "duplicate_of": "2025-WEB-RESINBAR.pdf",
+  "note": "Downloaded and SHA-256 matched an existing file in data/axiom_products/; not saved again."
+ },
+ {
+  "file": null,
+  "url": "https://anordmardix.com/wp-content/uploads/2026/03/Remote_Power-Panel_Datasheet.pdf",
+  "kind": "datasheet",
+  "family_keys": [
+   "ANORD-PDU/RPP"
+  ],
+  "title": "Remote_Power-Panel_Datasheet.pdf",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "25ea60669c0a26464a6473b62caf3224cca7cf0e0ab575fc2acc2e64d21fc3d3",
+  "bytes": 464743,
+  "has_ratings": null,
+  "duplicate_of": "Remote_Power-Panel_Datasheet.pdf",
+  "note": "Downloaded and SHA-256 matched an existing file in data/axiom_products/; not saved again."
+ },
+ {
+  "file": null,
+  "url": "https://anordmardix.com/downloads/remote-power-panel-rpp-datasheet/",
+  "kind": "datasheet",
+  "family_keys": [
+   "ANORD-PDU/RPP"
+  ],
+  "title": "Remote_Power-Panel_Datasheet.pdf",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "25ea60669c0a26464a6473b62caf3224cca7cf0e0ab575fc2acc2e64d21fc3d3",
+  "bytes": 464743,
+  "has_ratings": null,
+  "duplicate_of": "Remote_Power-Panel_Datasheet.pdf",
+  "note": "Downloaded and SHA-256 matched an existing file in data/axiom_products/; not saved again."
+ },
+ {
+  "file": null,
+  "url": "https://anordmardix.com/wp-content/uploads/2026/07/Anord_Mardix_SEN_Plus_Brochure_English.pdf",
+  "kind": "brochure",
+  "family_keys": [
+   "ANORD-LVSB/SEN Plus"
+  ],
+  "title": "Anord_Mardix_SEN_Plus_Brochure_English.pdf",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "a3dbc14b40200fcaccec6ee9ac5590e107af0ed2e4f715b70f1ecdc2d201094b",
+  "bytes": 522677,
+  "has_ratings": null,
+  "duplicate_of": "Anord_Mardix_SEN_Plus_Brochure_English.pdf",
+  "note": "Downloaded and SHA-256 matched an existing file in data/axiom_products/; not saved again."
+ },
+ {
+  "file": null,
+  "url": "https://anordmardix.com/downloads/sen-plus-brochure-iec/",
+  "kind": "brochure",
+  "family_keys": [
+   "ANORD-LVSB/SEN Plus"
+  ],
+  "title": "Anord_Mardix_SEN_Plus_Brochure_English.pdf",
+  "publisher": "Anord Mardix",
+  "retrieved": "2026-10-23",
+  "sha256": "a3dbc14b40200fcaccec6ee9ac5590e107af0ed2e4f715b70f1ecdc2d201094b",
+  "bytes": 522677,
+  "has_ratings": null,
+  "duplicate_of": "Anord_Mardix_SEN_Plus_Brochure_English.pdf",
+  "note": "Downloaded and SHA-256 matched an existing file in data/axiom_products/; not saved again."
+ },
+ {
+  "file": null,
+  "url": "https://9360232.fs1.hubspotusercontent-na1.net/hubfs/9360232/Marketing%20Resources%202026/In-Rack%20CDU300%20Datasheet%20(SmartSense%20CDU).pdf",
+  "kind": "datasheet",
+  "family_keys": [
+   "JETCOOL-CDU/SmartSense CDU"
+  ],
+  "title": "In-Rack CDU300 Datasheet (SmartSense CDU).pdf",
+  "publisher": "JetCool",
+  "retrieved": "2026-10-23",
+  "sha256": "1c4e28e9490d2b3a71e5fcff08d425f42680f7277a9a405803d002a8bc98846c",
+  "bytes": 277394,
+  "has_ratings": null,
+  "duplicate_of": "In-Rack CDU300 Datasheet (SmartSense CDU).pdf",
+  "note": "Downloaded and SHA-256 matched an existing file in data/axiom_products/; not saved again."
+ },
+ {
+  "file": null,
+  "url": "https://9360232.fs1.hubspotusercontent-na1.net/hubfs/9360232/Marketing%20Resources%202026/Modular%20CDU%20Datasheet.pdf",
+  "kind": "datasheet",
+  "family_keys": [
+   "JETCOOL-CDU/Modular CDU"
+  ],
+  "title": "Modular CDU Datasheet.pdf",
+  "publisher": "JetCool",
+  "retrieved": "2026-10-23",
+  "sha256": "82240ed33eca17567244684eb98fcfce291f06b83b9d19d3c696efce594bfdab",
+  "bytes": 1046271,
+  "has_ratings": null,
+  "duplicate_of": "Modular CDU Datasheet.pdf",
+  "note": "Downloaded and SHA-256 matched an existing file in data/axiom_products/; not saved again."
+ },
+ {
+  "file": null,
+  "url": "https://flex.com/products/power-modules/series/bmr720",
+  "kind": "page",
+  "family_keys": [
+   "FPM-800V/BMR720"
+  ],
+  "title": "BMR720 series page",
+  "publisher": "Flex",
+  "retrieved": "2026-10-23",
+  "has_ratings": false,
+  "note": "Not found: HTTP 404. Flex sitemaps (page, resource, download, component-selector) list no BMR720 page or datasheet; the power-modules hub only mentions BMR720 with a photo and peak power up to 15 kW."
+ },
+ {
+  "file": null,
+  "url": "https://flex.com/products/power-modules",
+  "kind": "datasheet",
+  "family_keys": [
+   "FPM-800V/BMR720"
+  ],
+  "title": "BMR720 datasheet",
+  "publisher": "Flex",
+  "retrieved": "2026-10-23",
+  "has_ratings": false,
+  "note": "Not found: no BMR720 datasheet link on the Flex hub or 800 VDC modules page; likely gated or not yet published."
+ },
+ {
+  "file": null,
+  "url": "https://jetcool.com/coolant-distribution-units-smartsense-cdu/",
+  "kind": "page",
+  "family_keys": [
+   "JETCOOL-CDU/Modular CDU"
+  ],
+  "title": "Separate Modular / rack-level CDU page",
+  "publisher": "JetCool",
+  "retrieved": "2026-10-23",
+  "has_ratings": false,
+  "note": "No separate page found in the JetCool sitemap: the Modular CDU is covered on the SmartSense CDU page and its datasheet (already held)."
+ }
+]

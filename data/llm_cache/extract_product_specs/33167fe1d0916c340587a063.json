@@ -1,0 +1,167 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rated operational voltage",
+            "max": 690,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 7,
+            "quote": "Rated operational voltage Ue up to 690 V AC",
+            "text": "up to 690 V AC",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Rated frequency",
+            "max": 60,
+            "min": 50,
+            "name": "frequency",
+            "page": 7,
+            "quote": "Rated frequency f 50/60 Hz",
+            "text": "50/60 Hz",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "",
+            "label": "Rated insulation voltage",
+            "max": 1000,
+            "min": null,
+            "name": "insulation_voltage",
+            "page": 7,
+            "quote": "Rated insulation voltage Ui up to 1000V",
+            "text": "up to 1000V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Rated impulse withstand voltage",
+            "max": 12,
+            "min": 8,
+            "name": "impulse_withstand_voltage",
+            "page": 7,
+            "quote": "Rated impulse withstand voltage Uimp 8/12kV",
+            "text": "8/12kV",
+            "unit": "kV"
+          },
+          {
+            "conditions": "1s",
+            "label": "Rated short time withstand current",
+            "max": 100,
+            "min": null,
+            "name": "short_time_withstand",
+            "page": 7,
+            "quote": "Rated short time withstand current Icw up to 100kA , 1s",
+            "text": "up to 100kA , 1s",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Rated peak withstand current",
+            "max": 220,
+            "min": null,
+            "name": "peak_withstand",
+            "page": 7,
+            "quote": "Rated peak withstand current Ipk up to 220kA",
+            "text": "up to 220kA",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Rated conditional short-circuit current",
+            "max": 100,
+            "min": null,
+            "name": "breaking_capacity",
+            "page": 7,
+            "quote": "Rated conditinal short-circuit current Icc up to 100kA",
+            "text": "up to 100kA",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Degree of protection (External)",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 7,
+            "quote": "Degree of protection (External) IP30 /IP31 / IP40 / IP41/ IP42 / IP43 / IP54",
+            "text": "IP30 /IP31 / IP40 / IP41/ IP42 / IP43 / IP54",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Internal separation PC",
+            "max": null,
+            "min": null,
+            "name": "form_of_separation",
+            "page": 7,
+            "quote": "Internal separation PC up to from 4b type 7",
+            "text": "up to from 4b type 7",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Internal separation MCC",
+            "max": null,
+            "min": null,
+            "name": "form_of_separation",
+            "page": 7,
+            "quote": "Internal separation MCC form 3b / 4b type 7",
+            "text": "form 3b / 4b type 7",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Design verification",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 7,
+            "quote": "Design verification IEC 61439-1/-2, Edition 3.0",
+            "text": "IEC 61439-1/-2, Edition 3.0",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Internal arc testing",
+            "max": null,
+            "min": null,
+            "name": "seismic_or_arc",
+            "page": 7,
+            "quote": "Internal arc testing IEC TR 61641, Edition 3.0",
+            "text": "IEC TR 61641, Edition 3.0",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Arc fault mitigation systems",
+            "max": null,
+            "min": null,
+            "name": "seismic_or_arc",
+            "page": 7,
+            "quote": "Arc fault mitigation systems IEC TS 63107, Class A, B, C, I",
+            "text": "IEC TS 63107, Class A, B, C, I",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Seismic testing",
+            "max": null,
+            "min": null,
+            "name": "seismic_or_arc",
+            "page": 7,
+            "quote": "Seismic testing IEEE 693 / ICC ES AC156, Edition 1.0",
+            "text": "IEEE 693 / ICC ES AC156, Edition 1.0",
+            "unit": ""
+          }
+        ],
+        "variant": "SEN Plus Switchgear"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

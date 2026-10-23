@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Vin (V)",
+            "max": 60,
+            "min": 40,
+            "name": "rated_voltage_dc",
+            "page": 16,
+            "quote": "BMR320 | 40-60 | 5-7.5 | 400 /740 | 97.6 | 27 x 18 x 6.4 mm",
+            "text": "40-60",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Vout (V)",
+            "max": 7.5,
+            "min": 5,
+            "name": "output_voltage",
+            "page": 16,
+            "quote": "BMR320 | 40-60 | 5-7.5 | 400 /740 | 97.6 | 27 x 18 x 6.4 mm",
+            "text": "5-7.5",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "PTDP / Ppeak(W)",
+            "max": 740,
+            "min": 400,
+            "name": "output_power",
+            "page": 16,
+            "quote": "BMR320 | 40-60 | 5-7.5 | 400 /740 | 97.6 | 27 x 18 x 6.4 mm",
+            "text": "400 /740",
+            "unit": "W"
+          },
+          {
+            "conditions": "",
+            "label": "EFFICIENCY (%)",
+            "max": 97.6,
+            "min": 97.6,
+            "name": "efficiency",
+            "page": 16,
+            "quote": "BMR320 | 40-60 | 5-7.5 | 400 /740 | 97.6 | 27 x 18 x 6.4 mm",
+            "text": "97.6",
+            "unit": "%"
+          },
+          {
+            "conditions": "",
+            "label": "DIMENSIONS (mm/in)",
+            "max": null,
+            "min": null,
+            "name": "other",
+            "page": 16,
+            "quote": "BMR320 | 40-60 | 5-7.5 | 400 /740 | 97.6 | 27 x 18 x 6.4 mm",
+            "text": "27 x 18 x 6.4 mm / 1.06 x 0.71 x 0.25 in",
+            "unit": ""
+          }
+        ],
+        "variant": "BMR320"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

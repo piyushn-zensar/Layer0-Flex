@@ -1,0 +1,57 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Operating voltage",
+            "max": 600,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 5,
+            "quote": "Operating voltage Up to 600VAC, 3Ph-3W + ground",
+            "text": "Up to 600VAC, 3Ph-3W + ground",
+            "unit": "VAC"
+          },
+          {
+            "conditions": "at 480V",
+            "label": "Short-circuit current rating",
+            "max": 65,
+            "min": 65,
+            "name": "short_time_withstand",
+            "page": 5,
+            "quote": "Short-circuit current rating 65kAIC at 480V",
+            "text": "65kAIC at 480V",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Operating temperature",
+            "max": 40,
+            "min": -5,
+            "name": "operating_temperature",
+            "page": 5,
+            "quote": "Operating temperature −5°C to +40°C",
+            "text": "−5°C to +40°C",
+            "unit": "ºC"
+          },
+          {
+            "conditions": "without derating",
+            "label": "Altitude",
+            "max": 2000,
+            "min": null,
+            "name": "altitude",
+            "page": 5,
+            "quote": "Altitude Up to 2000m without derating",
+            "text": "Up to 2000m without derating",
+            "unit": "m"
+          }
+        ],
+        "variant": "Anord Mardix Power Distribution Unit (PDU)"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

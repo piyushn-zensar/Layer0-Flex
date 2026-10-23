@@ -1,0 +1,123 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Cooling Capacity",
+            "max": 300,
+            "min": 160,
+            "name": "cooling_capacity",
+            "page": 1,
+            "quote": "Capable of cooling up to 300kW per rack",
+            "text": "160 kW to 300 kW",
+            "unit": "kW"
+          },
+          {
+            "conditions": "",
+            "label": "Flow Rate",
+            "max": 400,
+            "min": 280,
+            "name": "flow_rate",
+            "page": 1,
+            "quote": "280 LPM 400 LPM",
+            "text": "280 LPM to 400 LPM",
+            "unit": "LPM"
+          },
+          {
+            "conditions": "",
+            "label": "Approach Temp.",
+            "max": 7,
+            "min": 4,
+            "name": "approach_temperature",
+            "page": 1,
+            "quote": "4ºC 7ºC",
+            "text": "4ºC to 7ºC",
+            "unit": "ºC"
+          },
+          {
+            "conditions": "",
+            "label": "Power Consumption",
+            "max": 5100,
+            "min": 2800,
+            "name": "power_consumption",
+            "page": 1,
+            "quote": "2,800 W 5,100 W",
+            "text": "2,800 W to 5,100 W",
+            "unit": "W"
+          },
+          {
+            "conditions": "",
+            "label": "Form Factor",
+            "max": null,
+            "min": null,
+            "name": "height",
+            "page": 1,
+            "quote": "6U",
+            "text": "6U",
+            "unit": "other"
+          },
+          {
+            "conditions": "",
+            "label": "Length",
+            "max": 950,
+            "min": 950,
+            "name": "depth",
+            "page": 1,
+            "quote": "950 mm",
+            "text": "950 mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Weight",
+            "max": 160,
+            "min": 160,
+            "name": "weight",
+            "page": 1,
+            "quote": "160 kg",
+            "text": "160 kg",
+            "unit": "kg"
+          },
+          {
+            "conditions": "",
+            "label": "Fluid Temp. Range",
+            "max": 70,
+            "min": 10,
+            "name": "operating_temperature",
+            "page": 1,
+            "quote": "10ºC to 70ºC",
+            "text": "10ºC to 70ºC",
+            "unit": "ºC"
+          },
+          {
+            "conditions": "Single-Phase",
+            "label": "Electrical Supply",
+            "max": 250,
+            "min": 200,
+            "name": "rated_voltage_ac",
+            "page": 1,
+            "quote": "200 - 250 VAC, Single-Phase",
+            "text": "200 - 250 VAC, Single-Phase",
+            "unit": "VAC"
+          },
+          {
+            "conditions": "",
+            "label": "Comm Protocol",
+            "max": null,
+            "min": null,
+            "name": "communication",
+            "page": 1,
+            "quote": "TCP / IP, Redﬁsh SSH, Webserver",
+            "text": "TCP / IP, Redﬁsh SSH, Webserver",
+            "unit": "other"
+          }
+        ],
+        "variant": "SmartSense CDU300"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

@@ -1,0 +1,35 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Busbar rated current",
+            "max": 6300,
+            "min": 800,
+            "name": "rated_current",
+            "page": 10,
+            "quote": "Busbar... rated from 800A up to 6300A to support high density power distribution.",
+            "text": "800A up to 6300A",
+            "unit": "A"
+          },
+          {
+            "conditions": "per IEC 60529",
+            "label": "Ingress protection",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 10,
+            "quote": "Ingress protection (IEC 60529)... IP2X ensures finger safe design.",
+            "text": "IP2X",
+            "unit": ""
+          }
+        ],
+        "variant": "MDX Switchgear"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

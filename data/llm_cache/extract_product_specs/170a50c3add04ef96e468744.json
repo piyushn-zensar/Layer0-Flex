@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rated Current",
+            "max": 1250,
+            "min": 800,
+            "name": "rated_current",
+            "page": 5,
+            "quote": "DX+ range | 800A to 1250A",
+            "text": "800A to 1250A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Tap Off Current",
+            "max": 1000,
+            "min": 600,
+            "name": "tap_off_current",
+            "page": 5,
+            "quote": "DX+ range | 600A to 1000A",
+            "text": "600A to 1000A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Arc flash and seismic testing",
+            "max": null,
+            "min": null,
+            "name": "seismic_or_arc",
+            "page": 5,
+            "quote": "Arc flash and seismic testing | IEC / BS EN 61641, IEC 60068-3-3 | IEEE 1584, IEEE 344-20",
+            "text": "IEC / BS EN 61641, IEC 60068-3-3, IEEE 1584, IEEE 344-20",
+            "unit": ""
+          }
+        ],
+        "variant": "DX+ range"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

@@ -1,0 +1,35 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Tap-off rated current",
+            "max": 1000,
+            "min": 160,
+            "name": "rated_current",
+            "page": 8,
+            "quote": "Same tap-offs fit all DATABAR ratings from 160 A to 1000 A",
+            "text": "160 A to 1000 A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Tap-off breaking capacity",
+            "max": 50,
+            "min": 10,
+            "name": "breaking_capacity",
+            "page": 8,
+            "quote": "Standard options typically include fuses, MCBs and MCCBs in 10-50kA Isc",
+            "text": "10-50kA Isc",
+            "unit": "kA"
+          }
+        ],
+        "variant": "DATABAR DX busway system"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

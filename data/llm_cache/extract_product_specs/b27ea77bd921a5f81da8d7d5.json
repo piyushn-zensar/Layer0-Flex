@@ -1,0 +1,56 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "100 A range",
+            "max": 100,
+            "min": 100,
+            "name": "rated_current",
+            "page": 2,
+            "quote": "10mm CT window w/ 100 A range",
+            "text": "100 A range",
+            "unit": "A"
+          }
+        ],
+        "variant": "Solid Core Panel CT Strip"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "100 A range",
+            "max": 100,
+            "min": 100,
+            "name": "rated_current",
+            "page": 2,
+            "quote": "10mm CT window w/ 100 A range",
+            "text": "100 A range",
+            "unit": "A"
+          }
+        ],
+        "variant": "Split Core Panelboard Module"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "100 A range",
+            "max": 100,
+            "min": 100,
+            "name": "rated_current",
+            "page": 2,
+            "quote": "10mm CT window w/ 100 A range",
+            "text": "100 A range",
+            "unit": "A"
+          }
+        ],
+        "variant": "Multi-Circuit CT Module"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

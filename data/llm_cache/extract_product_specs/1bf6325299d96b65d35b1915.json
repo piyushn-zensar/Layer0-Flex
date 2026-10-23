@@ -1,0 +1,35 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Flow Targets",
+            "max": 1.5,
+            "min": 1,
+            "name": "flow_rate",
+            "page": 2,
+            "quote": "1-1.5 LPM/kW Flow Targets",
+            "text": "1-1.5 LPM/kW",
+            "unit": "LPM"
+          },
+          {
+            "conditions": "at >30 psid",
+            "label": "Available Pumping Pressure",
+            "max": 225,
+            "min": 225,
+            "name": "flow_rate",
+            "page": 2,
+            "quote": "225 LPM at >30 psid Available Pumping Pressure",
+            "text": "225 LPM at >30 psid",
+            "unit": "LPM"
+          }
+        ],
+        "variant": "SmartSense CDU300"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

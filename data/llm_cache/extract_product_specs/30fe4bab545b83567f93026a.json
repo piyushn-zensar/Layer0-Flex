@@ -1,0 +1,79 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rated Current",
+            "max": 6300,
+            "min": null,
+            "name": "rated_current",
+            "page": 2,
+            "quote": "up to 6300A for power distribution and motor control",
+            "text": "up to 6300A",
+            "unit": "A"
+          },
+          {
+            "conditions": "Designed to meet IEC 60529",
+            "label": "Ingress Protection",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 2,
+            "quote": "Designed to meet IEC 60529 for IP30–IP54 arrangements",
+            "text": "IP30–IP54",
+            "unit": ""
+          },
+          {
+            "conditions": "as per IEC 61439",
+            "label": "Form of Separation",
+            "max": null,
+            "min": null,
+            "name": "form_of_separation",
+            "page": 2,
+            "quote": "Configurations up to Form 4B Type 7 as per IEC 61439",
+            "text": "Form 4B Type 7",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Ambient Temperature",
+            "max": 50,
+            "min": null,
+            "name": "operating_temperature",
+            "page": 2,
+            "quote": "up to 50°C ambient temperature",
+            "text": "up to 50°C",
+            "unit": "°C"
+          },
+          {
+            "conditions": "Certified by DEKRA",
+            "label": "Standards",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 4,
+            "quote": "Certified to IEC 61439-1/2 standards by DEKRA for reliability and safety",
+            "text": "IEC 61439-1/2",
+            "unit": ""
+          },
+          {
+            "conditions": "report P111673, dated 2022-02-22",
+            "label": "Seismic Resistance",
+            "max": null,
+            "min": null,
+            "name": "seismic_or_arc",
+            "page": 4,
+            "quote": "Verified for seismic and vibration resistance by RISE (report P111673, dated 2022-02-22)",
+            "text": "Verified for seismic and vibration resistance",
+            "unit": ""
+          }
+        ],
+        "variant": "SEN Plus Switchgear"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

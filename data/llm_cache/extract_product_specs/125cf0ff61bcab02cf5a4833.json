@@ -1,0 +1,12 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [],
+        "variant": "ANORD-PDU/PDU"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

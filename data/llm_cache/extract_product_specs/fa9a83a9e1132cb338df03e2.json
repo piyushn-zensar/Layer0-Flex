@@ -1,0 +1,79 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "Redundant",
+            "label": "Cooling Capacity",
+            "max": 1.8,
+            "min": 1.2,
+            "name": "cooling_capacity",
+            "page": 1,
+            "quote": "Cooling Capacity Redundant 1.2 MW 1.8 MW",
+            "text": "1.2 MW to 1.8 MW",
+            "unit": "MW"
+          },
+          {
+            "conditions": "Performance",
+            "label": "Cooling Capacity",
+            "max": 1.2,
+            "min": 0.8,
+            "name": "cooling_capacity",
+            "page": 1,
+            "quote": "Cooling Capacity Performance 800 kW 1.2 MW",
+            "text": "800 kW to 1.2 MW",
+            "unit": "MW"
+          },
+          {
+            "conditions": "Redundant",
+            "label": "Approach Temp.",
+            "max": 9,
+            "min": 6,
+            "name": "approach_temperature",
+            "page": 1,
+            "quote": "Approach Temp. Redundant 6ºC 9ºC",
+            "text": "6ºC to 9ºC",
+            "unit": "ºC"
+          },
+          {
+            "conditions": "Performance",
+            "label": "Approach Temp.",
+            "max": 6,
+            "min": 5,
+            "name": "approach_temperature",
+            "page": 1,
+            "quote": "Approach Temp. Performance 5ºC 6ºC",
+            "text": "5ºC to 6ºC",
+            "unit": "ºC"
+          },
+          {
+            "conditions": "redundant",
+            "label": "Available Pumping Pressure",
+            "max": 1200,
+            "min": 1200,
+            "name": "flow_rate",
+            "page": 1,
+            "quote": "Available Pumping Pressure 1,200 LPM @ 35 psid (redundant)",
+            "text": "1,200 LPM @ 35 psid",
+            "unit": "LPM"
+          },
+          {
+            "conditions": "",
+            "label": "Max Power Usage",
+            "max": 30.6,
+            "min": 30.6,
+            "name": "output_power",
+            "page": 1,
+            "quote": "Max Power Usage 30.6 kW",
+            "text": "30.6 kW",
+            "unit": "kW"
+          }
+        ],
+        "variant": "Flex Modular Rack-Level CDU (six unit configuration)"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

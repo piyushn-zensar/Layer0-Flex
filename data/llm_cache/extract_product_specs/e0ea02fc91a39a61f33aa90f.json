@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "1 second",
+            "label": "short-time withstand",
+            "max": 100,
+            "min": 100,
+            "name": "short_time_withstand",
+            "page": 2,
+            "quote": "short‑time withstand capability up to 100 kA for 1 second",
+            "text": "100 kA for 1 second",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "busbars rated current",
+            "max": 6000,
+            "min": 1200,
+            "name": "rated_current",
+            "page": 2,
+            "quote": "Busbars rated from 1200 A to 6000 A",
+            "text": "1200 A to 6000 A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "rated voltage",
+            "max": 600,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 2,
+            "quote": "Rated up to 600 V AC with natural convection cooling",
+            "text": "up to 600 V AC",
+            "unit": "VAC"
+          },
+          {
+            "conditions": "",
+            "label": "certification standard",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 4,
+            "quote": "The switchboard is tested to UL 891 as a complete assembly",
+            "text": "UL 891",
+            "unit": ""
+          },
+          {
+            "conditions": "for regulated installations",
+            "label": "seismic compliance",
+            "max": null,
+            "min": null,
+            "name": "seismic_or_arc",
+            "page": 4,
+            "quote": "OSHPD‑compliant seismic options are available for regulated installations",
+            "text": "OSHPD-compliant seismic options",
+            "unit": ""
+          }
+        ],
+        "variant": "AMX Switchboards"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

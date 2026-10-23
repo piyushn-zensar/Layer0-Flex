@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Busbar ratings",
+            "max": 6300,
+            "min": 800,
+            "name": "rated_current",
+            "page": 2,
+            "quote": "IBAR’s HX range provides a high-power feeder busbar solution with busbar ratings ranging from 800A up to 6300A.",
+            "text": "800A up to 6300A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "IP rating",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 2,
+            "quote": "HX utilises a sandwich arrangement of individually insulated Copper (HXC) busbars (using a specialist epoxy resin coating) which are contained within a unique two piece, IP55 rated, Aluminium trunking/housing.",
+            "text": "IP55",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "British Standards",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 2,
+            "quote": "All IBAR product is manufactured within the UK to the latest British Standards (BS EN 61439-6).",
+            "text": "BS EN 61439-6",
+            "unit": ""
+          }
+        ],
+        "variant": "IBAR HXC range"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

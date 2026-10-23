@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "tap-off points",
+            "label": "IP rating",
+            "max": 55,
+            "min": 55,
+            "name": "ip_rating",
+            "page": 8,
+            "quote": "tap-off points are IP55 rated whilst the covers are in place.",
+            "text": "IP55",
+            "unit": ""
+          },
+          {
+            "conditions": "tap-off location shutters",
+            "label": "IP rating",
+            "max": 4,
+            "min": 4,
+            "name": "ip_rating",
+            "page": 8,
+            "quote": "actuation system that automatically operates the IP4X tap-off point shutters.",
+            "text": "IP4X",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Communication options",
+            "max": null,
+            "min": null,
+            "name": "communication",
+            "page": 8,
+            "quote": "supplied with optional integrated Modbus and/or Ethernet comms channel.",
+            "text": "Modbus and/or Ethernet comms channel",
+            "unit": ""
+          }
+        ],
+        "variant": "IBAR HX range tap-offs"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

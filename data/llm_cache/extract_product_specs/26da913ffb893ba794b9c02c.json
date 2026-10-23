@@ -1,0 +1,72 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rating Code (A)",
+            "max": 3200,
+            "min": 1000,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "Single Construction - Copper 1000A to 3200A",
+            "text": "1000A to 3200A",
+            "unit": "A"
+          }
+        ],
+        "variant": "RESINBAR CXC Single Construction Copper"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rating Code (A)",
+            "max": 2500,
+            "min": 800,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "Single Construction - Aluminium 800A to 2500A",
+            "text": "800A to 2500A",
+            "unit": "A"
+          }
+        ],
+        "variant": "RESINBAR CXC Single Construction Aluminium"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rating Code (A)",
+            "max": 6300,
+            "min": 4000,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "Double Construction - Copper 4000A to 6300A",
+            "text": "4000A to 6300A",
+            "unit": "A"
+          }
+        ],
+        "variant": "RESINBAR CXC Double Construction Copper"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rating Code (A)",
+            "max": 4000,
+            "min": 3200,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "Double Construction - Aluminium 3200A to 4000A",
+            "text": "3200A to 4000A",
+            "unit": "A"
+          }
+        ],
+        "variant": "RESINBAR CXC Double Construction Aluminium"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

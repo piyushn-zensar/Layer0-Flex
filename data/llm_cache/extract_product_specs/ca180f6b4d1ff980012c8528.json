@@ -1,0 +1,12 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [],
+        "variant": "ANORD-POD/Power Pod"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

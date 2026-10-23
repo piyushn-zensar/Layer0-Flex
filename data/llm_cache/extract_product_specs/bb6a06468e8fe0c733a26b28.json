@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "IP rating",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 8,
+            "quote": "Unique two piece IP55 Aluminium trunking case HXA Range 6101 Aluminium",
+            "text": "IP55",
+            "unit": ""
+          }
+        ],
+        "variant": "IBAR HXA Range"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

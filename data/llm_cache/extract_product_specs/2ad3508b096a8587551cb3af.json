@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rated current",
+            "max": 600,
+            "min": null,
+            "name": "rated_current",
+            "page": 2,
+            "quote": "Rated current Up to 600 A",
+            "text": "Up to 600 A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Rated voltage",
+            "max": null,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 2,
+            "quote": "Rated voltage 208Y/120 V, 415Y/240 V, 480Y/277 V",
+            "text": "208Y/120 V, 415Y/240 V, 480Y/277 V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Rated frequency",
+            "max": 60,
+            "min": 60,
+            "name": "frequency",
+            "page": 2,
+            "quote": "Rated frequency 60 Hz",
+            "text": "60 Hz",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "",
+            "label": "Ingress protection",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 2,
+            "quote": "Ingress protection NEMA 1",
+            "text": "NEMA 1",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Dimensions",
+            "max": 88,
+            "min": 57,
+            "name": "height",
+            "page": 2,
+            "quote": "Dimensions 20”x8”x57” (up to 72 branch circuits), 24”x12”x88” (up to 84 branch circuits), 24”x24”x88” (up to 168 branch circuits)",
+            "text": "20”x8”x57” (up to 72 branch circuits), 24”x12”x88” (up to 84 branch circuits), 24”x24”x88” (up to 168 branch circuits)",
+            "unit": "\""
+          },
+          {
+            "conditions": "",
+            "label": "Certifications",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 2,
+            "quote": "Certifications UL67, UL508A",
+            "text": "UL67, UL508A",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Monitoring protocol",
+            "max": null,
+            "min": null,
+            "name": "communication",
+            "page": 2,
+            "quote": "Monitoring protocol Modbus RTU, Modbus TCP/IP, HTML, SNMP v2, BACnet IP, REST API",
+            "text": "Modbus RTU, Modbus TCP/IP, HTML, SNMP v2, BACnet IP, REST API",
+            "unit": ""
+          }
+        ],
+        "variant": "ANORD-PDU/RPP (Remote Power Panel)"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

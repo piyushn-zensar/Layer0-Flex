@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Same tap-offs fit all DATABAR ratings",
+            "max": 1250,
+            "min": 160,
+            "name": "rated_current",
+            "page": 8,
+            "quote": "Same tap-offs fit all DATABAR ratings from 160A to 1250A",
+            "text": "160A to 1250A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Poles",
+            "max": 5,
+            "min": 4,
+            "name": "conductors_or_poles",
+            "page": 9,
+            "quote": "Poles 4P/5P",
+            "text": "4P/5P",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Conductor type",
+            "max": null,
+            "min": null,
+            "name": "conductor_material",
+            "page": 9,
+            "quote": "Conductor type (Copper)",
+            "text": "Copper",
+            "unit": ""
+          }
+        ],
+        "variant": "DATABAR DX busway"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

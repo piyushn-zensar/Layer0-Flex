@@ -1,0 +1,68 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rated operational voltage",
+            "max": 600,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 5,
+            "quote": "Rated operational voltage Up to 600V",
+            "text": "Up to 600V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Rated frequency",
+            "max": 60,
+            "min": 60,
+            "name": "frequency",
+            "page": 5,
+            "quote": "Rated frequency 60Hz",
+            "text": "60Hz",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "density rated",
+            "label": "Horizontal busbar rating",
+            "max": 6000,
+            "min": 1200,
+            "name": "rated_current",
+            "page": 5,
+            "quote": "Horizontal busbar rating 1200A to 6000A (density rated)",
+            "text": "1200A to 6000A (density rated)",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Short time withstand",
+            "max": 100,
+            "min": null,
+            "name": "short_time_withstand",
+            "page": 5,
+            "quote": "Short time withstand Up to 100kA",
+            "text": "Up to 100kA",
+            "unit": "kA"
+          },
+          {
+            "conditions": "maximum +40°C",
+            "label": "Operating temperature",
+            "max": 40,
+            "min": -5,
+            "name": "operating_temperature",
+            "page": 5,
+            "quote": "Operating temperature –5°C to +40°C (maximum +40°C)",
+            "text": "–5°C to +40°C (maximum +40°C)",
+            "unit": "°C"
+          }
+        ],
+        "variant": "AMX low voltage switchboards"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

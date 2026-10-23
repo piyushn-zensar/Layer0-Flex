@@ -1,0 +1,35 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Multiple connectivity options",
+            "max": null,
+            "min": null,
+            "name": "communication",
+            "page": 7,
+            "quote": "multiple connectivity options (including Modbus, BACnet, Wi‑Fi and cellular) ensure easy integration into existing power management systems.",
+            "text": "Modbus, BACnet, Wi-Fi, cellular",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "RJ45 Modbus In/Out",
+            "max": null,
+            "min": null,
+            "name": "communication",
+            "page": 7,
+            "quote": "Metered tap-offs are supplied with RJ45 terminals, allowing straightforward link‑out of the Modbus chain.",
+            "text": "RJ45 terminals",
+            "unit": ""
+          }
+        ],
+        "variant": "ANORD-PMS/MCMS"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

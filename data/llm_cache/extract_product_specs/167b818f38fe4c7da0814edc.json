@@ -1,0 +1,35 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Certified safety up to",
+            "max": 6300,
+            "min": null,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "Certified up to 6300A and tested to IEC 61439-2.",
+            "text": "up to 6300A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Ingress protection",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 4,
+            "quote": "offers ingress protection up to IP54.",
+            "text": "up to IP54",
+            "unit": ""
+          }
+        ],
+        "variant": "SEN Plus Switchgear (IEC 61439-2)"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Busbars rated",
+            "max": 6000,
+            "min": 1200,
+            "name": "rated_current",
+            "page": 3,
+            "quote": "Busbars rated from 1200A to 6000A",
+            "text": "1200A to 6000A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Tested and verified",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 3,
+            "quote": "tested and verified to UL891",
+            "text": "UL891",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "OSHPD compliant seismic options",
+            "max": null,
+            "min": null,
+            "name": "seismic_or_arc",
+            "page": 4,
+            "quote": "OSHPD compliant seismic options available (ICC-ES AC156)",
+            "text": "OSHPD compliant seismic options available (ICC-ES AC156)",
+            "unit": ""
+          }
+        ],
+        "variant": "AMX Switchboards (UL891)"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

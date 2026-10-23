@@ -1,10 +1,11 @@
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
-from app.core.web import BID_MANAGER, actor, require, row
+from app.core.web import BID_MANAGER, UNIT_ENGINEER, UNIT_MANAGER, actor, require, row
 
 from app.modules.catalog import service
 
@@ -34,12 +35,38 @@ def products(q: str = "", type: str | None = None, family: str | None = None, st
 
 
 @router.get("/catalog/product")
-def product(part: str):
-    """One product by part number or catalog ID (a query parameter: part numbers contain "/")."""
-    p = service.product_detail(part)
+def product(part: str, db: Session = Depends(get_db)):
+    """One product by part number or catalog ID (a query parameter: part numbers contain "/"), with its family's
+    extracted ratings ("specs", unverified until the unit confirms them)."""
+    p = service.product_detail(part, db)
     if p is None:
         raise HTTPException(404, f"no product {part!r}")
     return p
+
+
+@router.get("/catalog/specs")
+def specs(family: str | None = None, db: Session = Depends(get_db)):
+    """Ratings read from the product documents and official pages, with the unit's review (C-52 follow-up)."""
+    return service.specs(db, family)
+
+
+class SpecReviewIn(BaseModel):
+    status: Literal["confirmed", "rejected"]
+    note: str = Field("", max_length=2000)
+
+
+@router.post("/catalog/specs/{spec_id}/review")
+def review_spec(spec_id: str, body: SpecReviewIn, request: Request, db: Session = Depends(get_db)):
+    """The family's unit (manager or designer / engineer) confirms or rejects an extracted spec item."""
+    u = require(request, UNIT_MANAGER, UNIT_ENGINEER)
+    try:
+        return row(service.review_spec(db, spec_id, body.status, body.note, u))
+    except LookupError as exc:
+        raise HTTPException(404, str(exc))
+    except PermissionError as exc:
+        raise HTTPException(403, str(exc))
+    except ValueError as exc:
+        raise HTTPException(422, str(exc))
 
 
 @router.get("/people")

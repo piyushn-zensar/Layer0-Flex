@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "peak",
+            "label": "Peak power",
+            "max": 2320,
+            "min": 2320,
+            "name": "output_power",
+            "page": 20,
+            "quote": "Non-isolated quarter brick delivers 2,320 W of peak power",
+            "text": "2,320 W",
+            "unit": "W"
+          }
+        ],
+        "variant": "BMR720 800 VDC module"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

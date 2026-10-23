@@ -1,0 +1,24 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "peak",
+            "label": "peak power",
+            "max": 15,
+            "min": null,
+            "name": "output_power",
+            "page": 6,
+            "quote": "DC/DC modules for both 800 and ±400 VDC systems, delivering peak power up to 15 kW",
+            "text": "15 kW",
+            "unit": "kW"
+          }
+        ],
+        "variant": "BMR720 800 VDC module"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

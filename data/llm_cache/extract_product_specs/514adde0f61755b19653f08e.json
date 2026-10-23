@@ -1,0 +1,134 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rated current (In)",
+            "max": 160,
+            "min": 160,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "Rated current (In) 160A",
+            "text": "160A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Rated operating voltage (Ue)",
+            "max": 1000,
+            "min": 1000,
+            "name": "rated_voltage_ac",
+            "page": 4,
+            "quote": "Rated operating voltage (Ue) 1000V",
+            "text": "1000V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Rated insulation voltage (Ui)",
+            "max": 1000,
+            "min": 1000,
+            "name": "insulation_voltage",
+            "page": 4,
+            "quote": "Rated insulation voltage (Ui) 1000V",
+            "text": "1000V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Frequency (f)",
+            "max": 60,
+            "min": 50,
+            "name": "frequency",
+            "page": 4,
+            "quote": "Frequency (f) 50/60Hz",
+            "text": "50/60Hz",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "",
+            "label": "Degree of protection (IP)",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 4,
+            "quote": "Degree of protection (IP) IP2X",
+            "text": "IP2X",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Conductor material",
+            "max": null,
+            "min": null,
+            "name": "conductor_material",
+            "page": 4,
+            "quote": "Conductor material Copper (99.9%) BS EN 13601",
+            "text": "Copper (99.9%) BS EN 13601",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Case dimensions (4 or 5 pole systems)",
+            "max": 165,
+            "min": 165,
+            "name": "width",
+            "page": 4,
+            "quote": "Case dimensions (4 or 5 pole systems) 165mm (W)",
+            "text": "165mm (W)",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Case dimensions (4 or 5 pole systems)",
+            "max": 47,
+            "min": 47,
+            "name": "height",
+            "page": 4,
+            "quote": "Case dimensions (4 or 5 pole systems) 47mm (H)",
+            "text": "47mm (H)",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Weight (4 pole systems)",
+            "max": 12.9,
+            "min": 12.9,
+            "name": "weight",
+            "page": 4,
+            "quote": "Weight (4 pole systems) 12.9kg/m",
+            "text": "12.9kg/m",
+            "unit": "kg/m"
+          },
+          {
+            "conditions": "0.12 s",
+            "label": "Rated short-time current for 3-phase fault (lcw)",
+            "max": 30,
+            "min": 30,
+            "name": "short_time_withstand",
+            "page": 4,
+            "quote": "Rated short-time current for 3-phase fault (lcw) 30kA rms (0.12 s)",
+            "text": "30kA rms (0.12 s)",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Allowable peak current for 3-phase fault (lpk)",
+            "max": 63,
+            "min": 63,
+            "name": "peak_withstand",
+            "page": 4,
+            "quote": "Allowable peak current for 3-phase fault (lpk) 63kA",
+            "text": "63kA",
+            "unit": "kA"
+          }
+        ],
+        "variant": "DX 160A"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

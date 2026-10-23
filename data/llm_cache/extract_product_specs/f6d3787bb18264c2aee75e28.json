@@ -1,0 +1,12 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [],
+        "variant": "CROWN-EHOUSE/E-House"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

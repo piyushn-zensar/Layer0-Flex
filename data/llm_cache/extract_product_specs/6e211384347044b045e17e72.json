@@ -1,0 +1,368 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "System ampacity",
+            "max": 160,
+            "min": 160,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "System ampacity 160A, 250A, 400A",
+            "text": "160A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Operating voltage",
+            "max": 600,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 4,
+            "quote": "Operating voltage Up to 600V",
+            "text": "Up to 600V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Frequency",
+            "max": 60,
+            "min": 50,
+            "name": "frequency",
+            "page": 4,
+            "quote": "Frequency 50/60 Hz",
+            "text": "50/60 Hz",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "",
+            "label": "Degree of protection",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 4,
+            "quote": "Degree of protection Finger Safe (IP2X)",
+            "text": "Finger Safe (IP2X)",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Conductor material",
+            "max": null,
+            "min": null,
+            "name": "conductor_material",
+            "page": 4,
+            "quote": "Conductor material Copper",
+            "text": "Copper",
+            "unit": ""
+          }
+        ],
+        "variant": "DATABAR DX 160 A"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "System ampacity",
+            "max": 250,
+            "min": 250,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "System ampacity 160A, 250A, 400A",
+            "text": "250A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Operating voltage",
+            "max": 600,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 4,
+            "quote": "Operating voltage Up to 600V",
+            "text": "Up to 600V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Frequency",
+            "max": 60,
+            "min": 50,
+            "name": "frequency",
+            "page": 4,
+            "quote": "Frequency 50/60 Hz",
+            "text": "50/60 Hz",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "",
+            "label": "Degree of protection",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 4,
+            "quote": "Degree of protection Finger Safe (IP2X)",
+            "text": "Finger Safe (IP2X)",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Conductor material",
+            "max": null,
+            "min": null,
+            "name": "conductor_material",
+            "page": 4,
+            "quote": "Conductor material Copper",
+            "text": "Copper",
+            "unit": ""
+          }
+        ],
+        "variant": "DATABAR DX 250 A"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "System ampacity",
+            "max": 400,
+            "min": 400,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "System ampacity 160A, 250A, 400A",
+            "text": "400A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Operating voltage",
+            "max": 600,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 4,
+            "quote": "Operating voltage Up to 600V",
+            "text": "Up to 600V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Frequency",
+            "max": 60,
+            "min": 50,
+            "name": "frequency",
+            "page": 4,
+            "quote": "Frequency 50/60 Hz",
+            "text": "50/60 Hz",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "",
+            "label": "Degree of protection",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 4,
+            "quote": "Degree of protection Finger Safe (IP2X)",
+            "text": "Finger Safe (IP2X)",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Conductor material",
+            "max": null,
+            "min": null,
+            "name": "conductor_material",
+            "page": 4,
+            "quote": "Conductor material Copper",
+            "text": "Copper",
+            "unit": ""
+          }
+        ],
+        "variant": "DATABAR DX 400 A"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "System ampacity",
+            "max": 600,
+            "min": 600,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "System ampacity 600A, 800A, 1000A",
+            "text": "600A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Operating voltage",
+            "max": 600,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 4,
+            "quote": "Operating voltage Up to 600V",
+            "text": "Up to 600V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Frequency",
+            "max": 60,
+            "min": 50,
+            "name": "frequency",
+            "page": 4,
+            "quote": "Frequency 50/60 Hz",
+            "text": "50/60 Hz",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "",
+            "label": "Degree of protection",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 4,
+            "quote": "Degree of protection Finger Safe (IP2X)",
+            "text": "Finger Safe (IP2X)",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Conductor material",
+            "max": null,
+            "min": null,
+            "name": "conductor_material",
+            "page": 4,
+            "quote": "Conductor material Copper",
+            "text": "Copper",
+            "unit": ""
+          }
+        ],
+        "variant": "DATABAR DX+ 600 A"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "System ampacity",
+            "max": 800,
+            "min": 800,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "System ampacity 600A, 800A, 1000A",
+            "text": "800A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Operating voltage",
+            "max": 600,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 4,
+            "quote": "Operating voltage Up to 600V",
+            "text": "Up to 600V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Frequency",
+            "max": 60,
+            "min": 50,
+            "name": "frequency",
+            "page": 4,
+            "quote": "Frequency 50/60 Hz",
+            "text": "50/60 Hz",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "",
+            "label": "Degree of protection",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 4,
+            "quote": "Degree of protection Finger Safe (IP2X)",
+            "text": "Finger Safe (IP2X)",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Conductor material",
+            "max": null,
+            "min": null,
+            "name": "conductor_material",
+            "page": 4,
+            "quote": "Conductor material Copper",
+            "text": "Copper",
+            "unit": ""
+          }
+        ],
+        "variant": "DATABAR DX+ 800 A"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "System ampacity",
+            "max": 1000,
+            "min": 1000,
+            "name": "rated_current",
+            "page": 4,
+            "quote": "System ampacity 600A, 800A, 1000A",
+            "text": "1000A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Operating voltage",
+            "max": 600,
+            "min": null,
+            "name": "rated_voltage_ac",
+            "page": 4,
+            "quote": "Operating voltage Up to 600V",
+            "text": "Up to 600V",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Frequency",
+            "max": 60,
+            "min": 50,
+            "name": "frequency",
+            "page": 4,
+            "quote": "Frequency 50/60 Hz",
+            "text": "50/60 Hz",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "",
+            "label": "Degree of protection",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 4,
+            "quote": "Degree of protection Finger Safe (IP2X)",
+            "text": "Finger Safe (IP2X)",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "Conductor material",
+            "max": null,
+            "min": null,
+            "name": "conductor_material",
+            "page": 4,
+            "quote": "Conductor material Copper",
+            "text": "Copper",
+            "unit": ""
+          }
+        ],
+        "variant": "DATABAR DX+ 1000 A"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

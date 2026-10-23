@@ -1,0 +1,7 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": []
+  },
+  "task": "extract_product_specs"
+}

@@ -1,0 +1,35 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Same tap-offs fit all DATABAR ratings",
+            "max": 1250,
+            "min": 160,
+            "name": "rated_current",
+            "page": 8,
+            "quote": "Same tap-offs fit all DATABAR ratings from 160A to 1250A",
+            "text": "160A to 1250A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Tap-offs protection options",
+            "max": 50,
+            "min": 15,
+            "name": "short_time_withstand",
+            "page": 8,
+            "quote": "Standard options typically include fuses, MCBs and MCCBs in 15-50kA Isc",
+            "text": "15-50kA Isc",
+            "unit": "kA"
+          }
+        ],
+        "variant": "DATABAR DX 160 A to 1250 A"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

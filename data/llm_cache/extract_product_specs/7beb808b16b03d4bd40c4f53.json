@@ -1,0 +1,57 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "busbar ratings",
+            "max": 6300,
+            "min": 1000,
+            "name": "rated_current",
+            "page": 2,
+            "quote": "RESINBAR’s range provides a high-power feeder busbar solution with busbar ratings ranging from 1000A up to 6300A.",
+            "text": "1000A up to 6300A",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "conductive bars",
+            "max": 6,
+            "min": 3,
+            "name": "conductors_or_poles",
+            "page": 2,
+            "quote": "Each rating type can be supplied with between 3 and 6 conductive bars.",
+            "text": "between 3 and 6 conductive bars",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "ingress protection",
+            "max": null,
+            "min": null,
+            "name": "ip_rating",
+            "page": 2,
+            "quote": "RESINBAR is an arrangement of Copper (CXC) or Aluminium (CXA) busbars which are fully encapsulated within a specialist IP68 rated composite epoxy resin.",
+            "text": "IP68",
+            "unit": ""
+          },
+          {
+            "conditions": "",
+            "label": "seismic resistance",
+            "max": 7.9,
+            "min": 7.0,
+            "name": "seismic_or_arc",
+            "page": 2,
+            "quote": "Additionally, the busbar trunking system has been independently tested for resistance to major seismic events (richter magnitude 7.0-7.9).",
+            "text": "richter magnitude 7.0-7.9",
+            "unit": ""
+          }
+        ],
+        "variant": "RESINBAR CXC"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

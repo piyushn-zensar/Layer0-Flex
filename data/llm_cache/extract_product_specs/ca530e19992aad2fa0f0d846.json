@@ -1,0 +1,46 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Meets UL67 and UL508A standards",
+            "max": null,
+            "min": null,
+            "name": "standards",
+            "page": 1,
+            "quote": "Meets UL67 and UL508A standards for North American data halls",
+            "text": "UL67 and UL508A",
+            "unit": ""
+          },
+          {
+            "conditions": "footprints as small as",
+            "label": "Custom size options",
+            "max": 20,
+            "min": 20,
+            "name": "other",
+            "page": 1,
+            "quote": "Custom size options with footprints as small as 20 × 8 inch",
+            "text": "20 × 8 inch",
+            "unit": "inch"
+          },
+          {
+            "conditions": "",
+            "label": "Protected branch circuits",
+            "max": 168,
+            "min": null,
+            "name": "other",
+            "page": 1,
+            "quote": "Up to 168 protected branch circuits",
+            "text": "Up to 168",
+            "unit": ""
+          }
+        ],
+        "variant": "ANORD-PDU/RPP"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

@@ -1,0 +1,172 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rated Current",
+            "max": 800,
+            "min": 800,
+            "name": "rated_current",
+            "page": 3,
+            "quote": "Rated Current in [A] 800",
+            "text": "800",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Rated operating voltage",
+            "max": 1000,
+            "min": 1000,
+            "name": "rated_voltage_ac",
+            "page": 3,
+            "quote": "Rated operating voltage Ue [V] 1000",
+            "text": "1000",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Rated insulation voltage",
+            "max": 1000,
+            "min": 1000,
+            "name": "rated_voltage_dc",
+            "page": 3,
+            "quote": "Rated insulation voltage Ui [V] 1000",
+            "text": "1000",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Frequency",
+            "max": 60,
+            "min": 50,
+            "name": "frequency",
+            "page": 3,
+            "quote": "Frequency f [Hz] 50/60",
+            "text": "50/60",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "",
+            "label": "Degree of protection",
+            "max": 68,
+            "min": 68,
+            "name": "ip_rating",
+            "page": 3,
+            "quote": "Degree of protection IP 68",
+            "text": "68",
+            "unit": ""
+          },
+          {
+            "conditions": "1s",
+            "label": "Rated short-time current for three-phase fault (1s)",
+            "max": 25,
+            "min": 25,
+            "name": "short_time_withstand",
+            "page": 3,
+            "quote": "Rated short-time current for three-phase fault (1s) Icw [kA]rms 25",
+            "text": "25",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Allowable peak current for three-phase fault",
+            "max": 55,
+            "min": 55,
+            "name": "peak_withstand",
+            "page": 3,
+            "quote": "Allowable peak current for three-phase fault Ipk [kA] 55",
+            "text": "55",
+            "unit": "kA"
+          }
+        ],
+        "variant": "RESINBAR CXA 800 A"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Rated Current",
+            "max": 1000,
+            "min": 1000,
+            "name": "rated_current",
+            "page": 3,
+            "quote": "Rated Current in [A] 1000",
+            "text": "1000",
+            "unit": "A"
+          },
+          {
+            "conditions": "",
+            "label": "Rated operating voltage",
+            "max": 1000,
+            "min": 1000,
+            "name": "rated_voltage_ac",
+            "page": 3,
+            "quote": "Rated operating voltage Ue [V] 1000",
+            "text": "1000",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Rated insulation voltage",
+            "max": 1000,
+            "min": 1000,
+            "name": "rated_voltage_dc",
+            "page": 3,
+            "quote": "Rated insulation voltage Ui [V] 1000",
+            "text": "1000",
+            "unit": "V"
+          },
+          {
+            "conditions": "",
+            "label": "Frequency",
+            "max": 60,
+            "min": 50,
+            "name": "frequency",
+            "page": 3,
+            "quote": "Frequency f [Hz] 50/60",
+            "text": "50/60",
+            "unit": "Hz"
+          },
+          {
+            "conditions": "",
+            "label": "Degree of protection",
+            "max": 68,
+            "min": 68,
+            "name": "ip_rating",
+            "page": 3,
+            "quote": "Degree of protection IP 68",
+            "text": "68",
+            "unit": ""
+          },
+          {
+            "conditions": "1s",
+            "label": "Rated short-time current for three-phase fault (1s)",
+            "max": 50,
+            "min": 50,
+            "name": "short_time_withstand",
+            "page": 3,
+            "quote": "Rated short-time current for three-phase fault (1s) Icw [kA]rms 50",
+            "text": "50",
+            "unit": "kA"
+          },
+          {
+            "conditions": "",
+            "label": "Allowable peak current for three-phase fault",
+            "max": 110,
+            "min": 110,
+            "name": "peak_withstand",
+            "page": 3,
+            "quote": "Allowable peak current for three-phase fault Ipk [kA] 110",
+            "text": "110",
+            "unit": "kA"
+          }
+        ],
+        "variant": "RESINBAR CXA 1000 A"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}

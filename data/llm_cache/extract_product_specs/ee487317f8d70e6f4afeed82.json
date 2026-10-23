@@ -1,0 +1,215 @@
+{
+  "model": "gpt-4o",
+  "output": {
+    "items": [
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Standard X and Y",
+            "max": 350,
+            "min": 350,
+            "name": "other",
+            "page": 20,
+            "quote": "Standard X and Y = 350mm",
+            "text": "350mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Min. X and Y",
+            "max": 275,
+            "min": 275,
+            "name": "other",
+            "page": 20,
+            "quote": "Min. X and Y = 275mm",
+            "text": "275mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Max. X and Y",
+            "max": 600,
+            "min": 600,
+            "name": "other",
+            "page": 20,
+            "quote": "Max. X and Y = 600mm",
+            "text": "600mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Min Z",
+            "max": 75,
+            "min": 75,
+            "name": "other",
+            "page": 20,
+            "quote": "Min Z = 75mm",
+            "text": "75mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Max Z",
+            "max": 700,
+            "min": 700,
+            "name": "other",
+            "page": 20,
+            "quote": "Max Z = 700mm",
+            "text": "700mm",
+            "unit": "mm"
+          }
+        ],
+        "variant": "IBAR HXA Offsets"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Standard / Min. X",
+            "max": 250,
+            "min": 250,
+            "name": "other",
+            "page": 21,
+            "quote": "Standard / Min. X = 250mm",
+            "text": "250mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Max. X",
+            "max": 800,
+            "min": 800,
+            "name": "other",
+            "page": 21,
+            "quote": "Max. X = 800mm",
+            "text": "800mm",
+            "unit": "mm"
+          }
+        ],
+        "variant": "IBAR HXA Straight Panel Flanges"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Min. X",
+            "max": 180,
+            "min": 180,
+            "name": "other",
+            "page": 22,
+            "quote": "Min. X = 180mm",
+            "text": "180mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Max. X",
+            "max": 800,
+            "min": 800,
+            "name": "other",
+            "page": 22,
+            "quote": "Max. X = 800mm",
+            "text": "800mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Min. Y",
+            "max": 275,
+            "min": 275,
+            "name": "other",
+            "page": 22,
+            "quote": "Min. Y = 275mm",
+            "text": "275mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Max. Y",
+            "max": 500,
+            "min": 500,
+            "name": "other",
+            "page": 22,
+            "quote": "Max. Y = 500mm",
+            "text": "500mm",
+            "unit": "mm"
+          }
+        ],
+        "variant": "IBAR HXA Edgewise Panel Flanges"
+      },
+      {
+        "attributes": [
+          {
+            "conditions": "",
+            "label": "Single Stack Busbar A",
+            "max": 600,
+            "min": 600,
+            "name": "other",
+            "page": 23,
+            "quote": "Single Stack Busbar : A = 600mm",
+            "text": "600mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Single Stack Busbar B",
+            "max": 600,
+            "min": 600,
+            "name": "other",
+            "page": 23,
+            "quote": "Single Stack Busbar : B = 600mm",
+            "text": "600mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Single Stack Busbar C",
+            "max": 350,
+            "min": 350,
+            "name": "other",
+            "page": 23,
+            "quote": "Single Stack Busbar : C = 350mm",
+            "text": "350mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Double Stack Busbar A",
+            "max": 600,
+            "min": 600,
+            "name": "other",
+            "page": 23,
+            "quote": "Double Stack Busbar : A = 600mm",
+            "text": "600mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Double Stack Busbar B",
+            "max": 800,
+            "min": 800,
+            "name": "other",
+            "page": 23,
+            "quote": "Double Stack Busbar : B = 800mm",
+            "text": "800mm",
+            "unit": "mm"
+          },
+          {
+            "conditions": "",
+            "label": "Double Stack Busbar C",
+            "max": 650,
+            "min": 650,
+            "name": "other",
+            "page": 23,
+            "quote": "Double Stack Busbar : C = 650mm",
+            "text": "650mm",
+            "unit": "mm"
+          }
+        ],
+        "variant": "IBAR HXA Connection Boxes"
+      }
+    ]
+  },
+  "task": "extract_product_specs"
+}
